@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug26
+;; Version:    2013aug28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -4344,7 +4344,7 @@ Notice that the download scripts above contain these sexps:
 After you execute them hyperlinks like these should work:
 
   (find-eepitchvideo)
-  (find-eevvideo2)
+  (find-eevvideo)
 
 Note that they use mplayer to display the videos, and if you
 don't have mplayer - or if you haven't downloaded the \".mp4\"s -
@@ -4446,7 +4446,15 @@ Eev video: table of contents
 
 In Portuguese
 =============
+
   (find-eev-video-links \"eevvideopt\" \"video2pt\"       \"yztYD9Y7Iz4\")
+  (code-video \"eevvideopt\" \"$S/http/angg.twu.net/eev-videos/video2pt.mp4\")
+  (eev-avadj-mode 1)
+  (find-eevvideopt t)
+
+;; (find-eepitchvideo)
+;; (find-eevvideo)
+;; (find-eevvideopt)
 
 
 
@@ -4478,19 +4486,34 @@ At youtube: http://www.youtube.com/watch?v=yztYD9Y7Iz4
 Hi-res mp4: http://angg.twu.net/eev-videos/video2pt.mp4
             (128228339 bytes, 122MB. Duration: 1:09:42)
 
-# (find-eevvideo2pt)
-# (find-eevvideo2pt \"1:07:40\" \"eepitch pro shell e pro Python\")
+# (find-eevvideopt)
+# (find-eevvideopt \"1:07:40\" \"eepitch pro shell e pro Python\")
+
+
+
+
+Long story short
+================
+You may want to copy the block of elisp below to your .emacs. You can
+use this sexp to help you:
+
+  (ee-copy-rest 0 '(find-fline \"~/.emacs\"))
+
+;; Hyperlinks to videos about eev.
+;; See: (find-videos-intro)
+;; (find-eev-video-links \"eepitchvideo\" \"video4-eepitch\" \"Lj_zKC5BR64\")
+;; (find-eev-video-links \"eevvideo\"     \"video2\"         \"doeyn5MOaB8\")
+;; (find-eev-video-links \"eevvideopt\"   \"video2pt\"       \"yztYD9Y7Iz4\")
+\(code-video \"eepitchvideo\" \"$S/http/angg.twu.net/eev-videos/video4-eepitch.mp4\")
+\(code-video \"eevvideo\"     \"$S/http/angg.twu.net/eev-videos/video2.mp4\")
+\(code-video \"eevvideopt\"   \"$S/http/angg.twu.net/eev-videos/video2pt.mp4\")
+;; (find-eepitchvideo)
+;; (find-eevvideo)
+;; (find-eevvideopt)
+;; (find-ebuffer \"*Messages*\")
 " pos-spec-list)))
 
 ;; (find-videos-intro)
-
-
-;; A preliminary experiment (in Portuguese, and quite bad):
-;;   Introducao ao eev2 (preliminar, 2012oct28)
-;;   http://www.youtube.com/watch?v=1XtbM0D6leM
-
-
-
 
 
 
