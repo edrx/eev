@@ -93,10 +93,11 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 
 
 
+
 (provide 'eejump)
 
-
-
+;; To see all current targets, run:
+;;   (find-eejumps)
 
 
 

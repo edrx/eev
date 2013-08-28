@@ -3,7 +3,7 @@
 ;;; and that are not created by `code-c-d' and friends.
 
 ;; Copyright (C) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,
-;; 2009,2010,2011,2012 Free Software Foundation, Inc.
+;; 2009,2010,2011,2012,2013 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet) part of GNU eev.
 ;;
@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012nov08
+;; Version:    2013aug28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -729,6 +729,35 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 		(t (error "Invalid character set %s" charset)))
 	 pos-spec-list))
 
+
+
+
+;;;   __ _           _                  _                           
+;;;  / _(_)_ __   __| |       ___  ___ (_)_   _ _ __ ___  _ __  ___ 
+;;; | |_| | '_ \ / _` |_____ / _ \/ _ \| | | | | '_ ` _ \| '_ \/ __|
+;;; |  _| | | | | (_| |_____|  __/  __/| | |_| | | | | | | |_) \__ \
+;;; |_| |_|_| |_|\__,_|      \___|\___|/ |\__,_|_| |_| |_| .__/|___/
+;;;                                  |__/                |_|        
+;;
+;; A hack to diplay all the current eejump targets.
+;; Should this be here? See: (find-eev "eejump.el")
+;; Try: (find-eejumps)
+
+(defun ee-defun-sexp-for (symbol) 
+  `(defun ,symbol ,@(cdr (symbol-function symbol))))
+
+(defun ee-defun-str-for (symbol)
+  (replace-regexp-in-string
+   "^(defun \\([^ ]+\\) nil " "(defun \\1 () "
+   (ee-S (ee-defun-sexp-for symbol))))
+
+(defun eejump-symbols ()
+  (apropos-internal "^eejump-[0-9]*\\*?$"))
+
+(defun find-eejumps (&rest pos-spec-list) (interactive)
+  (apply 'find-estring-elisp
+	 (mapconcat 'eejump-defun-str-for (eejump-symbols) "\n")
+	 pos-spec-list))
 
 
 

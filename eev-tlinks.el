@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug23
+;; Version:    2013aug26
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -66,22 +66,43 @@
 ;; A hack for template-based find-*-links functions in which the
 ;; second half of the buffer in meant to be copied to somewhere else.
 ;;
+(defvar eeflash-copy '(highlight 0.5))
+
 (defun ee-count-lines (str)
   "Count the number of lines in STR (which should be newline-terminated)."
   (length (replace-regexp-in-string "[^\n]" "" str)))
 
-(defun ee-copy-after-and (nlines code)
-  "Copy into the kill ring everything from NLINES down on, and run CODE."
-  (move-beginning-of-line (- nlines 1))
-  (kill-new (buffer-substring (point) (point-max)))
-  (eval code)
-  (let ((n (ee-count-lines (ee-last-kill))))
-    `(Copied ,n lines to the kill ring - use C-y to paste)))
+(defun ee-copy-rest  (skip code)
+  (ee-copy-rest0 skip `(find-2b nil ',code)))
 
-(defun ee-copy-after-and-2b (nlines code)
-  "Copy into the kill ring everything from NLINES down on, and run CODE.
-The target of the hyperlink in CODE is opened in the right-side window."
-  (ee-copy-after-and nlines `(find-2b nil ',code)))
+(defun ee-copy-rest0 (skip code)
+  "Copy the rest of this buffer to the kill ring and execute CODE.
+The rest of this buffer is everything from the beginning of the next line -
+optionally moving down SKIP lines - to the end of the buffer."
+  ;; (setq nlines (+ 1 (or nlines 0)))
+  (setq skip (or skip 0))
+  (let* ((start (save-excursion (move-beginning-of-line (+ 2 skip)) (point)))
+	 (end   (point-max))
+	 (str   (buffer-substring start end))
+	 (len   (ee-count-lines str))
+	 (msg   `(Copied ,len lines to the kill ring - use C-y to paste)))
+    (eeflash+ start end eeflash-copy)
+    (kill-new str)
+    (eval code)
+    msg))
+
+;; (defun ee-copy-after-and (nlines code)
+;;   "Copy into the kill ring everything from NLINES down on, and run CODE."
+;;   (move-beginning-of-line (- nlines 1))
+;;   (kill-new (buffer-substring (point) (point-max)))
+;;   (eval code)
+;;   (let ((n (ee-count-lines (ee-last-kill))))
+;;     `(Copied ,n lines to the kill ring - use C-y to paste)))
+;; 
+;; (defun ee-copy-after-and-2b (nlines code)
+;;   "Copy into the kill ring everything from NLINES down on, and run CODE.
+;; The target of the hyperlink in CODE is opened in the right-side window."
+;;   (ee-copy-after-and nlines `(find-2b nil ',code)))
 
 
 
@@ -510,10 +531,10 @@ sudo dpkg -i *.deb
   (interactive)
   (setq dir (or dir ee-eevdir))
   (apply 'find-elinks
-   `((find-eev-update-links ,dir ,@pos-spec-list)
-     (find-eev-update-links "/tmp/eev/" ,@pos-spec-list)
-     (find-eev-update-links "~/eev/" ,@pos-spec-list)
-     (find-eev-update-links "{dir}" ,@pos-spec-list)
+   `((find-eev-update-links ,dir)
+     (find-eev-update-links "/tmp/eev/")
+     (find-eev-update-links "~/eev/")
+     (find-eev-update-links "{dir}")
      ,(ee-template0 "\
 #
 # In most \"*Elisp hyperlinks\" buffers the top sexp can be used
@@ -554,9 +575,9 @@ emacs    -fg bisque -bg black                  eev-readme.el
 # Emacs executes the file ~/.emacs when it starts up - see:
 #   (find-enode \"Init File\")
 # The easiest way to make Emacs load eev2 by default is to
-# open your ~/.emacs in another window with:
-#   (find-wset \"1so_o\" '(find-fline \"~/.emacs\"))
-# and then copy the elisp code below to it.
+# open your ~/.emacs in another window with the sexp below,
+# and then copy the block below to it with `C-y'.
+#   (ee-copy-rest 0 '(find-fline \"~/.emacs\"))
 
 ;; Load eev2.
 ;; See:  (find-file \"{dir}\")
@@ -1223,60 +1244,12 @@ echo     '{url}' >> ~/.psne.log
 
 ;; «find-git-links» (to ".find-git-links")
 ;; (find-find-links-links "g" "git" "usrc/ git/ gitname")
+;; (find-find-links-links "g" "git" "url c")
 (define-key eev-mode-map "\M-hg" 'find-git-links-1)
+(define-key eev-mode-map "\M-hg" 'find-git-links)
 
-(defun find-git-links (&optional usrc/ git/ gitname c &rest pos-spec-list)
-"Visit a temporary buffer containing scripts for acting on a Git URL.
-This is normally invoked interactively via `find-git-links-1' (`M-h g').
-I have VERY LITTLE experience with Git, so these scripts are kind of silly.
-Please send suggestions!"
-  ;; (interactive)
-  (setq usrc/ (or usrc/ "{usrc/}"))
-  (setq git/ (or git/ "{git/}"))
-  (setq gitname (or gitname "{gitname}"))
-  (setq c (or c "{c}"))
-  (apply 'find-elinks
-   `((find-git-links ,usrc/    ,git/ ,gitname ,c ,@pos-spec-list)
-     (find-git-links "/tmp/"   ,git/ ,gitname ,c ,@pos-spec-list)
-     (find-git-links "~/usrc/" ,git/ ,gitname ,c ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     ;; (find-efunction 'find-git-links)
-     ;; ""
-     ,(ee-template0 "\
-{ee-H}(find-efunction 'find-git-links-1)
-{ee-H}(find-efunction 'find-git-links)
-{ee-H}{git/}{gitname}
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-rm -Rfv {usrc/}{gitname}/
-mkdir   {usrc/}{gitname}/
-cd      {usrc/}
-git clone {git/}{gitname}
-cd      {usrc/}{gitname}/
-# (find-fline \"{usrc/}{gitname}/\")
-
-# (code-c-d \"{c}\" \"{usrc/}{gitname}\")
-# (find-{c}file \"\")
-# (find-{c}sh0 \"gitk\")
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-cd    {usrc/}{gitname}
-find  {usrc/}{gitname} -maxdepth 1 -mindepth 1 | sort | grep -v '/\.git$'
-rm -Rv $(
-find  {usrc/}{gitname} -maxdepth 1 -mindepth 1 | sort | grep -v '/\.git$'
-)
-git pull
-git reset --hard
-
-# (code-c-d \"{c}\" \"{usrc/}{gitname}/\")
-# (find-{c}file \"\")
-")
-     )
-   pos-spec-list))
+(defun ee-git-url-stem (url)
+  (replace-regexp-in-string "^\\(.*/\\)\\([^/]+?\\)\\(\\.git\\)?$" "\\2" url))
 
 (defun ee-git-url-at-point ()
   (require 'thingatpt)
@@ -1285,22 +1258,51 @@ git reset --hard
 		 thing-at-point-url-path-regexp)))
     (thing-at-point 'url)))
 
-(defun find-git-links-1 ()
-  "Visit a temporary buffer containing scripts for acting on a Git URL.
-This is the high-level version, that runs `ee-git-url-at-point',
-splits the Git URL at point, and calls `find-git-links' with
-reasonable default arguments.
+(setq ee-git-dir "~/usrc/") ;; Used by find-git-links
 
-To test this, type `M-h g' on a Git URL - for example, on:
-  https://github.com/kikito/inspect.lua"
+(defun find-git-links (&optional url c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for foo."
   (interactive)
-  (let* ((url/ (ee-git-url-at-point))
-         (url (replace-regexp-in-string "/*\\'" "" url/))
-	 (git/ (file-name-directory url))
-	 (gitname (file-name-nondirectory url))
-	 (c (replace-regexp-in-string "[-.]" "" gitname)))
-    (if (equal gitname "") (error "Maybe your git url ended with `/'?..."))
-    (find-git-links "/tmp/" git/ gitname c)))
+  (let (gitstem dir)
+    (setq url (or url (ee-git-url-at-point) "{url}"))
+    (setq gitstem (or gitstem (ee-git-url-stem url)))
+    (setq c (or c (replace-regexp-in-string "\\." "" gitstem)))
+    (setq dir (format "%s%s/" ee-git-dir gitstem))
+    (apply 'find-elinks
+     `((find-git-links ,url ,c)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-git-links)
+       ""
+       (setq ee-git-dir ,ee-git-dir)
+       (setq ee-git-dir "~/usrc/")
+       (setq ee-git-dir "/tmp/")
+       ""
+       (find-fline ,ee-git-dir)
+       (find-fline ,dir)
+       ""
+       ,(ee-template0 "\
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# rm -Rfv {dir}
+cd      {ee-git-dir}
+git clone --depth 1 {url}
+cd      {dir}
+# git pull
+# (find-fline \"{ee-git-dir}\")
+# (find-fline \"{dir}\")
+
+# (code-c-d \"{c}\" \"{dir}\")
+# (find-{c}file \"\")
+# (find-gitk \"{dir}\")
+
+git clean -dfx
+git reset --hard
+
+git pull
+")
+     )
+   pos-spec-list)))
 
 ;; Test by typing `M-h g' on this git url:
 ;; https://github.com/kikito/inspect.lua
@@ -1333,8 +1335,8 @@ To test this, type `M-h g' on a Git URL - for example, on:
      (find-efunction 'find-netcat-test-links)
      ""
      ,(ee-template0 "\
- (find-wset \"13o2!o!o\" '(eepitch-{eesrc}) '(eepitch-{eetgt}))
- (find-wset \"13o2=o=o\" '(eepitch-{eesrc}) '(eepitch-{eetgt}))
+ (find-3EE '(eepitch-{eesrc}) '(eepitch-{eetgt}))
+ (find-3ee '(eepitch-{eesrc}) '(eepitch-{eetgt}))
  (eepitch-{eetgt})
 # listen on port {tgtport}
 netcat -l -p {tgtport}

@@ -169,7 +169,7 @@ Commands to generate pages with lists of hyperlinks:
   \\[find-file-links]   -- hyperlinks to the current file
   \\[find-grep-links] -- hyperlinks to `find-xxxgrep' sexps
   \\[find-efunction-links] -- hyperlinks to an Emacs function
-  \\[find-einfo-links] -- hyperlinks to the current Info node
+  \\[find-einfo-links] -- hyperlinks to the current Info node (or intro)
   \\[find-ekey-links] -- hyperlinks to a key sequence and to the function
              associated to it
   \\[find-evariable-links] -- hyperlinks to an Emacs variable
