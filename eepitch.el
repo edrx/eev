@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug16
+;; Version:    2013aug29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -472,6 +472,25 @@ See: (find-eepitch-intro)"
 "Set `eepitch' to run PROGRAM-AND-ARGS in comint mode, in the buffer \"*NAME*\"."
   (eepitch `(find-comintprocess ,name ',program-and-args)))
 
+
+
+
+;;;                  _ _       _               _       
+;;;   ___  ___ _ __ (_) |_ ___| |__         __| | ___  
+;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ _____ / _` |/ _ \ 
+;;; |  __/  __/ |_) | | || (__| | | |_____| (_| | (_) |
+;;;  \___|\___| .__/|_|\__\___|_| |_|      \__,_|\___/ 
+;;;           |_|                                      
+;;
+(defun eepitch-make-suffix (arg)
+  (cond ((null arg) "")
+	((stringp arg) (format " %s" arg))
+	((numberp arg) (format " (%s)" arg))))
+
+(defun eepitch-do (program-and-args &optional suffix)
+  (eepitch-comint (format "%s%s" (ee-unsplit program-and-args)
+			  (eepitch-make-suffix suffix))
+		  program-and-args))
 
 
 

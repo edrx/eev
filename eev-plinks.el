@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012nov02
+;; Version:    2013aug28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -129,6 +129,20 @@
 (defun ee-find-comintprocess (dir name program-and-args)
   (ee-find-comintprocess-ne
    (ee-expand dir) name (ee-split-and-expand program-and-args)))
+
+
+
+;; find-wget
+;;
+(defun find-wget00 (url)
+  (find-callprocess00 `("wget" "-q" "-O" "-" ,url)))
+
+(defun find-wget (url &rest rest)
+  (setq url (ee-expand url))
+  (apply 'find-eoutput-reuse (format "*wget: %s*" url)
+	 `(insert (find-wget00 ,url))
+	 rest))
+
 
 
 (provide 'eev-plinks)

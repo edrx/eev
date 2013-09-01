@@ -462,6 +462,8 @@ The \"Local variables:\" section in the buffer is processed."
 ;;   (find-sh0  "seq 2095 2100")
 ;;   (find-sh00 "seq 2095 2100")
 
+;; Note: we could have written this using `find-eoutput-reuse'...
+;;
 (defun find-sh (command &rest pos-spec-list)
   "Hyperlink to the result of running the shell command COMMAND.
 If a buffer named COMMAND does not exist then create it and put
@@ -756,7 +758,7 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 
 (defun find-eejumps (&rest pos-spec-list) (interactive)
   (apply 'find-estring-elisp
-	 (mapconcat 'eejump-defun-str-for (eejump-symbols) "\n")
+	 (mapconcat 'ee-defun-str-for (eejump-symbols) "\n")
 	 pos-spec-list))
 
 

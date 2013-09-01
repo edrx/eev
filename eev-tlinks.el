@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug26
+;; Version:    2013aug29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -73,7 +73,7 @@
   (length (replace-regexp-in-string "[^\n]" "" str)))
 
 (defun ee-copy-rest  (skip code)
-  (ee-copy-rest0 skip `(find-2b nil ',code)))
+  (ee-copy-rest0 skip `(find-2a nil ',code)))
 
 (defun ee-copy-rest0 (skip code)
   "Copy the rest of this buffer to the kill ring and execute CODE.
@@ -605,6 +605,18 @@ emacs    -fg bisque -bg black                  eev-readme.el
 ;; (find-angg ".emacs.templates" "find-newhost-links")
 ;; (find-find-links-links "newhost" "thatmname thatip thismname thisip thisiface")
 ;; (find-angg "bin/etc.lua" "inet_addr")
+
+;; New, not used yet:
+(defun ee-inet-addr (&optional iface str)
+"Return the IP after \"inet addr:\" in the output of \"/sbin/ifconfig IFACE\".
+The defaulr for IFACE is \"wlan0\". If STR is non-nil, pretend that the
+output of /sbin/ifconfig was STR (for debugging)."
+  (setq iface (or iface "wlan0"))
+  (setq str (or str (find-sh0 (format "/sbin/ifconfig %s" iface))))
+  (if (string-match "inet addr:\\([0-9.]+\\)" str)
+      (match-string 1 str)))
+;;
+;; See also: system-name
 
 (defvar ee-this-mname nil)
 (defvar ee-this-iface "wlan0")
