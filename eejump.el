@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013jan04
+;; Version:    2013sep08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -86,6 +86,8 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 (defun eejump-5   () (find-eev-intro))
 (defun eejump-50  () (find-eev "eev-readme.el"))
 (defun eejump-59  () (find-eev-update-links))
+(defun eejump-6   () (find-freenode    "#eev"))
+(defun eejump-66  () (find-freenode-3a "#eev"))
 
 (defun eejump-55  () (find-fline "~/.emacs"))
 (defun eejump-552 () (find-eev "eev2-all.el"))
