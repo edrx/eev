@@ -703,9 +703,9 @@ See the comments in the source code."
 (defun find-ecolor-links (&optional initialcolor &rest pos-spec-list)
   "Visit a temporary buffer containing hyperlinks for the color INITIALCOLOR."
   (interactive)
-  (setq initialcolor (or initialcolor "{initialcolor}"))
+  (setq initialcolor (or initialcolor "#123456"))
   (apply 'find-elinks
-   `((find-color-links ,initialcolor ,@pos-spec-list)
+   `((find-ecolor-links ,initialcolor ,@pos-spec-list)
      ""
      (find-ecolor-links (ee-color-choose-tk ,(or initialcolor "gray")))
      (find-ecolor-links ,(or initialcolor "gray"))

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug28
+;; Version:    2013sep08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1768,7 +1768,6 @@ URL with find-file is to modify the URL by hand, replacing its
 example:
 
                 http://www.gnu.org/software/emacs/emacs-paper.html
-   (find-file \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
   (find-fline \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
 
 If you put the point on the URL and run `M-x brfl' on it you will
@@ -1784,6 +1783,7 @@ cryptic - name. The conventions are:
   \"l\"  is an optional suffix meaning to use the local copy.
 
 The details on how to create these \"brxxx functions\" are here:
+
   (find-brxxx-intro)
 
 " rest)))
@@ -1819,76 +1819,163 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-\[Note: these intros refer to the code in \"eev-code.el\", that
-is not yet loaded by default!]
-
-
 Introduction
 ============
-Suppose that `plic' is a function that expects a file name, and
-`pluc' is a function that expects a URL; to make these ideas more
-concrete, suppose that these are typical calls to them,
-
-  (plic \"/foo/bar/b\")
-  (pluc \"http://a/b\")
-
-and that both `plic' and `pluc' invoke external programs to visit
-the given file name or url - `plic' opens a file with a PDF
-viewer, and `pluc' makes a certain web browser open the given
-URL. And suppose that both `plic' and `pluc' are just Emacs
-\"functions\", not \"commands\" - remember that \"commands\" are
-the things that can be invoked with `M-x'.
-
 We saw in
 
   (find-psne-intro)
+  (find-psne-intro \"M-x brep\")
+  (find-psne-intro \"M-x brfl\")
+  (find-psne-intro \"`browse-url' and friends\")
 
-that by \"psne-ing\" the URL \"http://a/b\" we create a local
-copy of its contents in \"$S/http/a/b\". Emacs has a family of
-`browse-url' functions, briefly described in:
+that we can use `M-x brep' to download local copies of files from
+the internet, and that `M-x brfl' on a URL runs `find-fline' on
+the local copy of that URL. `brep' and `brfl' are
+\"`browse-url'-like functions\" defined by eev; we will refer to
+them, and to other such functions, as \"brxxx-functions\". Every
+brxxx-function is an interactive interface to some \"base
+function\"; for `brep' and `brfl' we have:
 
-  (find-enode \"Browse-URL\")
+    brxxx-function   base function
+    --------------   -------------
+         brep        find-psne-links
+         brfl        find-fline
 
-We will soon see in detail how we can create families of
-\"browse-url-like\" commands associated to each function like
-`plic' or `pluc'. Briefly, if we run
-
-  (code-brurl  'pluc :remote 'brpluc :local 'brplucl)
-  (code-brfile 'plic                 :local 'brplicl)
-
-we create commands `brpluc', `brplucl', and `brplicl', that can
-be invoked when the point is on a URL to visit either that URL or
-the local copy of its contents with `pluc' or `plic'; by
-convention, the `brxxx' commands that end with \"l\" operate on
-the local copy, and all of them start with \"br\" and have short
-\(and unfortunately often cryptic) names, as they're meant to be
-invokeable with few keystrokes.
-
+What we will see here is how `code-brfile' and `code-brurl' -
+which are somewhat similar to `code-c-d' - can be used to define
+brxxx-functions from base functions.
 
 
-A test
-======
-All commands created by calls to `code-brurl' and `code-brfile'
-display a message in the echo acrea that explain which function
-like `pluc' or `plic' they invoked, with what argument, and what
-result it returned. We can use that to understand them better.
-Run this,
 
-  (defun pluc (url)      url)
-  (defun plic (filename) filename)
-  (code-brurl  'pluc :remote 'brpluc :local 'brplucl)
-  (code-brfile 'plic                 :local 'brplicl)
 
-and now with the point on the URL below
+A first example
+===============
+Let's define two trivial base functions, one that expects a URL,
+and another one that expects a file name:
+
+  (defun foo-url  (url)      (format \"Got URL: %s\" url))
+  (defun foo-file (filename) (format \"Got filename: %s\" filename))
+
+These two calls
+
+  (code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
+  (code-brfile 'foo-file                  :local 'brshowfl)
+
+define three brxxx-functions - `brshowu' and `brshowul' for the
+base function `foo-url', and `brshowfl' for the base function
+`foo-file'.
+
+You can try the new brxxx-functions by typing `M-x brshowu', `M-x
+brshowul' and `M-x brshowfl' with the point on the URL below:
 
   http://a/b
 
-type `M-x brpluc', `M-x brplucl', and `M-x brplicl'. You should
-see messages like this in your echo area:
+On each case you will see on the echo area how the base function
+was called, and what it returned.
 
-  (pluc \"http://a/b\") -> \"http://a/b\"
-  (pluc \"file:///home/edrx/snarf/http/a/b\") -> \"file:///home/edrx/snarf/http/a/b\"
-  (plic \"/home/edrx/snarf/http/a/b\") -> \"/home/edrx/snarf/http/a/b\"
+  (brshowu  \"http://a/b\")
+    => `(foo-url \"http://a/b\") -> \"Got URL: http://a/b\"'
+
+  (brshowul \"http://a/b\")
+    => `(foo-url \"file:///home/edrx/snarf/http/a/b\") ->
+        \"Got URL: file:///home/edrx/snarf/http/a/b\"'
+
+  (brshowfl \"http://a/b\")
+    => `(foo-file \"/home/edrx/snarf/http/a/b\") ->
+        \"Got filename: /home/edrx/snarf/http/a/b\"'
+
+
+
+
+The conversions
+===============
+One underlying idea behind all this is that we have two
+conversion functions, one from URLs to file names, and another
+from (absolute) file names to URLs starting with \"file:///\".
+They work like this:
+
+  http://a/b  ->  $S/http/a/b  ->  file:///home/edrx/snarf/http/a/b
+                       /tmp/c  ->  file:///tmp/c
+
+try:
+
+  (ee-url-to-fname \"http://a/b\")
+  (ee-fname-to-url \"/tmp/c\")
+  (ee-url-to-local-url \"http://a/b\")
+
+Now execute the sexps below (with `M-2 M-e') to examine the code
+that calls to `code-brurl' and `code-brfile' generate and
+execute:
+
+  (find-code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
+  (find-code-brfile 'foo-file                  :local 'brshowfl)
+
+
+
+
+
+
+Naming conventions for brxxx-functions
+======================================
+By convention, each name for a brxxx-function is composed of a
+prefix, a stem, and a suffix. The prefix is always \"br\", the
+stem is a mnemonic for the base function, and the suffix is
+either \"\", \"l\", or \"d\", meaning:
+
+  \"\"   - use the URL without changes
+  \"l\"  - use the local copy
+  \"d\"  - dired variation (see below)
+
+Here are the stems for some of the brxxx-functions defined by
+eev:
+
+  Base function       receives   stem
+  -------------       --------   ----
+  find-psne-links     URL        \"ep\"
+  browse-url-firefox  URL        \"m\"
+  find-googlechrome   URL        \"g\"
+  find-w3m   	      URL        \"w\"
+  find-fline          file name  \"f\"
+  find-audio          file name  \"audio\"
+  find-video          file name  \"video\"
+  find-xpdf-page      file name  \"xpdf\"
+  find-evince-page    file name  \"evince\"
+  find-xdvi-page      file name  \"xdvi\"
+  find-djvu-page      file name  \"djvu\"
+  find-pdf-text       file name  \"pdftext\"
+  find-djvu-text      file name  \"djvutext\"
+
+In our example with `foo-url' and `foo-file' we had:
+
+  Base function       receives   stem
+  -------------       --------   ----
+  foo-url             URL        showu
+  foo-file            file name  showf
+
+
+
+
+Calling `code-brurl' and `code-brfile'
+======================================
+
+  (code-brurl '<U-function>
+                   :remote 'br<stem>   :local 'br<stem>l   :dired 'br<stem>d)
+                   \\---------------/   \\---------------/   \\----------------/
+                       optional              optional             optional
+
+  (code-brfile '<F-function>           :local 'br<stem>l   :dired 'br<stem>d)
+                                       \\---------------/   \\----------------/
+                                             optional             optional
+
+This, like many other parts of eev, is a hack with a very concise
+calling syntax - so we will see an example first, and then
+dissect it to understand precisely how it works. If you are
+curious about the inspirations behind it, here they are:
+
+  (find-code-c-d-intro)
+  (find-code-c-d-intro \"find-code-c-d\")
+  (find-code-c-d-intro \"Extra arguments\")
+  (find-enode \"Browse-URL\")
 
 
 
@@ -1901,7 +1988,6 @@ In dired mode each line corresponds to a file
 " rest)))
 
 ;; (find-brxxx-intro)
-;; (find-brxxx-intro "M-x brpluc")
 
 
 
@@ -3278,6 +3364,59 @@ More intros:  (find-eev-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
 
+
+
+Recent versions with Emacs come with two IRC clients built-in:
+Rcirc and ERC. I never understood ERC well enough, and I found
+Rcirc quite easy to understand and to hack, so eev has some
+support for Rcirc (and no support for ERC).
+
+
+
+If you are new to IRC
+=====================
+Most of the discussions between Free Software developers still
+happen in IRC channels, and mostly at Freenode. The best way to
+understand what IRC is - for modern people, I mean - is probably
+to try this first:
+
+  http://webchat.freenode.net/
+
+IRC is a command-line-ish protocol, in which lines starting with
+\"/\" are treated as commands and other lines are messages to be
+broadcast. Try to \"/join\" the channels \"#emacs\" and \"#eev\",
+with \"/join #emacs\" and \"/join #eev\"; 
+
+ in that
+webchat, try to switch between the channels you're connected to
+by clicking on the tabs at the top - and note that there is also
+a tab for a channel-ish thing that has only messages from the
+server. Try also to leave these channels with \"/part\", \"/part
+#emacs\", \"/part #eev\".
+
+In Rcirc each one of these channels, including the server
+channel, becomes an Emacs buffer. The names of these buffers will
+be:
+
+  *irc.freenode.net*
+  #emacs@irc.freenode.net
+  #eev@irc.freenode.net
+
+For more information see:
+
+  (find-node \"(rcirc)Top\")
+  (find-node \"(rcirc)Internet Relay Chat\")
+  (find-node \"(rcirc)rcirc commands\")
+  http://www.emacswiki.org/emacs/RcIrc
+  http://www.irchelp.org/
+
+  (find-node \"(erc)Top\")
+  http://www.emacswiki.org/emacs/ErC
+
+
+
+Eev and 
+
 Not yet!
 ========
 See: (find-eev \"eepitch.el\" \"eepitch-freenode\")
@@ -3902,32 +4041,41 @@ This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
 
 
+
 Introduction
 ============
 Before eepitch had been invented, eev had two other ways to send
-commands to external shell-like programs. The first way was
-technically very simple - something like `M-x eev' would be used
-to save commands into a temporary script file, and then the user
-would type something like `ee' on a shell, which would make it
-run the commands in the temporary file. This required a temporary
-file and a \"prepared shell\" which could interpret `ee'
-correctly. The details are here:
+commands to external shell-like programs. The first way,
+described here,
 
   (find-prepared-intro \"\\n`ee'\\n\")
 
+was technically very simple: running `M-x eev' would save a
+series of commands - usually the contents of the region - into a
+temporary script file, and then the user would type something
+like `ee' at the prompt of a (\"prepared\") shell; that would
+make it read the saved commands and execute them.
+
 Here we will describe the second of the Old Ways - one in which
 the target program, which is usually a shell running in an xterm,
-receives a signal saying \"execute the sent command NOW\" as soon
-as the command is saved into a temporary file by Emacs... the
-problem is that this require an Expect script in addition to
-temporary files, and, as some people have said, all this is \"a
-nightmare to set up\".
+is sent a signal saying \"execute the command NOW\" as soon as a
+command is saved into a temporary file by Emacs. The difficulty
+is that this requires not only a directory for temporary files,
+but also an Expect script, which acts as an intermediary that
+listens to signals and handles them pretending that the saved
+commands came from the keyboard... and, as some people have said,
+this is \"a nightmare to set up\".
+
+Here we explain the protocol - which can be adapted to other
+cases too, like, for example, to make Emacs talk to SmallTalk
+environments and to computer algebra systems with GUIs - and we
+will present several tests that should help with troubleshooting.
 
 
 
 The innards
 ===========
-We will start with a detailed low-level view of of what we have
+Let's start with a detailed low-level view of of what we have
 just summarized as to \"save a command into a temporary file,
 then send a signal to the external program etc etc\".
 

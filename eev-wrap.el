@@ -99,6 +99,13 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
 
 (defun ee-H (str) (format "%s%s" ee-hyperlink-prefix str))
 
+(defun ee-add-quote (obj)
+  "Return OBJ is OBJ is constant; else return 'OBJ."
+  (if (or (numberp obj) (stringp obj) (eq obj nil) (eq obj t) (keywordp obj))
+      obj
+    (list 'quote obj)))
+
+
 
 
 

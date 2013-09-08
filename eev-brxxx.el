@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013mar06
+;; Version:    2013sep07
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -127,6 +127,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 (defun   ee-code-brurl (f &rest rest)
 "Generate code for a family of functions from a function that operates on URLs"
   (concat (ee-template0 "\
+;; {(ee-S `(find-code-brurl ',f ,@(mapcar 'ee-add-quote rest)))}
 ")  (ee-code-brurl-rest rest)))
 
 ;; Support for extra arguments
@@ -194,6 +195,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 (defun   ee-code-brfile (f &rest rest)
 "Generate code for a family of functions from a function that operates on files"
   (concat (ee-template0 "\
+;; {(ee-S `(find-code-brfile ',f ,@(mapcar 'ee-add-quote rest)))}
 ")  (ee-code-brfile-rest rest)))
 
 ;; Support for extra arguments
