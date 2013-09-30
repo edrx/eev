@@ -186,20 +186,22 @@ This is an internal function used by `find-{stem}-links'.\"
 ;; A test: (find-intro-links)
 (define-key eev-mode-map "\M-hi" 'find-intro-links)
 
-(defun ee-intro-stem (bufname)
+(defun ee-intro-stem (&optional bufname)
+  (setq bufname (or bufname (buffer-name)))
   (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
       (match-string 1 bufname)))
 
 (defun find-intro-links (&optional stem &rest pos-spec-list)
 "Visit a temporary buffer with a skeleton for defining `find-<STEM>-intro'.
 See: (find-eev \"eev-intro.el\")"
-  (interactive (list (ee-intro-stem (buffer-name))))
+  (interactive (list (ee-intro-stem)))
   (setq stem (or stem "{stem}"))
   (apply 'find-elinks-elisp
    `((find-intro-links ,stem ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-intro-links)
     ,(ee-template0 "\
+;; (ee-copy-rest 1 '(find-eev \"eev-intro.el\"))
 ;; (find-{stem}-intro)
 
 ;; <find-{stem}-intro>
@@ -1060,6 +1062,7 @@ cd {dir}
 
 # {ee-youtubedl-command} -F    'http://www.youtube.com/watch?v={hash}'
 # {ee-youtubedl-command} -f 18 'http://www.youtube.com/watch?v={hash}'
+# {ee-youtubedl-command} -f 18  --write-thumbnail 'http://www.youtube.com/watch?v={hash}'
 
 # (find-es \"video\" \"youtube-dl\")
 # (find-fline \"{dir}\" \"{hash}\")
@@ -1076,6 +1079,41 @@ cd {dir}
 # (find-ebuffer \"*Messages*\")
 ")
     ) rest))
+
+
+;; Bonus (2013sep10): play a local copy of a video from its URL.
+;; I need to document this!
+;;
+(defun ee-youtubedl-guess** (dirs hash)
+  (apply 'append (mapcar (lambda (d) (ee-youtubedl-guess* d hash)) dirs)))
+
+(defun ee-youtubedl-dirs ()
+  (list ee-youtubedl-dir
+	ee-youtubedl-dir2
+	ee-youtubedl-dir3
+	ee-youtubedl-dir4))
+
+(defun ee-youtubedl-hash-to-fname (hash)
+  (and hash (car (ee-youtubedl-guess** (ee-youtubedl-dirs) hash))))
+
+(defun ee-youtubedl-url-to-hash (url)
+  (if (and url (string-match "[&?]v=\\([^&?#]+\\)" url))
+      (match-string 1 url)
+    url))
+
+(defun ee-youtubedl-url-to-fname (url)
+  (ee-youtubedl-hash-to-fname
+   (ee-youtubedl-url-to-hash url)))
+
+(autoload 'browse-url-url-at-point "browse-url")
+
+(defun bryl (url)
+  "Play a local copy of a video downloaded from youtube."
+  (interactive (list (browse-url-url-at-point)))
+  (let ((fname (and url (ee-youtubedl-url-to-fname url))))
+    (if fname (find-video fname))))
+
+
 
 
 

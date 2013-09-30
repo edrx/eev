@@ -137,6 +137,19 @@ CHANNEL."
 (defun ee-irc-channel-around-point ()
   (ee-stuff-around-point "#A-Za-z0-9_"))
 
+(defun ee-find-freenode-links (&optional channel)
+  (setq channel (or channel (replace-regexp-in-string
+			     "^\\(.*\\).irc\\.freenode\\.net" "\\1"
+			     (buffer-name))))
+  `((setq ee-freenode-ichannels ,ee-freenode-ichannels)
+    (setq ee-freenode-achannels ,ee-freenode-achannels)
+    ""
+    (find-freenode ,channel)
+    (find-freenode-3a ,channel)
+    (defun eejump-9 () (find-freenode ,channel))
+    (defun eejump-99 () (find-freenode-3a ,channel))
+    ))
+
 (defun find-freenode-links (&optional channel &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for foo."
   (interactive (list (ee-irc-channel-around-point)))
@@ -146,16 +159,7 @@ CHANNEL."
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-freenode-links)
      ""
-     (setq ee-freenode-ichannels ,ee-freenode-ichannels)
-     (setq ee-freenode-achannels ,ee-freenode-achannels)
-     ""
-     (find-freenode ,channel)
-     (find-freenode-3a ,channel)
-     (defun eejump-9 () (find-freenode ,channel))
-     (defun eejump-99 () (find-freenode-3a ,channel))
-     ""
-     ,(ee-template0 "\
-")
+     ,@(ee-find-freenode-links channel)
      )
    pos-spec-list))
 

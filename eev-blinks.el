@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug28
+;; Version:    2013sep12
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -289,6 +289,27 @@ then go to the position specified by POS-SPEC-LIST.\n
   (interactive (find-function-read))
   (apply 'find-wottb-call '(disassemble function) "*Disassemble*"
 	 pos-spec-list))
+
+;; New, 2013sep21
+;;
+(defun find-etp (&rest pos-spec-list)
+  "Hyperlink to the output of `describe-text-properties'.
+This is a high-level alternative to `find-etpat'."
+  (interactive)
+  (apply 'find-wottb-call '(describe-text-properties (point))
+	 "*Help*" pos-spec-list))
+
+(defun find-epackages (&optional no-fetch &rest pos-spec-list)
+  "Hyperlink to the output of `list-packages'."
+  (interactive "P")
+  (apply 'find-wottb-call '(list-packages no-fetch)
+	 "*Packages*" pos-spec-list))
+
+(defun find-epackage (&optional pkg-desc &rest pos-spec-list)
+  "Hyperlink to the output of `describe-package'."
+  (interactive "P")
+  (apply 'find-wottb-call '(describe-package pkg-desc)
+	 "*Help*" pos-spec-list))
 
 
 
@@ -758,7 +779,8 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 
 (defun find-eejumps (&rest pos-spec-list) (interactive)
   (apply 'find-estring-elisp
-	 (mapconcat 'ee-defun-str-for (eejump-symbols) "\n")
+	 (concat ";; (find-eejumps)\n\n"
+		 (mapconcat 'ee-defun-str-for (eejump-symbols) "\n"))
 	 pos-spec-list))
 
 

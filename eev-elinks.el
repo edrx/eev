@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug19
+;; Version:    2013sep30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -67,6 +67,8 @@
 ;; «.find-pdflike-page-links»	(to "find-pdflike-page-links")
 ;; «.ee-hyperlink-prefix»	(to "ee-hyperlink-prefix")
 ;; «.find-color-links»		(to "find-color-links")
+
+;; «.find-here-links»		(to "find-here-links")
 
 
 
@@ -357,9 +359,20 @@ This is an internal function used by `find-ekey-links' and
 (defun ee-info-shortp () (string= (ee-info-book-) (ee-info-file-)))
 (defun ee-info-shortf () (ee-intern "find-%snode" ee-info-code))
 (defun ee-info-fullnode () (format "(%s)%s" (ee-info-book-) (ee-info-node)))
-(defun ee-intro-stem (bufname)
+
+(defun ee-find-info-links ()
+  `((info      ,(ee-info-fullnode))
+    (find-node ,(ee-info-fullnode))
+    ,(if (ee-info-shortp)
+	 (list (ee-info-shortf) (ee-info-node)))))
+
+(defun ee-intro-stem (&optional bufname)
+  (setq bufname (or bufname (buffer-name (current-buffer))))
   (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
       (match-string 1 bufname)))
+
+(defun ee-find-intro-links (&optional stem)
+  `((,(ee-intern "find-%s-intro" (or stem (ee-intro-stem))))))
 
 ;; A test: (ee-intro-stem "*(find-foo-intro)*")
 
@@ -385,14 +398,12 @@ buffer, also generate a link to that buffer."
     ;; Body:
     ""
     ,@(if (ee-infop)
-	  `((info      ,(ee-info-fullnode))
-	    (find-node ,(ee-info-fullnode))
-	    ,(if (ee-info-shortp) (list (ee-info-shortf) (ee-info-node)))
-	    )
+	  (ee-find-info-links)
 	'("[No \"*info*\" buffer]"))
     ""
-    ,(if intro
-	 (list (ee-intern "find-%s-intro" intro))
+    ,@(if intro
+	 ;; (list (ee-intern "find-%s-intro" intro))
+	 (ee-find-intro-links)
        ;; else: "[Not invoked from a \"*find-xxx-intro*\" buffer]"
        )
     ) rest))
@@ -474,21 +485,26 @@ evaluate f in the context of a big `let', and return the result."
 	       (fname+ (concat newd fname-)))
 	  (eval code)))))
 
-(defun ee-find-file-extra-links (fname) ())
+(defun ee-find-file-links (&optional fname)
+  (setq fname (or fname (or (buffer-file-name) default-directory)))
+  `(,(ee-if-prefixp "~/" "~/" fname '`(find-fline ,fname+))
+    ,(ee-if-prefixp "$S/http/"   "http://" fname '(ee-H fname+))
+    ,(ee-if-prefixp "$S/shttp/" "shttp://" fname '(ee-H fname+))
+    ""
+    (find-file ,fname)		; non-refinable
+    (find-fline ,fname)		; refinable
+    ,@(ee-find-xxxfile-sexps (ee-expand fname))
+    ;;
+    ,@(ee-find-file-extra-links fname) ; customizable by the user
+    ))
+
+(defun ee-find-file-extra-links (fname) ()) ; customize this
 
 (defun find-file-links (fname &rest pos-spec-list)
   (interactive (list (or (buffer-file-name) default-directory)))
   (apply 'find-elinks
 	 `((find-file-links ,fname ,@pos-spec-list)
-	   ,(ee-if-prefixp "~/" "~/" fname '`(find-fline ,fname+))
-	   ,(ee-if-prefixp "$S/http/"   "http://" fname '(ee-H fname+))
-	   ,(ee-if-prefixp "$S/shttp/" "shttp://" fname '(ee-H fname+))
-	   ""
-	   (find-file ,fname)		; non-refinable
-	   (find-fline ,fname)		; refinable
-	   ,@(ee-find-xxxfile-sexps (ee-expand fname))
-	   ;;
-	   ,@(ee-find-file-extra-links fname) ; customizable by the user
+	   ,@(ee-find-file-links fname)
 	   )
 	 pos-spec-list))
 
@@ -525,13 +541,18 @@ evaluate f in the context of a big `let', and return the result."
   "An internal function used by `find-grep-links'."
   (cons "grep -nH -e _ *" (ee-first-n-elements 4 grep-history)))
 
-(defun ee-find-grep-links (find-xxxgreps grep-commands)
+(defun ee-find-grep-links0 (find-xxxgreps grep-commands)
   "An internal function used by `find-grep-links'."
   (let (result)
     (dolist (head find-xxxgreps)
       (dolist (command grep-commands)
 	(setq result (cons `(,head ,command) result))))
     (nreverse result)))
+
+(defun ee-find-grep-links ()
+  (ee-find-grep-links0
+   (ee-find-grep-functions default-directory)
+   (ee-find-grep-commands)))
 
 (defun find-grep-links (&rest pos-spec-list)
 "Visit a temporary buffer containing `find-xxxgrep' sexps."
@@ -541,9 +562,7 @@ evaluate f in the context of a big `let', and return the result."
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-grep-links)
      ""
-     ,@(ee-find-grep-links
-	(ee-find-grep-functions default-directory)
-	(ee-find-grep-commands))
+     ,@(ee-find-grep-links)
      )
    pos-spec-list))
 
@@ -734,7 +753,80 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 
 
+;;;   __ _           _       _                         _ _       _        
+;;;  / _(_)_ __   __| |     | |__   ___ _ __ ___      | (_)_ __ | | _____ 
+;;; | |_| | '_ \ / _` |_____| '_ \ / _ \ '__/ _ \_____| | | '_ \| |/ / __|
+;;; |  _| | | | | (_| |_____| | | |  __/ | |  __/_____| | | | | |   <\__ \
+;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
+;;;                                                                       
+;; «find-here-links» (to ".find-here-links")
 
+;; (find-efunction 'find-grep-links)
+;; (find-efunction 'find-einfo-links)
+;; (find-efunction 'find-file-links)
+;; (find-find-links-links "\\M-h" "here" "")
+;; (find-efunction 'find-ecolors)
+
+(define-key eev-mode-map "\M-h\M-h" 'find-here-links)
+
+(defun ee-buffer-re   (re)  (string-match re (buffer-name)))
+(defun ee-buffer-eq   (str) (string= str (buffer-name)))
+
+(defun ee-grep-bufferp     () (eq major-mode 'grep-mode))
+(defun ee-man-bufferp      () (eq major-mode 'Man-mode))
+(defun ee-rcirc-bufferp    () (eq major-mode 'rcirc-mode))
+(defun ee-info-bufferp     () (eq major-mode 'Info-mode))
+(defun ee-dired-bufferp    () (eq major-mode 'dired-mode))
+(defun ee-wdired-bufferp   () (eq major-mode 'wdired-mode))
+(defun ee-file-bufferp     () buffer-file-name)
+(defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))
+(defun ee-freenode-bufferp () (ee-buffer-re "^\\(.*\\).freenode\\.net"))
+
+(defun ee-ecolors-bufferp  () (ee-buffer-eq "*Colors*"))
+(defun ee-efaces-bufferp   () (ee-buffer-eq "*Faces*"))
+
+(defun ee-find-man-links (&optional mp) 
+  (setq mp (or mp (replace-regexp-in-string
+		   "^\\*Man \\(.*\\)\\*$" "\\1" (buffer-name))))
+  `((find-man ,mp)))
+
+(defun ee-find-here-links ()
+  (cond ((ee-info-bufferp)     (cons "" (ee-find-info-links)))
+	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))
+	((ee-man-bufferp)      (cons "" (ee-find-man-links)))
+	((ee-grep-bufferp)     (cons "" (ee-find-grep-links)))
+	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links)))
+	((ee-dired-bufferp)    (cons "" (ee-find-file-links)))
+	((ee-wdired-bufferp)   (cons "" (ee-find-file-links)))
+	((ee-file-bufferp)     (cons "" (ee-find-file-links)))
+	(t (list "hello" "you"))))
+
+(defun find-here-links-test (sexp)
+"See: (find-links-intro \"`find-here-links'\")"
+  (find-wset "13o_2o_o" sexp '(find-here-links)))
+
+;; (find-man "1 cat")
+;; (progn (find-man "1 cat") (buffer-name))
+;; (find-eevfile "eev-rcirc.el")
+
+;; (find-find-links-links "\\M-h" "here" "")
+;;
+(defun find-here-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks pointing to here."
+  (interactive)
+  (apply 'find-elinks
+   `(;; (find-here-links  ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     ;; (find-efunction 'find-here-links)
+     ,(ee-H "See: ")
+     (find-links-intro "`find-here-links'")
+     ;; ""
+     ,@(ee-find-here-links)
+     )
+   pos-spec-list))
+
+;; Test: (find-here-links)
+;; (progn (find-enode "Screen") (find-here-links))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013sep08
+;; Version:    2013sep30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -62,6 +62,7 @@
 
 ;; «.find-defun-intro»		(to "find-defun-intro")
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
+;; «.find-org-intro»		(to "find-org-intro")
 
 ;; See: (find-anchors-intro)
 
@@ -1223,6 +1224,78 @@ be expanded later:
 
 
 
+`find-here-links'
+=================
+The most important M-h command is `M-h M-h' (`find-here-links'),
+which analyzes the major mode and the buffer name of the current
+buffer and runs the most adequade of several `find-*-links'
+commands. For example, if you type `M-h M-h' now you should get
+a buffer like this:
+   __________________________________________________________
+  |# See:                                                    |
+  |# (find-links-intro \"`find-here-links'\")                  |
+  |                                                          |
+  |# (find-links-intro)                                      |
+  |                                                          |
+  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental eev) |
+  |__________________________________________________________|
+
+where `(find-links-intro)' is a hyperlink to this intro.
+
+  [NOTE: `find-here-links' is a new feature, and its buffers do
+  not yet follow all the conventions of elisp hyperlinks
+  buffers... some minor details will probably change soon to
+  reduce the risk of confusion]
+
+Normally we use `M-h M-h' like this. We are putting our
+\(executable, but messy) notes into something that we will refer
+to as an \"e-script buffer\"; we find a piece of interesting
+information at another buffer, and we want to put a link to that
+into our e-script buffer. The link that we will produce is a
+sexp, which goes to a \"target\" when executed. This is a bit
+confusing, to let's demonstrate it sort of backwards...
+
+The debugging function `find-here-links-test' receives a sexp and
+creates a window setting like this:
+   ___________________________________
+  |          |                        |
+  |          |     target of SEXP     |
+  |          |________________________|
+  |   here   |                        |
+  |          |   result of running    |
+  |          |  `find-here-links' on  |
+  |          |   the target of SEXP   |
+  |__________|________________________|
+
+Try it by running the `find-here-links-test' sexps below. Note
+that they will keep the cursor at the \"here\" window - i.e.,
+here at (find-links-intro) - so you can just move up and down
+between the tests and execute the other tests with `M-e'.
+
+  (find-here-links-test '(find-eval-intro))
+  (find-here-links-test '(find-node \"(dir)Top\"))
+  (find-here-links-test '(find-eevfile \"eepitch.el\"))
+  (find-here-links-test '(find-efunction 'find-here-links))
+  (find-here-links-test '(find-man \"1 cat\"))
+  (find-here-links-test '(find-fline \"~/\"))
+
+Now let's see the typical, real-life usage case. We don't start
+with the sexp that points to a target - we stumble at something
+interesting, and then we want to _produce_ a sexp that points to
+that, and then save it to our notes. When we are at \"interesting
+place\" we type `M-h M-h'; we get a find-here-links buffer, and
+we choose the sexp that looks more adequate between the ones that
+point to \"interesting place\". We edit that sexp - refining it
+if needed - and copy it to our e-script. If we want to go back to
+\"interesting place\" we can do that either with the right
+sequence of `M-K's or by executing the sexp.
+
+  [Note that `M-1 M-j' jumps to ~/TODO... EXPLAIN THIS]
+
+
+
+
+
 
 Basic and non-basic hyperlinks
 ==============================
@@ -1302,13 +1375,13 @@ this:
 
    ___________________________________________________________
   |# (ee-hyperlink-prefix)                                    |
-  |# (setq ee-hyperlink-prefix \"# \")                        |
+  |# (setq ee-hyperlink-prefix \"# \")                          |
   |                                                           |
-  |# (setq ee-hyperlink-prefix \"# \")                        |
-  |# (setq ee-hyperlink-prefix \";; \")                       |
-  |# (setq ee-hyperlink-prefix \"-- \")                       |
-  |# (setq ee-hyperlink-prefix \"// \")                       |
-  |# (setq ee-hyperlink-prefix \"% \")                        |
+  |# (setq ee-hyperlink-prefix \"# \")                          |
+  |# (setq ee-hyperlink-prefix \";; \")                         |
+  |# (setq ee-hyperlink-prefix \"-- \")                         |
+  |# (setq ee-hyperlink-prefix \"// \")                         |
+  |# (setq ee-hyperlink-prefix \"% \")                          |
   |                                                           |
   |                                                           |
   |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)--|
@@ -4590,6 +4663,51 @@ Eev video: table of contents
 \(eev-avadj-mode 1)
 \(find-eevvideo t)
 
+ 0:00 introduction
+ 2:45 unpack the tarball and invoke Emacs
+ 5:07 and make the cursor stop blinking
+
+ 5:11 Emacs as a Lisp environment
+11:48 Open the file \"VERSION\" (TAB completes)
+12:15 (eek \"C-x C-f VERSION\") is not very readable
+12:35 (find-file \".../VERSION\") is more readable
+12:43 to follow it we type M-e, and M-k to go back
+14:00 parts for humans and more or less for humans; passive sexps
+14:34 variations of M-e that split the screen
+15:09 left side is \"before\", right side is \"after\"
+
+16:00 help on a key sequence
+16:28 C-h k gives us help on a key sequence
+17:46 (eek \"C-h k  C-x C-f\") is an unreadble way to get help on a key
+17:55 (describe-function 'find-file) is even messier
+18:28 (find-efunctiondescr 'find-file) is cleaner - and why
+
+20:14 introduction the eev documentation in \"intro\"s
+22:30 (eek \"M-h M-k  C-x C-f\") generates a list of hyperlinks
+24:15 the first line regenerates the buffer
+24:40 the intros are temporary buffers
+25:07 we can play without destroying the documentation of eev
+25:40 we can copy the hyperlinks to intros to other places
+
+25:53 introduction to eejump
+26:44 a plain M-j goes to the index of eejumps
+28:00 M-5 M-j goes to the top level of the documentation in intros
+28:22 M-2 M-j goes to (find-emacs-intro)
+28:36 ...which has lots of links to the emacs manuals
+
+28:54 (find-eev-update-links)
+29:47 I could have done that with just instructions in English
+30:01 ...but it was more interesting to do that in an executable way.
+30:21 remember that the first line regenerates the buffer...
+31:07 we use that to select a directory for installation.
+31:40 an eepitch block
+31:53 emacs is made to handle anyting that looks like text...
+32:38 running terminals inside Emacs
+32:52 the best of both worlds
+33:50 f8
+35:48 [oops - I forgot to unpack]
+
+
 
 
 In Portuguese
@@ -5062,6 +5180,74 @@ C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
 
 ;; (find-emacs-intro)
 ;; (find-TH "emacs" "short-emacs-tutorial")
+
+
+
+
+
+
+;; «find-org-intro» (to ".find-org-intro")
+;; (find-intro-links "org")
+
+(defun find-org-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-org-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-org-intro)
+Source code:  (find-efunction 'find-org-intro)
+More intros:  (find-eev-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+Google Tech talk by Carsten Dominik (2008)
+==========================================
+http://orgmode.org/talks.html
+http://orgmode.org/worg/org-tutorials/org-screencasts/org-mode-google-tech-talk.html
+http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-taking and project planning
+\(find-youtubedl-links \"/sda5/videos/\" \"Emacs_Org-mode_-_a_system_for_note-taking_and_project_planning\" \"oJTwQvgfgMM\" \".flv\" \"carsten2008\")
+                     (ee-youtubedl-hash-to-fname \"oJTwQvgfgMM\")
+\(setq ee-carsten2008 (ee-youtubedl-hash-to-fname \"oJTwQvgfgMM\"))
+\(code-mplayer \"carsten2008\" ee-carsten2008)
+\(find-carsten2008 \"0:00\")
+
+\(eev-avadj-mode 1)
+\(find-carsten2008 t)
+
+1:20 Carsten Start
+1:50 History
+2:15 Working with Text Files
+3:58 Notes (not tasks) based project planning
+5:50 Outline mode - fixing
+9:56 Structure Editing
+11:00 Note taking other supports
+13:35 Meta data Intro
+14:57 tags
+15:26 Timeplanning
+15:53 Properties
+16:02 Meta data propagation
+16:49 Special Meta entry interfaces
+17:55 DateTime interface
+18:24 Column view
+19:20 Capture with remember
+23:02 Collect and Display
+23:52 Sparse tree
+25:47 Agenda view
+27:27 Exporting and publishing
+29:05 Tables
+31:34 Calc
+32:44 Radio tables
+34:53 Context sensitive keys
+38:13 How is org used
+40:55 Evolved Software software
+
+" pos-spec-list)))
+
+;; (find-org-intro)
+
+
 
 
 
