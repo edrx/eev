@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013sep30
+;; Version:    2013nov07
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -760,6 +760,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                       
 ;; «find-here-links» (to ".find-here-links")
+;; TO DO: DOCUMENT THIS!
 
 ;; (find-efunction 'find-grep-links)
 ;; (find-efunction 'find-einfo-links)
@@ -791,14 +792,14 @@ This needs a temporary directory; see: (find-prepared-intro)"
   `((find-man ,mp)))
 
 (defun ee-find-here-links ()
-  (cond ((ee-info-bufferp)     (cons "" (ee-find-info-links)))
-	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))
-	((ee-man-bufferp)      (cons "" (ee-find-man-links)))
-	((ee-grep-bufferp)     (cons "" (ee-find-grep-links)))
-	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links)))
-	((ee-dired-bufferp)    (cons "" (ee-find-file-links)))
-	((ee-wdired-bufferp)   (cons "" (ee-find-file-links)))
-	((ee-file-bufferp)     (cons "" (ee-find-file-links)))
+  (cond ((ee-info-bufferp)     (cons "" (ee-find-info-links)))     ; M-h M-i
+	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))	   ; M-h M-i
+	((ee-man-bufferp)      (cons "" (ee-find-man-links)))      ; ?
+	((ee-grep-bufferp)     (cons "" (ee-find-grep-links)))	   ; M-h M-g
+	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links))) ; ?
+	((ee-dired-bufferp)    (cons "" (ee-find-file-links)))	   ; M-h f
+	((ee-wdired-bufferp)   (cons "" (ee-find-file-links)))	   ; M-h f
+	((ee-file-bufferp)     (cons "" (ee-find-file-links)))	   ; M-h f
 	(t (list "hello" "you"))))
 
 (defun find-here-links-test (sexp)
@@ -820,6 +821,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
      ;; (find-efunction 'find-here-links)
      ,(ee-H "See: ")
      (find-links-intro "`find-here-links'")
+     (find-efunctiondescr 'eev-mode "M-h M-h")
      ;; ""
      ,@(ee-find-here-links)
      )

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug17
+;; Version:    2013oct18
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -193,11 +193,12 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
   (interactive "sFile name: ")
   (find-bgprocess (ee-find-mplayer fname pos)))
 (defvar     ee-mplayer-options '("-fs" "-osdlevel" "2" "-zoom"))
+(defun ee-mplayer-video-options () ee-mplayer-options)
 (defun ee-find-mplayer (fname &optional pos &rest rest)
   `("mplayer"
     ,fname
     ,@(if pos `("-ss" ,(ee-secs-to-mm:ss pos)))
-    ,@ee-mplayer-options
+    ,@(ee-mplayer-video-options)
     ))
 
 (defun      code-mplayer (c fname)
@@ -237,12 +238,13 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;
 (defvar     ee-termplayer-term-options '("xterm" "-geometry" "+200+100" "-e"))
 (defvar     ee-termplayer-options ())
+(defun ee-mplayer-audio-options () ee-termplayer-options)
 (defun ee-find-termplayer (fname &optional pos &rest rest)
   `(,@ee-termplayer-term-options
     "mplayer"
     ,fname
     ,@(if pos `("-ss" ,(ee-secs-to-mm:ss pos)))
-    ,@ee-termplayer-options
+    ,@(ee-mplayer-audio-options)
     ))
 (defun    find-termplayer (fname &optional pos &rest rest)
   "Open FNAME with mplayer, without a GUI (in a terminal - for audio files)."
@@ -260,7 +262,9 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
     (defun find-{c} (&optional time &rest rest)
       (interactive (list (ee-time-around-point)))
       (setq ee-audiovideo-last 'find-{c})
-      (find-termplayer {(ee-S fname)} time))
+      (if (eq time t)
+        \"Just setting the default audio\"
+        (find-termplayer {(ee-S fname)} time)))
   "))
 
 (defalias      'find-audio      'find-termplayer)

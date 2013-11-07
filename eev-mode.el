@@ -166,16 +166,18 @@ Commands to convert the current line into hyperlinks:
   \\[eewrap-audiovideo]  -- generate audio/video hyperlinks
     See: (find-wrap-intro)
 Commands to generate pages with lists of hyperlinks:
-  \\[find-file-links]   -- hyperlinks to the current file
-  \\[find-grep-links] -- hyperlinks to `find-xxxgrep' sexps
+  \\[find-here-links]  -- \"hyperlinks to here\", which supersedes all these:
+    \\[find-file-links]   -- hyperlinks to the current file
+    \\[find-einfo-links] -- hyperlinks to the current Info node (or intro)
+    \\[find-grep-links] -- hyperlinks to `find-xxxgrep' sexps
+    \\[find-manpage-links] -- hyperlinks to a manpage (ask for name)
+    \\[find-last-manpage-links]   -- hyperlinks to a manpage (being viewed)
+    See: (find-links-intro \"`find-here-links'\")
   \\[find-efunction-links] -- hyperlinks to an Emacs function
-  \\[find-einfo-links] -- hyperlinks to the current Info node (or intro)
   \\[find-ekey-links] -- hyperlinks to a key sequence and to the function
              associated to it
   \\[find-evariable-links] -- hyperlinks to an Emacs variable
   \\[find-eface-links] -- hyperlinks to a face (default: face at point)
-  \\[find-manpage-links] -- hyperlinks to a manpage (ask for name)
-  \\[find-last-manpage-links]   -- hyperlinks to a manpage (being viewed)
   \\[find-debpkg-links] -- hyperlinks about a Debian package
   \\[find-ecolor-links]   -- hyperlinks to a color
 Commands to edit hyperlinks:
@@ -183,6 +185,7 @@ Commands to edit hyperlinks:
   \\[ee-yank-pos-spec] -- yank into pos-spec-list
   \\[ee-shrink-hyperlink-at-eol] -- shrink `find-xxxfile' to `find-xxx'
   \\[eewrap-vldi-list-line]     -- transform filename into hyperlink
+  See: (find-eval-intro \"Producing and refining hyperlinks\")
 Other commands:
   \\[find-eev-mode-links] -- show this help about eev-mode, or some links
   \\[describe-char] -- lots of info about the character at point

@@ -117,6 +117,15 @@ CHANNEL."
 
 
 
+
+;; (find-find-links-links "{k}" "freenode" "channel")
+;;
+(defun ee-irc-channel-around-point ()
+  (ee-stuff-around-point "#A-Za-z0-9_"))
+
+
+
+
 ;; High-level
 ;;
 (defvar ee-freenode-server "irc.freenode.net")
@@ -131,11 +140,6 @@ CHANNEL."
 
 (defun find-freenode-3a (channel)
   (find-3a nil '(find-freenode) '(find-freenode channel)))
-
-;; (find-find-links-links "{k}" "freenode" "channel")
-;;
-(defun ee-irc-channel-around-point ()
-  (ee-stuff-around-point "#A-Za-z0-9_"))
 
 (defun ee-find-freenode-links (&optional channel)
   (setq channel (or channel (replace-regexp-in-string

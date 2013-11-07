@@ -2789,6 +2789,27 @@ each call to a short hyperlink of the form `find-xxxaudio' or
 
 
 
+Passing options to mplayer
+==========================
+By default mplayer is called with just a few command-line options,
+besides the ones that tell it at what position to start playing -
+typically just these for videos,
+
+  -fs -osdlevel 2
+
+to make it run in full-screen mode with an on-screen display
+showing the current position, and no options for audio.
+
+If you want to change this you should redefine these functions:
+
+  (ee-mplayer-video-options)
+  (ee-mplayer-audio-options)
+
+
+  
+
+
+
 `eev-avadj-mode'
 ================
 \"avadj-mode\" is a shorthand for \"audio/video adjust mode\".

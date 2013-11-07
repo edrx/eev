@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug29
+;; Version:    2013oct13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1062,7 +1062,7 @@ cd {dir}
 
 # {ee-youtubedl-command} -F    'http://www.youtube.com/watch?v={hash}'
 # {ee-youtubedl-command} -f 18 'http://www.youtube.com/watch?v={hash}'
-# {ee-youtubedl-command} -f 18  --write-thumbnail 'http://www.youtube.com/watch?v={hash}'
+# {ee-youtubedl-command} -f 18 --restrict-filenames --write-thumbnail 'http://www.youtube.com/watch?v={hash}'
 
 # (find-es \"video\" \"youtube-dl\")
 # (find-fline \"{dir}\" \"{hash}\")
@@ -1325,6 +1325,7 @@ echo     '{url}' >> ~/.psne.log
        ""
        (setq ee-git-dir ,ee-git-dir)
        (setq ee-git-dir "~/usrc/")
+       (setq ee-git-dir "~/bigsrc/")
        (setq ee-git-dir "/tmp/")
        ""
        (find-fline ,ee-git-dir)
@@ -1338,6 +1339,7 @@ echo     '{url}' >> ~/.psne.log
 cd      {ee-git-dir}
 git clone --depth 1 {url}
 cd      {dir}
+git pull --depth 1
 # git pull
 # (find-fline \"{ee-git-dir}\")
 # (find-fline \"{dir}\")
