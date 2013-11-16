@@ -384,7 +384,21 @@ cd     {dir}"))
 \(code-audio \"{stem}\" \"{fname}\")
 \(code-video \"{stem}\" \"{fname}\")
 ;; \(find-{stem})
+"))
+
+;; 2013nov15:
+(defun ee-wrap-audiovideo (stem fname)
+  "An internal function used by `eewrap-audiovideo'."
+  (ee-template0 "\
+;; (find-fline {(ee-S (file-name-directory fname))})
+;; (find-audio \"{fname}\")})
+;; (find-video \"{fname}\")})
+\(code-audio \"{stem}\" \"{fname}\")
+\(code-video \"{stem}\" \"{fname}\")
+;; \(find-{stem})
 ;; \(find-{stem} \"0:00\")
+;; \(find-{stem} t)
+;; \(eev-avadj-mode 1)
 "))
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov07
+;; Version:    2013nov16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -66,6 +66,7 @@
 ;; «.find-ekbmacro-links»	(to "find-ekbmacro-links")
 ;; «.find-pdflike-page-links»	(to "find-pdflike-page-links")
 ;; «.ee-hyperlink-prefix»	(to "ee-hyperlink-prefix")
+;; «.find-eface-links»		(to "find-eface-links")
 ;; «.find-color-links»		(to "find-color-links")
 
 ;; «.find-here-links»		(to "find-here-links")
@@ -626,9 +627,42 @@ evaluate f in the context of a big `let', and return the result."
   (if (stringp (car kill-ring))
     (ee-no-properties (car kill-ring))))
 
+(defun ee-region ()
+  (if (region-active-p)
+      (buffer-substring-no-properties (point) (mark))))
+
+(defun ee-region-or-last-kill ()
+  (or (ee-region) (ee-last-kill)))
+
 ;; (find-find-links-links "\\M-p" "pdflike-page" "page bufname offset")
 
 (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
+
+(defun ee-pdflike-page-links (&optional page bufname offset)
+  (setq page    (or page (ee-current-page)))
+  (setq bufname (or bufname (buffer-name)))
+  (setq offset  (or offset ee-page-offset))
+  (let* ((c          ee-page-c)
+	 (fname      ee-page-fname)
+	 (find-cpage (ee-intern "find-%spage" c))
+	 (find-ctext (ee-intern "find-%stext" c))
+	 (kill       (or (ee-region-or-last-kill) ""))
+	 (page-      (- page offset))
+	 )
+    `((,find-cpage ,page)
+      (,find-ctext ,page)
+      (,find-cpage (+ ,offset ,page-))
+      (,find-ctext (+ ,offset ,page-))
+      ""
+      (,find-cpage ,page ,kill)
+      (,find-ctext ,page ,kill)
+      (,find-cpage (+ ,offset ,page-) ,kill)
+      (,find-ctext (+ ,offset ,page-) ,kill)
+      ""
+      (code-pdf ,c ,fname)
+      (code-pdf-text ,c ,fname ,offset)
+      ,(ee-HS bufname)
+      )))
 
 (defun find-pdflike-page-links (&optional page bufname offset &rest rest)
 "Visit a temporary buffer containing hyperlinks to a pdf-like document.
@@ -645,7 +679,8 @@ See: (find-pdf-like-intro)
 	 (kill       (or (ee-last-kill) ""))
 	 (page-      (- page offset))
 	 )
-    (apply 'find-elinks `(
+    ;;
+    '(apply 'find-elinks `(
       (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
       (find-efunction 'find-pdflike-page-links)
       ""
@@ -662,7 +697,15 @@ See: (find-pdf-like-intro)
       (code-pdf ,c ,fname)
       (code-pdf-text ,c ,fname ,offset)
       ,(ee-HS bufname)
-    ) rest)))
+    ) rest)
+    ;;
+    (apply 'find-elinks `(
+      (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
+      (find-efunction 'find-pdflike-page-links)
+      ""
+      ,@(ee-pdflike-page-links page bufname offset)
+      ) rest)
+    ))
 
 ;; (find-pdflike-page-links)
 ;; (find-angg ".emacs.papers" "kopkadaly")
@@ -702,6 +745,49 @@ See the comments in the source code."
      (setq ee-hyperlink-prefix "// ")
      (setq ee-hyperlink-prefix "% ")
      )))
+
+
+
+
+;;;   __ _           _             __                      _ _       _        
+;;;  / _(_)_ __   __| |       ___ / _| __ _  ___ ___      | (_)_ __ | | _____ 
+;;; | |_| | '_ \ / _` |_____ / _ \ |_ / _` |/ __/ _ \_____| | | '_ \| |/ / __|
+;;; |  _| | | | | (_| |_____|  __/  _| (_| | (_|  __/_____| | | | | |   <\__ \
+;;; |_| |_|_| |_|\__,_|      \___|_|  \__,_|\___\___|     |_|_|_| |_|_|\_\___/
+;;;                                                                           
+;; See: (find-links-intro)
+;;      (find-templates-intro)
+
+;; «find-eface-links» (to ".find-eface-links")
+;; (find-find-links-links "\\M-s" "eface" "face-symbol")
+;; A test: (find-eface-links 'bold)
+(define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
+
+(defun find-eface-links (face-symbol &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about FACE-SYMBOL."
+  (interactive (list (or (face-at-point) 'default)))
+  ;; (setq face-symbol (or face-symbol "{face-symbol}"))
+  ;; (setq face-symbol (or face-symbol (face-at-point)))
+  (apply 'find-elinks
+   `((find-eface-links ',face-symbol ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eface-links)
+     ""
+     (find-efacedescr ',face-symbol)
+     (find-eface ',face-symbol)
+     (customize-face ',face-symbol)
+     (set-face-foreground ',face-symbol ,(face-foreground face-symbol))
+     (set-face-background ',face-symbol ,(face-background face-symbol))
+     (face-id ',face-symbol)
+     (find-epp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))
+     (find-ecolors)
+     (find-efaces)
+     )
+   pos-spec-list))
+
+;; Test: (find-eface-links 'eepitch-star-face)
+;; (find-eevfile "eev.el" "\\M-h\\M-s")
+
 
 
 
@@ -770,37 +856,103 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
 
-(defun ee-buffer-re   (re)  (string-match re (buffer-name)))
-(defun ee-buffer-eq   (str) (string= str (buffer-name)))
+;; Tools
+;; (defun ee-buffer-re (re)  (string-match re (buffer-name)))
+(defun ee-buffer-re (re)
+  (if (string-match re (buffer-name))
+      (match-string 1 (buffer-name))))
+(defun ee-buffer-eq (str) (string= str (buffer-name)))
 
+(defun ee-buffer-help0    () (ee-buffer-eq "*Help*"))
+(defun ee-buffer-help-re0 (re n)
+  (if (ee-buffer-help0)
+      (save-excursion
+	(goto-char (point-min))
+	(if (looking-at re) (match-string n)))))
+
+(defun ee-buffer-help (re n) (intern (or (ee-buffer-help-re0 re n) "nil")))
+
+;; By major mode
 (defun ee-grep-bufferp     () (eq major-mode 'grep-mode))
 (defun ee-man-bufferp      () (eq major-mode 'Man-mode))
 (defun ee-rcirc-bufferp    () (eq major-mode 'rcirc-mode))
 (defun ee-info-bufferp     () (eq major-mode 'Info-mode))
 (defun ee-dired-bufferp    () (eq major-mode 'dired-mode))
 (defun ee-wdired-bufferp   () (eq major-mode 'wdired-mode))
-(defun ee-file-bufferp     () buffer-file-name)
+(defun ee-w3m-bufferp      () (eq major-mode 'w3m-mode))
+
+;; By buffer name
 (defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))
 (defun ee-freenode-bufferp () (ee-buffer-re "^\\(.*\\).freenode\\.net"))
-
 (defun ee-ecolors-bufferp  () (ee-buffer-eq "*Colors*"))
 (defun ee-efaces-bufferp   () (ee-buffer-eq "*Faces*"))
+(defun ee-pdftext-bufferp  () (ee-buffer-re "^pdftotext"))
 
-(defun ee-find-man-links (&optional mp) 
-  (setq mp (or mp (replace-regexp-in-string
-		   "^\\*Man \\(.*\\)\\*$" "\\1" (buffer-name))))
-  `((find-man ,mp)))
+;; By buffer name (when it is "*Help*")
+(defvar ee-efunctiondescr-re "^\\([^ \t\n]+\\) is a[^\t\n]*function")
+(defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
+(defun  ee-find-efunctiondescr-links ()
+  (let ((f (ee-efunctiondescr-bufferp)))
+    `((find-efunction-links ',f)
+      (find-efunctiondescr ',f))))
+
+(defvar ee-evardescr-re "^\\([^ \t\n]+\\) is a variable")
+(defun  ee-evardescr-bufferp () (ee-buffer-help ee-evardescr-re 1))
+(defun  ee-find-evardescr-links ()
+  (let ((v (ee-evardescr-bufferp)))
+    `((find-evariable-links ',v)
+      (find-evardescr ',v))))
+
+(defvar ee-efacedescr-re "^Face: \\([^ \t\n]+\\)")
+(defun  ee-efacedescr-bufferp () (ee-buffer-help ee-efacedescr-re 1))
+(defun  ee-find-efacedescr-links ()
+  (let ((f (ee-efacedescr-bufferp)))
+    `((find-eface-links ',f)
+      (find-efacedescr ',f))))
+
+;; By buffer name (when the mode is man)
+(defvar ee-man-re "^\\*Man \\(.*\\)\\*$")
+(defun  ee-find-man-links () 
+  (let ((mp (ee-buffer-re ee-man-re)))
+    `((find-man ,mp))))
+
+;; Other cases
+(defun ee-file-bufferp     () buffer-file-name)
+
+
+
+(defun ee-find-efaces-links  () `((find-efaces)))
+(defun ee-find-ecolors-links () `((find-ecolors)))
+(defun ee-find-pdftext-links () (ee-pdflike-page-links))
+
+;; to to:
+;; ee-find-w3m-links
+;; ee-find-ecolor-links
+;; 
 
 (defun ee-find-here-links ()
-  (cond ((ee-info-bufferp)     (cons "" (ee-find-info-links)))     ; M-h M-i
-	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))	   ; M-h M-i
+  (cond ;; by major mode
+	((ee-info-bufferp)     (cons "" (ee-find-info-links)))     ; M-h M-i
 	((ee-man-bufferp)      (cons "" (ee-find-man-links)))      ; ?
 	((ee-grep-bufferp)     (cons "" (ee-find-grep-links)))	   ; M-h M-g
-	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links))) ; ?
+	((ee-w3m-bufferp)      (cons "" (ee-find-w3m-links)))	   ; M-h M-w
 	((ee-dired-bufferp)    (cons "" (ee-find-file-links)))	   ; M-h f
 	((ee-wdired-bufferp)   (cons "" (ee-find-file-links)))	   ; M-h f
+	;; by buffer name
+	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))	   ; M-h M-i
+	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links))) ; ?
+	((ee-ecolors-bufferp)  (cons "" (ee-find-ecolors-links)))  ; ?
+	((ee-efaces-bufferp)   (cons "" (ee-find-efaces-links)))   ; ?
+	((ee-pdftext-bufferp)  (cons "" (ee-find-pdftext-links)))  ; ?
+	;; by buffer name, when it is "*Help*"
+	((ee-efunctiondescr-bufferp) (cons "" (ee-find-efunctiondescr-links)))
+	((ee-efacedescr-bufferp)     (cons "" (ee-find-efacedescr-links)))
+	((ee-evardescr-bufferp)      (cons "" (ee-find-evardescr-links)))
+	;; other cases
 	((ee-file-bufferp)     (cons "" (ee-find-file-links)))	   ; M-h f
-	(t (list "hello" "you"))))
+	(t (list "" "Not implemented!" "See:"
+		 '(find-efunction 'ee-find-here-links)))
+	))
 
 (defun find-here-links-test (sexp)
 "See: (find-links-intro \"`find-here-links'\")"
@@ -810,19 +962,22 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;; (progn (find-man "1 cat") (buffer-name))
 ;; (find-eevfile "eev-rcirc.el")
 
+(defun ee-find-here-links0 ()
+  `(,(ee-H "See: ")
+    (find-links-intro "`find-here-links'")
+    (find-efunctiondescr 'eev-mode "M-h M-h")
+    ))
+
 ;; (find-find-links-links "\\M-h" "here" "")
 ;;
 (defun find-here-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks pointing to here."
   (interactive)
   (apply 'find-elinks
-   `(;; (find-here-links  ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     ;; (find-efunction 'find-here-links)
-     ,(ee-H "See: ")
-     (find-links-intro "`find-here-links'")
-     (find-efunctiondescr 'eev-mode "M-h M-h")
-     ;; ""
+   `(;; The first line of a find-here-links buffer DOES NOT
+     ;; regenerates the buffer - instead the first lines point to
+     ;; help pages.
+     ,@(ee-find-here-links0)
      ,@(ee-find-here-links)
      )
    pos-spec-list))

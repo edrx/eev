@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013sep30
+;; Version:    2013nov15
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -36,6 +36,14 @@
 ;;   (find-eepitch-intro)
 ;;   (find-wrap-intro)
 ;;   (find-code-c-d-intro)
+;;
+;; Note (2013nov12):
+;; I am using this code to edit these intros:
+;;
+;; (defun ee-sexp-at (str) (save-excursion (search-forward str) (ee-last-sexp)))
+;; (defun ee-intro-here () (eval (read (ee-sexp-at "rest)))"))))
+;; (defun d0 () (funcall (ee-intro-here) (ee-last-kill)))
+;; (defun d () (interactive) (find-2b nil '(d0)))
 
 
 
@@ -1226,79 +1234,151 @@ be expanded later:
 
 `find-here-links'
 =================
-The most important M-h command is `M-h M-h' (`find-here-links'),
-which analyzes the major mode and the buffer name of the current
-buffer and runs the most adequade of several `find-*-links'
-commands. For example, if you type `M-h M-h' now you should get
-a buffer like this:
-   __________________________________________________________
-  |# See:                                                    |
-  |# (find-links-intro \"`find-here-links'\")                  |
-  |                                                          |
-  |# (find-links-intro)                                      |
-  |                                                          |
-  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental eev) |
-  |__________________________________________________________|
+The most important of the commands that generates buffers with elisp
+hyperlinks - \"M-h commands\", in the terminology explained above - is
+`find-here-links', which integrates most of the functionalities of
+several more basic M-h commands. We will explain first what it _does_,
+then its _usage_.
 
-where `(find-links-intro)' is a hyperlink to this intro.
+`find-here-links' is bound to `M-h M-h' to make it very easy to
+invoke. If you are reading this then \"here\" means the buffer
+\"*(find-links-intro)*\", in a certain position. Try to type `M-h M-h';
+you will get a buffer like this,
 
-  [NOTE: `find-here-links' is a new feature, and its buffers do
-  not yet follow all the conventions of elisp hyperlinks
-  buffers... some minor details will probably change soon to
-  reduce the risk of confusion]
+   ____________________________________________________________
+  |# See:                                                      |
+  |# (find-links-intro \"`find-here-links'\")                    |
+  |# (find-efunctiondescr 'eev-mode \"M-h M-h\")                 |
+  |                                                            |
+  |# (find-links-intro)                                        |
+  |                                                            |
+  |                                                            |
+  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)  -|
+  |____________________________________________________________|
 
-Normally we use `M-h M-h' like this. We are putting our
-\(executable, but messy) notes into something that we will refer
-to as an \"e-script buffer\"; we find a piece of interesting
-information at another buffer, and we want to put a link to that
-into our e-script buffer. The link that we will produce is a
-sexp, which goes to a \"target\" when executed. This is a bit
-confusing, to let's demonstrate it sort of backwards...
+which contains a 3-line header with help links, that we will explain
+soon, and then a link to \"here\", i.e., to the buffer
+\"*(find-links-intro)*\". Note that the link
 
-The debugging function `find-here-links-test' receives a sexp and
-creates a window setting like this:
-   ___________________________________
-  |          |                        |
-  |          |     target of SEXP     |
-  |          |________________________|
-  |   here   |                        |
-  |          |   result of running    |
-  |          |  `find-here-links' on  |
-  |          |   the target of SEXP   |
-  |__________|________________________|
+  (find-links-intro)
 
-Try it by running the `find-here-links-test' sexps below. Note
-that they will keep the cursor at the \"here\" window - i.e.,
-here at (find-links-intro) - so you can just move up and down
-between the tests and execute the other tests with `M-e'.
+can be \"refined\" to, for example,
+
+  (find-links-intro \"which contains a 3-line header\")
+
+using the tricks described in these sections:
+
+  (find-eval-intro \"Refining hyperlinks\")
+  (find-eval-intro \"Producing and refining hyperlinks\")
+  (find-eval-intro \"Producing and refining hyperlinks\" \"`M-h M-2'\")
+  (find-eval-intro \"Producing and refining hyperlinks\" \"`M-h2hy'\")
+
+but `find-here-links' by itself only produces \"unrefined\" links - so
+when we say that `find-here-links' produces links to \"here\" we mean
+just \"to the current buffer\", not \"to the a certain position in the
+current buffer\".
+
+`find-here-links' works for several kinds of \"here\"s - it works for
+intros like this one, for Info pages, for manpages, for files and
+directories, for descriptions of Emacs functions and variables, and
+for a few other cases. Try the sexps below:
 
   (find-here-links-test '(find-eval-intro))
   (find-here-links-test '(find-node \"(dir)Top\"))
-  (find-here-links-test '(find-eevfile \"eepitch.el\"))
-  (find-here-links-test '(find-efunction 'find-here-links))
-  (find-here-links-test '(find-man \"1 cat\"))
+  (find-here-links-test '(find-enode \"Lisp Eval\"))
   (find-here-links-test '(find-fline \"~/\"))
+  (find-here-links-test '(find-eevfile \"eepitch.el\"))
+  (find-here-links-test '(find-efunction 'ee-eval-last-sexp))
 
-Now let's see the typical, real-life usage case. We don't start
-with the sexp that points to a target - we stumble at something
-interesting, and then we want to _produce_ a sexp that points to
-that, and then save it to our notes. When we are at \"interesting
-place\" we type `M-h M-h'; we get a find-here-links buffer, and
-we choose the sexp that looks more adequate between the ones that
-point to \"interesting place\". We edit that sexp - refining it
-if needed - and copy it to our e-script. If we want to go back to
-\"interesting place\" we can do that either with the right
-sequence of `M-K's or by executing the sexp.
+  (find-here-links-test '(find-efunctiondescr 'ee-eval-last-sexp))
+  (find-here-links-test '(find-evardescr      'ee-hyperlink-prefix))
+  (find-here-links-test '(find-efacedescr     'eepitch-star-face))
 
-  [Note that `M-1 M-j' jumps to ~/TODO... EXPLAIN THIS]
+  (find-here-links-test '(find-ecolors \"\\nred\"))
+  (find-here-links-test '(find-efaces  \"eepitch-star-face\"))
+
+  (find-here-links-test '(find-man \"1 cat\"))
+   [^ oops, this test doesn't work on multi-window settings...]
+
+Each one of them tests a different case of `find-here-links',
+creating a window setup like this:
+
+   ______________________________________ 
+  |               |                      |
+  |               |      target of       |
+  |               |        sexp          |
+  |     this      |______________________|
+  |     intro     |                      |
+  |               |  result of running   |
+  |               |  find-here-links on  |
+  |               |   [target of sexp]   |
+  |_______________|______________________|
+
+The cursor is kept at the left window (\"this intro\"), so you
+can compare the different cases using just <up>, <down>, and M-e.
 
 
+
+
+`find-here-links': usage patterns
+=================================
+Typically what happens is this. We are putting our notes - eepitch
+blocks, hyperlinks, etc - in a certain file; let's refer to it as the
+\"e-script\". Then we start to navigate for information, and we find
+something interesting. We want to add a link pointing to that
+\"something interesting\" to our e-script notes - but for that we need
+to produce that sexp hyperlink, and ideally we would like to do that
+in a way that does not disturb much our attention. Consider this
+diagram [note: it DOES NOT imply that the Emacs frame is split into three
+windows - typically we will switch between buffers in a single window]:
+
+   ______________________________________ 
+  |               |                      |
+  |               |      something       |
+  |              ==>    interesting      |
+  |   e-script    |_________||___________|
+  |               |         \\/           |
+  |               |  result of running   |
+  |              <== find-here-links on  |
+  |               |   [sthing intrstng]  |
+  |_______________|______________________|
+
+and this series of steps:
+
+  0. We start navigating from the e-script buffer, and when we
+  1. find something interesting [in another buffer], we
+  2. run `find-here-links' at the \"something interesting\" buffer,
+  3. identify among the sexps in the find-here-links buffer one that
+     points to that \"something interesting\",
+  4. copy that sexp to the kill-ring,
+  5. go back to the e-script buffer,
+  6. insert that sexp into the e-script buffer,
+  7. execute that sexp to go back to the \"something interesting\",
+  8. continue navigating & doing stuff.
+
+At (8) we are essentially back to (1), but we have added to our
+e-script buffer a link to \"something interesting\". 
+
+Note that to add refining we need to add a step before (2) and
+another one after (3):
+
+  1.9. select a string to search for and copy it to the kill-ring,
+  3.1. refine that sexp using the \"string to search for\" (with M-h2hy)
+
+\[TO DO: explain the keys that I normally use to perform all
+this; explain why I am not the right person to optimize these
+steps - because I can type these key sequences without thinking,
+and step (3) sometimes gives several sexps for us to choose from]
 
 
 
 
 Basic and non-basic hyperlinks
 ==============================
+How can we learn to recognize what each hyperlink sexp does? And
+which ones are safe(r), and which ones are not? How do we
+classify all hyperlink sexps?
+
 We can start by dividing the hyperlink functions into a fixed set
 of \"basic\" ones and an unbounded set of \"non-basic\" ones. In
 the buffer generated by
@@ -5032,7 +5112,7 @@ returns nil. But just as
 ;; «find-emacs-intro» (to ".find-emacs-intro")
 ;; (find-intro-links "emacs")
 
-(defun find-emacs-intro (&rest pos-spec-list) (interactive)
+(defun find-emacs-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-emacs-intro)*"))
     (apply 'find-estring "\
 \(Re)generate: (find-emacs-intro)
@@ -5055,6 +5135,7 @@ The most basic keys of eev are:
         `M-2j' takes you to this help page.
         `M-5j' takes you to: (find-eev-intro)
          See: (find-eejump-intro \"Families\")
+  M-h M-h - hyperlinks to here, plus help
 
 The mnemonics are:
   M-e   - evaluate/execute
@@ -5155,8 +5236,19 @@ or by using the menu bar (the relevant options are under
 Undoing
 =======
 C-/    -- undo    (find-enode \"Basic Undo\")
+C-_    -- undo    (find-enode \"Basic Undo\")
                   (find-enode \"Undo\")
 
+
+Windows
+=======
+See: (find-enode \"Frames\")
+     (find-enode \"Windows\")
+C-x o   -- other-window                      (find-enode \"Other Window\")
+C-x 0   -- delete-window                     (find-enode \"Change Window\")
+C-x 1   -- delete-other-windows (\"1 window\") (find-enode \"Change Window\")
+C-x 2   -- split-window-vertically (Abv/Blw) (find-enode \"Split Window\")
+C-x 3   -- split-window-horizontally   (L|R) (find-enode \"Split Window\")
 
 
 
@@ -5167,12 +5259,6 @@ M-x     -- execute-extended-command     (find-enode \"M-x\")
 TAB     -- for completion:              (find-enode \"Completion\")
            for indentation:             (find-enode \"Indentation\")
            in programming modes:        (find-enode \"Basic Indent\")
-
-C-x o   -- other-window                      (find-enode \"Other Window\")
-C-x 0   -- delete-window                     (find-enode \"Change Window\")
-C-x 1   -- delete-other-windows (\"1 window\") (find-enode \"Change Window\")
-C-x 2   -- split-window-vertically (Abv/Blw) (find-enode \"Split Window\")
-C-x 3   -- split-window-horizontally   (L|R) (find-enode \"Split Window\")
 
                                         (find-enode \"Dired\")
 C-x C-f -- find-file                    (find-enode \"Visiting\")
@@ -5197,7 +5283,7 @@ M-%     -- query-replace                (find-enode \"Replace\")
 C-x (   -- start-kbd-macro              (find-enode \"Keyboard Macros\")
 C-x )   -- end-kbd-macro                (find-enode \"Keyboard Macros\")
 C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
-" pos-spec-list)))
+" rest)))
 
 ;; (find-emacs-intro)
 ;; (find-TH "emacs" "short-emacs-tutorial")

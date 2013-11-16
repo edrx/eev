@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013sep12
+;; Version:    2013nov15
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -269,9 +269,25 @@ then go to the position specified by POS-SPEC-LIST.\n
   (interactive "kFind function on key: ")
   (apply 'find-wottb-call '(describe-key key) "*Help*" pos-spec-list))
 
-(defun find-efacedescr (face &rest pos-spec-list)
+(defun find-echardescr (&optional pos &rest pos-spec-list)
+  "Hyperlink to the result of running `describe-char' at POS."
+  (interactive)
+  (setq pos (or pos (point)))
+  (apply 'find-wottb-call '(describe-char pos) "*Help*" pos-spec-list))
+
+(defun find-etpat (&optional pos &rest pos-spec-list)
+  "Hyperlink to the result of running `describe-text-properties' at point.
+See `find-etpat0' and `find-etpat00' for lower-level tools for
+inspecting text proprties."
+  (interactive)
+  (setq pos (or pos (point)))
+  (apply 'find-wottb-call '(describe-text-properties pos)
+	 "*Help*" pos-spec-list))
+
+(defun find-efacedescr (&optional face &rest pos-spec-list)
   "Hyperlink to the result of running `describe-face' on FACE."
-  (interactive (list (read-face-name "Describe face")))
+  ;; (interactive (list (read-face-name "Describe face")))
+  (interactive (list (face-at-point)))
   (apply 'find-wottb-call '(describe-face face) "*Help*" pos-spec-list))
 
 (defun find-efaces (&rest pos-spec-list)
@@ -717,14 +733,14 @@ Example of use: (find-einsert '((32 1000) 10 (8000 12000)))"
   (apply 'find-eoutput-reuse "*einsert*"
 	 `(apply 'ee-insert ',what) rest))
 
-(defun find-etpat (&rest pos-spec-list)
-"Hyperlink to a pretty-version of the result of (text-properties-at (point))."
+(defun find-etpat0 (&rest pos-spec-list)
+"Hyperlink to a pretty version of the result of (text-properties-at (point))."
   (interactive)
   (let* ((ee-buffer-name
 	  (or ee-buffer-name "*(text-properties-at (point))*")))
     (apply 'find-epp (text-properties-at (point)) pos-spec-list)))
 
-(defun find-etpat0 ()
+(defun find-etpat00 ()
   "Show the result of (text-properties-at (point)) in the echo area."
   (interactive)
   (find-epp0 (text-properties-at (point))))

@@ -1,6 +1,6 @@
 ;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2013 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013feb16
+;; Version:    2013nov15
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -90,17 +90,20 @@ See: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links) 
   (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)     
   (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)      
-  (define-key eev-mode-map "\M-h\M-m" 'find-manpage-links)   
   (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
   (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links) 
   (define-key eev-mode-map "\M-hf"    'find-file-links)      
-  (define-key eev-mode-map "\M-hm"    'find-last-manpage-links)
   (define-key eev-mode-map "\M-hM"    'find-ekbmacro-links)
-  ;; Information about text properties, faces, and chars: 
-  (define-key eev-mode-map "\M-h\M-s" 'find-efacedescr)
-  (define-key eev-mode-map "\M-h\M-c" 'describe-char)
+  ;; (define-key eev-mode-map "\M-h\M-m" 'find-manpage-links)   
+  ;; (define-key eev-mode-map "\M-hm"    'find-last-manpage-links)
+  ;;
+  ;; Information about text properties, faces, and chars:
+  ;; (define-key eev-mode-map "\M-h\M-s" 'find-efacedescr)
+  (define-key eev-mode-map "\M-h\M-c" 'find-echardescr)
+  (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
   (define-key eev-mode-map "\M-h\M-t" 'find-etpat)
   (define-key eev-mode-map "\M-ht"    'find-etpat0)
+  ;;
   ;; Extras:
   (define-key eev-mode-map "\M-hg"    'find-git-links-1)
   ;;
