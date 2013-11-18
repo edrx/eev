@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov15
+;; Version:    2013nov17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -76,7 +76,7 @@
 (autoload 'word-at-point "thingatpt")
 (autoload 'list-iso-charset-chars     "mule-diag")
 (autoload 'list-non-iso-charset-chars "mule-diag")
-
+(autoload 'customize-read-group "cus-edit")
 
 
 ;;;            _    
@@ -327,6 +327,16 @@ This is a high-level alternative to `find-etpat'."
   (apply 'find-wottb-call '(describe-package pkg-desc)
 	 "*Help*" pos-spec-list))
 
+(defun find-customizegroup (group &rest pos-spec-list)
+  "Hyperlink to the result of running `customize-group' on GROUP."
+  (interactive (list (customize-read-group)))
+  (when (stringp group)
+    (if (string-equal "" group)
+	(setq group 'emacs)
+      (setq group (intern group))))
+  (apply 'find-wottb-call '(customize-group group)
+	 (format "*Customize Group: %s*" (custom-unlispify-tag-name group))
+	 pos-spec-list))
 
 
 

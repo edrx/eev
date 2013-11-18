@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov16
+;; Version:    2013nov17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -880,6 +880,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 (defun ee-dired-bufferp    () (eq major-mode 'dired-mode))
 (defun ee-wdired-bufferp   () (eq major-mode 'wdired-mode))
 (defun ee-w3m-bufferp      () (eq major-mode 'w3m-mode))
+(defun ee-custom-bufferp   () (eq major-mode 'Custom-mode))
 
 ;; By buffer name
 (defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))
@@ -916,6 +917,12 @@ This needs a temporary directory; see: (find-prepared-intro)"
   (let ((mp (ee-buffer-re ee-man-re)))
     `((find-man ,mp))))
 
+(defvar ee-custom-re "^\\*Customize Group: \\(.*\\)\\*$")
+(defun  ee-find-custom-links () 
+  (let* ((name   (ee-buffer-re ee-custom-re))
+	 (symbol (intern (downcase (replace-regexp-in-string " " "-" name)))))
+    `((find-customizegroup ',symbol))))
+
 ;; Other cases
 (defun ee-file-bufferp     () buffer-file-name)
 
@@ -938,6 +945,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 	((ee-w3m-bufferp)      (cons "" (ee-find-w3m-links)))	   ; M-h M-w
 	((ee-dired-bufferp)    (cons "" (ee-find-file-links)))	   ; M-h f
 	((ee-wdired-bufferp)   (cons "" (ee-find-file-links)))	   ; M-h f
+	((ee-custom-bufferp)   (cons "" (ee-find-custom-links)))   ; ?
 	;; by buffer name
 	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))	   ; M-h M-i
 	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links))) ; ?
