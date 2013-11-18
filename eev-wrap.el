@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug10
+;; Version:    2013nov18
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -416,6 +416,31 @@ cd     {dir}"))
 (defun ee-wrap-zsh (str)
   "An internal function used by `eewrap-zsh'."
   (ee-HS `(find-zsh ,str)))
+
+
+
+;;;  __  __         _  _       ____                    _ _       _               
+;;; |  \/  |      _| || |_ _  |___ \    ___  ___ _ __ (_) |_ ___| |__   ___  ___ 
+;;; | |\/| |_____|_  ..  _(_)   __) |  / _ \/ _ \ '_ \| | __/ __| '_ \ / _ \/ __|
+;;; | |  | |_____|_      _|_   / __/  |  __/  __/ |_) | | || (__| | | |  __/\__ \
+;;; |_|  |_|       |_||_| (_) |_____|  \___|\___| .__/|_|\__\___|_| |_|\___||___/
+;;;                                             |_|                              
+;; See: (find-multiwindow-intro "Several eepitch targets")
+;; (find-eewrap-links "#" "two-eepitches" "b c")
+;; M-#: two-eepitches
+(define-key eev-mode-map "\M-#" 'eewrap-two-eepitches)
+
+(defun  eewrap-two-eepitches () (interactive)
+  (ee-this-line-wrapn 2 'ee-wrap-two-eepitches))
+(defun ee-wrap-two-eepitches (b c)
+  "An internal function used by `eewrap-two-eepitches'."
+  (ee-template0 "\
+ (find-3EE '(eepitch-{b}) '(eepitch-{c}))
+ (find-3ee '(eepitch-{b}) '(eepitch-{c}))
+ (eepitch-{b})
+ (eepitch-{c})
+"))
+
 
 
 

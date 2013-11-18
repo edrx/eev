@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov17
+;; Version:    2013nov18
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -76,7 +76,8 @@
 (autoload 'word-at-point "thingatpt")
 (autoload 'list-iso-charset-chars     "mule-diag")
 (autoload 'list-non-iso-charset-chars "mule-diag")
-(autoload 'customize-read-group "cus-edit")
+(autoload 'customize-read-group      "cus-edit")
+(autoload 'custom-unlispify-tag-name "cus-edit")
 
 
 ;;;            _    

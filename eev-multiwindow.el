@@ -101,6 +101,11 @@ that. This is mainly for `find-wset'."
 (defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-O () (other-window -1))
 
+;; Mnemonic: "e" and "E" are both to prepare eepitch windows;
+;; "E" is more aggressive. See:
+(defun find-wset-e () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
+(defun find-wset-E () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
+
 
 
 ;; (find-multiwindow-intro)

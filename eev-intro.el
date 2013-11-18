@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov15
+;; Version:    2013nov18
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -40,8 +40,9 @@
 ;; Note (2013nov12):
 ;; I am using this code to edit these intros:
 ;;
-;; (defun ee-sexp-at (str) (save-excursion (search-forward str) (ee-last-sexp)))
-;; (defun ee-intro-here () (eval (read (ee-sexp-at "rest)))"))))
+;; (defun ee-sexp-at (re) (save-excursion (re-search-forward re) (ee-last-sexp)))
+;; (setq ee-intro-end-re "\\(rest\\|pos-spec-list\\))))")
+;; (defun ee-intro-here () (eval (read (ee-sexp-at ee-intro-end-re))))
 ;; (defun d0 () (funcall (ee-intro-here) (ee-last-kill)))
 ;; (defun d () (interactive) (find-2b nil '(d0)))
 
@@ -1296,6 +1297,7 @@ for a few other cases. Try the sexps below:
 
   (find-here-links-test '(find-ecolors \"\\nred\"))
   (find-here-links-test '(find-efaces  \"eepitch-star-face\"))
+  (find-here-links-test '(find-customizegroup 'rcirc))
 
   (find-here-links-test '(find-man \"1 cat\"))
    [^ oops, this test doesn't work on multi-window settings...]
@@ -3345,6 +3347,48 @@ how to extend it - see the source:
 
 
 
+High-level words
+================
+Very often we want to create window setups like
+
+   _______________            _______________ 
+  |       |       |	     |       |       |
+  |       |       |	     |       |   B   |
+  |   A   |   B   |    or    |   A   |_______| ;
+  |       |       |	     |       |       |
+  |       |       |	     |       |   C   |
+  |_______|_______|	     |_______|_______|
+
+there are shorthands for that. If you run
+
+  (find-2a sexpA sexpB)
+
+that will create a window setting like the one at the left above,
+initially with two copies of the current buffer, then will run
+sexpA at the window \"A\" and sexpB at the window \"B\", and
+finally will select the window \"A\", i.e., leave the cursor at
+the window at the left; this
+
+  (find-2b sexpA sexpB)
+
+will do exactly the same as the `(find-2a ...)' above, but will
+select the window \"B\" - the one at the right - at the end of
+the process. For three-window settings we have these:
+
+  (find-3a sexpA sexpB sexpC)
+  (find-3b sexpA sexpB sexpC)
+  (find-3c sexpA sexpB sexpC)
+
+all three create the three-window setting at the right above,
+initially with all three windows displaying the current buffer,
+then run sexpA at the window \"A\", sexpB at the window \"B\",
+and sexpC at the window \"C\"; the difference is that find-3a
+selects the window \"A\", find-3b the window \"B\", find-3c the
+window \"C\".
+
+
+
+
 Several eepitch targets
 =======================
 If we try to build a window setup like this one, with two eepitch
@@ -3376,9 +3420,104 @@ target. We can use this to create the window setting above,
              ' (ee-here '(eepitch-shell2))
              )
 
-This is too long - and would make a very bad one-liner - but a
-workaround is easy:
+This is too long - and would make a very bad one-liner - but
+there are two shorthands. First, \"e\" is a variant of \"_\" that
+runs its sexp inside an `(ee-here ...) - so this is equivalent
+the thing above,
 
+  (find-wset \"13o2eoeo\"
+             '(eepitch-shell)
+             '(eepitch-shell2)
+             )
+
+Second, these things are useful enough to deserve a high-level
+word, so this is equivalent to:
+
+  (find-3ee '(eepitch-shell) '(eepitch-shell2))
+
+
+
+
+Restarting eepitch targets
+==========================
+Sometimes we want to do the same as above, but restarting both
+eepitch targets, i.e., something like this:
+
+  (find-3ee '(progn (eepitch-shell)  (eepitch-kill) (eepitch-shell))
+            '(progn (eepitch-shell2) (eepitch-kill) (eepitch-shell2))
+            )
+
+There's a variant of `ee-here' that does that: `ee-here-reset'.
+For example,
+
+  (ee-here-reset '(eepitch-shell2))
+
+is equivalent to:
+
+  (ee-here '(progn (eepitch-shell2) (eepitch-kill) (eepitch-shell2)))
+
+and the letter \"E\" is a variant of \"e\" that uses
+`ee-here-reset' instead of `ee-here'; also, `find-3EE' is a
+variant of `find-3ee' that restarts both targets. Let's adapt
+this example,
+
+  (find-eepitch-intro \"Other targets\")
+
+to make it show the two eepitch targets at once in a three-window
+settings. It becomes:
+
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+ (eepitch-shell)
+echo Hello... > /tmp/o
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ Now compare:
+ (eek \"C-x 1\")
+ (find-3ee '(eepitch-shell) '(eepitch-python))
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+
+
+
+Non-trivial examples
+====================
+See:
+
+  (find-prepared-intro \"An `ee' for Python\")
+
+
+
+
+Eepitch blocks for two targets
+==============================
+An eepitch script with two targets uses several different kinds
+of red star lines - `(eepitch-target1)', `(eepitch-target2)',
+`(find-3EE ...)', `(find-3ee ...)', etc. We don't want to have to
+type all those by hand, so there is a hack similar to `M-T' that
+generates all those kinds from just \"target1\" and \"target2\"
+to let us just copy around the sexps we need. It is bound to
+`meta-shift-3', which Emacs sees as `M-#'. Compare the result of
+typing `M-T' here,
+
+python
+
+with the result of typing `M-#' on this line,
+
+shell python
+
+which yield this:
+
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+ (find-3ee '(eepitch-shell) '(eepitch-python))
+ (eepitch-shell)
+ (eepitch-python)
+
+Note that we use to `find-3EE' to restart targets instead of
+`eepitch-kill' (this is non-trivial - think about it =/)...
 
 
 
@@ -3409,18 +3548,9 @@ The source code is simple enough, so take a look:
 
 Note that `find-wset-!' restarts an eepitch target, while
 `find-wset-=' will reuse an eepitch target if its buffer already
-exists.
+exists. [Obs: \"=\" and \"!\" have been mostly superseded by
+\"e\" and \"E\"... to do: explain this]
 
-
-
-
-Eepitch to two targets
-======================
-Examples:
-
- (defun eepitch2  (s1 s2) (find-wset \"13o2=o=o\" s1 s2))
- (defun eepitch2! (s1 s2) (find-wset \"13o2!o!o\" s1 s2))
- (eepitch2! '(eepitch-shell) '(eepitch-shell2))
 
 See: (find-prepared-intro)
 
@@ -3964,12 +4094,10 @@ region from the current buffer as the temporary script.
 Note that the demo below uses `find-wset', which is an
 advanced (i.e., hackish) feature explained here:
 
-  (find-multiwindow-intro)
+  (find-multiwindow-intro \"Several eepitch targets\")
 
-
- (ee-kill-buffer \"*shell*\")
- (ee-kill-buffer \"*python*\")
- (find-wset \"13o2=o=o\" '(eepitch-shell) '(eepitch-python))
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+ (find-3ee '(eepitch-shell) '(eepitch-python))
  (eepitch-python)
 import os
 def ee():

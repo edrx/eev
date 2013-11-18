@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov17
+;; Version:    2013nov18
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -372,8 +372,19 @@ This is an internal function used by `find-ekey-links' and
   (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
       (match-string 1 bufname)))
 
+;; (defun ee-find-intro-links (&optional stem)
+;;   `((,(ee-intern "find-%s-intro" (or stem (ee-intro-stem))))))
+
 (defun ee-find-intro-links (&optional stem)
-  `((,(ee-intern "find-%s-intro" (or stem (ee-intro-stem))))))
+  (setq stem (or stem (ee-intro-stem)))
+  (let ((find-xxx-intro (ee-intern "find-%s-intro" stem))
+	(url (format "http://angg.twu.net/eev-intros/find-%s-intro.html" stem)))
+    `(,(ee-H url)
+      (,find-xxx-intro)
+      )))
+
+  
+
 
 ;; A test: (ee-intro-stem "*(find-foo-intro)*")
 
@@ -873,14 +884,15 @@ This needs a temporary directory; see: (find-prepared-intro)"
 (defun ee-buffer-help (re n) (intern (or (ee-buffer-help-re0 re n) "nil")))
 
 ;; By major mode
-(defun ee-grep-bufferp     () (eq major-mode 'grep-mode))
-(defun ee-man-bufferp      () (eq major-mode 'Man-mode))
-(defun ee-rcirc-bufferp    () (eq major-mode 'rcirc-mode))
-(defun ee-info-bufferp     () (eq major-mode 'Info-mode))
-(defun ee-dired-bufferp    () (eq major-mode 'dired-mode))
-(defun ee-wdired-bufferp   () (eq major-mode 'wdired-mode))
-(defun ee-w3m-bufferp      () (eq major-mode 'w3m-mode))
-(defun ee-custom-bufferp   () (eq major-mode 'Custom-mode))
+(defun ee-grep-bufferp      () (eq major-mode 'grep-mode))
+(defun ee-man-bufferp       () (eq major-mode 'Man-mode))
+(defun ee-rcirc-bufferp     () (eq major-mode 'rcirc-mode))
+(defun ee-info-bufferp      () (eq major-mode 'Info-mode))
+(defun ee-dired-bufferp     () (eq major-mode 'dired-mode))
+(defun ee-wdired-bufferp    () (eq major-mode 'wdired-mode))
+(defun ee-w3m-bufferp       () (eq major-mode 'w3m-mode))
+(defun ee-custom-bufferp    () (eq major-mode 'Custom-mode))
+(defun ee-epackages-bufferp () (eq major-mode 'package-menu-mode))
 
 ;; By buffer name
 (defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))
@@ -911,6 +923,13 @@ This needs a temporary directory; see: (find-prepared-intro)"
     `((find-eface-links ',f)
       (find-efacedescr ',f))))
 
+(defvar ee-epackage-re "^\\([^ \t\n]+\\) is a[ -~]+ package")
+(defun  ee-epackage-bufferp () (ee-buffer-help ee-epackage-re 1))
+(defun  ee-find-epackage-links ()
+  (let ((p (ee-epackage-bufferp)))
+    `((find-epackages ,(format "\n  %s " p) t)
+      (find-epackage ',p))))
+
 ;; By buffer name (when the mode is man)
 (defvar ee-man-re "^\\*Man \\(.*\\)\\*$")
 (defun  ee-find-man-links () 
@@ -928,9 +947,10 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 
 
-(defun ee-find-efaces-links  () `((find-efaces)))
-(defun ee-find-ecolors-links () `((find-ecolors)))
-(defun ee-find-pdftext-links () (ee-pdflike-page-links))
+(defun ee-find-efaces-links    () `((find-efaces)))
+(defun ee-find-ecolors-links   () `((find-ecolors)))
+(defun ee-find-epackages-links () `((find-epackages)))
+(defun ee-find-pdftext-links   () (ee-pdflike-page-links))
 
 ;; to to:
 ;; ee-find-w3m-links
@@ -939,25 +959,27 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 (defun ee-find-here-links ()
   (cond ;; by major mode
-	((ee-info-bufferp)     (cons "" (ee-find-info-links)))     ; M-h M-i
-	((ee-man-bufferp)      (cons "" (ee-find-man-links)))      ; ?
-	((ee-grep-bufferp)     (cons "" (ee-find-grep-links)))	   ; M-h M-g
-	((ee-w3m-bufferp)      (cons "" (ee-find-w3m-links)))	   ; M-h M-w
-	((ee-dired-bufferp)    (cons "" (ee-find-file-links)))	   ; M-h f
-	((ee-wdired-bufferp)   (cons "" (ee-find-file-links)))	   ; M-h f
-	((ee-custom-bufferp)   (cons "" (ee-find-custom-links)))   ; ?
+	((ee-info-bufferp)      (cons "" (ee-find-info-links)))      ; M-h M-i
+	((ee-man-bufferp)       (cons "" (ee-find-man-links)))       ; ?
+	((ee-grep-bufferp)      (cons "" (ee-find-grep-links)))	     ; M-h M-g
+	((ee-w3m-bufferp)       (cons "" (ee-find-w3m-links)))	     ; M-h M-w
+	((ee-dired-bufferp)     (cons "" (ee-find-file-links)))	     ; M-h f
+	((ee-wdired-bufferp)    (cons "" (ee-find-file-links)))	     ; M-h f
+	((ee-custom-bufferp)    (cons "" (ee-find-custom-links)))    ; ?
+	((ee-epackages-bufferp) (cons "" (ee-find-epackages-links))) ; ?
 	;; by buffer name
-	((ee-intro-bufferp)    (cons "" (ee-find-intro-links)))	   ; M-h M-i
-	((ee-freenode-bufferp) (cons "" (ee-find-freenode-links))) ; ?
-	((ee-ecolors-bufferp)  (cons "" (ee-find-ecolors-links)))  ; ?
-	((ee-efaces-bufferp)   (cons "" (ee-find-efaces-links)))   ; ?
-	((ee-pdftext-bufferp)  (cons "" (ee-find-pdftext-links)))  ; ?
+	((ee-intro-bufferp)     (cons "" (ee-find-intro-links)))     ; M-h M-i
+	((ee-freenode-bufferp)  (cons "" (ee-find-freenode-links)))  ; ?
+	((ee-ecolors-bufferp)   (cons "" (ee-find-ecolors-links)))   ; ?
+	((ee-efaces-bufferp)    (cons "" (ee-find-efaces-links)))    ; ?
+	((ee-pdftext-bufferp)   (cons "" (ee-find-pdftext-links)))   ; ?
 	;; by buffer name, when it is "*Help*"
 	((ee-efunctiondescr-bufferp) (cons "" (ee-find-efunctiondescr-links)))
 	((ee-efacedescr-bufferp)     (cons "" (ee-find-efacedescr-links)))
 	((ee-evardescr-bufferp)      (cons "" (ee-find-evardescr-links)))
+	((ee-epackage-bufferp)       (cons "" (ee-find-epackage-links)))
 	;; other cases
-	((ee-file-bufferp)     (cons "" (ee-find-file-links)))	   ; M-h f
+	((ee-file-bufferp)      (cons "" (ee-find-file-links)))	   ; M-h f
 	(t (list "" "Not implemented!" "See:"
 		 '(find-efunction 'ee-find-here-links)))
 	))
