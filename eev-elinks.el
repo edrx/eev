@@ -793,6 +793,7 @@ See the comments in the source code."
      (find-epp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))
      (find-ecolors)
      (find-efaces)
+     (find-efaces ,(symbol-name face-symbol))
      )
    pos-spec-list))
 

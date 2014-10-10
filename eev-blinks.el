@@ -3,7 +3,7 @@
 ;;; and that are not created by `code-c-d' and friends.
 
 ;; Copyright (C) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,
-;; 2009,2010,2011,2012,2013 Free Software Foundation, Inc.
+;; 2009,2010,2011,2012,2013,2014 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet) part of GNU eev.
 ;;
@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov18
+;; Version:    2014oct10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -721,6 +721,8 @@ Example: (find-ekeymapdescr isearch-mode-map \"toggle-regexp\")"
 Example: (find-eminorkeymapdescr 'eev-mode)"
   (apply 'find-ekeymapdescr (ee-minor-mode-keymap mode-symbol)
 	 pos-spec-list))
+
+(defalias 'find-eminormodekeymapdescr 'find-eminorkeymapdescr)
 
 (defun ee-minor-mode-keymap (mode-symbol)
   "An auxiliary function used by `find-eminorkeymapdescr'.

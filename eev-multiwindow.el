@@ -101,21 +101,25 @@ that. This is mainly for `find-wset'."
 (defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-O () (other-window -1))
 
-;; Mnemonic: "e" and "E" are both to prepare eepitch windows;
-;; "E" is more aggressive. See:
+;; Mnemonic: "e" and "E" are both to prepare eepitch windows,
+;; and "E" is more aggressive than "e". See:
+;; (find-multiwindow-intro)
 (defun find-wset-e () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-E () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 
 
 
-;; (find-multiwindow-intro)
-;; Temporary hacks
+;; Temporary hacks (?)
+;; See: (find-multiwindow-intro "High-level words")
 (defun find-2a (a b)   (find-wset "13_o_o" a b))
 (defun find-2b (a b)   (find-wset "13_o_"  a b))
 (defun find-3a (a b c) (find-wset "13_o2_o_o"  a b c))
 (defun find-3b (a b c) (find-wset "13_o2_o_oo" a b c))
 (defun find-3c (a b c) (find-wset "13_o2_o_"   a b c))
 
+;; See:
+;; (find-multiwindow-intro "Several eepitch targets")
+;; (find-multiwindow-intro "Restarting eepitch targets")
 (defun find-3ee (b c) (find-wset "13o2=o=o" b c))
 (defun find-3EE (b c) (find-wset "13o2!o!o" b c))
 

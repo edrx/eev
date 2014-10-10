@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013jun16
+;; Version:    2014mar05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -150,7 +150,8 @@
 (defun  ee-find-evince-page (fname &optional page)
   `("evince"
     ,@ee-find-evince-page-options
-    ,@(if page `(,(format "--page-label=%d" page)))
+    ;; ,@(if page `(,(format "--page-label=%d" page)))
+    ,@(if page `(,(format "--page-index=%d" page)))
     ,fname))
 
 (defun      code-evince (c fname &rest rest)

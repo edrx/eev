@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov18
+;; Version:    2013dec10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -391,8 +391,8 @@ cd     {dir}"))
   "An internal function used by `eewrap-audiovideo'."
   (ee-template0 "\
 ;; (find-fline {(ee-S (file-name-directory fname))})
-;; (find-audio \"{fname}\")})
-;; (find-video \"{fname}\")})
+;; (find-audio \"{fname}\")
+;; (find-video \"{fname}\")
 \(code-audio \"{stem}\" \"{fname}\")
 \(code-video \"{stem}\" \"{fname}\")
 ;; \(find-{stem})

@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013sep08
+;; Version:    2013nov27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-rcirc.el.html>
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;;                 <http://angg.twu.net/eev-intros/find-rcirc-intro.html>
+;;                                                (find-rcirc-intro)
 
 ;;; Commentary:
 

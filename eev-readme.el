@@ -1,6 +1,6 @@
 ;; eev-readme.el -- an executable README for eev2 (-> eev-0.96).
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2014 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012dec29
+;; Version:    2014aug17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-readme.el>
@@ -93,4 +93,6 @@
   (eev-mode 1)
   )
 
-;; (insert-file "2.el")
+;; Local Variables:
+;; no-byte-compile: t
+;; End:

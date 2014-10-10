@@ -1,6 +1,6 @@
 ;;; eev-intro.el --- intro scripts for eev
 
-;; Copyright (C) 2013 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2014 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov18
+;; Version:    2014aug23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -38,13 +38,16 @@
 ;;   (find-code-c-d-intro)
 ;;
 ;; Note (2013nov12):
-;; I am using this code to edit these intros:
-;;
-;; (defun ee-sexp-at (re) (save-excursion (re-search-forward re) (ee-last-sexp)))
-;; (setq ee-intro-end-re "\\(rest\\|pos-spec-list\\))))")
-;; (defun ee-intro-here () (eval (read (ee-sexp-at ee-intro-end-re))))
-;; (defun d0 () (funcall (ee-intro-here) (ee-last-kill)))
-;; (defun d () (interactive) (find-2b nil '(d0)))
+;; I am using the code below to edit these intros...
+;; Note that it is commented out - and HOW it is commented out!
+'
+(progn
+  (defun ee-sexp-at (re) (save-excursion (re-search-forward re) (ee-last-sexp)))
+  (setq ee-intro-end-re "\\(rest\\|pos-spec-list\\))))")
+  (defun ee-intro-here () (eval (read (ee-sexp-at ee-intro-end-re))))
+  (defun d0 () (funcall (ee-intro-here) (ee-last-kill)))
+  (defun d () (interactive) (find-2b nil '(d0)))
+  )
 
 
 
@@ -151,6 +154,47 @@ workshops, but that are not very eev-specific:
 
 
 
+Installation: way 1
+===================
+If you're a real beginner and you are reading this in a web browser
+then this is the easiest way to install eev and start playing with it.
+Mark the multi-line \"{ ... }\" block below, copy it to the clipboard
+with ctrl-C, and paste it to a shell running in a terminal to execute
+its commands. It will download the current version of eev and unpack
+it into ~/eev/.
+
+{
+  rm -Rv ~/eev/
+  mkdir  ~/eev/
+  cd     ~/eev/
+  rm -v eev2.tgz
+  wget http://angg.twu.net/eev-current/eev2.tgz
+  tar -xvzf eev2.tgz
+}
+
+Now do the same with this block:
+
+{
+  {
+    echo '#!/bin/sh'
+    echo 'cd ~/eev/ && emacs -l ./eev-readme.el --eval=\"(find-eval-intro)\"'
+  } > ~/e
+  chmod 755 ~/e
+}
+
+You now have a shell script that you can invoke with
+
+  ~/e
+
+that starts Emacs, loads eev, and opens this tutorial:
+
+  (find-eval-intro)
+
+Once you learn how to navigate the help system by following elisp
+hyperlinks and going back, the rest is easy.
+
+
+
 The README
 ==========
 The README for eev2 is an elisp file,
@@ -251,6 +295,7 @@ For the full lists of keybindings, see:
 \(Re)generate: (find-eval-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eval-intro\")
 More intros:  (find-eev-intro)
+              (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
@@ -1740,13 +1785,9 @@ access the values the `c' and the `d' that were passed to
 `ee-code-c-d' (due to dynamic scoping), so `c' and `d' do not
 need to be passed down explicitly as arguments.
 
-
+Try:
 
   (find-code-c-d      \"CODE\" \"/DIR/\" :info \"INFO\")
-  (find-code-pdf      \"CODE\" \"FILE.pdf\")
-  (find-code-pdf-text \"CODE\" \"FILE.pdf\")
-  (find-code-audio    \"CODE\" \"FILE\")
-  (find-code-video    \"CODE\" \"FILE\")
 
 
 
@@ -1756,6 +1797,11 @@ Other similar functions
 See: (find-brxxx-intro)
      (find-pdf-like-intro)
      (find-audiovideo-intro)
+
+Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
+     (find-code-pdf-text \"CODE\" \"FILE.pdf\")
+     (find-code-audio    \"CODE\" \"FILE.mp3\")
+     (find-code-video    \"CODE\" \"FILE.mp4\")
 " rest)))
 
 ;; (find-TH "eev-article")
@@ -2008,25 +2054,33 @@ A first example
 Let's define two trivial base functions, one that expects a URL,
 and another one that expects a file name:
 
-  (defun foo-url  (url)      (format \"Got URL: %s\" url))
+  (defun foo-url  (url)      (format \"Got URL: %s\"      url))
   (defun foo-file (filename) (format \"Got filename: %s\" filename))
 
-These two calls
+Note that they don't do much - they just return explanatory
+strings.
+
+These two calls,
 
   (code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
   (code-brfile 'foo-file                  :local 'brshowfl)
 
-define three brxxx-functions - `brshowu' and `brshowul' for the
+define three brxxx-functions: `brshowu' and `brshowul' for the
 base function `foo-url', and `brshowfl' for the base function
-`foo-file'.
+`foo-file'. You can inspect the definitions by running these
+sexps,
 
-You can try the new brxxx-functions by typing `M-x brshowu', `M-x
-brshowul' and `M-x brshowfl' with the point on the URL below:
+  (find-code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
+  (find-code-brfile 'foo-file                  :local 'brshowfl)
 
-  http://a/b
+and you can test what `foo-url', `foo-file', `brshowu',
+`brshowul', and `brshowfl' do by running the sexps below.
 
-On each case you will see on the echo area how the base function
-was called, and what it returned.
+  (foo-url \"http://a/b\")
+    => \"Got URL: http://a/b\"
+
+  (foo-file \"/c/d/e/f\")
+    => \"Got filename: /c/d/e/f\"
 
   (brshowu  \"http://a/b\")
     => `(foo-url \"http://a/b\") -> \"Got URL: http://a/b\"'
@@ -2038,6 +2092,17 @@ was called, and what it returned.
   (brshowfl \"http://a/b\")
     => `(foo-file \"/home/edrx/snarf/http/a/b\") ->
         \"Got filename: /home/edrx/snarf/http/a/b\"'
+
+Now let's go to what matters. Put the point on the URL below, and
+run `M-x brshowu', `M-x brshowul' and `M-x brshowfl':
+
+  http://a/b
+
+you will see that `brshowu', `brshowul', and `brshowfl' can be
+called interactively, and when they are called interactively they
+use as their argument either the URL around point, or something
+obtained from it - the local file name or a local URL associated
+to that URL.
 
 
 
@@ -3259,14 +3324,14 @@ is not enough; other setups, like these,
 
    ______________________
   |          |           |        _________________________ 
-  |          |  shell A  |     	 |            |            |
-  |          |___________|	 |   script   |     GDB    |
-  |  script  |           |	 |            |            |
-  |          |  shell B  |	 |____________|____________|
-  |          |___________|	 |            |            |
-  |          |           |	 |   program  |   program  |
-  |          |  shell C  |	 |     I/O    |    source  |
-  |__________|___________|	 |____________|____________|
+  |          |  shell A  |       |            |            |
+  |          |___________|       |   script   |     GDB    |
+  |  script  |           |       |            |            |
+  |          |  shell B  |       |____________|____________|
+  |          |___________|       |            |            |
+  |          |           |       |   program  |   program  |
+  |          |  shell C  |       |     I/O    |    source  |
+  |__________|___________|       |____________|____________|
 
 may be necessary. Eev comes with a few _low-level_ tools for
 creating these setups; they are not very smart, but they should
@@ -3283,12 +3348,12 @@ configuration with A at the left, and with the buffers B and C
 stacked on one another at the right. That is:
 
    ___________           ___________ 
-  |           |	        |     |     |
-  |           |	        |     |  B  |
+  |           |         |     |     |
+  |           |         |     |  B  |
   |     A     |   -->   |  A  |_____|
-  |           |	        |     |     |
-  |           |	        |     |  C  |
-  |___________|	        |_____|_____|
+  |           |         |     |     |
+  |           |         |     |  C  |
+  |___________|         |_____|_____|
 
 To do that from the keyboard we could type this:
 
@@ -3311,11 +3376,11 @@ that makes it easy to replace later the `C-x b B RET' and the
 `C-x b C RET' by arbitrary sexp hyperlinks. We get:
 
   (progn (eek \"C-x 1 C-x 3 C-x o\")
-	 (find-ebuffer \"B\")
+         (find-ebuffer \"B\")
          (eek \"C-x 2 C-x o\")
-	 (find-ebuffer \"C\")
-	 (eek \"C-x o\")
-	 )
+         (find-ebuffer \"C\")
+         (eek \"C-x o\")
+         )
 
 When I started to rewrite my window configurations into that form
 I realized that the `eek's were being used in a very limited way
@@ -3352,12 +3417,12 @@ High-level words
 Very often we want to create window setups like
 
    _______________            _______________ 
-  |       |       |	     |       |       |
-  |       |       |	     |       |   B   |
+  |       |       |          |       |       |
+  |       |       |          |       |   B   |
   |   A   |   B   |    or    |   A   |_______| ;
-  |       |       |	     |       |       |
-  |       |       |	     |       |   C   |
-  |_______|_______|	     |_______|_______|
+  |       |       |          |       |       |
+  |       |       |          |       |   C   |
+  |_______|_______|          |_______|_______|
 
 there are shorthands for that. If you run
 
@@ -3488,7 +3553,7 @@ Non-trivial examples
 See:
 
   (find-prepared-intro \"An `ee' for Python\")
-
+  (find-rcirc-intro \"The server buffer and the channel buffers\")
 
 
 
@@ -3677,6 +3742,74 @@ support for Rcirc (and no support for ERC).
 
 
 
+The server buffer and the channel buffers
+=========================================
+If you type `M-6 M-6 M-j' - or `M-e' on the line below - then eev
+runs this,
+
+  (find-freenode-3a \"#eev\")
+
+which tells Emacs to connect to Freenode and to the channel #eev,
+using this window setting:
+
+   _________________________
+  |           |             |
+  |           |   Freenode  |
+  |           |    server   |
+  |           |   messages  |
+  |  current  |_____________|    
+  |  buffer   |             |
+  |           |    #eev     |
+  |           |   channel   |
+  |           |             |
+  |___________|_____________|
+
+You will then be able to watch the process of connecting to
+Freenode, which takes about 20s on my machine, by the messages
+that will appear at the Freenode server buffer; at some point
+rcirc will be allowed by the server to connect to channels, it
+will request to connect to the channel #eev, and some login
+messages, plus at list of all users connected to #eev and a
+prompt, will appear at the #eev channel buffer.
+
+`M-66j' is mostly for establishing a connection to an IRC server
+and watching if any errors occur; once we know that we are
+connected we can use `M-6j' - with just one `M-6' - which just
+takes us to the #eev channel without changing the current window
+configuration. A mnemonic: `M-66j', which is one keypress longer,
+is to be used less often - essentially only once per session, or
+when we want to check the status of our connection to Freenode.
+
+
+
+
+Messages and commands
+=====================
+IRC is a command-line-ish protocol, in which lines starting with
+\"/\" are treated as commands and other lines as messages. A
+message typed at the #eev channel buffer is broadcast to all
+other users also connected to #eev; some commands, like
+
+  /join #emacs
+
+work in the same way no matter where they are typed, while
+others, like for example \"/part\", work differently when typed
+in #eev than when in #emacs. See:
+
+  (find-rcircnode \"rcirc commands\" \"/join #emacs\")
+  (find-rcircnode \"rcirc commands\" \"/part\")
+
+
+
+Other channels
+==============
+
+where `find-freenode-3a' is based on `find-3a', described here:
+
+  (find-multiwindow-intro \"High-level words\")
+
+  (find-eev \"eev-rcirc.el\")
+
 If you are new to IRC
 =====================
 Most of the discussions between Free Software developers still
@@ -3689,14 +3822,12 @@ to try this first:
 IRC is a command-line-ish protocol, in which lines starting with
 \"/\" are treated as commands and other lines are messages to be
 broadcast. Try to \"/join\" the channels \"#emacs\" and \"#eev\",
-with \"/join #emacs\" and \"/join #eev\"; 
-
- in that
-webchat, try to switch between the channels you're connected to
-by clicking on the tabs at the top - and note that there is also
-a tab for a channel-ish thing that has only messages from the
-server. Try also to leave these channels with \"/part\", \"/part
-#emacs\", \"/part #eev\".
+with \"/join #emacs\" and \"/join #eev\"; in that webchat, try to
+switch between the channels you're connected to by clicking on
+the tabs at the top - and note that there is also a tab for a
+channel-ish thing that has only messages from the server. Try
+also to leave these channels with \"/part\", \"/part #emacs\",
+\"/part #eev\".
 
 In Rcirc each one of these channels, including the server
 channel, becomes an Emacs buffer. The names of these buffers will
@@ -3705,6 +3836,8 @@ be:
   *irc.freenode.net*
   #emacs@irc.freenode.net
   #eev@irc.freenode.net
+
+  (defun eejump-66 () (find-freenode-3a \"#eev\"))
 
 For more information see:
 
@@ -3717,13 +3850,6 @@ For more information see:
   (find-node \"(erc)Top\")
   http://www.emacswiki.org/emacs/ErC
 
-
-
-Eev and 
-
-Not yet!
-========
-See: (find-eev \"eepitch.el\" \"eepitch-freenode\")
 " pos-spec-list)))
 
 ;; (find-rcirc-intro)
@@ -5263,7 +5389,9 @@ The most basic keys of eev are:
         `M-2j' takes you to this help page.
         `M-5j' takes you to: (find-eev-intro)
          See: (find-eejump-intro \"Families\")
-  M-h M-h - hyperlinks to here, plus help
+  M-h M-h - hyperlinks to here, plus help.
+         See: (find-links-intro \"`find-here-links'\")
+
 
 The mnemonics are:
   M-e   - evaluate/execute
