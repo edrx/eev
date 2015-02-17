@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug28
+;; Version:    2015feb17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -87,8 +87,8 @@
 (defun find-callprocess0-ne (program-and-args)
   (ee-no-trailing-nl (find-callprocess00 program-and-args)))
 
-(defun find-comintprocess-ne (name program-and-args)
-  (let ((argv (ee-split program-and-args)))
+(defun find-comintprocess-ne (name &optional program-and-args)
+  (let ((argv (ee-split (or program-and-args name))))
     (apply 'make-comint name (car argv) nil (cdr argv))
     (switch-to-buffer (format "*%s*" name))))
 
@@ -100,8 +100,8 @@
   (find-callprocess0-ne   (ee-split-and-expand program-and-args)))
 (defun find-callprocessregion (program-and-args input)
   (find-callprocessregion (ee-split-and-expand program-and-args)))
-(defun find-comintprocess (name program-and-args)
-  (find-comintprocess-ne   name (ee-split-and-expand program-and-args)))
+(defun find-comintprocess (name &optional program-and-args)
+  (find-comintprocess-ne name (ee-split-and-expand (or program-and-args name))))
 
 ;; These two are like `find-sh', but more low-level.
 (defun find-callprocess-ne (program-and-args &rest pos-spec-list)

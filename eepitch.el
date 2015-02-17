@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug29
+;; Version:    2015feb17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -454,21 +454,21 @@ This function is used by `find-comintprocess', `find-bgprocess'
 and `find-callprocess'."
   (mapcar 'ee-expand (ee-split str)))
 
-(defun find-comintprocess-ne (name program-and-args)
+(defun find-comintprocess-ne (name &optional program-and-args)
   "Switch to the buffer named *NAME* and run the command PROGRAM-AND-ARGS there.
 This function does not run `ee-expand' on the elements of PROGRAM-AND-ARGS."
-  (let ((argv (ee-split program-and-args)))
+  (let ((argv (ee-split (or program-and-args name))))
     (apply 'make-comint name (car argv) nil (cdr argv))
     (switch-to-buffer (format "*%s*" name))))
 
-(defun find-comintprocess (name program-and-args)
+(defun find-comintprocess (name &optional program-and-args)
   "Switch to the buffer named *NAME* and run the command PROGRAM-AND-ARGS there.
 If PROGRAM-AND-ARGS is a string, split it at whitespace to make it a list.
 Each element of PROGRAM-AND-ARGS is expanded with `ee-expand'.
 See: (find-eepitch-intro)"
-  (find-comintprocess-ne   name (ee-split-and-expand program-and-args)))
+  (find-comintprocess-ne name (ee-split-and-expand (or program-and-args name))))
 
-(defun eepitch-comint (name program-and-args)
+(defun eepitch-comint (name &optional program-and-args)
 "Set `eepitch' to run PROGRAM-AND-ARGS in comint mode, in the buffer \"*NAME*\"."
   (eepitch `(find-comintprocess ,name ',program-and-args)))
 
@@ -634,7 +634,7 @@ cd /tmp/\n"
 Use this to control programs that echo the commands that they receive."
   (eepitch `(progn ,code (setq comint-process-echoes t))))
 
-(defun eepitch-comint-de (name program-and-args)
+(defun eepitch-comint-de (name &optional program-and-args)
   "Like `eepitch-comint', but deletes the echoed commands.
 Use this to control programs that echo the commands that they receive."
   (eepitch-de `(find-comintprocess ,name ',program-and-args)))
@@ -658,7 +658,7 @@ Note the DIR is `ee-expand'-ed."
 	(error "Can't chdir to %s" dir))
     (eval code)))
 
-(defun eepitch-comint-at (dir name program-and-args)
+(defun eepitch-comint-at (dir name &optional program-and-args)
   "Like `eepitch-comint', but executes `eepitch-buffer-create' at DIR."
   (ee-at0 dir `(eepitch-comint ,name ,program-and-args)))
 
