@@ -5659,7 +5659,7 @@ it into the shell to run its commands.
   tar -xvzf eev2.tgz
   {
     echo '#!/bin/sh'
-    echo 'cd ~/eev/ && emacs --eval=\"(find-eev-quick-intro)\"'
+    echo 'cd ~/eev/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
   } > ~/e
   chmod 755 ~/e
 }
@@ -5707,9 +5707,9 @@ different indicated positions - you should get different results...
 debugger that is hard to leave if it finds errors, so let's see
 something better.
 
-When you type `M-e' emacs moves the point to the end of the current
-line, then run a variant of `C-x C-e'. Try this on each line of the
-block below:
+When you type `M-e' emacs moves the point to the end of the
+current line, then runs a variant of `C-x C-e'. Try this on each
+line of the block below:
 
   (+ (* 2 3)
      (* 4 5)
