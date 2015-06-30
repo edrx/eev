@@ -75,6 +75,7 @@
 ;; «.find-defun-intro»		(to "find-defun-intro")
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
 ;; «.find-org-intro»		(to "find-org-intro")
+;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
 
 ;; See: (find-anchors-intro)
 
@@ -150,6 +151,7 @@ workshops, but that are not very eev-specific:
 
    A. (find-emacs-intro)
    B. (find-defun-intro)
+   C. (find-eev-quick-intro)
 
 
 
@@ -5609,6 +5611,331 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
 " pos-spec-list)))
 
 ;; (find-org-intro)
+
+
+
+
+
+;; «find-eev-quick-intro» (to ".find-eev-quick-intro")
+;; (find-intro-links "eev-quick")
+
+(defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
+    (apply 'find-estring "\
+\\(Re)generate: (find-eev-quick-intro)
+Source code:  (find-efunction 'find-eev-quick-intro)
+More intros:  (find-eev-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+This is a tutorial for real beginners.
+It supposes that you have Emacs installed.
+
+
+1. Installing eev
+=================
+Start by watching the video at
+
+  http://angg.twu.net/eev-videos/eev-quick.mp4
+
+to see how things should look like.
+Then open the page at
+
+  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+
+in a browser, and open a terminal running a shell. Mark the multi-line
+\"{ ... }\" block below, copy it to the clipboard with ctrl-C, and paste
+it into the shell to run its commands.
+
+{
+  rm -Rv ~/eev/
+  mkdir  ~/eev/
+  cd     ~/eev/
+  rm -v eev2.tgz
+  wget http://angg.twu.net/eev-current/eev2.tgz
+  tar -xvzf eev2.tgz
+  {
+    echo '#!/bin/sh'
+    echo 'cd ~/eev/ && emacs --eval=\"(find-eev-quick-intro)\"'
+  } > ~/e
+  chmod 755 ~/e
+}
+
+You now have a shell script that you can invoke with
+
+  ~/e
+
+that starts Emacs, loads eev, and opens a copy of this tutorial.
+
+Every time that Emacs gets stuck into something that you don't know
+how to leave, or how to undo, you should kill the Emacs window and
+start it again by typing \"~/e\" again in the shell prompt.
+
+Eventually you will learn how go get out of everything and how to undo
+almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
+This tutorial is intented to make you learn the most essential things
+in the first ten minutes - including how to navigate in Emacs's
+manuals.
+
+
+
+
+2. Evaluating Lisp
+==================
+The most important idea in Emacs is that Lisp code can appear
+anywhere, and you can evaluate a Lisp expression (a \"sexp\") by
+placing the cursor (the \"point\") just after it and typing `C-x
+C-e'; the result is then displayed in the echo area.
+
+Note: `C-e' means control-E, `M-e' means alt-e, `M-E' means
+alt-shift-e. If you have Caps Lock on then Emacs will receive an `M-E'
+if you type alt-e, and `M-e' if you type alt-shift-e. Hint: avoid Caps
+Lock!
+
+You can try `C-x C-e' in the line below, with the point in the three
+different indicated positions - you should get different results...
+
+  (+ (* 2 3) (* 4 5))
+            ^       ^^
+            |       | \\
+            6      20  26
+
+...but `C-x C-e' is not beginner-friendly, and it even enters a
+debugger that is hard to leave if it finds errors, so let's see
+something better.
+
+When you type `M-e' emacs moves the point to the end of the current
+line, then run a variant of `C-x C-e'. Try this on each line of the
+block below:
+
+  (+ (* 2 3)
+     (* 4 5)
+     )
+
+`M-e' accepts several different numeric prefixes that alter its
+behavior. We are only interested in one of them now - `M-0 M-e'
+highlights the sexp for a fraction of a second insted of executing it.
+Try it above.
+
+
+
+
+3. Elisp hyperlinks
+===================
+Each one of the sexps below makes Emacs \"go somewhere\" if you execute
+it with `M-e'. Executing sexps like those - we will call them \"elisp
+hyperlinks\" - is like following a hyperlink in a browser.
+
+In a browser you can \"go back\" after following a hyperlink because the
+previous page is kept in the memory somehow. In Emacs+eev the easiest
+way to \"go back\" is with `M-k', which runs a function called
+`ee-kill-this-buffer'. If you follow one of the links below with
+`M-e', it creates a new buffer and displays it. If you then type `M-k'
+this new buffer is killed, and Emacs displays the buffer that was just
+below it, which is this tutorial... try it! Here are some nice elisp
+hyperlinks:
+
+  (find-fline \"/tmp/\")
+  (find-efunctiondescr 'find-file)
+  (find-man \"cat\")
+
+The following elisp hyperlinks may or may not work - try them too, but
+be aware that they may show errors instead of opening a new browser.
+The first one opens a page - actually a section, whose short title is
+\"Lisp Eval\" - from the main Emacs manual. The second one opens the
+file with the source code (in Lisp) for the function `find-file'.
+
+  (find-node \"(emacs)Lisp Eval\")
+  (find-efunction 'find-file)
+
+If they don't work that means that you don't have the Emacs manuals,
+or the elisp source files, installed. The names for the packages which
+have those things vary from one GNU/Linux distro to another. On Debian
+something like
+
+  sudo apt-get install emacs24-el
+  sudo apt-get install emacs24-common-non-dfsg
+
+may work - but \"emacs24-common-non-dfsg\" may need you to enable
+access to the \"non-free\" respository... ask for help if you need!
+
+
+
+4. Creating Elisp Hyperlinks
+============================
+You can write elisp hyperlinks by hand, but that is hard.
+
+The \"normal\" way of using eev is to use hyperlinks a lot - every time
+you find something interesting you put a hyperlink to it into the file
+where you keeping your notes, so that it will be trivial to go back
+there later.
+
+When you type `M-h M-h' you get a temporary buffer with lots of
+hyperlinks, some of them pointing to where you were before typing `M-h
+M-h'. By using cut and paste between that buffer and where you keep
+you notes, creating hyperlinks become easy... but we will see how to
+do cut and paste and how to edit files later.
+
+
+
+5. Links to Emacs documentation
+===============================
+Try these links (some of them need the Emacs manuals installed):
+
+  (find-emacs-intro \"Cutting & pasting\")
+  (find-node \"(emacs)Screen\")
+  (find-efunctiondescr 'find-file)
+  (find-efunction-links 'find-file)
+
+This part of the eev tutorials has links to almost all the keys that
+I've learned by heart after using Emacs for 20 years:
+
+  (find-emacs-intro \"Basic keys (Emacs)\")
+
+They are not very many, because I use this,
+
+  (find-node \"(emacs)M-x\")
+
+and I use elisp hyperlinks to create quick reminders for the keys that
+I only need to remember when I am performing specific tasks.
+
+Moral: when you want a quick reference of the main Emacs and eev keys,
+type `M-2 M-j'.
+
+
+
+6. Controlling shell-like programs
+==================================
+This is the second main feature of eev. The hyperlinks thing used the
+keys `M-e', `M-k', and `M-h M-h', plus standard Emacs keys for cutting
+and pasting. The module of eev that controls shell-like programs - it
+is called \"eepitch\" - uses `<F8>' and `M-T'. Note that it is
+`alt-shift-t', to not interfere with Emacs's `M-t'.
+
+The sections below were copied from here:
+
+  (find-eepitch-intro \"The main key: <F8>\")
+
+
+
+7. The main key: <F8>
+=====================
+Emacs can run a shell in a buffer, and it can split its frame
+into windows, like this:
+   ___________________
+  |         |         |
+  |   our   |    a    |
+  |  notes  |  shell  |
+  |         |  buffer |
+  |_________|_________|
+
+The usual way to use a shell buffer is to move the cursor there
+and type commands into its prompt; the eepitch-y way is to leave
+the cursor at the \"notes\" buffer, write the commands for the
+shell there, and send these commands to the shell with <F8>.
+
+Here's what <F8> does:
+
+  When we type <F8> on a line that starts with a red
+  star (\"\"), it executes the rest of the line as Lisp, and
+  moves down; when we type <F8> on a line that does not start
+  with a \"\", it makes sure that the \"target buffer\" is being
+  displayed (the \"target\" is usually the buffer called
+  \"*shell*\"), it \"send\"s the current line to the target
+  buffer, and moves down.
+
+  \"Sending the current line to the target buffer\" means copying
+  the contents of the current line to the target - as if the user
+  had typed that line there by hand -, then \"typing\" a <RET> at
+  the target buffet.
+
+Please try that in the example after this paragraph, by typing
+<F8> six times starting at the first line that says
+\" (eepitch-shell)\". The three red star lines at the top will
+create a target buffer, destroy it, and create it again; the
+other three lines will send commands to the target shell.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo \"We are at: $PWD\"
+cd /tmp/
+echo \"We changed to: $(pwd)\"
+
+
+
+
+8. Other targets
+================
+Just like `(eepitch-shell)' creates a shell buffer and sets the
+eepitch target to it, `(eepitch-python)' creates a buffer with a
+Python interpreter and uses it as the eepitch target. Try:
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+def square (x):
+    return x*x
+
+print(square(5))
+
+  We can use several targets at the time, alternating between them.
+  For example:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
+9. Creating eepitch blocks: `M-T'
+=================================
+Write just \"shell\" or \"python\" in a line, then type
+`M-T' (i.e., meta-shift-t) there. The line will be turned into
+three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
+\" (eepitch-xxx)\". We call these blocks of three lines
+\"eepitch blocks\". Try this below, converting the \"shell\" into
+an eepitch block for starting a shell.
+
+shell
+pwd
+cd /tmp/
+pwd
+
+
+
+
+10. Red stars
+=============
+Eepitch.el sets the glyph for the char 15 to a red star in the
+standard display table. In layman's terms: eepitch.el tells Emacs
+that the character 15 should be displayed as a red star. The
+character 15 corresponds to control-O, whose default
+representation on screen would be \"^O\". You can enter a
+literal ^O in a buffer by typing `C-q C-o'.
+
+
+(To be continued...)
+" pos-spec-list)))
+
+;; (find-eev-quick-intro)
+
 
 
 
