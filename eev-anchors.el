@@ -64,6 +64,30 @@
 
 
 
+;;;                  _        _       _   _       _ 
+;;;   ___  ___      | |_ ___ | | __ _| |_(_)_ __ / |
+;;;  / _ \/ _ \_____| __/ _ \| |/ _` | __| | '_ \| |
+;;; |  __/  __/_____| || (_) | | (_| | |_| | | | | |
+;;;  \___|\___|      \__\___/|_|\__,_|\__|_|_| |_|_|
+;;;                                                 
+;; 2017jul29: this is a low-level hack to allow anchors like "«tag»"
+;; to work on both unibyte and multibyte buffers and files without
+;; requiring the user to set the variable `ee-anchor-format' in the
+;; local variables section.
+
+(defun ee-to-coding (coding str)
+  (ee-no-properties (decode-coding-string str coding)))
+
+(defun ee-tolatin1 (str)
+  "Make STR compatible with both unibyte and multibyte buffers.
+Convert STR to a multibyte format that works in both
+unibyte (raw-text) and multibyte (e.g., utf-8) buffers. This may
+fail if STR contains chars that are not in the latin-1 range.
+This function is used by `ee-format-as-anchor'."
+  (ee-to-coding 'latin-1 str))
+
+
+
 
 ;;;                   _                      __                            _   
 ;;;   __ _ _ __   ___| |__   ___  _ __      / _| ___  _ __ _ __ ___   __ _| |_ 
@@ -81,7 +105,7 @@
 (defun ee-format-as-anchor (tag)
   "Convert TAG into an anchor using `ee-anchor-format'."
   (if ee-anchor-format
-      (format ee-anchor-format tag)
+      (format (ee-tolatin1 ee-anchor-format) tag)
     (error "`ee-anchor-format' is nil - can't convert string to anchor")))
 
 
@@ -107,9 +131,9 @@ searches for the first occurrence of \"<<foo>>\" in the current
 buffer, then for the first occurrence of \"bar\" after that. If
 \"<<foo>>\" is not found then do not move point.
 
-It is good style to set `ee-goto-anchor' globally to nil and only
-use anchors in files where `ee-anchor-format' is declared in the
-local variables section of the file; see:
+It is good style to set `ee-anchor-format' globally to nil and
+only use anchors in files where `ee-anchor-format' is declared in
+the local variables section of the file; see:
 
   (find-node \"(emacs)File Variables\")
   (find-node \"(emacs)Specifying File Variables\")

@@ -3,7 +3,7 @@
 ;;; and that are not created by `code-c-d' and friends.
 
 ;; Copyright (C) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,
-;; 2009,2010,2011,2012,2013,2014 Free Software Foundation, Inc.
+;; 2009,2010,2011,2012,2013,2014,2016 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet) part of GNU eev.
 ;;
@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2014oct10
+;; Version:    2016apr20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -51,6 +51,7 @@
 ;; «.find-Package»		(to "find-Package")
 ;; «.find-epp»			(to "find-epp")
 ;; «.find-einternals»		(to "find-einternals")
+;; «.find-eejumps»		(to "find-eejumps")
 
 
 
@@ -791,9 +792,11 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 ;;; |_| |_|_| |_|\__,_|      \___|\___|/ |\__,_|_| |_| |_| .__/|___/
 ;;;                                  |__/                |_|        
 ;;
-;; A hack to diplay all the current eejump targets.
-;; Should this be here? See: (find-eev "eejump.el")
-;; Try: (find-eejumps)
+;; «find-eejumps» (to ".find-eejumps")
+;; Display all the current eejump targets.
+;; Related to: (find-eev "eejump.el")
+;; Try:        (find-eejumps)
+;; See:        (find-eev-quick-intro "find-eejumps")
 
 (defun ee-defun-sexp-for (symbol) 
   `(defun ,symbol ,@(cdr (symbol-function symbol))))
@@ -803,13 +806,23 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
    "^(defun \\([^ ]+\\) nil " "(defun \\1 () "
    (ee-S (ee-defun-sexp-for symbol))))
 
-(defun eejump-symbols ()
+(defun ee-eejump-symbols ()
   (apropos-internal "^eejump-[0-9]*\\*?$"))
 
+(defun ee-find-eejumps-header ()
+  ";; (find-eejumps)
+;; See: (find-eev-quick-intro \"7.1. eejump\")
+;;      (find-eejump-intro)
+;; Current eejump targets:\n\n")
+
+(defun ee-find-eejumps-body ()
+  (mapconcat 'ee-defun-str-for (ee-eejump-symbols) "\n"))
+
 (defun find-eejumps (&rest pos-spec-list) (interactive)
+  "See: (find-eev-quick-intro \"find-eejumps\")"
   (apply 'find-estring-elisp
-	 (concat ";; (find-eejumps)\n\n"
-		 (mapconcat 'ee-defun-str-for (eejump-symbols) "\n"))
+	 (concat (ee-find-eejumps-header)
+		 (ee-find-eejumps-body))
 	 pos-spec-list))
 
 

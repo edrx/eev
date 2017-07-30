@@ -1,6 +1,6 @@
 ;;; eejump.el -- jump quickly to predefined places.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2016 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,21 +19,26 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013sep08
+;; Version:    2016sep23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eejump.el.html>
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eejump-intro.html>
 ;;                                                (find-eev-intro)
+;;                                                (find-eev-quick-intro)
 ;;                                                (find-eejump-intro)
 
 ;;; Commentary:
 
-;; See: (find-eejump-intro)
-;; and: (find-eev "eev-wrap.el" "eewrap-eejump")
+;; See: (find-eev-quick-intro "7.1. eejump")
+;;      (find-eev-quick-intro "7.1. eejump" "meta-uppercase-j")
+;;      (find-eejump-intro)
+;;      (find-eev "eev-wrap.el" "eewrap-eejump")
+;;      (find-eev "eev-blinks.el" "find-eejumps")
 
 
 
@@ -44,10 +49,11 @@
 (define-key eev-mode-map "\M-j" 'eejump)
 
 (defun eejump (arg)
-  "See: (find-eejump-intro)"
+  "See: (find-eev-quick-intro \"7.1. eejump\")
+and: (find-eejump-intro)"
   (interactive "P")
   (if (null arg)
-      (eejump-*)
+      (find-eejumps)			; was: (eejump-*)
     (if (fboundp (intern (format "eejump-%d" arg)))
 	(funcall (intern (format "eejump-%d" arg)))
       (eejump-str* (format "%d" arg)))))

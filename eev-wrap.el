@@ -1,8 +1,8 @@
 ;;; eev-wrap.el --- wrap the current line into a hyperlink
 
-;; Copyright (C) 2013 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2016 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet?) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013dec10
+;; Version:    2016sep23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -174,9 +174,11 @@ have to run an \"undo\"."
     (error "Does not match")))
 (defun ee-wrap-anchor0 (prefix anchor)
   "An internal function used by `ee-wrap-anchor'."
-  (ee-template0 "\
+  (ee-template0 (ee-tolatin1 "\
 {prefix}«.{anchor}»\t(to \"{anchor}\")
-{prefix}«{anchor}» (to \".{anchor}\")"))
+{prefix}«{anchor}» (to \".{anchor}\")")))
+
+
 
 
 ;;;  __  __        ____                   _                          _ 
@@ -237,16 +239,28 @@ have to run an \"undo\"."
 ;;; |_|  |_|      \___/(_)  \___|\___|/ |\__,_|_| |_| |_| .__/ 
 ;;;                                 |__/                |_|    
 ;;
-;; See: (find-eejump-intro "Producing `eejump-nnn's and `eejump-nnn*'s")
+;; See: (find-eev-quick-intro "7.1. eejump")
+;;      (find-eev-quick-intro "7.1. eejump" "meta-uppercase-j")
+;; Old: (find-eejump-intro "Producing `eejump-nnn's and `eejump-nnn*'s")
 (define-key eev-mode-map "\M-J" 'eewrap-eejump)
 
 (defun  eewrap-eejump () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-eejump))
 (defun ee-wrap-eejump (n sexp)
   "An internal function used by `eewrap-eejump'."
-  (if (equal sexp "")
-      (ee-template0 "(defun eejump-{n}* () (find-efunction 'eejump-{n}*))")
-    (ee-template0   "(defun eejump-{n} () {sexp})")))
+  (if (string-match-p "^[0-9]+$" n)
+    (if (equal sexp "")
+        (ee-template0 "(defun eejump-{n}* () (find-efunction 'eejump-{n}*))")
+      (ee-template0   "(defun eejump-{n} () {sexp})"))
+    (ee-template0     "(defun {n} () (interactive) {sexp})")))
+;;
+;; Old:
+;; (defun ee-wrap-eejump (n sexp)
+;;   "An internal function used by `eewrap-eejump'."
+;;   (if (equal sexp "")
+;;       (ee-template0 "(defun eejump-{n}* () (find-efunction 'eejump-{n}*))")
+;;     (ee-template0   "(defun eejump-{n} () {sexp})")))
+
 
 
 ;;;  __  __       __  __                           

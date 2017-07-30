@@ -227,6 +227,7 @@
 (defalias 'find-djvupage
           'find-djvu-page)
 (defun     find-djvu-page (fname &optional page &rest rest)
+  (ee-find-djvu-cleanup fname)
   (find-bgprocess (ee-find-djvu-page fname page)))
 (defvar ee-find-djvu-page-options '())
 (defun  ee-find-djvu-page (fname &optional page)
@@ -244,6 +245,9 @@
 \(defun find-{c}page (&optional page &rest rest)
   (find-djvu-page {(ee-pp0 fname)} page))
 ")  (ee-code-pdftext-rest rest)))
+
+(defun ee-find-djvu-cleanup (&optional fname)
+  "A hack: clean up djview's 'recentFiles=' line in the config file if needed.")
 
 (code-brfile 'find-djvu-page :local 'brdjvul :dired 'brdjvud)
 

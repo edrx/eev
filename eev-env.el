@@ -1,6 +1,6 @@
 ;;; eev-env.el -- set some environment variables.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2016 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012nov02
+;; Version:    2016sep18
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-env.el>
@@ -56,20 +56,79 @@
 ;; (find-eevrcfile ".bashrc")
 ;; (find-eevrcfile ".zshrc")
 
+;; Note: `ee-setenv' and its calls for "S" and "EEVDIR" were moved to:
+;;   (find-eev "eev.el" "ee-setenv")
+;;
 (defun ee-setenv (envvar value)
   "In case the environment variable ENVVAR was not set set it to VALUE."
   (if (null (getenv envvar))
       (setenv envvar (ee-expand value))))
 
-(ee-setenv "S" "~/snarf")	; for `find-psne-links'
+(ee-setenv "S" "~/snarf")       ; for `find-psne-links'
 
-;; Obsolete? See:
-;; (find-eev "eev-bounded.el")
-;; (find-eev "eev.el" "ee-setenv")
 (ee-setenv "EEVDIR"
-	   (let ((fname (locate-library "eev")))
-	     (if fname (directory-file-name (file-name-directory fname))
-	       "~/eev-current")))	; eev.el, etc
+           (let ((fname (locate-library "eev")))
+             (if fname (directory-file-name (file-name-directory fname))
+               "~/eev-current")))       ; eev.el, etc
+
+
+
+
+;;;                          _ _   _                           
+;;;   ___  ___     __      _(_) |_| |__         ___ _ ____   __
+;;;  / _ \/ _ \____\ \ /\ / / | __| '_ \ _____ / _ \ '_ \ \ / /
+;;; |  __/  __/_____\ V  V /| | |_| | | |_____|  __/ | | \ V / 
+;;;  \___|\___|      \_/\_/ |_|\__|_| |_|      \___|_| |_|\_/  
+;;;                                                            
+;; `ee-with-env' run a sexp in a modified environment.
+;; Tests:
+;;
+;; (ee-with-env '(("FOO" "~/foo") ("FOOL" "oo")) '(find-sh0 "set | grep -a FOO"))
+;; (ee-with-env '(("FOO" "~/foo")  "FOOL=oo")    '(find-sh0 "set | grep -a FOO"))
+;; (ee-with-env    "FOO=~/foo       FOOL=oo"     '(find-sh0 "set | grep -a FOO"))
+;; (ee-with-env    ""                            '(find-sh0 "set | grep -a FOO"))
+;;
+;; (ee-with-env0 '("A" "B=" "C=~/foo" ("D") ("E" "") ("F" "$SHELL")))
+;;   --> ("A" "B=" "C=/home/edrx/foo" "D" "E=" "F=/usr/bin/zsh")
+;; (ee-with-env0 "A B= C=~/foo")
+;;   --> ("A" "B=" "C=/home/edrx/foo")
+;;
+;; See:
+;; (find-evardescr 'process-environment "without \"=VALUE\"")
+;; (find-evardescr 'process-environment "first one")
+
+(defun ee-with-env (changes code)
+  "Run the sexp CODE with the changes CHANGES in the environment.
+CHANGES can be a list of (\"VAR\" \"VALUE\") pairs, a list of
+\"VAR=VALUE\" strings, or a string that is split into
+\"VAR=VALUE\" substrings at whitespace. Each \"VALUE\" is
+expanded with `ee-expand'.\n
+See the source for details, examples, and tests."
+  (eval `(let ((process-environment
+		(append (ee-with-env0 ',changes) process-environment)))
+	   ,code)))
+
+(defun ee-with-env0 (changes)
+  "An internal function used by `ee-with-env'. See the source."
+  (mapcar 'ee-with-env00 (if (stringp changes) (ee-split changes) changes)))
+
+(defun ee-with-env00 (change)
+  "An internal function used by `ee-with-env'. See the source."
+  (if (stringp change)			              
+      ;; cases "A", "B=", "C=...":
+      (let ((pos (string-match "=" change)))
+	(if (not pos)				      
+	    change                                   ; case "A"
+	  (let ((var (substring change 0 pos))        
+		(val (substring change (1+ pos))))
+	    (format "%s=%s" var (ee-expand val)))))  ; cases "B=" and "C=..."
+    ;; cases ("D"), ("E" ""), ("F" "$FOO"):
+    (if (not (cdr change))
+	(car change)			              
+      (format "%s=%s" (car change) (ee-expand (cadr change))))))
+
+
+
 
 (provide 'eev-env)
 
