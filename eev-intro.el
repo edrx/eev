@@ -5624,7 +5624,7 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
 
 (defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-estring (ee-tolatin1 "\
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
 More intros:  (find-eev-intro)
@@ -6358,27 +6358,47 @@ mentioned here:
 
   (find-wrap-intro \"All wrapping functions\")
 
-It will convert a line with a syntax like
+It will convert a line with a syntax like this (note the `<' and
+the '>'!),
 
-  comment-prefix <anchor-name>
+  comment-prefix <tag>
 
-into:
+into this:
 
-  comment-prefix «.anchor-name»	(to \"anchor-name\")
-  comment-prefix «anchor-name» (to \".anchor-name\")
+  comment-prefix «.tag»	(to \"tag\")
+  comment-prefix «tag» (to \".tag\")
 
-where comment-prefix is any string and anchor-name is a string
-without `<>'s. Note that the `<>'s, which are easy to type, are
-converted into `«»'s, which are harder.
+where comment-prefix is any string and tag is a string without
+`<>'s. Note that the `<>'s, which are easy to type, are converted
+into `«»'s, which are much harder to type. Try it, using `M-A' on
+the lines below:
+
+  % <foo>
+  # <bar>
 
 
 
+
+8.4. Creating e-script blocks
+-----------------------------
+Use `M-B' (`eewrap-anchor'). [To  be written]
+
+
+
+
+8.5. Hyperlinks to anchors in other files
+-----------------------------------------
+\[Explain code-c-d, find-code-c-d, :anchor and M-h M--]
+
+  (find-eevfile \"\")
+  (find-eevfile \"eev-tlinks.el\")
+  (find-eev \"eev-tlinks.el\")
 
 
 
 
 \(To be continued...)
-" pos-spec-list)))
+") pos-spec-list)))
 
 ;; end of defun
 

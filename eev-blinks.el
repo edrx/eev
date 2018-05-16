@@ -807,7 +807,7 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
    (ee-S (ee-defun-sexp-for symbol))))
 
 (defun ee-eejump-symbols ()
-  (apropos-internal "^eejump-[0-9]*\\*?$"))
+  (apropos-internal "^eejump-[0-9]*\\*?$" 'fboundp))
 
 (defun ee-find-eejumps-header ()
   ";; (find-eejumps)

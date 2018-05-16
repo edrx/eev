@@ -1,6 +1,6 @@
 ;;; eev-wrap.el --- wrap the current line into a hyperlink
 
-;; Copyright (C) 2013,2016 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2016,2017 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2016sep23
+;; Version:    2017jul31
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -177,6 +177,35 @@ have to run an \"undo\"."
   (ee-template0 (ee-tolatin1 "\
 {prefix}«.{anchor}»\t(to \"{anchor}\")
 {prefix}«{anchor}» (to \".{anchor}\")")))
+
+
+
+
+;;;  __  __       _                            _       _     _     _ _    
+;;; |  \/  |     | |__ _    ___  ___  ___ _ __(_)_ __ | |_  | |__ | | | __
+;;; | |\/| |_____| '_ (_)  / _ \/ __|/ __| '__| | '_ \| __| | '_ \| | |/ /
+;;; | |  | |_____| |_) |  |  __/\__ \ (__| |  | | |_) | |_  | |_) | |   < 
+;;; |_|  |_|     |_.__(_)  \___||___/\___|_|  |_| .__/ \__| |_.__/|_|_|\_\
+;;;                                             |_|                       
+(define-key eev-mode-map "\M-B" 'eewrap-escript-block)
+
+(defun  eewrap-escript-block () (interactive)
+  (ee-this-line-wrapn 2 'ee-wrap-escript-block))
+(defun ee-wrap-escript-block (anchor title &optional date)
+  "An internal function used by `ee-wrap-escript-block'."
+  (setq date (or date (downcase (format-time-string "%Y%b%d"))))
+  (if (equal title "") (setq title anchor))
+  (ee-template0 (ee-tolatin1 "\
+#####
+#
+# {title}
+# {date}
+#
+#####
+
+# «.{anchor}»\t(to \"{anchor}\")
+# «{anchor}» (to \".{anchor}\")")))
+
 
 
 

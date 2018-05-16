@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2017abr29
+;; Version:    2017set27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -58,6 +58,7 @@
 ;; «.find-eev-video-links»	(to "find-eev-video-links")
 ;;
 ;; «.find-latex-links»		(to "find-latex-links")
+;; «.find-lua-links»		(to "find-lua-links")
 
 
 
@@ -1539,6 +1540,66 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 
 ;; Tests: (find-latex-links)
 ;;        (find-latex-links "/tmp/foo")
+
+
+
+
+
+
+;;;   __ _           _       _                   _ _       _        
+;;;  / _(_)_ __   __| |     | |_   _  __ _      | (_)_ __ | | _____ 
+;;; | |_| | '_ \ / _` |_____| | | | |/ _` |_____| | | '_ \| |/ / __|
+;;; |  _| | | | | (_| |_____| | |_| | (_| |_____| | | | | |   <\__ \
+;;; |_| |_|_| |_|\__,_|     |_|\__,_|\__,_|     |_|_|_| |_|_|\_\___/
+;;;                                                                 
+;; «find-lua-links» (to ".find-lua-links")
+;; (find-find-links-links "{k}" "lua" "fname")
+;;
+;; Test: (find-sh0 "rm -v /tmp/foo.lua")
+;;       (find-lua-links "/tmp/foo.lua")
+;;
+(defun find-lua-links (&optional fname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for foo."
+  (interactive)
+  (setq fname (or fname "{fname}"))
+  (let ((dir    (file-name-directory    fname))
+	(fname0 (file-name-nondirectory fname)))
+    (find-elinks
+     `((find-lua-links ,fname ,@pos-spec-list)
+       (find-lua-links "~/LUA/foo.lua")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-lua-links)
+       ""
+       (find-fline ,dir ,fname0)
+       (find-fline ,fname)
+       (find-sh0 ,(format "touch %s && chmod 755 %s" fname fname))
+       ""
+       (ee-copy-rest 1 '(find-fline ,fname))
+       ""
+       ,(ee-template0 "\
+#!/usr/bin/env lua5.1
+-- (defun c () (interactive) (find-sh \"cd {dir}; ./{fname0}\"))
+-- (defun d () (interactive) (find-fline \"{dir}\"))
+-- (defun e () (interactive) (find-fline \"{fname}\"))
+--
+-- (find-sh \"./{fname0} arg1 arg2\")
+--
+-- (find-lua51manual \"\")
+-- (find-pil2page 8 \"Contents\")
+-- (find-pil2text 8 \"Contents\")
+-- (find-fline \"~/LUA/lua50init.lua\")
+
+print(\"Hello from {fname}\")
+
+--[[
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+dofile \"{fname0}\"
+
+--]]\
+")
+     ))))
 
 
 
