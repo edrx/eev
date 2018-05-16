@@ -70,6 +70,7 @@
 (require 'eev-brxxx)	       ; (find-eev "eev-brxxx.el")
 (require 'eev-pdflike)	       ; (find-eev "eev-pdflike.el")
 (require 'eev-audiovideo)      ; (find-eev "eev-audiovideo.el")
+(require 'eev-codings)	       ; (find-eev "eev-codings.el")
 (require 'eev-anchors)	       ; (find-eev "eev-anchors.el")
 
 ;; User stuff.

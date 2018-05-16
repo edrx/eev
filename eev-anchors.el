@@ -1,6 +1,6 @@
 ;;; eev-anchors.el -- hyperlinks to anchors.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2018 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012nov02
+;; Version:    2018mai16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-anchors.el>
@@ -32,10 +32,14 @@
 
 ;;; Commentary:
 
+;; See the tutorial on anchors here:
+;;   (find-eev-quick-intro "8. Anchors")
+
 
 
 
 (require 'eepitch)             ; (find-eev "eepitch.el")
+(require 'eev-codings)         ; (find-eev "eev-codings.el")
 
 		 
 
@@ -60,31 +64,6 @@
 
 (eepitch-set-glyph 171 171 'eev-glyph-face-green)
 (eepitch-set-glyph 187 187 'eev-glyph-face-green)
-
-
-
-
-;;;                  _        _       _   _       _ 
-;;;   ___  ___      | |_ ___ | | __ _| |_(_)_ __ / |
-;;;  / _ \/ _ \_____| __/ _ \| |/ _` | __| | '_ \| |
-;;; |  __/  __/_____| || (_) | | (_| | |_| | | | | |
-;;;  \___|\___|      \__\___/|_|\__,_|\__|_|_| |_|_|
-;;;                                                 
-;; 2017jul29: this is a low-level hack to allow anchors like "«tag»"
-;; to work on both unibyte and multibyte buffers and files without
-;; requiring the user to set the variable `ee-anchor-format' in the
-;; local variables section.
-
-(defun ee-to-coding (coding str)
-  (ee-no-properties (decode-coding-string str coding)))
-
-(defun ee-tolatin1 (str)
-  "Make STR compatible with both unibyte and multibyte buffers.
-Convert STR to a multibyte format that works in both
-unibyte (raw-text) and multibyte (e.g., utf-8) buffers. This may
-fail if STR contains chars that are not in the latin-1 range.
-This function is used by `ee-format-as-anchor'."
-  (ee-to-coding 'latin-1 str))
 
 
 
@@ -117,7 +96,8 @@ This function is used by `ee-format-as-anchor'."
 ;;; |  _| | | | | (_| |_____| (_| | | | | (__| | | | (_) | |   
 ;;; |_| |_|_| |_|\__,_|      \__,_|_| |_|\___|_| |_|\___/|_|   
 ;;;                                                            
-;; See: (find-eval-intro "Anchors and pages")
+;; See: (find-eev-quick-intro "8. Anchors")
+;;      (find-eval-intro "Anchors and pages")
 
 (defun ee-goto-anchor (&optional tag &rest rest)
   "Like `ee-goto-position', but TAG is converted to an anchor.

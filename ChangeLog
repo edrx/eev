@@ -1,3 +1,13 @@
+2018-05-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-codings.el (ee-to-coding,ee-tolatin1): new file, with these
+	two functions plus comments.
+
+	* eev-anchors.el (ee-to-coding,ee-tolatin1): moved to
+	eev-codings.el.
+
+	* eev2-all.el: load eev-codings.el.
+
 2018-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-eejump-symbols): add a test for `fboundp'.
