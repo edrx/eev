@@ -1,6 +1,7 @@
 ;;; eev-intro.el --- intro scripts for eev
 
-;; Copyright (C) 2013,2014,2016,2017 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2014,2016,2017,2018 Free Software Foundation,
+;; Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2017jul29
+;; Version:    2018mai24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -38,17 +39,35 @@
 ;;   (find-wrap-intro)
 ;;   (find-code-c-d-intro)
 ;;
-;; Note (2013nov12):
-;; I am using the code below to edit these intros...
-;; Note that it is commented out - and HOW it is commented out!
+
 '
 (progn
-  (defun ee-sexp-at (re) (save-excursion (re-search-forward re) (ee-last-sexp)))
-  (setq ee-intro-end-re "\\(rest\\|pos-spec-list\\))))")
-  (defun ee-intro-here () (eval (read (ee-sexp-at ee-intro-end-re))))
-  (defun d0 () (funcall (ee-intro-here) (ee-last-kill)))
-  (defun d () (interactive) (find-2b nil '(d0)))
-  )
+
+;; A hack to help me (edrx) edit these intros.
+;; Note that it is commented out - and how it is commented out!
+
+;; Test: (ee-sexp-at "2)")
+;;               (+ 1 2)
+(defun ee-sexp-at (re)
+  (save-excursion (re-search-forward re) (ee-last-sexp)))
+
+(setq ee-intro-sexp-end-re "\\(rest\\|pos-spec-list\\))))")
+
+(defun ee-intro-sexp-here ()
+  "Go to the end of the defun around point and `read' it.
+Only works for \"(defun find-xxx-intro ...)s\"."
+  (read (ee-sexp-at ee-intro-sexp-end-re)))
+
+(defun find-intro-here ()
+  "Evaluate the defun around point, run it, search for (ee-last-kill).
+Only works for \"(defun find-xxx-intro ...)s\"."
+  (interactive)
+  (eval (ee-intro-sexp-here))
+  (find-2b nil '(funcall (cadr (ee-intro-sexp-here)) (ee-last-kill))))
+
+(defalias 'fh 'find-intro-here)
+
+)
 
 
 
@@ -74,9 +93,11 @@
 ;; «.find-videos-intro»		(to "find-videos-intro")
 
 ;; «.find-defun-intro»		(to "find-defun-intro")
+;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
 ;; «.find-org-intro»		(to "find-org-intro")
 ;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
+;; «.find-escripts-intro»	(to "find-escripts-intro")
 
 ;; See: (find-anchors-intro)
 
@@ -105,7 +126,8 @@
     (apply 'find-estring "\
 \(Re)generate: (find-eev-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eev-intro\")
-Main intros:  (find-eval-intro)
+Main intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
               (find-wrap-intro)
 Index to the source files: (find-eev \"eev2-all.el\")
@@ -298,10 +320,16 @@ For the full lists of keybindings, see:
     (apply 'find-estring "\
 \(Re)generate: (find-eval-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eval-intro\")
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+
+
+
+For an introduction to the ideas here, see:
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+
 
 
 
@@ -663,10 +691,16 @@ hyperlinks in scripts]
     (apply 'find-estring "\
 \(Re)generate: (find-eepitch-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eepitch-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-wrap-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial (for eepitch) and a sandbox.
+
+
+
+For an introduction to the ideas here, see:
+  (find-eev-quick-intro \"6. Controlling shell-like programs\")
 
 
 
@@ -891,10 +925,16 @@ What functions can generate target buffers:
     (apply 'find-estring-lv "\
 \(Re)generate: (find-wrap-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-wrap-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+
+
+
+For an introduction to the ideas here, see:
+  (find-eev-quick-intro \"6. Controlling shell-like programs\")
 
 
 
@@ -1116,7 +1156,8 @@ kinds of scripts.
     (apply 'find-estring "\
 \(Re)generate: (find-links-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-links-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -1667,7 +1708,8 @@ scripts etc\]
     (apply 'find-estring "\
 \(Re)generate: (find-code-c-d-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-code-c-d-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -1834,7 +1876,8 @@ Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
     (apply 'find-estring "\
 \(Re)generate: (find-psne-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-psne-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -2017,7 +2060,8 @@ The details on how to create these \"brxxx functions\" are here:
     (apply 'find-estring "\
 \(Re)generate: (find-brxxx-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-brxxx-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -2235,7 +2279,8 @@ In dired mode each line corresponds to a file
     (apply 'find-estring "\
 \(Re)generate: (find-eejump-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eejump-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -2525,7 +2570,8 @@ then you'll be attributing just a \"temporary\" meaning to
     (apply 'find-estring "\
 \(Re)generate: (find-pdf-like-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-pdf-like-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -2872,7 +2918,8 @@ macros are VERY useful; if you don't use them yet, see:
     (apply 'find-estring "\
 \(Re)generate: (find-audiovideo-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-audiovideo-intro\")
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -3300,7 +3347,8 @@ Create short links
     (apply 'find-estring "\
 \(Re)generate: (find-multiwindow-intro)
 Source code:  (find-efunction 'find-multiwindow-intro)
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -3731,7 +3779,8 @@ Here:
     (apply 'find-estring "\
 \(Re)generate: (find-rcirc-intro)
 Source code:  (find-efunction 'find-rcirc-intro)
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -3877,7 +3926,8 @@ For more information see:
     (apply 'find-estring "\
 \(Re)generate: (find-templates-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-templates-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -3998,7 +4048,8 @@ Experiments
     (apply 'find-estring-lv "\
 \(Re)generate: (find-anchors-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-anchors-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -4146,7 +4197,8 @@ code-c-d and :anchor
     (apply 'find-estring "\
 \(Re)generate: (find-prepared-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-prepared-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -4373,7 +4425,8 @@ But try these:
     (apply 'find-estring "\
 \(Re)generate: (find-bounded-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-bounded-intro\")
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -4466,7 +4519,8 @@ so you should do something like this, but for your favourite key:
     (apply 'find-estring "\
 \(Re)generate: (find-channels-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-channels-intro\")
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -4863,7 +4917,8 @@ How to set it up
     (apply 'find-estring "\
 \(Re)generate: (find-videos-intro)
 Source code:  (find-efunction 'find-videos-intro)
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -5158,7 +5213,8 @@ use this sexp to help you:
     (apply 'find-estring "\
 \(Re)generate: (find-defun-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-defun-intro\")
-More intros:  (find-eval-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -5361,6 +5417,173 @@ returns nil. But just as
 
 
 
+
+;;;                                      _                  
+;;;   ___ _ __ ___   __ _  ___ ___      | | _____ _   _ ___ 
+;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| |/ / _ \ | | / __|
+;;; |  __/ | | | | | (_| | (__\__ \_____|   <  __/ |_| \__ \
+;;;  \___|_| |_| |_|\__,_|\___|___/     |_|\_\___|\__, |___/
+;;;                                               |___/     
+;;
+;; «find-emacs-keys-intro» (to ".find-emacs-keys-intro")
+;; (find-intro-links "emacs-keys")
+
+(defun find-emacs-keys-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-emacs-keys-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-emacs-keys-intro)
+Source code:  (find-efunction 'find-emacs-keys-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+1. Basic keys (eev)
+===================
+The most basic keys of eev are:
+  M-e   - to follow a hyperlink.  Mnemonic: \"(e)valuate\"/\"(e)xecute\".
+          See: (find-eev-quick-intro \"2. Evaluating Lisp\")
+               (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
+          See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
+  M-j   - to jump to certain predefined places - in particular,
+              `M-j' takes you to the list of jump targets.
+          `M-2 M-j' takes you to this help page.
+          `M-5 M-j' takes you to: (find-eev-quick-intro)
+
+
+
+2. Key sequences and how to abort them
+======================================
+See: (find-enode \"Keys\" \"key sequence\")
+     (find-enode \"User Input\" \"`Control-a'\" \"usually written `C-a'\")
+     (find-enode \"User Input\" \"<META> key\")
+     (find-enode \"Completion\" \"<TAB>\")
+
+<ESC> <ESC> <ESC>                (find-enode \"Quitting\")
+C-g   keyboard-quit              (find-enode \"Quitting\" \"`C-g'\")
+M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
+
+More about the minibuffer:       (find-enode \"Minibuffer\")
+More about TAB - for completion: (find-enode \"Completion\")
+                for indentation: (find-enode \"Indentation\")
+           in programming modes: (find-enode \"Basic Indent\")
+More about modes:                (find-enode \"Major Modes\")
+                                 (find-enode \"Minor Modes\")
+                                 (find-enode \"Dired\")
+
+
+
+3. Cutting & pasting
+====================
+The \"region\" where cut & copy operate is always what is between
+the \"point\" and the \"mark\":
+
+  (find-enode \"Point\")
+  (find-enode \"Mark\")
+
+You can do cut, copy and paste by using the icons in the toolbar
+or by using the menu bar (the relevant options are under
+\"Edit\"), but the keys are worth learning:
+
+  C-SPC   -- set-mark-command           (find-enode \"Setting Mark\")
+  C-x C-x -- exchange-point-and-mark    (find-enode \"Setting Mark\" \"C-x C-x\")
+  C-w     -- kill-region     (cut)      (find-enode \"Other Kill Commands\")
+  M-w     -- kill-ring-save  (copy)     (find-enode \"Kill Ring\")
+  C-y     -- yank            (paste)    (find-enode \"Kill Ring\")
+
+See: (find-enode \"Tool Bars\")
+     (find-enode \"Menu Bar\")
+
+
+
+4. Moving point
+===============
+C-a     -- beginning-of-line            (find-enode \"Moving Point\")
+C-e     -- end-of-line                  (find-enode \"Moving Point\")
+M-<     -- beginning-of-buffer          (find-enode \"Moving Point\")
+M->     -- end-of-buffer                (find-enode \"Moving Point\")
+
+
+
+5. Undoing
+==========
+C-/    -- undo    (find-enode \"Basic Undo\")
+C-_    -- undo    (find-enode \"Basic Undo\")
+                  (find-enode \"Undo\")
+
+
+6. Windows
+==========
+See: (find-enode \"Windows\")
+     (find-enode \"Frames\")
+
+C-x o   -- other-window                          (find-enode \"Other Window\")
+C-x 0   -- delete-window                         (find-enode \"Change Window\")
+C-x 1   -- delete-other-windows     (\"1 window\") (find-enode \"Change Window\")
+C-x 2   -- split-window-vertically (Above/Below) (find-enode \"Split Window\")
+C-x 3   -- split-window-horizontally       (L|R) (find-enode \"Split Window\")
+
+
+
+7. Files and buffers
+====================
+C-x C-f -- find-file                    (find-enode \"Visiting\")
+C-x C-s -- save-buffer                  (find-enode \"Saving\")
+C-x C-c -- save-buffers-kill-emacs      (find-enode \"Saving\")
+C-x b   -- switch-to-buffer             (find-enode \"Select Buffer\")
+C-x k   -- kill-buffer                  (find-enode \"Kill Buffer\")
+                                        (find-enode \"Dired\")
+
+
+8. Search and replace
+=====================
+C-s     -- isearch-forward              (find-enode \"Incremental Search\")
+C-r     -- isearch-backward             (find-enode \"Incremental Search\")
+M-C-s   -- isearch-forward-regexp       (find-enode \"Regexp Search\")
+M-C-r   -- isearch-backward-regexp      (find-enode \"Regexp Search\")
+M-%     -- query-replace                (find-enode \"Replace\")
+
+
+
+9. Macros
+=========
+C-x (   -- start-kbd-macro              (find-enode \"Keyboard Macros\")
+C-x )   -- end-kbd-macro                (find-enode \"Keyboard Macros\")
+C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
+
+
+
+10. Other keys (Emacs)
+======================
+M-q                  -- fill-paragraph       (find-enode \"Fill Commands\")
+C-x r <SPC> <char>   -- point-to-register    (find-enode \"Position Registers\")
+C-x r j <char>       -- jump-to-register     (find-enode \"Position Registers\")
+
+
+
+11. Other keys (eev)
+====================
+M-h M-h   -- find-here-links            (find-eev-quick-intro \"`M-h M-h'\")
+F8        -- eepitch-this-line          (find-eev-quick-intro \"what <F8> does\")
+M-T       -- eewrap-eepitch             (find-eev-quick-intro \"`M-T'\")
+M-F       -- eewrap-find-fline          (find-eev-quick-intro \"`M-F'\")
+M-M       -- eewrap-man                 (find-eev-quick-intro \"`M-M'\")
+M-S       -- eewrap-sh                  (find-eev-quick-intro \"`M-S'\")
+M-A       -- eewrap-anchor              (find-eev-quick-intro \"`M-A'\")
+M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
+" pos-spec-list)))
+
+;; (find-emacs-keys-intro)
+
+
+
+
+
 ;;;                                      _       _             
 ;;;   ___ _ __ ___   __ _  ___ ___      (_)_ __ | |_ _ __ ___  
 ;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| | '_ \| __| '__/ _ \ 
@@ -5375,11 +5598,18 @@ returns nil. But just as
     (apply 'find-estring "\
 \(Re)generate: (find-emacs-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-emacs-intro\")
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-emacs-keys-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+
+
+
+THIS INTRO IS OBSOLETE, and has been superseded by:
+  (find-emacs-keys-intro)
 
 
 
@@ -5562,7 +5792,8 @@ C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
     (apply 'find-estring "\
 \(Re)generate: (find-org-intro)
 Source code:  (find-efunction 'find-org-intro)
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -5627,7 +5858,8 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
     (apply 'find-estring (ee-tolatin1 "\
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
-More intros:  (find-eev-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
@@ -6353,35 +6585,88 @@ One way to type the chars `«' and `»' is with `C-x 8 <' and
 
 8.3. Creating index/section anchor pairs
 ----------------------------------------
-Use `M-A' (`eewrap-anchor'). Note that this has been briefly
-mentioned here:
+Eev has several commands that transform the text in the current
+line into something more complex. They are all called
+`eewrap-(something)', and they are bound to
+meta-uppercase-letters. The simplest examples are `M-F', `M-S'
+and `M-M', that just \"wrap the text in the current line into an
+elisp hyperlink\" by adding a prefix and a suffix; if you run
+`M-F', `M-S' and `M-M' in the following lines
 
-  (find-wrap-intro \"All wrapping functions\")
+/tmp/
+ls /tmp/
+ls
 
-It will convert a line with a syntax like this (note the `<' and
-the '>'!),
+they become this:
 
-  comment-prefix <tag>
+# (find-fline \"/tmp/\")
+# (find-sh \"ls /tmp/\")
+# (find-man \"ls\")
 
-into this:
+You can also try them by running the `eek' sexps below,
 
-  comment-prefix «.tag»	(to \"tag\")
-  comment-prefix «tag» (to \".tag\")
+\(eek \"<down> M-F\")
+/tmp/
 
-where comment-prefix is any string and tag is a string without
-`<>'s. Note that the `<>'s, which are easy to type, are converted
-into `«»'s, which are much harder to type. Try it, using `M-A' on
-the lines below:
+\(eek \"<down> M-S\")
+ls /tmp/
 
-  % <foo>
-  # <bar>
+\(eek \"<down> M-M\")
+ls
+
+HINT: sometimes the eewrap commands don't do exactly what we
+want, so learn how to use the \"undo\" command of Emacs. See:
+
+  (find-emacs-keys-intro \"5. Undoing\")
+
+The command `eewrap-anchor' (bound to `M-A') is similar to those
+above, but it parses the current line in a more complex way -
+everything between \"<>\" is the \"anchor\" and everything before
+the \"<\" is the \"comment prefix\" - and it converts the current
+line into two lines with `to's, each one pointing to the other
+one. For example, `M-A' in the line below
+
+  # <first-test>
+
+yields this:
+
+  # «.first-test»	(to \"first-test\")
+  # «first-test» (to \".first-test\")
+
+The line with the anchor \"«.first-test»\" is intended to be
+moved - by hand, with cut and paste - to the index section at the
+beginning of the file, as explained here:
+
+  (find-escripts-intro)
 
 
 
 
 8.4. Creating e-script blocks
 -----------------------------
-Use `M-B' (`eewrap-anchor'). [To  be written]
+The key `M-B' (`eewrap-escript-block') is a variant of `M-A' that
+converts the current line into seven (!) lines instead of two. If
+we type `M-B' on the line below
+
+  second-test Long description
+
+it becomes this - the header of an \"e-script block\":
+
+#####
+#
+# Long description
+# 2018may22
+#
+#####
+
+# «.second-test»	(to \"second-test\")
+# «second-test» (to \".second-test\")
+
+where again the line with the anchor \"«.second-test»\" is
+intended to be moved to the index section at the beginning of the
+file. The use of these \"e-script blocks\" is explained bere:
+
+  (find-escripts-intro)
 
 
 
@@ -6404,6 +6689,82 @@ Use `M-B' (`eewrap-anchor'). [To  be written]
 
 ;; (find-eev-quick-intro)
 
+
+
+
+;;;                           _       _       
+;;;   ___       ___  ___ _ __(_)_ __ | |_ ___ 
+;;;  / _ \_____/ __|/ __| '__| | '_ \| __/ __|
+;;; |  __/_____\__ \ (__| |  | | |_) | |_\__ \
+;;;  \___|     |___/\___|_|  |_| .__/ \__|___/
+;;;                            |_|            
+
+;; «find-escripts-intro» (to ".find-escripts-intro")
+;; (find-intro-links "escripts")
+
+(defun find-escripts-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-escripts-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-escripts-intro)
+Source code:  (find-efunction 'find-escripts-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+Eev's central idea is that you can keep \"executable logs\" of what you
+do, in a format that is easy to \"play back\". We call these executable
+logs \"e-scripts\", and this is an introduction to the _usual_ format of
+e-scripts. We start with a section on how to \"read\" existing
+e-scripts, and then we give hints to help you start \"writing\" your own
+e-scripts, first in a single file and then on several files.
+
+This index is used in the section ... below.
+
+
+
+
+1. Reading e-scripts
+====================
+
+1.1. Elisp hyperlinks
+---------------------
+
+\(Mention code-c-d)
+
+1.2. URLs
+---------
+
+1.3. Eepitch blocks
+-------------------
+
+1.4. Anchors, indexes and e-script blocks
+-----------------------------------------
+
+1.5. E-scripts embedded in other files
+--------------------------------------
+
+
+
+2. Writing e-scripts
+====================
+
+2.1. Creating hyperlinks with `M-h M-h'
+---------------------------------------
+
+2.3. Refining hyperlinks
+------------------------
+
+2.4. Creating eepitch blocks
+----------------------------
+
+
+
+" pos-spec-list)))
+
+;; (find-escripts-intro)
 
 
 

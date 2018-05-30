@@ -1,3 +1,29 @@
+2018-05-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-window-show): use a hack with `find-2a' from
+	eev-multiwindow.el; added a "(require 'eev-multiwindow)" to the
+	beginning of the file.
+
+2018-05-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (find-rcirc-buffer): make the argument ACHANNELS
+	optional.
+	(find-rcirc-buffer-2a, find-rcirc-buffer-3a): new functions.
+
+2018-05-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el: added a link to `(find-eev-quick-intro)' to the
+	header of each intro.
+
+	* eev-intro.el (ee-sexp-at, ee-intro-sexp-end-re)
+	(ee-intro-sexp-here, find-intro-here, fh): a (new) hack to help me
+	edit the text of the `find-xxx-intro's.
+
+2018-05-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-escripts-intro): new function.
+	(find-emacs-keys-intro): new function.
+
 2018-05-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-codings.el (ee-to-coding,ee-tolatin1): new file, with these

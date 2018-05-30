@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,98 +19,30 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2015feb17
+;; Version:    2018may30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eepitch.el.html>
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eepitch-intro.html>
-;;                                                (find-eev-intro)
+;;                                                (find-eev-quick-intro)
 ;;                                                (find-eepitch-intro)
 
 ;;; Commentary:
 
-;; This implements a much simpler way to interact with external
+;; 2018may30: There's a tutorial on eepitch here:
+;;   (find-eev-quick-intro "6. Controlling shell-like programs")
+;;    http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+;;
+;; Eepitch implements a much simpler way to interact with external
 ;; programs than the one shown in:
 ;;   <http://angg.twu.net/eev-current/anim/channels.anim.html>
 ;;
-;;
-;; Quick start guide (note: old!)
-;; ==============================
-;; Read the first sections of
-;;   <http://angg.twu.net/eev-current/eepitch.readme.html>
-;; then load this file, with something like:
-;;   (load-file "eepitch.el")
-;; Then in the '( ... ) block below type M-T on the `shell' line to
-;; convert it to an "eepitch block", then use `F8's to execute the
-;; three red-star lines, then use more `F8's to send the "cd /tmp/"
-;; and the "ls" to the shell buffer.
-'(
+;; The comments below are VERY old and were partly superseded by this:
+;;   (find-eepitch-intro)
 
-shell
-cd /tmp/
-ls
-
-)
-;; Note that as eepitch.el is still a bit prototype-ish we set two
-;; keybindings and a glyph GLOBALLY - search for "set-glyph" and
-;; "global-set-key" below.
-;;
-;;
-;; If you are interested in eev
-;; ============================
-;; The current recommended way to install eev is through the Debian
-;; package - see:
-;;   <http://angg.twu.net/debian/README.html>
-;; But this version can be used independently of the rest of eev.
-;;
-;;
-;; My TODO list for eepitch (short and medium term)
-;; ================================================
-;; The current priorities for eepitch are:
-;;   1) Debian packages. There's a quick-and-dirty package, called
-;;      "eev-puro", that depends on the Debian package for eev and
-;;      that installs some extra demo scripts; a bunch of students
-;;      from my university are using that to learn Lua (and *NIX). Its
-;;      docs are mostly in Portuguese, and they can be found at:
-;;        <http://angg.twu.net/eev-puro/>
-;;        <http://angg.twu.net/eev-puro/debian/README.Debian.html>
-;;      The package itself is here:
-;;        <http://angg.twu.net/debian/>
-;;      The important thing is that new versions of that .deb are
-;;      built and uploaded to angg.twu.net by templates similar to the
-;;      ones in:
-;;        <http://angg.twu.net/eev-current/eev-template.el.html>
-;;      These templates need to cleaned up and adapted to generate the
-;;      Debian packages for eev too (and for dednat5, and for
-;;      blogme4).
-;;   2) The support for GUD, SLIME and multi-window settings in
-;;      general is quite primitive at the moment. Note also that here
-;;      I do not use any of the "inferior <prog> mode" modes of Emacs.
-;;      That's just because I never learn hot to use them. 8-(
-;;   3) The docs in plain text format for eepitch, that are at
-;;        <http://angg.twu.net/eev-current/eepitch.readme.html>
-;;      are ok for the basic ideas but horribly incomplete on
-;;      everything more advanced.
-;;   4) I haven't touched this in years:
-;;        <http://angg.twu.net/eev-article.html>
-;;      It has several good parts, I would like to salvage it.
-;;   5) All these docs should be converted to texinfo, possibly
-;;      using blogme4, as in (but this is just a prototype):
-;;        <http://angg.twu.net/blogme4/doc/>
-;;   6) Understand packages with similar goals and write comparisons:
-;;      eepitch with org-babel and org-babel-screen, and eev-puro with
-;;      emacs-starter-kit.
-;;   7) Produce short videos about eepitch, like:
-;;        <http://angg.twu.net/eev-current/anim/channels.anim.html>
-;;      note that Org has lots of videos, e.g.:
-;;        <http://www.youtube.com/watch?v=oJTwQvgfgMM> Carsten Dominik
-;;        <http://www.youtube.com/watch?v=ht4JtEbFtFI> \ Kurt Schwehr on
-;;        <http://vislab-ccom.unh.edu/~schwehr/rt/>    / org-babel
-;;
-;;
 ;; The innards
 ;; ===========
 ;; In order to understand precisely how eepitch works (consider this a
@@ -203,6 +135,16 @@ ls
 ;;   `eepitch-prepare', of all the conditions 1-4.
 
 
+
+;; This `require' is needed because I had to replace the original
+;; `eepitch-window-show' by a hack that needs `find-2a'... =(
+;;
+(require 'eev-multiwindow)
+
+
+
+;; Some basic tools to make this file (almost) self-contained.
+;;
 (defun ee-bol () (point-at-bol))
 (defun ee-eol () (point-at-eol))
 
@@ -278,6 +220,26 @@ See `eepitch' and `eepitch-prepare'."
     (setq eepitch-buffer-name
 	  (buffer-name (current-buffer)))))
 
+;; 2018may30: This is broken in some versions of Emacs,
+;; 
+;; (defun eepitch-window-show ()
+;;   "Display the buffer `eepitch-buffer-name' in another window.
+;; This is just the default way of making sure that the \"target
+;; window\" is visible; note that `eepitch' sets the variable
+;; `eepitch-window-show' to `(eepitch-window-show)', and that
+;; `eepitch-prepare' evaluates the sexp in the variable
+;; `eepitch-window-show'. Alternative eepitch settings - like the
+;; ones for GUD or Slime, that use multiple windows - put calls to
+;; other functions instead of this one in the variable
+;; `eepitch-window-show'.\n
+;; This function uses `display-buffer', which calls
+;; `split-window-sensibly'."
+;;   (let ((pop-up-windows t)
+;; 	(same-window-buffer-names nil))
+;;     (display-buffer eepitch-buffer-name)))
+;;
+;; so we use a hack:
+
 (defun eepitch-window-show ()
   "Display the buffer `eepitch-buffer-name' in another window.
 This is just the default way of making sure that the \"target
@@ -285,14 +247,10 @@ window\" is visible; note that `eepitch' sets the variable
 `eepitch-window-show' to `(eepitch-window-show)', and that
 `eepitch-prepare' evaluates the sexp in the variable
 `eepitch-window-show'. Alternative eepitch settings - like the
-ones for GUD or Slime, that use multiple windows - put calls to
-other functions instead of this one in the variable
-`eepitch-window-show'.\n
-This function uses `display-buffer', which calls
-`split-window-sensibly'."
-  (let ((pop-up-windows t)
-	(same-window-buffer-names nil))
-    (display-buffer eepitch-buffer-name)))
+ones that would support GUD or Slime using multiple windows -
+would put calls to other functions instead of this one in the
+variable `eepitch-window-show'."
+  (find-2a nil '(find-ebuffer eepitch-buffer-name)))
 
 (defun eepitch-prepare ()
 "If the eepitch buffer does not exist, create it; if it is not shown, show it.
@@ -535,7 +493,9 @@ to make it work similarly in unibyte and multibyte buffers."
 ;;;   \_/\_/ |_|  \__,_| .__/ 
 ;;;                    |_|    
 ;;
-;; See: (find-wrap-intro)
+;; See: (find-eev-quick-intro "6.3. Creating eepitch blocks: `M-T'")
+;;      (find-eev-quick-intro "wrap")
+;;      (find-wrap-intro)
 
 (defun ee-no-properties (str)
   (setq str (copy-sequence str))

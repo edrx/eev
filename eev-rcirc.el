@@ -1,6 +1,6 @@
 ;;; eev-rcirc.el -- rcirc-related elisp hyperlinks.
 
-;; Copyright (C) 2012,2013 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2013,2018 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov27
+;; Version:    2018may28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -98,22 +98,87 @@ CHANNEL can also be nil, meaning the server buffer, or a nick to /query."
 	(rcirc-cmd-query channel))))
 
 
-;; Medium-level
+;; Medium-level words without window setup.
+;; Tests:
+;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs")
+;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" nil           "#eev")
+;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" "#eev #emacs")
+;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" "#eev #emacs" "#eev")
 ;;
-(defun find-rcirc-buffer0 (server &optional channel &rest pos-spec-list)
+(defun find-rcirc-buffer0
+  (server &optional channel &rest pos-spec-list)
   "Switch to the buffer for CHANNEL on SERVER. Make no attempt to (re)connect."
   (apply 'find-ebuffer (ee-rcirc-buffer server channel) pos-spec-list))
 
-(defun find-rcirc-buffer (server ichannels achannels channel &rest pos-spec-list)
+(defun find-rcirc-buffer
+  (server ichannels &optional achannels channel &rest pos-spec-list)
   "Switch to the buffer for CHANNEL on SERVER.
 When not connected connect to SERVER, taking the initial list of
 channels from ICHANNELS; always make sure that we are connected
 to ACHANNELS and to CHANNEL, and switch to the buffer for
-CHANNEL."
+CHANNEL.
+
+If ACHANNELS is nil (not \"\") then use the list in ICHANNELS.
+If CHANNEL is nil then switch to the server buffer."
   (ee-rcirc-connect       server (ee-split ichannels))
-  (ee-rcirc-join-channels server (ee-split achannels))
+  (ee-rcirc-join-channels server (ee-split (or achannels ichannels)))
   (ee-rcirc-join-channel  server channel)
   (apply 'find-rcirc-buffer0 server channel pos-spec-list))
+
+
+
+
+;; Medium-level words with window setup
+;; Tests:
+;; (find-rcirc-buffer-2a "irc.freenode.net" "#eev" nil "#libreboot")
+;; (find-rcirc-buffer-3a "irc.freenode.net" "#eev" nil "#libreboot")
+;;
+(defun find-rcirc-buffer-2a
+  (server ichannels &optional achannels channel &rest pos-spec-list)
+  "Connect to the irc server SERVER and create this window setup:
+   _________ ________
+  |         |        |
+  | current |  irc   |
+  | buffer  | buffer |
+  |_________|________|
+
+ICHANNELS is the list of initial channels (used when connecting
+to the server for the first time). ACHANNELS is the list of
+channels to always (re)connect to; if nil it defaults to
+ICHANNELS. CHANNEL selects what to display in the irc buffer at
+the right - nil means the server buffer, \"#foo\" means channel
+\"#foo\", \"nick\" means query \"nick\"."
+  (find-2a
+   nil
+   `(find-rcirc-buffer server ichannels achannels channel ,@pos-spec-list)))
+
+(defun find-rcirc-buffer-3a
+  (server ichannels achannels channel &rest pos-spec-list)
+  "Connect to the irc server SERVER and create this window setup:
+   _________ _________
+  |         |         |
+  |         |   irc   |
+  |         |  server |
+  | current |_________|
+  | buffer  |         |
+  |         |   irc   |
+  |         | channel |
+  |_________|_________|
+
+ICHANNELS is the list of initial channels (used when connecting
+to the server for the first time). ACHANNELS is the list of
+channels to always (re)connect to; if nil it defaults to
+ICHANNELS. CHANNEL selects what to display in the irc channel at
+the right - \"#foo\" means channel \"#foo\", \"nick\" means query
+\"nick\"."
+  (find-3a
+   nil
+   '(find-rcirc-buffer server ichannels achannels)
+   `(find-rcirc-buffer server ichannels achannels channel ,@pos-spec-list)))
+
+
+
+
 
 
 
@@ -122,9 +187,6 @@ CHANNEL."
 ;;
 (defun ee-irc-channel-around-point ()
   (ee-stuff-around-point "#A-Za-z0-9_"))
-
-
-
 
 ;; High-level
 ;;
@@ -155,7 +217,7 @@ CHANNEL."
     ))
 
 (defun find-freenode-links (&optional channel &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for foo."
+"Visit a temporary buffer containing hyperlinks for connecting to freenode."
   (interactive (list (ee-irc-channel-around-point)))
   (setq channel (or channel "{channel}"))
   (apply 'find-elinks

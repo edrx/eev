@@ -118,6 +118,8 @@ is used by some functions in \"eev-insert.el\".")
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|
 ;;;                                             
 ;; See: (find-code-c-d-intro)
+;; Try: (find-code-c-d "lua51" "~/usrc/lua-5.1.4/")
+;;      (find-code-c-d "lua51" "~/usrc/lua-5.1.4/" :anchor)
 
 ;; code-c-d: top-level functions
 ;;
