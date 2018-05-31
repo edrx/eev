@@ -4,6 +4,12 @@
 	eev-multiwindow.el; added a "(require 'eev-multiwindow)" to the
 	beginning of the file.
 
+	* eev-tlinks.el (find-intro-links): small changes in the template.
+
+	* eev-intro.el (find-eev-install-intro): new function.
+
+	* eev-tlinks.el (find-eev-install-links): new function.
+
 2018-05-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-rcirc.el (find-rcirc-buffer): make the argument ACHANNELS

@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018mai24
+;; Version:    2018mai31
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -97,6 +97,7 @@ Only works for \"(defun find-xxx-intro ...)s\"."
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
 ;; «.find-org-intro»		(to "find-org-intro")
 ;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
+;; «.find-eev-install-intro»	(to "find-eev-install-intro")
 ;; «.find-escripts-intro»	(to "find-escripts-intro")
 
 ;; See: (find-anchors-intro)
@@ -5917,6 +5918,10 @@ This tutorial is intented to make you learn the most essential things
 in the first ten minutes - including how to navigate in Emacs's
 manuals.
 
+For more on ways to install eev see:
+
+  (find-eev-install-intro)
+
 
 
 
@@ -6688,6 +6693,83 @@ file. The use of these \"e-script blocks\" is explained bere:
 ;; end of defun
 
 ;; (find-eev-quick-intro)
+
+
+
+
+;;;  _           _        _ _ 
+;;; (_)_ __  ___| |_ __ _| | |
+;;; | | '_ \/ __| __/ _` | | |
+;;; | | | | \__ \ || (_| | | |
+;;; |_|_| |_|___/\__\__,_|_|_|
+;;;                           
+
+;; «find-eev-install-intro» (to ".find-eev-install-intro")
+;; (find-intro-links "eev-install")
+
+(defun find-eev-install-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-eev-install-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-eev-install-intro)
+Source code:  (find-efunction 'find-eev-install-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+The \"quick introduction to eev\" describes a way to install eev
+for tests that does not make any permanent changes in your HD -
+everything gets installed in the /tmp/ directory, that is cleared
+at every boot. Here we describe several ways to install eev in
+other, more permanent, places.
+
+
+
+1. Running `(find-eev-install-links)'
+=====================================
+The shell commands in
+
+  (find-eev-quick-intro \"1. Installing eev\")
+
+can be obtained by running 
+
+  (find-eev-install-links)
+
+with these arguments:
+
+  (find-eev-install-links \"/tmp/eev2/\" \"/tmp/eev\")
+
+Note that `(find-eev-install-links)' is somehow similar to this,
+
+  (find-eev-quick-intro \"7.3. `find-latex-links'\")
+
+and follows most of the same conventions.
+
+If you want to install eev in a more permanent place the default
+way is to run `(find-eev-install-links)' with these arguments,
+
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
+
+and execute its eepitch block.
+
+
+
+
+2. Changing your .emacs
+=======================
+
+\(To be written)
+
+" pos-spec-list)))
+
+;; (find-eev-install-intro)
+
+;; (find-eev "eev-tlinks.el" "find-eev-update-links")
+;; (find-eev "eev-tlinks.el" "find-eev-install-links")
+;; (find-eev-update-links)
 
 
 
