@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018mai31
+;; Version:    2018jun02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -5859,7 +5859,8 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
     (apply 'find-estring (ee-tolatin1 "\
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
-More intros:  (find-eev-quick-intro)
+More intros:  (find-escripts-intro)
+              (find-emacs-keys-intro)
               (find-eev-intro)
               (find-eval-intro)
               (find-eepitch-intro)
@@ -5869,7 +5870,7 @@ Is is meant as both a tutorial and a sandbox.
 
 This is a tutorial for real beginners.
 It supposes that you have Emacs installed.
-You may start by watching:
+You may start by watching these (old) videos:
 
   http://angg.twu.net/eev-videos/video-eev-quick-0.mp4  (installation basics)
   http://angg.twu.net/eev-videos/video-eev-quick-1.mp4  (about this tutorial)
@@ -5889,28 +5890,29 @@ in a browser, and open a terminal running a shell. Mark the multi-line
 it into the shell to run its commands.
 
 {
-  rm -Rv ~/eev/
-  mkdir  ~/eev/
-  cd     ~/eev/
+  rm -Rv ~/eev
+  rm -Rv ~/eev2/
+  mkdir  ~/eev2/
+  cd     ~/eev2/
   rm -v eev2.tgz
   wget http://angg.twu.net/eev-current/eev2.tgz
   tar -xvzf eev2.tgz
   {
     echo '#!/bin/sh'
-    echo 'cd ~/eev/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
-  } > ~/e
-  chmod 755 ~/e
+    echo 'cd ~/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+  } > ~/eev
+  chmod 755 ~/eev
 }
 
 You now have a shell script that you can invoke with
 
-  ~/e
+  ~/eev
 
 that starts Emacs, loads eev, and opens a copy of this tutorial.
 
 Every time that Emacs gets stuck into something that you don't know
 how to leave, or how to undo, you should kill the Emacs window and
-start it again by typing \"~/e\" again in the shell prompt.
+start it again by typing \"~/eev\" again in the shell prompt.
 
 Eventually you will learn how go get out of everything and how to undo
 almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
@@ -6796,14 +6798,110 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-Eev's central idea is that you can keep \"executable logs\" of what you
-do, in a format that is easy to \"play back\". We call these executable
-logs \"e-scripts\", and this is an introduction to the _usual_ format of
-e-scripts. We start with a section on how to \"read\" existing
-e-scripts, and then we give hints to help you start \"writing\" your own
-e-scripts, first in a single file and then on several files.
+Eev's central idea is that you can keep \"executable logs\" of
+what you do, in a format that is easy to \"play back\". We call
+these executable logs \"e-scripts\", and this is an introduction
+to the _usual_ format of e-scripts. We start with a section on
+how to \"read\" existing e-scripts, and then we give some hints
+to help you start \"writing\" your own e-scripts, first in a
+single file and then on several files.
 
-This index is used in the section ... below.
+A typical e-script - like the ones in http://angg.twu.net/e/ - is
+made of an index followed by a series of \"e-script blocks\".
+Here is a miniature example, with an index with two entries
+followed by two e-script blocks:
+
+
+
+# «.lua5.1-debian»	(to \"lua5.1-debian\")
+# «.lua-tutorial»	(to \"lua-tutorial\")
+
+
+
+#####
+#
+# The main Debian packages for Lua 5.1
+# 2018jun02
+#
+#####
+
+# «lua5.1-debian» (to \".lua5.1-debian\")
+# (find-status   \"lua5.1\")
+# (find-vldifile \"lua5.1.list\")
+# (find-udfile   \"lua5.1/\")
+# (find-status   \"lua5.1-doc\")
+# (find-vldifile \"lua5.1-doc.list\")
+# (find-udfile   \"lua5.1-doc/\")
+# (find-udfile   \"lua5.1-doc/doc/\")
+# (find-udfile   \"lua5.1-doc/test/\")
+# http://www.lua.org/docs.html
+# http://www.lua.org/manual/5.1/manual.html
+# file:///usr/share/doc/lua5.1-doc/doc/manual.html
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo apt-get install lua5.1 lua5.1-doc
+
+
+
+
+#####
+#
+# Downloading and opening the eev-based Lua tutorial
+# 2018jun02
+#
+#####
+
+# «lua-tutorial» (to \".lua-tutorial\")
+# http://angg.twu.net/e/lua-intro.e.html
+# http://angg.twu.net/e/lua-intro.e
+# (find-es \"lua-intro\")
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd /tmp/
+rm -v lua-intro.e
+wget http://angg.twu.net/e/lua-intro.e
+
+# (find-fline \"/tmp/lua-intro.e\")
+# (defun eejump-11 () (find-fline \"/tmp/lua-intro.e\"))
+
+
+
+
+
+Let's name its parts - they will be explained in the sections below.
+
+1. The lines with «.lua5.1-debian» and «lua5.1-debian» use
+   the `(to ...)' sexps to \"point to one another\". They are
+   explained at:
+
+     (find-eev-quick-intro \"8. Anchors\")
+
+2. The comment block that says \"The main Debian packages for Lua
+   5.1\" is simply a way to distinguish visually one e-script
+   block from its neighboring ones. It was produced by `M-B', as
+   explained here:
+
+     (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+
+3. The sexps starting with `find-status' and other `find-xxx's
+   are elisp hyperlinks.
+
+4. The lines with \"http://...\" and \"file:///...\" contain URLs
+   that can be visited using `browse-url' or with `brg' and other
+   `brxxx' functions.
+
+5. The lines with a red star, like \" (eepitch-shell)\", start
+   \"eepitch blocks\", that are explained here:
+
+     (find-eev-quick-intro \"6. Controlling shell-like programs\")
+
+6. The lines just below the lines with \"\"s are shell commands
+   that can be executed with eepitch.
+
 
 
 
@@ -6811,21 +6909,27 @@ This index is used in the section ... below.
 1. Reading e-scripts
 ====================
 
+1.1. A miniature example
+------------------------
+
 1.1. Elisp hyperlinks
 ---------------------
 
 \(Mention code-c-d)
 
-1.2. URLs
+1.2. Shorter elisp hyperlinks
+-------------------------------
+
+1.3. URLs
 ---------
 
-1.3. Eepitch blocks
+1.4. Eepitch blocks
 -------------------
 
-1.4. Anchors, indexes and e-script blocks
+1.5. Anchors, indexes and e-script blocks
 -----------------------------------------
 
-1.5. E-scripts embedded in other files
+1.6. E-scripts embedded in other files
 --------------------------------------
 
 
@@ -6842,6 +6946,11 @@ This index is used in the section ... below.
 2.4. Creating eepitch blocks
 ----------------------------
 
+
+
+3. Social consequences
+======================
+\(of sharing e-scripts)
 
 
 " pos-spec-list)))
