@@ -1,3 +1,10 @@
+2018-06-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-install-intro): added instructions for
+	using the git repository.
+
+	* eev-plinks.el (find-gitk): New function.
+
 2018-05-30  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-window-show): use a hack with `find-2a' from

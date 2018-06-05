@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018jun02
+;; Version:    2018jun05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -6762,8 +6762,66 @@ and execute its eepitch block.
 
 2. Changing your .emacs
 =======================
+To be written. See:
 
-\(To be written)
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\" 2 \".emacs\")
+  (find-elnode \"Init File\")
+  (find-elnode \"Init Examples\")
+
+
+
+
+3. Using the git repository
+===========================
+Eev has a git repository at:
+
+  https://github.com/edrx/eev.git
+
+All recent changes are being made at the \"UTF-8\" branch and I
+haven't learned yet how to make the master branch point to
+UTF-8... so if you clone the repository you'll have to do a
+\"checkout UTF-8\" the go to the most recent version.
+
+Try this:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+rm -Rfv /tmp/eev2
+mkdir   /tmp/eev2/
+cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
+cd      /tmp/eev2/
+git checkout UTF-8
+# (find-gitk \"/tmp/eev2/\")
+{
+  echo '#!/bin/sh'
+  echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+} > /tmp/eev
+chmod 755 /tmp/eev
+
+and run the script in /tmp/eev if you want to.
+
+Note the \"cd ... && git clone URL .\" - if we don't specify a
+directory after the URL in \"git clone\" then git will create a
+directory /tmp/eev/, and that would be incompatible with our
+convention of creating a script called \"eev\" (\"/tmp/eev\" in
+this case).
+
+
+
+
+4. Eev as an ELPA package
+=========================
+I started to make an Emacs \"package\" for eev but I did not go
+very far. See:
+
+  (find-enode    \"Packages\")
+  (find-elnode   \"Packaging\")
+  (find-efaqnode \"Packages that do not come with Emacs\")
+
+Help would be greatly appreciated!
+
 
 " pos-spec-list)))
 

@@ -1,6 +1,6 @@
 ;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2018 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2015feb17
+;; Version:    2018jun05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -143,6 +143,14 @@
 	 `(insert (find-wget00 ,url))
 	 rest))
 
+
+
+;; find-gitk
+;; Example: (find-eev-install-intro "find-gitk")
+;;
+(defun find-gitk (dir)
+  "Run gitk in the directory DIR."
+  (ee-at0 dir '(find-bgprocess "gitk --all --date-order")))
 
 
 (provide 'eev-plinks)
