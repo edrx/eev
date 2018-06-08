@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018mai31
+;; Version:    2018jun08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -580,7 +580,7 @@ sudo dpkg -i *.deb
   tar -xvzf eev2.tgz
   {<}
     echo '#!/bin/sh'
-    echo 'cd {dir} && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+    echo 'cd {dir} && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\" $*'
   {>} > {script}
   chmod 755 {script}
 {comment}{>}

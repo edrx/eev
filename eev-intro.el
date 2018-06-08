@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018jun05
+;; Version:    2018jun08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -5899,7 +5899,7 @@ it into the shell to run its commands.
   tar -xvzf eev2.tgz
   {
     echo '#!/bin/sh'
-    echo 'cd ~/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+    echo 'cd ~/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\" $*'
   } > ~/eev
   chmod 755 ~/eev
 }
@@ -6722,11 +6722,14 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-The \"quick introduction to eev\" describes a way to install eev
-for tests that does not make any permanent changes in your HD -
-everything gets installed in the /tmp/ directory, that is cleared
-at every boot. Here we describe several ways to install eev in
-other, more permanent, places.
+The \"quick introduction to eev\" in
+
+  (find-eev-quick-intro)
+
+describes a way to install eev for tests that does not make any
+permanent changes in your HD - everything gets installed in the
+/tmp/ directory, that is cleared at every boot. Here we describe
+several ways to install eev in other, more permanent, places.
 
 
 
@@ -6802,11 +6805,11 @@ chmod 755 /tmp/eev
 
 and run the script in /tmp/eev if you want to.
 
-Note the \"cd ... && git clone URL .\" - if we don't specify a
-directory after the URL in \"git clone\" then git will create a
-directory /tmp/eev/, and that would be incompatible with our
-convention of creating a script called \"eev\" (\"/tmp/eev\" in
-this case).
+Note the \"cd ... && git clone URL .\". This is needed because if
+we don't specify a directory after the URL in \"git clone\" then
+git will create a directory /tmp/eev/, and that would be
+incompatible with our convention of creating a script called
+\"eev\" (\"/tmp/eev\" in this case).
 
 
 
