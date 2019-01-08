@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018jun08
+;; Version:    2019jan08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -430,6 +430,7 @@ Try this: (find-debpkg-links \"bash\")"
       ,@(ee-links-for-debpkg-extra-vldi pkgname)
       ""
       ,(ee-template0 "\
+{ee-H}(find-sh \"apt-file search {pkgname}\")
 {ee-H}(find-sh \"apt-cache dump | grep-dctrl -P {pkgname}\")
 {ee-H}(find-sh \"apt-cache search {pkgname} | sort\")
 {ee-H}(find-sh \"apt-cache showpkg {pkgname}\")

@@ -1,6 +1,6 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2018,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013jan07
+;; Version:    2019jan05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -141,6 +141,9 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
 (defun ee-code-c-d-rest (rest)
   (ee-tail-call "ee-code-c-d-%S" rest))
 
+(defun find-code-c-d-rest (c d &rest rest)
+  (find-estring-elisp (ee-code-c-d-rest rest)))
+
 (defun ee-code-c-d-base (c d)
   (ee-template0 "\
    ;; {(ee-S `(find-code-c-d ,c ,d ,@rest))} 
@@ -158,8 +161,10 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    (defun find-{c}tag (str &rest pos-spec-list)
      (ee-use-{c}-tags)
      (apply 'ee-find-tag str pos-spec-list))
+   ;; (defun find-{c}sh (command &rest pos-spec-list)
+   ;;   (apply 'ee-find-xxxsh ee-{c}dir command pos-spec-list))
    (defun find-{c}sh (command &rest pos-spec-list)
-     (apply 'ee-find-xxxsh ee-{c}dir command pos-spec-list))
+     (apply 'find-sh-at-dir ee-{c}dir command pos-spec-list))
    (defun find-{c}sh0 (command)
      (funcall 'ee-find-xxxsh0 ee-{c}dir command))
    (defun find-{c}sh00 (command)
@@ -260,6 +265,8 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (defun ee-locate-library (fname)
   (if (locate-library fname)
       (file-name-directory (locate-library fname))))
+(defvar ee-eev-source-directory
+  (ee-locate-library "eev-code.el"))
 (defvar ee-emacs-lisp-directory
   (or (ee-locate-library "loadup.el")
       (format "/usr/share/emacs/%d.%d/lisp/"
@@ -276,7 +283,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (code-c-d "equail" (ee-eleimfile "quail/") :gz)
 (code-c-d "eetc"   data-directory :gz)
 
-(code-c-d "eev"    (ee-locate-library "eev-code.el") :anchor) ; (find-eev "")
+(code-c-d "eev"    ee-eev-source-directory :anchor)     ; (find-eev "")
 
 ;; (find-efile "")
 ;; (find-equailfile "")

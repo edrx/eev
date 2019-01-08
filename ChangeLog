@@ -1,3 +1,24 @@
+2019-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (find-code-c-d-rest): new function.
+	(ee-eev-source-directory): new variable.
+
+	* eev-intro.el (find-eev-quick-intro): added a section about
+	"shorter hyperlinks".
+	(find-intro-here): added documentation in comments to the
+	`find-intro-here' and `fh' hacks.
+
+2019-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-code-c-d-base): use `find-sh-at-dir' instead of
+	`ee-find-xxxsh'.
+
+	* eev-blinks.el (find-sh-at-dir): new function.
+
+2018-11-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-debpkg-links): added "apt-file search".
+
 2018-06-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-install-intro): added instructions for

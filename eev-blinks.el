@@ -3,7 +3,7 @@
 ;;; and that are not created by `code-c-d' and friends.
 
 ;; Copyright (C) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,
-;; 2009,2010,2011,2012,2013,2014,2016 Free Software Foundation, Inc.
+;; 2009,2010,2011,2012,2013,2014,2016,2018 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet) part of GNU eev.
 ;;
@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2016apr20
+;; Version:    2019jan04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -536,6 +536,13 @@ removing a trailing newline from the output if one is found.
 Follow a `find-sh0' hyperlink just displays the output of the
 COMMAND in the echo area."
   (replace-regexp-in-string "\n\\'" "" (shell-command-to-string command)))
+
+(defun find-sh-at-dir (dir command &rest pos-spec-list)
+  "Run COMMAND at DIR and display the result.
+This is like `find-sh' but sets the buffer's default-directory to DIR."
+  (let ((fullcmd (format "cd %s\n%s" dir command)))
+    (prog1 (apply 'find-sh fullcmd pos-spec-list)
+           (setq default-directory dir))))
 
 
 

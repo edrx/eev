@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018jun08
+;; Version:    2019jan08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -38,40 +38,11 @@
 ;;   (find-eepitch-intro)
 ;;   (find-wrap-intro)
 ;;   (find-code-c-d-intro)
-;;
-
-'
-(progn
-
-;; A hack to help me (edrx) edit these intros.
-;; Note that it is commented out - and how it is commented out!
-
-;; Test: (ee-sexp-at "2)")
-;;               (+ 1 2)
-(defun ee-sexp-at (re)
-  (save-excursion (re-search-forward re) (ee-last-sexp)))
-
-(setq ee-intro-sexp-end-re "\\(rest\\|pos-spec-list\\))))")
-
-(defun ee-intro-sexp-here ()
-  "Go to the end of the defun around point and `read' it.
-Only works for \"(defun find-xxx-intro ...)s\"."
-  (read (ee-sexp-at ee-intro-sexp-end-re)))
-
-(defun find-intro-here ()
-  "Evaluate the defun around point, run it, search for (ee-last-kill).
-Only works for \"(defun find-xxx-intro ...)s\"."
-  (interactive)
-  (eval (ee-intro-sexp-here))
-  (find-2b nil '(funcall (cadr (ee-intro-sexp-here)) (ee-last-kill))))
-
-(defalias 'fh 'find-intro-here)
-
-)
-
 
 
 ;; Quick index:
+;; «.find-intro-here»		(to "find-intro-here")
+;;
 ;; «.find-eev-intro»		(to "find-eev-intro")
 ;; «.find-eval-intro»		(to "find-eval-intro")
 ;; «.find-eepitch-intro»	(to "find-eepitch-intro")
@@ -102,12 +73,62 @@ Only works for \"(defun find-xxx-intro ...)s\"."
 
 ;; See: (find-anchors-intro)
 
-;; Ignore this - this is a temporary hack to make the htmlization in
-;; <http://angg.twu.net/eev-intros/> work better...
+;; Ignore this - this is an obsolete hack that I used to use to make
+;; the htmlization in <http://angg.twu.net/eev-intros/> work better...
 ;; (find-angg "eev-intros/")
 ;; (find-angg "eev-intros/README")
 ' (fooi-re "Source code:  (find-efunction '\\([!-~]*\\))"
            "Source code:  (find-eev \\\\\"eev-intro.el\\\\\" \\\\\"\\1\\\\\")")
+
+
+;; «find-intro-here» (to ".find-intro-here")
+;; Below is a hack that I (edrx) use to edit these intros.
+;; Note that it is commented out - and how it is commented out!
+;; The way to run the (progn <multi-line-stuff>) is to put the point
+;; after the closing parenthesis - the one on a line by itself - and
+;; type `M-e'.
+;;
+;; Here's how to use this. Suppose that
+;; 1) you're editing this file - eev-intro.el - and
+;; 2) you're inside the defun of an intro, say, `find-eev-quick-intro', and
+;; 3) you're inside the multi-line string that forms the text of the intro,
+;; 4) then if you mark a string, say, "Open the page at",
+;; 5) and run `M-w' (kill-ring-save) on it,
+;; 6) then that string will be pushed onto the kill ring;
+;; 7) if you type `M-x fh' then this will
+;;  7a) evaluate the defun around point,
+;;  7b) i.e., it will redefine find-eev-quick-intro,
+;;  7c) and run (find-2b nil '(find-eev-quick-intro "Open the page at"))
+;;  7d) and you will have the defun of `find-eev-quick-intro' in
+;;      the left window and the (find-eev-quick-intro) buffer in the
+;;      right window, with the point just after the "Open the page at".
+'
+(progn
+
+;; Test: (ee-sexp-at "2)")
+;;               (+ 1 2)
+(defun ee-sexp-at (re)
+  (save-excursion (re-search-forward re) (ee-last-sexp)))
+
+(setq ee-intro-sexp-end-re "\\(rest\\|pos-spec-list\\))))")
+
+(defun ee-intro-sexp-here ()
+  "Go to the end of the defun around point and `read' it.
+Only works for \"(defun find-xxx-intro ...)s\"."
+  (read (ee-sexp-at ee-intro-sexp-end-re)))
+
+(defun find-intro-here ()
+  "Evaluate the defun around point, run it, search for (ee-last-kill).
+Only works for \"(defun find-xxx-intro ...)s\"."
+  (interactive)
+  (eval (ee-intro-sexp-here))
+  (find-2b nil '(funcall (cadr (ee-intro-sexp-here)) (ee-last-kill))))
+
+(defalias 'fh 'find-intro-here)
+
+)
+
+
 
 
 
@@ -6528,8 +6549,6 @@ the other ones are similar.
 
 8. Anchors
 ==========
-See (old version): (find-anchors-intro)
-
 
 8.1. Introduction: `to'
 -----------------------
@@ -6680,11 +6699,132 @@ file. The use of these \"e-script blocks\" is explained bere:
 
 8.5. Hyperlinks to anchors in other files
 -----------------------------------------
-\[Explain code-c-d, find-code-c-d, :anchor and M-h M--]
+`find-anchor' is like `find-fline', but it interprets the first
+argument after the file in a special way if it is present. These
+hyperlinks are all equivalent:
+
+  (find-anchor \"~/eev2/eev-blinks.el\" \"find-wottb\")
+  (find-anchor \"~/eev2/eev-blinks.el\" (ee-format-as-anchor \"find-wottb\"))
+  (find-fline  \"~/eev2/eev-blinks.el\" \"«find-wottb»\")
+
+You can use this - or the shorter hyperlinks to anchors in
+section 9.3 - to point to anchors or to e-script blocks in your
+files.
+
+
+
+
+
+
+9. Shorter hyperlinks
+=====================
+
+9.1. `code-c-d'
+---------------
+Sexps like
 
   (find-eevfile \"\")
-  (find-eevfile \"eev-tlinks.el\")
-  (find-eev \"eev-tlinks.el\")
+  (find-eevfile \"eev-blinks.el\")
+  (find-eevfile \"eev-blinks.el\" \"«find-sh»\")
+  (find-udfile \"\")
+  (find-udfile \"lua5.1-doc/\")
+  (find-udfile \"lua5.1-doc/test/\")
+  (find-udfile \"lua5.1-doc/test/fib.lua\")
+  (find-udfile \"lua5.1-doc/test/fib.lua\" \"function fib(n)\")
+
+work as abbreviations for
+
+  (find-fline \"~/eev-current/\")
+  (find-fline \"~/eev-current/eev-blinks.el\")
+  (find-fline \"~/eev-current/eev-blinks.el\" \"«find-sh»\")
+  (find-fline \"/usr/share/doc/\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/test/\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/test/fib.lua\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/test/fib.lua\" \"function fib(n)\")
+
+They are \"mass-produced\", in the following sense. When we run this,
+
+  (code-c-d \"ud\" \"/usr/share/doc/\")
+
+the function `code-c-d' produces a big string using a template, and
+evaluates that big string; the \"{c}\"s in the template are replaced by
+the argument \"ud\" - called the \"code\" - and the \"{d}\"s in the template
+are replaced by \"/usr/share/doc/\" - called the \"directory\". If we add
+a \"find-\" before the `code-c-d', like this,
+
+  (find-code-c-d \"ud\" \"/usr/share/doc/\")
+
+we get a hyperlink to the code that `(code-c-d \"ud\" \"/usr/share/doc/\")'
+would execute - i.e., to the result of substiting the \"{c}\"s and
+\"{d}\"s in the template. This is useful for understanding how
+`code-c-d' works; each call to `code-c-d' defines lots of functions,
+some of them easier to explain, some harder. This, for example,
+
+  (find-eevgrep \"grep --color -nH -e '(code-c-d ' *.el\")
+
+greps for all calls to \"code-c-d\" in the source of eev.
+
+By default, eev runs these `code-c-d's:
+
+  (find-eevfile \"eev-code.el\" \"code-c-d \\\"e\\\"\")
+
+You can add many more of them to your .emacs file.
+
+An introduction to the ideas, details, innards and technicalities of
+`code-c-d' can be found here:
+
+  (find-code-c-d-intro)
+
+
+
+9.2. Extra arguments to `code-c-d'
+----------------------------------
+If you compare the buffers generated by
+
+  (find-code-c-d      \"CODE\" \"/DIR/\")
+  (find-code-c-d      \"CODE\" \"/DIR/\" :info \"INFO\")
+  (find-code-c-d-rest \"CODE\" \"/DIR/\" :info \"INFO\")
+
+you will see that the `:info \"INFO\"' part adds some code to the end of
+the generated string, and that the `find-code-c-d-rest' shows only
+this extra code.
+
+The most important extra arguments to `code-c-d' are:
+
+  1) :info \"name-of-an-info-manual\"
+  2) :gz
+  3) :anchor
+
+If the first extra argument is a string then `ee-code-c-d' adds an
+`:info' before it, so these generate the same code:
+
+  (find-code-c-d \"CODE\" \"/DIR/\"       \"INFO\")
+  (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")
+
+The eev source has this (in the file \"eev-code.el\"),
+
+  (code-c-d \"e\"   ee-emacs-lisp-directory :info \"emacs\" :gz)
+  (code-c-d \"eev\" ee-eev-source-directory :anchor)
+
+and that code
+
+  1) makes (find-enode \"\")
+     work as an abbreviation for (find-node \"(emacs)\")
+
+  2) makes (find-efile \"files.el\")
+     run   (find-efile \"files.el.gz\")
+     if the file \"files.el\" is not found,
+
+  3) makes (find-eev     \"eev-blinks.el\" \"find-wottb\")
+     run:  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
+     or actually: (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
+
+For the technical details of the implementation, see here:
+
+  (find-code-c-d-intro \"Extra arguments to `code-c-d'\")
+
+
 
 
 
