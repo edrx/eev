@@ -1,3 +1,17 @@
+2019-01-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eejump.el: moved the binding for `M-j' to eev-intro.el.
+
+	* eev-mode.el (eev-mode-map-set): rewrote some comments.
+	(eev-mode-map-set): removed the binding for `find-git-links-1'.
+	(eev-mode-map-set): added the binding for `M-j' (`eejump').
+
+	* eev-intro.el (find-eev-quick-intro): added sections "3.1.
+	Non-elisp hyperlinks", "7.2. The list of eejump targets", "7.3.
+	Defining eejump targets"; small changes in other sections.
+
+	* eev-eval.el: added comments.
+
 2019-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-code.el (find-code-c-d-rest): new function.

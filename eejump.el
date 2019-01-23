@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2016sep23
+;; Version:    2019jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -43,11 +43,10 @@
 
 
 
-;; This module installs a key binding into eev-mode-keymap, so:
-(require 'eev-mode)			; (find-eev "eev-mode.el")
+;; See: (find-eevfile "eev-mode.el" "M-j")
+;; (define-key eev-mode-map "\M-j" 'eejump)
 
-(define-key eev-mode-map "\M-j" 'eejump)
-
+ 
 (defun eejump (arg)
   "See: (find-eev-quick-intro \"7.1. eejump\")
 and: (find-eejump-intro)"

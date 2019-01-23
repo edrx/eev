@@ -1,6 +1,6 @@
 ;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.
 
-;; Copyright (C) 2012,2013 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2013,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov15
+;; Version:    2019jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -54,24 +54,32 @@ See: (find-eval-intro \"`M-k'\")"
 (defun eev-mode-map-set ()
   "Add the standard keybindings for eev to `eev-mode-keymap'."
   ;;
-  ;; Eepitch: a simple way to script interactive programs.
-  ;; Explanation: (find-eepitch-intro "The main key: <F8>")
-  ;;              (find-eepitch-intro "Creating eepitch blocks: <M-T>")
-  ;;      Source: (find-eev "eepitch.el")
-  (define-key eev-mode-map [f8]   'eepitch-this-line)
-  (define-key eev-mode-map "\M-T" 'eewrap-eepitch)
-  ;;
   ;; Keys for following hyperlinks and for going back.
-  ;; Explanation: (find-eval-intro "`M-e'")
-  ;;              (find-eval-intro "Going back")
-  ;;      Source: (find-eev "eev-eval.el")
+  ;; See: (find-eev-quick-intro "2. Evaluating Lisp" "When you type `M-e'")
+  ;;      (find-eev-quick-intro "3. Elisp hyperlinks" "go back" "`M-k'")
+  ;; Source: (find-eev "eev-eval.el")
   (define-key eev-mode-map "\M-e" 'ee-eval-sexp-eol)  ; extends C-e C-x C-e
   (define-key eev-mode-map "\M-E" 'ee-eval-last-sexp) ; extends     C-x C-e
   (define-key eev-mode-map "\M-k" 'ee-kill-this-buffer)
   (define-key eev-mode-map "\M-K" 'bury-buffer)
   ;;
-  ;; Explanation: (find-wrap-intro)
-  ;;       Tests: (find-wrap-intro "all wrapping functions")
+  ;; Jump to numbered places (or actions).
+  ;; See:    (find-eev-quick-intro "7.1. eejump")
+  ;; Source: (find-eev "eejump.el")
+  (define-key eev-mode-map "\M-j" 'eejump)
+  ;;
+  ;; Eepitch: a simple way to script interactive programs.
+  ;; See: (find-eev-quick-intro "6. Controlling shell-like programs")
+  ;;      (find-eev-quick-intro "6.1. The main key: <F8>")
+  ;;      (find-eev-quick-intro "6.3. Creating eepitch blocks: `M-T'")
+  ;; Source: (find-eev "eepitch.el")
+  (define-key eev-mode-map [f8]   'eepitch-this-line)
+  (define-key eev-mode-map "\M-T" 'eewrap-eepitch)
+  ;;
+  ;; Functions that transform ("wrap") the current line.
+  ;; See: (find-eev-quick-intro "`eewrap-(something)'")
+  ;;      (find-wrap-intro)
+  ;;      (find-wrap-intro "all wrapping functions")
   ;;      Source: (find-eev "eev-wrap.el")
   (define-key eev-mode-map "\M-A" 'eewrap-anchor)
   (define-key eev-mode-map "\M-C" 'eewrap-code-c-d)
@@ -85,7 +93,10 @@ See: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-Z" 'eewrap-zsh)
   ;;
   ;; Keys for creating temporary buffers with elisp hyperlinks:
-  ;;      Source: (find-eev "eev-elinks.el")
+  ;; The highest-level command is `M-h M-h', described here:
+  ;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
+  ;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks" "`M-h M-h'")
+  ;; Source: (find-eev "eev-elinks.el")
   (define-key eev-mode-map "\M-h\M-d" 'find-debpkg-links)    
   (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links) 
   (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)     
@@ -104,14 +115,16 @@ See: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M-t" 'find-etpat)
   (define-key eev-mode-map "\M-ht"    'find-etpat0)
   ;;
-  ;; Extras:
-  (define-key eev-mode-map "\M-hg"    'find-git-links-1)
-  ;;
-  ;; Keys for editing hyperlinks:
+  ;; Keys for refining hyperlinks.
+  ;; See: (find-eval-intro "Producing and refining hyperlinks")
+  ;;      (find-eval-intro "`M-h M-2'")
   ;; Source: (find-eev "eev-edit.el")
   (define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
   (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
   (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
+  ;;
+  ;; Obsolete:
+  ;; (define-key eev-mode-map "\M-hg"    'find-git-links-1)
   ;;
   )
 

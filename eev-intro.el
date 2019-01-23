@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan08
+;; Version:    2019jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -6041,6 +6041,26 @@ access to the \"non-free\" respository... ask for help if you need!
 
 
 
+3.1. Non-elisp hyperlinks
+-------------------------
+Emacs has ways to follow URLs, but the keys for that are totally
+different from the ones for elisp hyperlinks. You can follow the URL
+below by putting the point on it and typing `M-x browse-url':
+
+  http://www.lua.org/start.html
+
+This will make emacs invoke the default browser on that URL. See:
+
+  (find-enode \"Browse-URL\")
+
+Eev defines several functions similar to `browse-url', but they are
+presently considered advanced features. See:
+
+  (find-brxxx-intro)
+
+
+
+
 
 4. Creating Elisp Hyperlinks
 ============================
@@ -6188,7 +6208,7 @@ The Emacs manuals are in \"info\" format, which means:
        ]         forward-node        (Top->1->1.1->1.2->2->3->3.1->...->Index)
        [         backward-node       (Top<-1<-1.1<-1.2<-2<-3<-3.1<-...<-Index)
 
-Try the keys above now - they are VERY imporant! Use:
+Try the keys above now - they are VERY important! Use:
 
   (eek \"<down> M-3 M-e  ;; open the hyperlink below in another window\")
   (find-node \"(emacs)Basic\")
@@ -6392,7 +6412,19 @@ Note that `M-1 M-j' can be typed as:
     type j,
   release the meta key.
 
-Internally, what happens is that:
+instead of:
+
+  hold the meta key,
+    type 1,
+  release the meta key,
+  hold the meta key,
+    type j,
+  release the meta key;
+
+There is no need to release and press agian the meta key between
+the `1' and the `j'.
+
+Internally, what happens when you type `M-1 M-j' is this:
 
   `M-j' is bound to `eejump',
   `M-1 M-j' runs `eejump' with argument 1, i.e., (eejump 1)
@@ -6401,17 +6433,44 @@ Internally, what happens is that:
 
     (defun eejump-1 () (find-fline \"~/TODO\"))
 
-Note that if you type `M-J' (i.e., meta-uppercase-j) on the line below
-then it will be converted into the \"(defun eejump-1 ...)\" above,
+So `M-1 M-j' runs the one-liner `(find-fline \"~/TODO\")',
+`M-5 M-j' runs the one-liner `(find-eev-quick-intro)',
+and so on.
 
-  1 (find-fline \"~/TODO\")
 
-and note also that if you type `M-j' without a prefix argument then it
-runs `(find-eejumps)', which displays all the current eejump targets,
-as defuns. Try it:
+
+7.2. The list of eejump targets
+-------------------------------
+If you type `M-j' without a prefix argument then it runs
+`(find-eejumps)', that displays all the current eejump targets as
+defuns, one in each line. Try it:
 
   (eek \"M-j\")
   (find-eejumps)
+
+You will see that two of those entries are:
+
+  (defun eejump-1 () (find-fline \"~/TODO\"))
+  (defun eejump-5 () (find-eev-quick-intro))
+
+
+
+7.3. Defining eejump targets
+----------------------------
+We can define new eejump targets, or overwrite the current ones, by
+just running `defun's to define functions with names starting with
+`eejump-'. Try:
+
+  (defun eejump-9 () (find-eev-quick-intro \"7.2.\"))
+  (defun eejump-9 () (find-eev-quick-intro \"7.3.\"))
+  (fmakunbound 'eejump-9)
+  (find-eejumps)
+
+Note that if you type `M-J' (i.e., meta-uppercase-j,
+`eewrap-eejump') on the line below then it will be converted into
+the first \"(defun eejump- ...)\" above:
+
+  9 (find-eev-quick-intro \"7.2.\")
 
 An advanced feature: if you type `M-J' on a line that starts with
 something that is not a number, you get a defun for a \"command
@@ -6420,7 +6479,6 @@ next section. Try it now:
 
   (eek \"<down> M-J\")
   e (find-fline \"/tmp/foo.tex\")
-
 
 
 

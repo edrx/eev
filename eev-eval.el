@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012dec29
+;; Version:    2019jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -45,6 +45,9 @@
 ;;;                                       |_|                       
 ;;;
 ;;; evaluating sexps (alternatives to eval-last-sexp)
+;;; See: (find-eev-quick-intro "2. Evaluating Lisp")
+;;;      (find-eev-quick-intro "2. Evaluating Lisp" "When you type `M-e'")
+;;;      (find-eev-quick-intro "2. Evaluating Lisp" "numeric prefixes")
 ;;;
 
 ;; ee-eval-sexp-eol may be obsolete
@@ -105,7 +108,6 @@
   (let ((sexp (read (ee-last-sexp)))
 	(debug-on-error t))
     (eval sexp)))
-
 
 
 (defun ee-eval-last-sexp (&optional arg)
