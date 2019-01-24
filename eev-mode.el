@@ -32,7 +32,8 @@
 
 (defun ee-kill-this-buffer ()
   "Kill the current buffer with fewer warnings than `kill-this-buffer'.
-See: (find-eval-intro \"`M-k'\")"
+See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"go back\" \"`M-k'\")
+and: (find-eval-intro \"`M-k'\")"
   (interactive)
   (let ((kill-buffer-query-functions nil))
     (kill-this-buffer)))
@@ -99,6 +100,7 @@ See: (find-eval-intro \"`M-k'\")"
   ;; Source: (find-eev "eev-elinks.el")
   (define-key eev-mode-map "\M-h\M-d" 'find-debpkg-links)    
   (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links) 
+  (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
   (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)     
   (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)      
   (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)

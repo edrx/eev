@@ -73,12 +73,13 @@
 
 ;; See: (find-anchors-intro)
 
+
 ;; Ignore this - this is an obsolete hack that I used to use to make
 ;; the htmlization in <http://angg.twu.net/eev-intros/> work better...
 ;; (find-angg "eev-intros/")
 ;; (find-angg "eev-intros/README")
-' (fooi-re "Source code:  (find-efunction '\\([!-~]*\\))"
-           "Source code:  (find-eev \\\\\"eev-intro.el\\\\\" \\\\\"\\1\\\\\")")
+;;' (fooi-re "Source code:  (find-efunction '\\([!-~]*\\))"
+;;           "Source code:  (find-eev \\\\\"eev-intro.el\\\\\" \\\\\"\\1\\\\\")")
 
 
 ;; «find-intro-here» (to ".find-intro-here")
@@ -355,8 +356,8 @@ For an introduction to the ideas here, see:
 
 
 
-The standard way to evaluate Lisp: `C-x C-e'
-============================================
+1. The standard way to evaluate Lisp: `C-x C-e'
+===============================================
 The most important idea in Emacs is that Lisp code can appear
 anywhere, and you can evaluate a Lisp expression (a \"sexp\") by
 placing the cursor (the \"point\") just after it and typing `C-x
@@ -371,8 +372,8 @@ positions - you should get different results.
 
 
 
-The end of line and `M-e'
-=========================
+2. The end of line and `M-e'
+============================
 A common operation is to move the point to the end of the current
 line, then run `C-x C-e'. That can be done with `C-e C-x C-e',
 but eev-mode implements a shorthand for it: `M-e'. Try it here:
@@ -397,8 +398,9 @@ hightlight the subsexps `(* 2 3)', `(* 4 5)', and `4'.
 
 
 
-What to execute, and in what order
-==================================
+
+3. What to execute, and in what order
+=====================================
 Note that the order of evaluation may be important:
 
   (setq a 5)
@@ -413,6 +415,17 @@ An exercise: edit the three sexps above to introduce a
 `(setq a 22)', then use that sexp and the `(* a a)' to calculate
 the square of 22.
 
+Another exercise: just as `setq' sets variables and can override
+their previous values, `defun' defines, and redefines, functions.
+Execute the sexps below in different orders to obtain the results
+25, 36, 50, and 60.
+
+  (setq a 5)
+  (setq a 6)
+  (defun f (x) (* x x))
+  (defun f (x) (* x 10))
+  (f a)
+
 MORAL: Elisp code can appear anywhere in any Emacs buffer, but it
 is _passive by default_. It only gets executed if we move the
 point to the right positions and type `C-x C-e', `M-e', or
@@ -422,8 +435,8 @@ order, and can be edited and modified.
 
 
 
-Elisp hyperlinks
-================
+4. Elisp hyperlinks
+===================
 Some Emacs functions can be used as hyperlinks. When sexps like
 
   (find-file \"/tmp/\")
@@ -476,8 +489,8 @@ eev versions of the links above:
 
 
 
-Going back
-==========
+5. Going back
+=============
 Web browsers let you follow a hyperlink and then \"go back\".
 There are different ways of going back - if you opened the new
 page on a new window or tab, then going back means deleting the
@@ -512,8 +525,8 @@ quicker than recreating it anew.
 
 
 
-Refining hyperlinks
-===================
+6. Refining hyperlinks
+======================
 Most hyperlinks functions defined by eev can be \"refined\" by
 the addition of extra arguments. These extra arguments are called
 a \"pos-spec\" (or a \"pos-spec-list\") and they specify a
@@ -535,8 +548,8 @@ are numbers or strings. Try:
 
 
 
-Pos-spec-lists
-==============
+7. Pos-spec-lists
+===---===========
 The optional arguments that refine a hyperlink form what we call
 a \"pos-spec-list\". For example, the pos-spec-list here has two
 elements,
@@ -571,8 +584,8 @@ replace `ee-goto-rest' with your own extended version.
 
 
 
-Anchors and pages
-=================
+8. Anchors and pages
+====================
 \[See:\] (find-anchors-intro)
 
 Some hyperlink functions, like `find-efunction' and
@@ -607,8 +620,8 @@ more on \"pages\", see:
 
 
 
-Producing and refining hyperlinks
-=================================
+9. Producing and refining hyperlinks
+====================================
 If you are on an Info page, typing `M-h M-i' will create a
 temporary buffer containing a header - which we will discuss
 later - and several (possibly equivalent) links to that info
@@ -1187,8 +1200,8 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-What is a hyperlink?
-====================
+1. What is a hyperlink?
+=======================
 In a previous tutorial - (find-eval-intro) - we saw that several
 kinds of sexps can be used as hyperlinks. For example, these:
 
@@ -1231,8 +1244,8 @@ kinds of hyperlinks.
 
 
 
-Elisp hyperlinks buffers
-========================
+2. Elisp hyperlinks buffers
+===========================
 Emacs has several help commands, whose bindings start with `C-h',
 that display their information in (temporary) \"help buffers\" -
 and in many cases these generated help buffers have hyperlinks,
@@ -1286,8 +1299,8 @@ What is that?...
 
 
 
-Elisp hyperlinks buffers conventions
-====================================
+3. Elisp hyperlinks buffers conventions
+=======================================
 Let's refer to Emacs's help buffers as \"C-h buffers\" and to
 eev's elisp hyperlink buffers as \"M-h buffers\". Here is a quick
 list of the main differences and conventions; some of them will
@@ -1345,8 +1358,8 @@ be expanded later:
 
 
 
-`find-here-links'
-=================
+4. `find-here-links'
+====================
 The most important of the commands that generates buffers with elisp
 hyperlinks - \"M-h commands\", in the terminology explained above - is
 `find-here-links', which integrates most of the functionalities of
@@ -1434,8 +1447,8 @@ can compare the different cases using just <up>, <down>, and M-e.
 
 
 
-`find-here-links': usage patterns
-=================================
+5. `find-here-links': usage patterns
+====================================
 Typically what happens is this. We are putting our notes - eepitch
 blocks, hyperlinks, etc - in a certain file; let's refer to it as the
 \"e-script\". Then we start to navigate for information, and we find
@@ -1487,8 +1500,8 @@ and step (3) sometimes gives several sexps for us to choose from]
 
 
 
-Basic and non-basic hyperlinks
-==============================
+6. Basic and non-basic hyperlinks
+=================================
 How can we learn to recognize what each hyperlink sexp does? And
 which ones are safe(r), and which ones are not? How do we
 classify all hyperlink sexps?
@@ -1557,8 +1570,8 @@ that they generate.
 
 
 
-ee-hyperlink-prefix
-===================
+7. ee-hyperlink-prefix
+======================
 `ee-hyperlink-prefix' is both a variable and a function that
 helps us set that variable; it started to an experiment on how to
 create an alternative to `M-x customize' and ended up becoming
@@ -1596,8 +1609,8 @@ Try this, with `M-2 M-e' on each line:
 
 
 
-The first line regenerates the buffer
-=====================================
+8. The first line regenerates the buffer
+========================================
 \[To do: explain this convention with examples; explain the
 conventions for the \"variants of the first line\"\]
 
@@ -1610,8 +1623,8 @@ conventions for the \"variants of the first line\"\]
 
 
 
-Pointing to where we are now
-============================
+9. Pointing to where we are now
+===============================
 Several of the `M-h' commands are mainly meant to help us
 generate hyperlinks to \"where we are now\": to the current file,
 to the current Info page, to the current `find-*-intro', to an
@@ -1653,8 +1666,8 @@ buffer, and so on. They don't try to be very smart -
 
 
 
-The rest of the buffer
-======================
+10. The rest of the buffer
+==========================
 
 Several elisp hyperlinks buffers are composed of two parts: a
 series of links at the top, and then a template-generated text
@@ -1735,6 +1748,11 @@ More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+
+
+
+This intro has been mostly superseded by:
+(find-eev-quick-intro \"9.1. `code-c-d'\")
 
 
 
@@ -2090,8 +2108,8 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-Introduction
-============
+1. Introduction
+===============
 We saw in
 
   (find-psne-intro)
@@ -2119,8 +2137,8 @@ brxxx-functions from base functions.
 
 
 
-A first example
-===============
+2. A first example
+==================
 Let's define two trivial base functions, one that expects a URL,
 and another one that expects a file name:
 
@@ -2177,8 +2195,8 @@ to that URL.
 
 
 
-The conversions
-===============
+3. The conversions
+==================
 One underlying idea behind all this is that we have two
 conversion functions, one from URLs to file names, and another
 from (absolute) file names to URLs starting with \"file:///\".
@@ -2205,8 +2223,8 @@ execute:
 
 
 
-Naming conventions for brxxx-functions
-======================================
+4. Naming conventions for brxxx-functions
+=========================================
 By convention, each name for a brxxx-function is composed of a
 prefix, a stem, and a suffix. The prefix is always \"br\", the
 stem is a mnemonic for the base function, and the suffix is
@@ -2245,8 +2263,8 @@ In our example with `foo-url' and `foo-file' we had:
 
 
 
-Calling `code-brurl' and `code-brfile'
-======================================
+5. Calling `code-brurl' and `code-brfile'
+=========================================
 
   (code-brurl '<U-function>
                    :remote 'br<stem>   :local 'br<stem>l   :dired 'br<stem>d)
@@ -2269,8 +2287,8 @@ curious about the inspirations behind it, here they are:
 
 
 
-The dired variation
-===================
+6. The dired variation
+======================
 
 In dired mode each line corresponds to a file
 
@@ -3379,8 +3397,8 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-Introduction
-============
+1. Introduction
+===============
 In many situations - for example, when we want to script a
 debugger, or to test programs that have to talk to one another,
 or to control several external machines simultaneously - the
@@ -3415,8 +3433,8 @@ practical experimentation.
 
 
 
-`find-wset'
-===========
+2. `find-wset'
+==============
 Suppose that we are in a buffer A, and we want to create a window
 configuration with A at the left, and with the buffers B and C
 stacked on one another at the right. That is:
@@ -3486,8 +3504,8 @@ how to extend it - see the source:
 
 
 
-High-level words
-================
+3. High-level words
+===================
 Very often we want to create window setups like
 
    _______________            _______________ 
@@ -3528,8 +3546,8 @@ window \"C\".
 
 
 
-Several eepitch targets
-=======================
+4. Several eepitch targets
+==========================
 If we try to build a window setup like this one, with two eepitch
 targets, with just `find-wset', we will run into problems -
 
@@ -3577,8 +3595,8 @@ word, so this is equivalent to:
 
 
 
-Restarting eepitch targets
-==========================
+5. Restarting eepitch targets
+=============================
 Sometimes we want to do the same as above, but restarting both
 eepitch targets, i.e., something like this:
 
@@ -3622,8 +3640,8 @@ print(open(\"/tmp/o\").read())
 
 
 
-Non-trivial examples
-====================
+6. Non-trivial examples
+========================
 See:
 
   (find-prepared-intro \"An `ee' for Python\")
@@ -3631,8 +3649,8 @@ See:
 
 
 
-Eepitch blocks for two targets
-==============================
+7. Eepitch blocks for two targets
+=================================
 An eepitch script with two targets uses several different kinds
 of red star lines - `(eepitch-target1)', `(eepitch-target2)',
 `(find-3EE ...)', `(find-3ee ...)', etc. We don't want to have to
@@ -3660,8 +3678,8 @@ Note that we use to `find-3EE' to restart targets instead of
 
 
 
-Adding support for new characters in `find-wset'
-================================================
+8. Adding support for new characters in `find-wset'
+===================================================
 The standard characters supported by `find-wset' are these:
 
   char  action                       key
@@ -3698,16 +3716,18 @@ See: (find-prepared-intro)
 
 
 
-Executing key sequences at other windows
-========================================
+9. Executing key sequences at other windows
+===========================================
 It is possible to use multi-window settings, together with the
 trick that `<f8>' on a red star line executes it as Lisp and
 moves down, to create tutorials for Emacs modes. An example:
 
+  (...)
 
 
-A tutorial for Info mode
-========================
+
+10. A tutorial for Info mode
+============================
 Here's a mini-tutorial for Info mode, demonstrating how to
 navigate in Info using the usual movement keys, plus TAB,
 <backtab>, RET, l (last), u (up), n (next), p (prev), q (quit),
@@ -4075,6 +4095,11 @@ More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+
+
+
+NOTE: This has been mostly superseded by:
+(find-eev-quick-intro \"8. Anchors\")
 
 
 
@@ -5476,7 +5501,13 @@ The most basic keys of eev are:
               `M-j' takes you to the list of jump targets.
           `M-2 M-j' takes you to this help page.
           `M-5 M-j' takes you to: (find-eev-quick-intro)
+  <f8>  - See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
+  M-T   - See: (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
 
+The keys for creating \"hyperlinks to here\" and refining them are:
+  M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
+  M-h M-2   - `ee-duplicate-this-line'. See: (find-eval-intro \"M-h M-2\")
+  M-h M-y   - `ee-yank-pos-spec'. See: (find-eval-intro \"M-h M-y\")
 
 
 2. Key sequences and how to abort them
@@ -5590,9 +5621,6 @@ C-x r j <char>       -- jump-to-register     (find-enode \"Position Registers\")
 
 11. Other keys (eev)
 ====================
-M-h M-h   -- find-here-links            (find-eev-quick-intro \"`M-h M-h'\")
-F8        -- eepitch-this-line          (find-eev-quick-intro \"what <F8> does\")
-M-T       -- eewrap-eepitch             (find-eev-quick-intro \"`M-T'\")
 M-F       -- eewrap-find-fline          (find-eev-quick-intro \"`M-F'\")
 M-M       -- eewrap-man                 (find-eev-quick-intro \"`M-M'\")
 M-S       -- eewrap-sh                  (find-eev-quick-intro \"`M-S'\")
@@ -6311,17 +6339,6 @@ cd /tmp/
 echo \"We changed to: $(pwd)\"
 
 
-Note (for ADVANCED USERS):
-if the above does not work as expected then the code below MAY fix it -
-try it and copy it to your .emacs if it works...
-
-;; See: (find-eevfile \"eepitch.el\" \"defun eepitch-window-show\")
-\(defun eepitch-window-show ()
-  \"An emergency hack for Emacs versions where `display-buffer' is buggy\"
-  (find-2a nil '(find-ebuffer eepitch-buffer-name)))
-
-
-
 
 
 6.2. Other targets
@@ -6776,6 +6793,7 @@ files.
 
 9. Shorter hyperlinks
 =====================
+See also: (find-code-c-d-intro)
 
 9.1. `code-c-d'
 ---------------

@@ -1,6 +1,6 @@
 ;; eev-multiwindow.el - functions to create multi-window setups
 
-;; Copyright (C) 2012,2013 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2013,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013aug24
+;; Version:    2019jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-multiwindow.el>
@@ -29,16 +29,31 @@
 ;;                                                (find-eev-intro)
 
 ;;; Commentary:
+;;
+;; For the main ideas, see: (find-multiwindow-intro)
 
+
+
+;;;   __ _           _                        _   
+;;;  / _(_)_ __   __| |    __      _____  ___| |_ 
+;;; | |_| | '_ \ / _` |____\ \ /\ / / __|/ _ \ __|
+;;; |  _| | | | | (_| |_____\ V  V /\__ \  __/ |_ 
+;;; |_| |_|_| |_|\__,_|      \_/\_/ |___/\___|\__|
+;;;                                               
+;; These functions are explained here:
+;; (find-multiwindow-intro "1. Introduction")
+;; (find-multiwindow-intro "2. `find-wset'")
+;; (find-multiwindow-intro "8. Adding support for new characters in `find-wset'")
 
 (defun find-wset-1 () (delete-other-windows))
 (defun find-wset-2 () (split-window-vertically))
 (defun find-wset-3 () (split-window-horizontally))
 (defun find-wset-s () (split-window-sensibly (selected-window)))
 (defun find-wset-o () (other-window 1))
+(defun find-wset-O () (other-window -1))
 (defun find-wset-+ () (balance-windows))
 (defun find-wset-_ () (eval (car sexps)) (setq sexps (cdr sexps)))
-(defun find-wset-\ ())			; allow whitespace
+(defun find-wset-\  ())			; allow whitespace
 
 (defun find-wset (chars &rest sexps)
   "Create a multi-window setting according to CHARS and SEXPS.
@@ -62,6 +77,18 @@ a function `find-wset-C'."
 	(apply 'find-wset chars sexps))))
 
 
+;; High-level functions.
+;; See: (find-multiwindow-intro "3. High-level words")
+;;
+(defun find-2a (a b)   (find-wset "13_o_o" a b))
+(defun find-2b (a b)   (find-wset "13_o_"  a b))
+(defun find-3a (a b c) (find-wset "13_o2_o_o"  a b c))
+(defun find-3b (a b c) (find-wset "13_o2_o_oo" a b c))
+(defun find-3c (a b c) (find-wset "13_o2_o_"   a b c))
+
+
+
+
 
 
 
@@ -71,6 +98,10 @@ a function `find-wset-C'."
 ;;; |  __/  __/ |_) | | || (__| | | | | | | | (_| | (__|   <\__ \
 ;;;  \___|\___| .__/|_|\__\___|_| |_| |_| |_|\__,_|\___|_|\_\___/
 ;;;           |_|                                                
+;; See:
+;; (find-multiwindow-intro "4. Several eepitch targets")
+;; (find-multiwindow-intro "5. Restarting eepitch targets")
+;; (find-multiwindow-intro "7. Eepitch blocks for two targets")
 
 (defun ee-here (code)
   "Example: (ee-here '(eepitch-xxx)) opens the target of (eepitch-xxx) here.
@@ -97,29 +128,15 @@ that. This is mainly for `find-wset'."
        eepitch-buffer-name))
     result))
 
-(defun find-wset-= () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
-(defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
-(defun find-wset-O () (other-window -1))
 
-;; Mnemonic: "e" and "E" are both to prepare eepitch windows,
-;; and "E" is more aggressive than "e". See:
-;; (find-multiwindow-intro)
+;; Mnemonic: "e" and "E" are both for preparing eepitch windows,
+;; and "E" is more aggressive than "e" (it yells at you).
+;; Same for "=" and "!".
+(defun find-wset-= () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-e () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
+(defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-E () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 
-
-
-;; Temporary hacks (?)
-;; See: (find-multiwindow-intro "High-level words")
-(defun find-2a (a b)   (find-wset "13_o_o" a b))
-(defun find-2b (a b)   (find-wset "13_o_"  a b))
-(defun find-3a (a b c) (find-wset "13_o2_o_o"  a b c))
-(defun find-3b (a b c) (find-wset "13_o2_o_oo" a b c))
-(defun find-3c (a b c) (find-wset "13_o2_o_"   a b c))
-
-;; See:
-;; (find-multiwindow-intro "Several eepitch targets")
-;; (find-multiwindow-intro "Restarting eepitch targets")
 (defun find-3ee (b c) (find-wset "13o2=o=o" b c))
 (defun find-3EE (b c) (find-wset "13o2!o!o" b c))
 

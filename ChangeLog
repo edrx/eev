@@ -1,16 +1,27 @@
 2019-01-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
-	* eejump.el: moved the binding for `M-j' to eev-intro.el.
+	* eev-intro.el (find-eev-quick-intro): added sections "3.1.
+	Non-elisp hyperlinks", "7.2. The list of eejump targets", "7.3.
+	Defining eejump targets"; small changes in other sections.
+	(find-multiwindow-intro): small changes.
+	(find-anchors-intro): small changes.
+	(find-eval-intro): small changes.
+	(find-brxxx-intro): small changes.
+	(find-emacs-keys-intro): small changes.
+	(find-links-intro): small changes.
+
+	* eev-eval.el: added comments.
+	(ee-eval-last-sexp): rewrote to make it use
+	`ee-eval-last-sexp-0', `ee-eval-last-sexp-1', etc.
+
+	* eejump.el: moved the binding for `M-j' to eev-mode.el.
+
+	* eev-elinks.el: moved the binding for `M-h M-h' to eev-mode.el.
 
 	* eev-mode.el (eev-mode-map-set): rewrote some comments.
 	(eev-mode-map-set): removed the binding for `find-git-links-1'.
 	(eev-mode-map-set): added the binding for `M-j' (`eejump').
-
-	* eev-intro.el (find-eev-quick-intro): added sections "3.1.
-	Non-elisp hyperlinks", "7.2. The list of eejump targets", "7.3.
-	Defining eejump targets"; small changes in other sections.
-
-	* eev-eval.el: added comments.
+	(eev-mode-map-set): added the binding for `M-h M-h' (`find-here-links').
 
 2019-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
 

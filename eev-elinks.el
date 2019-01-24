@@ -1,6 +1,6 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'
 
-;; Copyright (C) 2012,2013 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2013,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013nov18
+;; Version:    2019jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -858,7 +858,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                       
 ;; «find-here-links» (to ".find-here-links")
-;; TO DO: DOCUMENT THIS!
+;; See: (find-eev-quick-intro "`M-h M-h'")
 
 ;; (find-efunction 'find-grep-links)
 ;; (find-efunction 'find-einfo-links)
@@ -866,10 +866,11 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;; (find-find-links-links "\\M-h" "here" "")
 ;; (find-efunction 'find-ecolors)
 
-(define-key eev-mode-map "\M-h\M-h" 'find-here-links)
+;; Moved the key binding to:
+;;   (find-eevfile "eev-mode.el" "\\M-h\\M-h")
+;; (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
 
-;; Tools
-;; (defun ee-buffer-re (re)  (string-match re (buffer-name)))
+;; Some tools for detecting which kind of buffer we're in.
 (defun ee-buffer-re (re)
   (if (string-match re (buffer-name))
       (match-string 1 (buffer-name))))
