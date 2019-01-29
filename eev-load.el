@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan23
+;; Version:    2019jan29
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -33,6 +33,11 @@
 ;;                                                (find-eev-quick-intro)
 
 ;;; Commentary:
+
+;; This file loads all the main modules of eev, and people who want to
+;; read the source can use this as an index to them. The modules are
+;; loaded more or less in the order that they are mentioned here:
+;; (find-eev-quick-intro)
 
 ;; The "eev quick intro" itself, and many other intros:
 (require 'eev-intro)	       ; (find-eev "eev-intro.el")
@@ -75,14 +80,15 @@
 ;; Shorter hyperlinks and how to mass-produce them:
 ;;   (find-eev-quick-intro "9. Shorter hyperlinks")
 ;;   (find-code-c-d-intro "\nShorter hyperlinks\n")
+;;   (find-eev-quick-intro "9.3. Hyperlinks to PDF files")
 (require 'eev-code)	       ; (find-eev "eev-code.el")
-(require 'eev-brxxx)	       ; (find-eev "eev-brxxx.el")
 (require 'eev-pdflike)	       ; (find-eev "eev-pdflike.el")
 ;;
 ;; (I need to write comments for these)
 (require 'eev-codings)	       ; (find-eev "eev-codings.el")
 (require 'eev-env)	       ; (find-eev "eev-env.el")
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
+(require 'eev-brxxx)	       ; (find-eev "eev-brxxx.el")
 ;;
 ;; Advanced (and hard to use) features that may require creating a
 ;; temporary directory, patching rcfiles, and installing Expect

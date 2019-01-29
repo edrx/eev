@@ -1,3 +1,34 @@
+2019-01-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-load.el: new file.
+
+	* eev-intro.el (find-eev-quick-intro): Added two new sections:
+	"9.3. Hyperlinks to PDF files" and "9.4. Shorter hyperlinks to PDF
+	files".
+
+	* eev-pdflike.el: TOTAL REWRITE. The old version was renamed to
+	eev-pdflike-old.el and will be deleted at some point in the
+	future.
+	(code-xxxpdf-family): new function.
+	(code-xxxpdftext-family): new function.
+	(code-xxxpdf-alias): new function.
+
+	* eev-pdflike-old.el: new file.
+
+	* eev-rcirc.el (find-freenode-2a): new function.
+	(find-freenode-links): rewrote completely.
+
+2019-01-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (ee-buffer-freenode-channel-name): new function.
+
+2019-01-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-pdf-text): new function - an alias to
+	`ee-find-pdftotext-text'.
+	(ee-find-pdf-page): new function - an alias to
+	`ee-find-xpdf-page'.
+
 2019-01-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-quick-intro): added sections "3.1.

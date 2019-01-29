@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan23
+;; Version:    2019jan29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -6896,11 +6896,107 @@ and that code
      run:  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
      or actually: (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
 
+Calls to `find-eev' are \"short hyperlinks to anchors\":
+
+  (find-eev \"eev-blinks.el\" \"find-wottb\")
+  (find-eev \"eev-blinks.el\" \"find-wottb\" \"defun find-wottb-call\")
+
 For the technical details of the implementation, see here:
 
   (find-code-c-d-intro \"Extra arguments to `code-c-d'\")
 
 
+
+9.3. Hyperlinks to PDF files
+----------------------------
+If you run this e-script
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+#         https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+mkdir -p $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
+cd       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
+wget -nc  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+you will download a local copy of J.M. Coetzee's \"The Lives of
+Animals\" into this directory:
+
+  (find-fline      \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
+  (find-fline \"~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
+
+The full idea behind these \"local copies\" is explained here:
+
+  (find-psne-intro)
+
+If you have xpdf installed then the second sexp here,
+
+  (setq l-o-a \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf\")
+  (find-pdf-page l-o-a)
+
+should work as a \"hyperlink to the PDF\": it calls xpdf as
+external program to open that PDF file. The main keys of xpdf
+are:
+
+  q         quit xpdf
+  alt-f     toggle full-screen; use twice to fit document to page
+  PageDown  scroll down/go to next page
+  PageUp    scroll up/go to previous page
+  0         set zoom to 125%
+  +         zoom in one step
+  -         zoom out out step
+  arrows    scroll within the current page
+
+Also, if you have the program pdftotext installed (hint: apt-get
+install poppler-utils!) then this
+
+  (find-pdf-text l-o-a)
+
+should work as a \"hyperlink to the text of the PDF\".
+
+You can use these two sexps
+
+  (ee-find-pdf-text l-o-a)
+  (ee-find-pdf-page l-o-a)
+
+to see exactly how the `find-pdf-page' and the `find-pdf-text'
+sexps above invoke xpdf and pdftotext; note that `find-pdf-page'
+uses `find-bgprocess' and `find-pdf-text' uses `find-sh'.
+
+The functions above accept extra arguments, that are interpreted
+as a page number and as strings to look for, but it's easier to
+discuss them using shorter hyperlinks.
+
+
+
+
+9.4. Shorter hyperlinks to PDF files
+------------------------------------
+If you run these sexps
+
+  (code-pdf-page \"livesofanimals\" l-o-a)
+  (code-pdf-text \"livesofanimals\" l-o-a -110)
+
+then these hyperlinks should work:
+
+  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalspage (+ -110 164) \"last common ground\")
+  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+
+[To do: explain them]
 
 
 

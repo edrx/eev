@@ -164,8 +164,8 @@ Commands to return from hyperlinks:
   \\[bury-buffer] -- put this buffer at the end of the list of all buffers
     See: (find-eval-intro \"\\nGoing back\\n\")
 Other very very important commands:
-      \\[eejump] -- jump to where the main eejump targets are defined
-  M-5 \\[eejump] -- jump to the index of all sandbox tutorials for eev
+      \\[eejump] -- jump to the list of eejump targets
+  M-5 \\[eejump] -- jump to the tutorial at (find-eev-quick-intro)
     See: (find-eejump-intro)
   \\[eepitch-this-line]     -- pitch this line to another Emacs buffer,
            or execute it as lisp if it starts with `'

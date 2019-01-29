@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018may28
+;; Version:    2019jan29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -188,6 +188,11 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
 (defun ee-irc-channel-around-point ()
   (ee-stuff-around-point "#A-Za-z0-9_"))
 
+(defun ee-buffer-freenode-channel-name ()
+  (replace-regexp-in-string
+   "^\\(.*\\).irc\\.freenode\\.net" "\\1"
+   (buffer-name)))
+
 ;; High-level
 ;;
 (defvar ee-freenode-server "irc.freenode.net")
@@ -200,37 +205,63 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
 	  ee-freenode-ichannels 
 	  ee-freenode-achannels channel pos-spec-list))
 
+(defun find-freenode-2a (channel)
+  (find-2a nil '(find-freenode channel)))
+
 (defun find-freenode-3a (channel)
   (find-3a nil '(find-freenode) '(find-freenode channel)))
 
-(defun ee-find-freenode-links (&optional channel)
-  (setq channel (or channel (replace-regexp-in-string
-			     "^\\(.*\\).irc\\.freenode\\.net" "\\1"
-			     (buffer-name))))
-  `((setq ee-freenode-ichannels ,ee-freenode-ichannels)
-    (setq ee-freenode-achannels ,ee-freenode-achannels)
-    ""
-    (find-freenode ,channel)
-    (find-freenode-3a ,channel)
-    (defun eejump-9 () (find-freenode ,channel))
-    (defun eejump-99 () (find-freenode-3a ,channel))
-    ))
+;; (defun ee-find-freenode-links (&optional c channel)
+;;   (setq c (or c "{c}"))
+;;   (setq channel (or channel (ee-buffer-freenode-channel-name))
+;;   `((setq ee-freenode-ichannels ,ee-freenode-ichannels)
+;;     (setq ee-freenode-achannels ,ee-freenode-achannels)
+;;     ""
+;;     (find-freenode ,channel)
+;;     (find-freenode-3a ,channel)
+;;     (defun eejump-9 () (find-freenode ,channel))
+;;     (defun eejump-99 () (find-freenode-3a ,channel))
+;;     ))
+;; 
+;; (defun find-freenode-links (&optional channel &rest pos-spec-list)
+;; "Visit a temporary buffer containing hyperlinks for connecting to freenode."
+;;   (interactive (list (ee-irc-channel-around-point)))
+;;   (setq channel (or channel "{channel}"))
+;;   (apply 'find-elinks
+;;    `((find-freenode-links ,channel)
+;;      ;; Convention: the first sexp always regenerates the buffer.
+;;      (find-efunction 'find-freenode-links)
+;;      ""
+;;      ,@(ee-find-freenode-links channel)
+;;      )
+;;    pos-spec-list))
 
-(defun find-freenode-links (&optional channel &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for connecting to freenode."
-  (interactive (list (ee-irc-channel-around-point)))
+;; New, 2019jan28
+(defun find-freenode-links (&optional c channel &rest pos-spec-list)
+"Visit a temporary buffer containing code for connecting to a freenode channel."
+  (interactive)
+  (setq c (or c "{c}"))
   (setq channel (or channel "{channel}"))
   (apply 'find-elinks
-   `((find-freenode-links ,channel)
+   `((find-freenode-links ,c ,channel)
+     (find-freenode-links "{e}" "{#eev}")
+     (find-freenode-links "e" "#eev")
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-freenode-links)
+     (find-efunction 'find-freenode-2a)
      ""
-     ,@(ee-find-freenode-links channel)
+     ,(ee-template0 "\
+(setq ee-freenode-ichannels {(ee-pp0 ee-freenode-ichannels)})
+(setq ee-freenode-achannels {(ee-pp0 ee-freenode-achannels)})
+(setq ee-freenode-achannels nil)
+(defun {c}2 () (interactive) (find-freenode-2a \"{channel}\"))
+(defun {c}3 () (interactive) (find-freenode-3a \"{channel}\"))
+")
      )
    pos-spec-list))
 
 ;; Tests: (find-freenode-links)
-;;        (find-freenode-links "#eev")
+;;        (find-freenode-links "e" "#eev")
 
 (provide 'eev-rcirc)
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018jun05
+;; Version:    2019jan25
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -61,8 +61,8 @@
 ;; unchanged, (3) they're short and clean.
 
 ;; Sorry, no docstrings yet... some tests:
-;; (find-callprocess0  '("lua51" "-e" "print(1+2)"))
-;; (find-callprocess00 '("lua51" "-e" "print(1+2)"))
+;; (find-callprocess0  '("lua5.1" "-e" "print(1+2)"))
+;; (find-callprocess00 '("lua5.1" "-e" "print(1+2)"))
 
 ;; Suffixes:
 ;; "-ne" means "(do) not ee-expand"
