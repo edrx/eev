@@ -1,3 +1,11 @@
+2019-01-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eev-install-links): small changes.
+
+	* eev-intro.el (find-videos-intro): small changes.
+	(find-eev-intro): small changes.
+	(find-eev-quick-intro): small changes.
+
 2019-01-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-wrap.el (ee-wrap-pdflike): use `code-pdf-page' instead of

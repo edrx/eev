@@ -1,7 +1,7 @@
-;;; eev-intro.el --- intro scripts for eev
+;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)
 
-;; Copyright (C) 2013,2014,2016,2017,2018 Free Software Foundation,
-;; Inc.
+;; Copyright (C) 2013,2014,2016,2017,2018,2019 Free Software
+;; Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan29
+;; Version:    2019jan30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -31,6 +31,18 @@
 
 ;;; Commentary:
 ;;
+;; Sometime around 2015 I realized that I could make write a sandboxed
+;; tutorial - (find-eev-quick-intro) - that could be THE starting
+;; point of eev. It could be at the same time an interactive tutorial
+;; for beginners, a tutorial for advanced users, and an index to the
+;; other sandboxed tutorials, that were mostly quite technical - and
+;; incomplete =(. Also, the default way of installing eev for
+;; beginners would show that "quick intro" in the starting screen.
+;;
+;; As of jan/2019, the work to make (find-eev-quick-intro) central is
+;; almost complete (...)
+
+
 ;; To use this, simply execute any of the sexps below:
 ;;   (find-eev-quick-intro)
 ;;   (find-eev-intro)
@@ -43,7 +55,11 @@
 ;; Quick index:
 ;; «.find-intro-here»		(to "find-intro-here")
 ;;
+;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
+;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
+;; «.find-eev-install-intro»	(to "find-eev-install-intro")
 ;; «.find-eev-intro»		(to "find-eev-intro")
+;;
 ;; «.find-eval-intro»		(to "find-eval-intro")
 ;; «.find-eepitch-intro»	(to "find-eepitch-intro")
 ;; «.find-wrap-intro»		(to "find-wrap-intro")
@@ -64,11 +80,8 @@
 ;; «.find-videos-intro»		(to "find-videos-intro")
 
 ;; «.find-defun-intro»		(to "find-defun-intro")
-;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
 ;; «.find-org-intro»		(to "find-org-intro")
-;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
-;; «.find-eev-install-intro»	(to "find-eev-install-intro")
 ;; «.find-escripts-intro»	(to "find-escripts-intro")
 
 ;; See: (find-anchors-intro)
@@ -127,8 +140,1454 @@ Only works for \"(defun find-xxx-intro ...)s\"."
 
 (defalias 'fh 'find-intro-here)
 
+(defun find-intro-source ()
+  (interactive)
+  (find-2a
+    '(find-eev "eev-intro.el"
+	       (format "find-%s-intro" (ee-intro-bufferp))
+	       (ee-last-kill))
+    nil))
+
+(defalias 'fi 'find-intro-source)
+
 )
 
+
+
+
+
+;;;                                   _      _         _       _             
+;;;   ___  _____   __      __ _ _   _(_) ___| | __    (_)_ __ | |_ _ __ ___  
+;;;  / _ \/ _ \ \ / /____ / _` | | | | |/ __| |/ /____| | '_ \| __| '__/ _ \ 
+;;; |  __/  __/\ V /_____| (_| | |_| | | (__|   <_____| | | | | |_| | | (_) |
+;;;  \___|\___| \_/       \__, |\__,_|_|\___|_|\_\    |_|_| |_|\__|_|  \___/ 
+;;;                          |_|                                             
+;;
+;; «find-eev-quick-intro» (to ".find-eev-quick-intro")
+;; (find-intro-links "eev-quick")
+
+(defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
+    (apply 'find-estring (ee-tolatin1 "\
+\(Re)generate: (find-eev-quick-intro)
+Source code:  (find-efunction 'find-eev-quick-intro)
+More intros:  (find-emacs-keys-intro)
+              (find-escripts-intro)
+              (find-eev-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-5 M-j'.
+
+
+This is a tutorial for real beginners.
+It supposes that you have Emacs installed.
+You may start by watching these (old) videos:
+
+  http://angg.twu.net/eev-videos/video-eev-quick-0.mp4  (installation basics)
+  http://angg.twu.net/eev-videos/video4-eepitch.mp4     (eev's main ideas)
+
+
+
+
+1. Installing eev
+=================
+Open the page at
+
+  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+
+in a browser, and open a terminal running a shell. Mark the multi-line
+\"{ ... }\" block below, copy it to the clipboard with ctrl-C, and paste
+it into the shell to run its commands.
+
+{
+  rm -Rv ~/eev
+  rm -Rv ~/eev2/
+  mkdir  ~/eev2/
+  cd     ~/eev2/
+  rm -v eev2.tgz
+  wget http://angg.twu.net/eev-current/eev2.tgz
+  tar -xvzf eev2.tgz
+  {
+    echo '#!/bin/sh'
+    echo 'cd ~/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\" $*'
+  } > ~/eev
+  chmod 755 ~/eev
+}
+
+You now have a shell script that you can invoke with
+
+  ~/eev
+
+that starts Emacs, loads eev, and opens a copy of this tutorial.
+
+Every time that Emacs gets stuck into something that you don't know
+how to leave, or how to undo, you should kill the Emacs window and
+start it again by typing \"~/eev\" again in the shell prompt.
+
+Eventually you will learn how go get out of everything and how to undo
+almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
+This tutorial is intented to make you learn the most essential things
+in the first ten minutes - including how to navigate in Emacs's
+manuals.
+
+For more on ways to install eev see:
+
+  (find-eev-install-intro)
+
+
+
+
+2. Evaluating Lisp
+==================
+The most important idea in Emacs is that Lisp code can appear
+anywhere, and you can evaluate a Lisp expression (a \"sexp\") by
+placing the cursor (the \"point\") just after it and typing `C-x
+C-e'; the result is then displayed in the echo area.
+
+Note: `C-e' means control-E, `M-e' means alt-e, `M-E' means
+alt-shift-e. If you have Caps Lock on then Emacs will receive an `M-E'
+if you type alt-e, and `M-e' if you type alt-shift-e. Hint: avoid Caps
+Lock!
+
+You can try `C-x C-e' in the line below, with the point in the three
+different indicated positions - you should get different results...
+
+  (+ (* 2 3) (* 4 5))
+            ^       ^^
+            |       | \\
+            6      20  26
+
+...but `C-x C-e' is not beginner-friendly, and it even enters a
+debugger that is hard to leave if it finds errors, so let's see
+something better.
+
+When you type `M-e' emacs moves the point to the end of the
+current line, then runs a variant of `C-x C-e'. Try this on each
+line of the block below:
+
+  (+ (* 2 3)
+     (* 4 5)
+     )
+
+`M-e' accepts several different numeric prefixes that alter its
+behavior. We are only interested in one of them now - `M-0 M-e'
+highlights the sexp for a fraction of a second insted of executing it.
+Try it above.
+
+
+
+
+3. Elisp hyperlinks
+===================
+Each one of the sexps below makes Emacs \"go somewhere\" if you execute
+it with `M-e'. Executing sexps like those - we will call them \"elisp
+hyperlinks\" - is like following a hyperlink in a browser.
+
+In a browser you can \"go back\" after following a hyperlink because the
+previous page is kept in the memory somehow. In Emacs+eev the easiest
+way to \"go back\" is with `M-k', which runs a function called
+`ee-kill-this-buffer'. If you follow one of the links below with
+`M-e', it creates a new buffer and displays it. If you then type `M-k'
+this new buffer is killed, and Emacs displays the buffer that was just
+below it, which is this tutorial... try it! Here are some nice elisp
+hyperlinks:
+
+  (find-fline \"/tmp/\")
+  (find-efunctiondescr 'find-file)
+  (find-man \"cat\")
+
+Not all elisp hyperlinks \"go somewhere\"; some are like buttons that
+perform an action, like the one below, that acts as if the user had
+pressed a series of keys,
+
+  (eek \"<down> C-a H E L L O ! <up> C-e\")
+
+and some display their output in the echo area:
+
+  (find-sh0 \"date\")
+
+The following elisp hyperlinks may or may not work - try them too, but
+be aware that they may show errors instead of opening a new buffer.
+The first two of them open a page - actually a section, whose short
+title is \"Lisp Eval\" - from the main Emacs manual. The third one
+opens the file with the source code (in Lisp) for the function
+`find-file'.
+
+  (find-node \"(emacs)Lisp Eval\")
+  (find-enode       \"Lisp Eval\")
+  (find-efunction 'find-file)
+
+If they don't work that means that you don't have the Emacs manuals,
+or the elisp source files, installed. The names for the packages which
+have those things vary from one GNU/Linux distro to another. On Debian
+something like
+
+  sudo apt-get install emacs24-el
+  sudo apt-get install emacs24-common-non-dfsg
+
+may work - but \"emacs24-common-non-dfsg\" may need you to enable
+access to the \"non-free\" respository... ask for help if you need!
+
+
+
+3.1. Non-elisp hyperlinks
+-------------------------
+Emacs has ways to follow URLs, but the keys for that are totally
+different from the ones for elisp hyperlinks. You can follow the URL
+below by putting the point on it and typing `M-x browse-url':
+
+  http://www.lua.org/start.html
+
+This will make emacs invoke the default browser on that URL. See:
+
+  (find-enode \"Browse-URL\")
+
+Eev defines several functions similar to `browse-url'. These elisp
+hyperlinks
+
+  (find-firefox      \"http://www.lua.org/start.html\")
+  (find-googlechrome \"http://www.lua.org/start.html\")
+
+invoke \"firefox\" and \"google-chrome\" respectively on the given URL;
+note that the \"firefox\" in a Debian-based system is usually a free
+derivative of Firefox, and that \"google-chrome\" does not come
+installed by default because it is \"gratis\" but not free. Also,
+
+  M-x brff   -- runs `find-firefox' on the URL at point,
+  M-x brg    -- runs `find-googlechrome' on the URL at point.
+
+For more on the \"brxxx functions\" of eev, see:
+
+  (find-brxxx-intro)
+
+
+
+
+
+4. Creating Elisp Hyperlinks
+============================
+You can write elisp hyperlinks by hand, but that is hard. It is better
+to generate hyperlinks automatically and then use cut and paste.
+
+Eev has several functions that generate \"elisp hyperlinks\" buffers.
+For example,
+
+  (find-efunction-links 'find-file)
+
+creates this buffer, and switches to it:
+   ___________________________________________________________
+  |# (find-efunction-links 'find-file)                        |
+  |# (where-is 'find-file)                                    |
+  |# (describe-function 'find-file)                           |
+  |# (find-efunctiondescr 'find-file)                         |
+  |# (find-efunction 'find-file)                              |
+  |# (find-efunctionpp 'find-file)                            |
+  |# (find-efunctiond 'find-file)                             |
+  |# (find-estring (documentation 'find-file))                |
+  |# (find-estring (documentation 'find-file t))              |
+  |# (symbol-file 'find-file 'defun)                          |
+  |# (find-fline (symbol-file 'find-file 'defun))             |
+  |                                                           |
+  |# (Info-goto-emacs-command-node 'find-file)                |
+  |# (find-enode \"Command Index\" \"* find-file:\")              |
+  |# (find-elnode \"Index\" \"* find-file:\")                     |
+  |                                                           |
+  |                                                           |
+  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)--|
+  |___________________________________________________________|
+
+One standard way of using eev is:
+
+  a) we keep our current notes in a a file - for example, \"~/TODO\"
+  b) these notes are an \"executable log\" of what we did, including:
+     c) hyperlinks to things we saw or visited
+     d) commands issued to shells or shell-like programs (see sec. 6)
+
+The quickest way of generating hyperlinks for (c) is with `M-h M-h'
+\(`find-here-links'). When we type `M-h M-h' eev tries to generate an
+elisp hyperlinks buffer containing some hyperlinks to \"here\" - and how
+it does that depends on the major mode and on the name of the current
+buffer. For example, typing `M-h M-h' here generates:
+
+   ____________________________________________________________
+  |# See:                                                      |
+  |# (find-links-intro \"`find-here-links'\")                    |
+  |# (find-efunctiondescr 'eev-mode \"M-h M-h\")                 |
+  |                                                            |
+  |http://angg.twu.net/eev-intros/find-eev-quick-intro.html    |
+  |# (find-eev-quick-intro)                                    |
+  |                                                            |
+  |                                                            |
+  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)  -|
+  |____________________________________________________________|
+
+The
+
+  # (find-eev-quick-intro)
+
+opens this tutorial.
+
+Cutting and pasting is explained briefly in section 5.2.
+
+A way to \"refine\" hyperlinks to make them more precise is
+explained here:
+
+  (find-eval-intro \"Producing and refining hyperlinks\")
+
+
+
+
+
+5. Links to Emacs documentation
+===============================
+Try these links (some of them need the Emacs manuals installed):
+
+  (find-emacs-intro \"Cutting & pasting\")
+  (find-node \"(emacs)Screen\")
+  (find-efunctiondescr 'find-file)
+  (find-efunction-links 'find-file)
+
+This part of the eev tutorials has links to almost all the keys that
+I've learned by heart after using Emacs for 20 years:
+
+  (find-emacs-intro \"Basic keys (Emacs)\")
+
+They are not very many, because I use this a lot,
+
+  (find-node \"(emacs)M-x\")
+
+and I use elisp hyperlinks to create quick reminders for the keys that
+I only need to remember when I am performing specific tasks.
+
+Moral: when you want a quick reference of the main Emacs and eev keys,
+type `M-2 M-j'.
+
+
+
+5.1. Navigating the Emacs manuals
+---------------------------------
+The Emacs manuals are in \"info\" format, which means:
+
+  a) they are divided into \"nodes\" - a top node, and chapters,
+     sections, subsections, etc,
+
+  b) the nodes in each manual in info format are organized as a tree,
+     and they're all numbered except for the top node, the indexes and
+     the appendixes. For example:
+
+       top --.-- 1 --.-- 1.1
+             |       `-- 1.2
+             |-- 2
+             |-- 3 ----- 3.1 --.-- 3.1.1
+             |                 |-- 3.1.2
+             |                 `-- 3.1.3
+             |-- Appendix A 
+             `-- Index
+
+  c) each node also has a short name. Elisp hyperlinks use the
+     (internal) name of the manual and the short name to jump straight
+     to a node in a manual. The table below has some examples:
+
+       Manual (full name)   Node \"number\"    elisp hyperlink
+       -----------------------------------------------------
+       Emacs                Top             (find-node \"(emacs)\")
+       Emacs                7               (find-node \"(emacs)Basic\")
+       Emacs                7.4             (find-node \"(emacs)Basic Undo\")
+       Emacs                Concept Index   (find-node \"(emacs)Concept Index\")
+       Emacs Lisp           Top             (find-node \"(elisp)\")
+
+  d) Emacs uses \"Info mode\" when displaying nodes of manuals in info
+     format. These are the most important keys of Info mode:
+
+       q         exit                (go back to some other buffer) 
+       (arrows)  move point
+       RET       follow link at point
+       TAB       move to next link
+       BACKTAB   move to prev link
+       n         next                (1->2->3->Appendix A; 3.1.1->3.1.1->3.1.2)
+       p         previous            (1<-2<-3<-Appendix A; 3.1.1<-3.1.1<-3.1.2)
+       u         up                  (Top<-1<-1.1; 1<-1.2; 3<-3.1<-3.1.2, etc)
+       ]         forward-node        (Top->1->1.1->1.2->2->3->3.1->...->Index)
+       [         backward-node       (Top<-1<-1.1<-1.2<-2<-3<-3.1<-...<-Index)
+
+Try the keys above now - they are VERY important! Use:
+
+  (eek \"<down> M-3 M-e  ;; open the hyperlink below in another window\")
+  (find-node \"(emacs)Basic\")
+  (find-node \"(emacs)Major Modes\")
+
+
+
+5.2. Cutting and pasting
+------------------------
+You can do cut, copy and paste in a \"user-friendly\" way by using
+
+  a) the rightmost icons in the toolbar, or
+  b) the \"Edit\" menu in the menu-bar,
+
+but the keys are very much worth learning:
+
+  C-SPC   -- set-mark-command           (find-enode \"Setting Mark\")
+  C-x C-x -- exchange-point-and-mark    (find-enode \"Setting Mark\" \"C-x C-x\")
+  C-w     -- kill-region     (cut)      (find-enode \"Other Kill Commands\")
+  M-w     -- kill-ring-save  (copy)     (find-enode \"Kill Ring\")
+  C-y     -- yank            (paste)    (find-enode \"Kill Ring\")
+
+The \"region\" where cut & paste operate is always what is between
+the \"point\" and the \"mark\". See:
+
+  (find-enode \"Point\")
+  (find-enode \"Mark\")
+
+Exercise: understand how the `eek' sexp below switches the two
+lines just after it.
+
+  (eek \"<down> C-a C-SPC <down> C-w <down> C-y 3*<up>\")
+  First
+  Second
+
+
+
+
+
+
+
+
+6. Controlling shell-like programs
+==================================
+This is the second main feature of eev. The hyperlinks thing used the
+keys `M-e', `M-k', and `M-h M-h', plus standard Emacs keys for cutting
+and pasting. The module of eev that controls shell-like programs - it
+is called \"eepitch\" - uses `<F8>' and `M-T'. Note that it is
+`alt-shift-t', to not interfere with Emacs's `M-t'.
+
+The sections below were adapted from:
+
+  (find-eepitch-intro \"The main key: <F8>\")
+
+
+
+
+6.1. The main key: <F8>
+-----------------------
+Emacs can run a shell in a buffer, and it can split its frame
+into windows, like this:
+   ___________________
+  |         |         |
+  |   our   |    a    |
+  |  notes  |  shell  |
+  |         |  buffer |
+  |_________|_________|
+
+The usual way to use a shell buffer is to move the cursor there
+and type commands into its prompt; the eepitch-y way is to leave
+the cursor at the \"notes\" buffer, write the commands for the
+shell there, and send these commands to the shell with <F8>.
+
+Here's what <F8> does:
+
+  When we type <F8> on a line that starts with a red
+  star (\"\"), it executes the rest of the line as Lisp, and
+  moves down; when we type <F8> on a line that does not start
+  with a \"\", it makes sure that the \"target buffer\" is being
+  displayed (the \"target\" is usually the buffer called
+  \"*shell*\"), it \"send\"s the current line to the target
+  buffer, and moves down.
+
+  \"Sending the current line to the target buffer\" means copying
+  the contents of the current line to the target - as if the user
+  had typed that line there by hand -, then \"typing\" a <RET> at
+  the target buffet.
+
+Please try that in the example after this paragraph, by typing
+<F8> six times starting at the first line that says
+\" (eepitch-shell)\". The three red star lines at the top will
+create a target buffer, destroy it, and create it again; the
+other three lines will send commands to the target shell.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo \"We are at: $PWD\"
+cd /tmp/
+echo \"We changed to: $(pwd)\"
+
+
+
+
+6.2. Other targets
+------------------
+Just like `(eepitch-shell)' creates a shell buffer and sets the
+eepitch target to it, `(eepitch-python)' creates a buffer with a
+Python interpreter and uses it as the eepitch target. Try:
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+def square (x):
+    return x*x
+
+print(square(5))
+
+  We can use several targets at the time, alternating between them.
+  For example:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
+6.3. Creating eepitch blocks: `M-T'
+-----------------------------------
+Write just \"shell\" or \"python\" in a line, then type
+`M-T' (i.e., meta-shift-t) there. The line will be turned into
+three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
+\" (eepitch-xxx)\". We call these blocks of three lines
+\"eepitch blocks\". Try this below, converting the \"shell\" into
+an eepitch block for starting a shell.
+
+shell
+pwd
+cd /tmp/
+pwd
+
+
+
+
+6.4. Red stars
+--------------
+Eepitch.el sets the glyph for the char 15 to a red star in the
+standard display table. In layman's terms: eepitch.el tells Emacs
+that the character 15 should be displayed as a red star. The
+character 15 corresponds to control-O, whose default
+representation on screen would be \"^O\". You can enter a
+literal ^O in a buffer by typing `C-q C-o'.
+
+
+
+
+7. Quick access to one-liners
+=============================
+
+
+7.1. eejump
+-----------
+We may have elisp one-liners that we want to be able to execute very
+quickly, and from anywhere. For example, I keep all my notes that I
+have not organized yet in a file called \"~/TODO\", and if I type
+
+  M-1 M-j
+
+then I \"jump\" to \"~/TODO\" - the effect is the same as running this:
+
+  (find-fline \"~/TODO\")
+
+Note that `M-1 M-j' can be typed as:
+
+  hold the meta key,
+    type 1,
+    type j,
+  release the meta key.
+
+instead of:
+
+  hold the meta key,
+    type 1,
+  release the meta key,
+  hold the meta key,
+    type j,
+  release the meta key;
+
+There is no need to release and press again the meta key between
+the `1' and the `j'.
+
+Internally, what happens when you type `M-1 M-j' is this:
+
+  `M-j' is bound to `eejump',
+  `M-1 M-j' runs `eejump' with argument 1, i.e., (eejump 1)
+  (eejump 1) runs (eejump-1)
+  (eejump-1) has been defined with:
+
+    (defun eejump-1 () (find-fline \"~/TODO\"))
+
+So `M-1 M-j' runs the one-liner `(find-fline \"~/TODO\")',
+`M-5 M-j' runs the one-liner `(find-eev-quick-intro)',
+and so on.
+
+
+
+7.2. The list of eejump targets
+-------------------------------
+If you type `M-j' without a prefix argument then it runs
+`(find-eejumps)', that displays all the current eejump targets as
+defuns, one in each line. Try it:
+
+  (eek \"M-j\")
+  (find-eejumps)
+
+You will see that two of those entries are:
+
+  (defun eejump-1 () (find-fline \"~/TODO\"))
+  (defun eejump-5 () (find-eev-quick-intro))
+
+
+
+7.3. Defining eejump targets
+----------------------------
+We can define new eejump targets, or overwrite the current ones, by
+just running `defun's to define functions with names starting with
+`eejump-'. Try:
+
+  (defun eejump-9 () (find-eev-quick-intro \"7.2.\"))
+  (defun eejump-9 () (find-eev-quick-intro \"7.3.\"))
+  (fmakunbound 'eejump-9)
+  (find-eejumps)
+
+Note that if you type `M-J' (i.e., meta-uppercase-j,
+`eewrap-eejump') on the line below then it will be converted into
+the first \"(defun eejump- ...)\" above:
+
+  9 (find-eev-quick-intro \"7.2.\")
+
+An advanced feature: if you type `M-J' on a line that starts with
+something that is not a number, you get a defun for a \"command
+with a very short name\" like the ones that are described in the
+next section. Try it now:
+
+  (eek \"<down> M-J\")
+  e (find-fline \"/tmp/foo.tex\")
+
+
+
+
+7.2. Commands with very short names
+-----------------------------------
+Let's start with an example. If we are editing a LaTeX file, say
+\"/tmp/foo.tex\", then it is convenient to have quick ways to:
+
+  c) compile \"foo.tex\" into a \"foo.pdf\",
+  d) display the resulting \"foo.pdf\",
+  e) jump to \"foo.tex\" from anywhere to edit it.
+
+If our \"/tmp/foo.tex\" starts with these lines
+
+  % (defun c () (interactive) (find-sh \"cd /tmp/; pdflatex foo.tex\"))
+  % (defun d () (interactive) (find-xpdfpage \"/tmp/foo.pdf\"))
+  % (defun e () (interactive) (find-fline \"/tmp/foo.tex\"))
+
+and we execute these defuns, then from that point on `M-x c', `M-x d'
+and `M-x e' will do \"compile\", \"display\" and \"edit\" on \"foo.tex\", as
+described above.
+
+For more on `M-x', and on why the defuns above need the
+\"(interactive)\", see:
+
+  (find-node \"(emacs)M-x\")
+  (find-node \"(emacs)Commands\")
+  (find-node \"(elisp)Defining Commands\")
+
+
+
+
+7.3. `find-latex-links'
+-----------------------
+The easiest way to put the three defuns of the last section in
+the header of a LaTeX file is with:
+
+  (find-latex-links \"/tmp/foo\")
+
+`find-latex-links' is just one of several template functions that
+generate commands with very short names. Here's how to use it -
+the other ones are similar.
+
+  1) Run `M-x find-latex-links'. You will get a buffer whose top
+     line is:
+
+       # (find-latex-links \"{stem}\")
+
+  2) Edit that, and change the \"{stem}\" to \"/tmp/foo\".
+
+  3) Execute that top line, which is now:
+
+       # (find-latex-links \"/tmp/foo\")
+
+     You should get:
+
+   _____________________________________________________________________
+  |# (find-latex-links \"/tmp/foo\")                                      |
+  |# (find-eev-quick-intro \"`find-latex-links'\")                        |
+  |# (ee-copy-rest 1 '(find-fline \"/tmp/foo.tex\"))                      |
+  |                                                                     |
+  |% (defun c () (interactive) (find-sh \"pdflatex foo.tex\"))            |
+  |% (defun d () (interactive) (find-pdf-page \"/tmp/foo.pdf\"))          |
+  |% (defun e () (interactive) (find-fline \"/tmp/foo.tex\"))             |
+  |%                                                                    |
+  |\\documentclass{article}                                              |
+  |\\begin{document}                                                     |
+  |                                                                     |
+  |\\end{document}                                                       |
+  |                                                                     |
+  |                                                                     |
+  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental)                |
+  |_____________________________________________________________________|
+
+
+  4) Execute the line with the \"(ee-copy-rest ...)\". You should get this -
+     the window on the right is visiting the file \"/tmp/foo.tex\":
+
+   ______________________________________________________________________
+  |# (find-latex-links \"/tmp/foo\")   |                                  |
+  |# (find-eev-quick-intro \"`find-lat|                                  |
+  |# (ee-copy-rest 1 '(find-fline \"/t|                                  |
+  |                                  |                                  |
+  |% (defun c () (interactive) (find-|                                  |
+  |% (defun d () (interactive) (find-|                                  |
+  |% (defun e () (interactive) (find-|                                  |
+  |%                                 |                                  |
+  |\\documentclass{article}           |                                  |
+  |\\begin{document}                  |                                  |
+  |                                  |                                  |
+  |\\end{document}                    |                                  |
+  |                                  |                                  |
+  |                                  |                                  |
+  | -:**-  *Elisp hyperlinks*   All L| -:**-  foo.tex        All L9     |
+  |_(Copied 8 lines to the kill ring - use C-y to paste)________________|
+
+
+  5) Go to the window on the right and type `M-y'. You should get this,
+
+   ______________________________________________________________________
+  |# (find-latex-links \"/tmp/foo\")   |% (defun c () (interactive) (find-|
+  |# (find-eev-quick-intro \"`find-lat|% (defun d () (interactive) (find-|
+  |# (ee-copy-rest 1 '(find-fline \"/t|% (defun e () (interactive) (find-|
+  |                                  |%                                 |
+  |% (defun c () (interactive) (find-|\\documentclass{article}           |
+  |% (defun d () (interactive) (find-|\\begin{document}                  |
+  |% (defun e () (interactive) (find-|                                  |
+  |%                                 |\\end{document}                    |
+  |\\documentclass{article}           |                                  |
+  |\\begin{document}                  |                                  |
+  |                                  |                                  |
+  |\\end{document}                    |                                  |
+  |                                  |                                  |
+  |                                  |                                  |
+  | -:**-  *Elisp hyperlinks*   All L| -:**-  foo.tex        All L9     |
+  |_____________________________________________________________________|
+
+  and you can now save the file foo.tex (hint: use `C-x C-s'!),
+  execute the three defuns for `c', `d', and `e', and jump to
+  \"/tmp/foo.tex\" from anywhere with `M-x e'.
+
+
+
+
+
+8. Anchors
+==========
+
+8.1. Introduction: `to'
+-----------------------
+A hyperlink like
+
+  (to \"foo\")
+
+jumps to the first occurrence of the string \"«foo»\" in the
+current buffer. The function that wraps a string in `«»'s is
+called `ee-format-as-anchor', and the sexp `(to \"foo\")'
+is equivalent the second sexp below:
+
+                    (ee-format-as-anchor \"foo\")
+  (ee-goto-position (ee-format-as-anchor \"foo\"))
+
+We will call strings in `«»'s _anchors_, and we will say
+that `(to \"foo\")' jumps \"to the anchor `foo'\". The string
+inside a `«»'s is called a _tag_.
+
+In a situation like this,
+
+  «one»     (to \"two\")
+  «two»     (to \"three\")
+  «three»   (to \"four\")
+  «four»    (to \"one\")
+
+we have four anchors, and typing `M-e' at the line with the
+anchor \"one\" takes us to the line with the anchor \"two\",
+typing `M-e' at the line with the anchor \"two\" takes us to the
+line with the anchor \"three\", typing `M-e' again takes us to
+the line with the anchor \"four\", and typing `M-e' again takes
+us back to the line with the anchor \"one\". In a situation like
+this we say that the anchors \"one\", \"two\", \"three\", and
+\"four\" _point to one another_.
+
+In a case like this,
+
+  «.five»   (to \"five\")
+   «five»  (to \".five\")
+
+where the names of two anchors pointing to one another differ by
+an initial dot, we will say that the anchor \".five\" is the
+\"index anchor\", and the anchor \"five\" is the \"section
+anchor\"; and one way to create an index for a file is to group
+all the index anchors together. For an example, see:
+
+  (find-eev \"eev-intro.el\" \".find-eev-intro\")
+
+
+
+8.2. Creating anchors by hand
+-----------------------------
+One way to type the chars `«' and `»' is with `C-x 8 <' and
+`C-x 8 >'. Try:
+
+  (eek \"RET C-x 8 < t a g C-x 8 >\")
+
+
+
+
+8.3. Creating index/section anchor pairs
+----------------------------------------
+Eev has several commands that transform the text in the current
+line into something more complex. They are all called
+`eewrap-(something)', and they are bound to
+meta-uppercase-letters. The simplest examples are `M-F', `M-S'
+and `M-M', that just \"wrap the text in the current line into an
+elisp hyperlink\" by adding a prefix and a suffix; if you run
+`M-F', `M-S' and `M-M' in the following lines
+
+/tmp/
+ls /tmp/
+ls
+
+they become this:
+
+# (find-fline \"/tmp/\")
+# (find-sh \"ls /tmp/\")
+# (find-man \"ls\")
+
+You can also try them by running the `eek' sexps below,
+
+\(eek \"<down> M-F\")
+/tmp/
+
+\(eek \"<down> M-S\")
+ls /tmp/
+
+\(eek \"<down> M-M\")
+ls
+
+HINT: sometimes the eewrap commands don't do exactly what we
+want, so learn how to use the \"undo\" command of Emacs. See:
+
+  (find-emacs-keys-intro \"5. Undoing\")
+
+The command `eewrap-anchor' (bound to `M-A') is similar to those
+above, but it parses the current line in a more complex way -
+everything between \"<>\" is the \"anchor\" and everything before
+the \"<\" is the \"comment prefix\" - and it converts the current
+line into two lines with `to's, each one pointing to the other
+one. For example, `M-A' in the line below
+
+  # <first-test>
+
+yields this:
+
+  # «.first-test»	(to \"first-test\")
+  # «first-test» (to \".first-test\")
+
+The line with the anchor \"«.first-test»\" is intended to be
+moved - by hand, with cut and paste - to the index section at the
+beginning of the file, as explained here:
+
+  (find-escripts-intro)
+
+
+
+
+8.4. Creating e-script blocks
+-----------------------------
+The key `M-B' (`eewrap-escript-block') is a variant of `M-A' that
+converts the current line into seven (!) lines instead of two. If
+we type `M-B' on the line below
+
+  second-test Long description
+
+it becomes this - the header of an \"e-script block\":
+
+#####
+#
+# Long description
+# 2018may22
+#
+#####
+
+# «.second-test»	(to \"second-test\")
+# «second-test» (to \".second-test\")
+
+where again the line with the anchor \"«.second-test»\" is
+intended to be moved to the index section at the beginning of the
+file. The use of these \"e-script blocks\" is explained bere:
+
+  (find-escripts-intro)
+
+
+
+
+8.5. Hyperlinks to anchors in other files
+-----------------------------------------
+`find-anchor' is like `find-fline', but it interprets the first
+argument after the file in a special way if it is present. These
+hyperlinks are all equivalent:
+
+  (find-anchor \"~/eev2/eev-blinks.el\" \"find-wottb\")
+  (find-anchor \"~/eev2/eev-blinks.el\" (ee-format-as-anchor \"find-wottb\"))
+  (find-fline  \"~/eev2/eev-blinks.el\" \"«find-wottb»\")
+
+You can use this - or the shorter hyperlinks to anchors in
+section 9.3 - to point to anchors or to e-script blocks in your
+files.
+
+
+
+
+
+
+9. Shorter hyperlinks
+=====================
+See also: (find-code-c-d-intro)
+
+9.1. `code-c-d'
+---------------
+Sexps like
+
+  (find-eevfile \"\")
+  (find-eevfile \"eev-blinks.el\")
+  (find-eevfile \"eev-blinks.el\" \"«find-sh»\")
+  (find-udfile \"\")
+  (find-udfile \"lua5.1-doc/\")
+  (find-udfile \"lua5.1-doc/test/\")
+  (find-udfile \"lua5.1-doc/test/fib.lua\")
+  (find-udfile \"lua5.1-doc/test/fib.lua\" \"function fib(n)\")
+
+work as abbreviations for
+
+  (find-fline \"~/eev-current/\")
+  (find-fline \"~/eev-current/eev-blinks.el\")
+  (find-fline \"~/eev-current/eev-blinks.el\" \"«find-sh»\")
+  (find-fline \"/usr/share/doc/\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/test/\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/test/fib.lua\")
+  (find-fline \"/usr/share/doc/lua5.1-doc/test/fib.lua\" \"function fib(n)\")
+
+They are \"mass-produced\", in the following sense. When we run this,
+
+  (code-c-d \"ud\" \"/usr/share/doc/\")
+
+the function `code-c-d' produces a big string using a template, and
+evaluates that big string; the \"{c}\"s in the template are replaced by
+the argument \"ud\" - called the \"code\" - and the \"{d}\"s in the template
+are replaced by \"/usr/share/doc/\" - called the \"directory\". If we add
+a \"find-\" before the `code-c-d', like this,
+
+  (find-code-c-d \"ud\" \"/usr/share/doc/\")
+
+we get a hyperlink to the code that `(code-c-d \"ud\" \"/usr/share/doc/\")'
+would execute - i.e., to the result of substiting the \"{c}\"s and
+\"{d}\"s in the template. This is useful for understanding how
+`code-c-d' works; each call to `code-c-d' defines lots of functions,
+some of them easier to explain, some harder. This, for example,
+
+  (find-eevgrep \"grep --color -nH -e '(code-c-d ' *.el\")
+
+greps for all calls to \"code-c-d\" in the source of eev.
+
+By default, eev runs these `code-c-d's:
+
+  (find-eevfile \"eev-code.el\" \"code-c-d \\\"e\\\"\")
+
+You can add many more of them to your .emacs file.
+
+An introduction to the ideas, details, innards and technicalities of
+`code-c-d' can be found here:
+
+  (find-code-c-d-intro)
+
+
+
+9.2. Extra arguments to `code-c-d'
+----------------------------------
+If you compare the buffers generated by
+
+  (find-code-c-d      \"CODE\" \"/DIR/\")
+  (find-code-c-d      \"CODE\" \"/DIR/\" :info \"INFO\")
+  (find-code-c-d-rest \"CODE\" \"/DIR/\" :info \"INFO\")
+
+you will see that the `:info \"INFO\"' part adds some code to the end of
+the generated string, and that the `find-code-c-d-rest' shows only
+this extra code.
+
+The most important extra arguments to `code-c-d' are:
+
+  1) :info \"name-of-an-info-manual\"
+  2) :gz
+  3) :anchor
+
+If the first extra argument is a string then `ee-code-c-d' adds an
+`:info' before it, so these generate the same code:
+
+  (find-code-c-d \"CODE\" \"/DIR/\"       \"INFO\")
+  (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")
+
+The eev source has this (in the file \"eev-code.el\"),
+
+  (code-c-d \"e\"   ee-emacs-lisp-directory :info \"emacs\" :gz)
+  (code-c-d \"eev\" ee-eev-source-directory :anchor)
+
+and that code
+
+  1) makes (find-enode \"\")
+     work as an abbreviation for (find-node \"(emacs)\")
+
+  2) makes (find-efile \"files.el\")
+     run   (find-efile \"files.el.gz\")
+     if the file \"files.el\" is not found,
+
+  3) makes (find-eev     \"eev-blinks.el\" \"find-wottb\")
+     run:  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
+     or actually: (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
+
+Calls to `find-eev' are \"short hyperlinks to anchors\":
+
+  (find-eev \"eev-blinks.el\" \"find-wottb\")
+  (find-eev \"eev-blinks.el\" \"find-wottb\" \"defun find-wottb-call\")
+
+For the technical details of the implementation, see here:
+
+  (find-code-c-d-intro \"Extra arguments to `code-c-d'\")
+
+
+
+9.3. Hyperlinks to PDF files
+----------------------------
+If you run this e-script
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+#         https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+mkdir -p $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
+cd       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
+wget -nc  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+you will download a local copy of J.M. Coetzee's \"The Lives of
+Animals\" into this directory:
+
+  (find-fline      \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
+  (find-fline \"~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
+
+The full idea behind these \"local copies\" is explained here:
+
+  (find-psne-intro)
+
+If you have xpdf installed then the second sexp here,
+
+  (setq l-o-a \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf\")
+  (find-pdf-page l-o-a)
+
+should work as a \"hyperlink to the PDF\": it calls xpdf as
+external program to open that PDF file. The main keys of xpdf
+are:
+
+  q         quit xpdf
+  alt-f     toggle full-screen; use twice to fit document to page
+  PageDown  scroll down/go to next page
+  PageUp    scroll up/go to previous page
+  0         set zoom to 125%
+  +         zoom in one step
+  -         zoom out out step
+  arrows    scroll within the current page
+
+Also, if you have the program pdftotext installed (hint: apt-get
+install poppler-utils!) then this
+
+  (find-pdf-text l-o-a)
+
+should work as a \"hyperlink to the text of the PDF\".
+
+You can use these two sexps
+
+  (ee-find-pdf-text l-o-a)
+  (ee-find-pdf-page l-o-a)
+
+to see exactly how the `find-pdf-page' and the `find-pdf-text'
+sexps above invoke xpdf and pdftotext; note that `find-pdf-page'
+uses `find-bgprocess' and `find-pdf-text' uses `find-sh'.
+
+The functions above accept extra arguments, that are interpreted
+as a page number and as strings to look for, but it's easier to
+discuss them using shorter hyperlinks.
+
+
+
+
+9.4. Shorter hyperlinks to PDF files
+------------------------------------
+If you run these sexps
+
+  (code-pdf-page \"livesofanimals\" l-o-a)
+  (code-pdf-text \"livesofanimals\" l-o-a -110)
+
+then these hyperlinks should work:
+
+  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalspage (+ -110 164) \"last common ground\")
+  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+
+[To do: explain them]
+
+
+
+
+\(To be continued...)
+") pos-spec-list)))
+
+;; end of defun
+
+;; (find-eev-quick-intro)
+
+
+
+
+;;;                                      _                  
+;;;   ___ _ __ ___   __ _  ___ ___      | | _____ _   _ ___ 
+;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| |/ / _ \ | | / __|
+;;; |  __/ | | | | | (_| | (__\__ \_____|   <  __/ |_| \__ \
+;;;  \___|_| |_| |_|\__,_|\___|___/     |_|\_\___|\__, |___/
+;;;                                               |___/     
+;;
+;; «find-emacs-keys-intro» (to ".find-emacs-keys-intro")
+;; (find-intro-links "emacs-keys")
+
+(defun find-emacs-keys-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-emacs-keys-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-emacs-keys-intro)
+Source code:  (find-efunction 'find-emacs-keys-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-2 M-j'.
+
+
+
+1. Basic keys (eev)
+===================
+The most basic keys of eev are:
+  M-e   - to follow a hyperlink.  Mnemonic: \"(e)valuate\"/\"(e)xecute\".
+          See: (find-eev-quick-intro \"2. Evaluating Lisp\")
+               (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
+          See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
+  M-j   - to jump to certain predefined places - in particular,
+              `M-j' takes you to the list of jump targets.
+          `M-2 M-j' takes you to this help page.
+          `M-5 M-j' takes you to: (find-eev-quick-intro)
+  <f8>  - See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
+  M-T   - See: (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+
+The keys for creating \"hyperlinks to here\" and refining them are:
+  M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
+  M-h M-2   - `ee-duplicate-this-line'. See: (find-eval-intro \"M-h M-2\")
+  M-h M-y   - `ee-yank-pos-spec'. See: (find-eval-intro \"M-h M-y\")
+
+
+2. Key sequences and how to abort them
+======================================
+See: (find-enode \"Keys\" \"key sequence\")
+     (find-enode \"User Input\" \"`Control-a'\" \"usually written `C-a'\")
+     (find-enode \"User Input\" \"<META> key\")
+     (find-enode \"Completion\" \"<TAB>\")
+
+<ESC> <ESC> <ESC>                (find-enode \"Quitting\")
+C-g   keyboard-quit              (find-enode \"Quitting\" \"`C-g'\")
+M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
+
+More about the minibuffer:       (find-enode \"Minibuffer\")
+More about TAB - for completion: (find-enode \"Completion\")
+                for indentation: (find-enode \"Indentation\")
+           in programming modes: (find-enode \"Basic Indent\")
+More about modes:                (find-enode \"Major Modes\")
+                                 (find-enode \"Minor Modes\")
+                                 (find-enode \"Dired\")
+
+
+
+3. Cutting & pasting
+====================
+The \"region\" where cut & copy operate is always what is between
+the \"point\" and the \"mark\":
+
+  (find-enode \"Point\")
+  (find-enode \"Mark\")
+
+You can do cut, copy and paste by using the icons in the toolbar
+or by using the menu bar (the relevant options are under
+\"Edit\"), but the keys are worth learning:
+
+  C-SPC   -- set-mark-command           (find-enode \"Setting Mark\")
+  C-x C-x -- exchange-point-and-mark    (find-enode \"Setting Mark\" \"C-x C-x\")
+  C-w     -- kill-region     (cut)      (find-enode \"Other Kill Commands\")
+  M-w     -- kill-ring-save  (copy)     (find-enode \"Kill Ring\")
+  C-y     -- yank            (paste)    (find-enode \"Kill Ring\")
+
+See: (find-enode \"Tool Bars\")
+     (find-enode \"Menu Bar\")
+
+
+
+4. Moving point
+===============
+C-a     -- beginning-of-line            (find-enode \"Moving Point\")
+C-e     -- end-of-line                  (find-enode \"Moving Point\")
+M-<     -- beginning-of-buffer          (find-enode \"Moving Point\")
+M->     -- end-of-buffer                (find-enode \"Moving Point\")
+
+
+
+5. Undoing
+==========
+C-/    -- undo    (find-enode \"Basic Undo\")
+C-_    -- undo    (find-enode \"Basic Undo\")
+                  (find-enode \"Undo\")
+
+
+6. Windows
+==========
+See: (find-enode \"Windows\")
+     (find-enode \"Frames\")
+
+C-x o   -- other-window                          (find-enode \"Other Window\")
+C-x 0   -- delete-window                         (find-enode \"Change Window\")
+C-x 1   -- delete-other-windows     (\"1 window\") (find-enode \"Change Window\")
+C-x 2   -- split-window-vertically (Above/Below) (find-enode \"Split Window\")
+C-x 3   -- split-window-horizontally       (L|R) (find-enode \"Split Window\")
+
+
+
+7. Files and buffers
+====================
+C-x C-f -- find-file                    (find-enode \"Visiting\")
+C-x C-s -- save-buffer                  (find-enode \"Saving\")
+C-x C-c -- save-buffers-kill-emacs      (find-enode \"Saving\")
+C-x b   -- switch-to-buffer             (find-enode \"Select Buffer\")
+C-x k   -- kill-buffer                  (find-enode \"Kill Buffer\")
+                                        (find-enode \"Dired\")
+
+
+8. Search and replace
+=====================
+C-s     -- isearch-forward              (find-enode \"Incremental Search\")
+C-r     -- isearch-backward             (find-enode \"Incremental Search\")
+M-C-s   -- isearch-forward-regexp       (find-enode \"Regexp Search\")
+M-C-r   -- isearch-backward-regexp      (find-enode \"Regexp Search\")
+M-%     -- query-replace                (find-enode \"Replace\")
+
+
+
+9. Macros
+=========
+C-x (   -- start-kbd-macro              (find-enode \"Keyboard Macros\")
+C-x )   -- end-kbd-macro                (find-enode \"Keyboard Macros\")
+C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
+
+
+
+10. Other keys (Emacs)
+======================
+M-q                  -- fill-paragraph       (find-enode \"Fill Commands\")
+C-x r <SPC> <char>   -- point-to-register    (find-enode \"Position Registers\")
+C-x r j <char>       -- jump-to-register     (find-enode \"Position Registers\")
+
+
+
+11. Other keys (eev)
+====================
+M-F       -- eewrap-find-fline          (find-eev-quick-intro \"`M-F'\")
+M-M       -- eewrap-man                 (find-eev-quick-intro \"`M-M'\")
+M-S       -- eewrap-sh                  (find-eev-quick-intro \"`M-S'\")
+M-A       -- eewrap-anchor              (find-eev-quick-intro \"`M-A'\")
+M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
+" pos-spec-list)))
+
+;; (find-emacs-keys-intro)
+
+
+
+
+;;;  _           _        _ _ 
+;;; (_)_ __  ___| |_ __ _| | |
+;;; | | '_ \/ __| __/ _` | | |
+;;; | | | | \__ \ || (_| | | |
+;;; |_|_| |_|___/\__\__,_|_|_|
+;;;                           
+
+;; «find-eev-install-intro» (to ".find-eev-install-intro")
+;; (find-intro-links "eev-install")
+
+(defun find-eev-install-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-eev-install-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-eev-install-intro)
+Source code:  (find-efunction 'find-eev-install-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+The installation instructions in
+
+  (find-eev-quick-intro \"1. Installing eev\")
+
+describe a way to install eev that uses the directory \"~/eev2/\" for
+elisp files and that creates a secript \"~/eev\" that starts Emacs,
+loads eev, and runs `(find-eev-quick-intro)'. Here we describe several
+ways to install eev in other places and how to change your .emacs to
+make it load eev at startup.
+
+
+
+1. Running `(find-eev-install-links)'
+=====================================
+The shell commands in
+
+  (find-eev-quick-intro \"1. Installing eev\")
+
+can be obtained by running `find-eev-install-links' with these
+arguments:
+
+  (find-eev-install-links \"~/eev2/\" \"~/eev\")
+
+Note that `(find-eev-install-links)' is somehow similar to this,
+
+  (find-eev-quick-intro \"7.3. `find-latex-links'\")
+
+and follows most of the same conventions.
+
+If you want to install eev in a more permanent place the default
+way is to run `(find-eev-install-links)' with these arguments,
+
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
+
+and execute its eepitch block.
+
+
+
+
+2. Changing your .emacs
+=======================
+See:
+
+  (find-elnode \"Init File\" \".emacs\")
+  (find-elnode \"Init Examples\")
+  (find-elnode \"Init File Examples\")
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"\" 2 \".emacs\")
+
+
+
+
+3. Using the git repository
+===========================
+Eev has a git repository at:
+
+  https://github.com/edrx/eev.git
+
+All recent changes are being made at the \"UTF-8\" branch and I
+haven't learned yet how to make the master branch point to
+UTF-8... so if you clone the repository you'll have to do a
+\"checkout UTF-8\" the go to the most recent version.
+
+Try this:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+rm -Rfv /tmp/eev2
+mkdir   /tmp/eev2/
+cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
+cd      /tmp/eev2/
+git checkout UTF-8
+# (find-gitk \"/tmp/eev2/\")
+{
+  echo '#!/bin/sh'
+  echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+} > /tmp/eev
+chmod 755 /tmp/eev
+
+and run the script in /tmp/eev if you want to.
+
+Note the \"cd ... && git clone URL .\". This is needed because if
+we don't specify a directory after the URL in \"git clone\" then
+git will create a directory /tmp/eev/, and that would be
+incompatible with our convention of creating a script called
+\"eev\" (\"/tmp/eev\" in this case).
+
+
+
+
+4. Eev as an ELPA package
+=========================
+I started to make an Emacs \"package\" for eev but I did not go
+very far. See:
+
+  (find-enode    \"Packages\")
+  (find-elnode   \"Packaging\")
+  (find-efaqnode \"Packages that do not come with Emacs\")
+
+Help would be greatly appreciated!
+
+
+" pos-spec-list)))
+
+;; (find-eev-install-intro)
+
+;; (find-eev "eev-tlinks.el" "find-eev-update-links")
+;; (find-eev "eev-tlinks.el" "find-eev-install-links")
+;; (find-eev-update-links)
 
 
 
@@ -150,39 +1609,42 @@ Only works for \"(defun find-xxx-intro ...)s\"."
 \(Re)generate: (find-eev-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eev-intro\")
 Main intros:  (find-eev-quick-intro)
+              (find-emacs-keys-intro)
               (find-eval-intro)
               (find-eepitch-intro)
               (find-wrap-intro)
-Index to the source files: (find-eev \"eev2-all.el\")
+              (find-eev-intro)
+Index to the source files: (find-eev \"eev-load.el\")
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
-The quickest way to reach this index is with `M-5 M-j'.
 
 
 Here is a list of all the available sandbox-y tutorials that
 explain parts and concepts of eev, listed in (a kind of)
 recommended reading order:
 
-  00. (find-eev-quick-intro)
-   0. (find-eev-intro)
-   1. (find-eval-intro)
-   2. (find-eepitch-intro)
-   3. (find-wrap-intro)
-   4. (find-links-intro)
-   5. (find-eejump-intro)
-   6. (find-code-c-d-intro)
-   7. (find-psne-intro)
-   9. (find-brxxx-intro)
-  10. (find-pdf-like-intro)
-  11. (find-audiovideo-intro)
-  12. (find-anchors-intro)
-  13. (find-multiwindow-intro)
-  14. (find-rcirc-intro)
-  15. (find-templates-intro)
-  16. (find-prepared-intro)
-  17. (find-bounded-intro)
-  18. (find-channels-intro)
-  19. (find-videos-intro)
+   0. (find-eev-quick-intro)
+   1. (find-emacs-keys-intro)
+   2. (find-eev-install-intro)
+   3. (find-eev-intro)
+   4. (find-eval-intro)
+   5. (find-links-intro)
+   6. (find-eepitch-intro)
+   6. (find-wrap-intro)
+   7. (find-eejump-intro)
+   8. (find-code-c-d-intro)
+   9. (find-psne-intro)
+  10. (find-brxxx-intro)
+  11. (find-pdf-like-intro)
+  12. (find-audiovideo-intro)
+  13. (find-anchors-intro)
+  14. (find-multiwindow-intro)
+  15. (find-rcirc-intro)
+  16. (find-templates-intro)
+  17. (find-prepared-intro)
+  18. (find-bounded-intro)
+  19. (find-channels-intro)
+  20. (find-videos-intro)
 
 Items 00, 1 and 2 should give you a good grasp of the main ideas
 - namely, that _elisp hyperlinks and interactive scripts can be
@@ -203,92 +1665,6 @@ workshops, but that are not very eev-specific:
 
 
 
-Installation: way 1
-===================
-If you're a real beginner and you are reading this in a web browser
-then this is the easiest way to install eev and start playing with it.
-Mark the multi-line \"{ ... }\" block below, copy it to the clipboard
-with ctrl-C, and paste it to a shell running in a terminal to execute
-its commands. It will download the current version of eev and unpack
-it into ~/eev/.
-
-{
-  rm -Rv ~/eev/
-  mkdir  ~/eev/
-  cd     ~/eev/
-  rm -v eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
-  tar -xvzf eev2.tgz
-}
-
-Now do the same with this block:
-
-{
-  {
-    echo '#!/bin/sh'
-    echo 'cd ~/eev/ && emacs -l ./eev-readme.el --eval=\"(find-eval-intro)\"'
-  } > ~/e
-  chmod 755 ~/e
-}
-
-You now have a shell script that you can invoke with
-
-  ~/e
-
-that starts Emacs, loads eev, and opens this tutorial:
-
-  (find-eval-intro)
-
-Once you learn how to navigate the help system by following elisp
-hyperlinks and going back, the rest is easy.
-
-
-
-The README
-==========
-The README for eev2 is an elisp file,
-
-  (find-eev \"eev-readme.el\")
-
-that contains an easy way of installing eev - in either a
-temporary directory or in a permanent one - and initial
-instructions for trying the main keys. HIGHLY RECOMMENDED!
-
-
-
-Installing eev
-==============
-The instructions below are adapted from:
-
-  (find-eev-update-links \"/tmp/eev/\")
-    and:   (find-eev \"eev-readme.el\")
-
-You should download the tarball with all the elisp files, unpack
-it somewhere - doing something like this (here you can use F8 if
-you already have eev installed),
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-rm -Rv /tmp/eev/
-mkdir  /tmp/eev/
-cd     /tmp/eev/
-wget http://angg.twu.net/eev-current/eev2.tgz
-tar -xvzf eev2.tgz
-
-and then evaluate these sexps (type C-x C-e at the end of each
-line):
-
-  (add-to-list 'load-path \"/tmp/eev/\")
-  (require 'eev2-all)
-  (eev-mode 1)
-
-This will turn on eev-mode - which just activates a few
-keybindings. To understand the main ideas, please follow these
-two tutorials:
-
-  (find-eval-intro)
-  (find-eepitch-intro)
 
 To toggle eev-mode on and off, use `M-x eev-mode'.
 
@@ -345,14 +1721,15 @@ For the full lists of keybindings, see:
 Source code:  (find-eev \"eev-intro.el\" \"find-eval-intro\")
 More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
+              (find-eev-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
 
-For an introduction to the ideas here, see:
+Note: most of this material was copied to
   (find-eev-quick-intro \"2. Evaluating Lisp\")
-
+but some sections are more detailed here...
 
 
 
@@ -4973,8 +6350,8 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-What we have now
-================
+1. What we have now
+===================
 I am producing a series of videos about eev - but at this moment
 only two very broad introductions are ready 8-(. I have plans for
 several short videos about specific usage patterns, but don't
@@ -4988,8 +6365,8 @@ watch them is to fetch local copies of the high-res .mp4 files.
 
 
 
-Downloading local copies
-========================
+2. Downloading local copies
+===========================
 Here are direct links to both the low-res versions at Youtube
 and to the corresponding high-res \".mp4\"s:
 
@@ -5016,8 +6393,8 @@ These sexps generate the download scripts in temporary buffers:
 
 
 
-Hyperlinks to the local copies of the videos
-============================================
+3. Hyperlinks to the local copies of the videos
+===============================================
 Notice that the download scripts above contain these sexps:
 
 \(code-video \"eepitchvideo\" \"$S/http/angg.twu.net/eev-videos/video4-eepitch.mp4\")
@@ -5038,8 +6415,8 @@ You can inspect them with `C-x b *Messages*' or with:
 
 
 
-Hyperlinks to positions
-=======================
+4. Hyperlinks to positions
+==========================
 The first argument to `find-eepitchvideo' and to other similar
 functions is a time offset; it is optional, and it defaults to
 \"0:00\". Any further arguments are ignored, and this allows us
@@ -5054,8 +6431,8 @@ written documents...
 
 
 
-Time offsets as hyperlinks to positions
-=======================================
+5. Time offsets as hyperlinks to positions
+==========================================
 In some cases using sexps creates too much visual clutter, and we
 would like to be able to create an index or table of contents
 writing lines just like this,
@@ -5081,8 +6458,9 @@ player. All this is explained here:
 
 
 
-Eepitch video: table of contents
-================================
+6. Eepitch video: table of contents
+===================================
+\(find-eev-video-links \"eepitchvideo\" \"video4-eepitch\" \"Lj_zKC5BR64\")
 \(eev-avadj-mode 1)
 \(find-eepitchvideo t)
 
@@ -5119,8 +6497,9 @@ Eepitch video: table of contents
 
 
 
-Eev video: table of contents
-============================
+7. Eev video: table of contents
+===============================
+\(find-eev-video-links \"eevvideo\" \"video2\" \"doeyn5MOaB8\")
 \(eev-avadj-mode 1)
 \(find-eevvideo t)
 
@@ -5171,8 +6550,8 @@ Eev video: table of contents
 
 
 
-In Portuguese
-=============
+8. In Portuguese
+================
 
   (find-eev-video-links \"eevvideopt\" \"video2pt\"       \"yztYD9Y7Iz4\")
   (code-video \"eevvideopt\" \"$S/http/angg.twu.net/eev-videos/video2pt.mp4\")
@@ -5186,8 +6565,8 @@ In Portuguese
 
 
 
-Comparison with youtube
-=======================
+9. Comparison with youtube
+==========================
 Note that Youtube has a trick that lets we use URLs that point to
 specific positions in videos. For example, this,
 
@@ -5201,8 +6580,10 @@ position.
 
   (find-audiovideo-intro)
 
-Video2pt: Uma introducao ao eev2 (2012nov15)
-=============================================
+
+
+10. Video2pt: Uma introducao ao eev2 (2012nov15)
+================================================
 This is a version in Portuguese of the video above.
 It is slightly longer than the version in English because it's
 intended mostly for non-Emacsers, so some things are explained
@@ -5461,175 +6842,6 @@ returns nil. But just as
 ;; (find-defun-intro "&rest")
 ;; (find-defun-intro "\ninteractive\n")
 ;; (find-defun-intro "Defining Commands")
-
-
-
-
-;;;                                      _                  
-;;;   ___ _ __ ___   __ _  ___ ___      | | _____ _   _ ___ 
-;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| |/ / _ \ | | / __|
-;;; |  __/ | | | | | (_| | (__\__ \_____|   <  __/ |_| \__ \
-;;;  \___|_| |_| |_|\__,_|\___|___/     |_|\_\___|\__, |___/
-;;;                                               |___/     
-;;
-;; «find-emacs-keys-intro» (to ".find-emacs-keys-intro")
-;; (find-intro-links "emacs-keys")
-
-(defun find-emacs-keys-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-emacs-keys-intro)*"))
-    (apply 'find-estring "\
-\(Re)generate: (find-emacs-keys-intro)
-Source code:  (find-efunction 'find-emacs-keys-intro)
-More intros:  (find-eev-quick-intro)
-              (find-eev-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
-
-
-
-1. Basic keys (eev)
-===================
-The most basic keys of eev are:
-  M-e   - to follow a hyperlink.  Mnemonic: \"(e)valuate\"/\"(e)xecute\".
-          See: (find-eev-quick-intro \"2. Evaluating Lisp\")
-               (find-eev-quick-intro \"3. Elisp hyperlinks\")
-  M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
-          See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
-  M-j   - to jump to certain predefined places - in particular,
-              `M-j' takes you to the list of jump targets.
-          `M-2 M-j' takes you to this help page.
-          `M-5 M-j' takes you to: (find-eev-quick-intro)
-  <f8>  - See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
-  M-T   - See: (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
-
-The keys for creating \"hyperlinks to here\" and refining them are:
-  M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
-  M-h M-2   - `ee-duplicate-this-line'. See: (find-eval-intro \"M-h M-2\")
-  M-h M-y   - `ee-yank-pos-spec'. See: (find-eval-intro \"M-h M-y\")
-
-
-2. Key sequences and how to abort them
-======================================
-See: (find-enode \"Keys\" \"key sequence\")
-     (find-enode \"User Input\" \"`Control-a'\" \"usually written `C-a'\")
-     (find-enode \"User Input\" \"<META> key\")
-     (find-enode \"Completion\" \"<TAB>\")
-
-<ESC> <ESC> <ESC>                (find-enode \"Quitting\")
-C-g   keyboard-quit              (find-enode \"Quitting\" \"`C-g'\")
-M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
-
-More about the minibuffer:       (find-enode \"Minibuffer\")
-More about TAB - for completion: (find-enode \"Completion\")
-                for indentation: (find-enode \"Indentation\")
-           in programming modes: (find-enode \"Basic Indent\")
-More about modes:                (find-enode \"Major Modes\")
-                                 (find-enode \"Minor Modes\")
-                                 (find-enode \"Dired\")
-
-
-
-3. Cutting & pasting
-====================
-The \"region\" where cut & copy operate is always what is between
-the \"point\" and the \"mark\":
-
-  (find-enode \"Point\")
-  (find-enode \"Mark\")
-
-You can do cut, copy and paste by using the icons in the toolbar
-or by using the menu bar (the relevant options are under
-\"Edit\"), but the keys are worth learning:
-
-  C-SPC   -- set-mark-command           (find-enode \"Setting Mark\")
-  C-x C-x -- exchange-point-and-mark    (find-enode \"Setting Mark\" \"C-x C-x\")
-  C-w     -- kill-region     (cut)      (find-enode \"Other Kill Commands\")
-  M-w     -- kill-ring-save  (copy)     (find-enode \"Kill Ring\")
-  C-y     -- yank            (paste)    (find-enode \"Kill Ring\")
-
-See: (find-enode \"Tool Bars\")
-     (find-enode \"Menu Bar\")
-
-
-
-4. Moving point
-===============
-C-a     -- beginning-of-line            (find-enode \"Moving Point\")
-C-e     -- end-of-line                  (find-enode \"Moving Point\")
-M-<     -- beginning-of-buffer          (find-enode \"Moving Point\")
-M->     -- end-of-buffer                (find-enode \"Moving Point\")
-
-
-
-5. Undoing
-==========
-C-/    -- undo    (find-enode \"Basic Undo\")
-C-_    -- undo    (find-enode \"Basic Undo\")
-                  (find-enode \"Undo\")
-
-
-6. Windows
-==========
-See: (find-enode \"Windows\")
-     (find-enode \"Frames\")
-
-C-x o   -- other-window                          (find-enode \"Other Window\")
-C-x 0   -- delete-window                         (find-enode \"Change Window\")
-C-x 1   -- delete-other-windows     (\"1 window\") (find-enode \"Change Window\")
-C-x 2   -- split-window-vertically (Above/Below) (find-enode \"Split Window\")
-C-x 3   -- split-window-horizontally       (L|R) (find-enode \"Split Window\")
-
-
-
-7. Files and buffers
-====================
-C-x C-f -- find-file                    (find-enode \"Visiting\")
-C-x C-s -- save-buffer                  (find-enode \"Saving\")
-C-x C-c -- save-buffers-kill-emacs      (find-enode \"Saving\")
-C-x b   -- switch-to-buffer             (find-enode \"Select Buffer\")
-C-x k   -- kill-buffer                  (find-enode \"Kill Buffer\")
-                                        (find-enode \"Dired\")
-
-
-8. Search and replace
-=====================
-C-s     -- isearch-forward              (find-enode \"Incremental Search\")
-C-r     -- isearch-backward             (find-enode \"Incremental Search\")
-M-C-s   -- isearch-forward-regexp       (find-enode \"Regexp Search\")
-M-C-r   -- isearch-backward-regexp      (find-enode \"Regexp Search\")
-M-%     -- query-replace                (find-enode \"Replace\")
-
-
-
-9. Macros
-=========
-C-x (   -- start-kbd-macro              (find-enode \"Keyboard Macros\")
-C-x )   -- end-kbd-macro                (find-enode \"Keyboard Macros\")
-C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
-
-
-
-10. Other keys (Emacs)
-======================
-M-q                  -- fill-paragraph       (find-enode \"Fill Commands\")
-C-x r <SPC> <char>   -- point-to-register    (find-enode \"Position Registers\")
-C-x r j <char>       -- jump-to-register     (find-enode \"Position Registers\")
-
-
-
-11. Other keys (eev)
-====================
-M-F       -- eewrap-find-fline          (find-eev-quick-intro \"`M-F'\")
-M-M       -- eewrap-man                 (find-eev-quick-intro \"`M-M'\")
-M-S       -- eewrap-sh                  (find-eev-quick-intro \"`M-S'\")
-M-A       -- eewrap-anchor              (find-eev-quick-intro \"`M-A'\")
-M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
-" pos-spec-list)))
-
-;; (find-emacs-keys-intro)
-
 
 
 
@@ -5896,1268 +7108,6 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
 
 ;; (find-org-intro)
 
-
-
-
-
-;; «find-eev-quick-intro» (to ".find-eev-quick-intro")
-;; (find-intro-links "eev-quick")
-
-(defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
-    (apply 'find-estring (ee-tolatin1 "\
-\(Re)generate: (find-eev-quick-intro)
-Source code:  (find-efunction 'find-eev-quick-intro)
-More intros:  (find-escripts-intro)
-              (find-emacs-keys-intro)
-              (find-eev-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
-
-
-This is a tutorial for real beginners.
-It supposes that you have Emacs installed.
-You may start by watching these (old) videos:
-
-  http://angg.twu.net/eev-videos/video-eev-quick-0.mp4  (installation basics)
-  http://angg.twu.net/eev-videos/video-eev-quick-1.mp4  (about this tutorial)
-  http://angg.twu.net/eev-videos/video4-eepitch.mp4  (all of eev's main ideas)
-
-
-
-
-1. Installing eev
-=================
-Open the page at
-
-  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
-
-in a browser, and open a terminal running a shell. Mark the multi-line
-\"{ ... }\" block below, copy it to the clipboard with ctrl-C, and paste
-it into the shell to run its commands.
-
-{
-  rm -Rv ~/eev
-  rm -Rv ~/eev2/
-  mkdir  ~/eev2/
-  cd     ~/eev2/
-  rm -v eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
-  tar -xvzf eev2.tgz
-  {
-    echo '#!/bin/sh'
-    echo 'cd ~/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\" $*'
-  } > ~/eev
-  chmod 755 ~/eev
-}
-
-You now have a shell script that you can invoke with
-
-  ~/eev
-
-that starts Emacs, loads eev, and opens a copy of this tutorial.
-
-Every time that Emacs gets stuck into something that you don't know
-how to leave, or how to undo, you should kill the Emacs window and
-start it again by typing \"~/eev\" again in the shell prompt.
-
-Eventually you will learn how go get out of everything and how to undo
-almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
-This tutorial is intented to make you learn the most essential things
-in the first ten minutes - including how to navigate in Emacs's
-manuals.
-
-For more on ways to install eev see:
-
-  (find-eev-install-intro)
-
-
-
-
-2. Evaluating Lisp
-==================
-The most important idea in Emacs is that Lisp code can appear
-anywhere, and you can evaluate a Lisp expression (a \"sexp\") by
-placing the cursor (the \"point\") just after it and typing `C-x
-C-e'; the result is then displayed in the echo area.
-
-Note: `C-e' means control-E, `M-e' means alt-e, `M-E' means
-alt-shift-e. If you have Caps Lock on then Emacs will receive an `M-E'
-if you type alt-e, and `M-e' if you type alt-shift-e. Hint: avoid Caps
-Lock!
-
-You can try `C-x C-e' in the line below, with the point in the three
-different indicated positions - you should get different results...
-
-  (+ (* 2 3) (* 4 5))
-            ^       ^^
-            |       | \\
-            6      20  26
-
-...but `C-x C-e' is not beginner-friendly, and it even enters a
-debugger that is hard to leave if it finds errors, so let's see
-something better.
-
-When you type `M-e' emacs moves the point to the end of the
-current line, then runs a variant of `C-x C-e'. Try this on each
-line of the block below:
-
-  (+ (* 2 3)
-     (* 4 5)
-     )
-
-`M-e' accepts several different numeric prefixes that alter its
-behavior. We are only interested in one of them now - `M-0 M-e'
-highlights the sexp for a fraction of a second insted of executing it.
-Try it above.
-
-
-
-
-3. Elisp hyperlinks
-===================
-Each one of the sexps below makes Emacs \"go somewhere\" if you execute
-it with `M-e'. Executing sexps like those - we will call them \"elisp
-hyperlinks\" - is like following a hyperlink in a browser.
-
-In a browser you can \"go back\" after following a hyperlink because the
-previous page is kept in the memory somehow. In Emacs+eev the easiest
-way to \"go back\" is with `M-k', which runs a function called
-`ee-kill-this-buffer'. If you follow one of the links below with
-`M-e', it creates a new buffer and displays it. If you then type `M-k'
-this new buffer is killed, and Emacs displays the buffer that was just
-below it, which is this tutorial... try it! Here are some nice elisp
-hyperlinks:
-
-  (find-fline \"/tmp/\")
-  (find-efunctiondescr 'find-file)
-  (find-man \"cat\")
-
-Not all elisp hyperlinks \"go somewhere\"; some are like buttons that
-perform an action, like the one below, that acts as if the user had
-pressed a series of keys,
-
-  (eek \"<down> C-a H E L L O ! <up> C-e\")
-
-and some display their output in the echo area:
-
-  (find-sh0 \"date\")
-
-The following elisp hyperlinks may or may not work - try them too, but
-be aware that they may show errors instead of opening a new buffer.
-The first two of them open a page - actually a section, whose short
-title is \"Lisp Eval\" - from the main Emacs manual. The third one
-opens the file with the source code (in Lisp) for the function
-`find-file'.
-
-  (find-node \"(emacs)Lisp Eval\")
-  (find-enode       \"Lisp Eval\")
-  (find-efunction 'find-file)
-
-If they don't work that means that you don't have the Emacs manuals,
-or the elisp source files, installed. The names for the packages which
-have those things vary from one GNU/Linux distro to another. On Debian
-something like
-
-  sudo apt-get install emacs24-el
-  sudo apt-get install emacs24-common-non-dfsg
-
-may work - but \"emacs24-common-non-dfsg\" may need you to enable
-access to the \"non-free\" respository... ask for help if you need!
-
-
-
-3.1. Non-elisp hyperlinks
--------------------------
-Emacs has ways to follow URLs, but the keys for that are totally
-different from the ones for elisp hyperlinks. You can follow the URL
-below by putting the point on it and typing `M-x browse-url':
-
-  http://www.lua.org/start.html
-
-This will make emacs invoke the default browser on that URL. See:
-
-  (find-enode \"Browse-URL\")
-
-Eev defines several functions similar to `browse-url'. These elisp
-hyperlinks
-
-  (find-firefox      \"http://www.lua.org/start.html\")
-  (find-googlechrome \"http://www.lua.org/start.html\")
-
-invoke \"firefox\" and \"google-chrome\" respectively on the given URL;
-note that the \"firefox\" in a Debian-based system is usually a free
-derivative of Firefox, and that \"google-chrome\" does not come
-installed by default because it is \"gratis\" but not free. Also,
-
-  M-x brff   -- runs `find-firefox' on the URL at point,
-  M-x brg    -- runs `find-googlechrome' on the URL at point.
-
-For more on the \"brxxx functions\" of eev, see:
-
-  (find-brxxx-intro)
-
-
-
-
-
-4. Creating Elisp Hyperlinks
-============================
-You can write elisp hyperlinks by hand, but that is hard. It is better
-to generate hyperlinks automatically and then use cut and paste.
-
-Eev has several functions that generate \"elisp hyperlinks\" buffers.
-For example,
-
-  (find-efunction-links 'find-file)
-
-creates this buffer, and switches to it:
-   ___________________________________________________________
-  |# (find-efunction-links 'find-file)                        |
-  |# (where-is 'find-file)                                    |
-  |# (describe-function 'find-file)                           |
-  |# (find-efunctiondescr 'find-file)                         |
-  |# (find-efunction 'find-file)                              |
-  |# (find-efunctionpp 'find-file)                            |
-  |# (find-efunctiond 'find-file)                             |
-  |# (find-estring (documentation 'find-file))                |
-  |# (find-estring (documentation 'find-file t))              |
-  |# (symbol-file 'find-file 'defun)                          |
-  |# (find-fline (symbol-file 'find-file 'defun))             |
-  |                                                           |
-  |# (Info-goto-emacs-command-node 'find-file)                |
-  |# (find-enode \"Command Index\" \"* find-file:\")              |
-  |# (find-elnode \"Index\" \"* find-file:\")                     |
-  |                                                           |
-  |                                                           |
-  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)--|
-  |___________________________________________________________|
-
-One standard way of using eev is:
-
-  a) we keep our current notes in a a file - for example, \"~/TODO\"
-  b) these notes are an \"executable log\" of what we did, including:
-     c) hyperlinks to things we saw or visited
-     d) commands issued to shells or shell-like programs (see sec. 6)
-
-The quickest way of generating hyperlinks for (c) is with `M-h M-h'
-\(`find-here-links'). When we type `M-h M-h' eev tries to generate an
-elisp hyperlinks buffer containing some hyperlinks to \"here\" - and how
-it does that depends on the major mode and on the name of the current
-buffer. For example, typing `M-h M-h' here generates:
-
-   ____________________________________________________________
-  |# See:                                                      |
-  |# (find-links-intro \"`find-here-links'\")                    |
-  |# (find-efunctiondescr 'eev-mode \"M-h M-h\")                 |
-  |                                                            |
-  |http://angg.twu.net/eev-intros/find-eev-quick-intro.html    |
-  |# (find-eev-quick-intro)                                    |
-  |                                                            |
-  |                                                            |
-  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)  -|
-  |____________________________________________________________|
-
-The
-
-  # (find-eev-quick-intro)
-
-opens this tutorial.
-
-Cutting and pasting is explained briefly in section 5.2.
-
-A way to \"refine\" hyperlinks to make them more precise is
-explained here:
-
-  (find-eval-intro \"Producing and refining hyperlinks\")
-
-
-
-
-
-5. Links to Emacs documentation
-===============================
-Try these links (some of them need the Emacs manuals installed):
-
-  (find-emacs-intro \"Cutting & pasting\")
-  (find-node \"(emacs)Screen\")
-  (find-efunctiondescr 'find-file)
-  (find-efunction-links 'find-file)
-
-This part of the eev tutorials has links to almost all the keys that
-I've learned by heart after using Emacs for 20 years:
-
-  (find-emacs-intro \"Basic keys (Emacs)\")
-
-They are not very many, because I use this a lot,
-
-  (find-node \"(emacs)M-x\")
-
-and I use elisp hyperlinks to create quick reminders for the keys that
-I only need to remember when I am performing specific tasks.
-
-Moral: when you want a quick reference of the main Emacs and eev keys,
-type `M-2 M-j'.
-
-
-
-5.1. Navigating the Emacs manuals
----------------------------------
-The Emacs manuals are in \"info\" format, which means:
-
-  a) they are divided into \"nodes\" - a top node, and chapters,
-     sections, subsections, etc,
-
-  b) the nodes in each manual in info format are organized as a tree,
-     and they're all numbered except for the top node, the indexes and
-     the appendixes. For example:
-
-       top --.-- 1 --.-- 1.1
-             |       `-- 1.2
-             |-- 2
-             |-- 3 ----- 3.1 --.-- 3.1.1
-             |                 |-- 3.1.2
-             |                 `-- 3.1.3
-             |-- Appendix A 
-             `-- Index
-
-  c) each node also has a short name. Elisp hyperlinks use the
-     (internal) name of the manual and the short name to jump straight
-     to a node in a manual. The table below has some examples:
-
-       Manual (full name)   Node \"number\"    elisp hyperlink
-       -----------------------------------------------------
-       Emacs                Top             (find-node \"(emacs)\")
-       Emacs                7               (find-node \"(emacs)Basic\")
-       Emacs                7.4             (find-node \"(emacs)Basic Undo\")
-       Emacs                Concept Index   (find-node \"(emacs)Concept Index\")
-       Emacs Lisp           Top             (find-node \"(elisp)\")
-
-  d) Emacs uses \"Info mode\" when displaying nodes of manuals in info
-     format. These are the most important keys of Info mode:
-
-       q         exit                (go back to some other buffer) 
-       (arrows)  move point
-       RET       follow link at point
-       TAB       move to next link
-       BACKTAB   move to prev link
-       n         next                (1->2->3->Appendix A; 3.1.1->3.1.1->3.1.2)
-       p         previous            (1<-2<-3<-Appendix A; 3.1.1<-3.1.1<-3.1.2)
-       u         up                  (Top<-1<-1.1; 1<-1.2; 3<-3.1<-3.1.2, etc)
-       ]         forward-node        (Top->1->1.1->1.2->2->3->3.1->...->Index)
-       [         backward-node       (Top<-1<-1.1<-1.2<-2<-3<-3.1<-...<-Index)
-
-Try the keys above now - they are VERY important! Use:
-
-  (eek \"<down> M-3 M-e  ;; open the hyperlink below in another window\")
-  (find-node \"(emacs)Basic\")
-  (find-node \"(emacs)Major Modes\")
-
-
-
-5.2. Cutting and pasting
-------------------------
-You can do cut, copy and paste in a \"user-friendly\" way by using
-
-  a) the rightmost icons in the toolbar, or
-  b) the \"Edit\" menu in the menu-bar,
-
-but the keys are very much worth learning:
-
-  C-SPC   -- set-mark-command           (find-enode \"Setting Mark\")
-  C-x C-x -- exchange-point-and-mark    (find-enode \"Setting Mark\" \"C-x C-x\")
-  C-w     -- kill-region     (cut)      (find-enode \"Other Kill Commands\")
-  M-w     -- kill-ring-save  (copy)     (find-enode \"Kill Ring\")
-  C-y     -- yank            (paste)    (find-enode \"Kill Ring\")
-
-The \"region\" where cut & paste operate is always what is between
-the \"point\" and the \"mark\". See:
-
-  (find-enode \"Point\")
-  (find-enode \"Mark\")
-
-Exercise: understand how the `eek' sexp below switches the two
-lines just after it.
-
-  (eek \"<down> C-a C-SPC <down> C-w <down> C-y 3*<up>\")
-  First
-  Second
-
-
-
-
-
-
-
-
-6. Controlling shell-like programs
-==================================
-This is the second main feature of eev. The hyperlinks thing used the
-keys `M-e', `M-k', and `M-h M-h', plus standard Emacs keys for cutting
-and pasting. The module of eev that controls shell-like programs - it
-is called \"eepitch\" - uses `<F8>' and `M-T'. Note that it is
-`alt-shift-t', to not interfere with Emacs's `M-t'.
-
-The sections below were adapted from:
-
-  (find-eepitch-intro \"The main key: <F8>\")
-
-
-
-
-6.1. The main key: <F8>
------------------------
-Emacs can run a shell in a buffer, and it can split its frame
-into windows, like this:
-   ___________________
-  |         |         |
-  |   our   |    a    |
-  |  notes  |  shell  |
-  |         |  buffer |
-  |_________|_________|
-
-The usual way to use a shell buffer is to move the cursor there
-and type commands into its prompt; the eepitch-y way is to leave
-the cursor at the \"notes\" buffer, write the commands for the
-shell there, and send these commands to the shell with <F8>.
-
-Here's what <F8> does:
-
-  When we type <F8> on a line that starts with a red
-  star (\"\"), it executes the rest of the line as Lisp, and
-  moves down; when we type <F8> on a line that does not start
-  with a \"\", it makes sure that the \"target buffer\" is being
-  displayed (the \"target\" is usually the buffer called
-  \"*shell*\"), it \"send\"s the current line to the target
-  buffer, and moves down.
-
-  \"Sending the current line to the target buffer\" means copying
-  the contents of the current line to the target - as if the user
-  had typed that line there by hand -, then \"typing\" a <RET> at
-  the target buffet.
-
-Please try that in the example after this paragraph, by typing
-<F8> six times starting at the first line that says
-\" (eepitch-shell)\". The three red star lines at the top will
-create a target buffer, destroy it, and create it again; the
-other three lines will send commands to the target shell.
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-echo \"We are at: $PWD\"
-cd /tmp/
-echo \"We changed to: $(pwd)\"
-
-
-
-
-6.2. Other targets
-------------------
-Just like `(eepitch-shell)' creates a shell buffer and sets the
-eepitch target to it, `(eepitch-python)' creates a buffer with a
-Python interpreter and uses it as the eepitch target. Try:
-
- (eepitch-python)
- (eepitch-kill)
- (eepitch-python)
-def square (x):
-    return x*x
-
-print(square(5))
-
-  We can use several targets at the time, alternating between them.
-  For example:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-echo Hello... > /tmp/o
-
- (eepitch-python)
- (eepitch-kill)
- (eepitch-python)
-print(open(\"/tmp/o\").read())
-
- (eepitch-shell)
-echo ...and bye >> /tmp/o
-
- (eepitch-python)
-print(open(\"/tmp/o\").read())
-
-
-
-
-6.3. Creating eepitch blocks: `M-T'
------------------------------------
-Write just \"shell\" or \"python\" in a line, then type
-`M-T' (i.e., meta-shift-t) there. The line will be turned into
-three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
-\" (eepitch-xxx)\". We call these blocks of three lines
-\"eepitch blocks\". Try this below, converting the \"shell\" into
-an eepitch block for starting a shell.
-
-shell
-pwd
-cd /tmp/
-pwd
-
-
-
-
-6.4. Red stars
---------------
-Eepitch.el sets the glyph for the char 15 to a red star in the
-standard display table. In layman's terms: eepitch.el tells Emacs
-that the character 15 should be displayed as a red star. The
-character 15 corresponds to control-O, whose default
-representation on screen would be \"^O\". You can enter a
-literal ^O in a buffer by typing `C-q C-o'.
-
-
-
-
-7. Quick access to one-liners
-=============================
-
-
-7.1. eejump
------------
-We may have elisp one-liners that we want to be able to execute very
-quickly, and from anywhere. For example, I keep all my notes that I
-have not organized yet in a file called \"~/TODO\", and if I type
-
-  M-1 M-j
-
-then I \"jump\" to \"~/TODO\" - the effect is the same as running this:
-
-  (find-fline \"~/TODO\")
-
-Note that `M-1 M-j' can be typed as:
-
-  hold the meta key,
-    type 1,
-    type j,
-  release the meta key.
-
-instead of:
-
-  hold the meta key,
-    type 1,
-  release the meta key,
-  hold the meta key,
-    type j,
-  release the meta key;
-
-There is no need to release and press agian the meta key between
-the `1' and the `j'.
-
-Internally, what happens when you type `M-1 M-j' is this:
-
-  `M-j' is bound to `eejump',
-  `M-1 M-j' runs `eejump' with argument 1, i.e., (eejump 1)
-  (eejump 1) runs (eejump-1)
-  (eejump-1) has been defined with:
-
-    (defun eejump-1 () (find-fline \"~/TODO\"))
-
-So `M-1 M-j' runs the one-liner `(find-fline \"~/TODO\")',
-`M-5 M-j' runs the one-liner `(find-eev-quick-intro)',
-and so on.
-
-
-
-7.2. The list of eejump targets
--------------------------------
-If you type `M-j' without a prefix argument then it runs
-`(find-eejumps)', that displays all the current eejump targets as
-defuns, one in each line. Try it:
-
-  (eek \"M-j\")
-  (find-eejumps)
-
-You will see that two of those entries are:
-
-  (defun eejump-1 () (find-fline \"~/TODO\"))
-  (defun eejump-5 () (find-eev-quick-intro))
-
-
-
-7.3. Defining eejump targets
-----------------------------
-We can define new eejump targets, or overwrite the current ones, by
-just running `defun's to define functions with names starting with
-`eejump-'. Try:
-
-  (defun eejump-9 () (find-eev-quick-intro \"7.2.\"))
-  (defun eejump-9 () (find-eev-quick-intro \"7.3.\"))
-  (fmakunbound 'eejump-9)
-  (find-eejumps)
-
-Note that if you type `M-J' (i.e., meta-uppercase-j,
-`eewrap-eejump') on the line below then it will be converted into
-the first \"(defun eejump- ...)\" above:
-
-  9 (find-eev-quick-intro \"7.2.\")
-
-An advanced feature: if you type `M-J' on a line that starts with
-something that is not a number, you get a defun for a \"command
-with a very short name\" like the ones that are described in the
-next section. Try it now:
-
-  (eek \"<down> M-J\")
-  e (find-fline \"/tmp/foo.tex\")
-
-
-
-
-7.2. Commands with very short names
------------------------------------
-Let's start with an example. If we are editing a LaTeX file, say
-\"/tmp/foo.tex\", then it is convenient to have quick ways to:
-
-  c) compile \"foo.tex\" into a \"foo.pdf\",
-  d) display the resulting \"foo.pdf\",
-  e) jump to \"foo.tex\" from anywhere to edit it.
-
-If our \"/tmp/foo.tex\" starts with these lines
-
-  % (defun c () (interactive) (find-sh \"cd /tmp/; pdflatex foo.tex\"))
-  % (defun d () (interactive) (find-xpdfpage \"/tmp/foo.pdf\"))
-  % (defun e () (interactive) (find-fline \"/tmp/foo.tex\"))
-
-and we execute these defuns, then from that point on `M-x c', `M-x d'
-and `M-x e' will do \"compile\", \"display\" and \"edit\" on \"foo.tex\", as
-described above.
-
-For more on `M-x', and on why the defuns above need the
-\"(interactive)\", see:
-
-  (find-node \"(emacs)M-x\")
-  (find-node \"(emacs)Commands\")
-  (find-node \"(elisp)Defining Commands\")
-
-
-
-
-7.3. `find-latex-links'
------------------------
-The easiest way to put the three defuns of the last section in
-the header of a LaTeX file is with:
-
-  (find-latex-links \"/tmp/foo\")
-
-`find-latex-links' is just one of several template functions that
-generate commands with very short names. Here's how to use it -
-the other ones are similar.
-
-  1) Run `M-x find-latex-links'. You will get a buffer whose top
-     line is:
-
-       # (find-latex-links \"{stem}\")
-
-  2) Edit that, and change the \"{stem}\" to \"/tmp/foo\".
-
-  3) Execute that top line, which is now:
-
-       # (find-latex-links \"/tmp/foo\")
-
-     You should get:
-
-   _____________________________________________________________________
-  |# (find-latex-links \"/tmp/foo\")                                      |
-  |# (find-eev-quick-intro \"`find-latex-links'\")                        |
-  |# (ee-copy-rest 1 '(find-fline \"/tmp/foo.tex\"))                      |
-  |                                                                     |
-  |% (defun c () (interactive) (find-sh \"pdflatex foo.tex\"))            |
-  |% (defun d () (interactive) (find-pdf-page \"/tmp/foo.pdf\"))          |
-  |% (defun e () (interactive) (find-fline \"/tmp/foo.tex\"))             |
-  |%                                                                    |
-  |\\documentclass{article}                                              |
-  |\\begin{document}                                                     |
-  |                                                                     |
-  |\\end{document}                                                       |
-  |                                                                     |
-  |                                                                     |
-  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental)                |
-  |_____________________________________________________________________|
-
-
-  4) Execute the line with the \"(ee-copy-rest ...)\". You should get this -
-     the window on the right is visiting the file \"/tmp/foo.tex\":
-
-   ______________________________________________________________________
-  |# (find-latex-links \"/tmp/foo\")   |                                  |
-  |# (find-eev-quick-intro \"`find-lat|                                  |
-  |# (ee-copy-rest 1 '(find-fline \"/t|                                  |
-  |                                  |                                  |
-  |% (defun c () (interactive) (find-|                                  |
-  |% (defun d () (interactive) (find-|                                  |
-  |% (defun e () (interactive) (find-|                                  |
-  |%                                 |                                  |
-  |\\documentclass{article}           |                                  |
-  |\\begin{document}                  |                                  |
-  |                                  |                                  |
-  |\\end{document}                    |                                  |
-  |                                  |                                  |
-  |                                  |                                  |
-  | -:**-  *Elisp hyperlinks*   All L| -:**-  foo.tex        All L9     |
-  |_(Copied 8 lines to the kill ring - use C-y to paste)________________|
-
-
-  5) Go to the window on the right and type `M-y'. You should get this,
-
-   ______________________________________________________________________
-  |# (find-latex-links \"/tmp/foo\")   |% (defun c () (interactive) (find-|
-  |# (find-eev-quick-intro \"`find-lat|% (defun d () (interactive) (find-|
-  |# (ee-copy-rest 1 '(find-fline \"/t|% (defun e () (interactive) (find-|
-  |                                  |%                                 |
-  |% (defun c () (interactive) (find-|\\documentclass{article}           |
-  |% (defun d () (interactive) (find-|\\begin{document}                  |
-  |% (defun e () (interactive) (find-|                                  |
-  |%                                 |\\end{document}                    |
-  |\\documentclass{article}           |                                  |
-  |\\begin{document}                  |                                  |
-  |                                  |                                  |
-  |\\end{document}                    |                                  |
-  |                                  |                                  |
-  |                                  |                                  |
-  | -:**-  *Elisp hyperlinks*   All L| -:**-  foo.tex        All L9     |
-  |_____________________________________________________________________|
-
-  and you can now save the file foo.tex (hint: use `C-x C-s'!),
-  execute the three defuns for `c', `d', and `e', and jump to
-  \"/tmp/foo.tex\" from anywhere with `M-x e'.
-
-
-
-
-
-8. Anchors
-==========
-
-8.1. Introduction: `to'
------------------------
-A hyperlink like
-
-  (to \"foo\")
-
-jumps to the first occurrence of the string \"«foo»\" in the
-current buffer. The function that wraps a string in `«»'s is
-called `ee-format-as-anchor', and the sexp `(to \"foo\")'
-is equivalent the second sexp below:
-
-                    (ee-format-as-anchor \"foo\")
-  (ee-goto-position (ee-format-as-anchor \"foo\"))
-
-We will call strings in `«»'s _anchors_, and we will say
-that `(to \"foo\")' jumps \"to the anchor `foo'\". The string
-inside a `«»'s is called a _tag_.
-
-In a situation like this,
-
-  «one»     (to \"two\")
-  «two»     (to \"three\")
-  «three»   (to \"four\")
-  «four»    (to \"one\")
-
-we have four anchors, and typing `M-e' at the line with the
-anchor \"one\" takes us to the line with the anchor \"two\",
-typing `M-e' at the line with the anchor \"two\" takes us to the
-line with the anchor \"three\", typing `M-e' again takes us to
-the line with the anchor \"four\", and typing `M-e' again takes
-us back to the line with the anchor \"one\". In a situation like
-this we say that the anchors \"one\", \"two\", \"three\", and
-\"four\" _point to one another_.
-
-In a case like this,
-
-  «.five»   (to \"five\")
-   «five»  (to \".five\")
-
-where the names of two anchors pointing to one another differ by
-an initial dot, we will say that the anchor \".five\" is the
-\"index anchor\", and the anchor \"five\" is the \"section
-anchor\"; and one way to create an index for a file is to group
-all the index anchors together. For an example, see:
-
-  (find-eev \"eev-intro.el\" \".find-eev-intro\")
-
-
-
-8.2. Creating anchors by hand
------------------------------
-One way to type the chars `«' and `»' is with `C-x 8 <' and
-`C-x 8 >'. Try:
-
-  (eek \"RET C-x 8 < t a g C-x 8 >\")
-
-
-
-
-8.3. Creating index/section anchor pairs
-----------------------------------------
-Eev has several commands that transform the text in the current
-line into something more complex. They are all called
-`eewrap-(something)', and they are bound to
-meta-uppercase-letters. The simplest examples are `M-F', `M-S'
-and `M-M', that just \"wrap the text in the current line into an
-elisp hyperlink\" by adding a prefix and a suffix; if you run
-`M-F', `M-S' and `M-M' in the following lines
-
-/tmp/
-ls /tmp/
-ls
-
-they become this:
-
-# (find-fline \"/tmp/\")
-# (find-sh \"ls /tmp/\")
-# (find-man \"ls\")
-
-You can also try them by running the `eek' sexps below,
-
-\(eek \"<down> M-F\")
-/tmp/
-
-\(eek \"<down> M-S\")
-ls /tmp/
-
-\(eek \"<down> M-M\")
-ls
-
-HINT: sometimes the eewrap commands don't do exactly what we
-want, so learn how to use the \"undo\" command of Emacs. See:
-
-  (find-emacs-keys-intro \"5. Undoing\")
-
-The command `eewrap-anchor' (bound to `M-A') is similar to those
-above, but it parses the current line in a more complex way -
-everything between \"<>\" is the \"anchor\" and everything before
-the \"<\" is the \"comment prefix\" - and it converts the current
-line into two lines with `to's, each one pointing to the other
-one. For example, `M-A' in the line below
-
-  # <first-test>
-
-yields this:
-
-  # «.first-test»	(to \"first-test\")
-  # «first-test» (to \".first-test\")
-
-The line with the anchor \"«.first-test»\" is intended to be
-moved - by hand, with cut and paste - to the index section at the
-beginning of the file, as explained here:
-
-  (find-escripts-intro)
-
-
-
-
-8.4. Creating e-script blocks
------------------------------
-The key `M-B' (`eewrap-escript-block') is a variant of `M-A' that
-converts the current line into seven (!) lines instead of two. If
-we type `M-B' on the line below
-
-  second-test Long description
-
-it becomes this - the header of an \"e-script block\":
-
-#####
-#
-# Long description
-# 2018may22
-#
-#####
-
-# «.second-test»	(to \"second-test\")
-# «second-test» (to \".second-test\")
-
-where again the line with the anchor \"«.second-test»\" is
-intended to be moved to the index section at the beginning of the
-file. The use of these \"e-script blocks\" is explained bere:
-
-  (find-escripts-intro)
-
-
-
-
-8.5. Hyperlinks to anchors in other files
------------------------------------------
-`find-anchor' is like `find-fline', but it interprets the first
-argument after the file in a special way if it is present. These
-hyperlinks are all equivalent:
-
-  (find-anchor \"~/eev2/eev-blinks.el\" \"find-wottb\")
-  (find-anchor \"~/eev2/eev-blinks.el\" (ee-format-as-anchor \"find-wottb\"))
-  (find-fline  \"~/eev2/eev-blinks.el\" \"«find-wottb»\")
-
-You can use this - or the shorter hyperlinks to anchors in
-section 9.3 - to point to anchors or to e-script blocks in your
-files.
-
-
-
-
-
-
-9. Shorter hyperlinks
-=====================
-See also: (find-code-c-d-intro)
-
-9.1. `code-c-d'
----------------
-Sexps like
-
-  (find-eevfile \"\")
-  (find-eevfile \"eev-blinks.el\")
-  (find-eevfile \"eev-blinks.el\" \"«find-sh»\")
-  (find-udfile \"\")
-  (find-udfile \"lua5.1-doc/\")
-  (find-udfile \"lua5.1-doc/test/\")
-  (find-udfile \"lua5.1-doc/test/fib.lua\")
-  (find-udfile \"lua5.1-doc/test/fib.lua\" \"function fib(n)\")
-
-work as abbreviations for
-
-  (find-fline \"~/eev-current/\")
-  (find-fline \"~/eev-current/eev-blinks.el\")
-  (find-fline \"~/eev-current/eev-blinks.el\" \"«find-sh»\")
-  (find-fline \"/usr/share/doc/\")
-  (find-fline \"/usr/share/doc/lua5.1-doc/\")
-  (find-fline \"/usr/share/doc/lua5.1-doc/test/\")
-  (find-fline \"/usr/share/doc/lua5.1-doc/test/fib.lua\")
-  (find-fline \"/usr/share/doc/lua5.1-doc/test/fib.lua\" \"function fib(n)\")
-
-They are \"mass-produced\", in the following sense. When we run this,
-
-  (code-c-d \"ud\" \"/usr/share/doc/\")
-
-the function `code-c-d' produces a big string using a template, and
-evaluates that big string; the \"{c}\"s in the template are replaced by
-the argument \"ud\" - called the \"code\" - and the \"{d}\"s in the template
-are replaced by \"/usr/share/doc/\" - called the \"directory\". If we add
-a \"find-\" before the `code-c-d', like this,
-
-  (find-code-c-d \"ud\" \"/usr/share/doc/\")
-
-we get a hyperlink to the code that `(code-c-d \"ud\" \"/usr/share/doc/\")'
-would execute - i.e., to the result of substiting the \"{c}\"s and
-\"{d}\"s in the template. This is useful for understanding how
-`code-c-d' works; each call to `code-c-d' defines lots of functions,
-some of them easier to explain, some harder. This, for example,
-
-  (find-eevgrep \"grep --color -nH -e '(code-c-d ' *.el\")
-
-greps for all calls to \"code-c-d\" in the source of eev.
-
-By default, eev runs these `code-c-d's:
-
-  (find-eevfile \"eev-code.el\" \"code-c-d \\\"e\\\"\")
-
-You can add many more of them to your .emacs file.
-
-An introduction to the ideas, details, innards and technicalities of
-`code-c-d' can be found here:
-
-  (find-code-c-d-intro)
-
-
-
-9.2. Extra arguments to `code-c-d'
-----------------------------------
-If you compare the buffers generated by
-
-  (find-code-c-d      \"CODE\" \"/DIR/\")
-  (find-code-c-d      \"CODE\" \"/DIR/\" :info \"INFO\")
-  (find-code-c-d-rest \"CODE\" \"/DIR/\" :info \"INFO\")
-
-you will see that the `:info \"INFO\"' part adds some code to the end of
-the generated string, and that the `find-code-c-d-rest' shows only
-this extra code.
-
-The most important extra arguments to `code-c-d' are:
-
-  1) :info \"name-of-an-info-manual\"
-  2) :gz
-  3) :anchor
-
-If the first extra argument is a string then `ee-code-c-d' adds an
-`:info' before it, so these generate the same code:
-
-  (find-code-c-d \"CODE\" \"/DIR/\"       \"INFO\")
-  (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")
-
-The eev source has this (in the file \"eev-code.el\"),
-
-  (code-c-d \"e\"   ee-emacs-lisp-directory :info \"emacs\" :gz)
-  (code-c-d \"eev\" ee-eev-source-directory :anchor)
-
-and that code
-
-  1) makes (find-enode \"\")
-     work as an abbreviation for (find-node \"(emacs)\")
-
-  2) makes (find-efile \"files.el\")
-     run   (find-efile \"files.el.gz\")
-     if the file \"files.el\" is not found,
-
-  3) makes (find-eev     \"eev-blinks.el\" \"find-wottb\")
-     run:  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
-     or actually: (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
-
-Calls to `find-eev' are \"short hyperlinks to anchors\":
-
-  (find-eev \"eev-blinks.el\" \"find-wottb\")
-  (find-eev \"eev-blinks.el\" \"find-wottb\" \"defun find-wottb-call\")
-
-For the technical details of the implementation, see here:
-
-  (find-code-c-d-intro \"Extra arguments to `code-c-d'\")
-
-
-
-9.3. Hyperlinks to PDF files
-----------------------------
-If you run this e-script
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-#         https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-mkdir -p $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
-cd       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
-wget -nc  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-
-you will download a local copy of J.M. Coetzee's \"The Lives of
-Animals\" into this directory:
-
-  (find-fline      \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
-  (find-fline \"~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
-
-The full idea behind these \"local copies\" is explained here:
-
-  (find-psne-intro)
-
-If you have xpdf installed then the second sexp here,
-
-  (setq l-o-a \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf\")
-  (find-pdf-page l-o-a)
-
-should work as a \"hyperlink to the PDF\": it calls xpdf as
-external program to open that PDF file. The main keys of xpdf
-are:
-
-  q         quit xpdf
-  alt-f     toggle full-screen; use twice to fit document to page
-  PageDown  scroll down/go to next page
-  PageUp    scroll up/go to previous page
-  0         set zoom to 125%
-  +         zoom in one step
-  -         zoom out out step
-  arrows    scroll within the current page
-
-Also, if you have the program pdftotext installed (hint: apt-get
-install poppler-utils!) then this
-
-  (find-pdf-text l-o-a)
-
-should work as a \"hyperlink to the text of the PDF\".
-
-You can use these two sexps
-
-  (ee-find-pdf-text l-o-a)
-  (ee-find-pdf-page l-o-a)
-
-to see exactly how the `find-pdf-page' and the `find-pdf-text'
-sexps above invoke xpdf and pdftotext; note that `find-pdf-page'
-uses `find-bgprocess' and `find-pdf-text' uses `find-sh'.
-
-The functions above accept extra arguments, that are interpreted
-as a page number and as strings to look for, but it's easier to
-discuss them using shorter hyperlinks.
-
-
-
-
-9.4. Shorter hyperlinks to PDF files
-------------------------------------
-If you run these sexps
-
-  (code-pdf-page \"livesofanimals\" l-o-a)
-  (code-pdf-text \"livesofanimals\" l-o-a -110)
-
-then these hyperlinks should work:
-
-  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
-  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
-  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
-  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
-  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
-  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
-  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
-  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
-  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
-  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
-  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
-  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
-  (find-livesofanimalspage (+ -110 164) \"last common ground\")
-  (find-livesofanimalstext (+ -110 164) \"last common ground\")
-
-[To do: explain them]
-
-
-
-
-\(To be continued...)
-") pos-spec-list)))
-
-;; end of defun
-
-;; (find-eev-quick-intro)
-
-
-
-
-;;;  _           _        _ _ 
-;;; (_)_ __  ___| |_ __ _| | |
-;;; | | '_ \/ __| __/ _` | | |
-;;; | | | | \__ \ || (_| | | |
-;;; |_|_| |_|___/\__\__,_|_|_|
-;;;                           
-
-;; «find-eev-install-intro» (to ".find-eev-install-intro")
-;; (find-intro-links "eev-install")
-
-(defun find-eev-install-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-eev-install-intro)*"))
-    (apply 'find-estring "\
-\(Re)generate: (find-eev-install-intro)
-Source code:  (find-efunction 'find-eev-install-intro)
-More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
-
-
-
-The \"quick introduction to eev\" in
-
-  (find-eev-quick-intro)
-
-describes a way to install eev for tests that does not make any
-permanent changes in your HD - everything gets installed in the
-/tmp/ directory, that is cleared at every boot. Here we describe
-several ways to install eev in other, more permanent, places.
-
-
-
-1. Running `(find-eev-install-links)'
-=====================================
-The shell commands in
-
-  (find-eev-quick-intro \"1. Installing eev\")
-
-can be obtained by running 
-
-  (find-eev-install-links)
-
-with these arguments:
-
-  (find-eev-install-links \"/tmp/eev2/\" \"/tmp/eev\")
-
-Note that `(find-eev-install-links)' is somehow similar to this,
-
-  (find-eev-quick-intro \"7.3. `find-latex-links'\")
-
-and follows most of the same conventions.
-
-If you want to install eev in a more permanent place the default
-way is to run `(find-eev-install-links)' with these arguments,
-
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
-
-and execute its eepitch block.
-
-
-
-
-2. Changing your .emacs
-=======================
-To be written. See:
-
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\" 2 \".emacs\")
-  (find-elnode \"Init File\")
-  (find-elnode \"Init Examples\")
-
-
-
-
-3. Using the git repository
-===========================
-Eev has a git repository at:
-
-  https://github.com/edrx/eev.git
-
-All recent changes are being made at the \"UTF-8\" branch and I
-haven't learned yet how to make the master branch point to
-UTF-8... so if you clone the repository you'll have to do a
-\"checkout UTF-8\" the go to the most recent version.
-
-Try this:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-rm -Rfv /tmp/eev2
-mkdir   /tmp/eev2/
-cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
-cd      /tmp/eev2/
-git checkout UTF-8
-# (find-gitk \"/tmp/eev2/\")
-{
-  echo '#!/bin/sh'
-  echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
-} > /tmp/eev
-chmod 755 /tmp/eev
-
-and run the script in /tmp/eev if you want to.
-
-Note the \"cd ... && git clone URL .\". This is needed because if
-we don't specify a directory after the URL in \"git clone\" then
-git will create a directory /tmp/eev/, and that would be
-incompatible with our convention of creating a script called
-\"eev\" (\"/tmp/eev\" in this case).
-
-
-
-
-4. Eev as an ELPA package
-=========================
-I started to make an Emacs \"package\" for eev but I did not go
-very far. See:
-
-  (find-enode    \"Packages\")
-  (find-elnode   \"Packaging\")
-  (find-efaqnode \"Packages that do not come with Emacs\")
-
-Help would be greatly appreciated!
-
-
-" pos-spec-list)))
-
-;; (find-eev-install-intro)
-
-;; (find-eev "eev-tlinks.el" "find-eev-update-links")
-;; (find-eev "eev-tlinks.el" "find-eev-install-links")
-;; (find-eev-update-links)
 
 
 

@@ -288,26 +288,25 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;;  \___\___/ \__,_|\___|     |_.__/|_|  /_/\_\/_/\_\/_/\_\___/
 ;;;                                                             
 ;; «code-brxxxs» (to ".code-brxxxs")
-
-;; See:
-;; (find-eev "eev-blinks.el" "find-w3m")
-;; (find-efile "net/browse-url.el")
-
-(code-brurl 'find-psne-links
-            :remote 'brep)
-(code-brurl 'browse-url-firefox
-	    :remote 'brm :local 'brml :dired 'brmd)
-(code-brurl 'find-googlechrome
-            :remote 'brg :local 'brgl :dired 'brgd)
-(code-brurl 'find-w3m
-	    :remote 'brw :local 'brwl :dired 'brwd)
-
-(code-brfile 'find-fline       :local 'brfl)
-
-
+;; See: (find-eev "eev-pdflike.el" "code-brxxxs")
+;;      (find-eev "eev-blinks.el" "find-w3m")
+;;      (find-efile "net/browse-url.el")
 
 (defun find-googlechrome (url) (find-bgprocess `("google-chrome" ,url)))
 (defun find-firefox      (url) (find-bgprocess `("firefox"       ,url)))
+
+(code-brurl 'find-psne-links       :remote 'brep)
+
+;; (code-brurl 'browse-url-firefox :remote 'brm  :local 'brml  :dired 'brmd)
+;; (code-brurl 'browse-url-firefox :remote 'brff :local 'brffl :dired 'brffd)
+(code-brurl 'find-firefox          :remote 'brm  :local 'brml  :dired 'brmd)
+(code-brurl 'find-firefox          :remote 'brff :local 'brffl :dired 'brffd)
+(code-brurl 'find-googlechrome     :remote 'brg  :local 'brgl  :dired 'brgd)
+(code-brurl 'find-w3m              :remote 'brw  :local 'brwl  :dired 'brwd)
+
+(code-brfile 'find-fline                         :local 'brfl)
+
+
 
 
 ;; These are defined elsewhere.

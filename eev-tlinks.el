@@ -535,17 +535,18 @@ sudo dpkg -i *.deb
 ;; A test: (find-eev-install-links)
 
 (defun find-eev-install-links (&optional dir script comment &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for foo."
+"Visit a temporary buffer containing an e-script for installing eev."
   (interactive)
-  (setq dir (or dir "{dir}"))
-  (setq script (or script "{script}"))
-  (setq comment (or comment "{comment}"))
+  (setq dir (or dir "~/eev2/"))
+  (setq script (or script "~/eev"))
+  (setq comment (or comment ""))
   (apply 'find-elinks
    `((find-eev-install-links ,dir ,script ,comment ,@pos-spec-list)
-     (find-eev-install-links "/tmp/eev2/" "/tmp/eev" "#")
-     (find-eev-install-links "/tmp/eev2/" "/tmp/eev")
-     (find-eev-install-links "~/eev2/" "~/eev" "#")
      (find-eev-install-links "~/eev2/" "~/eev")
+     (find-eev-install-links "~/eev2/" "~/eev" "#")
+     (find-eev-install-links "/tmp/eev2/" "/tmp/eev")
+     (find-eev-install-links "/tmp/eev2/" "/tmp/eev" "#")
+     (find-eev-install-links "{dir}" "{script}" "{comment}")
      (find-eev-install-links)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-eev-install-links)
@@ -556,11 +557,11 @@ sudo dpkg -i *.deb
 # This function is explained at:
 #   (find-eev-install-intro \"1. Running `(find-eev-install-links)'\")
 #
-# The default way to use it to install eev in /tmp/ for tests is with:
-#   (find-eev-install-links \"/tmp/eev2/\" \"/tmp/eev\" \"#\")
-#
 # The default way to use it to install eev in your home directory is with:
 #   (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
+#
+# The default way to use it to install eev in /tmp/ for tests is with:
+#   (find-eev-install-links \"/tmp/eev2/\" \"/tmp/eev\" \"#\")
 
 
 
