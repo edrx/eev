@@ -6081,8 +6081,21 @@ This will make emacs invoke the default browser on that URL. See:
 
   (find-enode \"Browse-URL\")
 
-Eev defines several functions similar to `browse-url', but they are
-presently considered advanced features. See:
+Eev defines several functions similar to `browse-url'. These elisp
+hyperlinks
+
+  (find-firefox      \"http://www.lua.org/start.html\")
+  (find-googlechrome \"http://www.lua.org/start.html\")
+
+invoke \"firefox\" and \"google-chrome\" respectively on the given URL;
+note that the \"firefox\" in a Debian-based system is usually a free
+derivative of Firefox, and that \"google-chrome\" does not come
+installed by default because it is \"gratis\" but not free. Also,
+
+  M-x brff   -- runs `find-firefox' on the URL at point,
+  M-x brg    -- runs `find-googlechrome' on the URL at point.
+
+For more on the \"brxxx functions\" of eev, see:
 
   (find-brxxx-intro)
 

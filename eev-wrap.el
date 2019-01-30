@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2017jul31
+;; Version:    2019jan29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -324,7 +324,7 @@ have to run an \"undo\"."
   "An internal function used by `eewrap-pdflike'."
   (ee-template0 "\
 ;; (find-fline {(ee-S (file-name-directory fname))})
-\(code-xpdf     \"{stem}\" \"{fname}\")
+\(code-pdf-page \"{stem}\" \"{fname}\")
 \(code-pdf-text \"{stem}\" \"{fname}\")
 ;; \(find-{stem}page)
 ;; \(find-{stem}text)

@@ -1,5 +1,10 @@
 2019-01-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-wrap.el (ee-wrap-pdflike): use `code-pdf-page' instead of
+	`code-xpdf'.
+
+	* eev-brxxx.el: added comments.
+
 	* eev-load.el: new file.
 
 	* eev-intro.el (find-eev-quick-intro): Added two new sections:
@@ -13,7 +18,7 @@
 	(code-xxxpdftext-family): new function.
 	(code-xxxpdf-alias): new function.
 
-	* eev-pdflike-old.el: new file.
+	* eev-pdflike-old.el: new file - see above.
 
 	* eev-rcirc.el (find-freenode-2a): new function.
 	(find-freenode-links): rewrote completely.
