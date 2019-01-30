@@ -17,10 +17,10 @@ using it to teach Emacs and GNU/Linux to beginners.
 
 Besides that tutorial the best introductions to eev are these videos:
 
-  Eepitch: a way to control shell-like programs from Emacs (2013)
+  Eepitch: a way to control shell-like programs from Emacs (2013)  
   http://www.youtube.com/watch?v=Lj_zKC5BR64
 
-  An introduction to eev2 (2012)
+  An introduction to eev2 (2012)  
   http://www.youtube.com/watch?v=doeyn5MOaB8
 
 The video about eepitch has a very nice demonstration of controlling
@@ -35,7 +35,7 @@ The main URLs for eev are these:
 
 The "quick intro" has installation instructions.
 
-Cheers! =)
-  Eduardo Ochs
-  eduardoochs@gmail.com
+Cheers! =)  
+  Eduardo Ochs  
+  eduardoochs@gmail.com  
   http://angg.twu.net/
