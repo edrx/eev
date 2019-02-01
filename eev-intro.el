@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan30
+;; Version:    2019feb01
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -33,16 +33,19 @@
 ;;
 ;; Sometime around 2015 I realized that I could make write a sandboxed
 ;; tutorial - (find-eev-quick-intro) - that could be THE starting
-;; point of eev. It could be at the same time an interactive tutorial
-;; for beginners, a tutorial for advanced users, and an index to the
-;; other sandboxed tutorials, that were mostly quite technical - and
-;; incomplete =(. Also, the default way of installing eev for
-;; beginners would show that "quick intro" in the starting screen.
+;; point of eev. It would be:
+;;
+;;   1) an interactive tutorial for beginners,
+;;   2) the thing that emacs shows when it starts (when we invoke it
+;;      as "~/eev"),
+;;   3) a tutorial for advanced users,
+;;   4) an index to the other sandboxed tutorials, that were mostly
+;;      quite technical (and incomplete),
+;;   5) a guide to the source files.
 ;;
 ;; As of jan/2019, the work to make (find-eev-quick-intro) central is
 ;; almost complete (...)
-
-
+;;
 ;; To use this, simply execute any of the sexps below:
 ;;   (find-eev-quick-intro)
 ;;   (find-eev-intro)
@@ -53,7 +56,7 @@
 
 
 ;; Quick index:
-;; «.find-intro-here»		(to "find-intro-here")
+;; «.find-intro-dual»		(to "find-intro-dual")
 ;;
 ;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
 ;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
@@ -61,19 +64,20 @@
 ;; «.find-eev-intro»		(to "find-eev-intro")
 ;;
 ;; «.find-eval-intro»		(to "find-eval-intro")
+;; «.find-links-intro»		(to "find-links-intro")
 ;; «.find-eepitch-intro»	(to "find-eepitch-intro")
 ;; «.find-wrap-intro»		(to "find-wrap-intro")
-;; «.find-links-intro»		(to "find-links-intro")
-;; «.find-code-c-d-intro»	(to "find-code-c-d-intro")
-;; «.find-psne-intro»		(to "find-psne-intro")
-;; «.find-brxxx-intro»		(to "find-brxxx-intro")
 ;; «.find-eejump-intro»		(to "find-eejump-intro")
+;; «.find-anchors-intro»	(to "find-anchors-intro")
+;; «.find-code-c-d-intro»	(to "find-code-c-d-intro")
 ;; «.find-pdf-like-intro»	(to "find-pdf-like-intro")
+;; «.find-brxxx-intro»		(to "find-brxxx-intro")
+;; «.find-psne-intro»		(to "find-psne-intro")
+;;
 ;; «.find-audiovideo-intro»	(to "find-audiovideo-intro")
 ;; «.find-multiwindow-intro»	(to "find-multiwindow-intro")
 ;; «.find-rcirc-intro»		(to "find-rcirc-intro")
 ;; «.find-templates-intro»	(to "find-templates-intro")
-;; «.find-anchors-intro»	(to "find-anchors-intro")
 ;; «.find-prepared-intro»	(to "find-prepared-intro")
 ;; «.find-bounded-intro»	(to "find-bounded-intro")
 ;; «.find-channels-intro»	(to "find-channels-intro")
@@ -95,60 +99,78 @@
 ;;           "Source code:  (find-eev \\\\\"eev-intro.el\\\\\" \\\\\"\\1\\\\\")")
 
 
-;; «find-intro-here» (to ".find-intro-here")
+;; «find-intro-dual» (to ".find-intro-dual")
 ;; Below is a hack that I (edrx) use to edit these intros.
 ;; Note that it is commented out - and how it is commented out!
-;; The way to run the (progn <multi-line-stuff>) is to put the point
+;; The way to run the ' (progn <multi-line-stuff>) is to put the point
 ;; after the closing parenthesis - the one on a line by itself - and
-;; type `M-e'.
+;; then type `M-e'.
 ;;
-;; Here's how to use this. Suppose that
-;; 1) you're editing this file - eev-intro.el - and
-;; 2) you're inside the defun of an intro, say, `find-eev-quick-intro', and
-;; 3) you're inside the multi-line string that forms the text of the intro,
-;; 4) then if you mark a string, say, "Open the page at",
-;; 5) and run `M-w' (kill-ring-save) on it,
-;; 6) then that string will be pushed onto the kill ring;
-;; 7) if you type `M-x fh' then this will
-;;  7a) evaluate the defun around point,
-;;  7b) i.e., it will redefine find-eev-quick-intro,
-;;  7c) and run (find-2b nil '(find-eev-quick-intro "Open the page at"))
-;;  7d) and you will have the defun of `find-eev-quick-intro' in
-;;      the left window and the (find-eev-quick-intro) buffer in the
-;;      right window, with the point just after the "Open the page at".
+;; If we're editing the defun for `find-foo-intro' at a line that
+;; contains "<a certain string>" then running `M-x fd' there creates a
+;; window setup like this,
+;;
+;;    _______________________________________
+;;   |                |                      |
+;;   |    source:     |        intro:        |
+;;   |  eev-intro.el  |  *(find-foo-intro)*  |
+;;   |________________|______________________|
+;;
+;; with both windows centered on the lines with "<a certain string>".
+;; If we're editing the buffer "*(find-foo-intro)*" and we're on a
+;; line containing "<a certain string>" then running `M-x fd' also
+;; creates the same window setup, with the source at the left and the
+;; intro buffer at the right.
 '
 (progn
 
 ;; Test: (ee-sexp-at "2)")
-;;               (+ 1 2)
+;;             (+  1  2)
 (defun ee-sexp-at (re)
   (save-excursion (re-search-forward re) (ee-last-sexp)))
-
 (setq ee-intro-sexp-end-re "\\(rest\\|pos-spec-list\\))))")
-
 (defun ee-intro-sexp-here ()
   "Go to the end of the defun around point and `read' it.
-Only works for \"(defun find-xxx-intro ...)s\"."
+Only works for \"(defun find-xxx-intro ...)s\".
+Returns a list like this: (defun find-xxx-intro ...)."
   (read (ee-sexp-at ee-intro-sexp-end-re)))
 
-(defun find-intro-here ()
-  "Evaluate the defun around point, run it, search for (ee-last-kill).
-Only works for \"(defun find-xxx-intro ...)s\"."
-  (interactive)
-  (eval (ee-intro-sexp-here))
-  (find-2b nil '(funcall (cadr (ee-intro-sexp-here)) (ee-last-kill))))
+(defun ee-bad-line (str) (string-match "[\\\"]" str))
+(defun ee-this-line0 ()
+  (buffer-substring-no-properties (ee-bol) (ee-eol)))
+(defun ee-this-line ()
+  (let ((line (ee-this-line0)))
+    (if (ee-bad-line line)
+	(error "Current line contains evil characters")
+      line)))
 
-(defalias 'fh 'find-intro-here)
+(defun find-intro-intro ()
+"If we're in the defun for `find-foo-intro' run (find-foo-intro (ee-last-kill))."
+  (interactive)
+  (funcall (cadr (ee-intro-sexp-here)) (ee-this-line)))
 
 (defun find-intro-source ()
+"If we're in a buffer \"*(find-foo-intro)*\" go to the source for `find-foo-intro'.
+Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
   (interactive)
-  (find-2a
-    '(find-eev "eev-intro.el"
-	       (format "find-%s-intro" (ee-intro-bufferp))
-	       (ee-last-kill))
-    nil))
+  (find-eev "eev-intro.el" (format "find-%s-intro" (ee-intro-bufferp))
+	    (ee-this-line)))
 
-(defalias 'fi 'find-intro-source)
+;; (defun find-2a (a b) (find-wset "13_o_o" a b))
+;; (defun find-2b (a b) (find-wset "13_o_"  a b))
+(defun find-c2a (a b)   (find-wset "13_co_co" a b))
+(defun find-c2b (a b)   (find-wset "13_co_c"  a b))
+
+(defun find-intro-dual ()
+  (interactive)
+  (if (equal (buffer-name) "eev-intro.el")
+      (progn (eval (ee-intro-sexp-here))
+	     (find-c2b nil '(find-intro-intro)))
+    (find-c2a '(find-intro-source) nil)))
+
+(defalias 'fs 'find-intro-source)
+(defalias 'fi 'find-intro-intro)
+(defalias 'fd 'find-intro-dual)
 
 )
 
@@ -398,6 +420,10 @@ creates this buffer, and switches to it:
   |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)--|
   |___________________________________________________________|
 
+
+
+4.1. `find-here-links'
+----------------------
 One standard way of using eev is:
 
   a) we keep our current notes in a a file - for example, \"~/TODO\"
@@ -423,14 +449,14 @@ buffer. For example, typing `M-h M-h' here generates:
   |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)  -|
   |____________________________________________________________|
 
-The
+The elisp hyperlink
 
   # (find-eev-quick-intro)
 
 opens this tutorial.
 
 Cutting and pasting is explained briefly in section 5.2.
-
+A way to go quickly to \"~/TODO\" is explained in section 7.1.
 A way to \"refine\" hyperlinks to make them more precise is
 explained here:
 
@@ -1593,12 +1619,12 @@ Help would be greatly appreciated!
 
 
 
-;;;                       _       _             
-;;;   ___  _____   __    (_)_ __ | |_ _ __ ___  
-;;;  / _ \/ _ \ \ / /____| | '_ \| __| '__/ _ \ 
-;;; |  __/  __/\ V /_____| | | | | |_| | | (_) |
-;;;  \___|\___| \_/      |_|_| |_|\__|_|  \___/ 
-;;;                                             
+;;;                  
+;;;   ___  _____   __
+;;;  / _ \/ _ \ \ / /
+;;; |  __/  __/\ V / 
+;;;  \___|\___| \_/  
+;;;                  
 ;; This works as an index.
 ;; (find-intro-links "eev")
 ;; «find-eev-intro»  (to ".find-eev-intro")
@@ -1630,25 +1656,26 @@ recommended reading order:
    4. (find-eval-intro)
    5. (find-links-intro)
    6. (find-eepitch-intro)
-   6. (find-wrap-intro)
-   7. (find-eejump-intro)
-   8. (find-code-c-d-intro)
-   9. (find-psne-intro)
-  10. (find-brxxx-intro)
+   7. (find-wrap-intro)
+   8. (find-eejump-intro)
+   9. (find-anchors-intro)
+  10. (find-code-c-d-intro)
   11. (find-pdf-like-intro)
-  12. (find-audiovideo-intro)
-  13. (find-anchors-intro)
-  14. (find-multiwindow-intro)
-  15. (find-rcirc-intro)
-  16. (find-templates-intro)
-  17. (find-prepared-intro)
-  18. (find-bounded-intro)
-  19. (find-channels-intro)
-  20. (find-videos-intro)
+  12. (find-brxxx-intro)
+  13. (find-psne-intro)
 
-Items 00, 1 and 2 should give you a good grasp of the main ideas
-- namely, that _elisp hyperlinks and interactive scripts can be
-embedded anywhere_. The other tutorials mainly show how to make
+  14. (find-audiovideo-intro)
+  15. (find-multiwindow-intro)
+  16. (find-rcirc-intro)
+  17. (find-templates-intro)
+  18. (find-prepared-intro)
+  19. (find-bounded-intro)
+  20. (find-channels-intro)
+  21. (find-videos-intro)
+
+Items 0, 3, 4, 5, 6, 9, 10, 11 should give you a good grasp of the
+main ideas - namely, that _elisp hyperlinks and interactive scripts
+can be embedded anywhere_. The other tutorials mainly show how to make
 these ideas pervasive.
 
 The last item above is an index of the video tutorials, with
@@ -1660,7 +1687,6 @@ workshops, but that are not very eev-specific:
 
    A. (find-emacs-intro)
    B. (find-defun-intro)
-   C. (find-eev-quick-intro)
 
 
 
@@ -1696,9 +1722,6 @@ For the full lists of keybindings, see:
 
 
 
-
-
-
 ;;;                  _ 
 ;;;   _____   ____ _| |
 ;;;  / _ \ \ / / _` | |
@@ -1711,8 +1734,7 @@ For the full lists of keybindings, see:
 ;;      http://angg.twu.net/eev-article.html#hyperlinks
 ;;   file:///home/edrx/TH/L/eev-article.html#hyperlinks
 ;; (find-TH "eev-article" "forward-and-back")
-;; (find-efunction 'eek-eval-last-sexp)
-
+;; (find-efunction 'ee-eval-last-sexp)
 
 (defun find-eval-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eval-intro)*"))
@@ -1727,9 +1749,10 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: most of this material was copied to
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
   (find-eev-quick-intro \"2. Evaluating Lisp\")
-but some sections are more detailed here...
+
 
 
 
@@ -2087,471 +2110,6 @@ hyperlinks in scripts]
 
 
 
-;;;                  _ _       _           _       _             
-;;;   ___  ___ _ __ (_) |_ ___| |__       (_)_ __ | |_ _ __ ___  
-;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ _____| | '_ \| __| '__/ _ \ 
-;;; |  __/  __/ |_) | | || (__| | | |_____| | | | | |_| | | (_) |
-;;;  \___|\___| .__/|_|\__\___|_| |_|     |_|_| |_|\__|_|  \___/ 
-;;;           |_|                                                
-;;
-;; «find-eepitch-intro»  (to ".find-eepitch-intro")
-;; (find-intro-links "eepitch")
-;; (find-eev "eepitch.readme")
-
-(defun find-eepitch-intro (&rest rest) (interactive)
-  (let ((ee-buffer-name "*(find-eepitch-intro)*"))
-    (apply 'find-estring "\
-\(Re)generate: (find-eepitch-intro)
-Source code:  (find-eev \"eev-intro.el\" \"find-eepitch-intro\")
-More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-wrap-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial (for eepitch) and a sandbox.
-
-
-
-For an introduction to the ideas here, see:
-  (find-eev-quick-intro \"6. Controlling shell-like programs\")
-
-
-
-The motivation for eepitch: taking notes and redoing
-====================================================
-Suppose that we have to do some reasonably complex task using a
-shell, and that we want to take notes of what we do because we
-might have to do something similar later.
-
-The two usual ways to interact with a shell are:
-
-  1) through a _script_, that is, by preparing in advance all
-     commands to be executed, putting them in a script file, and
-     then running that file,
-
-  2) _interactively_, by typing the commands one by one on a
-     shell prompt.
-
-Suppose that we have to discover which commands to run as we go;
-that rules out preparing a script beforehand, so we need to use
-the shell interactively. After issuing the right commands, the
-two usual ways to retrieve what we did are:
-
-  a) through the _shell history_, which records the last commands
-     that the shell received,
-
-  b) by looking at the full _transcript_ of our interaction with
-     the shell.
-
-The way (a) gets a list of commands, without comments, that can
-be then saved into a text editor; the way (b) may require some
-tricky editing to isolate the commands from their outputs.
-
-Eepitch.el implements a simple alternative way of interacting
-with shells (and other shell-like programs) while keeping notes.
-It has only one essential key binding, <F8>, which is better
-explained through the executable example in the next section, and
-two unessential features, `M-T' and \"\", which will be
-explained later.
-
-
-
-The main key: <F8>
-==================
-Emacs can run a shell in a buffer, and it can split its frame
-into windows, like this:
-   ___________________
-  |         |         |
-  |   our   |    a    |
-  |  notes  |  shell  |
-  |         |  buffer |
-  |_________|_________|
-
-The usual way to use a shell buffer is to move the cursor there
-and type commands into its prompt; the eepitch-y way is to leave
-the cursor at the \"notes\" buffer, write the commands for the
-shell there, and send these commands to the shell with <F8>.
-
-Here's what <F8> does:
-
-  When we type <F8> on a line that starts with a red
-  star (\"\"), it executes the rest of the line as Lisp, and
-  moves down; when we type <F8> on a line that does not start
-  with a \"\", it makes sure that the \"target buffer\" is being
-  displayed (the \"target\" is usually the buffer called
-  \"*shell*\"), it \"send\"s the current line to the target
-  buffer, and moves down.
-
-  \"Sending the current line to the target buffer\" means copying
-  the contents of the current line to the target - as if the user
-  had typed that line there by hand -, then \"typing\" a <RET> at
-  the target buffet.
-
-Please try that in the example after this paragraph, by typing
-<F8> six times starting at the first line that says
-\" (eepitch-shell)\". The three red star lines at the top will
-create a target buffer, destroy it, and create it again; the
-other three lines will send commands to the target shell.
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-echo \"We are at: $PWD\"
-cd /tmp/
-echo \"We changed to: $(pwd)\"
-
-
-
-
-Other targets
-=============
-Just like `(eepitch-shell)' creates a shell buffer and sets the
-eepitch target to it, `(eepitch-python)' creates a buffer with a
-Python interpreter and uses it as the eepitch target. Try:
-
- (eepitch-python)
- (eepitch-kill)
- (eepitch-python)
-def square (x):
-    return x*x
-
-print(square(5))
-
-  We can use several targets at the time, alternating between them.
-  For example:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-echo Hello... > /tmp/o
-
- (eepitch-python)
- (eepitch-kill)
- (eepitch-python)
-print(open(\"/tmp/o\").read())
-
- (eepitch-shell)
-echo ...and bye >> /tmp/o
-
- (eepitch-python)
-print(open(\"/tmp/o\").read())
-
-
-  There is a (much) more advanced example of working with several
-  targets here:
-
-  (find-prepared-intro \"An `ee' for Python\")
-
-
-
-
-
-More on eepitch-kill
-====================
-Note that `(eepitch-kill)' kills the _current_ target, that may
-or may not be a shell buffer, a Python interaction buffer, etc...
-That explains the first line in blocks like:
-
- (eepitch-python)
- (eepitch-kill)
- (eepitch-python)
-
-and:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-
-by running the first `(eepitch-python)' we can be sure that the
-following `(eepitch-kill)' will kill the Python buffer, not the
-shell buffer! And the last `(eepitch-python)' in the block of
-three lines will then create a new Python interaction buffer,
-erasing all definitions done in previous sessions.
-
-
-
-
-Creating eepitch blocks: `M-T'
-==============================
-Write just \"shell\" or \"python\" in a line, then type
-`M-T' (i.e., meta-shift-t) there. The line will be turned into
-three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
-\" (eepitch-xxx)\". We call these blocks of three lines
-\"eepitch blocks\". Try this below, converting the \"shell\" into
-an eepitch block for starting a shell.
-
-shell
-pwd
-cd /tmp/
-pwd
-
-
-
-
-Red stars
-=========
-Eepitch.el sets the glyph for the char 15 to a red star in the
-standard display table. In layman's terms: eepitch.el tells Emacs
-that the character 15 should be displayed as a red star. The
-character 15 corresponds to control-O, whose default
-representation on screen would be \"^O\". You can enter a
-literal ^O in a buffer by typing `C-q C-o'.
-
-
-
-For more information
-====================
-On hyperlinks:               (find-eval-intro)
-On keys similar to `M-T':    (find-wrap-intro)
-An older text about eepitch:
-  (find-eev \"eepitch.readme\")
-  (find-eev \"eepitch.readme\" \"the-trivial-case\")
-  (find-eev \"eepitch.readme\" \"red-stars\")
-  (find-eev \"eepitch.readme\" \"eepitch-blocks\")
-  (find-eev \"eepitch.readme\" \"eepitch-blocks\")
-Many functions like `eepitch-shell':
-  (find-efunction 'eepitch-bash)
-What functions can generate target buffers:
-  (find-eevfile \"eepitch.el\" \"shell-like sexp\")
-  (find-efunction 'eepitch)
-" rest)))
-
-;; (find-eepitch-intro)
-
-;; (find-pytutnode "Methods of File Objects")
-
-
-
-
-;;;                                 _       _             
-;;; __      ___ __ __ _ _ __       (_)_ __ | |_ _ __ ___  
-;;; \ \ /\ / / '__/ _` | '_ \ _____| | '_ \| __| '__/ _ \ 
-;;;  \ V  V /| | | (_| | |_) |_____| | | | | |_| | | (_) |
-;;;   \_/\_/ |_|  \__,_| .__/      |_|_| |_|\__|_|  \___/ 
-;;;                    |_|                                
-;;
-;; (find-intro-links "wrap")
-;; «find-wrap-intro»  (to ".find-wrap-intro")
-
-(defun find-wrap-intro (&rest rest) (interactive)
-  (let ((ee-buffer-name "*(find-wrap-intro)*"))
-    (apply 'find-estring-lv "\
-\(Re)generate: (find-wrap-intro)
-Source code:  (find-eev \"eev-intro.el\" \"find-wrap-intro\")
-More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
-
-
-
-For an introduction to the ideas here, see:
-  (find-eev-quick-intro \"6. Controlling shell-like programs\")
-
-
-
-Eepitch and eev
-===============
-Eepitch defines only two keys - <F8> and <M-T> - and <M-T> is a
-particular case of something more general: \"wrapping commands\", that
-follow these conventions:
-
-  1) they are bound to meta-shift-letter keys (M-T, M-F, M-M, ...),
-  2) they transform the current line and then move down,
-  3) they produce Lisp code meant to be executed with `M-e' or `F8',
-  4) they are listed at:
-       (find-efunctiondescr 'eev-mode \"M-F\")
-  5) their keybindings are only available when eev-mode is turned on.
-
-To understand how they work, please follow the instructions below and
-try them here. Note that this buffer is a sandbox, and it can be
-recreated by executing the sexp \"(find-wrap-intro)\" at the top.
-
-Note that the wrapping commands are all bound to key sequences of
-the form meta-SHIFT-letter - don't forget the shift!!!
-
-
-
-<M-T>: produce an eepitch block
-===============================
-If you type <M-T> on a line containing just the word \"shell\" you get
-three lines, like this:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-
-We call a block of three lines like this an \"eepitch block\", and
-eepitch blocks can be used to set up interactions with external
-programs. Try typing <M-T> on the lines that say \"shell\" and \"python\"
-below, and use them to send some lines to bash and to a python
-interpreter (with <F8>):
-
-bash
-export PS1='$PWD% '
-cd /tmp/
-function ee () { set -v; . /tmp/ee.sh; set +v; }
-rm -v /tmp/ee.sh
-cat > /tmp/ee.sh <<'%%%'
-  echo Hello
-  cd /etc/
-%%%
-cat   /tmp/ee.sh
-bash  /tmp/ee.sh
-ee
-
-python
-square = lambda x: x*x
-square(5)
-
-
-
-<M-F>: hyperlink to a file or a directory
-=========================================
-If you type <M-F> on the lines below,
-
-/etc/
-/tmp/
-~/
-~/.emacs
-
-you get hyperlinks like these:
-
-# (find-fline \"/etc/\")
-# (find-fline \"/tmp/\")
-# (find-fline \"~/\")
-# (find-fline \"~/.emacs\")
-
-
-
-<M-S>: hyperlink to the output of a shell command
-=================================================
-If you type <M-S> on a line containing a shell command you get a
-hyperlink that starts with `find-sh', and that when followed opens a
-temporary buffer with the output of that shell command, like these:
-
-  # (find-sh \"find --help\")
-  # (find-sh \"find /etc | sort\")
-  # (find-sh \"find /etc -type d | sort\")
-  # (find-sh \"find /etc -type d -maxdepth 1 | sort\")
-  # (find-sh \"find /etc -type d -maxdepth 2 | sort\")
-
-Try it here:
-
-dict smop
-dict 'minor detail'
-
-If you have the packages dict, dictd and dict-jargon installed
-these hyperlinks will show you the meaning of the expressions
-\"smop\" and \"minor detail\".
-
-  # (find-sh \"dict smop\")
-  # (find-sh \"dict 'minor detail'\")
-
-
-
-<M-M>: hyperlink to a manpage
-=============================
-Try <M-M> here:
-
-1 tac
-
-
-
-All wrapping functions
-======================
-Below is a list of all wrapping functions, with tests and
-hyperlinks:
-
-  (eek \"2*<down> M-A <down> ;;; Test eewrap-anchor\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-anchor\")
-;; <anchor>
-
-  (eek \"2*<down> M-C <down> ;;; Test eewrap-code-c-d\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-code-c-d\")
-foo /tmp/foobar/
-
-  (eek \"2*<down> M-D <down> ;;; Test eewrap-debian\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-debian\")
-bash
-
-  (eek \"2*<down> M-F <down> ;;; Test eewrap-find-fline\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-find-fline\")
-/tmp/foobar/
-
-  (eek \"2*<down> M-J <down> ;;; Test eewrap-eejump\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eejump\")
-422 (find-eev-intro \"find-wrap-intro\")
-
-  (eek \"2*<down> M-J <down> ;;; Test eewrap-eejump\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eejump\")
-42
-
-  (eek \"2*<down> M-M <down> ;;; Test eewrap-man\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-man\")
-1 tac
-
-  (eek \"2*<down> M-P <down> ;;; Test eewrap-pdflike\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-pdflike\")
-foopdf $S/http/foo.org/bar.pdf
-
-  (eek \"2*<down> M-R <down> ;;; Test eewrap-rm/mkdir/cd\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-rm/mkdir/cd\")
-/tmp/foo/
-
-  (eek \"2*<down> M-S <down> ;;; Test eewrap-sh\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-sh\")
-seq 1 20
-
-  (eek \"2*<down> M-T <down> ;;; Test eewrap-eepitch\")
-   Source:  (find-eev \"eepitch.el\"  \"eewrap-eepitch\")
-python
-
-  (eek \"2*<down> M-V <down> ;;; Test eewrap-audiovideo\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-audiovideo\")
-slimetutorial /tmp/slime-tutorial.mp4
-
-  (eek \"2*<down> M-Z <down> ;;; Test eewrap-zsh\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-zsh\")
-echo $SHELL
-
-  (eek \"2*<down> <<eewrap-eewrap>> <down> ;;; Test eewrap-eewrap\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eewrap\")
-U user-defined a b c
-
-
-
-
-Wrapping functions generate hyperlinks
-======================================
-...this is a slogan - a huge idea, in a very shortened form. In its
-full form, that would be:
-
-  (Some) wrapping function provide one of the basic ways to produce
-  elisp hyperlinks quickly; the second basic way, which is a bit more
-  complex conceptually, is via Elisp hyperlinks buffers. This, and the
-  whole rationale behind generating and using elisp hyperlinks, is
-  explained here:
-
-    (find-links-intro \"Elisp hyperlinks buffers\")
-
-The \"some\" in beginning of the long version of the slogan, above, is
-because a few of the wrapping commands, for example, <M-T> and <M-R>,
-are used to produce things that are not hyperlinks - usually other
-kinds of scripts.
-
-
-
-
-# Local Variables:
-# coding:           raw-text-unix
-# ee-anchor-format: \"«%s»\"
-# End:
-" rest)))
-
-;; (find-wrap-intro)
-
-
 
 
 ;;;  _ _       _        
@@ -2574,6 +2132,11 @@ More intros:  (find-eev-quick-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
 
+
+
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
 
 
 
@@ -3107,376 +2670,258 @@ scripts etc\]
 
 
 
-;;;                _                          _       _       _             
-;;;   ___ ___   __| | ___        ___       __| |     (_)_ __ | |_ _ __ ___  
-;;;  / __/ _ \ / _` |/ _ \_____ / __|____ / _` |_____| | '_ \| __| '__/ _ \ 
-;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |_____| | | | | |_| | | (_) |
-;;;  \___\___/ \__,_|\___|      \___|     \__,_|     |_|_| |_|\__|_|  \___/ 
-;;;                                                                         
-;; «find-code-c-d-intro»  (to ".find-code-c-d-intro")
-
-(defun find-code-c-d-intro (&rest rest) (interactive)
-  (let ((ee-buffer-name "*(find-code-c-d-intro)*"))
-    (apply 'find-estring "\
-\(Re)generate: (find-code-c-d-intro)
-Source code:  (find-eev \"eev-intro.el\" \"find-code-c-d-intro\")
-More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
-
-
-
-This intro has been mostly superseded by:
-(find-eev-quick-intro \"9.1. `code-c-d'\")
-
-
-
-Avoiding full path names
-========================
-Suppose that you have downloaded (\"psne\"-ed) this URL,
-
-  http://www.lua.org/ftp/lua-5.1.4.tar.gz
-
-with `M-x brep' - see:
-
-  (find-psne-intro)
-
-and you unpacked that tarball into the directory ~/usrc/ (I
-prefer to use that instead of /usr/src/) with:
-
-  tar -C ~/usrc/ -xvzf $S/http/www.lua.org/ftp/lua-5.1.4.tar.gz
-
-Now you can access some directories and files of the unpacked
-tarball with:
-
-  (find-fline \"~/usrc/lua-5.1.4/\")
-  (find-fline \"~/usrc/lua-5.1.4/src/\")
-  (find-fline \"~/usrc/lua-5.1.4/src/lstrlib.c\")
-  (find-fline \"~/usrc/lua-5.1.4/test/\")
-  (find-fline \"~/usrc/lua-5.1.4/test/README\")
-  (find-fline \"~/usrc/lua-5.1.4/doc/\")
-  (find-w3m   \"~/usrc/lua-5.1.4/doc/contents.html\")
-
-but it's a bit clumsy to have to use the \"~/usrc/lua-5.1.4/\"
-every time, so eev provides a nice way to define shorthands. We
-want to be able to write just this instead of the sexps above,
-
-  (find-lua51file \"\")
-  (find-lua51file \"src/\")
-  (find-lua51file \"src/lstrlib.c\")
-  (find-lua51file \"test/\")
-  (find-lua51file \"test/README\")
-  (find-lua51file \"doc/\")
-  (find-lua51w3m  \"doc/contents.html\")
-
-and here the directory \"~/usrc/lua-5.1.4/\" became a mnemonic
-\"lua51\" in the middle of the names of some functions.
-
-We will call these sexps with \"lua51\" \"shorter hyperlinks\".
-
-
-
-Shorter hyperlinks
-==================
-How can we generate the definitions for `find-lua51file' and
-`find-lua51w3m' from just the strings \"lua51\" and
-\"~/usrc/lua-5.1.4/\"? Try this:
-
-  (find-code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
-
-you will get a temporary buffer with a lot of Lisp code -
-including a definition for `find-lua51file' and another one for
-`find-lua51w3m'. That Lisp code has not been executed yet; the
-function `find-code-c-d' is just for debugging, and we can regard
-it as a hyperlink to the code that this sexp would execute:
-
-  (code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
-  
-So, to define a family of functions including `find-lua51file'
-and `find-lua51w3m', for a given \"mnemonic\" - \"lua51\" in this
-case - and a given \"directory\" - \"~/usrc/lua-5.1.4/\" - we run
-this:
-
-  (code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
-
-which generates a block of Lisp code, as a string, and evaluates
-it. Note: the original (and rather confusing) terminology for the
-\"mnemonic\" was \"code\"; that's why the \"c\" in `code-c-d'.
-
-
-
-Extra arguments to `code-c-d'
-=============================
-`code-c-d' supports extra arguments - for example, this works:
-
-  (find-code-c-d \"el\" \"~/usrc/emacs/lisp/\" :info \"elisp\")
-
-Look at the end of the generated code and you will see that it
-has a definition for `find-elnode' - such that
-
-  (find-elnode \"Constant Variables\")
-
-is a shorthand (a \"shorter hyperlink\") for:
-
-  (find-node \"(elisp)Constant Variables\")
-
-What is important to understand here is how these definitions
-with extra arguments are structured - so that you will be able to
-understand the source code when you need to. Both `code-c-d' and
-`find-code-c-d' are defined with a `&rest' in their argument
-lists, like this (NOTE: do not execute these defuns!):
-
-  (defun      code-c-d (c d &rest rest) ...)
-  (defun find-code-c-d (c d &rest rest) ...)
-
-and they both invoke `ee-code-c-d', which does all the template
-work and returns a big string; `ee-code-c-d' passes its `rest'
-argument to a recursive function called `ee-code-c-d-rest', and
-for each one of the suported keywords there is a corresponding
-function, also recursive; for `:info' it is called
-`ee-code-c-d-:info'. Their specifications are like this:
-
-  (defun   ee-code-c-d (c d &rest rest) ...)
-  (defun   ee-code-c-d-rest      (rest) ...)
-  (defun   ee-code-c-d-:info (manual &rest rest) ...)
-
-and one very non-obvious trick is used to make the code short.
-When `ee-code-c-d-rest' and `ee-code-c-d-:info' are run they can
-access the values the `c' and the `d' that were passed to
-`ee-code-c-d' (due to dynamic scoping), so `c' and `d' do not
-need to be passed down explicitly as arguments.
-
-Try:
-
-  (find-code-c-d      \"CODE\" \"/DIR/\" :info \"INFO\")
-
-
-
-
-Other similar functions
-=======================
-See: (find-brxxx-intro)
-     (find-pdf-like-intro)
-     (find-audiovideo-intro)
-
-Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
-     (find-code-pdf-text \"CODE\" \"FILE.pdf\")
-     (find-code-audio    \"CODE\" \"FILE.mp3\")
-     (find-code-video    \"CODE\" \"FILE.mp4\")
-" rest)))
-
-;; (find-TH "eev-article")
-;; (find-TH "eev-article" "shorter-hyperlinks")
-;; (find-code-c-d-intro)
-
-
-
-
-
-;;;                             _       _             
-;;;  _ __  ___ _ __   ___      (_)_ __ | |_ _ __ ___  
-;;; | '_ \/ __| '_ \ / _ \_____| | '_ \| __| '__/ _ \ 
-;;; | |_) \__ \ | | |  __/_____| | | | | |_| | | (_) |
-;;; | .__/|___/_| |_|\___|     |_|_| |_|\__|_|  \___/ 
-;;; |_|                                               
+;;;                  _ _       _     
+;;;   ___  ___ _ __ (_) |_ ___| |__  
+;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ 
+;;; |  __/  __/ |_) | | || (__| | | |
+;;;  \___|\___| .__/|_|\__\___|_| |_|
+;;;           |_|                    
 ;;
-;; «find-psne-intro»  (to ".find-psne-intro")
-;; (find-TH "eev-article" "local-copies")
-;; (find-angg ".emacs" "brep")
-;; (find-eev "eev-browse-url.el" "find-psne-links")
-;; (find-eev "eev-browse-url.el" "brep")
+;; «find-eepitch-intro»  (to ".find-eepitch-intro")
+;; (find-intro-links "eepitch")
+;; (find-eev "eepitch.readme")
 
-(defun find-psne-intro (&rest rest) (interactive)
-  (let ((ee-buffer-name "*(find-psne-intro)*"))
+(defun find-eepitch-intro (&rest rest) (interactive)
+  (let ((ee-buffer-name "*(find-eepitch-intro)*"))
     (apply 'find-estring "\
-\(Re)generate: (find-psne-intro)
-Source code:  (find-eev \"eev-intro.el\" \"find-psne-intro\")
+\(Re)generate: (find-eepitch-intro)
+Source code:  (find-eev \"eev-intro.el\" \"find-eepitch-intro\")
 More intros:  (find-eev-quick-intro)
               (find-eval-intro)
-              (find-eepitch-intro)
+              (find-wrap-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+Is is meant as both a tutorial (for eepitch) and a sandbox.
+
+
+
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"6. Controlling shell-like programs\")
 
 
 
 
-Local copies of files from the internet
-=======================================
-Emacs knows how to fetch files from the internet, but for most
-purposes it is better to use local copies. Suppose that the
-environment variable $S is set to ~/snarf/; then running this
+The motivation for eepitch: taking notes and redoing
+====================================================
+Suppose that we have to do some reasonably complex task using a
+shell, and that we want to take notes of what we do because we
+might have to do something similar later.
 
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-  mkdir -p $S/http/www.gnu.org/software/emacs/
-  cd       $S/http/www.gnu.org/software/emacs/
-  wget      http://www.gnu.org/software/emacs/emacs-paper.html
-  echo     'http://www.gnu.org/software/emacs/emacs-paper.html' >> ~/.psne.log
+The two usual ways to interact with a shell are:
 
-  # (find-fline \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
-  # (find-w3m   \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
+  1) through a _script_, that is, by preparing in advance all
+     commands to be executed, putting them in a script file, and
+     then running that file,
 
-creates a local copy of `emacs-paper.html' inside ~/snarf/http/
-and appends the URL to the file ~/.psne.log. The two lines in
-comments are hyperlinks to the local copy; The `find-fline' opens
-it as a file in the obvious way, and `find-w3m' opens it \"as
-HTML\", using a text-mode web browser called w3m that can be run
-either in standalone mode or inside Emacs; `find-w3m' uses w3m's
-Emacs interface, and it accepts extra arguments, which are
-treated as a pos-spec-list.
+  2) _interactively_, by typing the commands one by one on a
+     shell prompt.
 
+Suppose that we have to discover which commands to run as we go;
+that rules out preparing a script beforehand, so we need to use
+the shell interactively. After issuing the right commands, the
+two usual ways to retrieve what we did are:
 
+  a) through the _shell history_, which records the last commands
+     that the shell received,
 
-The old way: psne
-=================
-A long time ago eev used to include a shell function called
-`psne' that ran all that with a single command. This:
+  b) by looking at the full _transcript_ of our interaction with
+     the shell.
 
-  psne http://www.gnu.org/software/emacs/emacs-paper.html
+The way (a) gets a list of commands, without comments, that can
+be then saved into a text editor; the way (b) may require some
+tricky editing to isolate the commands from their outputs.
 
-would run the `mkdir', the `cd', the `wget' and the `echo' above.
-
-If psne were just a shell script then it wouldn't be able to
-change the current directory for the calling shell, so it had to
-be defined as shell function instead of a script, and the user
-had to patch his ~/.bashrc (or ~/.zshrc, or whatever) to install
-the definition for psne and make it available. That was VERY
-clumsy.
-
-From now on we will use \"psne\" as a verb: to psne a URL means
-to download a local copy of it into the right place, change to
-its directory and save its name into the file \"~/.psne.log\".
+Eepitch.el implements a simple alternative way of interacting
+with shells (and other shell-like programs) while keeping notes.
+It has only one essential key binding, <F8>, which is better
+explained through the executable example in the next section, and
+two unessential features, `M-T' and \"\", which will be
+explained later.
 
 
 
+The main key: <F8>
+==================
+Emacs can run a shell in a buffer, and it can split its frame
+into windows, like this:
+   ___________________
+  |         |         |
+  |   our   |    a    |
+  |  notes  |  shell  |
+  |         |  buffer |
+  |_________|_________|
 
-The new way: M-x brep
-=====================
-Try to run this:
+The usual way to use a shell buffer is to move the cursor there
+and type commands into its prompt; the eepitch-y way is to leave
+the cursor at the \"notes\" buffer, write the commands for the
+shell there, and send these commands to the shell with <F8>.
 
-  (find-psne-links \"http://www.gnu.org/software/emacs/emacs-paper.html\")
+Here's what <F8> does:
 
-or, equivalently, put the point on the URL below and then run
-`M-x brep':
+  When we type <F8> on a line that starts with a red
+  star (\"\"), it executes the rest of the line as Lisp, and
+  moves down; when we type <F8> on a line that does not start
+  with a \"\", it makes sure that the \"target buffer\" is being
+  displayed (the \"target\" is usually the buffer called
+  \"*shell*\"), it \"send\"s the current line to the target
+  buffer, and moves down.
 
-  http://www.gnu.org/software/emacs/emacs-paper.html
+  \"Sending the current line to the target buffer\" means copying
+  the contents of the current line to the target - as if the user
+  had typed that line there by hand -, then \"typing\" a <RET> at
+  the target buffet.
 
-You will get a temporary buffer for psne-ing the URL above. It
-will contain a `mkdir', a `cd', a `wget' and an `echo', plus an
-eepitch block and some elisp hyperlinks, and it can be executed
-with `F8's. Moral of the story: the \"new\" way to download a
-local copy of a url is to put the point on it, then run `M-x
-brep', then execute the resulting e-script. This does not require
-any patching of rcfiles, as the shell-function version of `psne'
-used to do.
-
-
-
-The environment variable $S
-===========================
-If when eev is loaded by Emacs the environment variable $S is
-unset, it will be set to a default value - namely, to the
-expansion of \"$HOME/snarf\". Processes started from Emacs, such
-as shells created with `eepitch-shell' or `find-sh', or external
-terminals created by sexps like
-
-  (find-bgprocess \"xterm\")
-  (find-bgprocess \"gnome-terminal\")
-  (find-bgprocess \"eterm\")
-
-will then inherit that value. Try it:
-
-  (getenv \"S\")
-  (find-sh0 \"echo $S\")
+Please try that in the example after this paragraph, by typing
+<F8> six times starting at the first line that says
+\" (eepitch-shell)\". The three red star lines at the top will
+create a target buffer, destroy it, and create it again; the
+other three lines will send commands to the target shell.
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-echo $S
-
-Try also to create an external shell not from Emacs - for
-example, from your window manager's list of available
-applications, or from a text-mode login - and run \"echo $S\"
-there: you will notice that $S is unset.
-
-Old versions of eev used to require the user to run a script that
-would patch his rcfiles (i.e., ~/.bashrc, ~/.zshrc, etc) to set
-$S on startup. That turned out to be unreliable - it was better
-to teach people how to distinguish those processes that inherit
-$S from Emacs from those that don't, and let the experts patch
-their rcfiles by hand.
+echo \"We are at: $PWD\"
+cd /tmp/
+echo \"We changed to: $(pwd)\"
 
 
 
-`browse-url' and friends
-========================
-If you place the point on the URL below
 
-  http://www.gnu.org/software/emacs/emacs-paper.html
+Other targets
+=============
+Just like `(eepitch-shell)' creates a shell buffer and sets the
+eepitch target to it, `(eepitch-python)' creates a buffer with a
+Python interpreter and uses it as the eepitch target. Try:
 
-and run `M-x browse-url', Emacs will make an external browser
-visit the remote version of that URL. One (bad) way to visit the
-local copy of that URL is to modify the URL above by hand to
-adjust it to your value of $S, until you obtain something like
-this:
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+def square (x):
+    return x*x
 
-  file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
+print(square(5))
 
-and then run `M-x browse-url' on it.
+  We can use several targets at the time, alternating between them.
+  For example:
 
-One - rather primitive - way of visiting the local copy of that
-URL with find-file is to modify the URL by hand, replacing its
-\"http://\" with n \"$S/http/\", and then visit that file. For
-example:
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo Hello... > /tmp/o
 
-                http://www.gnu.org/software/emacs/emacs-paper.html
-  (find-fline \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
 
-If you put the point on the URL and run `M-x brfl' on it you will
-visit the local copy \"as a file\", with `find-file' /
-`find-fline'. Visiting URLs - or their local copies - is
-something that we do so frequently that we need ways to do that
-with few keystrokes, which is why `brfl' has a short - and
-cryptic - name. The conventions are:
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
 
-  \"br\" is the common prefix for all the browse-url-like
-       functions in eev,
-  \"f\"  means to use `find-fline' (or, equivalently, `find-file'),
-  \"l\"  is an optional suffix meaning to use the local copy.
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
 
-The details on how to create these \"brxxx functions\" are here:
 
-  (find-brxxx-intro)
+  There is a (much) more advanced example of working with several
+  targets here:
 
+  (find-prepared-intro \"An `ee' for Python\")
+
+
+
+
+
+More on eepitch-kill
+====================
+Note that `(eepitch-kill)' kills the _current_ target, that may
+or may not be a shell buffer, a Python interaction buffer, etc...
+That explains the first line in blocks like:
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+
+and:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+by running the first `(eepitch-python)' we can be sure that the
+following `(eepitch-kill)' will kill the Python buffer, not the
+shell buffer! And the last `(eepitch-python)' in the block of
+three lines will then create a new Python interaction buffer,
+erasing all definitions done in previous sessions.
+
+
+
+
+Creating eepitch blocks: `M-T'
+==============================
+Write just \"shell\" or \"python\" in a line, then type
+`M-T' (i.e., meta-shift-t) there. The line will be turned into
+three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
+\" (eepitch-xxx)\". We call these blocks of three lines
+\"eepitch blocks\". Try this below, converting the \"shell\" into
+an eepitch block for starting a shell.
+
+shell
+pwd
+cd /tmp/
+pwd
+
+
+
+
+Red stars
+=========
+Eepitch.el sets the glyph for the char 15 to a red star in the
+standard display table. In layman's terms: eepitch.el tells Emacs
+that the character 15 should be displayed as a red star. The
+character 15 corresponds to control-O, whose default
+representation on screen would be \"^O\". You can enter a
+literal ^O in a buffer by typing `C-q C-o'.
+
+
+
+For more information
+====================
+On hyperlinks:               (find-eval-intro)
+On keys similar to `M-T':    (find-wrap-intro)
+An older text about eepitch:
+  (find-eev \"eepitch.readme\")
+  (find-eev \"eepitch.readme\" \"the-trivial-case\")
+  (find-eev \"eepitch.readme\" \"red-stars\")
+  (find-eev \"eepitch.readme\" \"eepitch-blocks\")
+  (find-eev \"eepitch.readme\" \"eepitch-blocks\")
+Many functions like `eepitch-shell':
+  (find-efunction 'eepitch-bash)
+What functions can generate target buffers:
+  (find-eevfile \"eepitch.el\" \"shell-like sexp\")
+  (find-efunction 'eepitch)
 " rest)))
 
-;; (find-enode "Command Index" "browse-url")
-;; (find-efunction 'browse-url)
-;; (find-elnode "System Environment")
-;; (find-enode "Environment")
-;; (find-eevfile \"eev.el\" \"$HOME/snarf\")
+;; (find-eepitch-intro)
 
-;; (find-psne-intro)
+;; (find-pytutnode "Methods of File Objects")
 
 
 
 
-;;;  _                                _       _             
-;;; | |__  _ ____  ____  ____  __    (_)_ __ | |_ _ __ ___  
-;;; | '_ \| '__\ \/ /\ \/ /\ \/ /____| | '_ \| __| '__/ _ \ 
-;;; | |_) | |   >  <  >  <  >  <_____| | | | | |_| | | (_) |
-;;; |_.__/|_|  /_/\_\/_/\_\/_/\_\    |_|_| |_|\__|_|  \___/ 
-;;;                                                         
-;; «find-brxxx-intro»  (to ".find-brxxx-intro")
+;;;                           
+;;; __      ___ __ __ _ _ __  
+;;; \ \ /\ / / '__/ _` | '_ \ 
+;;;  \ V  V /| | | (_| | |_) |
+;;;   \_/\_/ |_|  \__,_| .__/ 
+;;;                    |_|    
+;;
+;; (find-intro-links "wrap")
+;; «find-wrap-intro»  (to ".find-wrap-intro")
 
-(defun find-brxxx-intro (&rest rest) (interactive)
-  (let ((ee-buffer-name "*(find-brxxx-intro)*"))
-    (apply 'find-estring "\
-\(Re)generate: (find-brxxx-intro)
-Source code:  (find-eev \"eev-intro.el\" \"find-brxxx-intro\")
+(defun find-wrap-intro (&rest rest) (interactive)
+  (let ((ee-buffer-name "*(find-wrap-intro)*"))
+    (apply 'find-estring-lv "\
+\(Re)generate: (find-wrap-intro)
+Source code:  (find-eev \"eev-intro.el\" \"find-wrap-intro\")
 More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
@@ -3485,194 +2930,208 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-1. Introduction
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+
+
+
+
+
+Eepitch and eev
 ===============
-We saw in
+Eepitch defines only two keys - <F8> and <M-T> - and <M-T> is a
+particular case of something more general: \"wrapping commands\", that
+follow these conventions:
 
-  (find-psne-intro)
-  (find-psne-intro \"M-x brep\")
-  (find-psne-intro \"M-x brfl\")
-  (find-psne-intro \"`browse-url' and friends\")
+  1) they are bound to meta-shift-letter keys (M-T, M-F, M-M, ...),
+  2) they transform the current line and then move down,
+  3) they produce Lisp code meant to be executed with `M-e' or `F8',
+  4) they are listed at:
+       (find-efunctiondescr 'eev-mode \"M-F\")
+  5) their keybindings are only available when eev-mode is turned on.
 
-that we can use `M-x brep' to download local copies of files from
-the internet, and that `M-x brfl' on a URL runs `find-fline' on
-the local copy of that URL. `brep' and `brfl' are
-\"`browse-url'-like functions\" defined by eev; we will refer to
-them, and to other such functions, as \"brxxx-functions\". Every
-brxxx-function is an interactive interface to some \"base
-function\"; for `brep' and `brfl' we have:
+To understand how they work, please follow the instructions below and
+try them here. Note that this buffer is a sandbox, and it can be
+recreated by executing the sexp \"(find-wrap-intro)\" at the top.
 
-    brxxx-function   base function
-    --------------   -------------
-         brep        find-psne-links
-         brfl        find-fline
-
-What we will see here is how `code-brfile' and `code-brurl' -
-which are somewhat similar to `code-c-d' - can be used to define
-brxxx-functions from base functions.
+Note that the wrapping commands are all bound to key sequences of
+the form meta-SHIFT-letter - don't forget the shift!!!
 
 
 
+<M-T>: produce an eepitch block
+===============================
+If you type <M-T> on a line containing just the word \"shell\" you get
+three lines, like this:
 
-2. A first example
-==================
-Let's define two trivial base functions, one that expects a URL,
-and another one that expects a file name:
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
 
-  (defun foo-url  (url)      (format \"Got URL: %s\"      url))
-  (defun foo-file (filename) (format \"Got filename: %s\" filename))
+We call a block of three lines like this an \"eepitch block\", and
+eepitch blocks can be used to set up interactions with external
+programs. Try typing <M-T> on the lines that say \"shell\" and \"python\"
+below, and use them to send some lines to bash and to a python
+interpreter (with <F8>):
 
-Note that they don't do much - they just return explanatory
-strings.
+bash
+export PS1='$PWD% '
+cd /tmp/
+function ee () { set -v; . /tmp/ee.sh; set +v; }
+rm -v /tmp/ee.sh
+cat > /tmp/ee.sh <<'%%%'
+  echo Hello
+  cd /etc/
+%%%
+cat   /tmp/ee.sh
+bash  /tmp/ee.sh
+ee
 
-These two calls,
-
-  (code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
-  (code-brfile 'foo-file                  :local 'brshowfl)
-
-define three brxxx-functions: `brshowu' and `brshowul' for the
-base function `foo-url', and `brshowfl' for the base function
-`foo-file'. You can inspect the definitions by running these
-sexps,
-
-  (find-code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
-  (find-code-brfile 'foo-file                  :local 'brshowfl)
-
-and you can test what `foo-url', `foo-file', `brshowu',
-`brshowul', and `brshowfl' do by running the sexps below.
-
-  (foo-url \"http://a/b\")
-    => \"Got URL: http://a/b\"
-
-  (foo-file \"/c/d/e/f\")
-    => \"Got filename: /c/d/e/f\"
-
-  (brshowu  \"http://a/b\")
-    => `(foo-url \"http://a/b\") -> \"Got URL: http://a/b\"'
-
-  (brshowul \"http://a/b\")
-    => `(foo-url \"file:///home/edrx/snarf/http/a/b\") ->
-        \"Got URL: file:///home/edrx/snarf/http/a/b\"'
-
-  (brshowfl \"http://a/b\")
-    => `(foo-file \"/home/edrx/snarf/http/a/b\") ->
-        \"Got filename: /home/edrx/snarf/http/a/b\"'
-
-Now let's go to what matters. Put the point on the URL below, and
-run `M-x brshowu', `M-x brshowul' and `M-x brshowfl':
-
-  http://a/b
-
-you will see that `brshowu', `brshowul', and `brshowfl' can be
-called interactively, and when they are called interactively they
-use as their argument either the URL around point, or something
-obtained from it - the local file name or a local URL associated
-to that URL.
+python
+square = lambda x: x*x
+square(5)
 
 
 
-
-3. The conversions
-==================
-One underlying idea behind all this is that we have two
-conversion functions, one from URLs to file names, and another
-from (absolute) file names to URLs starting with \"file:///\".
-They work like this:
-
-  http://a/b  ->  $S/http/a/b  ->  file:///home/edrx/snarf/http/a/b
-                       /tmp/c  ->  file:///tmp/c
-
-try:
-
-  (ee-url-to-fname \"http://a/b\")
-  (ee-fname-to-url \"/tmp/c\")
-  (ee-url-to-local-url \"http://a/b\")
-
-Now execute the sexps below (with `M-2 M-e') to examine the code
-that calls to `code-brurl' and `code-brfile' generate and
-execute:
-
-  (find-code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
-  (find-code-brfile 'foo-file                  :local 'brshowfl)
-
-
-
-
-
-
-4. Naming conventions for brxxx-functions
+<M-F>: hyperlink to a file or a directory
 =========================================
-By convention, each name for a brxxx-function is composed of a
-prefix, a stem, and a suffix. The prefix is always \"br\", the
-stem is a mnemonic for the base function, and the suffix is
-either \"\", \"l\", or \"d\", meaning:
+If you type <M-F> on the lines below,
 
-  \"\"   - use the URL without changes
-  \"l\"  - use the local copy
-  \"d\"  - dired variation (see below)
+/etc/
+/tmp/
+~/
+~/.emacs
 
-Here are the stems for some of the brxxx-functions defined by
-eev:
+you get hyperlinks like these:
 
-  Base function       receives   stem
-  -------------       --------   ----
-  find-psne-links     URL        \"ep\"
-  browse-url-firefox  URL        \"m\"
-  find-googlechrome   URL        \"g\"
-  find-w3m   	      URL        \"w\"
-  find-fline          file name  \"f\"
-  find-audio          file name  \"audio\"
-  find-video          file name  \"video\"
-  find-xpdf-page      file name  \"xpdf\"
-  find-evince-page    file name  \"evince\"
-  find-xdvi-page      file name  \"xdvi\"
-  find-djvu-page      file name  \"djvu\"
-  find-pdf-text       file name  \"pdftext\"
-  find-djvu-text      file name  \"djvutext\"
-
-In our example with `foo-url' and `foo-file' we had:
-
-  Base function       receives   stem
-  -------------       --------   ----
-  foo-url             URL        showu
-  foo-file            file name  showf
+# (find-fline \"/etc/\")
+# (find-fline \"/tmp/\")
+# (find-fline \"~/\")
+# (find-fline \"~/.emacs\")
 
 
 
+<M-S>: hyperlink to the output of a shell command
+=================================================
+If you type <M-S> on a line containing a shell command you get a
+hyperlink that starts with `find-sh', and that when followed opens a
+temporary buffer with the output of that shell command, like these:
 
-5. Calling `code-brurl' and `code-brfile'
-=========================================
+  # (find-sh \"find --help\")
+  # (find-sh \"find /etc | sort\")
+  # (find-sh \"find /etc -type d | sort\")
+  # (find-sh \"find /etc -type d -maxdepth 1 | sort\")
+  # (find-sh \"find /etc -type d -maxdepth 2 | sort\")
 
-  (code-brurl '<U-function>
-                   :remote 'br<stem>   :local 'br<stem>l   :dired 'br<stem>d)
-                   \\---------------/   \\---------------/   \\----------------/
-                       optional              optional             optional
+Try it here:
 
-  (code-brfile '<F-function>           :local 'br<stem>l   :dired 'br<stem>d)
-                                       \\---------------/   \\----------------/
-                                             optional             optional
+dict smop
+dict 'minor detail'
 
-This, like many other parts of eev, is a hack with a very concise
-calling syntax - so we will see an example first, and then
-dissect it to understand precisely how it works. If you are
-curious about the inspirations behind it, here they are:
+If you have the packages dict, dictd and dict-jargon installed
+these hyperlinks will show you the meaning of the expressions
+\"smop\" and \"minor detail\".
 
-  (find-code-c-d-intro)
-  (find-code-c-d-intro \"find-code-c-d\")
-  (find-code-c-d-intro \"Extra arguments\")
-  (find-enode \"Browse-URL\")
+  # (find-sh \"dict smop\")
+  # (find-sh \"dict 'minor detail'\")
 
 
 
-6. The dired variation
+<M-M>: hyperlink to a manpage
+=============================
+Try <M-M> here:
+
+1 tac
+
+
+
+All wrapping functions
 ======================
+Below is a list of all wrapping functions, with tests and
+hyperlinks:
 
-In dired mode each line corresponds to a file
+  (eek \"2*<down> M-A <down> ;;; Test eewrap-anchor\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-anchor\")
+;; <anchor>
+
+  (eek \"2*<down> M-C <down> ;;; Test eewrap-code-c-d\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-code-c-d\")
+foo /tmp/foobar/
+
+  (eek \"2*<down> M-D <down> ;;; Test eewrap-debian\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-debian\")
+bash
+
+  (eek \"2*<down> M-F <down> ;;; Test eewrap-find-fline\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-find-fline\")
+/tmp/foobar/
+
+  (eek \"2*<down> M-J <down> ;;; Test eewrap-eejump\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eejump\")
+422 (find-eev-intro \"find-wrap-intro\")
+
+  (eek \"2*<down> M-J <down> ;;; Test eewrap-eejump\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eejump\")
+42
+
+  (eek \"2*<down> M-M <down> ;;; Test eewrap-man\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-man\")
+1 tac
+
+  (eek \"2*<down> M-P <down> ;;; Test eewrap-pdflike\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-pdflike\")
+foopdf $S/http/foo.org/bar.pdf
+
+  (eek \"2*<down> M-R <down> ;;; Test eewrap-rm/mkdir/cd\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-rm/mkdir/cd\")
+/tmp/foo/
+
+  (eek \"2*<down> M-S <down> ;;; Test eewrap-sh\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-sh\")
+seq 1 20
+
+  (eek \"2*<down> M-T <down> ;;; Test eewrap-eepitch\")
+   Source:  (find-eev \"eepitch.el\"  \"eewrap-eepitch\")
+python
+
+  (eek \"2*<down> M-V <down> ;;; Test eewrap-audiovideo\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-audiovideo\")
+slimetutorial /tmp/slime-tutorial.mp4
+
+  (eek \"2*<down> M-Z <down> ;;; Test eewrap-zsh\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-zsh\")
+echo $SHELL
+
+  (eek \"2*<down> <<eewrap-eewrap>> <down> ;;; Test eewrap-eewrap\")
+   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eewrap\")
+U user-defined a b c
 
 
+
+
+Wrapping functions generate hyperlinks
+======================================
+...this is a slogan - a huge idea, in a very shortened form. In its
+full form, that would be:
+
+  (Some) wrapping function provide one of the basic ways to produce
+  elisp hyperlinks quickly; the second basic way, which is a bit more
+  complex conceptually, is via Elisp hyperlinks buffers. This, and the
+  whole rationale behind generating and using elisp hyperlinks, is
+  explained here:
+
+    (find-links-intro \"Elisp hyperlinks buffers\")
+
+The \"some\" in beginning of the long version of the slogan, above, is
+because a few of the wrapping commands, for example, <M-T> and <M-R>,
+are used to produce things that are not hyperlinks - usually other
+kinds of scripts.
 " rest)))
 
-;; (find-brxxx-intro)
+;; (find-wrap-intro)
 
 
 
@@ -3701,6 +3160,13 @@ More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+
+
+
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"7.1. eejump\")
+
 
 
 
@@ -3958,17 +3424,325 @@ If you create a block like the block of six defuns above in your
 not evaluated in every Emacs session (and execute it, of course),
 then you'll be attributing just a \"temporary\" meaning to
 `M-91j', ..., `M-992j'.
-
-
-
-
-# Local Variables:
-# coding:           raw-text-unix
-# ee-anchor-format: \"%s\"
-# End:
 " rest)))
 
 ;; (find-eejump-intro)
+
+
+
+
+;;;                   _                    
+;;;   __ _ _ __   ___| |__   ___  _ __ ___ 
+;;;  / _` | '_ \ / __| '_ \ / _ \| '__/ __|
+;;; | (_| | | | | (__| | | | (_) | |  \__ \
+;;;  \__,_|_| |_|\___|_| |_|\___/|_|  |___/
+;;;                                        
+;; «find-anchors-intro» (to ".find-anchors-intro")
+;; (find-intro-links "anchors")
+
+(defun find-anchors-intro (&rest rest) (interactive)
+  (let ((ee-buffer-name "*(find-anchors-intro)*"))
+    (apply 'find-estring-lv "\
+\(Re)generate: (find-anchors-intro)
+Source code:  (find-eev \"eev-intro.el\" \"find-anchors-intro\")
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"8. Anchors\")
+
+
+
+Introduction: `ee-anchor-format' and `to'
+=========================================
+A hyperlink like
+
+  (to \"foo\")
+
+jumps to the first occurrence of the string \"«foo»\" in the
+current buffer. The way to convert from \"foo\" to \"«foo»\" is
+controlled by the variable `ee-anchor-format', and the sexp
+`(to \"foo\")' is roughly equivalent the third sexp below:
+
+                            ee-anchor-format
+                    (format ee-anchor-format \"foo\")
+  (ee-goto-position (format ee-anchor-format \"foo\"))
+
+We will call strings in `«»'s _anchors_, and we will say
+that `(to \"foo\")' jumps \"to the anchor `foo'\".
+
+Anchors can be used to create sections and indexes, as we shall
+see soon - but due to some old design decisions that I was never
+able to find good alternatives for, this tutorial needs to start
+with a BIG WARNING.
+
+
+
+WARNING: some glyphs need raw-text-unix
+=======================================
+The best way to make anchors stand out is to use colored glyphs
+for them - just like we made `^O's appear as red star glyphs for
+eepitch, as described here:
+
+  (find-eepitch-intro \"\\nRed stars\\n\")
+
+For historical reasons, the glyphs for `«' and `»' defined in
+
+  (find-eev \"eev-anchors.el\")
+
+use the characters 171 and 187; as far as I know, these
+characters are only \"safe\" - in the sense that Emacs will not
+try to convert them to anything else - in unibyte buffers. The
+best way to make sure that anchors with `«»'s will work in a
+certain file is to put a \"Local variables:\" section at the end
+of it, as has been done in this buffer - and use that to set both
+the file coding to raw-text-unix and the value of
+`ee-anchor-format' to \"«%s»\".
+
+Note that if you change a \"Local variables:\" section by hand
+you will probably have to either reload the file or run `M-x
+normal-mode' to make the new settings take effect.
+
+
+
+Indexes
+=======
+In a situation like this,
+
+  «one»   (to \"two\")
+  «two»   (to \"one\")
+
+we have two anchors, and typing `M-e' at the line with the anchor
+\"one\" takes us to the line with the anchor \"two\", and typing
+`M-e' at the line with the anchor \"two\" takes us to the line
+with the anchor \"one\". In a situation like this we say that the
+anchors \"one\" and \"two\" _point to one another_.
+
+In a case like this,
+
+  «.three»   (to \"three\")
+   «three»  (to \".three\")
+
+where the names of two anchors pointing to one another differ by
+an initial dot, we will say that the anchor \".three\" is the
+\"index anchor\", and the anchor \"three\" is the \"section
+anchor\"; and one way to create an index for a file is to group
+all the index anchors together. For an example, see:
+
+  (find-eev \"eev-intro.el\" \".find-eev-intro\")
+
+
+
+
+Creating index/section anchor pairs
+===================================
+Use `M-A' (`eewrap-anchor'). Note that this has been briefly
+mentioned here:
+
+  (find-wrap-intro \"All wrapping functions\")
+
+It will convert a line with a syntax like
+
+  comment-prefix <anchor-name>
+
+into:
+
+  comment-prefix «.anchor-name»	(to \"anchor-name\")
+  comment-prefix «anchor-name» (to \".anchor-name\")
+
+where comment-prefix is any string and anchor-name is a string
+without `<>'s. Note that the `<>'s, which are easy to type, are
+converted into `«»'s, which are harder.
+
+
+
+find-anchor
+===========
+\(find-eev \"eev-anchors.el\")
+\(find-eev \"eev-anchors.el\" \"find-anchor\")
+
+
+code-c-d and :anchor
+====================
+\(find-eev \"eev-code.el\" \"ee-code-c-d-:anchor\")
+" rest)))
+
+;; (find-anchors-intro)
+
+
+
+
+;;;                _                          _ 
+;;;   ___ ___   __| | ___        ___       __| |
+;;;  / __/ _ \ / _` |/ _ \_____ / __|____ / _` |
+;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |
+;;;  \___\___/ \__,_|\___|      \___|     \__,_|
+;;;                                             
+;; «find-code-c-d-intro»  (to ".find-code-c-d-intro")
+
+(defun find-code-c-d-intro (&rest rest) (interactive)
+  (let ((ee-buffer-name "*(find-code-c-d-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-code-c-d-intro)
+Source code:  (find-eev \"eev-intro.el\" \"find-code-c-d-intro\")
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+
+
+
+Avoiding full path names
+========================
+Suppose that you have downloaded (\"psne\"-ed) this URL,
+
+  http://www.lua.org/ftp/lua-5.1.4.tar.gz
+
+with `M-x brep' - see:
+
+  (find-psne-intro)
+
+and you unpacked that tarball into the directory ~/usrc/ (I
+prefer to use that instead of /usr/src/) with:
+
+  tar -C ~/usrc/ -xvzf $S/http/www.lua.org/ftp/lua-5.1.4.tar.gz
+
+Now you can access some directories and files of the unpacked
+tarball with:
+
+  (find-fline \"~/usrc/lua-5.1.4/\")
+  (find-fline \"~/usrc/lua-5.1.4/src/\")
+  (find-fline \"~/usrc/lua-5.1.4/src/lstrlib.c\")
+  (find-fline \"~/usrc/lua-5.1.4/test/\")
+  (find-fline \"~/usrc/lua-5.1.4/test/README\")
+  (find-fline \"~/usrc/lua-5.1.4/doc/\")
+  (find-w3m   \"~/usrc/lua-5.1.4/doc/contents.html\")
+
+but it's a bit clumsy to have to use the \"~/usrc/lua-5.1.4/\"
+every time, so eev provides a nice way to define shorthands. We
+want to be able to write just this instead of the sexps above,
+
+  (find-lua51file \"\")
+  (find-lua51file \"src/\")
+  (find-lua51file \"src/lstrlib.c\")
+  (find-lua51file \"test/\")
+  (find-lua51file \"test/README\")
+  (find-lua51file \"doc/\")
+  (find-lua51w3m  \"doc/contents.html\")
+
+and here the directory \"~/usrc/lua-5.1.4/\" became a mnemonic
+\"lua51\" in the middle of the names of some functions.
+
+We will call these sexps with \"lua51\" \"shorter hyperlinks\".
+
+
+
+Shorter hyperlinks
+==================
+How can we generate the definitions for `find-lua51file' and
+`find-lua51w3m' from just the strings \"lua51\" and
+\"~/usrc/lua-5.1.4/\"? Try this:
+
+  (find-code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
+
+you will get a temporary buffer with a lot of Lisp code -
+including a definition for `find-lua51file' and another one for
+`find-lua51w3m'. That Lisp code has not been executed yet; the
+function `find-code-c-d' is just for debugging, and we can regard
+it as a hyperlink to the code that this sexp would execute:
+
+  (code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
+  
+So, to define a family of functions including `find-lua51file'
+and `find-lua51w3m', for a given \"mnemonic\" - \"lua51\" in this
+case - and a given \"directory\" - \"~/usrc/lua-5.1.4/\" - we run
+this:
+
+  (code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
+
+which generates a block of Lisp code, as a string, and evaluates
+it. Note: the original (and rather confusing) terminology for the
+\"mnemonic\" was \"code\"; that's why the \"c\" in `code-c-d'.
+
+
+
+Extra arguments to `code-c-d'
+=============================
+`code-c-d' supports extra arguments - for example, this works:
+
+  (find-code-c-d \"el\" \"~/usrc/emacs/lisp/\" :info \"elisp\")
+
+Look at the end of the generated code and you will see that it
+has a definition for `find-elnode' - such that
+
+  (find-elnode \"Constant Variables\")
+
+is a shorthand (a \"shorter hyperlink\") for:
+
+  (find-node \"(elisp)Constant Variables\")
+
+What is important to understand here is how these definitions
+with extra arguments are structured - so that you will be able to
+understand the source code when you need to. Both `code-c-d' and
+`find-code-c-d' are defined with a `&rest' in their argument
+lists, like this (NOTE: do not execute these defuns!):
+
+  (defun      code-c-d (c d &rest rest) ...)
+  (defun find-code-c-d (c d &rest rest) ...)
+
+and they both invoke `ee-code-c-d', which does all the template
+work and returns a big string; `ee-code-c-d' passes its `rest'
+argument to a recursive function called `ee-code-c-d-rest', and
+for each one of the suported keywords there is a corresponding
+function, also recursive; for `:info' it is called
+`ee-code-c-d-:info'. Their specifications are like this:
+
+  (defun   ee-code-c-d (c d &rest rest) ...)
+  (defun   ee-code-c-d-rest      (rest) ...)
+  (defun   ee-code-c-d-:info (manual &rest rest) ...)
+
+and one very non-obvious trick is used to make the code short.
+When `ee-code-c-d-rest' and `ee-code-c-d-:info' are run they can
+access the values the `c' and the `d' that were passed to
+`ee-code-c-d' (due to dynamic scoping), so `c' and `d' do not
+need to be passed down explicitly as arguments.
+
+Try:
+
+  (find-code-c-d      \"CODE\" \"/DIR/\" :info \"INFO\")
+
+
+
+
+Other similar functions
+=======================
+See: (find-brxxx-intro)
+     (find-pdf-like-intro)
+     (find-audiovideo-intro)
+
+Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
+     (find-code-pdf-text \"CODE\" \"FILE.pdf\")
+     (find-code-audio    \"CODE\" \"FILE.mp3\")
+     (find-code-video    \"CODE\" \"FILE.mp4\")
+" rest)))
+
+;; (find-TH "eev-article")
+;; (find-TH "eev-article" "shorter-hyperlinks")
+;; (find-code-c-d-intro)
+
 
 
 
@@ -3992,6 +3766,13 @@ More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+
+
+
+
+Note: this intro needs to be rewritten!
+Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
 
 
 
@@ -4317,6 +4098,424 @@ macros are VERY useful; if you don't use them yet, see:
 " rest)))
 
 ;; (find-pdf-like-intro)
+
+
+
+
+;;;  _                           
+;;; | |__  _ ____  ____  ____  __
+;;; | '_ \| '__\ \/ /\ \/ /\ \/ /
+;;; | |_) | |   >  <  >  <  >  < 
+;;; |_.__/|_|  /_/\_\/_/\_\/_/\_\
+;;;                              
+;; «find-brxxx-intro»  (to ".find-brxxx-intro")
+
+(defun find-brxxx-intro (&rest rest) (interactive)
+  (let ((ee-buffer-name "*(find-brxxx-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-brxxx-intro)
+Source code:  (find-eev \"eev-intro.el\" \"find-brxxx-intro\")
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+Note: this intro needs to be rewritten!
+It expands an idea that was mentioned briefly at:
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+
+
+
+1. Introduction
+===============
+We saw in
+
+  (find-psne-intro)
+  (find-psne-intro \"M-x brep\")
+  (find-psne-intro \"M-x brfl\")
+  (find-psne-intro \"`browse-url' and friends\")
+
+that we can use `M-x brep' to download local copies of files from
+the internet, and that `M-x brfl' on a URL runs `find-fline' on
+the local copy of that URL. `brep' and `brfl' are
+\"`browse-url'-like functions\" defined by eev; we will refer to
+them, and to other such functions, as \"brxxx-functions\". Every
+brxxx-function is an interactive interface to some \"base
+function\"; for `brep' and `brfl' we have:
+
+    brxxx-function   base function
+    --------------   -------------
+         brep        find-psne-links
+         brfl        find-fline
+
+What we will see here is how `code-brfile' and `code-brurl' -
+which are somewhat similar to `code-c-d' - can be used to define
+brxxx-functions from base functions.
+
+
+
+
+2. A first example
+==================
+Let's define two trivial base functions, one that expects a URL,
+and another one that expects a file name:
+
+  (defun foo-url  (url)      (format \"Got URL: %s\"      url))
+  (defun foo-file (filename) (format \"Got filename: %s\" filename))
+
+Note that they don't do much - they just return explanatory
+strings.
+
+These two calls,
+
+  (code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
+  (code-brfile 'foo-file                  :local 'brshowfl)
+
+define three brxxx-functions: `brshowu' and `brshowul' for the
+base function `foo-url', and `brshowfl' for the base function
+`foo-file'. You can inspect the definitions by running these
+sexps,
+
+  (find-code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
+  (find-code-brfile 'foo-file                  :local 'brshowfl)
+
+and you can test what `foo-url', `foo-file', `brshowu',
+`brshowul', and `brshowfl' do by running the sexps below.
+
+  (foo-url \"http://a/b\")
+    => \"Got URL: http://a/b\"
+
+  (foo-file \"/c/d/e/f\")
+    => \"Got filename: /c/d/e/f\"
+
+  (brshowu  \"http://a/b\")
+    => `(foo-url \"http://a/b\") -> \"Got URL: http://a/b\"'
+
+  (brshowul \"http://a/b\")
+    => `(foo-url \"file:///home/edrx/snarf/http/a/b\") ->
+        \"Got URL: file:///home/edrx/snarf/http/a/b\"'
+
+  (brshowfl \"http://a/b\")
+    => `(foo-file \"/home/edrx/snarf/http/a/b\") ->
+        \"Got filename: /home/edrx/snarf/http/a/b\"'
+
+Now let's go to what matters. Put the point on the URL below, and
+run `M-x brshowu', `M-x brshowul' and `M-x brshowfl':
+
+  http://a/b
+
+you will see that `brshowu', `brshowul', and `brshowfl' can be
+called interactively, and when they are called interactively they
+use as their argument either the URL around point, or something
+obtained from it - the local file name or a local URL associated
+to that URL.
+
+
+
+
+3. The conversions
+==================
+One underlying idea behind all this is that we have two
+conversion functions, one from URLs to file names, and another
+from (absolute) file names to URLs starting with \"file:///\".
+They work like this:
+
+  http://a/b  ->  $S/http/a/b  ->  file:///home/edrx/snarf/http/a/b
+                       /tmp/c  ->  file:///tmp/c
+
+try:
+
+  (ee-url-to-fname \"http://a/b\")
+  (ee-fname-to-url \"/tmp/c\")
+  (ee-url-to-local-url \"http://a/b\")
+
+Now execute the sexps below (with `M-2 M-e') to examine the code
+that calls to `code-brurl' and `code-brfile' generate and
+execute:
+
+  (find-code-brurl  'foo-url  :remote 'brshowu :local 'brshowul)
+  (find-code-brfile 'foo-file                  :local 'brshowfl)
+
+
+
+
+
+
+4. Naming conventions for brxxx-functions
+=========================================
+By convention, each name for a brxxx-function is composed of a
+prefix, a stem, and a suffix. The prefix is always \"br\", the
+stem is a mnemonic for the base function, and the suffix is
+either \"\", \"l\", or \"d\", meaning:
+
+  \"\"   - use the URL without changes
+  \"l\"  - use the local copy
+  \"d\"  - dired variation (see below)
+
+Here are the stems for some of the brxxx-functions defined by
+eev:
+
+  Base function       receives   stem
+  -------------       --------   ----
+  find-psne-links     URL        \"ep\"
+  browse-url-firefox  URL        \"m\"
+  find-googlechrome   URL        \"g\"
+  find-w3m   	      URL        \"w\"
+  find-fline          file name  \"f\"
+  find-audio          file name  \"audio\"
+  find-video          file name  \"video\"
+  find-xpdf-page      file name  \"xpdf\"
+  find-evince-page    file name  \"evince\"
+  find-xdvi-page      file name  \"xdvi\"
+  find-djvu-page      file name  \"djvu\"
+  find-pdf-text       file name  \"pdftext\"
+  find-djvu-text      file name  \"djvutext\"
+
+In our example with `foo-url' and `foo-file' we had:
+
+  Base function       receives   stem
+  -------------       --------   ----
+  foo-url             URL        showu
+  foo-file            file name  showf
+
+
+
+
+5. Calling `code-brurl' and `code-brfile'
+=========================================
+
+  (code-brurl '<U-function>
+                   :remote 'br<stem>   :local 'br<stem>l   :dired 'br<stem>d)
+                   \\---------------/   \\---------------/   \\----------------/
+                       optional              optional             optional
+
+  (code-brfile '<F-function>           :local 'br<stem>l   :dired 'br<stem>d)
+                                       \\---------------/   \\----------------/
+                                             optional             optional
+
+This, like many other parts of eev, is a hack with a very concise
+calling syntax - so we will see an example first, and then
+dissect it to understand precisely how it works. If you are
+curious about the inspirations behind it, here they are:
+
+  (find-code-c-d-intro)
+  (find-code-c-d-intro \"find-code-c-d\")
+  (find-code-c-d-intro \"Extra arguments\")
+  (find-enode \"Browse-URL\")
+
+
+
+6. The dired variation
+======================
+
+In dired mode each line corresponds to a file
+
+
+" rest)))
+
+;; (find-brxxx-intro)
+
+
+
+
+;;;                       
+;;;  _ __  ___ _ __   ___ 
+;;; | '_ \/ __| '_ \ / _ \
+;;; | |_) \__ \ | | |  __/
+;;; | .__/|___/_| |_|\___|
+;;; |_|                   
+;;
+;; «find-psne-intro»  (to ".find-psne-intro")
+;; (find-TH "eev-article" "local-copies")
+;; (find-angg ".emacs" "brep")
+;; (find-eev "eev-browse-url.el" "find-psne-links")
+;; (find-eev "eev-browse-url.el" "brep")
+
+(defun find-psne-intro (&rest rest) (interactive)
+  (let ((ee-buffer-name "*(find-psne-intro)*"))
+    (apply 'find-estring "\
+\(Re)generate: (find-psne-intro)
+Source code:  (find-eev \"eev-intro.el\" \"find-psne-intro\")
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+
+Note: this intro needs to be rewritten!
+It expands an idea that was mentioned briefly at:
+  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
+  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\" \"local copies\")
+
+
+
+Local copies of files from the internet
+=======================================
+Emacs knows how to fetch files from the internet, but for most
+purposes it is better to use local copies. Suppose that the
+environment variable $S is set to ~/snarf/; then running this
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  mkdir -p $S/http/www.gnu.org/software/emacs/
+  cd       $S/http/www.gnu.org/software/emacs/
+  wget      http://www.gnu.org/software/emacs/emacs-paper.html
+  echo     'http://www.gnu.org/software/emacs/emacs-paper.html' >> ~/.psne.log
+
+  # (find-fline \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
+  # (find-w3m   \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
+
+creates a local copy of `emacs-paper.html' inside ~/snarf/http/
+and appends the URL to the file ~/.psne.log. The two lines in
+comments are hyperlinks to the local copy; The `find-fline' opens
+it as a file in the obvious way, and `find-w3m' opens it \"as
+HTML\", using a text-mode web browser called w3m that can be run
+either in standalone mode or inside Emacs; `find-w3m' uses w3m's
+Emacs interface, and it accepts extra arguments, which are
+treated as a pos-spec-list.
+
+
+
+The old way: psne
+=================
+A long time ago eev used to include a shell function called
+`psne' that ran all that with a single command. This:
+
+  psne http://www.gnu.org/software/emacs/emacs-paper.html
+
+would run the `mkdir', the `cd', the `wget' and the `echo' above.
+
+If psne were just a shell script then it wouldn't be able to
+change the current directory for the calling shell, so it had to
+be defined as shell function instead of a script, and the user
+had to patch his ~/.bashrc (or ~/.zshrc, or whatever) to install
+the definition for psne and make it available. That was VERY
+clumsy.
+
+From now on we will use \"psne\" as a verb: to psne a URL means
+to download a local copy of it into the right place, change to
+its directory and save its name into the file \"~/.psne.log\".
+
+
+
+
+The new way: M-x brep
+=====================
+Try to run this:
+
+  (find-psne-links \"http://www.gnu.org/software/emacs/emacs-paper.html\")
+
+or, equivalently, put the point on the URL below and then run
+`M-x brep':
+
+  http://www.gnu.org/software/emacs/emacs-paper.html
+
+You will get a temporary buffer for psne-ing the URL above. It
+will contain a `mkdir', a `cd', a `wget' and an `echo', plus an
+eepitch block and some elisp hyperlinks, and it can be executed
+with `F8's. Moral of the story: the \"new\" way to download a
+local copy of a url is to put the point on it, then run `M-x
+brep', then execute the resulting e-script. This does not require
+any patching of rcfiles, as the shell-function version of `psne'
+used to do.
+
+
+
+The environment variable $S
+===========================
+If when eev is loaded by Emacs the environment variable $S is
+unset, it will be set to a default value - namely, to the
+expansion of \"$HOME/snarf\". Processes started from Emacs, such
+as shells created with `eepitch-shell' or `find-sh', or external
+terminals created by sexps like
+
+  (find-bgprocess \"xterm\")
+  (find-bgprocess \"gnome-terminal\")
+  (find-bgprocess \"eterm\")
+
+will then inherit that value. Try it:
+
+  (getenv \"S\")
+  (find-sh0 \"echo $S\")
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo $S
+
+Try also to create an external shell not from Emacs - for
+example, from your window manager's list of available
+applications, or from a text-mode login - and run \"echo $S\"
+there: you will notice that $S is unset.
+
+Old versions of eev used to require the user to run a script that
+would patch his rcfiles (i.e., ~/.bashrc, ~/.zshrc, etc) to set
+$S on startup. That turned out to be unreliable - it was better
+to teach people how to distinguish those processes that inherit
+$S from Emacs from those that don't, and let the experts patch
+their rcfiles by hand.
+
+
+
+`browse-url' and friends
+========================
+If you place the point on the URL below
+
+  http://www.gnu.org/software/emacs/emacs-paper.html
+
+and run `M-x browse-url', Emacs will make an external browser
+visit the remote version of that URL. One (bad) way to visit the
+local copy of that URL is to modify the URL above by hand to
+adjust it to your value of $S, until you obtain something like
+this:
+
+  file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
+
+and then run `M-x browse-url' on it.
+
+One - rather primitive - way of visiting the local copy of that
+URL with find-file is to modify the URL by hand, replacing its
+\"http://\" with n \"$S/http/\", and then visit that file. For
+example:
+
+                http://www.gnu.org/software/emacs/emacs-paper.html
+  (find-fline \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
+
+If you put the point on the URL and run `M-x brfl' on it you will
+visit the local copy \"as a file\", with `find-file' /
+`find-fline'. Visiting URLs - or their local copies - is
+something that we do so frequently that we need ways to do that
+with few keystrokes, which is why `brfl' has a short - and
+cryptic - name. The conventions are:
+
+  \"br\" is the common prefix for all the browse-url-like
+       functions in eev,
+  \"f\"  means to use `find-fline' (or, equivalently, `find-file'),
+  \"l\"  is an optional suffix meaning to use the local copy.
+
+The details on how to create these \"brxxx functions\" are here:
+
+  (find-brxxx-intro)
+
+" rest)))
+
+;; (find-enode "Command Index" "browse-url")
+;; (find-efunction 'browse-url)
+;; (find-elnode "System Environment")
+;; (find-enode "Environment")
+;; (find-eevfile \"eev.el\" \"$HOME/snarf\")
+
+;; (find-psne-intro)
+
+
+
+
 
 
 
@@ -5459,152 +5658,6 @@ Experiments
 
 
 
-;; «find-anchors-intro» (to ".find-anchors-intro")
-;; (find-intro-links "anchors")
-
-(defun find-anchors-intro (&rest rest) (interactive)
-  (let ((ee-buffer-name "*(find-anchors-intro)*"))
-    (apply 'find-estring-lv "\
-\(Re)generate: (find-anchors-intro)
-Source code:  (find-eev \"eev-intro.el\" \"find-anchors-intro\")
-More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
-
-
-
-NOTE: This has been mostly superseded by:
-(find-eev-quick-intro \"8. Anchors\")
-
-
-
-Introduction: `ee-anchor-format' and `to'
-=========================================
-A hyperlink like
-
-  (to \"foo\")
-
-jumps to the first occurrence of the string \"«foo»\" in the
-current buffer. The way to convert from \"foo\" to \"«foo»\" is
-controlled by the variable `ee-anchor-format', and the sexp
-`(to \"foo\")' is roughly equivalent the third sexp below:
-
-                            ee-anchor-format
-                    (format ee-anchor-format \"foo\")
-  (ee-goto-position (format ee-anchor-format \"foo\"))
-
-We will call strings in `«»'s _anchors_, and we will say
-that `(to \"foo\")' jumps \"to the anchor `foo'\".
-
-Anchors can be used to create sections and indexes, as we shall
-see soon - but due to some old design decisions that I was never
-able to find good alternatives for, this tutorial needs to start
-with a BIG WARNING.
-
-
-
-WARNING: some glyphs need raw-text-unix
-=======================================
-The best way to make anchors stand out is to use colored glyphs
-for them - just like we made `^O's appear as red star glyphs for
-eepitch, as described here:
-
-  (find-eepitch-intro \"\\nRed stars\\n\")
-
-For historical reasons, the glyphs for `«' and `»' defined in
-
-  (find-eev \"eev-anchors.el\")
-
-use the characters 171 and 187; as far as I know, these
-characters are only \"safe\" - in the sense that Emacs will not
-try to convert them to anything else - in unibyte buffers. The
-best way to make sure that anchors with `«»'s will work in a
-certain file is to put a \"Local variables:\" section at the end
-of it, as has been done in this buffer - and use that to set both
-the file coding to raw-text-unix and the value of
-`ee-anchor-format' to \"«%s»\".
-
-Note that if you change a \"Local variables:\" section by hand
-you will probably have to either reload the file or run `M-x
-normal-mode' to make the new settings take effect.
-
-
-
-Indexes
-=======
-In a situation like this,
-
-  «one»   (to \"two\")
-  «two»   (to \"one\")
-
-we have two anchors, and typing `M-e' at the line with the anchor
-\"one\" takes us to the line with the anchor \"two\", and typing
-`M-e' at the line with the anchor \"two\" takes us to the line
-with the anchor \"one\". In a situation like this we say that the
-anchors \"one\" and \"two\" _point to one another_.
-
-In a case like this,
-
-  «.three»   (to \"three\")
-   «three»  (to \".three\")
-
-where the names of two anchors pointing to one another differ by
-an initial dot, we will say that the anchor \".three\" is the
-\"index anchor\", and the anchor \"three\" is the \"section
-anchor\"; and one way to create an index for a file is to group
-all the index anchors together. For an example, see:
-
-  (find-eev \"eev-intro.el\" \".find-eev-intro\")
-
-
-
-
-Creating index/section anchor pairs
-===================================
-Use `M-A' (`eewrap-anchor'). Note that this has been briefly
-mentioned here:
-
-  (find-wrap-intro \"All wrapping functions\")
-
-It will convert a line with a syntax like
-
-  comment-prefix <anchor-name>
-
-into:
-
-  comment-prefix «.anchor-name»	(to \"anchor-name\")
-  comment-prefix «anchor-name» (to \".anchor-name\")
-
-where comment-prefix is any string and anchor-name is a string
-without `<>'s. Note that the `<>'s, which are easy to type, are
-converted into `«»'s, which are harder.
-
-
-
-find-anchor
-===========
-\(find-eev \"eev-anchors.el\")
-\(find-eev \"eev-anchors.el\" \"find-anchor\")
-
-
-code-c-d and :anchor
-====================
-\(find-eev \"eev-code.el\" \"ee-code-c-d-:anchor\")
-
-
-
-# Local Variables:
-# coding:           raw-text-unix
-# ee-anchor-format: \"«%s»\"
-# End:
-" rest)))
-
-;; (find-anchors-intro)
-
-
-
 
 ;;;                                          _ 
 ;;;  _ __  _ __ ___ _ __   __ _ _ __ ___  __| |
@@ -6648,8 +6701,13 @@ This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
 
 
-\[At present this is just a _skeleton_ for a tutorial on defining
-functions in Lisp...]
+Note: this intro needs to be rewritten!
+I wrote it for a mini-tutorial on Lisp that I gave.
+It complements this:
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-eval-intro \"3. What to execute, and in what order\")
+  (find-eval-intro \"3. What to execute, and in what order\" \"defun\")
+
 
 
 

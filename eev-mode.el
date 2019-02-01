@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan23
+;; Version:    2019feb01
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -130,9 +130,29 @@ and: (find-eval-intro \"`M-k'\")"
   ;;
   )
 
+
+;; Now we run the function `eev-mode-map-set' above, but we only do
+;; that if the variable `eev-mode-map' holds nil:
+;;
 (when (not eev-mode-map)
   (setq eev-mode-map (make-sparse-keymap))
   (eev-mode-map-set))
+;;
+;; The (when ...) above means that if you want to define your own
+;; `eev-mode-map' with different keybindings you can do that by
+;; putting something like this in your .emacs _before the point where
+;; you load eev_:
+;;
+;;   (setq eev-mode-map (make-sparse-keymap))
+;;   (define-key eev-mode-map "\M-e" 'ee-eval-sexp-eol)
+;;   (define-key eev-mode-map "\M-E" 'ee-eval-last-sexp)
+;;   (define-key eev-mode-map "\M-k" 'ee-kill-this-buffer)
+;;   (define-key eev-mode-map "\M-K" 'bury-buffer)
+;;   (define-key eev-mode-map "\M-j" 'eejump)
+;;   (define-key eev-mode-map [f8]   'eepitch-this-line)
+;;   (define-key eev-mode-map "\M-T" 'eewrap-eepitch)
+
+
 
 
 

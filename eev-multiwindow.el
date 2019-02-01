@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan23
+;; Version:    2019feb01
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-multiwindow.el>
@@ -52,6 +52,7 @@
 (defun find-wset-o () (other-window 1))
 (defun find-wset-O () (other-window -1))
 (defun find-wset-+ () (balance-windows))
+(defun find-wset-c () (recenter))
 (defun find-wset-_ () (eval (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-\  ())			; allow whitespace
 
@@ -66,6 +67,7 @@ Here is a list of the standard characters that can be used in CHARS:
   s:  `split-window-sensibly'
   o:  `other-window'               (C-x o)
   +:  `balance-windows'            (C-x +)
+  c:  `recenter'                   (C-l)
   _:  execute the next sexp in SEXPS.
 
 To add support for a new character, say `C', just define

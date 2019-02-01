@@ -1,3 +1,17 @@
+2019-02-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-intro-dual): new function - a new hack that
+	replaces `find-intro-here'.
+	(find-intro-here): deleted together with its dependencies.
+	(find-eev-quick-intro): small changes.
+	(find-eval-intro): small changes.
+	(find-links-intro): small changes.
+	(find-eepitch-intro): small changes.
+	(find-eejump-intro): small changes.
+	(find-code-c-d-intro): small changes.
+
+	* eev-multiwindow.el (find-wset-c): new function.
+
 2019-01-30  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-eev-install-links): small changes.
