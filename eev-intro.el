@@ -237,6 +237,9 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
   (ee-intro-fontify-maybe)
   (apply 'ee-goto-position pos-spec-list))
 
+(defun find-eintro-latin1 (bigstr &rest pos-spec-list)
+  "Like `find-eintro', but handles some strange chars in BIGSTR."
+  (apply `find-eintro (ee-tolatin1 bigstr) pos-spec-list))
 
 
 
@@ -253,7 +256,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 (defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
-    (apply 'find-eintro (ee-tolatin1 "\
+    (apply 'find-eintro-latin1 "\
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
 More intros:  (find-emacs-keys-intro)
@@ -1367,7 +1370,7 @@ then these hyperlinks should work:
 
 
 \(To be continued...)
-") pos-spec-list)))
+" pos-spec-list)))
 
 ;; end of defun
 
@@ -2982,7 +2985,7 @@ What functions can generate target buffers:
 
 (defun find-wrap-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-wrap-intro)*"))
-    (apply 'find-eintro (ee-tolatin1 "\
+    (apply 'find-eintro-latin1 "\
 \(Re)generate: (find-wrap-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-wrap-intro\")
 More intros:  (find-eev-quick-intro)
@@ -3003,8 +3006,8 @@ Ideally it should _complement_ the material in:
 
 
 
-Eepitch and eev
-===============
+1. Eepitch and eev
+==================
 Eepitch defines only two keys - <F8> and <M-T> - and <M-T> is a
 particular case of something more general: \"wrapping commands\", that
 follow these conventions:
@@ -3025,8 +3028,8 @@ the form meta-SHIFT-letter - don't forget the shift!!!
 
 
 
-<M-T>: produce an eepitch block
-===============================
+2. <M-T>: produce an eepitch block
+==================================
 If you type <M-T> on a line containing just the word \"shell\" you get
 three lines, like this:
 
@@ -3059,8 +3062,8 @@ square(5)
 
 
 
-<M-F>: hyperlink to a file or a directory
-=========================================
+3. <M-F>: hyperlink to a file or a directory
+============================================
 If you type <M-F> on the lines below,
 
 /etc/
@@ -3077,8 +3080,8 @@ you get hyperlinks like these:
 
 
 
-<M-S>: hyperlink to the output of a shell command
-=================================================
+4. <M-S>: hyperlink to the output of a shell command
+====================================================
 If you type <M-S> on a line containing a shell command you get a
 hyperlink that starts with `find-sh', and that when followed opens a
 temporary buffer with the output of that shell command, like these:
@@ -3103,16 +3106,16 @@ these hyperlinks will show you the meaning of the expressions
 
 
 
-<M-M>: hyperlink to a manpage
-=============================
+5. <M-M>: hyperlink to a manpage
+================================
 Try <M-M> here:
 
 1 tac
 
 
 
-All wrapping functions
-======================
+6. All wrapping functions
+=========================
 Below is a list of all wrapping functions, with tests and
 hyperlinks:
 
@@ -3175,8 +3178,8 @@ U user-defined a b c
 
 
 
-Wrapping functions generate hyperlinks
-======================================
+7. Wrapping functions generate hyperlinks
+=========================================
 ...this is a slogan - a huge idea, in a very shortened form. In its
 full form, that would be:
 
@@ -3192,7 +3195,7 @@ The \"some\" in beginning of the long version of the slogan, above, is
 because a few of the wrapping commands, for example, <M-T> and <M-R>,
 are used to produce things that are not hyperlinks - usually other
 kinds of scripts.
-" rest))))
+" rest)))
 
 ;; (find-wrap-intro)
 
@@ -3505,7 +3508,7 @@ then you'll be attributing just a \"temporary\" meaning to
 
 (defun find-anchors-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-anchors-intro)*"))
-    (apply 'find-eintro (ee-tolatin1 "\
+    (apply 'find-eintro-latin1 "\
 \(Re)generate: (find-anchors-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-anchors-intro\")
 More intros:  (find-eev-quick-intro)
@@ -3634,7 +3637,7 @@ find-anchor
 code-c-d and :anchor
 ====================
 \(find-eev \"eev-code.el\" \"ee-code-c-d-:anchor\")
-" rest))))
+" rest)))
 
 ;; (find-anchors-intro)
 
