@@ -1,3 +1,19 @@
+2019-02-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el: changed all intros to make them use `find-eintro'
+	instead of `find-estring'.
+	(find-eintro): new function.
+	(ee-intro-face): new function.
+	(ee-intro-fontify): new function.
+	(ee-intro-fontify-maybe): new function.
+	(find-wrap-intro): use `ee-tolatin1'.
+	(find-anchors-intro): use `ee-tolatin1'.
+
+	* eejump.el: changes in the comments.
+
+	* eev-blinks.el: changes in the comments.
+	(find-eface): new function.
+
 2019-02-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-intro-dual): new function - a new hack that

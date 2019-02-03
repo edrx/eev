@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan23
+;; Version:    2019feb03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -36,15 +36,13 @@
 
 ;; See: (find-eev-quick-intro "7.1. eejump")
 ;;      (find-eev-quick-intro "7.1. eejump" "meta-uppercase-j")
+;;      (find-eev-quick-intro "7.2. The list of eejump targets")
+;;      (find-eevfile "eev-mode.el" "M-j" "eejump")
+;;      (find-eevfile "eev-mode.el" "M-J" "eewrap-eejump")
 ;;      (find-eejump-intro)
-;;      (find-eev "eev-wrap.el" "eewrap-eejump")
+;; Some features are defined elsewhere:
 ;;      (find-eev "eev-blinks.el" "find-eejumps")
-
-
-
-
-;; See: (find-eevfile "eev-mode.el" "M-j")
-;; (define-key eev-mode-map "\M-j" 'eejump)
+;;      (find-eev "eev-wrap.el" "eewrap-eejump")
 
  
 (defun eejump (arg)

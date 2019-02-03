@@ -3,7 +3,8 @@
 ;;; and that are not created by `code-c-d' and friends.
 
 ;; Copyright (C) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,
-;; 2009,2010,2011,2012,2013,2014,2016,2018 Free Software Foundation, Inc.
+;; 2009,2010,2011,2012,2013,2014,2016,2018,2019 Free Software
+;; Foundation, Inc.
 ;;
 ;; This file is (not yet) part of GNU eev.
 ;;
@@ -22,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan04
+;; Version:    2019feb03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -33,6 +34,9 @@
 
 ;;; Commentary:
 
+;; See: (find-eev-quick-intro "3. Elisp hyperlinks")
+;;      (find-links-intro "6. Basic and non-basic hyperlinks")
+
 
 
 
@@ -41,6 +45,7 @@
 ;; «.ee-goto-rest»		(to "ee-goto-rest")
 ;; «.find-fline»		(to "find-fline")
 ;; «.find-wottb»		(to "find-wottb")
+;; «.find-efaces»		(to "find-efaces")
 ;; «.find-ebufferandpos»	(to "find-ebufferandpos")
 ;; «.find-ebuffer»		(to "find-ebuffer")
 ;; «.find-eoutput»		(to "find-eoutput")
@@ -88,6 +93,7 @@
 ;;;  \___|\___|_|\_\
 ;;;                 
 ;; «eek» (to ".eek")
+;; See: (find-eev-quick-intro "3. Elisp hyperlinks" "eek")
 
 (defun eek (str) (interactive "sKeys: ")
   "Execute STR as a keyboard macro. See `edmacro-mode' for the exact format.\n
@@ -105,8 +111,8 @@ An example: (eek \"C-x 4 C-h\")"
 ;;; |_|                       |_|                                   
 ;;;
 ;; «ee-goto-position»  (to ".ee-goto-position")
-;; support for pos-spec-lists in hyperlinks
-;; See: (find-eval-intro "Refining hyperlinks")
+;; Support for pos-spec-lists in hyperlinks.
+;; See: (find-eval-intro "6. Refining hyperlinks")
 
 (defun ee-goto-position (&optional pos-spec &rest rest)
   "Process the \"absolute pos-spec-lists\" arguments in hyperlink functions.
@@ -139,7 +145,8 @@ they skip the first \"absolute\" pos-spec."
     (if rest (ee-goto-rest rest))))
 
 ;; «ee-goto-rest»  (to ".ee-goto-rest")
-
+;; See: (find-eval-intro "7. Pos-spec-lists")
+;;
 (defun ee-goto-rest (list)
   "Process \"relative pos-spec-lists\".
 For each element in LIST, if it is:
@@ -179,10 +186,9 @@ the standard definition."
 ;;; |_| |_|_| |_|\__,_|     |_| |_|\___/ \__,_|\___|
 ;;;                                                 
 ;; «find-fline» (to ".find-fline")
-;;; Basic links: find-fline and find-node
-;; Tests:
-;;   (find-fline "~/")
-;;   (find-node  "(emacs)Top")
+;; Basic links: `find-fline' and `find-node'.
+;; See: (find-eev-quick-intro "3. Elisp hyperlinks")
+;;      (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" ":gz")
 
 (defun find-fline (fname &rest pos-spec-list)
   "Hyperlink to a file (or a directory).
@@ -225,17 +231,7 @@ Examples:\n
 ;;; |_| |_|_| |_|\__,_|      \_/\_/ \___/ \__|\__|_.__/ 
 ;;;
 ;; «find-wottb» (to ".find-wottb")
-;;; hyperlinks to the output of Emacs's help-like functions
-
-;; Tests:
-;;   (find-efunctiondescr 'next-line        "line-move-visual")
-;;   (find-ekeydescr      [down]            "line-move-visual")
-;;   (find-evariabledescr 'line-move-visual "visual lines")
-;;   (find-efunctiond     'next-line        "next-line-add-newlines")
-;;   (find-eapropos       "^find-.*-links"  "find-intro-links")
-;;   (find-ecolors                          " white")
-;;   (find-efacedescr     'default          "Foreground:")
-;;   (find-efaces                           "default")
+;; Hyperlinks to the output of Emacs's help-like functions.
 
 (defun find-wottb-call (sexp bufname &rest pos-spec-list)
   "Hyperlink to functions that call `with-output-to-temp-buffer'.
@@ -249,16 +245,26 @@ then go to the position specified by POS-SPEC-LIST.\n
   (set-buffer bufname)			; why is this needed?
   (apply 'ee-goto-position pos-spec-list))
 
+
+;; Tests: (find-eapropos "regexp")
+;;        (find-eapropos "^find-.*-links" "find-intro-links")
+;;
 (defun find-eapropos (regexp &rest pos-spec-list)
   "Hyperlink to the result of running `apropos' on REGEXP."
   (interactive "sApropos symbol (regexp): ")
   (apply 'find-wottb-call '(apropos regexp) "*Apropos*" pos-spec-list))
 
+;; Tests: (find-efunctiondescr 'find-file)
+;;        (find-efunctiondescr 'next-line "line-move-visual")
+;;
 (defun find-efunctiondescr (symbol &rest pos-spec-list)
   "Hyperlink to the result of running `describe-function' on SYMBOL."
   (interactive (find-function-read))
   (apply 'find-wottb-call '(describe-function symbol) "*Help*" pos-spec-list))
 
+;; Tests: (find-evardescr 'default-directory)
+;;        (find-evariabledescr 'line-move-visual "visual lines")
+;;
 (defun find-evariabledescr (symbol &rest pos-spec-list)
   "Hyperlink to the result of running `describe-variable' on SYMBOL."
   (interactive (find-function-read 'variable))
@@ -266,69 +272,25 @@ then go to the position specified by POS-SPEC-LIST.\n
 
 (defalias 'find-evardescr 'find-evariabledescr)
 
+;; Tests: (find-ekeydescr "\M-h\M-h")
+;;        (find-ekeydescr [down] "line-move-visual")
+;;
 (defun find-ekeydescr (key &rest pos-spec-list)
   "Hyperlink to the result of running `describe-key' on KEY."
   (interactive "kFind function on key: ")
   (apply 'find-wottb-call '(describe-key key) "*Help*" pos-spec-list))
 
-(defun find-echardescr (&optional pos &rest pos-spec-list)
-  "Hyperlink to the result of running `describe-char' at POS."
-  (interactive)
-  (setq pos (or pos (point)))
-  (apply 'find-wottb-call '(describe-char pos) "*Help*" pos-spec-list))
-
-(defun find-etpat (&optional pos &rest pos-spec-list)
-  "Hyperlink to the result of running `describe-text-properties' at point.
-See `find-etpat0' and `find-etpat00' for lower-level tools for
-inspecting text proprties."
-  (interactive)
-  (setq pos (or pos (point)))
-  (apply 'find-wottb-call '(describe-text-properties pos)
-	 "*Help*" pos-spec-list))
-
-(defun find-efacedescr (&optional face &rest pos-spec-list)
-  "Hyperlink to the result of running `describe-face' on FACE."
-  ;; (interactive (list (read-face-name "Describe face")))
-  (interactive (list (face-at-point)))
-  (apply 'find-wottb-call '(describe-face face) "*Help*" pos-spec-list))
-
-(defun find-efaces (&rest pos-spec-list)
-  "Hyperlink to the result of running `list-faces-display'."
-  (interactive)
-  (apply 'find-wottb-call '(list-faces-display) "*Faces*" pos-spec-list))
-
-(defun find-ecolors (&rest pos-spec-list)
-  "Hyperlink to the result of running `list-colors-display'."
-  (interactive)
-  (apply 'find-wottb-call '(list-colors-display) "*Colors*" pos-spec-list))
-
+;; Tests: (find-efunctiond 'find-file)
+;;        (find-efunctiond 'next-line "next-line-add-newlines")
+;;
 (defun find-efunctiond (function &rest pos-spec-list)
   "Hyperlink to the result of running `disassemble' on FUNCTION."
   (interactive (find-function-read))
   (apply 'find-wottb-call '(disassemble function) "*Disassemble*"
 	 pos-spec-list))
 
-;; New, 2013sep21
+;; Test: (find-customizegroup 'processes)
 ;;
-(defun find-etp (&rest pos-spec-list)
-  "Hyperlink to the output of `describe-text-properties'.
-This is a high-level alternative to `find-etpat'."
-  (interactive)
-  (apply 'find-wottb-call '(describe-text-properties (point))
-	 "*Help*" pos-spec-list))
-
-(defun find-epackages (&optional no-fetch &rest pos-spec-list)
-  "Hyperlink to the output of `list-packages'."
-  (interactive "P")
-  (apply 'find-wottb-call '(list-packages no-fetch)
-	 "*Packages*" pos-spec-list))
-
-(defun find-epackage (&optional pkg-desc &rest pos-spec-list)
-  "Hyperlink to the output of `describe-package'."
-  (interactive "P")
-  (apply 'find-wottb-call '(describe-package pkg-desc)
-	 "*Help*" pos-spec-list))
-
 (defun find-customizegroup (group &rest pos-spec-list)
   "Hyperlink to the result of running `customize-group' on GROUP."
   (interactive (list (customize-read-group)))
@@ -340,6 +302,90 @@ This is a high-level alternative to `find-etpat'."
 	 (format "*Customize Group: %s*" (custom-unlispify-tag-name group))
 	 pos-spec-list))
 
+;; Tests: (find-epackages nil "\n  bdo ")
+;;        (find-epackages t   "\n  bdo ")
+;;
+(defun find-epackages (&optional no-fetch &rest pos-spec-list)
+  "Hyperlink to the output of `list-packages'."
+  (interactive "P")
+  (apply 'find-wottb-call '(list-packages no-fetch)
+	 "*Packages*" pos-spec-list))
+
+;; Test: (find-epackage 'bdo)
+;;
+(defun find-epackage (&optional pkg-desc &rest pos-spec-list)
+  "Hyperlink to the output of `describe-package'."
+  (interactive "P")
+  (apply 'find-wottb-call '(describe-package pkg-desc)
+	 "*Help*" pos-spec-list))
+
+
+
+
+
+
+
+;;;   __                     
+;;;  / _| __ _  ___ ___  ___ 
+;;; | |_ / _` |/ __/ _ \/ __|
+;;; |  _| (_| | (_|  __/\__ \
+;;; |_|  \__,_|\___\___||___/
+;;;                          
+;; «find-efaces» (to ".find-efaces")
+;; Inspect faces, colors and characters.
+;; Most of these use `find-wottb-call'.
+;; Tests:
+;;   (find-ecolors             " white")
+;;   (find-efaces              "default")
+;;   (find-efacedescr 'default "Foreground:")
+
+(defun find-efaces (&rest pos-spec-list)
+  "Hyperlink to the result of running `list-faces-display'."
+  (interactive)
+  (apply 'find-wottb-call '(list-faces-display) "*Faces*" pos-spec-list))
+
+(defun find-ecolors (&rest pos-spec-list)
+  "Hyperlink to the result of running `list-colors-display'."
+  (interactive)
+  (apply 'find-wottb-call '(list-colors-display) "*Colors*" pos-spec-list))
+
+(defun find-echardescr (&optional pos &rest pos-spec-list)
+  "Hyperlink to the result of running `describe-char' at POS."
+  (interactive)
+  (setq pos (or pos (point)))
+  (apply 'find-wottb-call '(describe-char pos) "*Help*" pos-spec-list))
+
+(defun find-efacedescr (&optional face &rest pos-spec-list)
+  "Hyperlink to the result of running `describe-face' on FACE."
+  ;; (interactive (list (read-face-name "Describe face")))
+  (interactive (list (face-at-point)))
+  (apply 'find-wottb-call '(describe-face face) "*Help*" pos-spec-list))
+
+(defun find-etpat (&optional pos &rest pos-spec-list)
+  "Hyperlink to the result of running `describe-text-properties' at point.
+See `find-etpat0' and `find-etpat00' for lower-level tools for
+inspecting text proprties."
+  (interactive)
+  (setq pos (or pos (point)))
+  (apply 'find-wottb-call '(describe-text-properties pos)
+	 "*Help*" pos-spec-list))
+
+(defun find-etpat0 (&rest pos-spec-list)
+"Hyperlink to a pretty version of the result of (text-properties-at (point))."
+  (interactive)
+  (let* ((ee-buffer-name
+	  (or ee-buffer-name "*(text-properties-at (point))*")))
+    (apply 'find-epp (text-properties-at (point)) pos-spec-list)))
+
+(defun find-etpat00 ()
+  "Show the result of (text-properties-at (point)) in the echo area."
+  (interactive)
+  (find-epp0 (text-properties-at (point))))
+
+(defalias 'find-etp 'find-etpat)
+
+
+
 
 
 ;;;   __ _           _            __                  _   _             
@@ -349,8 +395,7 @@ This is a high-level alternative to `find-etpat'."
 ;;; |_| |_|_| |_|\__,_|     \___|_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|
 ;;;                                                                      
 ;; «find-ebufferandpos» (to ".find-ebufferandpos")
-;;; hyperlinks to the source code of Emacs functions and variables
-
+;; Hyperlinks to the source code of Emacs functions and variables.
 ;; Tests:
 ;;   (find-efunction 'next-line)
 ;;   (find-evariable 'line-move-visual)
@@ -387,6 +432,16 @@ support a POS-SPEC-LIST like this function does."
   "Hyperlink to the result of running `find-variable' on SYMBOL."
   (interactive (find-function-read 'variable))
   (apply 'find-ebufferandpos (find-variable-noselect symbol) pos-spec-list))
+
+(defun find-eface (face &rest pos-spec-list)
+  "Hyperlink to the result of running `find-face-definition' on FACE.
+The `find-face-definition' function of Emacs can be used as a hyperlink
+- it finds the Elisp source code of SYMBOL -, but it doesn't
+support a POS-SPEC-LIST like this function does."
+  (interactive (find-function-read 'defface))
+  (apply 'find-ebufferandpos (find-definition-noselect face 'defface)
+	 pos-spec-list))
+
 
 
 
@@ -470,8 +525,13 @@ runs `emacs-lisp-mode' in the buffer."
   (apply 'find-eoutput-rerun (or ee-buffer-name "*string*")
 	 `(progn (insert ,string) (emacs-lisp-mode)) pos-spec-list))
 
-;; For (find-anchors-intro)
-;; Hacky.
+
+
+;; TODO: Delete this.
+;; This is an ugly hack.
+;; It was created for: (find-efunction 'find-anchors-intro)
+;; It was made obsolete by: (find-eev "eev-codings.el")
+
 (defun ee-raw-text-unix ()
   "Set the current buffer to unibyte (for certain glyphs).
 See: (find-anchors-intro \"WARNING: some glyphs need raw-text-unix\")"
@@ -503,9 +563,9 @@ The \"Local variables:\" section in the buffer is processed."
 ;;; |  _| | | | | (_| |_____\__ \ | | |
 ;;; |_| |_|_| |_|\__,_|     |___/_| |_|
 ;;;                                    
-;;; hyperlinks to the output of shell commands
-;;;
 ;; «find-sh»  (to ".find-sh")
+;; Hyperlinks to the output of shell commands.
+;; See: (find-eev-quick-intro "3. Elisp hyperlinks" "find-sh0")
 ;; Tests:
 ;;   (find-sh   "seq 2095 2100")
 ;;   (find-sh0  "seq 2095 2100")
@@ -553,7 +613,7 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;;; |_| |_|_| |_|\__,_|     |_| |_| |_|\__,_|_| |_|
 ;;;                                                
 ;; «find-man»  (to ".find-man")
-;; hyperlinks to manpages
+;; Hyperlinks to manpages.
 ;; Tests:
 ;;   (find-man "1 cat")
 
@@ -574,7 +634,10 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 	ee-find-man-pos-spec-list pos-spec-list)
     (man manpage))
 
-;; Missing: find-woman. (find-node "(woman)Top")
+;; Missing: find-woman.
+;; (find-node "(woman)Top")
+;; (woman   "cat")
+;; (woman "1 cat")
 
 
 
@@ -586,9 +649,10 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;;; |_| |_|_| |_|\__,_|      \_/\_/ |____/|_| |_| |_|
 ;;;
 ;; «find-w3m»  (to ".find-w3m")
-;; Hyperlinks to webpages and files in HTML
-;; Tests:
-;;   (find-w3m "http://www.emacswiki.org/")
+;; Hyperlinks to webpages and files in HTML.
+;; Needs this: (find-epackage 'w3m)
+;; Tests: (find-w3m "http://www.emacswiki.org/")
+;;        (find-w3m "http://www.emacswiki.org/" "EmacsNewbie")
 
 (defun find-w3m (url &rest pos-spec-list)
   "Hyperlink to a page in HTML.
@@ -671,7 +735,7 @@ This is Debian-specific. See `find-Package'."
 ;; Pretty-priting sexps.
 ;; "pp0" -> "pretty-print a Lisp object in a very compact way".
 ;; Tests:
-;;   (find-epp '(apply (lambda (a) (* a a)) 5))
+;;   (find-epp '(mapcar (lambda (a) (* a a)) '(2 3 4 5)))
 ;;   (find-functionpp 'find-efunction)
 
 (defun find-epp0 (object)
@@ -711,12 +775,11 @@ explicitly. Try this: (progn (message \"foo\") \"bar\")"
 ;; «find-einternals»  (to ".find-einternals")
 ;; Hyperlinks to other things internal to Emacs
 ;; Tests:
-;;   (find-ekeymapdescr isearch-mode-map "toggle-regexp")
-;;   (find-eminorkeymapdescr 'eev-mode)
 ;;   (find-einsert '((32 255) 10 (8592 9167)))
 ;;   (find-etpat)
 ;;   (find-etpat0)
 
+;; Test: (find-ekeymapdescr isearch-mode-map "toggle-regexp")
 (defun find-ekeymapdescr (keymap &rest pos-spec-list)
   "Hyperlink to the list of bindings in KEYMAP.
 Example: (find-ekeymapdescr isearch-mode-map \"toggle-regexp\")"
@@ -724,6 +787,7 @@ Example: (find-ekeymapdescr isearch-mode-map \"toggle-regexp\")"
   (apply 'find-estring (substitute-command-keys "\\<keymap>\\{keymap}")
 	 pos-spec-list))
 
+;; Test: (find-eminorkeymapdescr 'eev-mode)
 (defun find-eminorkeymapdescr (mode-symbol &rest pos-spec-list)
   "Hyperlink to the list of bindings in the minor mode MODE-SYMBOL.
 Example: (find-eminorkeymapdescr 'eev-mode)"
@@ -737,6 +801,7 @@ Example: (find-eminorkeymapdescr 'eev-mode)"
 Example: (find-ekeymapdescr (ee-minor-mode-keymap 'eev-mode))"
   (cdr (assq mode-symbol minor-mode-map-alist)))
 
+;; Test: (ee-insert "\n;; " '(?a ?z) 32 "Foo")
 (defun ee-insert (&rest rest)
   "Insert characters, strings, or ranges of characters.
 Example: (ee-insert '(?a ?z) 10 \"Foo!\")"
@@ -748,23 +813,12 @@ Example: (ee-insert '(?a ?z) 10 \"Foo!\")"
 	    (t (error "Not string/int/pair: %S" o))))
     (setq rest (cdr rest))))
 
+;; Test: (find-einsert '((32 1000) 10 (8000 12000)))
 (defun find-einsert (what &rest rest)
 "See `ee-insert'.
 Example of use: (find-einsert '((32 1000) 10 (8000 12000)))"
   (apply 'find-eoutput-reuse "*einsert*"
 	 `(apply 'ee-insert ',what) rest))
-
-(defun find-etpat0 (&rest pos-spec-list)
-"Hyperlink to a pretty version of the result of (text-properties-at (point))."
-  (interactive)
-  (let* ((ee-buffer-name
-	  (or ee-buffer-name "*(text-properties-at (point))*")))
-    (apply 'find-epp (text-properties-at (point)) pos-spec-list)))
-
-(defun find-etpat00 ()
-  "Show the result of (text-properties-at (point)) in the echo area."
-  (interactive)
-  (find-epp0 (text-properties-at (point))))
 
 ;; Broken? See: (find-efile "international/ccl.el")
 (defun find-eccldump (ccl-code &rest pos-spec-list)
@@ -801,9 +855,9 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 ;;
 ;; «find-eejumps» (to ".find-eejumps")
 ;; Display all the current eejump targets.
+;; See: (find-eev-quick-intro "7.2. The list of eejump targets")
+;; Try: (find-eejumps)
 ;; Related to: (find-eev "eejump.el")
-;; Try:        (find-eejumps)
-;; See:        (find-eev-quick-intro "find-eejumps")
 
 (defun ee-defun-sexp-for (symbol) 
   `(defun ,symbol ,@(cdr (symbol-function symbol))))

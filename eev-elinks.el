@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan23
+;; Version:    2019feb03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -35,7 +35,7 @@
 ;; See this for a (rough) classification of eev's hyperlink functions
 ;; into several classes:
 ;;
-;;   (find-links-intro "Basic and non-basic hyperlinks")
+;;   (find-links-intro "6. Basic and non-basic hyperlinks")
 ;;
 ;; In this file we define `find-elinks' and several functions based on
 ;; it which generate relatively simple elisp hyperlinks buffers -
@@ -785,6 +785,7 @@ See the comments in the source code."
      (find-efunction 'find-eface-links)
      ""
      (find-efacedescr ',face-symbol)
+     (find-efaces ,(format "\n%S " face-symbol))
      (find-eface ',face-symbol)
      (customize-face ',face-symbol)
      (set-face-foreground ',face-symbol ,(face-foreground face-symbol))

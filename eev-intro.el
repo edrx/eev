@@ -57,6 +57,7 @@
 
 ;; Quick index:
 ;; «.find-intro-dual»		(to "find-intro-dual")
+;; «.find-eintro»		(to "find-eintro")
 ;;
 ;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
 ;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
@@ -176,6 +177,68 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 
 
+;;;   __             _   _  __       
+;;;  / _| ___  _ __ | |_(_)/ _|_   _ 
+;;; | |_ / _ \| '_ \| __| | |_| | | |
+;;; |  _| (_) | | | | |_| |  _| |_| |
+;;; |_|  \___/|_| |_|\__|_|_|  \__, |
+;;;                            |___/ 
+;;
+;; «find-eintro» (to ".find-eintro")
+;; 2019feb03: experimental. This is like `find-estring' but it runs
+;; `ee-intro-fontify-maybe' to optionally fontify the titles;
+;; `ee-intro-fontify-maybe' is similar to `Info-fontify-node'.
+;; Compare:
+;;   (find-fline "/usr/share/info/emacs-24/elisp.info.gz" "****")
+;;   (find-elnode "Top" "Emacs Lisp\n**********")
+
+;; This is practically a copy of:
+;; (find-efile "info.el" "defun Info-fontify-node" ";; Fontify titles")
+(defun ee-intro-fontify ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (and (re-search-forward
+		 "\n\\([^ \t\n].+\\)\n\\(\\*\\*+\\|==+\\|--+\\|\\.\\.+\\)$"
+		 nil t)
+		;; Only consider it as an underlined title if the ASCII
+		;; underline has the same size as the text.  A typical
+		;; counter example is when a continuation "..." is alone
+		;; on a line.
+		(= (string-width (match-string 1))
+		   (string-width (match-string 2))))
+      (let* ((c (preceding-char))
+	     (face (ee-intro-face c)))
+	(put-text-property (match-beginning 1) (match-end 1)
+			   'face face))
+      ;; This is a serious problem for trying to handle multiple
+      ;; frame types at once.  We want this text to be invisible
+      ;; on frames that can display the font above.
+      (when (memq (framep (selected-frame)) '(x pc w32 ns))
+	(add-text-properties
+	 (1- (match-beginning 2)) (match-end 2)
+	 '(invisible t front-sticky nil rear-nonsticky t))))))
+
+;; (find-elnode "Overlay Properties" "list of faces")
+;; (find-efaces "info-title-1")
+;; (find-efaces "underline")
+(defun ee-intro-face (c)
+  (cond ((= c ?*) '(info-title-1 underline))
+	((= c ?=) '(info-title-2 underline))
+	((= c ?-) '(info-title-3 underline))
+	(t        'info-title-3)))
+
+(defun ee-intro-fontify-maybe ())
+(defun ee-intro-fontify-maybe () (ee-intro-fontify))
+
+(defun find-eintro (bigstr &rest pos-spec-list)
+  "Like `find-estring', but runs `ee-intro-fontify-maybe'."
+  (find-estring bigstr)
+  (ee-intro-fontify-maybe)
+  (apply 'ee-goto-position pos-spec-list))
+
+
+
 
 
 ;;;                                   _      _         _       _             
@@ -190,13 +253,13 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 (defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
-    (apply 'find-estring (ee-tolatin1 "\
+    (apply 'find-eintro (ee-tolatin1 "\
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
 More intros:  (find-emacs-keys-intro)
-              (find-escripts-intro)
               (find-eev-intro)
               (find-eval-intro)
+              (find-links-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
@@ -1325,7 +1388,7 @@ then these hyperlinks should work:
 
 (defun find-emacs-keys-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-emacs-keys-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-emacs-keys-intro)
 Source code:  (find-efunction 'find-emacs-keys-intro)
 More intros:  (find-eev-quick-intro)
@@ -1494,7 +1557,7 @@ M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
 
 (defun find-eev-install-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-eev-install-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-eev-install-intro)
 Source code:  (find-efunction 'find-eev-install-intro)
 More intros:  (find-eev-quick-intro)
@@ -1631,7 +1694,7 @@ Help would be greatly appreciated!
 
 (defun find-eev-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eev-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-eev-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eev-intro\")
 Main intros:  (find-eev-quick-intro)
@@ -1738,7 +1801,7 @@ For the full lists of keybindings, see:
 
 (defun find-eval-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eval-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-eval-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eval-intro\")
 More intros:  (find-eev-quick-intro)
@@ -1949,7 +2012,7 @@ are numbers or strings. Try:
 
 
 7. Pos-spec-lists
-===---===========
+=================
 The optional arguments that refine a hyperlink form what we call
 a \"pos-spec-list\". For example, the pos-spec-list here has two
 elements,
@@ -2123,7 +2186,7 @@ hyperlinks in scripts]
 
 (defun find-links-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-links-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-links-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-links-intro\")
 More intros:  (find-eev-quick-intro)
@@ -2683,7 +2746,7 @@ scripts etc\]
 
 (defun find-eepitch-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eepitch-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-eepitch-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eepitch-intro\")
 More intros:  (find-eev-quick-intro)
@@ -2919,7 +2982,7 @@ What functions can generate target buffers:
 
 (defun find-wrap-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-wrap-intro)*"))
-    (apply 'find-estring-lv "\
+    (apply 'find-eintro (ee-tolatin1 "\
 \(Re)generate: (find-wrap-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-wrap-intro\")
 More intros:  (find-eev-quick-intro)
@@ -3129,7 +3192,7 @@ The \"some\" in beginning of the long version of the slogan, above, is
 because a few of the wrapping commands, for example, <M-T> and <M-R>,
 are used to produce things that are not hyperlinks - usually other
 kinds of scripts.
-" rest)))
+" rest))))
 
 ;; (find-wrap-intro)
 
@@ -3152,7 +3215,7 @@ kinds of scripts.
 
 (defun find-eejump-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eejump-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-eejump-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-eejump-intro\")
 More intros:  (find-eev-quick-intro)
@@ -3442,7 +3505,7 @@ then you'll be attributing just a \"temporary\" meaning to
 
 (defun find-anchors-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-anchors-intro)*"))
-    (apply 'find-estring-lv "\
+    (apply 'find-eintro (ee-tolatin1 "\
 \(Re)generate: (find-anchors-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-anchors-intro\")
 More intros:  (find-eev-quick-intro)
@@ -3571,7 +3634,7 @@ find-anchor
 code-c-d and :anchor
 ====================
 \(find-eev \"eev-code.el\" \"ee-code-c-d-:anchor\")
-" rest)))
+" rest))))
 
 ;; (find-anchors-intro)
 
@@ -3588,7 +3651,7 @@ code-c-d and :anchor
 
 (defun find-code-c-d-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-code-c-d-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-code-c-d-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-code-c-d-intro\")
 More intros:  (find-eev-quick-intro)
@@ -3758,7 +3821,7 @@ Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
 
 (defun find-pdf-like-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-pdf-like-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-pdf-like-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-pdf-like-intro\")
 More intros:  (find-eev-quick-intro)
@@ -4112,7 +4175,7 @@ macros are VERY useful; if you don't use them yet, see:
 
 (defun find-brxxx-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-brxxx-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-brxxx-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-brxxx-intro\")
 More intros:  (find-eev-quick-intro)
@@ -4336,7 +4399,7 @@ In dired mode each line corresponds to a file
 
 (defun find-psne-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-psne-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-psne-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-psne-intro\")
 More intros:  (find-eev-quick-intro)
@@ -4531,7 +4594,7 @@ The details on how to create these \"brxxx functions\" are here:
 
 (defun find-audiovideo-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-audiovideo-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-audiovideo-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-audiovideo-intro\")
 More intros:  (find-eev-quick-intro)
@@ -4960,7 +5023,7 @@ Create short links
 
 (defun find-multiwindow-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-multiwindow-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-multiwindow-intro)
 Source code:  (find-efunction 'find-multiwindow-intro)
 More intros:  (find-eev-quick-intro)
@@ -5394,7 +5457,7 @@ Here:
 
 (defun find-rcirc-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-rcirc-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-rcirc-intro)
 Source code:  (find-efunction 'find-rcirc-intro)
 More intros:  (find-eev-quick-intro)
@@ -5541,7 +5604,7 @@ For more information see:
 
 (defun find-templates-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-templates-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-templates-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-templates-intro\")
 More intros:  (find-eev-quick-intro)
@@ -5671,7 +5734,7 @@ Experiments
 
 (defun find-prepared-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-prepared-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-prepared-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-prepared-intro\")
 More intros:  (find-eev-quick-intro)
@@ -5899,7 +5962,7 @@ But try these:
 ;; (find-intro-links "bounded")
 (defun find-bounded-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-bounded-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-bounded-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-bounded-intro\")
 More intros:  (find-eev-quick-intro)
@@ -5993,7 +6056,7 @@ so you should do something like this, but for your favourite key:
 
 (defun find-channels-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-channels-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-channels-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-channels-intro\")
 More intros:  (find-eev-quick-intro)
@@ -6391,7 +6454,7 @@ How to set it up
 
 (defun find-videos-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-videos-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-videos-intro)
 Source code:  (find-efunction 'find-videos-intro)
 More intros:  (find-eev-quick-intro)
@@ -6691,7 +6754,7 @@ use this sexp to help you:
 
 (defun find-defun-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-defun-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-defun-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-defun-intro\")
 More intros:  (find-eev-quick-intro)
@@ -6915,7 +6978,7 @@ returns nil. But just as
 
 (defun find-emacs-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-emacs-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-emacs-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-emacs-intro\")
 More intros:  (find-eev-quick-intro)
@@ -7109,7 +7172,7 @@ C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
 
 (defun find-org-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-org-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-org-intro)
 Source code:  (find-efunction 'find-org-intro)
 More intros:  (find-eev-quick-intro)
@@ -7182,7 +7245,7 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
 
 (defun find-escripts-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-escripts-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-escripts-intro)
 Source code:  (find-efunction 'find-escripts-intro)
 More intros:  (find-eev-quick-intro)
