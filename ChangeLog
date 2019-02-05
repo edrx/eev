@@ -1,8 +1,13 @@
+2019-02-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el: added (require 'info).
+
 2019-02-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el: changed all intros to make them use `find-eintro'
 	instead of `find-estring'.
 	(find-eintro): new function.
+	(find-eintro-latin1): new function.
 	(ee-intro-face): new function.
 	(ee-intro-fontify): new function.
 	(ee-intro-fontify-maybe): new function.

@@ -92,6 +92,11 @@
 ;; See: (find-anchors-intro)
 
 
+;; For: (find-efile "info.el" "defface info-title-1")
+(require 'info)
+
+
+
 ;; Ignore this - this is an obsolete hack that I used to use to make
 ;; the htmlization in <http://angg.twu.net/eev-intros/> work better...
 ;; (find-angg "eev-intros/")
