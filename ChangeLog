@@ -1,3 +1,19 @@
+2019-02-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el: added lots of comments, and moved all
+	`define-key's to eev-mode.el.
+	(find-ekey-links): small changes.
+	(ee-code-c-d-filter-1): new function.
+	(ee-code-c-d-filter-2): new function.
+	(find-code-c-d-filter-1): new function.
+	(find-code-c-d-filter-2): new function.
+
+2019-02-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-emacs-keys-intro): small changes.
+	(find-eev-quick-intro): small changes.
+	(find-eval-intro): small changes.
+
 2019-02-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el: added (require 'info).

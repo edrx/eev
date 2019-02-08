@@ -100,6 +100,7 @@ and: (find-eval-intro \"`M-k'\")"
   ;; Source: (find-eev "eev-elinks.el")
   (define-key eev-mode-map "\M-h\M-d" 'find-debpkg-links)    
   (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links) 
+  (define-key eev-mode-map "\M-h\M-g" 'find-grep-links)
   (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
   (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)     
   (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)      
@@ -116,6 +117,7 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
   (define-key eev-mode-map "\M-h\M-t" 'find-etpat)
   (define-key eev-mode-map "\M-ht"    'find-etpat0)
+  (define-key eev-mode-map "\M-hc"    'find-ecolor-links)
   ;;
   ;; Keys for refining hyperlinks.
   ;; See: (find-eval-intro "Producing and refining hyperlinks")

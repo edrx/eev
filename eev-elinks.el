@@ -38,8 +38,11 @@
 ;;   (find-links-intro "6. Basic and non-basic hyperlinks")
 ;;
 ;; In this file we define `find-elinks' and several functions based on
-;; it which generate relatively simple elisp hyperlinks buffers -
-;; buffers which are mostly composed of elisp hyperlinks.
+;; it that generate relatively simple elisp hyperlinks buffers -
+;; buffers which are mostly composed of elisp hyperlinks. They follow
+;; these conventions:
+;;
+;;   (find-links-intro "3. Elisp hyperlinks buffers conventions")
 ;;
 ;; The "more complex" `find-elinks'-based functions are the ones which
 ;; use `ee-template0'. They are defined here:
@@ -52,6 +55,7 @@
 
 
 
+;; «.around-point»		(to "around-point")
 ;; «.find-elinks»		(to "find-elinks")
 ;; «.find-efunction-links»	(to "find-efunction-links")
 ;; «.find-evariable-links»	(to "find-evariable-links")
@@ -83,7 +87,8 @@
 ;;; | (_| | | | (_) | |_| | | | | (_| |_____| |_) | (_) | | | | | |_ 
 ;;;  \__,_|_|  \___/ \__,_|_| |_|\__,_|     | .__/ \___/|_|_| |_|\__|
 ;;;                                         |_|                      
-
+;;
+;; «around-point» (to ".around-point")
 ;; (find-eapropos "around-point")
 
 ;; (find-elnode "Index" "* thing-at-point:")
@@ -133,8 +138,36 @@ This function is not very smart - it doesn't understand section names."
 ;;; |_| |_|_| |_|\__,_|      \___|_|_|_| |_|_|\_\___/
 ;;;                                                  
 ;; «find-elinks»  (to ".find-elinks")
-;; A test:
-;; (find-elinks '("a" nil (b c) (d "e")))
+;; `find-elinks' is an internal function used by all functions that
+;; generate buffers with hyperlinks, like `find-efunction-links', and
+;; by most functions that generate buffers with hyperlinks followed by
+;; a templated string, like `find-latex-links'. It is a variant of
+;; `find-estring', in the sense that
+;;
+;;    (find-elinks LIST POS-SPEC)
+;;
+;; is similar to
+;;
+;;    (find-estring (ee-links-to-string LIST) pos-spec).
+;;
+;; Here is how the conversion from LIST to a string works. Try:
+;;
+;;    (find-elinks '((a sexp) "a string"))
+;;
+;; In simple examples like this one each element in LIST becomes a
+;; line in the output string: sexps are prefixed by
+;; `ee-hyperlink-prefix', and each string becomes a line. Try:
+;;
+;;    (find-elinks '((a sexp) (another) "" (sexp) "a string" "another"))
+;;
+;; The "" becomes an empty line. But things can be more complex: here,
+;;
+;;    (find-elinks '((str "foo\nbar") nil "foo\nbar"))
+;;
+;; the `(str "foo\nbar")' becomes a single line, with the `\n'
+;; displayed as "\n"; the nil is dropped from the list by
+;; `ee-remove-nils' and does not become a line, and the string
+;; "foo\nbar" becomes two lines.
 
 (defun ee-remove-nils (list)
   "Return a list like LIST, but without the `nil's."
@@ -177,11 +210,18 @@ The buffer is put in Emacs Lisp mode."
 ;;; |_| |_|_| |_|\__,_|      \___|_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|
 ;;;                                                                      
 ;; «find-efunction-links» (to ".find-efunction-links")
-;; (find-find-links-links "\\M-f" "efunction" "f")
-;; A test: (find-efunction-links 'next-line)
-;;                  (eek "M-h M-f next-line")
+;; `find-efunction-links' is one of the simplest functions that
+;; generate buffers with hyperlinks. It is mentioned in
+;; `find-eev-quick-intro':
+;; 
+;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
+;;   (find-eev-quick-intro "(find-efunction-links 'find-file)")
+;;
+;; Try: (find-efunction-links 'find-file)
+;;               (eek "M-h M-f next-line")
 
-(define-key eev-mode-map "\M-h\M-f" 'find-efunction-links)
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links)
 
 (defun find-efunction-links (&optional f &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks related to the function F."
@@ -228,10 +268,12 @@ This is an internal function used by `find-efunction-links' and
 ;; A test: (find-evariable-links 'line-move-visual)
 ;;                  (eek "M-h M-v line-move-visual")
 
-(define-key eev-mode-map "\M-h\M-v" 'find-evariable-links)
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links)
 
+;; Test: (find-evariable-links 'line-move-visual)
 (defun find-evariable-links (var &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for foo."
+"Visit a temporary buffer containing hyperlinks about a variable."
   (interactive (find-function-read 'variable))
   (apply 'find-elinks
    `((find-evariable-links ',var ,@pos-spec-list)
@@ -257,16 +299,70 @@ This is an internal function used by `find-efunction-links' and
 ;;
 ;; «find-ekey-links» (to ".find-ekey-links")
 ;; (find-find-links-links "\\M-k" "ekey" "key")
-;; A test: (find-ekey-links "\C-x2")
-;;             (eek "M-h M-k C-x 2")
-(define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)
+;;
+;; The functions in this section generate buffers with hyperlinks
+;; about a key sequence. Like this,
+;;
+;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
+;;   (find-eev-quick-intro "(find-efunction-links 'find-file)")
+;;
+;; but for a key sequence instead of for a function. Try:
+;;
+;;    (eek "M-h M-k C-x 4 0")
+;;    (find-elongkey-links "C-x 4 0")
+;;    (find-ekey-links      "\C-x40")
+;;    (find-ekey-links [?\C-x ?4 ?0])
+;;    (read-key-sequence        "Key seq:")
+;;    (read-key-sequence-vector "Key seq:")
+;;
+;; The high-level functions here are `find-ekey-links' and
+;; `find-elongkey-links'. In the terminology of this section, a "key"
+;; means a key sequence as a vector or a string, as described here,
+;;
+;;   (find-elnode "Key Sequence Input")
+;;   (find-elnode "Strings of Events")
+;;
+;; and by "long key" we mean a key sequence in "keyboard macro" form,
+;; with or without the ";; <comment>"s. This format is described here:
+;;
+;;   (find-efunctiondescr 'edmacro-mode "Format of keyboard macros")
+;;
+;; Here are some conversion functions:
+;;
+;;    (format-kbd-macro     "\C-x40")
+;;    (format-kbd-macro     "\C-x40" t)
+;;    (ee-format-kbd-macro  "\C-x40")
+;;    (read-kbd-macro      "C-x 4 0")
+;;
+;; Note that the last hyperlinks in these buffers are conversions:
+;;
+;;    (find-ekey-links      "\C-x40" 2 "format-kbd-macro")
+;;    (find-elongkey-links "C-x 4 0" 2 "format-kbd-macro")
+;;
+;; Only `find-ekey-links' is bound to a key sequence (`M-h M-k'),
+;; because `interactive' can return a key but not a long key:
+;;
+;;   (find-efunctiondescr 'interactive "Key sequence")
+;;
+;; A good way to save to our notes hyperlinks about a key sequence is
+;; by using the lines 4 and 5 in a `M-h M-k' buffer. For example, in
+;; the case of `M-c', they are:
+;;
+;;   (eek "M-h M-k M-c  ;; capitalize-word")
+;;   (find-efunctiondescr 'capitalize-word)
+;;
+
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)
 
 (defun ee-format-kbd-macro (key)
   "Example: (ee-format-kbd-macro [down])  --> \"<down>  ;; next-line\""
   (replace-regexp-in-string "[ \t][ \t]+" "  " (format-kbd-macro key t)))
 
+;; Test: (find-ekey-links "\C-x40")
 (defun find-ekey-links (key &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks related to the key sequence KEY."
+"Visit a temporary buffer containing hyperlinks related to the key sequence KEY.
+See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
   (interactive "kElisp hyperlinks for key: ")
   (let ((longkey     (format-kbd-macro key))
 	(longkey+ (ee-format-kbd-macro key))
@@ -277,6 +373,7 @@ This is an internal function used by `find-efunction-links' and
 	     (find-ekey-links          ,key)
 	     (eek ,(format "M-h M-k %s" longkey))
 	     (eek ,(format "M-h M-k %s" longkey+))
+	     (find-efunctiondescr ',f)
 	     ""
 	     (find-elongkey-links      ,longkey)
 	     (find-elongkey-links      ,longkey+)
@@ -287,8 +384,7 @@ This is an internal function used by `find-efunction-links' and
 	   pos-spec-list)))
 
 ;; «find-elongkey-links» (to ".find-elongkey-links")
-;; A test: (find-elongkey-links "C-x 2")
-;;                 (eek "M-h M-k C-x 2")
+;; Test: (find-elongkey-links "C-x 4 0")
 (defun find-elongkey-links (longkey &rest pos-spec-list)
   "Like `find-ekey-links', but LONGKEY is a key sequence \"spelled out\".
 Example: (find-elongkey-links \"M-h M-k\")
@@ -305,6 +401,7 @@ See `read-kbd-macro' and `edmacro-mode' for the format."
 	     )
 	   pos-spec-list)))
 
+;; Test: (find-elinks (ee-find-eboundkey-links "\M-c" 'capitalize-word))
 (defun ee-find-eboundkey-links (key f)
   "From KEY and its binding, F, produce a list of hyperlinks.
 This is an internal function used by `find-ekey-links' and
@@ -338,6 +435,7 @@ This is an internal function used by `find-ekey-links' and
 
 
 
+
 ;;;   __ _           _            _        __       
 ;;;  / _(_)_ __   __| |       ___(_)_ __  / _| ___  
 ;;; | |_| | '_ \ / _` |_____ / _ \ | '_ \| |_ / _ \ 
@@ -345,10 +443,11 @@ This is an internal function used by `find-ekey-links' and
 ;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|_|  \___/ 
 ;;;                                                 
 ;; «find-einfo-links» (to ".find-einfo-links")
-;; (find-find-links-links "\\M-i" "einfo" "")
 ;; A test: (progn (find-enode "Lisp Eval") (find-einfo-links))
 ;;         (progn (find-enode "Lisp Eval") (eek "M-h M-i"))
-(define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)
+
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)
 
 (defvar ee-info-file "")
 
@@ -366,24 +465,6 @@ This is an internal function used by `find-ekey-links' and
     (find-node ,(ee-info-fullnode))
     ,(if (ee-info-shortp)
 	 (list (ee-info-shortf) (ee-info-node)))))
-
-(defun ee-intro-stem (&optional bufname)
-  (setq bufname (or bufname (buffer-name (current-buffer))))
-  (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
-      (match-string 1 bufname)))
-
-;; (defun ee-find-intro-links (&optional stem)
-;;   `((,(ee-intern "find-%s-intro" (or stem (ee-intro-stem))))))
-
-(defun ee-find-intro-links (&optional stem)
-  (setq stem (or stem (ee-intro-stem)))
-  (let ((find-xxx-intro (ee-intern "find-%s-intro" stem))
-	(url (format "http://angg.twu.net/eev-intros/find-%s-intro.html" stem)))
-    `(,(ee-H url)
-      (,find-xxx-intro)
-      )))
-
-  
 
 
 ;; A test: (ee-intro-stem "*(find-foo-intro)*")
@@ -423,6 +504,29 @@ buffer, also generate a link to that buffer."
 
 
 
+;; Used by `find-intro-links', that was moved to:
+;;   (find-eev "eev-tlinks.el" "find-intro-links")
+
+(defun ee-intro-stem (&optional bufname)
+  (setq bufname (or bufname (buffer-name (current-buffer))))
+  (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
+      (match-string 1 bufname)))
+
+(defun ee-find-intro-links (&optional stem)
+  (setq stem (or stem (ee-intro-stem)))
+  (let ((find-xxx-intro (ee-intern "find-%s-intro" stem))
+	(url (format "http://angg.twu.net/eev-intros/find-%s-intro.html" stem)))
+    `(,(ee-H url)
+      (,find-xxx-intro)
+      )))
+
+  
+
+
+
+
+
+
 ;;;                _                          _                   _          
 ;;;   ___ ___   __| | ___        ___       __| |      _ __   __ _(_)_ __ ___ 
 ;;;  / __/ _ \ / _` |/ _ \_____ / __|____ / _` |_____| '_ \ / _` | | '__/ __|
@@ -431,11 +535,75 @@ buffer, also generate a link to that buffer."
 ;;;                                                  |_|                     
 ;;
 ;; «ee-code-c-d-pairs-eval» (to ".ee-code-c-d-pairs-eval")
+;; Each call to `(code-c-d C D)' generates an entry `(C D)' in the
+;; alist `ee-code-c-d-pairs', and this is used to make
+;; `(find-file-links FNAME)' list short hyperlinks to FNAME. Let's
+;; look at an example:
+;;
+;;   (code-c-d "foo"  "/FOO")
+;;   (code-c-d "bar"  "/FOO/BAR/")
+;;   (code-c-d "plic" "/FOO/BAR/PLIC/")
+;;   (find-file-links "/FOO/BAR/PLIC/ploc")
+;;
+;; The last links in the `find-file-links' buffer will be:
+;;
+;;   (find-plicfile "ploc")
+;;   (find-barfile "PLIC/ploc")
+;;   (find-foofile "/BAR/PLIC/ploc")
+;;
+;; The implementation is tricky enough to deserve debug functions.
+;; Try:
+;;
+;;   (find-epp ee-code-c-d-pairs)
+;;   (find-code-c-d-filter-1 'c-d)
+;;   (find-code-c-d-filter-1 'c)
+;;   (find-code-c-d-filter-1 'd)
+;;   (find-code-c-d-filter-1 'ed)
+;;   (find-code-c-d-filter-2 "/FOO/BAR/PLIC/ploc" '(list c fname-))
+;;   (find-code-c-d-filter-2 "/FOO/BAR/PLIC/ploc" '(ee-intern "find-%sfile" c))
+;;   (find-epp (ee-find-xxxfile-sexps "/FOO/BAR/PLIC/ploc"))
+;;
+;; See: (find-evariable 'ee-code-c-d-pairs)
+;;      (find-elnode "Association Lists")
 
 (defun ee-filter (f list)
   "Return the elements of LIST for which (F elt) is true.
 Actually return a list of `(F elt)'s."
   (ee-remove-nils (mapcar f list)))
+
+(defun ee-code-c-d-filter-1 (code)
+  "For debugging. See the comments in the source."
+  (ee-filter
+   (lambda (c-d)
+     (let* ((c (car c-d))
+	    (d (cadr c-d))
+	    (ed (ee-expand d)))
+       (eval code)))
+   ee-code-c-d-pairs))
+
+(defun ee-code-c-d-filter-2 (fname code)
+  "For debugging. See the comments in the source.
+Run CODE on each `c-d' of `ee-code-c-d-pairs' and return a list of results."
+  (let ((efname (ee-expand fname)))
+    (ee-filter
+     (lambda (c-d)
+       (let* ((c (car c-d))
+	      (d (cadr c-d))
+	      (ed (ee-expand d)))
+	 (if (ee-prefixp ed efname)
+	     (let ((fname- (ee-remove-prefix ed efname)))
+	       (eval code)))))
+     ee-code-c-d-pairs)))
+
+(defun find-code-c-d-filter-1 (code)
+  "For debugging. See the comments in the source."
+  (find-epp (ee-code-c-d-filter-1 code)))
+
+(defun find-code-c-d-filter-2 (fname code)
+  "For debugging. See the comments in the source."
+  (find-epp (ee-code-c-d-filter-2 fname code)))
+
+;; ---
 
 (defun ee-prefixp (prefix str)
   "Return t if STR begins with PREFIX."
@@ -486,7 +654,9 @@ evaluate f in the context of a big `let', and return the result."
 ;; «find-file-links» (to ".find-file-links")
 ;; (find-find-links-links "f" "file" "fname")
 ;; A test: (find-file-links "~/tmp/foo")
-(define-key eev-mode-map "\M-hf" 'find-file-links)
+
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-hf" 'find-file-links)
 
 (defun ee-if-prefixp (d newd fname code)
   "An internal function used by `find-file-links'."
@@ -537,7 +707,9 @@ evaluate f in the context of a big `let', and return the result."
 ;;   (ee-find-grep-links '(find-agrep find-bgrep) '("grep a *" "grep b *"))
 ;;   (find-grep-links)
 ;;
-(define-key eev-mode-map "\M-h\M-g" 'find-grep-links)
+
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-g" 'find-grep-links)
 
 (defun ee-first-n-elements (n list)
   "Example: (ee-first-n-elements 2 '(a b c d e f))   ==> (a b)"
@@ -591,7 +763,8 @@ evaluate f in the context of a big `let', and return the result."
 ;; (find-find-links-links "M" "macro" "")
 ;; (find-efunction 'find-ekbmacro-links)
 
-(define-key eev-mode-map "\M-hM" 'find-ekbmacro-links)
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-hM" 'find-ekbmacro-links)
 
 (defun find-ekbmacro-links () (interactive)
   (find-elinks `(
@@ -647,7 +820,8 @@ evaluate f in the context of a big `let', and return the result."
 
 ;; (find-find-links-links "\\M-p" "pdflike-page" "page bufname offset")
 
-(define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
 
 (defun ee-pdflike-page-links (&optional page bufname offset)
   (setq page    (or page (ee-current-page)))
@@ -772,7 +946,9 @@ See the comments in the source code."
 ;; «find-eface-links» (to ".find-eface-links")
 ;; (find-find-links-links "\\M-s" "eface" "face-symbol")
 ;; A test: (find-eface-links 'bold)
-(define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
+
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
 
 (defun find-eface-links (face-symbol &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks about FACE-SYMBOL."
@@ -816,7 +992,9 @@ See the comments in the source code."
 ;;   (find-ecolor-links)
 ;;   (find-ecolor-links "sienna")
 ;;
-(define-key eev-mode-map "\M-hc" 'find-ecolor-links)
+
+;; Moved to eev-mode.el:
+;; (define-key eev-mode-map "\M-hc" 'find-ecolor-links)
 
 (defun find-ecolor-links (&optional initialcolor &rest pos-spec-list)
   "Visit a temporary buffer containing hyperlinks for the color INITIALCOLOR."

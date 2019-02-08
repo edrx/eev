@@ -873,7 +873,7 @@ next section. Try it now:
 
 
 
-7.2. Commands with very short names
+7.4. Commands with very short names
 -----------------------------------
 Let's start with an example. If we are editing a LaTeX file, say
 \"/tmp/foo.tex\", then it is convenient to have quick ways to:
@@ -902,7 +902,7 @@ For more on `M-x', and on why the defuns above need the
 
 
 
-7.3. `find-latex-links'
+7.5. `find-latex-links'
 -----------------------
 The easiest way to put the three defuns of the last section in
 the header of a LaTeX file is with:
@@ -1183,9 +1183,9 @@ Sexps like
 
 work as abbreviations for
 
-  (find-fline \"~/eev-current/\")
-  (find-fline \"~/eev-current/eev-blinks.el\")
-  (find-fline \"~/eev-current/eev-blinks.el\" \"«find-sh»\")
+  (find-fline \"~/eev2/\")
+  (find-fline \"~/eev2/eev-blinks.el\")
+  (find-fline \"~/eev2/eev-blinks.el\" \"«find-sh»\")
   (find-fline \"/usr/share/doc/\")
   (find-fline \"/usr/share/doc/lua5.1-doc/\")
   (find-fline \"/usr/share/doc/lua5.1-doc/test/\")
@@ -1500,6 +1500,7 @@ C-x 0   -- delete-window                         (find-enode \"Change Window\")
 C-x 1   -- delete-other-windows     (\"1 window\") (find-enode \"Change Window\")
 C-x 2   -- split-window-vertically (Above/Below) (find-enode \"Split Window\")
 C-x 3   -- split-window-horizontally       (L|R) (find-enode \"Split Window\")
+C-x 4 0 -- kill-buffer-and-window                (find-enode \"Change Window\")
 
 
 
@@ -2120,11 +2121,11 @@ follow we will first put a string on the kill ring:
   (kill-new \"C-y\")
   (car kill-ring)
 
-Now let's see how refine hyperlinks quickly. `M-h M-2' duplicates
-the current line; we will use that to refine a copy of a working
-hyperlink, instead of working directly on the original, and
-risking breaking it. And `M-h M-y' refines the hyperlink on the
-current line by adding a string - the top element in the kill
+Now let's see how to refine hyperlinks quickly. `M-h M-2'
+duplicates the current line; we will use that to refine a copy of
+a working hyperlink, instead of working directly on the original,
+and risking breaking it. And `M-h M-y' refines the hyperlink on
+the current line by adding a string - the top element in the kill
 ring - to its sexp. Try this below; you should be able to convert
 
   (find-enode \"Kill Ring\")

@@ -1628,6 +1628,7 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 % (defun c () (interactive) (find-sh \"pdflatex {stem-}.tex\"))
 % (defun d () (interactive) (find-pdf-page \"{stem}.pdf\"))
 % (defun e () (interactive) (find-fline \"{stem}.tex\"))
+% (defun w () (interactive) (find-texworks \"{stem}.tex\"))
 %
 \\documentclass{<}article{>}
 \\begin{<}document{>}
