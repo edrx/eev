@@ -1,3 +1,33 @@
+2019-02-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): small changes.
+
+2019-02-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el: commented out all the `define-key's - they are now
+	all in eev-mode.el (but `M-Z' and `M-#' are inactive by default).
+
+	* eev-mode.el (eev-mode-map-set): commented out the binding for `M-Z'.
+	(eev-mode-map-set): added the binding for `M-B' (`eewrap-escript-block').
+	(eev-mode-map-set): added the binding for `M-V' (`eewrap-audiovideo').
+
+	* eev-tlinks.el: deleted the key binding for `find-intro-links'.
+
+2019-02-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-copy-rest): added (lots of) comments.
+	(ee-untabify-string): new function.
+	(ee-ss-strings): new variable.
+	(ee-ss-width): new variable.
+	(ee-ss-mode-line): new variable.
+	(ee-ss-echo-area): new variable.
+	(ee-ss-linefmt): new variable.
+	(ee-ss-string-pad): new function.
+	(ee-ss-screenshot0): new function.
+	(ee-ss-screenshot): new function.
+	(find-escreenshot0-links): new function.
+	(find-escreenshot-links): new function.
+
 2019-02-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el: added lots of comments, and moved all

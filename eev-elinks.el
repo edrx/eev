@@ -572,7 +572,8 @@ Actually return a list of `(F elt)'s."
   (ee-remove-nils (mapcar f list)))
 
 (defun ee-code-c-d-filter-1 (code)
-  "For debugging. See the comments in the source."
+  "Run CODE on each `c-d' of `ee-code-c-d-pairs' and return a list of results.
+This is a simpler version of `ee-code-c-d-filter-1', used for debugging."
   (ee-filter
    (lambda (c-d)
      (let* ((c (car c-d))
@@ -582,8 +583,8 @@ Actually return a list of `(F elt)'s."
    ee-code-c-d-pairs))
 
 (defun ee-code-c-d-filter-2 (fname code)
-  "For debugging. See the comments in the source.
-Run CODE on each `c-d' of `ee-code-c-d-pairs' and return a list of results."
+  "Run CODE on each `c-d' of `ee-code-c-d-pairs' and return a list of results.
+Only eval CODE when (ee-expand D) is a prefix of (ee-expand FNAME)."
   (let ((efname (ee-expand fname)))
     (ee-filter
      (lambda (c-d)
@@ -624,24 +625,36 @@ Run CODE on each `c-d' of `ee-code-c-d-pairs' and return a list of results."
 (defun ee-intern (fmt &rest args)
   (intern (apply 'format fmt args)))
 
-(defun ee-code-c-d-pairs-eval (fname code)
-  "For each entry (C D) in `ee-code-c-d-pairs' for which D is a prefix of FNAME,
-evaluate f in the context of a big `let', and return the result."
-  (let ((efname (ee-expand fname)))
-    (ee-filter (lambda (c-d)
-		 (let* ((c (car c-d))
-			(d (cadr c-d))
-			(ed (ee-expand d)))
-		   (if (ee-prefixp ed efname)
-		       (let ((fname- (ee-remove-prefix ed efname)))
-			 (eval code)))))
-	       ee-code-c-d-pairs)))
+;; (defun ee-code-c-d-pairs-eval (fname code)
+;;   "For each entry (C D) in `ee-code-c-d-pairs' for which D is a prefix of FNAME,
+;; evaluate f in the context of a big `let', and return the result."
+;;   (let ((efname (ee-expand fname)))
+;;     (ee-filter (lambda (c-d)
+;;                  (let* ((c (car c-d))
+;;                         (d (cadr c-d))
+;;                         (ed (ee-expand d)))
+;;                    (if (ee-prefixp ed efname)
+;;                        (let ((fname- (ee-remove-prefix ed efname)))
+;;                          (eval code)))))
+;;                ee-code-c-d-pairs)))
 
 ;; «ee-find-xxxfile-sexps»  (to ".ee-find-xxxfile-sexps")
 (defun ee-find-xxxfile-sexps (fname)
+  "For each (C D) in ee-code-c-d-pairs test if D is a prefix of FNAME;
+when this is true remove the prefix D from FNAME, and put the sexp
+(find-Cfile \"FNAME-\") in the list of results. Return that list."
   (ee-code-c-d-pairs-eval
    fname
    '(list (ee-intern "find-%sfile" c) fname-)))
+
+;; Experimental:
+(defun ee-find-xxxfile-sexps (fname)
+  (;; ee-code-c-d-pairs-eval
+   ee-code-c-d-filter-2
+   fname
+   '(list (ee-intern "find-%sfile" c) fname-)))
+
+
 
 
 
@@ -719,7 +732,7 @@ evaluate f in the context of a big `let', and return the result."
 
 (defun ee-find-grep-functions (dir)
   "An internal function used by `find-grep-links'."
-  (ee-code-c-d-pairs-eval dir '(ee-intern "find-%sgrep" c)))
+  (ee-code-c-d-filter-2 dir '(ee-intern "find-%sgrep" c)))
 
 (defun ee-find-grep-commands ()
   "An internal function used by `find-grep-links'."

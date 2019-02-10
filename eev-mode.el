@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb01
+;; Version:    2019feb09
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -83,6 +83,7 @@ and: (find-eval-intro \"`M-k'\")"
   ;;      (find-wrap-intro "all wrapping functions")
   ;;      Source: (find-eev "eev-wrap.el")
   (define-key eev-mode-map "\M-A" 'eewrap-anchor)
+  (define-key eev-mode-map "\M-B" 'eewrap-escript-block)
   (define-key eev-mode-map "\M-C" 'eewrap-code-c-d)
   (define-key eev-mode-map "\M-D" 'eewrap-debian)
   (define-key eev-mode-map "\M-F" 'eewrap-find-fline)
@@ -91,7 +92,9 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-P" 'eewrap-pdflike)
   (define-key eev-mode-map "\M-R" 'eewrap-rm/mkdir/cd)
   (define-key eev-mode-map "\M-S" 'eewrap-sh)
-  (define-key eev-mode-map "\M-Z" 'eewrap-zsh)
+  (define-key eev-mode-map "\M-V" 'eewrap-audiovideo)
+  ;; (define-key eev-mode-map "\M-Z" 'eewrap-zsh)
+  ;; (define-key eev-mode-map "\M-#" 'eewrap-two-eepitches)
   ;;
   ;; Keys for creating temporary buffers with elisp hyperlinks:
   ;; The highest-level command is `M-h M-h', described here:

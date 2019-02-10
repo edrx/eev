@@ -991,6 +991,10 @@ the other ones are similar.
   execute the three defuns for `c', `d', and `e', and jump to
   \"/tmp/foo.tex\" from anywhere with `M-x e'.
 
+  A detailed explanation of `ee-copy-rest' can be found here:
+
+    (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")
+
 
 
 
