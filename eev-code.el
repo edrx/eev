@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan05
+;; Version:    2019feb13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -220,7 +220,8 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
 
 (defun ee-code-c-d-:grep (&rest rest) (ee-code-c-d-rest rest))  ; compat
 
-;; support functions
+;; Support functions.
+;; Maybe I should rewrite some of them using `ee-at0'...
 ;;
 (defun ee-find-node (dir manual page &rest pos-spec-list)
   (apply 'find-node (format "(%s%s)%s" dir manual page) pos-spec-list))

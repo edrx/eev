@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb03
+;; Version:    2019feb13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -34,8 +34,8 @@
 
 ;;; Commentary:
 
-;; See: (find-eev-quick-intro "7.1. eejump")
-;;      (find-eev-quick-intro "7.1. eejump" "meta-uppercase-j")
+;; See: (find-eev-quick-intro "7.1. `eejump'")
+;;      (find-eev-quick-intro "7.1. `eejump'" "meta-uppercase-j")
 ;;      (find-eev-quick-intro "7.2. The list of eejump targets")
 ;;      (find-eevfile "eev-mode.el" "M-j" "eejump")
 ;;      (find-eevfile "eev-mode.el" "M-J" "eewrap-eejump")
@@ -46,7 +46,7 @@
 
  
 (defun eejump (arg)
-  "See: (find-eev-quick-intro \"7.1. eejump\")
+  "See: (find-eev-quick-intro \"7.1. `eejump'\")
 and: (find-eejump-intro)"
   (interactive "P")
   (if (null arg)

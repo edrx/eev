@@ -430,6 +430,11 @@ See: (find-eepitch-intro)"
 "Set `eepitch' to run PROGRAM-AND-ARGS in comint mode, in the buffer \"*NAME*\"."
   (eepitch `(find-comintprocess ,name ',program-and-args)))
 
+(defalias 'ee-eepitch-comint 'eepitch-comint-at)
+
+
+
+
 
 
 
@@ -613,14 +618,19 @@ Use this to control programs that echo the commands that they receive."
   "Eval CODE at DIR.
 If DIR does not end with a slash then weird things might happen.
 Note the DIR is `ee-expand'-ed."
-  (let ((default-directory (ee-expand dir)))
-    (if (not (file-accessible-directory-p dir))
-	(error "Can't chdir to %s" dir))
+  (setq dir (ee-expand dir))
+  (if (not (file-accessible-directory-p dir))
+      (error "Can't chdir to %s" dir))
+  (let ((default-directory dir))
     (eval code)))
 
 (defun eepitch-comint-at (dir name &optional program-and-args)
   "Like `eepitch-comint', but executes `eepitch-buffer-create' at DIR."
   (ee-at0 dir `(eepitch-comint ,name ,program-and-args)))
+
+(defun eepitch-to-buffer (name)
+  (interactive "beepitch to buffer: ")
+  (eepitch `(switch-to-buffer ,name)))
 
 (defun with-pager-cat (code)
   "Run CODE with the environment variable PAGER set to \"cat\".
@@ -628,10 +638,6 @@ This is useful for for running processes that use pagers like
 \"more\" by default."
   (let ((process-environment (cons "PAGER=cat" process-environment)))
     (eval code)))
-
-(defun eepitch-to-buffer (name)
-  (interactive "beepitch to buffer: ")
-  (eepitch `(switch-to-buffer ,name)))
 
 (defun at-nth-window (n code)
   "Run `other-window' N times, run CODE there, and go back."

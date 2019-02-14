@@ -1,3 +1,19 @@
+2019-02-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-find-eejumps-header): show a link to
+	`(find-emacs-keys-intro "1. Basic keys (eev)")'.
+
+	* eev-intro.el (find-eev-quick-intro): renamed "7.1. eejump" to
+	"7.1. `eejump'".
+
+	* eepitch.el (ee-at0): rewritten.
+	(ee-eepitch-comint): made this an alias for `eepitch-comint-at'.
+
+	* eev-plinks.el (find-callprocessregion-ne): new function.
+	(find-callprocessregion): call `find-callprocessregion-ne'.
+	(find-comintprocess-ne): deleted - has a copy in eepitch.el.
+	(find-comintprocess): deleted - has a copy in eepitch.el.
+
 2019-02-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-quick-intro): small changes.

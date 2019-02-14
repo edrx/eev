@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb09
+;; Version:    2019feb13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -65,7 +65,7 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-K" 'bury-buffer)
   ;;
   ;; Jump to numbered places (or actions).
-  ;; See:    (find-eev-quick-intro "7.1. eejump")
+  ;; See:    (find-eev-quick-intro "7.1. `eejump'")
   ;; Source: (find-eev "eejump.el")
   (define-key eev-mode-map "\M-j" 'eejump)
   ;;

@@ -69,7 +69,7 @@
 ;;
 ;; Eejump (`M-j'):
 ;;   (find-eev-quick-intro "7. Quick access to one-liners")
-;;   (find-eev-quick-intro "7.1. eejump")
+;;   (find-eev-quick-intro "7.1. `eejump'")
 (require 'eejump)              ; (find-eev "eejump.el")
 ;;
 ;; Anchors:

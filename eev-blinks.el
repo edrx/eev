@@ -23,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb03
+;; Version:    2019feb13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -872,8 +872,8 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 
 (defun ee-find-eejumps-header ()
   ";; (find-eejumps)
-;; See: (find-eev-quick-intro \"7.1. eejump\")
-;;      (find-eejump-intro)
+;; See: (find-eev-quick-intro \"7.1. `eejump'\")
+;;      (find-emacs-keys-intro \"1. Basic keys (eev)\")
 ;; Current eejump targets:\n\n")
 
 (defun ee-find-eejumps-body ()

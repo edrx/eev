@@ -297,8 +297,8 @@ have to run an \"undo\"."
 ;;; |_|  |_|      \___/(_)  \___|\___|/ |\__,_|_| |_| |_| .__/ 
 ;;;                                 |__/                |_|    
 ;;
-;; See: (find-eev-quick-intro "7.1. eejump")
-;;      (find-eev-quick-intro "7.1. eejump" "meta-uppercase-j")
+;; See: (find-eev-quick-intro "7.1. `eejump'")
+;;      (find-eev-quick-intro "7.1. `eejump'" "meta-uppercase-j")
 ;; Old: (find-eejump-intro "Producing `eejump-nnn's and `eejump-nnn*'s")
 ;; (define-key eev-mode-map "\M-J" 'eewrap-eejump)
 

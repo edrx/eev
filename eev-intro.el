@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb01
+;; Version:    2019feb13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -783,8 +783,8 @@ literal ^O in a buffer by typing `C-q C-o'.
 =============================
 
 
-7.1. eejump
------------
+7.1. `eejump'
+-------------
 We may have elisp one-liners that we want to be able to execute very
 quickly, and from anywhere. For example, I keep all my notes that I
 have not organized yet in a file called \"~/TODO\", and if I type
@@ -1440,6 +1440,7 @@ See: (find-enode \"Keys\" \"key sequence\")
      (find-enode \"User Input\" \"`Control-a'\" \"usually written `C-a'\")
      (find-enode \"User Input\" \"<META> key\")
      (find-enode \"Completion\" \"<TAB>\")
+     (find-enode \"Minibuffer History\" \"<UP>\" \"<DOWN>\")
 
 <ESC> <ESC> <ESC>                (find-enode \"Quitting\")
 C-g   keyboard-quit              (find-enode \"Quitting\" \"`C-g'\")
@@ -3241,7 +3242,7 @@ Is is meant as both a tutorial and a sandbox.
 
 Note: this intro needs to be rewritten!
 Ideally it should _complement_ the material in:
-  (find-eev-quick-intro \"7.1. eejump\")
+  (find-eev-quick-intro \"7.1. `eejump'\")
 
 
 
@@ -4430,8 +4431,8 @@ It expands an idea that was mentioned briefly at:
 
 
 
-Local copies of files from the internet
-=======================================
+1. Local copies of files from the internet
+==========================================
 Emacs knows how to fetch files from the internet, but for most
 purposes it is better to use local copies. Suppose that the
 environment variable $S is set to ~/snarf/; then running this
@@ -4458,8 +4459,8 @@ treated as a pos-spec-list.
 
 
 
-The old way: psne
-=================
+2. The old way: psne
+====================
 A long time ago eev used to include a shell function called
 `psne' that ran all that with a single command. This:
 
@@ -4481,8 +4482,8 @@ its directory and save its name into the file \"~/.psne.log\".
 
 
 
-The new way: M-x brep
-=====================
+3. The new way: M-x brep
+========================
 Try to run this:
 
   (find-psne-links \"http://www.gnu.org/software/emacs/emacs-paper.html\")
@@ -4503,8 +4504,8 @@ used to do.
 
 
 
-The environment variable $S
-===========================
+4. The environment variable $S
+==============================
 If when eev is loaded by Emacs the environment variable $S is
 unset, it will be set to a default value - namely, to the
 expansion of \"$HOME/snarf\". Processes started from Emacs, such
@@ -4539,8 +4540,8 @@ their rcfiles by hand.
 
 
 
-`browse-url' and friends
-========================
+5. `browse-url' and friends
+===========================
 If you place the point on the URL below
 
   http://www.gnu.org/software/emacs/emacs-paper.html
@@ -5293,7 +5294,7 @@ print(open(\"/tmp/o\").read())
 
 
 6. Non-trivial examples
-========================
+=======================
 See:
 
   (find-prepared-intro \"An `ee' for Python\")
@@ -6007,7 +6008,7 @@ Old mentions to this:  \(find-TH \"eev-article\" \"delimited-regions\")
 
 
 Delimited (\"bounded\") regions
-===============================
+=============================
 Try:
 
 #
@@ -7018,10 +7019,10 @@ The most basic keys of eev are:
          `M-j' takes you to the list of jump targets.
         `M-2j' takes you to this help page.
         `M-5j' takes you to: (find-eev-intro)
-         See: (find-eejump-intro \"Families\")
+         See: (find-eev-quick-intro \"7.1. `eejump'\")
+              (find-eejump-intro \"Families\")
   M-h M-h - hyperlinks to here, plus help.
-         See: (find-eev-quick-intro \"7.1. eejump\")
-              (find-links-intro \"`find-here-links'\")
+         See: (find-links-intro \"`find-here-links'\")
 
 
 The mnemonics are:
@@ -7388,7 +7389,7 @@ Let's name its parts - they will be explained in the sections below.
 \(Mention code-c-d)
 
 1.2. Shorter elisp hyperlinks
--------------------------------
+-----------------------------
 
 1.3. URLs
 ---------
