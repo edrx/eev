@@ -1,3 +1,14 @@
+2019-02-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-escripts-intro): added some text.
+	(find-links-intro): rewrote several sections.
+
+	* eev-tlinks.el (find-latex-links): small changes.
+
+2019-02-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-sh): new function.
+
 2019-02-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-find-eejumps-header): show a link to

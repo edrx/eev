@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb13
+;; Version:    2019feb22
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -389,7 +389,8 @@ hyperlinks:
 
   (find-fline \"/tmp/\")
   (find-efunctiondescr 'find-file)
-  (find-man \"cat\")
+  (find-man \"date\")
+  (find-sh  \"date; sleep 1; date\")
 
 Not all elisp hyperlinks \"go somewhere\"; some are like buttons that
 perform an action, like the one below, that acts as if the user had
@@ -1749,6 +1750,7 @@ recommended reading order:
   19. (find-bounded-intro)
   20. (find-channels-intro)
   21. (find-videos-intro)
+  22. (find-escripts-intro)
 
 Items 0, 3, 4, 5, 6, 9, 10, 11 should give you a good grasp of the
 main ideas - namely, that _elisp hyperlinks and interactive scripts
@@ -2217,10 +2219,14 @@ Ideally it should _complement_ the material in:
 
 
 
-1. What is a hyperlink?
-=======================
-In a previous tutorial - (find-eval-intro) - we saw that several
-kinds of sexps can be used as hyperlinks. For example, these:
+1. Security vs. transparency
+============================
+In a previous tutorial - here:
+
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
+
+we saw that several kinds of sexps can be used as hyperlinks. For
+example, these ones:
 
   (find-fline \"/tmp/\")
   (find-node \"(emacs)Lisp Eval\")
@@ -2261,62 +2267,223 @@ kinds of hyperlinks.
 
 
 
-2. Elisp hyperlinks buffers
+2. Elisp hyperlinks: some conventions
+=====================================
+One of the main ideas of eev is that elisp hyperlinks can be
+\"followed\" with `M-e', and we can _usually_ \"go back\" with `M-k'.
+We saw a few cases where `M-k' didn't work for going back:
+
+  (find-eev-quick-intro \"3. Elisp hyperlinks\" \"eek\")
+  (find-eev-quick-intro \"3. Elisp hyperlinks\" \"find-sh0\")
+  (find-eev-quick-intro \"8.1. Introduction: `to'\")
+  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\" \"find-pdf-page\")
+
+Emacs has several functions that _sort_ of can be used as hyperlinks,
+but that are kind of messy. For example, this one
+
+  (man \"cat\")
+
+may split the current window or even create another frame, and this
+one
+
+  (describe-function 'find-file)
+
+displays a lot of output in the echo area. Compare them with their
+eev-ish variants:
+
+  (find-man \"cat\")
+  (find-man \"cat\" \"-n, --number\")
+  (find-efunctiondescr 'find-file)
+  (find-efunctiondescr 'find-file \"RET\")
+
+They:
+
+  1) Have names that start with \"find-\" to indicate that they are from
+     eev (practically all functions and variables defined in eev start
+     with the prefixes \"find-\" or \"ee\"),
+
+  2) they open the new buffer in the current window (to make it
+     easier to go back),
+
+  3) they don't display much output in the echo area,
+
+  4) calls to them can be \"refined\" with a pos-spec.
+
+
+
+
+3. Elisp hyperlinks buffers
 ===========================
 Emacs has several help commands, whose bindings start with `C-h',
 that display their information in (temporary) \"help buffers\" -
-and in many cases these generated help buffers have hyperlinks,
-that can be followed by typing <RET> on them.
+and in many cases these help buffers have hyperlinks, that can be
+followed by typing <RET> on them. They are explained here:
+
+  (find-enode \"Help\")
+
+An example:
+
+  (find-enode \"Key Help\")
+  (eek \"C-h k <down>\")
 
 Eev has something similar, but using the prefix `M-h' and
 following very different design decisions. Let's start with a
 comparison, between Emacs's `C-h f' (`describe-function') and
-eev's `M-h M-f' (`find-efunction-links'). Remember that `M-e'
-accepts prefix arguments, and that `M-2 M-e' displays the target
-of a hyperlink at another window without switching to there; use
-that on the two sexps below to see the results by yourself:
+eev's `M-h M-f' (`find-efunction-links'). Try:
 
+  \"C-h f   find-file\" -> (describe-function    'find-file)
   \"C-h f   find-file\" -> (find-efunctiondescr  'find-file)
   \"M-h M-f find-file\" -> (find-efunction-links 'find-file)
 
-Note that we used `find-efunctiondescr' instead of
-`describe-function'; `find-efunctiondescr' is a variant of
-`describe-function' that that follows eev's conventions, as
-explained here:
+`describe-function' and `find-efunctiondescr' are similar, but
+the second one is better for use with `M-e'; we saw the reasons
+in the previous section. `C-h f find-file' produces a buffer with
+readable text and \"usual\" hyperlinks that can be followed by
+typing RET on them, while `M-h M-f find-file' produces a buffer
+like this:
 
-  (find-eval-intro \"main conventions\")
+   _____________________________________________________________ 
+  |# (find-efunction-links 'find-file)                          |
+  |# (where-is 'find-file)                                      |
+  |# (describe-function 'find-file)                             |
+  |# (find-efunctiondescr 'find-file)                           |
+  |# (find-efunction 'find-file)                                |
+  |# (find-efunctionpp 'find-file)                              |
+  |# (find-efunctiond 'find-file)                               |
+  |# (find-estring (documentation 'find-file))                  |
+  |# (find-estring (documentation 'find-file t))                |
+  |# (symbol-file 'find-file 'defun)                            |
+  |# (find-fline (symbol-file 'find-file 'defun))               |
+  |                                                             |
+  |# (Info-goto-emacs-command-node 'find-file)                  |
+  |# (find-enode \"Command Index\" \"* find-file:\")                |
+  |# (find-elnode \"Index\" \"* find-file:\")                       |
+  |                                                             |
+  |                                                             |
+  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental)  ------|
+  |_____________________________________________________________|
 
-`C-h f find-file' produces a buffer with readable text and
-\"usual\" hyperlinks that can be followed by typing RET on them,
-while `M-h M-f find-file' produces a buffer like this:
+that looks very cryptic at first. It has lots of elisp
+hyperlinks, some of them starting with \"find-\" and following
+the conventions explained in section 2, some others not; some of
+the sexps in it are easy to understand - try all of them! -,
+while others are very technical.
 
-   ___________________________________________________________
-  |# (find-efunction-links 'find-file)                        |
-  |# (where-is 'find-file)                                    |
-  |# (describe-function 'find-file)                           |
-  |# (find-efunctiondescr 'find-file)                         |
-  |# (find-efunction 'find-file)                              |
-  |# (find-efunctionpp 'find-file)                            |
-  |# (find-efunctiond 'find-file)                             |
-  |# (find-estring (documentation 'find-file))                |
-  |# (find-estring (documentation 'find-file t))              |
-  |# (symbol-file 'find-file 'defun)                          |
-  |# (find-fline (symbol-file 'find-file 'defun))             |
-  |                                                           |
-  |# (Info-goto-emacs-command-node 'find-file)                |
-  |# (find-enode \"Command Index\" \"* find-file:\")              |
-  |# (find-elnode \"Index\" \"* find-file:\")                     |
-  |                                                           |
-  |                                                           |
-  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)--|
-  |___________________________________________________________|
+This is an example of an \"elisp hyperlinks buffer\". The
+functions that generate elisp hyperlinks buffers, like
+`find-efunction-links', follow the convention (1)-(4) from
+section 2 plus:
 
-What is that?...
+  5) The buffer name is \"*Elisp hyperlinks*\",
+
+  6) The first sexp(s) in the elisp hyperlinks buffer regenerates
+     the buffer,
+
+  7) all the sexps are prefixed with the string stored in the
+     variable `ee-hyperlink-prefix', to let these sexps be
+     pasted into e-scripts as comments.
+
+To understand the role of the first sexp let's look at the next
+level of complexity.
 
 
 
 
-3. Elisp hyperlinks buffers conventions
+4. Templated text
+=================
+Some functions, like `find-latex-links', generate buffers that
+are composed of a series of elisp hyperlinks, as in the previous
+section, followed by some \"templated text\". Try to execute the
+two sexps below with `M-2 M-e':
+
+  (find-latex-links)
+  (find-latex-links \"/tmp/latextest\")
+  (find-latex-links \"~/LATEX/foobar\")
+
+Remember that `M-2 M-e' splits the window like this,
+   __________ __________
+  |          |          |
+  |  source  |  target  |
+  |          |          |
+  |__________|__________|
+
+where the \"source buffer\" is this one and the \"target buffer\" will be
+this in the first case,
+   ___________________________________________________________________ 
+  |# (find-latex-links \"{stem}\")                                      |
+  |# (find-latex-links \"/tmp/test\")                                   |
+  |# (find-eev-quick-intro \"`find-latex-links'\")                      |
+  |# (ee-copy-rest 1 '(find-fline \"{stem}.tex\"))                      |
+  |                                                                   |
+  |% (defun c () (interactive) (find-sh \"pdflatex {stem}.tex\"))       |
+  |% (defun d () (interactive) (find-pdf-page \"{stem}.pdf\"))          |
+  |% (defun e () (interactive) (find-fline    \"{stem}.tex\"))          |
+  |% (defun w () (interactive) (find-texworks \"{stem}.tex\"))          |
+  |%                                                                  |
+  |\\documentclass{article}                                            |
+  |\\begin{document}                                                   |
+  |                                                                   |
+  |\\end{document}                                                     |
+  |                                                                   |
+  |                                                                   |
+  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental)  ------------|
+  |___________________________________________________________________|
+
+In the second case all the \"{stem}\"s are substituted by
+\"/tmp/latextest\", and in the third case they are substituted by
+\"~/LATEX/foobar\". If you execute the second sexp in that
+buffer, that is,
+
+  # (find-latex-links \"/tmp/test\")
+
+you get the buffer with the \"{stem}\"s substituted by \"/tmp/test\".
+
+We can think that `find-latex-links' generates an \"*Elisp
+hyperlinks*\" buffer from a template that depends on an argument
+`stem', and:
+
+  1) when `stem' is nil it is set to \"{stem}\",
+
+  2) the first sexp corresponds to how `find-latex-links' was
+     called (after the substitution of nils above),
+
+  3) the second sexp shows a typical, useful, value for `stem',
+
+  4) we can edit by hand the `stem's in the `find-latex-links'
+     sexps in first two lines, and run them to regenerate the
+     buffer with the new, hand-edited values.
+
+
+
+
+5. Functions for templated text
+===============================
+The function that is used to generate templated text from a
+string is called `ee-template0'. The function that generates a
+templated text from a list of sexps and strings is called
+`ee-links-to-string'. The function that generates an \"*Elisp
+hyperlinks*\" buffer from a list of sexps and strings is called
+`find-elinks'. They are explained, with examples, in the source
+code, at:
+
+  (find-eev \"eev-wrap.el\" \"ee-template0\")
+  (find-eev \"eev-elinks.el\" \"find-elinks\")
+  (find-eev \"eev-elinks.el\" \"find-elinks\" \"ee-links-to-string\")
+
+Some functions like `find-latex-links' generate buffers with
+elisp hyperlinks at the top, some templated text meant to be
+saved to a file at the bottom, and with a call to `ee-copy-rest'
+separating the top part from the bottom part. The `ee-copy-rest'
+is explained in detail here:
+
+  (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")
+
+
+
+
+
+
+6. Elisp hyperlinks buffers conventions
 =======================================
 Let's refer to Emacs's help buffers as \"C-h buffers\" and to
 eev's elisp hyperlink buffers as \"M-h buffers\". Here is a quick
@@ -2375,7 +2542,7 @@ be expanded later:
 
 
 
-4. `find-here-links'
+7. `find-here-links'
 ====================
 The most important of the commands that generates buffers with elisp
 hyperlinks - \"M-h commands\", in the terminology explained above - is
@@ -2464,7 +2631,7 @@ can compare the different cases using just <up>, <down>, and M-e.
 
 
 
-5. `find-here-links': usage patterns
+6. `find-here-links': usage patterns
 ====================================
 Typically what happens is this. We are putting our notes - eepitch
 blocks, hyperlinks, etc - in a certain file; let's refer to it as the
@@ -2517,7 +2684,7 @@ and step (3) sometimes gives several sexps for us to choose from]
 
 
 
-6. Basic and non-basic hyperlinks
+7. Basic and non-basic hyperlinks
 =================================
 How can we learn to recognize what each hyperlink sexp does? And
 which ones are safe(r), and which ones are not? How do we
@@ -2587,7 +2754,7 @@ that they generate.
 
 
 
-7. ee-hyperlink-prefix
+8. ee-hyperlink-prefix
 ======================
 `ee-hyperlink-prefix' is both a variable and a function that
 helps us set that variable; it started to an experiment on how to
@@ -2626,7 +2793,7 @@ Try this, with `M-2 M-e' on each line:
 
 
 
-8. The first line regenerates the buffer
+9. The first line regenerates the buffer
 ========================================
 \[To do: explain this convention with examples; explain the
 conventions for the \"variants of the first line\"\]
@@ -2640,8 +2807,8 @@ conventions for the \"variants of the first line\"\]
 
 
 
-9. Pointing to where we are now
-===============================
+10. Pointing to where we are now
+================================
 Several of the `M-h' commands are mainly meant to help us
 generate hyperlinks to \"where we are now\": to the current file,
 to the current Info page, to the current `find-*-intro', to an
@@ -2683,7 +2850,7 @@ buffer, and so on. They don't try to be very smart -
 
 
 
-10. The rest of the buffer
+11. The rest of the buffer
 ==========================
 
 Several elisp hyperlinks buffers are composed of two parts: a
@@ -3678,12 +3845,13 @@ Is is meant as both a tutorial and a sandbox.
 
 Note: this intro needs to be rewritten!
 Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
   (find-eev-quick-intro \"9.1. `code-c-d'\")
 
 
 
-Avoiding full path names
-========================
+1. Avoiding full path names
+===========================
 Suppose that you have downloaded (\"psne\"-ed) this URL,
 
   http://www.lua.org/ftp/lua-5.1.4.tar.gz
@@ -3727,8 +3895,8 @@ We will call these sexps with \"lua51\" \"shorter hyperlinks\".
 
 
 
-Shorter hyperlinks
-==================
+2. Shorter hyperlinks
+=====================
 How can we generate the definitions for `find-lua51file' and
 `find-lua51w3m' from just the strings \"lua51\" and
 \"~/usrc/lua-5.1.4/\"? Try this:
@@ -3756,8 +3924,8 @@ it. Note: the original (and rather confusing) terminology for the
 
 
 
-Extra arguments to `code-c-d'
-=============================
+3. Extra arguments to `code-c-d'
+================================
 `code-c-d' supports extra arguments - for example, this works:
 
   (find-code-c-d \"el\" \"~/usrc/emacs/lisp/\" :info \"elisp\")
@@ -3804,8 +3972,8 @@ Try:
 
 
 
-Other similar functions
-=======================
+4. Other similar functions
+==========================
 See: (find-brxxx-intro)
      (find-pdf-like-intro)
      (find-audiovideo-intro)
@@ -7269,10 +7437,21 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
+See: (find-eev \"eev.el\")
+     http://angg.twu.net/eev.html
+     http://angg.twu.net/eev-article.html
+     http://angg.twu.net/emacs.html#what-is-eev
+     https://www.gnu.org/brave-gnu-world/issue-13.html
+     http://angg.twu.net/eev-manifesto.html
+
 Eev's central idea is that you can keep \"executable logs\" of
-what you do, in a format that is easy to \"play back\". We call
-these executable logs \"e-scripts\", and this is an introduction
-to the _usual_ format of e-scripts. We start with a section on
+what you do, in a format that is reasonably readable and that is
+easy to \"play back\" later, step by step and in any order. We
+call these executable logs \"e-scripts\", and this is an
+introduction to some of the most usual formats for e-scripts.
+
+
+We start with a section on
 how to \"read\" existing e-scripts, and then we give some hints
 to help you start \"writing\" your own e-scripts, first in a
 single file and then on several files.
@@ -7281,6 +7460,117 @@ A typical e-script - like the ones in http://angg.twu.net/e/ - is
 made of an index followed by a series of \"e-script blocks\".
 Here is a miniature example, with an index with two entries
 followed by two e-script blocks:
+
+
+
+1. Prehistory
+=============
+Eev appeared by accident. I started using Emacs in 1994 or 1995.
+I knew a bit of Lisp from a course in the university, and after
+just a few hours using Emacs I started putting sexps like this in
+my notes,
+
+  (find-file \"/usr/share/emacs/19.24/lisp/\")
+  (find-file \"/usr/share/emacs/19.24/lisp/files.el\")
+
+to go quickly to files or directories that I found interesting. A
+few days after that I wrote a function - that I could invoke as
+`M-x eev' - that saved the text of the region in the file
+\"~/ee.sh\", and I had an alias `ee' in my shell that would
+execute the contents of that file in verbose mode, i.e., showing
+each line before executing it. \"Eev\" meant
+\"Emacs-execute-verbosely\", but `M-x eev' only saved some
+commands into \"~/ee.sh\"; to execute them I had to switch to a
+terminal and type \"eev\". If the function `eev' was called with
+a string argument instead of being called interactively it would
+write that string to \"~/ee.sh\"; a sexp like
+
+  (eev \"man tar\")
+
+was a very primitive hyperlink to the manpage for \"tar\". I
+wrote extensions to these ideas gradually, and for YEARS I was
+absolutery sure that Emacs was meant to be used exactly in that
+way, and that everybody used elisp code as hyperlinks. At some
+point in 1999 I sent a message to a mailing list about Emacs, and
+I casually apologized for using my own functions - with weird
+names - for elisp hyperlinks and for saving code to be sent to a
+shell, and asked where in the elisp source files I could find the
+standard function that did that.
+
+RMS himself answered.
+
+He said that no one else was using Emacs in that way; that that
+was very interesting, and that someone should clean up and
+document my code so that it could be included in Emacs.
+
+Eev is not yet an official part of Emacs (long story!) and
+eepitch practically replaced `M-x eev' as a way to execute shell
+commands.
+
+
+
+
+
+2. E-scripts
+============
+The best short definition for eev that I've found involves some
+cheating, as it is a circular definition: \"eev is a library that
+adds support for e-scripts to Emacs\" - and e-scripts are files
+that contain chunks meant to be processed by eev's functions.
+Almost any file can contain parts \"meant for eev\": for example,
+a HOWTO or README file about some program will usually contain
+some shell commands, and we can use `M-x eev' or eepitch to send
+these commands to a shell; most of my own files contain lots of
+elisp hyperlinks, and some of them even contain eepitch blocks
+inside multi-line comments - for example, this Lua library:
+
+  http://angg.twu.net/LATEX/dednat6/eoo.lua.html#Vector
+
+Some of my files are \"pure e-scripts\": they are mostly made of
+\"e-script blocks\" like the ones described here:
+
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+
+Here are two examples structured like this:
+
+  http://angg.twu.net/e/emacs.e.html
+  http://angg.twu.net/e/lua5.e.html
+
+Each of these \"e-script blocks\" is an \"executable log\" of
+something that I was trying to understand, or trying to do.
+
+
+
+
+3. Sharing
+==========
+
+
+
+
+
+
+
+mark these commands and
+execute them with M-x eev; and if we have the habit of using eev
+and we are writing code in, say, C or Lua we will often put elisp
+hyperlinks inside comment blocks in our code. These two specific
+languages (and a few others) have a feature that is quite
+convenient for eev: they have syntactical constructs that allow
+comment blocks spanning several lines --- for example, in Lua,
+where these comment blocks are delimited by --(( and
+--))s, we can have a block like
+
+
+
+
+
+
+
+
+
+
+I knew a bit of Lisp, and after just a few hours
 
 
 

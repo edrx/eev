@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018may30
+;; Version:    2019feb16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -655,9 +655,11 @@ This is useful for for running processes that use pagers like
 ;;;                   |___/             |___/           
 
 ;; Shells
-(defun eepitch-shell  () (interactive) (eepitch '(shell)))
-(defun eepitch-shell2 () (interactive) (eepitch '(shell "*shell 2*")))
-(defun eepitch-eshell () (interactive) (eepitch '(eshell)))
+;; The first three are defined above.
+;; (defun eepitch-shell  () (interactive) (eepitch '(shell)))
+;; (defun eepitch-shell2 () (interactive) (eepitch '(shell "*shell 2*")))
+;; (defun eepitch-eshell () (interactive) (eepitch '(eshell)))
+(defun eepitch-sh   () (interactive) (eepitch-comint "sh" "sh"))
 (defun eepitch-bash () (interactive) (eepitch-comint "bash" "bash"))
 (defun eepitch-dash () (interactive) (eepitch-comint "dash" "dash"))
 (defun eepitch-ksh  () (interactive) (eepitch-comint "ksh" "ksh"))

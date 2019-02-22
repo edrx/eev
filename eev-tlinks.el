@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb10
+;; Version:    2019feb22
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1705,6 +1705,7 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
   (let ((stem- (file-name-nondirectory stem)))
     (apply 'find-elinks
      `((find-latex-links ,stem ,@pos-spec-list)
+       (find-latex-links "/tmp/test")
        ;; Convention: the first sexp always regenerates the buffer.
        ;; (find-efunction 'find-latex-links)
        (find-eev-quick-intro "`find-latex-links'")
@@ -1713,7 +1714,7 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
        ,(ee-template0 "\
 % (defun c () (interactive) (find-sh \"pdflatex {stem-}.tex\"))
 % (defun d () (interactive) (find-pdf-page \"{stem}.pdf\"))
-% (defun e () (interactive) (find-fline \"{stem}.tex\"))
+% (defun e () (interactive) (find-fline    \"{stem}.tex\"))
 % (defun w () (interactive) (find-texworks \"{stem}.tex\"))
 %
 \\documentclass{<}article{>}

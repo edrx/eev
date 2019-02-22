@@ -105,7 +105,7 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
 ;;     -->  "a5b"
 ;; 
 ;;   (let ((hi "Here: ") (a 22) (b 33)) (ee-template00 "{hi}{a}+{b}={(+ a b)}"))
-;;       -->  "22 + 33 = 55"
+;;       -->  "22+33=55"
 ;;
 ;;   (ee-template0 "{<} a{(+ 2 3)} {>}")
 ;;       -->  "{ a5 }"
