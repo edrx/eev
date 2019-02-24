@@ -154,8 +154,8 @@ This function is not very smart - it doesn't understand section names."
 ;;
 ;;    (find-elinks '((a sexp) "a string"))
 ;;
-;; In simple examples like this one each element in LIST becomes a
-;; line in the output string: sexps are prefixed by
+;; In simple examples like the one above each element in LIST becomes
+;; a line in the output string: sexps are prefixed by
 ;; `ee-hyperlink-prefix', and each string becomes a line. Try:
 ;;
 ;;    (find-elinks '((a sexp) (another) "" (sexp) "a string" "another"))

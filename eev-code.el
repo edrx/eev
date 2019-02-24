@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb13
+;; Version:    2019feb24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -32,6 +32,18 @@
 
 ;;; Commentary:
 
+;; This file defines `code-c-d', that is used to mass-produce
+;; short(er) hyperlinks, as explained here:
+;;
+;;   (find-eev-quick-intro "9. Shorter hyperlinks")
+;;   (find-eev-quick-intro "9.1. `code-c-d'")
+;;
+;; and it also defines `find-code-c-d', that is a debugging function
+;; that can be considered as a hyperlink to templated text. Try:
+;;
+;;   (find-code-c-d "CODE" "/DIR/" :info "INFO")
+
+
 
 
 
@@ -42,7 +54,7 @@
 ;;              (find-elnode "Constant Variables")
 ;; The name "tail call" is misleading - this is recursive,
 ;; but not a tail call in the usual sense.
-;;
+
 (defun ee-tail-call (fmt rest)
   "An internal function used to support keyword-argument pairs."
   (cond ((null rest) "")

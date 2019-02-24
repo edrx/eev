@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb09
+;; Version:    2019feb24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -100,12 +100,30 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
 ;;;                                   |_|                          
 ;;
 ;; «ee-template0» (to ".ee-template0")
-;; Tests:
+;; The functions `ee-template00' and `ee-template0' are used by
+;; several functions of the `eewrap-*' family and also by functions
+;; like `find-latex-links', that create a temporary buffer with elisp
+;; hyperlinks followed by a "templated string". In low-level terms,
+;;
+;;   (ee-template00 STR)
+;;
+;; replace substrings enclosed by `{}'s in STR by the result of
+;; evaluating them; in particular, it replaces each `{VAR}' in STR by
+;; the contents of the variable VAR. Here are some examples/tests:
+;;
 ;;   (ee-template00 "a{(+ 2 3)}b")
 ;;     -->  "a5b"
 ;; 
 ;;   (let ((hi "Here: ") (a 22) (b 33)) (ee-template00 "{hi}{a}+{b}={(+ a b)}"))
+;;       -->  "Here: 22+33=55"
+;;
+;;   (defun foo (a b) (ee-template00 "{a}+{b}={(+ a b)}"))
+;;   (foo 22 33)
 ;;       -->  "22+33=55"
+;;
+;; `ee-template0' is like `ee-template00' but it adds a trick that
+;; makes each "{<}" and each "{>}" in STR be replaced by "{" and "}"
+;; respectively. For example:
 ;;
 ;;   (ee-template0 "{<} a{(+ 2 3)} {>}")
 ;;       -->  "{ a5 }"

@@ -23,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb13
+;; Version:    2019feb23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -56,6 +56,8 @@
 ;; «.find-Package»		(to "find-Package")
 ;; «.find-epp»			(to "find-epp")
 ;; «.find-einternals»		(to "find-einternals")
+;; «.find-einsert»		(to "find-einsert")
+;; «.find-eunicode»		(to "find-eunicode")
 ;; «.find-eejumps»		(to "find-eejumps")
 
 
@@ -339,27 +341,27 @@ then go to the position specified by POS-SPEC-LIST.\n
 ;;   (find-efaces              "default")
 ;;   (find-efacedescr 'default "Foreground:")
 
-(defun find-efaces (&rest pos-spec-list)
-  "Hyperlink to the result of running `list-faces-display'."
-  (interactive)
-  (apply 'find-wottb-call '(list-faces-display) "*Faces*" pos-spec-list))
-
-(defun find-ecolors (&rest pos-spec-list)
-  "Hyperlink to the result of running `list-colors-display'."
-  (interactive)
-  (apply 'find-wottb-call '(list-colors-display) "*Colors*" pos-spec-list))
-
 (defun find-echardescr (&optional pos &rest pos-spec-list)
   "Hyperlink to the result of running `describe-char' at POS."
   (interactive)
   (setq pos (or pos (point)))
   (apply 'find-wottb-call '(describe-char pos) "*Help*" pos-spec-list))
 
+(defun find-ecolors (&rest pos-spec-list)
+  "Hyperlink to the result of running `list-colors-display'."
+  (interactive)
+  (apply 'find-wottb-call '(list-colors-display) "*Colors*" pos-spec-list))
+
 (defun find-efacedescr (&optional face &rest pos-spec-list)
   "Hyperlink to the result of running `describe-face' on FACE."
   ;; (interactive (list (read-face-name "Describe face")))
   (interactive (list (face-at-point)))
   (apply 'find-wottb-call '(describe-face face) "*Help*" pos-spec-list))
+
+(defun find-efaces (&rest pos-spec-list)
+  "Hyperlink to the result of running `list-faces-display'."
+  (interactive)
+  (apply 'find-wottb-call '(list-faces-display) "*Faces*" pos-spec-list))
 
 (defun find-etpat (&optional pos &rest pos-spec-list)
   "Hyperlink to the result of running `describe-text-properties' at point.
@@ -775,7 +777,6 @@ explicitly. Try this: (progn (message \"foo\") \"bar\")"
 ;; «find-einternals»  (to ".find-einternals")
 ;; Hyperlinks to other things internal to Emacs
 ;; Tests:
-;;   (find-einsert '((32 255) 10 (8592 9167)))
 ;;   (find-etpat)
 ;;   (find-etpat0)
 
@@ -801,25 +802,6 @@ Example: (find-eminorkeymapdescr 'eev-mode)"
 Example: (find-ekeymapdescr (ee-minor-mode-keymap 'eev-mode))"
   (cdr (assq mode-symbol minor-mode-map-alist)))
 
-;; Test: (ee-insert "\n;; " '(?a ?z) 32 "Foo")
-(defun ee-insert (&rest rest)
-  "Insert characters, strings, or ranges of characters.
-Example: (ee-insert '(?a ?z) 10 \"Foo!\")"
-  (while rest
-    (let ((o (car rest)))
-      (cond ((stringp o) (insert o))
-	    ((numberp o) (if (char-valid-p o) (insert o)))
-	    ((consp o) (mapc 'ee-insert (apply 'number-sequence o)))
-	    (t (error "Not string/int/pair: %S" o))))
-    (setq rest (cdr rest))))
-
-;; Test: (find-einsert '((32 1000) 10 (8000 12000)))
-(defun find-einsert (what &rest rest)
-"See `ee-insert'.
-Example of use: (find-einsert '((32 1000) 10 (8000 12000)))"
-  (apply 'find-eoutput-reuse "*einsert*"
-	 `(apply 'ee-insert ',what) rest))
-
 ;; Broken? See: (find-efile "international/ccl.el")
 (defun find-eccldump (ccl-code &rest pos-spec-list)
   "Hyperlink to the result of running `ccl-dump' on CCL-CODE.
@@ -842,6 +824,65 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 		 (list-non-iso-charset-chars charset))
 		(t (error "Invalid character set %s" charset)))
 	 pos-spec-list))
+
+
+
+;;;   __ _           _            _                     _   
+;;;  / _(_)_ __   __| |       ___(_)_ __  ___  ___ _ __| |_ 
+;;; | |_| | '_ \ / _` |_____ / _ \ | '_ \/ __|/ _ \ '__| __|
+;;; |  _| | | | | (_| |_____|  __/ | | | \__ \  __/ |  | |_ 
+;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|___/\___|_|   \__|
+;;;                                                         
+;; «find-einsert» (to ".find-einsert")
+
+;; Test: (ee-insert "\n;; " '(?a ?z) 32 "Foo")
+(defun ee-insert (&rest rest)
+  "Insert characters, strings, or ranges of characters.
+Example: (ee-insert '(?a ?z) 10 \"Foo!\")"
+  (while rest
+    (let ((o (car rest)))
+      (cond ((stringp o) (insert o))
+	    ((numberp o) (if (char-valid-p o) (insert o)))
+	    ((consp o) (mapc 'ee-insert (apply 'number-sequence o)))
+	    (t (error "Not string/int/pair: %S" o))))
+    (setq rest (cdr rest))))
+
+;; Tests: (find-einsert '((32 1000) 10 (8000 12000)))
+;;        (find-einsert '("Greek:\n" (913 969) 10 "Bold:\n" (120276 120327)))
+(defun find-einsert (what &rest rest)
+"Show characters, strings, and ranges of characters in a temporary buffer.
+Example of use: (find-einsert '((32 1000) 10 (8000 12000)))"
+  (apply 'find-eoutput-reuse "*einsert*"
+	 `(apply 'ee-insert ',what) rest))
+
+
+
+;;;   __ _           _                        _               _      
+;;;  / _(_)_ __   __| |       ___ _   _ _ __ (_) ___ ___   __| | ___ 
+;;; | |_| | '_ \ / _` |_____ / _ \ | | | '_ \| |/ __/ _ \ / _` |/ _ \
+;;; |  _| | | | | (_| |_____|  __/ |_| | | | | | (_| (_) | (_| |  __/
+;;; |_| |_|_| |_|\__,_|      \___|\__,_|_| |_|_|\___\___/ \__,_|\___|
+;;;                                                                  
+;; «find-eunicode» (to ".find-eunicode")
+
+(defvar ee-unicode-data-file
+  "/usr/share/unicode/UnicodeData.txt"
+  "The table of unicode characters used by `find-eunicodeucs'.
+Hint: install the Debian package \"unicode-data\".")
+
+;; Test: (find-eunicode "203D;INTERROBANG")
+(defun find-eunicode (&rest pos-spec-list)
+  "Find POS-SPEC-LIST in the file UnicodeData.txt."
+  (apply 'find-fline ee-unicode-data-file pos-spec-list))
+
+;; Test: run the `eek' sexp below.
+;;   (find-einsert '("Greek:\n" (913 969) 10 "Bold:\n" (120276 120327)) 4)
+;;   (eek "<up> M-e  C-x 1  C-x 3  C-x o  M-h M-n")
+(defun find-eunicodeucs (c &rest pos-spec-list)
+  "Find the entry about the character at point in the file UnicodeData.txt."
+  (interactive (list (char-after (point))))
+  (apply 'find-eunicode (format "\n%04X" (encode-char c 'ucs)) pos-spec-list))
+
 
 
 

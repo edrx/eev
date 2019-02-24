@@ -1,3 +1,18 @@
+2019-02-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-links-intro): rewrote some sections.
+	(find-links-conv-intro): new function.
+
+	* eev-wrap.el: added comments about `ee-template0' and
+	`ee-template00'.
+
+	* eev-blinks.el (ee-unicode-data-file): new variable.
+	(find-eunicode): new function.
+	(find-eunicodeucs): new function.
+
+	* eev-mode.el (eev-mode-map-set): new binding: `M-h M-n'
+	(`find-eunicodeucs').
+
 2019-02-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-escripts-intro): added some text.

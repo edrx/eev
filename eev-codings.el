@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018mai16
+;; Version:    2019feb24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-coding.el>
@@ -38,6 +38,24 @@
 ;; trick unneccessary - `ee-format-as-anchor' now uses `ee-tolatin1'
 ;; to produce a search string that works both unibyte, on UTF-8, on
 ;; latin-1 files and some (most?) other encodings.
+;;
+;; NOTE: `ee-tolatin1' a hack! Conversion to latin-1 seems to work in
+;; most cases, but I don't understand very well the reasons why... I
+;; have some notes about all this in these e-script blocks in my notes
+;; about Emacs:
+;;
+;;   (find-es "emacs" "unibyte-2019")
+;;   (find-es "emacs" "unibyte-2019-search")
+;;   (find-es "emacs" "creating-utf8-files")
+;;   (find-es "emacs" "ee-re-to")
+;;   http://angg.twu.net/e/emacs.e.html#unibyte-2019
+;;   http://angg.twu.net/e/emacs.e.html#unibyte-2019-search
+;;   http://angg.twu.net/e/emacs.e.html#creating-utf8-files
+;;   http://angg.twu.net/e/emacs.e.html#ee-re-to
+
+;; «.ee-tolatin1»	(to "ee-tolatin1")
+;; «.ee-tolatin1-re»	(to "ee-tolatin1-re")
+
 
 
 
@@ -47,6 +65,7 @@
 ;;; |  __/  __/_____| || (_) | | (_| | |_| | | | | |
 ;;;  \___|\___|      \__\___/|_|\__,_|\__|_|_| |_|_|
 ;;;                                                 
+;; «ee-tolatin1» (to ".ee-tolatin1")
 ;; Original comment:
 ;;
 ;; 2017jul29: this is a low-level hack to allow anchors like "«tag»"
@@ -64,6 +83,35 @@ unibyte (raw-text) and multibyte (e.g., utf-8) buffers. This may
 fail if STR contains chars that are not in the latin-1 range.
 This function is used by `ee-format-as-anchor'."
   (ee-to-coding 'latin-1 str))
+
+
+
+
+;;;                  _        _       _   _       _                
+;;;   ___  ___      | |_ ___ | | __ _| |_(_)_ __ / |      _ __ ___ 
+;;;  / _ \/ _ \_____| __/ _ \| |/ _` | __| | '_ \| |_____| '__/ _ \
+;;; |  __/  __/_____| || (_) | | (_| | |_| | | | | |_____| | |  __/
+;;;  \___|\___|      \__\___/|_|\__,_|\__|_|_| |_|_|     |_|  \___|
+;;;                                                                
+;; «ee-tolatin1-re» (to ".ee-tolatin1-re")
+;; 2019feb24: this is a hack!
+;; Test code: (find-es "emacs" "unibyte-2019-search")
+
+(defun ee-tolatin1-re (re)
+  "Make the regexp RE compatible with the current buffer.
+This is similar to `ee-tolatin1', but for regexps that contain
+the \"«»\"s used to delimit anchors. For example,
+
+  (ee-tolatin1-re \"\\253\\([!-~]\\)\\273\")
+
+should return a regexp for anchors that works in the current
+buffer. This is a hack and a work in progress!!! See the code for
+comments."
+    (let ((bfcs buffer-file-coding-system))
+      (cond ((eq bfcs 'iso-latin-1-unix) (ee-tolatin1 re))
+            ((eq bfcs 'raw-text-unix)    re)
+            ((eq bfcs 'utf-8-unix)       (ee-tolatin1 re))
+            (t                           re))))
 
 
 

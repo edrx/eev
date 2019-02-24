@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb13
+;; Version:    2019feb23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -107,6 +107,7 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
   (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)     
   (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)      
+  (define-key eev-mode-map "\M-h\M-n" 'find-eunicodeucs)
   (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
   (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links) 
   (define-key eev-mode-map "\M-hf"    'find-file-links)      
