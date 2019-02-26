@@ -1,3 +1,9 @@
+2019-02-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro, find-eev-intro)
+	(find-prepared-intro, find-escripts-intro, find-rcirc-intro):
+	small changes.
+
 2019-02-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-install-intro): small changes.

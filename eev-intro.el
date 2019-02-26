@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb25
+;; Version:    2019feb26
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -267,6 +267,8 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 Source code:  (find-efunction 'find-eev-quick-intro)
 More intros:  (find-emacs-keys-intro)
               (find-eev-intro)
+              (find-links-conv-intro)
+              (find-escripts-intro)
               (find-eval-intro)
               (find-links-intro)
               (find-eepitch-intro)
@@ -1813,33 +1815,45 @@ Is is meant as both a tutorial and a sandbox.
 
 Here is a list of all the available sandbox-y tutorials that
 explain parts and concepts of eev, listed in (a kind of)
-recommended reading order:
+recommended reading order. These are the basic ones:
 
    0. (find-eev-quick-intro)
    1. (find-emacs-keys-intro)
-   2. (find-eev-install-intro)
-   3. (find-eev-intro)
-   4. (find-eval-intro)
-   5. (find-links-intro)
-   6. (find-links-conv-intro)
-   7. (find-eepitch-intro)
-   8. (find-wrap-intro)
-   9. (find-eejump-intro)
-  10. (find-anchors-intro)
-  11. (find-code-c-d-intro)
-  12. (find-pdf-like-intro)
-  13. (find-brxxx-intro)
-  14. (find-psne-intro)
+   2. (find-eev-intro)
+   3. (find-eev-install-intro)
 
-  15. (find-audiovideo-intro)
+These ones explain ideas, conventions, and usage patterns:
+
+   4. (find-escripts-intro)
+   5. (find-links-conv-intro)
+
+These are older and more technical versions of sections of the
+eev-quick-intro:
+
+   6. (find-eval-intro)
+   7. (find-links-intro)
+   8. (find-brxxx-intro)
+   9. (find-eepitch-intro)
+  10. (find-wrap-intro)
+  11. (find-eejump-intro)
+  12. (find-anchors-intro)
+  13. (find-code-c-d-intro)
+  14. (find-pdf-like-intro)
+  15. (find-psne-intro)
+
+These are etcs:
+
   16. (find-multiwindow-intro)
-  17. (find-rcirc-intro)
-  18. (find-templates-intro)
-  19. (find-prepared-intro)
-  20. (find-bounded-intro)
-  21. (find-channels-intro)
-  22. (find-videos-intro)
-  23. (find-escripts-intro)
+  17. (find-audiovideo-intro)
+  18. (find-rcirc-intro)
+  19. (find-templates-intro)
+  20. (find-videos-intro)
+
+These ones explain advanced features that require extra setup:
+
+  21. (find-prepared-intro)
+  22. (find-bounded-intro)
+  23. (find-channels-intro)
 
 Items 0, 3, 4, 5, 6, 9, 10, 11 should give you a good grasp of the
 main ideas - namely, that _elisp hyperlinks and interactive scripts
@@ -2768,7 +2782,7 @@ Ideally it should _complement_ the material in:
 
 
 
-5. Functions for templated text
+1. Functions for templated text
 ===============================
 The function that is used to generate templated text from a
 string is called `ee-template0'. The function that generates a
@@ -2793,7 +2807,7 @@ is explained in detail here:
 
 
 
-8. `find-here-links'
+2. `find-here-links'
 ====================
 The most important of the commands that generates buffers with elisp
 hyperlinks - \"M-h commands\", in the terminology explained above - is
@@ -2882,7 +2896,7 @@ can compare the different cases using just <up>, <down>, and M-e.
 
 
 
-9. `find-here-links': usage patterns
+3. `find-here-links': usage patterns
 ====================================
 Typically what happens is this. We are putting our notes - eepitch
 blocks, hyperlinks, etc - in a certain file; let's refer to it as the
@@ -2935,7 +2949,7 @@ and step (3) sometimes gives several sexps for us to choose from]
 
 
 
-11. ee-hyperlink-prefix
+4. ee-hyperlink-prefix
 =======================
 `ee-hyperlink-prefix' is both a variable and a function that
 helps us set that variable; it started to an experiment on how to
@@ -2974,7 +2988,7 @@ Try this, with `M-2 M-e' on each line:
 
 
 
-12. The first line regenerates the buffer
+5. The first line regenerates the buffer
 =========================================
 \[To do: explain this convention with examples; explain the
 conventions for the \"variants of the first line\"\]
@@ -2988,7 +3002,7 @@ conventions for the \"variants of the first line\"\]
 
 
 
-13. Pointing to where we are now
+6. Pointing to where we are now
 ================================
 Several of the `M-h' commands are mainly meant to help us
 generate hyperlinks to \"where we are now\": to the current file,
@@ -3031,7 +3045,7 @@ buffer, and so on. They don't try to be very smart -
 
 
 
-14. The rest of the buffer
+7. The rest of the buffer
 ==========================
 Several elisp hyperlinks buffers are composed of two parts: a
 series of links at the top, and then a template-generated text
@@ -5838,8 +5852,8 @@ support for Rcirc (and no support for ERC).
 
 
 
-The server buffer and the channel buffers
-=========================================
+1. The server buffer and the channel buffers
+============================================
 If you type `M-6 M-6 M-j' - or `M-e' on the line below - then eev
 runs this,
 
@@ -5879,8 +5893,8 @@ when we want to check the status of our connection to Freenode.
 
 
 
-Messages and commands
-=====================
+2. Messages and commands
+========================
 IRC is a command-line-ish protocol, in which lines starting with
 \"/\" are treated as commands and other lines as messages. A
 message typed at the #eev channel buffer is broadcast to all
@@ -5897,7 +5911,7 @@ in #eev than when in #emacs. See:
 
 
 
-Other channels
+3. Other channels
 ==============
 
 where `find-freenode-3a' is based on `find-3a', described here:
@@ -5906,8 +5920,10 @@ where `find-freenode-3a' is based on `find-3a', described here:
 
   (find-eev \"eev-rcirc.el\")
 
-If you are new to IRC
-=====================
+
+
+4. If you are new to IRC
+========================
 Most of the discussions between Free Software developers still
 happen in IRC channels, and mostly at Freenode. The best way to
 understand what IRC is - for modern people, I mean - is probably
@@ -5940,7 +5956,7 @@ For more information see:
   (find-node \"(rcirc)Top\")
   (find-node \"(rcirc)Internet Relay Chat\")
   (find-node \"(rcirc)rcirc commands\")
-  http://www.emacswiki.org/emacs/RcIrc
+  httpa://www.emacswiki.org/emacs/RcIrc
   http://www.irchelp.org/
 
   (find-node \"(erc)Top\")
@@ -6106,8 +6122,9 @@ This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
 
 
-Prepared shells
-===============
+
+1. Prepared shells
+==================
 Long before eepitch had been created, eev had another way -
 technically much simpler, but clumsier from the user's point of
 view - to send commands to external shells (and other shell-like
@@ -6152,8 +6169,8 @@ function ee () { set -v; . ~/.eev/ee.sh; set +v; }
 
 
 
-`ee'
-====
+2. `ee'
+=======
 \[Explain how several interpreters can be programmed to accept
 an `ee' command to execute temporary scripts\]
 
@@ -6166,8 +6183,8 @@ an `ee' command to execute temporary scripts\]
 
 
 
-An `ee' for Python
-==================
+3. An `ee' for Python
+=====================
 Here is a simple way to make Python execute commands saved in a
 temporary script when the user types `ee()' (note that it is not
 just `ee' - the `()' is needed). We will show first an example in
@@ -6209,8 +6226,8 @@ print(foo(6))
 
 
 
-`eepy'
-======
+4. `eepy'
+=========
 The function `eev' receives three parameters, called `s', `e', and
 `altfile'; `e' and `altfile' are optional, and `s' should be either a
 string or a number. When `s' is a string, then the commands to be
@@ -6262,8 +6279,8 @@ print(foo(6))
 
 
 
-`M-x eepy' and `M-x eev'
-========================
+5. `M-x eepy' and `M-x eev'
+===========================
 Now let's define a more realistic `eepy' - one that can also be
 called interactively. We want `M-x eepy' to save the current
 _region_ into the temporary script; `eepy' has to be a _command_,
@@ -7622,22 +7639,20 @@ what you do, in a format that is reasonably readable and that is
 easy to \"play back\" later, step by step and in any order. We
 call these executable logs \"e-scripts\".
 
-This tutorial is an introduction to some of the most usual
-formats for e-scripts:
+We will start this intro by explaining how eev and e-scripts
+appeared. Then we will discuss some of the most usual formats of
+e-scripts, that are, in order or complexity:
 
-  1) files with e-script blocks,
-  2) files with elisp hyperlinks,
-  3) source files with eepitch blocks in multi-line comments.
+  1) a file with elisp hyperlinks,
+  2) a file with e-script blocks and an index,
+  3) several files with elisp hyperlinks and e-script blocks,
+  4) source files with eepitch blocks in multi-line comments,
+  5) temporary buffers like the ones generated by
+     `find-latex-links' and `find-lua-links'.
 
+We will see first how to \"read\" (and \"play back\"!) them, then
+how to create e-scripts in those formats.
 
-We start with a section on how to \"read\" existing e-scripts,
-and then we give some hints to help you start \"writing\" your
-own e-scripts, first in a single file and then on several files.
-
-A typical e-script - like the ones in http://angg.twu.net/e/ - is
-made of an index followed by a series of \"e-script blocks\".
-Here is a miniature example, with an index with two entries
-followed by two e-script blocks (...)
 
 
 
@@ -7683,8 +7698,7 @@ document my code so that it could be included in Emacs.
 
 Eev is not yet an official part of Emacs (long story!) and
 eepitch practically replaced `M-x eev' as a way to execute shell
-commands. See: (find-prepared-intro)
-
+commands. For more on `M-x eev', see: (find-prepared-intro)
 
 
 
@@ -7723,26 +7737,91 @@ something that I was trying to understand, or trying to do.
 
 3. Sharing
 ==========
+One of my first public texts about eev was the \"Eev Manifesto\":
+
+  http://angg.twu.net/eev-manifesto.html
+
+Here are its main parts.
+
+  Everybody is fluent in only a small fraction of all Unix
+  commands. If you could \"listen\" to how the Unix gurus
+  \"speak\" to their machines you would learn which \"words\" are
+  related to solving a particular task, and learn how they fit in
+  \"sentences\". By checking the \"dictionary entries\" for
+  them (i.e., manpages, info pages, READMEs, source code, etc)
+  you could learn the real meaning of them. But then you'd be
+  learning Unix by immersion, from real use, instead of having to
+  rely only on \"textbooks\", \"dictionaries\" and sometimes
+  \"Rosetta stones\", \"graffitis on toilet walls\" and \"old
+  newspapers\".
+
+  The fact is that you can make a record of how you \"speak\"
+  Unix, and more, you can become a lot more productive if you do
+  so. Many tasks consist on short fixed sequences of commands:
+  connecting to your ISP via modem, unpacking a source package
+  and recompiling it, printing a text file in two-column mode,
+  and so on. The trick is that with some functions defined in
+  eev.el you can write these sequences of commands in a plain
+  text file, then mark a block of this file with your
+  editor (which must be Emacs for this to work), then tell a
+  shell to execute only the commands in that block; in this way
+  you can easily execute only portions of what would otherwise
+  have to be a monolythic script; this is great for when you're
+  not sure if everything works, or if you just want to do some
+  steps. Also, it would be easy to change bits of the \"script\"
+  before execution, as you'll be doing things from inside an
+  editor.
+
+  (...)
+
+  I have placed essentially all my \"scripts\" written in this
+  way (I call them \"e-scripts\") in a public place. They contain
+  almost everything I know about Unix.
+
+  If you like this idea, please get in touch, send comments, ask
+  questions -- about e-scripts or questions whose answer could
+  become an e-script chunk -- or send me your e-scripts when you
+  have some, or even ask for help on setting up your own e-script
+  collection or e-script public site... anything! By asking good
+  questions you can help me make the documentation get better.
+
+  I really want to make this e-scripts idea spread. Learning Unix
+  -- or simply more Unix -- could be made easier for everybody...
+  please help! E-scripts are more fun to use, and easier to
+  write, than texts that tell everything in terms of \"press
+  this, do that\". A lot of effort and money are being invested
+  now on these kinds of text, and they're often very depressing.
+  Let's try to save the world from them, at least a bit, and
+  maybe this money will be directed to better things. And
+  teaching people Unix tricks will be both easier and more fun.
+
+The Manifesto said that
+
+  1) *NIX can be compared to an oral language,
+  2) we can \"write\" the commands that we \"speak\",
+  3) we learn mostly by \"listening\", or \"reading\", others,
+  4) we have good reasons to write:
+
+     a) executable logs make us more productive,
+     b) our notes/logs can, and should, be shared.
+
+What it *did not* say explicitly was:
+
+  5) that *not sharing* should be *immoral*,
+  6) one of my main objectives with eev was REVENGE.
+
+I spent (what felt like) hundreds of hours in the university
+trying to learn things with the *NIX users and gurus there - to
+practically no avail. They answered very few of my questions,
+they only very rarely showed me their code or notes, and I can
+remember only a handful of cases in which we sat side-by-side on
+a terminal.
+
+These people should be stripped of their hacker status.
 
 
 
-mark these commands and
-execute them with M-x eev; and if we have the habit of using eev
-and we are writing code in, say, C or Lua we will often put elisp
-hyperlinks inside comment blocks in our code. These two specific
-languages (and a few others) have a feature that is quite
-convenient for eev: they have syntactical constructs that allow
-comment blocks spanning several lines --- for example, in Lua,
-where these comment blocks are delimited by --(( and
---))s, we can have a block like
 
-
-See: (find-eev \"eev.el\")
-     http://angg.twu.net/eev.html
-     http://angg.twu.net/eev-article.html
-     http://angg.twu.net/emacs.html#what-is-eev
-     https://www.gnu.org/brave-gnu-world/issue-13.html
-     http://angg.twu.net/eev-manifesto.html
 
 
 
