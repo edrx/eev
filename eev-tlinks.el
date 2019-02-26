@@ -272,18 +272,16 @@ This is an internal function used by `find-{stem}-links'.\"
 ;; (find-find-links-links "i" "intro" "stem")
 ;; A test: (find-intro-links)
 
-(defun ee-intro-stem (&optional bufname)
-  (setq bufname (or bufname (buffer-name)))
-  (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
-      (match-string 1 bufname)))
-
 (defun find-intro-links (&optional stem &rest pos-spec-list)
 "Visit a temporary buffer with a skeleton for defining `find-<STEM>-intro'.
+All `find-*-intro' functions in eev-intro.el were written using this.
 See: (find-eev \"eev-intro.el\")"
-  (interactive (list (ee-intro-stem)))
+  (interactive)
   (setq stem (or stem "{stem}"))
   (apply 'find-elinks-elisp
-   `((find-intro-links ,stem ,@pos-spec-list)
+   `((find-intro-links ,stem    ,@pos-spec-list)
+     (find-intro-links "{stem}" ,@pos-spec-list)
+     (find-intro-links "foo"    ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-intro-links)
     ,(ee-template0 "\
@@ -311,6 +309,7 @@ Hello
 ;; (find-{stem}-intro)
 ")) pos-spec-list))
 
+;; (find-intro-links)
 ;; (find-intro-links "emacs")
 
 

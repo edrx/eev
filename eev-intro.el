@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb23
+;; Version:    2019feb25
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1380,6 +1380,74 @@ then these hyperlinks should work:
 
 
 
+
+10. Generating short hyperlinks
+===============================
+
+10.1. Generating short hyperlinks to files
+------------------------------------------
+If you run this
+
+  (code-c-d \"foo\"  \"/tmp/FOO\")
+  (code-c-d \"bar\"  \"/tmp/FOO/BAR/\")
+  (code-c-d \"plic\" \"/tmp/FOO/BAR/PLIC/\")
+
+then these five links will all point to the same file:
+
+  (find-file  \"/tmp/FOO/BAR/PLIC/bletch\")
+  (find-fline \"/tmp/FOO/BAR/PLIC/bletch\")
+  (find-foofile       \"/BAR/PLIC/bletch\")
+  (find-barfile            \"PLIC/bletch\")
+  (find-plicfile                \"bletch\")
+ 
+Note that the last three are short hyperlinks. If you open that
+file and then type `M-h M-h' this will run `find-here-links',
+that will run:
+
+  (find-file-links \"/tmp/FOO/BAR/PLIC/bletch\")
+
+and this will create an elisp hyperlinks buffer in which the last
+sexps will be the three different short hyperlinks to
+\"/tmp/FOO/BAR/PLIC/bletch\" above.
+
+This works for all files. If you visit a file and type `M-h M-h'
+then the last hyperlinks in the temporary buffer will be the
+short hyperlinks to that file.
+
+
+
+
+10.2. Generating short hyperlinks to info nodes
+-----------------------------------------------
+If you run this
+
+  (code-c-d \"el\" ee-emacs-lisp-directory \"elisp\")
+
+then these three hyperlinks will point to the same info node:
+
+  (info      \"(elisp)Top\")
+  (find-node \"(elisp)Top\")
+  (find-elnode      \"Top\")
+
+Note that the last one is a short hyperlink. If you open that
+info node and type `M-h M-h' this will run `find-here-links',
+that will run something similar to:
+
+  (find-einfo-links \"(elisp)Top\")
+
+
+
+
+10.3. Generating short hyperlinks to intros
+-------------------------------------------
+
+10.3. Generating short hyperlinks to PDFs
+-----------------------------------------
+
+
+
+
+
 \(To be continued...)
 " pos-spec-list)))
 
@@ -1682,8 +1750,27 @@ very far. See:
   (find-enode    \"Packages\")
   (find-elnode   \"Packaging\")
   (find-efaqnode \"Packages that do not come with Emacs\")
+  (find-elnode   \"Autoload\")
+
+Eev is an atypical package and I am note sure how to handle
+autoloads in its case. I would like - *in a first moment!* - to
+make only a handful of its functions autoloadable, and to make
+each of them autoload all the main modules of eev, but I couldn't
+find (yet) how to do that...
 
 Help would be greatly appreciated!
+
+Note: _100%_ of the feedback that I received about eev in the
+last years came from people who knew practically nothing about
+Emacs or GNU/Linux before trying eev. They installed it by
+copying and pasting to a terminal the script in
+
+  (find-eev-quick-intro \"1. Installing eev\")
+
+and then invoking Emacs+eev with the \"~/eev\" script. For them
+installing a package with `M-x list-packages' is too hard.
+
+If you want to change these statistics, send me a \"hi\"!
 
 
 " pos-spec-list)))

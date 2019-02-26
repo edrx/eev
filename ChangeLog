@@ -1,3 +1,27 @@
+2019-02-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-install-intro): small changes.
+	(find-eev-quick-intro): small changes.
+
+	* eev-elinks.el (ee-info-fullnode+): new function.
+	(ee-info-shortlink): new function.
+	(find-einfo-links): rewritten.
+	(ee-intro-stem): added comments, and deleted the copy of the
+	`(defun ee-intro-stem ...)' that was in eev-tlinks.el.
+	(find-eintro-links): new function.
+	(find-eintro-or-einfo-links): new function.
+	(ee-find-here-links0): small changes.
+
+	* eev-mode.el (eev-mode-map-set): changed the binding of `M-h M-i'
+	to `find-eintro-or-einfo-links'.
+	(eev-mode-help): small changes.
+
+	* eev-tlinks.el (find-intro-links): small changes.
+
+2019-02-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-codings.el (ee-tolatin1-re): new function.
+
 2019-02-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-links-intro): rewrote some sections.

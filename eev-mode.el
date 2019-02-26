@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb23
+;; Version:    2019feb25
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -101,18 +101,18 @@ and: (find-eval-intro \"`M-k'\")"
   ;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
   ;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks" "`M-h M-h'")
   ;; Source: (find-eev "eev-elinks.el")
-  (define-key eev-mode-map "\M-h\M-d" 'find-debpkg-links)    
-  (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links) 
+  (define-key eev-mode-map "\M-h\M-d" 'find-debpkg-links)
+  (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links)
   (define-key eev-mode-map "\M-h\M-g" 'find-grep-links)
   (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
-  (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)     
-  (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)      
+  (define-key eev-mode-map "\M-h\M-i" 'find-eintro-or-einfo-links)
+  (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)
   (define-key eev-mode-map "\M-h\M-n" 'find-eunicodeucs)
   (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
-  (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links) 
-  (define-key eev-mode-map "\M-hf"    'find-file-links)      
+  (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links)
+  (define-key eev-mode-map "\M-hf"    'find-file-links)
   (define-key eev-mode-map "\M-hM"    'find-ekbmacro-links)
-  ;; (define-key eev-mode-map "\M-h\M-m" 'find-manpage-links)   
+  ;; (define-key eev-mode-map "\M-h\M-m" 'find-manpage-links)
   ;; (define-key eev-mode-map "\M-hm"    'find-last-manpage-links)
   ;;
   ;; Information about text properties, faces, and chars:
@@ -212,7 +212,7 @@ Commands to convert the current line into hyperlinks:
 Commands to generate pages with lists of hyperlinks:
   \\[find-here-links]  -- \"hyperlinks to here\", which supersedes all these:
     \\[find-file-links]   -- hyperlinks to the current file
-    \\[find-einfo-links] -- hyperlinks to the current Info node (or intro)
+    \\[find-find-eintro-or-einfo-links] -- hyperlinks to the current intro, or Info node
     \\[find-grep-links] -- hyperlinks to `find-xxxgrep' sexps
     \\[find-manpage-links] -- hyperlinks to a manpage (ask for name)
     \\[find-last-manpage-links]   -- hyperlinks to a manpage (being viewed)

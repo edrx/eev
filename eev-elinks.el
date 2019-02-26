@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb03
+;; Version:    2019feb25
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -62,8 +62,10 @@
 ;; «.find-ekey-links»		(to "find-ekey-links")
 ;; «.find-elongkey-links»	(to "find-elongkey-links")
 ;; «.find-einfo-links»		(to "find-einfo-links")
+;; «.find-eintro»		(to "find-eintro")
 
 ;; «.ee-code-c-d-pairs-eval»	(to "ee-code-c-d-pairs-eval")
+;; «.ee-code-c-d-filter»	(to "ee-code-c-d-filter")
 ;; «.ee-find-xxxfile-sexps»	(to "ee-find-xxxfile-sexps")
 ;; «.find-file-links»		(to "find-file-links")
 ;; «.find-grep-links»		(to "find-grep-links")
@@ -443,84 +445,146 @@ This is an internal function used by `find-ekey-links' and
 ;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|_|  \___/ 
 ;;;                                                 
 ;; «find-einfo-links» (to ".find-einfo-links")
-;; A test: (progn (find-enode "Lisp Eval") (find-einfo-links))
-;;         (progn (find-enode "Lisp Eval") (eek "M-h M-i"))
+;; Tests: (progn (find-enode "Lisp Eval") (find-einfo-links))
+;;        (progn (find-enode "Lisp Eval") (eek "M-h M-i"))
 
 ;; Moved to eev-mode.el:
 ;; (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)
 
 (defvar ee-info-file "")
 
-(defun ee-infop       () (get-buffer "*info*"))
-(defun ee-info-node   () (with-current-buffer "*info*" Info-current-node))
-(defun ee-info-book+  () (with-current-buffer "*info*" Info-current-file))
-(defun ee-info-book-  () (file-name-nondirectory (ee-info-book+)))
-(defun ee-info-file-  () (file-name-nondirectory  ee-info-file))
-(defun ee-info-shortp () (string= (ee-info-book-) (ee-info-file-)))
-(defun ee-info-shortf () (ee-intern "find-%snode" ee-info-code))
-(defun ee-info-fullnode () (format "(%s)%s" (ee-info-book-) (ee-info-node)))
+(defun ee-infop          () (get-buffer "*info*"))
+(defun ee-info-node      () (with-current-buffer "*info*" Info-current-node))
+(defun ee-info-book+     () (with-current-buffer "*info*" Info-current-file))
+(defun ee-info-book-     () (file-name-nondirectory (ee-info-book+)))
+(defun ee-info-fullnode  () (format "(%s)%s" (ee-info-book-) (ee-info-node)))
+(defun ee-info-fullnode+ () (format "(%s)%s" (ee-info-book+) (ee-info-node)))
+
+(defun ee-info-file-     () (file-name-nondirectory ee-info-file))
+(defun ee-info-shortp    () (string= (ee-info-book-) (ee-info-file-)))
+(defun ee-info-shortf    () (ee-intern "find-%snode" ee-info-code))
+(defun ee-info-shortlink () (list (ee-info-shortf) (ee-info-node)))
 
 (defun ee-find-info-links ()
   `((info      ,(ee-info-fullnode))
     (find-node ,(ee-info-fullnode))
-    ,(if (ee-info-shortp)
-	 (list (ee-info-shortf) (ee-info-node)))))
+    ,(if (ee-info-shortp) (ee-info-shortlink))
+    ))
+
+(defun find-einfo-links (&optional fullnode &rest rest)
+  "Visit a temporary buffer containing hyperlinks to the current info page.
+When possible try to produce also a short hyperlink, like the last one in:
+
+  (info \"(bashref)Pipelines\")
+  (find-node \"(bashref)Pipelines\")
+  (find-bashnode \"Pipelines\")
+
+The short link is generated when the non-directory part of the
+current value of the global variable `ee-info-file' - set by the
+last call to a function of the form `find-XXXnode' - matches the
+value of (ee-info-book-). This only works reliably for info
+\"books\" that are in `Info-directory-list'."
+  (interactive)
+  (setq fullnode (or fullnode (ee-info-fullnode)))
+  (apply 'find-elinks `(
+    ;; Convention: the first sexp always regenerates the buffer.
+    (find-einfo-links ,fullnode ,@rest)
+    (find-einfo-links ,(ee-info-fullnode+) ,@rest)
+    ""
+    ,@(ee-find-info-links)
+    ) rest))
 
 
 ;; A test: (ee-intro-stem "*(find-foo-intro)*")
 
-(defun find-einfo-links (&optional intro &rest rest)
-  "Visit a temporary buffer containing hyperlinks to the current info page.
-When possible, try to produce also a shorter hyperlink, like the last one in:
-  (info \"(bashref)Pipelines\")
-  (find-node \"(bashref)Pipelines\")
-  (find-bashnode \"Pipelines\")
-The hack for generating the shorter hyperlink uses the global
-variables `ee-info-code' and `ee-info-file' - see:
-  (progn
-   (find-code-c-d \"bash\" \"/usr/share/doc/bash/examples/\" \"bashref\")
-   (ee-goto-position \"ee-info-code\"))
+;; Old version:
 
-As an extra hack, if this function is called from a \"*(find-???-intro)*\"
-buffer, also generate a link to that buffer."
-  (interactive)
-  (setq intro (or intro (ee-intro-stem (buffer-name (current-buffer)))))
-  (apply 'find-elinks `(
-    ;; Convention: the first sexp always regenerates the buffer.
-    (find-einfo-links ,intro ,@rest)
-    ;; Body:
-    ""
-    ,@(if (ee-infop)
-	  (ee-find-info-links)
-	'("[No \"*info*\" buffer]"))
-    ""
-    ,@(if intro
-	 ;; (list (ee-intern "find-%s-intro" intro))
-	 (ee-find-intro-links)
-       ;; else: "[Not invoked from a \"*find-xxx-intro*\" buffer]"
-       )
-    ) rest))
+;; (defun find-einfo-links (&optional intro &rest rest)
+;;   "Visit a temporary buffer containing hyperlinks to the current info page.
+;; When possible, try to produce also a shorter hyperlink, like the last one in:
+;;   (info \"(bashref)Pipelines\")
+;;   (find-node \"(bashref)Pipelines\")
+;;   (find-bashnode \"Pipelines\")
+;; The hack for generating the shorter hyperlink uses the global
+;; variables `ee-info-code' and `ee-info-file' - see:
+;;   (progn
+;;    (find-code-c-d \"bash\" \"/usr/share/doc/bash/examples/\" \"bashref\")
+;;    (ee-goto-position \"ee-info-code\"))
+;; 
+;; As an extra hack, if this function is called from a \"*(find-???-intro)*\"
+;; buffer, also generate a link to that buffer."
+;;   (interactive)
+;;   (setq intro (or intro (ee-intro-stem (buffer-name (current-buffer)))))
+;;   (apply 'find-elinks `(
+;;     ;; Convention: the first sexp always regenerates the buffer.
+;;     (find-einfo-links ,intro ,@rest)
+;;     ;; Body:
+;;     ""
+;;     ,@(if (ee-infop)
+;; 	  (ee-find-info-links)
+;;        '("[No \"*info*\" buffer]"))
+;;     ""
+;;     ,@(if intro
+;; 	 ;; (list (ee-intern "find-%s-intro" intro))
+;; 	 (ee-find-intro-links)
+;;        ;; else: "[Not invoked from a \"*find-xxx-intro*\" buffer]"
+;;        )
+;;     ) rest))
 
 
 
+;;;   __ _           _            _       _             
+;;;  / _(_)_ __   __| |       ___(_)_ __ | |_ _ __ ___  
+;;; | |_| | '_ \ / _` |_____ / _ \ | '_ \| __| '__/ _ \ 
+;;; |  _| | | | | (_| |_____|  __/ | | | | |_| | | (_) |
+;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|\__|_|  \___/ 
+;;;                                                     
+;; «find-eintro» (to ".find-eintro")
 
-;; Used by `find-intro-links', that was moved to:
-;;   (find-eev "eev-tlinks.el" "find-intro-links")
-
+;; Test: (ee-intro-stem "*(find-eev-quick-intro)*")
 (defun ee-intro-stem (&optional bufname)
-  (setq bufname (or bufname (buffer-name (current-buffer))))
+  "Convert a string of the form \"*(find-STEM-intro)*\" to \"STEM\".
+When BUFNAME is nil use the name of the current buffer instead.
+When BUFNAME is a string that is not of the right form return nil.
+This can be used to test if the current buffer is an intro buffer."
+  (setq bufname (or bufname (buffer-name)))
   (if (string-match "^\\*(find-\\(.*\\)-intro)\\*$" bufname)
       (match-string 1 bufname)))
 
+;; Test: (find-elinks (ee-find-intro-links "FOO"))
 (defun ee-find-intro-links (&optional stem)
-  (setq stem (or stem (ee-intro-stem)))
   (let ((find-xxx-intro (ee-intern "find-%s-intro" stem))
 	(url (format "http://angg.twu.net/eev-intros/find-%s-intro.html" stem)))
     `(,(ee-H url)
       (,find-xxx-intro)
       )))
 
-  
+;; Test: (find-eintro-links "eev-quick")
+(defun find-eintro-links (&optional stem &rest rest)
+  "Visit a temporary buffer containing hyperlinks to the current intro.
+This only works reliably if either 1) the current buffer has a
+name like \"*(find-STEM-intro)*\", or 2) STEM is given explicitly."
+  (interactive)
+  (setq stem (or stem (ee-intro-stem)))
+  (apply 'find-elinks `(
+    ;; Convention: the first sexp always regenerates the buffer.
+    (find-eintro-links ,stem ,@rest)
+    ""
+    ,@(ee-find-intro-links stem)
+    ) rest))
+
+
+;; Note that eev-mode.el has this:
+;; (define-key eev-mode-map "\M-h\M-i" 'find-eintro-or-einfo-links)
+(defun find-eintro-or-einfo-links ()
+  "Visit a temporary buffer containing hyperlinks to the current intro buffer.
+If we're not in an intro buffer, visit a temporary buffer
+containing hyperlinks to the current _info node_ instead. This is
+a hack to let use use `M-h M-i' for both \"intro\" and \"info\"."
+  (interactive)
+  (if (ee-intro-stem)
+      (find-eintro-links)
+    (find-einfo-links)))
 
 
 
@@ -535,6 +599,7 @@ buffer, also generate a link to that buffer."
 ;;;                                                  |_|                     
 ;;
 ;; «ee-code-c-d-pairs-eval» (to ".ee-code-c-d-pairs-eval")
+;; «ee-code-c-d-filter» (to ".ee-code-c-d-filter")
 ;; Each call to `(code-c-d C D)' generates an entry `(C D)' in the
 ;; alist `ee-code-c-d-pairs', and this is used to make
 ;; `(find-file-links FNAME)' list short hyperlinks to FNAME. Let's
@@ -573,7 +638,7 @@ Actually return a list of `(F elt)'s."
 
 (defun ee-code-c-d-filter-1 (code)
   "Run CODE on each `c-d' of `ee-code-c-d-pairs' and return a list of results.
-This is a simpler version of `ee-code-c-d-filter-1', used for debugging."
+This is a simpler version of `ee-code-c-d-filter-2', used for debugging."
   (ee-filter
    (lambda (c-d)
      (let* ((c (car c-d))
@@ -625,6 +690,8 @@ Only eval CODE when (ee-expand D) is a prefix of (ee-expand FNAME)."
 (defun ee-intern (fmt &rest args)
   (intern (apply 'format fmt args)))
 
+;; Renamed to `ee-code-c-d-filter-2'. See above.
+;;
 ;; (defun ee-code-c-d-pairs-eval (fname code)
 ;;   "For each entry (C D) in `ee-code-c-d-pairs' for which D is a prefix of FNAME,
 ;; evaluate f in the context of a big `let', and return the result."
@@ -1188,8 +1255,8 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 (defun ee-find-here-links0 ()
   `(,(ee-H "See: ")
-    (find-links-intro "`find-here-links'")
-    (find-efunctiondescr 'eev-mode "M-h M-h")
+    (find-eev-quick-intro "4.1. `find-here-links'")
+    (find-emacs-keys-intro "1. Basic keys (eev)" "M-h M-h")
     ))
 
 ;; (find-find-links-links "\\M-h" "here" "")
