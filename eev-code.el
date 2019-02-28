@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb24
+;; Version:    2019feb27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -45,13 +45,15 @@
 
 
 
+;; «.alists»		(to "alists")
+;; «.code-c-d-pairs»	(to "code-c-d-pairs")
+;; «.code-c-d»		(to "code-c-d")
+;; «.code-c-d-s»	(to "code-c-d-s")
 
 
-;; A simple and flexible implementation of argument lists.
-;; Inspired by: (find-node "(cl)Argument Lists")
-;;              (find-node "(cl)Argument Lists" "&body")
-;;    See also: (find-elnode "Symbol Type" "`:'")
-;;              (find-elnode "Constant Variables")
+
+
+
 ;; The name "tail call" is misleading - this is recursive,
 ;; but not a tail call in the usual sense.
 
@@ -71,25 +73,44 @@
 ;;; | (_| | | \__ \ |_\__ \
 ;;;  \__,_|_|_|___/\__|___/
 ;;;                        
+;; «alists» (to ".alists")
+;; A simple and flexible implementation of argument lists.
+;; Inspired by: (find-node "(cl)Argument Lists")
+;;              (find-node "(cl)Argument Lists" "&body")
+;;    See also: (find-elnode "Symbol Type" ":" "keyword")
+;;              (find-elnode "Constant Variables")
 
+;; Test: (ee-aref '((1 . one) (2 . two) (3 . three)) 2)
+;;                              -> two
 (defun ee-aref (alist idx)
   "Like `aref', but for alists.
 Example: (ee-aref '((1 . one) (2 . two) (3 . three)) 2)
                                 -> two"
   (cdr (assoc idx alist)))
 
+;; Test: (ee-adel '((1 . one) (2 . two) (3 . three)) 2)
+;;              -> ((1 . one)           (3 . three))
+;;
 (defun ee-adel (alist idx)
   "Like `remq', but for alists. This is non-destructive, so wrap it in a setq.
 Example: (ee-adel '((1 . one) (2 . two) (3 . three)) 2)
                 -> ((1 . one)           (3 . three))"
   (remq (assoc idx alist) alist))
 
+;; Test: (ee-aset '((1 . one) (2 . two) (3 . three)) 2 'foo)
+;;    -> ((2 . foo) (1 . one)           (3 . three))
+;;
 (defun ee-aset (alist idx newelt)
   "Like `aset', but for alists. This is non-destructive, so wrap it in a setq.
 Example: (ee-aset '((1 . one) (2 . two) (3 . three)) 2 'foo)
       -> ((2 . foo) (1 . one)           (3 . three))"
   (cons (cons idx newelt) (ee-adel alist idx)))
 
+;; Tests: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
+;;                   -> ((1 . one) (2 . foo) (3 . three))
+;;        (ee-areplace '((1 . one) (2 . two) (3 . three)) 0 'zero)
+;;        -> ((0 . zero) (1 . one) (2 . two) (3 . three))
+;;
 (defun ee-areplace (alist idx newelt)
   "Like `ee-aset', but keeping the order.
 Examples: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
@@ -101,14 +122,17 @@ Examples: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
 	     alist)
     (cons (cons idx newelt) alist)))
 
+
+
 ;;;                _                          _                   _          
 ;;;   ___ ___   __| | ___        ___       __| |      _ __   __ _(_)_ __ ___ 
 ;;;  / __/ _ \ / _` |/ _ \_____ / __|____ / _` |_____| '_ \ / _` | | '__/ __|
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |_____| |_) | (_| | | |  \__ \
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|     | .__/ \__,_|_|_|  |___/
 ;;;                                                  |_|                     
-;; Old: (find-evardescr 'code-c-d-keywords)
-;;      (find-evariable 'code-c-d-keywords)
+;;
+;; «code-c-d-pairs» (to ".code-c-d-pairs")
+;; Used by: (find-eev "eev-elinks.el" "ee-code-c-d-filter")
 
 (defvar ee-code-c-d-pairs nil
   "Each (code-c-d C D) call generates an entry (C (ee-expand D)) here.
@@ -129,7 +153,8 @@ is used by some functions in \"eev-insert.el\".")
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|
 ;;;                                             
-;; See: (find-code-c-d-intro)
+;; «code-c-d» (to ".code-c-d")
+;; See: (find-eev-quick-intro "9.1. `code-c-d'")
 ;; Try: (find-code-c-d "lua51" "~/usrc/lua-5.1.4/")
 ;;      (find-code-c-d "lua51" "~/usrc/lua-5.1.4/" :anchor)
 
@@ -273,7 +298,8 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| \__ \
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|___/
 ;;;                                                 
-;; Some default `code-c-d's (debian-centric)
+;; «code-c-d-s» (to ".code-c-d-s")
+;; Some default `code-c-d's (debian-centric).
 
 (defun ee-locate-library (fname)
   (if (locate-library fname)
@@ -314,7 +340,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 
 ;; Local Variables:
 ;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
 ;; ee-anchor-format:  "defun %s "
+;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

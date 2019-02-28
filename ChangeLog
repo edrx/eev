@@ -1,3 +1,11 @@
+2019-02-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-escripts-intro): added several new sections.
+
+	* eev-code.el: better comments.
+
+	* eev-elinks.el: better comments.
+
 2019-02-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-quick-intro, find-eev-intro)

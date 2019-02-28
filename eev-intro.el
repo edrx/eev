@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb26
+;; Version:    2019feb27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2950,7 +2950,7 @@ and step (3) sometimes gives several sexps for us to choose from]
 
 
 4. ee-hyperlink-prefix
-=======================
+======================
 `ee-hyperlink-prefix' is both a variable and a function that
 helps us set that variable; it started to an experiment on how to
 create an alternative to `M-x customize' and ended up becoming
@@ -2989,7 +2989,7 @@ Try this, with `M-2 M-e' on each line:
 
 
 5. The first line regenerates the buffer
-=========================================
+========================================
 \[To do: explain this convention with examples; explain the
 conventions for the \"variants of the first line\"\]
 
@@ -3003,7 +3003,7 @@ conventions for the \"variants of the first line\"\]
 
 
 6. Pointing to where we are now
-================================
+===============================
 Several of the `M-h' commands are mainly meant to help us
 generate hyperlinks to \"where we are now\": to the current file,
 to the current Info page, to the current `find-*-intro', to an
@@ -3046,7 +3046,7 @@ buffer, and so on. They don't try to be very smart -
 
 
 7. The rest of the buffer
-==========================
+=========================
 Several elisp hyperlinks buffers are composed of two parts: a
 series of links at the top, and then a template-generated text
 that is mean to be copied to somewhere else. The canonical
@@ -7643,7 +7643,7 @@ We will start this intro by explaining how eev and e-scripts
 appeared. Then we will discuss some of the most usual formats of
 e-scripts, that are, in order or complexity:
 
-  1) a file with elisp hyperlinks,
+  1) a file with elisp hyperlinks and eepitch blocks,
   2) a file with e-script blocks and an index,
   3) several files with elisp hyperlinks and e-script blocks,
   4) source files with eepitch blocks in multi-line comments,
@@ -7817,152 +7817,256 @@ they only very rarely showed me their code or notes, and I can
 remember only a handful of cases in which we sat side-by-side on
 a terminal.
 
-These people should be stripped of their hacker status.
+These people - who shared very little - were the most respected
+hackers of that place.
+
+They had to be stripped of their status.
+
+
+
+
+4. How to read an e-script
+==========================
+The indented block below between the two \"snip, snip\" lines -
+we will call it \"Example 1\" - exemplifies most of the basic
+techniques available for e-scripts. These techniques will be
+reviewed in the subsections below.
+
+
+  --snip, snip--
+
+  # Index:
+  # «.lua5.1-debian»	(to \"lua5.1-debian\")
+  # «.lua-tutorial»	(to \"lua-tutorial\")
+
+
+
+  #####
+  #
+  # The main Debian packages for Lua 5.1
+  # 2018jun02
+  #
+  #####
+
+  # «lua5.1-debian» (to \".lua5.1-debian\")
+  # (find-status   \"lua5.1\")
+  # (find-vldifile \"lua5.1.list\")
+  # (find-udfile   \"lua5.1/\")
+  # (find-status   \"lua5.1-doc\")
+  # (find-vldifile \"lua5.1-doc.list\")
+  # (find-udfile   \"lua5.1-doc/\")
+  # (find-udfile   \"lua5.1-doc/doc/\")
+  # (find-udfile   \"lua5.1-doc/test/\")
+  # http://www.lua.org/docs.html
+  # http://www.lua.org/manual/5.1/manual.html
+  # file:///usr/share/doc/lua5.1-doc/doc/manual.html
+
+   (eepitch-shell)
+   (eepitch-kill)
+   (eepitch-shell)
+  sudo apt-get install lua5.1 lua5.1-doc
+
+
+
+
+  #####
+  #
+  # Downloading and opening an eev-based Lua tutorial
+  # 2018jun02
+  #
+  #####
+
+  # «lua-tutorial» (to \".lua-tutorial\")
+  # http://angg.twu.net/e/lua-intro.e.html
+  # http://angg.twu.net/e/lua-intro.e
+
+   (eepitch-shell)
+   (eepitch-kill)
+   (eepitch-shell)
+  cd /tmp/
+  rm -v lua-intro.e
+  wget http://angg.twu.net/e/lua-intro.e
+
+  # (find-fline \"/tmp/lua-intro.e\")
+  # (defun eejump-11 () (find-fline \"/tmp/lua-intro.e\"))
+
+  --snip, snip--
+
+
+
+
+4.1. Anchors and `to'
+---------------------
+The two lines below
+
+  # «.foo»	 (to \"foo\")
+  # «foo» 	(to \".foo\")
+
+\"point to one another\". This is explained here:
+
+  (find-eev-quick-intro \"8. Anchors\")
+
+We used this in Example 1 to create an index. Compare with:
+
+  # Index:
+  # «.one»	(to \"one\")
+  # «.two»	(to \"two\")
+
+  ###
+  ## Stuff in block \"one\"
+  ###
+
+  # «one» (to \".one\")
+  (...)
+
+  ###
+  ## Stuff in block \"two\"
+  ###
+
+  # «two» (to \".two\")
+
+
+
+4.2. Debian hyperlinks
+----------------------
+The hyperlinks using `find-status', `find-vldifile', and
+`find-udfile' are hyperlinks to information about a Debian
+package. These hyperlinks
+
+  (find-status   \"bash\")
+  (find-vldifile \"bash.list\")
+  (find-udfile   \"bash/\")
+
+are equivalent to:
+
+  (find-fline \"/var/lib/dpkg/status\" \"\\nPackage: bash\\n\")
+  (find-fline \"/var/lib/dpkg/info/bash.list\")
+  (find-fline \"/usr/share/doc/bash/\")
+
+See:
+
+  (find-eev \"eev-blinks.el\" \"find-Package\")
+  (find-eev \"eev-blinks.el\" \"find-Package\" \"find-status\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"(code-c-d \\\"ud\\\"\")
+  (find-eev \"eev-code.el\" \"code-c-d-s\")
+  (find-eev \"eev-code.el\" \"code-c-d-s\" \"(code-c-d \\\"ud\\\"\")
+  (find-eev \"eev-code.el\" \"code-c-d-s\" \"(code-c-d \\\"vldi\\\"\")
+
+
+
+4.3. URL hyperlinks
+-------------------
+The lines
+
+  # http://www.lua.org/docs.html
+  # http://www.lua.org/manual/5.1/manual.html
+  # file:///usr/share/doc/lua5.1-doc/doc/manual.html
+
+are URL hyperlinks. Here's how to follow them:
+
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+
+Note that the \"file:///\" URL above points to a local copy of
+the Lua manual at \"http://www.lua.org/manual/5.1/manual.html\" -
+but the local copy will only exist if the Debian package
+\"lua5.1-doc\" is installed.
+
+
+
+4.4. Eepitch blocks
+-------------------
+This
+
+   (eepitch-shell)
+   (eepitch-kill)
+   (eepitch-shell)
+  sudo apt-get install lua5.1 lua5.1-doc
+
+is an \"eepitch block\", as explained here:
+
+  (find-eev-quick-intro \"6. Controlling shell-like programs\")
+  (find-eev-quick-intro \"6.1. The main key: <F8>\")
+
+Note that it will only work if you delete the whitespace before
+the \"\"s!
+
+
+
+4.5. Htmlized e-scripts
+-----------------------
+The \"Eev Manifesto\" in section 3 above has this:
+
+  I have placed essentially all my \"scripts\" written in this
+  way (I call them \"e-scripts\") in a public place. They contain
+  almost everything I know about Unix.
+
+The \"public place\" is here:
+
+  http://angg.twu.net/e/
+
+The links
+
+  # http://angg.twu.net/e/lua-intro.e.html
+  # http://angg.twu.net/e/lua-intro.e
+
+point to one of these e-scripts - one that I use to teach (or
+introduce) Lua to people that already know other programming
+languages. The
+
+  # http://angg.twu.net/e/lua-intro.e.html
+
+point to an \"htmlized version\" of it, in which many of the
+hyperlinks are converted to something that works in a browser.
+The header of the .html explains briefly how the htmlized version
+is produced.
+
+
+
+
+4.6. The `rm' in the eepitch block
+----------------------------------
+When we execute this eepitch block a first time,
+
+   (eepitch-shell)
+   (eepitch-kill)
+   (eepitch-shell)
+  cd /tmp/
+  rm -v lua-intro.e
+  wget http://angg.twu.net/e/lua-intro.e
+
+  rm -v lua-intro.e lua50init.lua
+  wget http://angg.twu.net/e/lua-intro.e
+  wget http://angg.twu.net/LUA/lua50init.lua
+
+
+the \"rm\" gives an error:
+
+  rm: cannot remove 'lua-intro.e': No such file or directory
+
+When we execute it a second, third, fourth time, the \"rm\"
+deletes the file \"/tmp/lua-intro.e\" that the wget downloaded in
+the previous run.
+
+  (...)
+
+  (find-anchor \"/tmp/lua-intro.e\" \"intro:types\")
 
 
 
 
 
-
-
-# «.lua5.1-debian»	(to \"lua5.1-debian\")
-# «.lua-tutorial»	(to \"lua-tutorial\")
-
-
-
-#####
-#
-# The main Debian packages for Lua 5.1
-# 2018jun02
-#
-#####
-
-# «lua5.1-debian» (to \".lua5.1-debian\")
-# (find-status   \"lua5.1\")
-# (find-vldifile \"lua5.1.list\")
-# (find-udfile   \"lua5.1/\")
-# (find-status   \"lua5.1-doc\")
-# (find-vldifile \"lua5.1-doc.list\")
-# (find-udfile   \"lua5.1-doc/\")
-# (find-udfile   \"lua5.1-doc/doc/\")
-# (find-udfile   \"lua5.1-doc/test/\")
-# http://www.lua.org/docs.html
-# http://www.lua.org/manual/5.1/manual.html
-# file:///usr/share/doc/lua5.1-doc/doc/manual.html
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-sudo apt-get install lua5.1 lua5.1-doc
-
-
-
-
-#####
-#
-# Downloading and opening the eev-based Lua tutorial
-# 2018jun02
-#
-#####
-
-# «lua-tutorial» (to \".lua-tutorial\")
-# http://angg.twu.net/e/lua-intro.e.html
-# http://angg.twu.net/e/lua-intro.e
-# (find-es \"lua-intro\")
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-cd /tmp/
-rm -v lua-intro.e
-wget http://angg.twu.net/e/lua-intro.e
-
-# (find-fline \"/tmp/lua-intro.e\")
-# (defun eejump-11 () (find-fline \"/tmp/lua-intro.e\"))
-
-
-
-
-
-Let's name its parts - they will be explained in the sections below.
-
-1. The lines with «.lua5.1-debian» and «lua5.1-debian» use
-   the `(to ...)' sexps to \"point to one another\". They are
-   explained at:
-
-     (find-eev-quick-intro \"8. Anchors\")
+5. Creating e-scripts
+=====================
 
 2. The comment block that says \"The main Debian packages for Lua
    5.1\" is simply a way to distinguish visually one e-script
    block from its neighboring ones. It was produced by `M-B', as
    explained here:
 
-     (find-eev-quick-intro \"8.4. Creating e-script blocks\")
-
-3. The sexps starting with `find-status' and other `find-xxx's
-   are elisp hyperlinks.
-
-4. The lines with \"http://...\" and \"file:///...\" contain URLs
-   that can be visited using `browse-url' or with `brg' and other
-   `brxxx' functions.
-
-5. The lines with a red star, like \" (eepitch-shell)\", start
-   \"eepitch blocks\", that are explained here:
-
-     (find-eev-quick-intro \"6. Controlling shell-like programs\")
-
-6. The lines just below the lines with \"\"s are shell commands
-   that can be executed with eepitch.
+     (find-eev-quick-intro \"8.4. Creating e-script blocks\" \"`M-B'\")
 
 
-
-
-
-1. Reading e-scripts
-====================
-
-1.1. A miniature example
-------------------------
-
-1.1. Elisp hyperlinks
----------------------
-
-\(Mention code-c-d)
-
-1.2. Shorter elisp hyperlinks
------------------------------
-
-1.3. URLs
----------
-
-1.4. Eepitch blocks
--------------------
-
-1.5. Anchors, indexes and e-script blocks
------------------------------------------
-
-1.6. E-scripts embedded in other files
---------------------------------------
-
-
-
-2. Writing e-scripts
-====================
-
-2.1. Creating hyperlinks with `M-h M-h'
----------------------------------------
-
-2.3. Refining hyperlinks
-------------------------
-
-2.4. Creating eepitch blocks
-----------------------------
-
-
-
-3. Social consequences
-======================
-\(of sharing e-scripts)
 
 
 " pos-spec-list)))

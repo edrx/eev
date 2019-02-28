@@ -23,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb23
+;; Version:    2019feb27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -695,6 +695,11 @@ it doesn't convert relative filenames into urls. See
 ;;   (find-available      "bash")
 ;;   (find-grep-status    "bash")
 ;;   (find-grep-available "bash")
+;;
+;; Note that these links are all equivalent:
+;;   (find-status                                    "bash")
+;;   (find-Package "/var/lib/dpkg/status"            "bash")
+;;   (find-fline   "/var/lib/dpkg/status" "\nPackage: bash\n")
 
 (defun find-Package (fname &optional packagename &rest pos-spec-list)
   "Hyperlink to \"Package: \" achors in Debian package control files.
