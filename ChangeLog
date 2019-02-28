@@ -1,3 +1,9 @@
+2019-02-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (at-nth-window): commented out.
+	(ee-with-pager-cat): renamed `with-pager-cat' to
+	`ee-with-pager-cat'.
+
 2019-02-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-escripts-intro): added several new sections.

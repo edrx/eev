@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb16
+;; Version:    2019feb28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -632,18 +632,18 @@ Note the DIR is `ee-expand'-ed."
   (interactive "beepitch to buffer: ")
   (eepitch `(switch-to-buffer ,name)))
 
-(defun with-pager-cat (code)
+(defun ee-with-pager-cat (code)
   "Run CODE with the environment variable PAGER set to \"cat\".
 This is useful for for running processes that use pagers like
 \"more\" by default."
   (let ((process-environment (cons "PAGER=cat" process-environment)))
     (eval code)))
 
-(defun at-nth-window (n code)
-  "Run `other-window' N times, run CODE there, and go back."
-  (save-selected-window
-    (other-window n)
-    (eval code)))
+;; (defun at-nth-window (n code)
+;;   "Run `other-window' N times, run CODE there, and go back."
+;;   (save-selected-window
+;;     (other-window n)
+;;     (eval code)))
 
 
 
@@ -711,7 +711,7 @@ This is useful for for running processes that use pagers like
 (defun eepitch-maxima () (interactive) (eepitch-comint "maxima" "maxima"))
 (defun eepitch-octave () (interactive) (eepitch-comint "octave" "octave"))
 (defun eepitch-R () (interactive)
-  (eepitch '(with-pager-cat (find-comintprocess "R" "R"))))
+  (eepitch '(ee-with-pager-cat (find-comintprocess "R" "R"))))
 
 ;; Plotters.
 ;; We force GhostScript's resolution to make its window fit on the screen.
@@ -729,7 +729,7 @@ This is useful for for running processes that use pagers like
 
 ;; SQL. To do: add postgres and sqlite
 (defun eepitch-mysql () (interactive)
-  (eepitch '(with-pager-cat '(find-comintprocess "mysql" "mysql -u root"))))
+  (eepitch '(ee-with-pager-cat '(find-comintprocess "mysql" "mysql -u root"))))
 
 ;; SmallTalk
 (defun eepitch-gst () (interactive)
