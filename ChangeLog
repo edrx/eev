@@ -1,3 +1,11 @@
+2019-03-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-edit.el: moved all keybindings to eev-mode.el.
+
+	* eev-tlinks.el (find-eev-update-links): marked as obsolete.
+
+	* eev-intro.el (find-intro-dual-define): new function.
+
 2019-02-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (at-nth-window): commented out.

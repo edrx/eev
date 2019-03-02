@@ -1,6 +1,6 @@
-;; eev-readme.el -- an executable README for eev2 (-> eev-0.96).
+;; eev-readme.el -- load all modules of eev and activate eev-mode.
 
-;; Copyright (C) 2012,2014,2018 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2014,2018,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018mai16
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-readme.el>
@@ -31,6 +31,13 @@
 ;;                                                (find-eev-update-links)
 
 ;;; Commentary:
+
+;; See this for the current standard ways to install eev:
+;;   
+;;   (find-eev-quick-intro "1. Installing eev")
+;;   (find-eev-install-intro)
+;;
+;; The rest of this file is very old.
 
 ;; Quick instructions:
 ;;

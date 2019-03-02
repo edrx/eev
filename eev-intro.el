@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb27
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -98,20 +98,9 @@
 
 
 
-;; Ignore this - this is an obsolete hack that I used to use to make
-;; the htmlization in <http://angg.twu.net/eev-intros/> work better...
-;; (find-angg "eev-intros/")
-;; (find-angg "eev-intros/README")
-;;' (fooi-re "Source code:  (find-efunction '\\([!-~]*\\))"
-;;           "Source code:  (find-eev \\\\\"eev-intro.el\\\\\" \\\\\"\\1\\\\\")")
-
-
 ;; «find-intro-dual» (to ".find-intro-dual")
 ;; Below is a hack that I (edrx) use to edit these intros.
-;; Note that it is commented out - and how it is commented out!
-;; The way to run the ' (progn <multi-line-stuff>) is to put the point
-;; after the closing parenthesis - the one on a line by itself - and
-;; then type `M-e'.
+;; Note that it is sort of commented out.
 ;;
 ;; If we're editing the defun for `find-foo-intro' at a line that
 ;; contains "<a certain string>" then running `M-x fd' there creates a
@@ -128,8 +117,11 @@
 ;; line containing "<a certain string>" then running `M-x fd' also
 ;; creates the same window setup, with the source at the left and the
 ;; intro buffer at the right.
-'
-(progn
+
+(defun find-intro-dual-define ()
+  "Define `find-intro-dual' and `fd', that are hacks for editing `find-xxx-intro's."
+  (interactive)
+  ;; The hackish functions begin here and end at the line with a single ")".
 
 ;; Test: (ee-sexp-at "2)")
 ;;             (+  1  2)
@@ -179,7 +171,10 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 (defalias 'fi 'find-intro-intro)
 (defalias 'fd 'find-intro-dual)
 
-)
+(message "`find-intro-dual' and `fd' are now defined.")
+
+  ;; end of `find-intro-dual-define'
+  )
 
 
 
@@ -535,7 +530,7 @@ A way to go quickly to \"~/TODO\" is explained in section 7.1.
 A way to \"refine\" hyperlinks to make them more precise is
 explained here:
 
-  (find-eval-intro \"Producing and refining hyperlinks\")
+  (find-eval-intro \"9. Producing and refining hyperlinks\")
 
 
 
@@ -4982,8 +4977,8 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-Time offsets
-============
+1. Time offsets
+===============
 Links to audio and video files are similar to links to pdf-like
 documents, but instead of page numbers we use \"time offsets\" to
 refer to positions. Time offsets are strings like 1:23, 12:34, or
@@ -5005,8 +5000,8 @@ default - and its error messages appear here:
 
 
 
-Shorter hyperlinks to audio and video files
-===========================================
+2. Shorter hyperlinks to audio and video files
+==============================================
 If you type `M-V' (`eewrap-audiovideo') on a line containing a
 shorthand word and a file name of an audio or video file, for
 example, here,
@@ -5042,8 +5037,8 @@ each call to a short hyperlink of the form `find-xxxaudio' or
 
 
 
-Passing options to mplayer
-==========================
+3. Passing options to mplayer
+=============================
 By default mplayer is called with just a few command-line options,
 besides the ones that tell it at what position to start playing -
 typically just these for videos,
@@ -5063,8 +5058,8 @@ If you want to change this you should redefine these functions:
 
 
 
-`eev-avadj-mode'
-================
+4. `eev-avadj-mode'
+===================
 \"avadj-mode\" is a shorthand for \"audio/video adjust mode\".
 When `eev-avadj-mode' is active we get keys for adjusting time
 offsets quickly and for playing again the default audio or video
@@ -5108,8 +5103,8 @@ we are not doing that yet.
 
 
 
-The time-from-bol
-=================
+5. The time-from-bol
+====================
 All the keys in eev-avadj-mode operate on the \"time-from-bol\"
 of the current line: the first occurrence, in the current line,
 of a string that looks like a time offset. Note that the search
@@ -5143,8 +5138,8 @@ For more realistic examples, see:
 
 
 
-Youtube-dl
-==========
+6. Youtube-dl
+=============
 Videos at Youtube are identified by unique 11-char codes that are
 assigned to them when they are uploaded. We will call those 11-char
 codes \"hashes\", even though the term is not totally adequade in this
@@ -5177,8 +5172,8 @@ as soon as the download is finished.
 
 
 
-Downloading a local copy
-========================
+7. Downloading a local copy
+===========================
 Place the point at hash in the URL below,
 
   http://www.youtube.com/watch?v=abcdefghijk
@@ -5245,8 +5240,8 @@ of the video from Youtube.
 
 
 
-Guessing the title and extension
-================================
+8. Guessing the title and extension
+===================================
 Let's simulate what would happen after the eepitch script above -
 Execute this:
 
@@ -5282,8 +5277,8 @@ components are the \"dir\", the \"title\", and the \"hash\".
 
 
 
-The first lines regenerate the buffer
-=====================================
+9. The first lines regenerate the buffer
+========================================
 The arguments to `find-youtubedl-links' are:
 
   (find-youtubedl-links DIR TITLE HASH EXT- STEM)
@@ -5320,8 +5315,8 @@ TITLE and EXT- are made nil.
 
 
 
-Selecting a directory
-=====================
+10. Selecting a directory
+=========================
 The second block of lines in the `find-youtubedl-links' buffer
 are used to let we switch the directory quickly. If we just
 execute `M-x find-youtubedl-links' with the point on our example
@@ -6447,8 +6442,8 @@ Is is meant as both a tutorial and a sandbox.
 
 
 
-Introduction
-============
+1. Introduction
+===============
 Before eepitch had been invented, eev had two other ways to send
 commands to external shell-like programs. The first way,
 described here,
@@ -6478,8 +6473,8 @@ will present several tests that should help with troubleshooting.
 
 
 
-The innards
-===========
+2. The innards
+==============
 Let's start with a detailed low-level view of of what we have
 just summarized as to \"save a command into a temporary file,
 then send a signal to the external program etc etc\".
@@ -6497,8 +6492,8 @@ you... =(
 
 
 
-The protocol, in diagrams
-=========================
+3. The protocol, in diagrams
+============================
 Here's a diagram that shows roughly what we have when X is
 running both an Emacs and an xterm, each in a separate window.
 Many details have been omitted - for examples, the real
@@ -6643,8 +6638,8 @@ protocol are not shown.
 
 
 
-Downloading and testing eechannel
-=================================
+4. Downloading and testing eechannel
+====================================
 Here I'll suppose that the directory \"~/bin/\" exists and is in
 your PATH. Run this to download the \"eechannel\" script and make
 it executable:
@@ -6734,8 +6729,8 @@ If that worked, we're done. =)
 
 
 
-Several xterms
-==============
+5. Several xterms
+=================
 http://angg.twu.net/eev-current/anim/channels.anim.html
 
  (eexterm \"A\")

@@ -726,6 +726,10 @@ sudo dpkg -i *.deb
      (find-eev-update-links)
      ,(ee-template0 "\
 
+# NOTE! This function is obsolete and has been superseded by:
+# (find-eev-install-links)
+
+
 
 # Download , unpack and create a script \"~/e\"
 # ============================================

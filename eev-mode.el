@@ -19,16 +19,31 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb25
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-mode.el.html>
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
+;;                                                (find-eev-quick-intro)
 
 ;;; Commentary:
+
+;; Turning on eev-mode simply activates the eev-mode-map keymap, and
+;; adds an "eev" to the mode line to remind you this. Turning off
+;; eev-mode deactivates the keymap and the reminder. If you want an
+;; eev-mode-map with fewer or other bindings, follow the instructions
+;; here:
+;;   (find-eev "eev-mode.el" "when-not-eev-mode-map")
+
+;; «.eev-mode-map-set»		(to "eev-mode-map-set")
+;; «.when-not-eev-mode-map»	(to "when-not-eev-mode-map")
+;; «.eev-mode»			(to "eev-mode")
+
+
+
+
 
 (defun ee-kill-this-buffer ()
   "Kill the current buffer with fewer warnings than `kill-this-buffer'.
@@ -48,7 +63,7 @@ and: (find-eval-intro \"`M-k'\")"
 ;;; |_|\_\___|\__, |_| |_| |_|\__,_| .__/ 
 ;;;           |___/                |_|    
 ;;;
-;;; eev mode keymap
+;; «eev-mode-map-set» (to ".eev-mode-map-set")
 
 (defvar eev-mode-map nil)
 
@@ -131,12 +146,17 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
   (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
   ;;
+  ;; These ones are also from: (find-eev "eev-edit.el")
+  (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
+  (define-key eev-mode-map "\M-I" 'eewrap-vldi-list-line)
+  ;;
   ;; Obsolete:
   ;; (define-key eev-mode-map "\M-hg"    'find-git-links-1)
   ;;
   )
 
 
+;; «when-not-eev-mode-map» (to ".when-not-eev-mode-map")
 ;; Now we run the function `eev-mode-map-set' above, but we only do
 ;; that if the variable `eev-mode-map' holds nil:
 ;;
@@ -144,10 +164,9 @@ and: (find-eval-intro \"`M-k'\")"
   (setq eev-mode-map (make-sparse-keymap))
   (eev-mode-map-set))
 ;;
-;; The (when ...) above means that if you want to define your own
+;; The `(when ...)' above means that if you want to define your own
 ;; `eev-mode-map' with different keybindings you can do that by
-;; putting something like this in your .emacs _before the point where
-;; you load eev_:
+;; putting something like this
 ;;
 ;;   (setq eev-mode-map (make-sparse-keymap))
 ;;   (define-key eev-mode-map "\M-e" 'ee-eval-sexp-eol)
@@ -157,7 +176,8 @@ and: (find-eval-intro \"`M-k'\")"
 ;;   (define-key eev-mode-map "\M-j" 'eejump)
 ;;   (define-key eev-mode-map [f8]   'eepitch-this-line)
 ;;   (define-key eev-mode-map "\M-T" 'eewrap-eepitch)
-
+;;
+;; in your .emacs _before the point where you load eev_.
 
 
 
@@ -170,11 +190,20 @@ and: (find-eval-intro \"`M-k'\")"
 ;;; |  __/  __/\ V /_____| | | | | | (_) | (_| |  __/
 ;;;  \___|\___| \_/      |_| |_| |_|\___/ \__,_|\___|
 ;;;                                                  
-;;; eev mode
+;; «eev-mode» (to ".eev-mode")
+;; This defines `eev-mode'. Turning on eev-mode simply activates the
+;; eev-mode-map keymap, and adds an "eev" to the mode line to remind
+;; you this.
 ;;
-;; (find-efunctiondescr 'eev-mode)
-;; (find-ekeymapdescr eev-mode-map)
-;; (find-elnode "Keys in Documentation")
+;; At one point, when the `find-*-intro' functions either did not
+;; exist or were almost irrelevant, I decided that I had to write a
+;; huge description of eev-mode... I regret that.
+;;
+;; See:
+;;   (find-efunctiondescr 'eev-mode)
+;;   (find-eminorkeymapdescr 'eev-mode)
+;;   (find-ekeymapdescr eev-mode-map)
+;;   (find-elnode "Keys in Documentation" "\\<MAPVAR>")
 
 (defvar eev-mode-lighter " eev")
 (defvar eev-mode-help "Toggle eev mode, i.e, activate or deactivate the `eev-mode-map' keymap.
@@ -255,10 +284,6 @@ Other commands:
 ;; (find-efunctiondescr 'eev-mode)
 
 
-
-(provide 'eev-mode)
-
-
 ;; Deleted code:
 ;;
 ;; Run the default bounded action (usually `eev-bounded'):
@@ -281,10 +306,15 @@ Other commands:
 
 
 
+(provide 'eev-mode)
+
+
+
+
+
 
 ;; Local Variables:
 ;; coding:            raw-text-unix
 ;; ee-anchor-format:  "«%s»"
-;; ee-anchor-format:  "defun %s "
 ;; no-byte-compile:   t
 ;; End:

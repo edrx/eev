@@ -1,6 +1,6 @@
 ;;; eev-audiovideo.el -- elisp hyperlinks to audio and video files.
 
-;; Copyright (C) 2013 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2013oct18
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -30,6 +30,12 @@
 ;;                                                (find-audiovideo-intro)
 
 ;;; Commentary:
+
+;; There is an introduction to these features here,
+;;
+;;   (find-audiovideo-intro)
+;;
+;; but that needs to be rewritten...
 
 
 

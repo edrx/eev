@@ -1,7 +1,7 @@
 ;;; eev-channels.el -- control external processes usign signals,
 ;;; temporary files, and Expect scripts.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012dec27
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-channels.el>
@@ -30,6 +30,14 @@
 ;;                                                (find-eev-intro)
 
 ;;; Commentary:
+
+;; `eechannel' is very difficult to set up and has been mostly
+;; superseded by `eepitch'. There is some documentation here,
+;;
+;;  (find-channels-intro)
+;;
+;; but it needs to be rewritten.
+
 
 ;; TODO: import code from:
 ;;   (find-eevgrep "grep -nH -e channel *.el")

@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan29
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -37,7 +37,7 @@
 ;; This file loads all the main modules of eev, and people who want to
 ;; read the source can use this as an index to them. The modules are
 ;; loaded more or less in the order that they are mentioned here:
-;; (find-eev-quick-intro)
+;;   (find-eev-quick-intro)
 
 ;; The "eev quick intro" itself, and many other intros:
 (require 'eev-intro)	       ; (find-eev "eev-intro.el")
@@ -53,10 +53,15 @@
 ;;
 ;; Support for many kinds of hyperlink functions. See:
 ;;   (find-eev-quick-intro "3. Elisp hyperlinks")
+;;   (find-links-conv-intro "3. Classification")
 (require 'eev-blinks)	       ; (find-eev "eev-blinks.el")
 (require 'eev-plinks)	       ; (find-eev "eev-plinks.el")
 (require 'eev-elinks)	       ; (find-eev "eev-elinks.el")
 (require 'eev-tlinks)	       ; (find-eev "eev-tlinks.el")
+;;
+;; The `brxxx' functions. See:
+;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
+(require 'eev-brxxx)	       ; (find-eev "eev-brxxx.el")
 ;;
 ;; The main "killer feature" of eev: a way to control interactive programs.
 ;;   (find-eev-quick-intro "6. Controlling shell-like programs")
@@ -72,35 +77,39 @@
 ;;   (find-eev-quick-intro "7.1. `eejump'")
 (require 'eejump)              ; (find-eev "eejump.el")
 ;;
-;; Anchors:
+;; Anchors.
 ;;   (find-eev-quick-intro "8. Anchors")
 ;;   (find-eev-quick-intro "8.1. Introduction: `to'")
 (require 'eev-anchors)	       ; (find-eev "eev-anchors.el")
 ;;
 ;; Shorter hyperlinks and how to mass-produce them:
 ;;   (find-eev-quick-intro "9. Shorter hyperlinks")
-;;   (find-code-c-d-intro "\nShorter hyperlinks\n")
+;;   (find-code-c-d-intro  "2. Shorter hyperlinks")
 ;;   (find-eev-quick-intro "9.3. Hyperlinks to PDF files")
 (require 'eev-code)	       ; (find-eev "eev-code.el")
 (require 'eev-pdflike)	       ; (find-eev "eev-pdflike.el")
 ;;
-;; (I need to write comments for these)
+;; Some technical things.
 (require 'eev-codings)	       ; (find-eev "eev-codings.el")
 (require 'eev-env)	       ; (find-eev "eev-env.el")
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
-(require 'eev-brxxx)	       ; (find-eev "eev-brxxx.el")
+;;
+;; Hyperlinks to audio, video, and IRC. Not well documented. See:
+;;   (find-audiovideo-intro)
+;;   (find-rcirc-intro)
+(require 'eev-audiovideo)      ; (find-eev "eev-audiovideo.el")
+(require 'eev-rcirc)           ; (find-eev "eev-rcirc.el")
 ;;
 ;; Advanced (and hard to use) features that may require creating a
 ;; temporary directory, patching rcfiles, and installing Expect
-;; scripts. See:
+;; scripts. In the future these will no longer be loaded by default.
+;; See:
 ;;   (find-prepared-intro)
 ;;   (find-bounded-intro)
 ;;   (find-channels-intro)
-(require 'eev-audiovideo)      ; (find-eev "eev-audiovideo.el")
-(require 'eev-rcirc)           ; (find-eev "eev-rcirc.el")
-(require 'eev-prepared)		; (find-eev "eev-prepared.el")
-(require 'eev-bounded)		; (find-eev "eev-bounded.el")
-(require 'eev-channels)		; (find-eev "eev-channels.el")
+(require 'eev-prepared)	       ; (find-eev "eev-prepared.el")
+(require 'eev-bounded)	       ; (find-eev "eev-bounded.el")
+(require 'eev-channels)	       ; (find-eev "eev-channels.el")
 
 
 
@@ -109,7 +118,9 @@
 
 
 ;; Old comments taken from eev-readme.el.
-;; I need to revise this and see what is (not) trash.
+;; Most of them point to old files that are no longer in eev - but I
+;; have them in my machine, and they may have some comments that I may
+;; want to cannibalize.
 ;;
 ;; (require 'eev)                 ; (find-eev "eev.el")
 ;; (require 'eev-glyphs)          ; (find-eev "eev-glyphs.el")

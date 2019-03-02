@@ -1,6 +1,6 @@
 ;;; eev-edit.el -- tools for editing (mainly refining) elisp hyperlinks.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012dec26
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -31,15 +31,21 @@
 ;;; Commentary:
 
 ;; See:
-;; (find-eev-intro)
-;; (find-eval-intro)
-;; (find-eval-intro "Refining hyperlinks")
-;; (find-eevgrep "grep -niH -e m-- *.el")
-;; (find-angg ".emacs" "ee-shrink-hyperlink-at-eol")
+;;   (find-eval-intro "9. Producing and refining hyperlinks")
+;;   (find-escripts-intro "5.7. Refining hyperlinks")
+;;   (find-escripts-intro "5.8. Pointing to anchors")
+;;   (find-eevfile "eev-mode.el" "Keys for refining hyperlinks")
+;;
+;; `M-h M--', `M-s' and `M-I' are not yet explained in the intros!
 
-;; (find-eevfile "eev-mode.el" "Keys for editing hyperlinks:")
-;; (find-eevfile "eev-insert.el" "defun ee-ill")
-;; (find-eevgrep "grep -nH -e duplicate *.el")
+
+
+;; «.ee-duplicate-this-line»		(to "ee-duplicate-this-line")
+;; «.ee-yank-pos-spec»			(to "ee-yank-pos-spec")
+;; «.ee-shrink-hyperlink-at-eol»	(to "ee-shrink-hyperlink-at-eol")
+;; «.ee-flip-psne-ness»			(to "ee-flip-psne-ness")
+;; «.eewrap-vldi-list-line»		(to "eewrap-vldi-list-line")
+
 
 
 
@@ -49,8 +55,9 @@
 ;;; | (_| | |_| | |_) | | | (_| (_| | ||  __/
 ;;;  \__,_|\__,_| .__/|_|_|\___\__,_|\__\___|
 ;;;             |_|                          
-
-(define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
+;;
+;; «ee-duplicate-this-line» (to ".ee-duplicate-this-line")
+;; (define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
 
 (defun ee-duplicate-this-line ()
   "Duplicate the current line (without any changes to the kill ring)."
@@ -58,14 +65,16 @@
   (let ((line (buffer-substring (ee-bol) (ee-eol))))
     (save-excursion (beginning-of-line) (insert-before-markers line "\n"))))
 
+
 ;;;                    _    
 ;;;  _   _  __ _ _ __ | | __
 ;;; | | | |/ _` | '_ \| |/ /
 ;;; | |_| | (_| | | | |   < 
 ;;;  \__, |\__,_|_| |_|_|\_\
 ;;;  |___/                  
-
-(define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
+;;
+;; «ee-yank-pos-spec» (to ".ee-yank-pos-spec")
+;; (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
 
 (defun ee-yank-pos-spec ()
   "Append the top of the kill ring to a hyperlink sexp, as a Lisp string.
@@ -107,9 +116,8 @@ and you copy that hyperlink to a more permanent place."
 ;;; \__ \ | | | |  | | | | |   < 
 ;;; |___/_| |_|_|  |_|_| |_|_|\_\
 ;;;                              
-;; «ee-shrink-hyperlink-at-eol»  (to ".ee-shrink-hyperlink-at-eol")
-;;
-(define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
+;; «ee-shrink-hyperlink-at-eol» (to ".ee-shrink-hyperlink-at-eol")
+;; (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
 
 (defun ee-shrink-sexp (sexp)
   "If the car of SEXP of the form `find-xxxfile', reduce it to `find-xxx'."
@@ -139,11 +147,11 @@ and you copy that hyperlink to a more permanent place."
 ;;; |  _| | | |_) |_____| |_) \__ \ | | |  __/
 ;;; |_| |_|_| .__/      | .__/|___/_| |_|\___|
 ;;;         |_|         |_|                   
+;;
+;; «ee-flip-psne-ness» (to ".ee-flip-psne-ness")
+;; (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
 
-;; (find-efunctiondescr 'eemklinks-yank-pos-spec)
 ;; (find-eevfile "eev-insert.el" "defun ee-ill")
-
-(define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
 
 (defun ee-flip-psne-ness ()
   (interactive)
@@ -162,7 +170,8 @@ and you copy that hyperlink to a more permanent place."
 ;;;  \ V /| | (_| | |_____| | \__ \ ||_____| | | | | |  __/
 ;;;   \_/ |_|\__,_|_|     |_|_|___/\__|    |_|_|_| |_|\___|
 ;;;                                                        
-;; This is a hack.
+;; «eewrap-vldi-list-line» (to ".eewrap-vldi-list-line")
+;; (define-key eev-mode-map "\M-I" 'eewrap-vldi-list-line)
 ;;
 ;; In a Debian system, for each installed package named xxxx there is
 ;; an associated file, at /var/lib/dpkg/info/xxxx.list - let's call
@@ -171,14 +180,11 @@ and you copy that hyperlink to a more permanent place."
 ;;
 ;; To convert a vldi list to hyperlinks, copy it to a read-write
 ;; buffer and run M-I on each of its lines. More details later - this
-;; is a hack. =\
+;; is a hack!
 ;;
-;; (find-eev "eev-insert.el" "ee-ill")
-;;
-;; M-I: vldi-list-line
-(define-key eev-mode-map "\M-I" 'eewrap-vldi-list-line)
+;; Old version: (find-eev "eev-insert.el" "ee-ill")
 
-(defun  eewrap-vldi-list-line () (interactive)
+(defun eewrap-vldi-list-line () (interactive)
   "Convert a filename at the current line into a hyperlink, and go down.
 Supports `find-man', `find-udfile', and `find-fline' hyperlinks.
 This function recognizes lines containing directory names, and
@@ -221,6 +227,5 @@ then just delete the current line."
 ;; Local Variables:
 ;; coding:            raw-text-unix
 ;; ee-anchor-format:  "«%s»"
-;; ee-anchor-format:  "defun %s "
 ;; no-byte-compile:   t
 ;; End:

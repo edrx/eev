@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan29
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -211,32 +211,6 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
 (defun find-freenode-3a (channel)
   (find-3a nil '(find-freenode) '(find-freenode channel)))
 
-;; (defun ee-find-freenode-links (&optional c channel)
-;;   (setq c (or c "{c}"))
-;;   (setq channel (or channel (ee-buffer-freenode-channel-name))
-;;   `((setq ee-freenode-ichannels ,ee-freenode-ichannels)
-;;     (setq ee-freenode-achannels ,ee-freenode-achannels)
-;;     ""
-;;     (find-freenode ,channel)
-;;     (find-freenode-3a ,channel)
-;;     (defun eejump-9 () (find-freenode ,channel))
-;;     (defun eejump-99 () (find-freenode-3a ,channel))
-;;     ))
-;; 
-;; (defun find-freenode-links (&optional channel &rest pos-spec-list)
-;; "Visit a temporary buffer containing hyperlinks for connecting to freenode."
-;;   (interactive (list (ee-irc-channel-around-point)))
-;;   (setq channel (or channel "{channel}"))
-;;   (apply 'find-elinks
-;;    `((find-freenode-links ,channel)
-;;      ;; Convention: the first sexp always regenerates the buffer.
-;;      (find-efunction 'find-freenode-links)
-;;      ""
-;;      ,@(ee-find-freenode-links channel)
-;;      )
-;;    pos-spec-list))
-
-;; New, 2019jan28
 (defun find-freenode-links (&optional c channel &rest pos-spec-list)
 "Visit a temporary buffer containing code for connecting to a freenode channel."
   (interactive)

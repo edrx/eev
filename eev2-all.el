@@ -1,7 +1,7 @@
 ;;; eev2-all.el -- load all the modules of the rewrite of eev (-> 0.96).
 ;;; This can also be used as an index to the (new) source files.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -20,22 +20,27 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2012nov02
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev2-all.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev2-all.el.html>
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
+;;                                                (find-eev-quick-intro)
 
 ;;; Commentary:
 
-;; Just as eev-all.el loads all modules of the stable version of eev
-;; (0.95.2) this loads all the refactored modules of eev, that are
-;; going to become eev-0.96 - a major rewrite.
+;; At one point there was a file "eev-all.el" that loaded all the
+;; modules of eev. Then (circa 2012) many modules were refactored, and
+;; the old and the new modules coexisted for a while; the file
+;; "eev2-all.el" (this one!) was used to load the common ones and the
+;; new ones...
+;;
+;; Now (2019) this file is about to be deprecated, and to be replaced
+;; by "eev-load.el". See:
+;;   (find-eev "eev-load.el")
 
-;; (find-eev-intro)
 
 
 ;; The main "killer feature" of eev: a way to control interactive programs.
