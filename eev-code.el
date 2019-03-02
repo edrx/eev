@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb27
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -45,10 +45,10 @@
 
 
 
-;; «.alists»		(to "alists")
-;; «.code-c-d-pairs»	(to "code-c-d-pairs")
-;; «.code-c-d»		(to "code-c-d")
-;; «.code-c-d-s»	(to "code-c-d-s")
+;; Â«.alistsÂ»		(to "alists")
+;; Â«.code-c-d-pairsÂ»	(to "code-c-d-pairs")
+;; Â«.code-c-dÂ»		(to "code-c-d")
+;; Â«.code-c-d-sÂ»	(to "code-c-d-s")
 
 
 
@@ -73,7 +73,7 @@
 ;;; | (_| | | \__ \ |_\__ \
 ;;;  \__,_|_|_|___/\__|___/
 ;;;                        
-;; «alists» (to ".alists")
+;; Â«alistsÂ» (to ".alists")
 ;; A simple and flexible implementation of argument lists.
 ;; Inspired by: (find-node "(cl)Argument Lists")
 ;;              (find-node "(cl)Argument Lists" "&body")
@@ -131,7 +131,7 @@ Examples: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|     | .__/ \__,_|_|_|  |___/
 ;;;                                                  |_|                     
 ;;
-;; «code-c-d-pairs» (to ".code-c-d-pairs")
+;; Â«code-c-d-pairsÂ» (to ".code-c-d-pairs")
 ;; Used by: (find-eev "eev-elinks.el" "ee-code-c-d-filter")
 
 (defvar ee-code-c-d-pairs nil
@@ -153,7 +153,7 @@ is used by some functions in \"eev-insert.el\".")
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|
 ;;;                                             
-;; «code-c-d» (to ".code-c-d")
+;; Â«code-c-dÂ» (to ".code-c-d")
 ;; See: (find-eev-quick-intro "9.1. `code-c-d'")
 ;; Try: (find-code-c-d "lua51" "~/usrc/lua-5.1.4/")
 ;;      (find-code-c-d "lua51" "~/usrc/lua-5.1.4/" :anchor)
@@ -298,7 +298,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| \__ \
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|___/
 ;;;                                                 
-;; «code-c-d-s» (to ".code-c-d-s")
+;; Â«code-c-d-sÂ» (to ".code-c-d-s")
 ;; Some default `code-c-d's (debian-centric).
 
 (defun ee-locate-library (fname)
@@ -339,8 +339,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "defun %s "
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

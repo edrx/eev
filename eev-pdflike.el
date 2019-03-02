@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan29
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -112,24 +112,24 @@
 
 
 
-;; «.ee-goto-position-page»		(to "ee-goto-position-page")
-;; «.find-sh-page»			(to "find-sh-page")
-;; «.code-xxxpdf-family»		(to "code-xxxpdf-family")
-;; «.code-xxxpdftext-family»		(to "code-xxxpdftext-family")
-;; «.code-xxxpdf-alias»			(to "code-xxxpdf-alias")
+;; Â«.ee-goto-position-pageÂ»		(to "ee-goto-position-page")
+;; Â«.find-sh-pageÂ»			(to "find-sh-page")
+;; Â«.code-xxxpdf-familyÂ»		(to "code-xxxpdf-family")
+;; Â«.code-xxxpdftext-familyÂ»		(to "code-xxxpdftext-family")
+;; Â«.code-xxxpdf-aliasÂ»			(to "code-xxxpdf-alias")
 ;;
-;; «.find-xpdf-page»			(to "find-xpdf-page")
-;; «.find-pdf-page»			(to "find-pdf-page")
-;; «.find-pdf-text»			(to "find-pdf-text")
+;; Â«.find-xpdf-pageÂ»			(to "find-xpdf-page")
+;; Â«.find-pdf-pageÂ»			(to "find-pdf-page")
+;; Â«.find-pdf-textÂ»			(to "find-pdf-text")
 ;;
-;; «.find-xdvi-page»			(to "find-xdvi-page")
-;; «.find-djview-page»			(to "find-djview-page")
-;; «.find-evince-page»			(to "find-evince-page")
-;; «.find-gv-page»			(to "find-gv-page")
-;; «.find-djvutxt-text»			(to "find-djvutxt-text")
+;; Â«.find-xdvi-pageÂ»			(to "find-xdvi-page")
+;; Â«.find-djview-pageÂ»			(to "find-djview-page")
+;; Â«.find-evince-pageÂ»			(to "find-evince-page")
+;; Â«.find-gv-pageÂ»			(to "find-gv-page")
+;; Â«.find-djvutxt-textÂ»			(to "find-djvutxt-text")
 ;;
-;; «.aliases»				(to "aliases")
-;; «.code-brxxxs»			(to "code-brxxxs")
+;; Â«.aliasesÂ»				(to "aliases")
+;; Â«.code-brxxxsÂ»			(to "code-brxxxs")
 
 
 (require 'eev-brxxx)			; (find-eev "eev-brxxx.el")
@@ -157,7 +157,7 @@
 ;;; |_| |_|_| |_|\__,_|     |___/_| |_|     | .__/ \__,_|\__, |\___|
 ;;;                                         |_|          |___/      
 ;;
-;; «ee-goto-position-page» (to ".ee-goto-position-page")
+;; Â«ee-goto-position-pageÂ» (to ".ee-goto-position-page")
 (defun ee-goto-position-page (&optional pos-spec &rest rest)
   "Like `ee-goto-position', but interpreting a number as a page number.
 \(Note that POS-SPEC is only interpreted as a page if it is a number.)"
@@ -173,7 +173,7 @@
 	  (t (error "This is not a valid pos-spec: %S" pos-spec)))
     (if rest (ee-goto-rest rest))))
 
-;; «find-sh-page» (to ".find-sh-page")
+;; Â«find-sh-pageÂ» (to ".find-sh-page")
 (defun find-sh-page (command &rest pos-spec-list)
   "Like `find-sh', but interpreting the car of POS-SPEC-LIST as a page."
   (interactive "sShell command: ")
@@ -191,7 +191,7 @@
 ;;; | | | | | |  __/ || (_| |_____| || (_) | (_) | \__ \
 ;;; |_| |_| |_|\___|\__\__,_|      \__\___/ \___/|_|___/
 ;;;                                                     
-;; «code-xxxpdf-family» (to ".code-xxxpdf-family")
+;; Â«code-xxxpdf-familyÂ» (to ".code-xxxpdf-family")
 ;; Test: (find-code-xxxpdf-family "XPDFPAGE")
 ;;
 (defun      code-xxxpdf-family (xxxpdf)
@@ -220,7 +220,7 @@
 \"))
 "))
 
-;; «code-xxxpdftext-family» (to ".code-xxxpdftext-family")
+;; Â«code-xxxpdftext-familyÂ» (to ".code-xxxpdftext-family")
 ;; Tests: (find-code-xxxpdftext-family "XPDFTEXT")
 ;;
 (defun      code-xxxpdftext-family (xxxpdf)
@@ -255,7 +255,7 @@
 \"))
 "))
 
-;; «code-xxxpdf-alias» (to ".code-xxxpdf-alias")
+;; Â«code-xxxpdf-aliasÂ» (to ".code-xxxpdf-alias")
 ;; Test: (find-code-xxxpdf-alias "pdfpage" "xpdf-page")
 ;;
 (defun      code-xxxpdf-alias (xxxpdfnew xxxpdfold)
@@ -285,7 +285,7 @@
 ;;; |_| |_|_| |_|\__,_|    /_/\_\ .__/ \__,_|_|       | .__/ \__,_|\__, |\___|
 ;;;                             |_|                   |_|          |___/      
 ;;
-;; «find-xpdf-page» (to ".find-xpdf-page")
+;; Â«find-xpdf-pageÂ» (to ".find-xpdf-page")
 ;; (find-pdflikedef-links "xpdf" "c fname")
 ;; (find-code-xxxpdf-family "xpdf-page")
         (code-xxxpdf-family "xpdf-page")
@@ -307,7 +307,7 @@
 ;;; |_| |_|_| |_|\__,_|     | .__/ \__,_|_|       | .__/ \__,_|\__, |\___|
 ;;;                         |_|                   |_|          |___/      
 ;;
-;; «find-pdf-page» (to ".find-pdf-page")
+;; Â«find-pdf-pageÂ» (to ".find-pdf-page")
 ;; (find-code-xxxpdf-alias "pdf-page" "xpdf-page")
         (code-xxxpdf-alias "pdf-page" "xpdf-page")
 
@@ -319,7 +319,7 @@
 ;;; |_| |_|_| |_|\__,_|     | .__/ \__,_|_|        \__\___/_/\_\\__|
 ;;;                         |_|                                     
 ;;
-;; «find-pdf-text» (to ".find-pdf-text")
+;; Â«find-pdf-textÂ» (to ".find-pdf-text")
 ;; (find-code-xxxpdftext-family "pdf-text")
         (code-xxxpdftext-family "pdf-text")
 
@@ -343,7 +343,7 @@
 ;;;  \___/ \__|_| |_|\___|_|    | .__/|_|  \___/ \__, |___/
 ;;;                             |_|              |___/     
 ;;
-;; «find-xdvi-page» (to ".find-xdvi-page")
+;; Â«find-xdvi-pageÂ» (to ".find-xdvi-page")
 ;; (find-code-xxxpdf-family "xdvi-page")
         (code-xxxpdf-family "xdvi-page")
 
@@ -355,7 +355,7 @@
     ,fname))
 
 
-;; «find-djview-page» (to ".find-djview-page")
+;; Â«find-djview-pageÂ» (to ".find-djview-page")
 ;; (find-code-xxxpdf-family "djview-page")
         (code-xxxpdf-family "djview-page")
 
@@ -381,7 +381,7 @@ file it will go to the page 234 OVERRIDING THE ARGUMENT
 may want to put here code that cleans up that page information.")
 
 
-;; «find-evince-page» (to ".find-evince-page")
+;; Â«find-evince-pageÂ» (to ".find-evince-page")
 ;; (find-code-xxxpdf-family "evince-page")
         (code-xxxpdf-family "evince-page")
 
@@ -396,7 +396,7 @@ may want to put here code that cleans up that page information.")
     ,fname))
 
 
-;; «find-gv-page» (to ".find-gv-page")
+;; Â«find-gv-pageÂ» (to ".find-gv-page")
 ;; (find-code-xxxpdf-family "gv-page")
         (code-xxxpdf-family "gv-page")
 
@@ -408,7 +408,7 @@ may want to put here code that cleans up that page information.")
     ,fname))
 
 
-;; «find-djvutxt-text» (to ".find-djvutxt-text")
+;; Â«find-djvutxt-textÂ» (to ".find-djvutxt-text")
 ;; (find-code-xxxpdftext-family "djvutxt-text")
         (code-xxxpdftext-family "djvutxt-text")
 
@@ -423,7 +423,7 @@ may want to put here code that cleans up that page information.")
 ;;;  / ___ \| | | (_| \__ \  __/\__ \
 ;;; /_/   \_\_|_|\__,_|___/\___||___/
 ;;;                                  
-;; «aliases» (to ".aliases")
+;; Â«aliasesÂ» (to ".aliases")
 ;; For compatibility the with previous versions - that were a mess.
 ;; At some point these aliases will all be commented out, and if you
 ;; depend on them what you I suggest you to do is:
@@ -461,7 +461,7 @@ may want to put here code that cleans up that page information.")
 ;; (find-code-xxxpdf-alias "evince"     "evince-page")
 
 
-;; «code-brxxxs» (to ".code-brxxxs")
+;; Â«code-brxxxsÂ» (to ".code-brxxxs")
 
 (code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
 (code-brfile 'find-djvu-text   :local 'brdjvutextl :dired 'brdjvutextd)
@@ -479,6 +479,6 @@ may want to put here code that cleans up that page information.")
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:

@@ -23,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb27
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -40,25 +40,25 @@
 
 
 
-;; «.eek»			(to "eek")
-;; «.ee-goto-position»		(to "ee-goto-position")
-;; «.ee-goto-rest»		(to "ee-goto-rest")
-;; «.find-fline»		(to "find-fline")
-;; «.find-wottb»		(to "find-wottb")
-;; «.find-efaces»		(to "find-efaces")
-;; «.find-ebufferandpos»	(to "find-ebufferandpos")
-;; «.find-ebuffer»		(to "find-ebuffer")
-;; «.find-eoutput»		(to "find-eoutput")
-;; «.find-estring»		(to "find-estring")
-;; «.find-sh»			(to "find-sh")
-;; «.find-man»			(to "find-man")
-;; «.find-w3m»			(to "find-w3m")
-;; «.find-Package»		(to "find-Package")
-;; «.find-epp»			(to "find-epp")
-;; «.find-einternals»		(to "find-einternals")
-;; «.find-einsert»		(to "find-einsert")
-;; «.find-eunicode»		(to "find-eunicode")
-;; «.find-eejumps»		(to "find-eejumps")
+;; Â«.eekÂ»			(to "eek")
+;; Â«.ee-goto-positionÂ»		(to "ee-goto-position")
+;; Â«.ee-goto-restÂ»		(to "ee-goto-rest")
+;; Â«.find-flineÂ»		(to "find-fline")
+;; Â«.find-wottbÂ»		(to "find-wottb")
+;; Â«.find-efacesÂ»		(to "find-efaces")
+;; Â«.find-ebufferandposÂ»	(to "find-ebufferandpos")
+;; Â«.find-ebufferÂ»		(to "find-ebuffer")
+;; Â«.find-eoutputÂ»		(to "find-eoutput")
+;; Â«.find-estringÂ»		(to "find-estring")
+;; Â«.find-shÂ»			(to "find-sh")
+;; Â«.find-manÂ»			(to "find-man")
+;; Â«.find-w3mÂ»			(to "find-w3m")
+;; Â«.find-PackageÂ»		(to "find-Package")
+;; Â«.find-eppÂ»			(to "find-epp")
+;; Â«.find-einternalsÂ»		(to "find-einternals")
+;; Â«.find-einsertÂ»		(to "find-einsert")
+;; Â«.find-eunicodeÂ»		(to "find-eunicode")
+;; Â«.find-eejumpsÂ»		(to "find-eejumps")
 
 
 
@@ -94,7 +94,7 @@
 ;;; |  __/  __/   < 
 ;;;  \___|\___|_|\_\
 ;;;                 
-;; «eek» (to ".eek")
+;; Â«eekÂ» (to ".eek")
 ;; See: (find-eev-quick-intro "3. Elisp hyperlinks" "eek")
 
 (defun eek (str) (interactive "sKeys: ")
@@ -112,7 +112,7 @@ An example: (eek \"C-x 4 C-h\")"
 ;;; | .__/ \___/|___/     |___/ .__/ \___|\___|   |_|_|___/\__|___/
 ;;; |_|                       |_|                                   
 ;;;
-;; «ee-goto-position»  (to ".ee-goto-position")
+;; Â«ee-goto-positionÂ»  (to ".ee-goto-position")
 ;; Support for pos-spec-lists in hyperlinks.
 ;; See: (find-eval-intro "6. Refining hyperlinks")
 
@@ -146,7 +146,7 @@ they skip the first \"absolute\" pos-spec."
 	  (t (error "This is not a valid pos-spec: %S" pos-spec)))
     (if rest (ee-goto-rest rest))))
 
-;; «ee-goto-rest»  (to ".ee-goto-rest")
+;; Â«ee-goto-restÂ»  (to ".ee-goto-rest")
 ;; See: (find-eval-intro "7. Pos-spec-lists")
 ;;
 (defun ee-goto-rest (list)
@@ -187,7 +187,7 @@ the standard definition."
 ;;; |  _| | | | | (_| |_____| | | | (_) | (_| |  __/
 ;;; |_| |_|_| |_|\__,_|     |_| |_|\___/ \__,_|\___|
 ;;;                                                 
-;; «find-fline» (to ".find-fline")
+;; Â«find-flineÂ» (to ".find-fline")
 ;; Basic links: `find-fline' and `find-node'.
 ;; See: (find-eev-quick-intro "3. Elisp hyperlinks")
 ;;      (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" ":gz")
@@ -232,7 +232,7 @@ Examples:\n
 ;;; |  _| | | | | (_| |_____\ V  V / (_) | |_| |_| |_) |
 ;;; |_| |_|_| |_|\__,_|      \_/\_/ \___/ \__|\__|_.__/ 
 ;;;
-;; «find-wottb» (to ".find-wottb")
+;; Â«find-wottbÂ» (to ".find-wottb")
 ;; Hyperlinks to the output of Emacs's help-like functions.
 
 (defun find-wottb-call (sexp bufname &rest pos-spec-list)
@@ -333,7 +333,7 @@ then go to the position specified by POS-SPEC-LIST.\n
 ;;; |  _| (_| | (_|  __/\__ \
 ;;; |_|  \__,_|\___\___||___/
 ;;;                          
-;; «find-efaces» (to ".find-efaces")
+;; Â«find-efacesÂ» (to ".find-efaces")
 ;; Inspect faces, colors and characters.
 ;; Most of these use `find-wottb-call'.
 ;; Tests:
@@ -396,7 +396,7 @@ inspecting text proprties."
 ;;; |  _| | | | | (_| |____|  __/  _| |_| | | | | (__| |_| | (_) | | | |
 ;;; |_| |_|_| |_|\__,_|     \___|_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|
 ;;;                                                                      
-;; «find-ebufferandpos» (to ".find-ebufferandpos")
+;; Â«find-ebufferandposÂ» (to ".find-ebufferandpos")
 ;; Hyperlinks to the source code of Emacs functions and variables.
 ;; Tests:
 ;;   (find-efunction 'next-line)
@@ -455,7 +455,7 @@ support a POS-SPEC-LIST like this function does."
 ;;; |  _| | | | | (_| |_____|  __/ |_) | |_| |  _|  _|  __/ |   
 ;;; |_| |_|_| |_|\__,_|      \___|_.__/ \__,_|_| |_|  \___|_|   
 ;;;                                                             
-;; «find-ebuffer» (to ".find-ebuffer")
+;; Â«find-ebufferÂ» (to ".find-ebuffer")
 ;; Hyperlinks to buffers
 ;; Tests:
 ;;   (find-ebuffer "*Messages*")
@@ -474,7 +474,7 @@ support a POS-SPEC-LIST like this function does."
 ;;; |  _| | | | | (_| |_____|  __/ (_) | |_| | |_| |_) | |_| | |_ 
 ;;; |_| |_|_| |_|\__,_|      \___|\___/ \__,_|\__| .__/ \__,_|\__|
 ;;;                                              |_|              
-;; «find-eoutput»  (to ".find-eoutput")
+;; Â«find-eoutputÂ»  (to ".find-eoutput")
 ;; Tests:
 ;;   (find-estring "a\nb\nc\n")
 ;;   (find-estring-elisp "(dotimes (i 10) (insert \"\\na\"))")
@@ -509,7 +509,7 @@ CODE argument, and process the POS-SPEC-LIST."
     (goto-char (point-min)))
   (apply 'ee-goto-position pos-spec-list))
 
-;; «find-estring»  (to ".find-estring")
+;; Â«find-estringÂ»  (to ".find-estring")
 ;;
 (defun find-estring (string &rest pos-spec-list)
   "Visit a temporary buffer whose contents are given by STR.
@@ -565,7 +565,7 @@ The \"Local variables:\" section in the buffer is processed."
 ;;; |  _| | | | | (_| |_____\__ \ | | |
 ;;; |_| |_|_| |_|\__,_|     |___/_| |_|
 ;;;                                    
-;; «find-sh»  (to ".find-sh")
+;; Â«find-shÂ»  (to ".find-sh")
 ;; Hyperlinks to the output of shell commands.
 ;; See: (find-eev-quick-intro "3. Elisp hyperlinks" "find-sh0")
 ;; Tests:
@@ -614,7 +614,7 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;;; |  _| | | | | (_| |_____| | | | | | (_| | | | |
 ;;; |_| |_|_| |_|\__,_|     |_| |_| |_|\__,_|_| |_|
 ;;;                                                
-;; «find-man»  (to ".find-man")
+;; Â«find-manÂ»  (to ".find-man")
 ;; Hyperlinks to manpages.
 ;; Tests:
 ;;   (find-man "1 cat")
@@ -650,7 +650,7 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;;; |  _| | | | | (_| |_____\ V  V / ___) | | | | | |
 ;;; |_| |_|_| |_|\__,_|      \_/\_/ |____/|_| |_| |_|
 ;;;
-;; «find-w3m»  (to ".find-w3m")
+;; Â«find-w3mÂ»  (to ".find-w3m")
 ;; Hyperlinks to webpages and files in HTML.
 ;; Needs this: (find-epackage 'w3m)
 ;; Tests: (find-w3m "http://www.emacswiki.org/")
@@ -688,7 +688,7 @@ it doesn't convert relative filenames into urls. See
 ;;; | (_| |  __/ |_) | | (_| | | | |
 ;;;  \__,_|\___|_.__/|_|\__,_|_| |_|
 ;;;                                 
-;; «find-Package»  (to ".find-Package")
+;; Â«find-PackageÂ»  (to ".find-Package")
 ;; Hyperlinks to information about Debian packages.
 ;; Tests:
 ;;   (find-status         "bash")
@@ -738,7 +738,7 @@ This is Debian-specific. See `find-Package'."
 ;;; |  _| | | | | (_| |____|  __/ |_) | |_) |
 ;;; |_| |_|_| |_|\__,_|     \___| .__/| .__/ 
 ;;;                             |_|   |_|    
-;; «find-epp»  (to ".find-epp")
+;; Â«find-eppÂ»  (to ".find-epp")
 ;; Pretty-priting sexps.
 ;; "pp0" -> "pretty-print a Lisp object in a very compact way".
 ;; Tests:
@@ -779,7 +779,7 @@ explicitly. Try this: (progn (message \"foo\") \"bar\")"
 ;;; |  __/ | | | | | (_| | (__\__ \  | | | | | ||  __/ |  | | | | (_| | \__ \
 ;;;  \___|_| |_| |_|\__,_|\___|___/  |_|_| |_|\__\___|_|  |_| |_|\__,_|_|___/
 ;;;                                                                          
-;; «find-einternals»  (to ".find-einternals")
+;; Â«find-einternalsÂ»  (to ".find-einternals")
 ;; Hyperlinks to other things internal to Emacs
 ;; Tests:
 ;;   (find-etpat)
@@ -838,7 +838,7 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 ;;; |  _| | | | | (_| |_____|  __/ | | | \__ \  __/ |  | |_ 
 ;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|___/\___|_|   \__|
 ;;;                                                         
-;; «find-einsert» (to ".find-einsert")
+;; Â«find-einsertÂ» (to ".find-einsert")
 
 ;; Test: (ee-insert "\n;; " '(?a ?z) 32 "Foo")
 (defun ee-insert (&rest rest)
@@ -868,7 +868,7 @@ Example of use: (find-einsert '((32 1000) 10 (8000 12000)))"
 ;;; |  _| | | | | (_| |_____|  __/ |_| | | | | | (_| (_) | (_| |  __/
 ;;; |_| |_|_| |_|\__,_|      \___|\__,_|_| |_|_|\___\___/ \__,_|\___|
 ;;;                                                                  
-;; «find-eunicode» (to ".find-eunicode")
+;; Â«find-eunicodeÂ» (to ".find-eunicode")
 
 (defvar ee-unicode-data-file
   "/usr/share/unicode/UnicodeData.txt"
@@ -899,7 +899,7 @@ Hint: install the Debian package \"unicode-data\".")
 ;;; |_| |_|_| |_|\__,_|      \___|\___|/ |\__,_|_| |_| |_| .__/|___/
 ;;;                                  |__/                |_|        
 ;;
-;; «find-eejumps» (to ".find-eejumps")
+;; Â«find-eejumpsÂ» (to ".find-eejumps")
 ;; Display all the current eejump targets.
 ;; See: (find-eev-quick-intro "7.2. The list of eejump targets")
 ;; Try: (find-eejumps)
@@ -941,11 +941,9 @@ Hint: install the Debian package \"unicode-data\".")
 
 
 
-;; was: ee-anchor-format:  "defun %s "
-
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

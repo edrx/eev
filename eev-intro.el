@@ -56,39 +56,39 @@
 
 
 ;; Quick index:
-;; «.find-intro-dual»		(to "find-intro-dual")
-;; «.find-eintro»		(to "find-eintro")
+;; Â«.find-intro-dualÂ»		(to "find-intro-dual")
+;; Â«.find-eintroÂ»		(to "find-eintro")
 ;;
-;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
-;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
-;; «.find-eev-install-intro»	(to "find-eev-install-intro")
-;; «.find-eev-intro»		(to "find-eev-intro")
+;; Â«.find-eev-quick-introÂ»	(to "find-eev-quick-intro")
+;; Â«.find-emacs-keys-introÂ»	(to "find-emacs-keys-intro")
+;; Â«.find-eev-install-introÂ»	(to "find-eev-install-intro")
+;; Â«.find-eev-introÂ»		(to "find-eev-intro")
 ;;
-;; «.find-eval-intro»		(to "find-eval-intro")
-;; «.find-links-conv-intro»	(to "find-links-conv-intro")
-;; «.find-links-intro»		(to "find-links-intro")
-;; «.find-eepitch-intro»	(to "find-eepitch-intro")
-;; «.find-wrap-intro»		(to "find-wrap-intro")
-;; «.find-eejump-intro»		(to "find-eejump-intro")
-;; «.find-anchors-intro»	(to "find-anchors-intro")
-;; «.find-code-c-d-intro»	(to "find-code-c-d-intro")
-;; «.find-pdf-like-intro»	(to "find-pdf-like-intro")
-;; «.find-brxxx-intro»		(to "find-brxxx-intro")
-;; «.find-psne-intro»		(to "find-psne-intro")
+;; Â«.find-eval-introÂ»		(to "find-eval-intro")
+;; Â«.find-links-conv-introÂ»	(to "find-links-conv-intro")
+;; Â«.find-links-introÂ»		(to "find-links-intro")
+;; Â«.find-eepitch-introÂ»	(to "find-eepitch-intro")
+;; Â«.find-wrap-introÂ»		(to "find-wrap-intro")
+;; Â«.find-eejump-introÂ»		(to "find-eejump-intro")
+;; Â«.find-anchors-introÂ»	(to "find-anchors-intro")
+;; Â«.find-code-c-d-introÂ»	(to "find-code-c-d-intro")
+;; Â«.find-pdf-like-introÂ»	(to "find-pdf-like-intro")
+;; Â«.find-brxxx-introÂ»		(to "find-brxxx-intro")
+;; Â«.find-psne-introÂ»		(to "find-psne-intro")
 ;;
-;; «.find-audiovideo-intro»	(to "find-audiovideo-intro")
-;; «.find-multiwindow-intro»	(to "find-multiwindow-intro")
-;; «.find-rcirc-intro»		(to "find-rcirc-intro")
-;; «.find-templates-intro»	(to "find-templates-intro")
-;; «.find-prepared-intro»	(to "find-prepared-intro")
-;; «.find-bounded-intro»	(to "find-bounded-intro")
-;; «.find-channels-intro»	(to "find-channels-intro")
-;; «.find-videos-intro»		(to "find-videos-intro")
+;; Â«.find-audiovideo-introÂ»	(to "find-audiovideo-intro")
+;; Â«.find-multiwindow-introÂ»	(to "find-multiwindow-intro")
+;; Â«.find-rcirc-introÂ»		(to "find-rcirc-intro")
+;; Â«.find-templates-introÂ»	(to "find-templates-intro")
+;; Â«.find-prepared-introÂ»	(to "find-prepared-intro")
+;; Â«.find-bounded-introÂ»	(to "find-bounded-intro")
+;; Â«.find-channels-introÂ»	(to "find-channels-intro")
+;; Â«.find-videos-introÂ»		(to "find-videos-intro")
 
-;; «.find-defun-intro»		(to "find-defun-intro")
-;; «.find-emacs-intro»		(to "find-emacs-intro")
-;; «.find-org-intro»		(to "find-org-intro")
-;; «.find-escripts-intro»	(to "find-escripts-intro")
+;; Â«.find-defun-introÂ»		(to "find-defun-intro")
+;; Â«.find-emacs-introÂ»		(to "find-emacs-intro")
+;; Â«.find-org-introÂ»		(to "find-org-intro")
+;; Â«.find-escripts-introÂ»	(to "find-escripts-intro")
 
 ;; See: (find-anchors-intro)
 
@@ -98,7 +98,7 @@
 
 
 
-;; «find-intro-dual» (to ".find-intro-dual")
+;; Â«find-intro-dualÂ» (to ".find-intro-dual")
 ;; Below is a hack that I (edrx) use to edit these intros.
 ;; Note that it is sort of commented out.
 ;;
@@ -185,7 +185,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 ;;; |_|  \___/|_| |_|\__|_|_|  \__, |
 ;;;                            |___/ 
 ;;
-;; «find-eintro» (to ".find-eintro")
+;; Â«find-eintroÂ» (to ".find-eintro")
 ;; 2019feb03: experimental. This is like `find-estring' but it runs
 ;; `ee-intro-fontify-maybe' to optionally fontify the titles;
 ;; `ee-intro-fontify-maybe' is similar to `Info-fontify-node'.
@@ -252,7 +252,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 ;;;  \___|\___| \_/       \__, |\__,_|_|\___|_|\_\    |_|_| |_|\__|_|  \___/ 
 ;;;                          |_|                                             
 ;;
-;; «find-eev-quick-intro» (to ".find-eev-quick-intro")
+;; Â«find-eev-quick-introÂ» (to ".find-eev-quick-intro")
 ;; (find-intro-links "eev-quick")
 
 (defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
@@ -1007,24 +1007,24 @@ A hyperlink like
 
   (to \"foo\")
 
-jumps to the first occurrence of the string \"«foo»\" in the
-current buffer. The function that wraps a string in `«»'s is
+jumps to the first occurrence of the string \"Â«fooÂ»\" in the
+current buffer. The function that wraps a string in `Â«Â»'s is
 called `ee-format-as-anchor', and the sexp `(to \"foo\")'
 is equivalent the second sexp below:
 
                     (ee-format-as-anchor \"foo\")
   (ee-goto-position (ee-format-as-anchor \"foo\"))
 
-We will call strings in `«»'s _anchors_, and we will say
+We will call strings in `Â«Â»'s _anchors_, and we will say
 that `(to \"foo\")' jumps \"to the anchor `foo'\". The string
-inside a `«»'s is called a _tag_.
+inside a `Â«Â»'s is called a _tag_.
 
 In a situation like this,
 
-  «one»     (to \"two\")
-  «two»     (to \"three\")
-  «three»   (to \"four\")
-  «four»    (to \"one\")
+  Â«oneÂ»     (to \"two\")
+  Â«twoÂ»     (to \"three\")
+  Â«threeÂ»   (to \"four\")
+  Â«fourÂ»    (to \"one\")
 
 we have four anchors, and typing `M-e' at the line with the
 anchor \"one\" takes us to the line with the anchor \"two\",
@@ -1037,8 +1037,8 @@ this we say that the anchors \"one\", \"two\", \"three\", and
 
 In a case like this,
 
-  «.five»   (to \"five\")
-   «five»  (to \".five\")
+  Â«.fiveÂ»   (to \"five\")
+   Â«fiveÂ»  (to \".five\")
 
 where the names of two anchors pointing to one another differ by
 an initial dot, we will say that the anchor \".five\" is the
@@ -1052,7 +1052,7 @@ all the index anchors together. For an example, see:
 
 8.2. Creating anchors by hand
 -----------------------------
-One way to type the chars `«' and `»' is with `C-x 8 <' and
+One way to type the chars `Â«' and `Â»' is with `C-x 8 <' and
 `C-x 8 >'. Try:
 
   (eek \"RET C-x 8 < t a g C-x 8 >\")
@@ -1107,10 +1107,10 @@ one. For example, `M-A' in the line below
 
 yields this:
 
-  # «.first-test»	(to \"first-test\")
-  # «first-test» (to \".first-test\")
+  # Â«.first-testÂ»	(to \"first-test\")
+  # Â«first-testÂ» (to \".first-test\")
 
-The line with the anchor \"«.first-test»\" is intended to be
+The line with the anchor \"Â«.first-testÂ»\" is intended to be
 moved - by hand, with cut and paste - to the index section at the
 beginning of the file, as explained here:
 
@@ -1136,10 +1136,10 @@ it becomes this - the header of an \"e-script block\":
 #
 #####
 
-# «.second-test»	(to \"second-test\")
-# «second-test» (to \".second-test\")
+# Â«.second-testÂ»	(to \"second-test\")
+# Â«second-testÂ» (to \".second-test\")
 
-where again the line with the anchor \"«.second-test»\" is
+where again the line with the anchor \"Â«.second-testÂ»\" is
 intended to be moved to the index section at the beginning of the
 file. The use of these \"e-script blocks\" is explained bere:
 
@@ -1156,7 +1156,7 @@ hyperlinks are all equivalent:
 
   (find-anchor \"~/eev2/eev-blinks.el\" \"find-wottb\")
   (find-anchor \"~/eev2/eev-blinks.el\" (ee-format-as-anchor \"find-wottb\"))
-  (find-fline  \"~/eev2/eev-blinks.el\" \"«find-wottb»\")
+  (find-fline  \"~/eev2/eev-blinks.el\" \"Â«find-wottbÂ»\")
 
 You can use this - or the shorter hyperlinks to anchors in
 section 9.3 - to point to anchors or to e-script blocks in your
@@ -1177,7 +1177,7 @@ Sexps like
 
   (find-eevfile \"\")
   (find-eevfile \"eev-blinks.el\")
-  (find-eevfile \"eev-blinks.el\" \"«find-sh»\")
+  (find-eevfile \"eev-blinks.el\" \"Â«find-shÂ»\")
   (find-udfile \"\")
   (find-udfile \"lua5.1-doc/\")
   (find-udfile \"lua5.1-doc/test/\")
@@ -1188,7 +1188,7 @@ work as abbreviations for
 
   (find-fline \"~/eev2/\")
   (find-fline \"~/eev2/eev-blinks.el\")
-  (find-fline \"~/eev2/eev-blinks.el\" \"«find-sh»\")
+  (find-fline \"~/eev2/eev-blinks.el\" \"Â«find-shÂ»\")
   (find-fline \"/usr/share/doc/\")
   (find-fline \"/usr/share/doc/lua5.1-doc/\")
   (find-fline \"/usr/share/doc/lua5.1-doc/test/\")
@@ -1269,7 +1269,7 @@ and that code
      if the file \"files.el\" is not found,
 
   3) makes (find-eev     \"eev-blinks.el\" \"find-wottb\")
-     run:  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
+     run:  (find-eevfile \"eev-blinks.el\" \"Â«find-wottbÂ»\")
      or actually: (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
 
 Calls to `find-eev' are \"short hyperlinks to anchors\":
@@ -1462,7 +1462,7 @@ that will run something similar to:
 ;;;  \___|_| |_| |_|\__,_|\___|___/     |_|\_\___|\__, |___/
 ;;;                                               |___/     
 ;;
-;; «find-emacs-keys-intro» (to ".find-emacs-keys-intro")
+;; Â«find-emacs-keys-introÂ» (to ".find-emacs-keys-intro")
 ;; (find-intro-links "emacs-keys")
 
 (defun find-emacs-keys-intro (&rest pos-spec-list) (interactive)
@@ -1633,7 +1633,7 @@ M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
 ;;; |_|_| |_|___/\__\__,_|_|_|
 ;;;                           
 
-;; «find-eev-install-intro» (to ".find-eev-install-intro")
+;; Â«find-eev-install-introÂ» (to ".find-eev-install-intro")
 ;; (find-intro-links "eev-install")
 
 (defun find-eev-install-intro (&rest pos-spec-list) (interactive)
@@ -1790,7 +1790,7 @@ If you want to change these statistics, send me a \"hi\"!
 ;;;                  
 ;; This works as an index.
 ;; (find-intro-links "eev")
-;; «find-eev-intro»  (to ".find-eev-intro")
+;; Â«find-eev-introÂ»  (to ".find-eev-intro")
 
 (defun find-eev-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eev-intro)*"))
@@ -1905,7 +1905,7 @@ For the full lists of keybindings, see:
 ;;; |  __/\ V / (_| | |
 ;;;  \___| \_/ \__,_|_|
 ;;;                    
-;; «find-eval-intro»  (to ".find-eval-intro")
+;; Â«find-eval-introÂ»  (to ".find-eval-intro")
 ;; (find-intro-links "eval")
 ;; (find-TH "eev-article" "hyperlinks")
 ;;      http://angg.twu.net/eev-article.html#hyperlinks
@@ -2295,7 +2295,7 @@ hyperlinks in scripts]
 ;;; | | | | | |   <\__ \_____| (_| (_) | | | \ V /  __/ | | | |_| | (_) | | | \__ \
 ;;; |_|_|_| |_|_|\_\___/      \___\___/|_| |_|\_/ \___|_| |_|\__|_|\___/|_| |_|___/
 ;;;                                                                                
-;; «find-links-conv-intro» (to ".find-links-conv-intro")
+;; Â«find-links-conv-introÂ» (to ".find-links-conv-intro")
 ;; (find-intro-links "links-conv")
 
 (defun find-links-conv-intro (&rest pos-spec-list) (interactive)
@@ -2751,7 +2751,7 @@ be expanded later:
 ;;; |_|_|_| |_|_|\_\___/
 ;;;                     
 ;; (find-intro-links "links")
-;; «find-links-intro»  (to ".find-links-intro")
+;; Â«find-links-introÂ»  (to ".find-links-intro")
 
 (defun find-links-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-links-intro)*"))
@@ -3110,7 +3110,7 @@ scripts etc\]
 ;;;  \___|\___| .__/|_|\__\___|_| |_|
 ;;;           |_|                    
 ;;
-;; «find-eepitch-intro»  (to ".find-eepitch-intro")
+;; Â«find-eepitch-introÂ»  (to ".find-eepitch-intro")
 ;; (find-intro-links "eepitch")
 ;; (find-eev "eepitch.readme")
 
@@ -3348,7 +3348,7 @@ What functions can generate target buffers:
 ;;;                    |_|    
 ;;
 ;; (find-intro-links "wrap")
-;; «find-wrap-intro»  (to ".find-wrap-intro")
+;; Â«find-wrap-introÂ»  (to ".find-wrap-intro")
 
 (defun find-wrap-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-wrap-intro)*"))
@@ -3581,7 +3581,7 @@ kinds of scripts.
 ;;              (find-TH "emacs"    "eejump")
 ;;    http://angg.twu.net/emacs.html#eejump
 ;; file:///home/edrx/TH/L/emacs.html#eejump
-;; «find-eejump-intro»  (to ".find-eejump-intro")
+;; Â«find-eejump-introÂ»  (to ".find-eejump-intro")
 
 (defun find-eejump-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-eejump-intro)*"))
@@ -3870,7 +3870,7 @@ then you'll be attributing just a \"temporary\" meaning to
 ;;; | (_| | | | | (__| | | | (_) | |  \__ \
 ;;;  \__,_|_| |_|\___|_| |_|\___/|_|  |___/
 ;;;                                        
-;; «find-anchors-intro» (to ".find-anchors-intro")
+;; Â«find-anchors-introÂ» (to ".find-anchors-intro")
 ;; (find-intro-links "anchors")
 
 (defun find-anchors-intro (&rest rest) (interactive)
@@ -3898,8 +3898,8 @@ A hyperlink like
 
   (to \"foo\")
 
-jumps to the first occurrence of the string \"«foo»\" in the
-current buffer. The way to convert from \"foo\" to \"«foo»\" is
+jumps to the first occurrence of the string \"Â«fooÂ»\" in the
+current buffer. The way to convert from \"foo\" to \"Â«fooÂ»\" is
 controlled by the variable `ee-anchor-format', and the sexp
 `(to \"foo\")' is roughly equivalent the third sexp below:
 
@@ -3907,7 +3907,7 @@ controlled by the variable `ee-anchor-format', and the sexp
                     (format ee-anchor-format \"foo\")
   (ee-goto-position (format ee-anchor-format \"foo\"))
 
-We will call strings in `«»'s _anchors_, and we will say
+We will call strings in `Â«Â»'s _anchors_, and we will say
 that `(to \"foo\")' jumps \"to the anchor `foo'\".
 
 Anchors can be used to create sections and indexes, as we shall
@@ -3925,18 +3925,18 @@ eepitch, as described here:
 
   (find-eepitch-intro \"\\nRed stars\\n\")
 
-For historical reasons, the glyphs for `«' and `»' defined in
+For historical reasons, the glyphs for `Â«' and `Â»' defined in
 
   (find-eev \"eev-anchors.el\")
 
 use the characters 171 and 187; as far as I know, these
 characters are only \"safe\" - in the sense that Emacs will not
 try to convert them to anything else - in unibyte buffers. The
-best way to make sure that anchors with `«»'s will work in a
+best way to make sure that anchors with `Â«Â»'s will work in a
 certain file is to put a \"Local variables:\" section at the end
 of it, as has been done in this buffer - and use that to set both
 the file coding to raw-text-unix and the value of
-`ee-anchor-format' to \"«%s»\".
+`ee-anchor-format' to \"Â«%sÂ»\".
 
 Note that if you change a \"Local variables:\" section by hand
 you will probably have to either reload the file or run `M-x
@@ -3948,8 +3948,8 @@ Indexes
 =======
 In a situation like this,
 
-  «one»   (to \"two\")
-  «two»   (to \"one\")
+  Â«oneÂ»   (to \"two\")
+  Â«twoÂ»   (to \"one\")
 
 we have two anchors, and typing `M-e' at the line with the anchor
 \"one\" takes us to the line with the anchor \"two\", and typing
@@ -3959,8 +3959,8 @@ anchors \"one\" and \"two\" _point to one another_.
 
 In a case like this,
 
-  «.three»   (to \"three\")
-   «three»  (to \".three\")
+  Â«.threeÂ»   (to \"three\")
+   Â«threeÂ»  (to \".three\")
 
 where the names of two anchors pointing to one another differ by
 an initial dot, we will say that the anchor \".three\" is the
@@ -3986,12 +3986,12 @@ It will convert a line with a syntax like
 
 into:
 
-  comment-prefix «.anchor-name»	(to \"anchor-name\")
-  comment-prefix «anchor-name» (to \".anchor-name\")
+  comment-prefix Â«.anchor-nameÂ»	(to \"anchor-name\")
+  comment-prefix Â«anchor-nameÂ» (to \".anchor-name\")
 
 where comment-prefix is any string and anchor-name is a string
 without `<>'s. Note that the `<>'s, which are easy to type, are
-converted into `«»'s, which are harder.
+converted into `Â«Â»'s, which are harder.
 
 
 
@@ -4017,7 +4017,7 @@ code-c-d and :anchor
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|
 ;;;                                             
-;; «find-code-c-d-intro»  (to ".find-code-c-d-intro")
+;; Â«find-code-c-d-introÂ»  (to ".find-code-c-d-intro")
 
 (defun find-code-c-d-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-code-c-d-intro)*"))
@@ -4188,7 +4188,7 @@ Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
 ;;; | .__/ \__,_|_|       |_|_|_|\_\___|
 ;;; |_|                                 
 ;;
-;; «find-pdf-like-intro»  (to ".find-pdf-like-intro")
+;; Â«find-pdf-like-introÂ»  (to ".find-pdf-like-intro")
 
 (defun find-pdf-like-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-pdf-like-intro)*"))
@@ -4542,7 +4542,7 @@ macros are VERY useful; if you don't use them yet, see:
 ;;; | |_) | |   >  <  >  <  >  < 
 ;;; |_.__/|_|  /_/\_\/_/\_\/_/\_\
 ;;;                              
-;; «find-brxxx-intro»  (to ".find-brxxx-intro")
+;; Â«find-brxxx-introÂ»  (to ".find-brxxx-intro")
 
 (defun find-brxxx-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-brxxx-intro)*"))
@@ -4762,7 +4762,7 @@ In dired mode each line corresponds to a file
 ;;; | .__/|___/_| |_|\___|
 ;;; |_|                   
 ;;
-;; «find-psne-intro»  (to ".find-psne-intro")
+;; Â«find-psne-introÂ»  (to ".find-psne-intro")
 ;; (find-TH "eev-article" "local-copies")
 ;; (find-angg ".emacs" "brep")
 ;; (find-eev "eev-browse-url.el" "find-psne-links")
@@ -4960,7 +4960,7 @@ The details on how to create these \"brxxx functions\" are here:
 ;;; | (_| | |_| | (_| | | (_) / /  \ V /| | (_| |  __/ (_) |
 ;;;  \__,_|\__,_|\__,_|_|\___/_/    \_/ |_|\__,_|\___|\___/ 
 ;;;                                                         
-;; «find-audiovideo-intro» (to ".find-audiovideo-intro")
+;; Â«find-audiovideo-introÂ» (to ".find-audiovideo-intro")
 ;; (find-intro-links "audiovideo")
 
 (defun find-audiovideo-intro (&rest pos-spec-list) (interactive)
@@ -5389,7 +5389,7 @@ Create short links
 ;;; | | | | | | |_| | | |_| |\ V  V /| | | | | (_| | (_) \ V  V / 
 ;;; |_| |_| |_|\__,_|_|\__|_| \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/  
 ;;;                                                               
-;; «find-multiwindow-intro» (to ".find-multiwindow-intro")
+;; Â«find-multiwindow-introÂ» (to ".find-multiwindow-intro")
 ;; (find-intro-links "multiwindow")
 
 (defun find-multiwindow-intro (&rest pos-spec-list) (interactive)
@@ -5823,7 +5823,7 @@ Here:
 ;;; | | | (__| | | | (__ 
 ;;; |_|  \___|_|_|  \___|
 ;;;                      
-;; «find-rcirc-intro» (to ".find-rcirc-intro")
+;; Â«find-rcirc-introÂ» (to ".find-rcirc-intro")
 ;; (find-intro-links "rcirc")
 
 (defun find-rcirc-intro (&rest pos-spec-list) (interactive)
@@ -5972,7 +5972,7 @@ For more information see:
 ;;;  \__\___|_| |_| |_| .__/|_|\__,_|\__\___||___/
 ;;;                   |_|                         
 ;;
-;; «find-templates-intro» (to ".find-templates-intro")
+;; Â«find-templates-introÂ» (to ".find-templates-intro")
 ;; (find-intro-links "templates")
 
 (defun find-templates-intro (&rest rest) (interactive)
@@ -6102,7 +6102,7 @@ Experiments
 ;;; | .__/|_|  \___| .__/ \__,_|_|  \___|\__,_|
 ;;; |_|            |_|                         
 ;;
-;; «find-prepared-intro»  (to ".find-prepared-intro")
+;; Â«find-prepared-introÂ»  (to ".find-prepared-intro")
 ;; (find-eev "eev-bounded.el")
 
 (defun find-prepared-intro (&rest rest) (interactive)
@@ -6332,7 +6332,7 @@ But try these:
 ;;; | |_) | (_) | |_| | | | | (_| |  __/ (_| |
 ;;; |_.__/ \___/ \__,_|_| |_|\__,_|\___|\__,_|
 ;;;                                           
-;; «find-bounded-intro» (to ".find-bounded-intro")
+;; Â«find-bounded-introÂ» (to ".find-bounded-intro")
 ;; (find-intro-links "bounded")
 (defun find-bounded-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-bounded-intro)*"))
@@ -6425,7 +6425,7 @@ so you should do something like this, but for your favourite key:
 ;;; | (__| | | | (_| | | | | | | |  __/ \__ \
 ;;;  \___|_| |_|\__,_|_| |_|_| |_|\___|_|___/
 ;;;                                          
-;; «find-channels-intro» (to ".find-channels-intro")
+;; Â«find-channels-introÂ» (to ".find-channels-intro")
 ;; (find-intro-links "channels")
 
 (defun find-channels-intro (&rest pos-spec-list) (interactive)
@@ -6823,7 +6823,7 @@ How to set it up
 ;;;  \ V /| | (_| |  __/ (_) \__ \
 ;;;   \_/ |_|\__,_|\___|\___/|___/
 ;;;                               
-;; «find-videos-intro» (to ".find-videos-intro")
+;; Â«find-videos-introÂ» (to ".find-videos-intro")
 ;; (find-intro-links "videos")
 
 (defun find-videos-intro (&rest pos-spec-list) (interactive)
@@ -7123,7 +7123,7 @@ use this sexp to help you:
 ;;; | (_| |  __/  _| |_| | | | |
 ;;;  \__,_|\___|_|  \__,_|_| |_|
 ;;;                             
-;; «find-defun-intro»  (to ".find-defun-intro")
+;; Â«find-defun-introÂ»  (to ".find-defun-intro")
 ;; (find-intro-links "defun")
 
 (defun find-defun-intro (&rest rest) (interactive)
@@ -7347,7 +7347,7 @@ returns nil. But just as
 ;;; |  __/ | | | | | (_| | (__\__ \_____| | | | | |_| | | (_) |
 ;;;  \___|_| |_| |_|\__,_|\___|___/     |_|_| |_|\__|_|  \___/ 
 ;;;                                                            
-;; «find-emacs-intro» (to ".find-emacs-intro")
+;; Â«find-emacs-introÂ» (to ".find-emacs-intro")
 ;; (find-intro-links "emacs")
 
 (defun find-emacs-intro (&rest rest) (interactive)
@@ -7541,7 +7541,7 @@ C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
 
 
 
-;; «find-org-intro» (to ".find-org-intro")
+;; Â«find-org-introÂ» (to ".find-org-intro")
 ;; (find-intro-links "org")
 
 (defun find-org-intro (&rest pos-spec-list) (interactive)
@@ -7614,7 +7614,7 @@ http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-ta
 ;;;  \___|     |___/\___|_|  |_| .__/ \__|___/
 ;;;                            |_|            
 
-;; «find-escripts-intro» (to ".find-escripts-intro")
+;; Â«find-escripts-introÂ» (to ".find-escripts-intro")
 ;; (find-intro-links "escripts")
 
 (defun find-escripts-intro (&rest pos-spec-list) (interactive)
@@ -7830,8 +7830,8 @@ reviewed in the subsections below.
   --snip, snip--
 
   # Index:
-  # «.lua5.1-debian»	(to \"lua5.1-debian\")
-  # «.lua-tutorial»	(to \"lua-tutorial\")
+  # Â«.lua5.1-debianÂ»	(to \"lua5.1-debian\")
+  # Â«.lua-tutorialÂ»	(to \"lua-tutorial\")
 
 
 
@@ -7842,7 +7842,7 @@ reviewed in the subsections below.
   #
   #####
 
-  # «lua5.1-debian» (to \".lua5.1-debian\")
+  # Â«lua5.1-debianÂ» (to \".lua5.1-debian\")
   # (find-status   \"lua5.1\")
   # (find-vldifile \"lua5.1.list\")
   # (find-udfile   \"lua5.1/\")
@@ -7870,7 +7870,7 @@ reviewed in the subsections below.
   #
   #####
 
-  # «lua-tutorial» (to \".lua-tutorial\")
+  # Â«lua-tutorialÂ» (to \".lua-tutorial\")
   # http://angg.twu.net/e/lua-intro.e.html
   # http://angg.twu.net/e/lua-intro.e
 
@@ -7894,8 +7894,8 @@ reviewed in the subsections below.
 ---------------------
 The two lines below
 
-  # «.foo»	 (to \"foo\")
-  # «foo» 	(to \".foo\")
+  # Â«.fooÂ»	 (to \"foo\")
+  # Â«fooÂ» 	(to \".foo\")
 
 \"point to one another\". This is explained here:
 
@@ -7904,21 +7904,21 @@ The two lines below
 We used this in Example 1 to create an index. Compare with:
 
   # Index:
-  # «.one»	(to \"one\")
-  # «.two»	(to \"two\")
+  # Â«.oneÂ»	(to \"one\")
+  # Â«.twoÂ»	(to \"two\")
 
   ###
   ## Stuff in block \"one\"
   ###
 
-  # «one» (to \".one\")
+  # Â«oneÂ» (to \".one\")
   (...)
 
   ###
   ## Stuff in block \"two\"
   ###
 
-  # «two» (to \".two\")
+  # Â«twoÂ» (to \".two\")
 
 
 
@@ -8077,8 +8077,8 @@ Typing `M-A' on this line:
 
 yields this pair of anchor-to lines:
 
-  # «.bletch»	(to \"bletch\")
-  # «bletch»	(to \".bletch\")
+  # Â«.bletchÂ»	(to \"bletch\")
+  # Â«bletchÂ»	(to \".bletch\")
 
 let's call the first one a \"to-forward\" and the second one a
 \"to-back\". In my e-scripts files I follow the convention that
@@ -8240,7 +8240,7 @@ This can also be used to generate links to info nodes.
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2016sep18
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-env.el>
@@ -138,8 +138,7 @@ See the source for details, examples, and tests."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
-;; ee-anchor-format:  "defun %s "
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

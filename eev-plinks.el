@@ -93,10 +93,10 @@
 ;; `find-sh' shows it in a temporary buffer instead of in the acho
 ;; area.
 
-;; «.find-bgprocess»		(to "find-bgprocess")
-;; «.find-callprocess»		(to "find-callprocess")
-;; «.find-callprocessregion»	(to "find-callprocessregion")
-;; «.find-comintprocess»	(to "find-comintprocess")
+;; Â«.find-bgprocessÂ»		(to "find-bgprocess")
+;; Â«.find-callprocessÂ»		(to "find-callprocess")
+;; Â«.find-callprocessregionÂ»	(to "find-callprocessregion")
+;; Â«.find-comintprocessÂ»	(to "find-comintprocess")
 
 
 
@@ -111,8 +111,8 @@
 ;; (find-eev "eev-brxxx.el")
 
 
-;; «.find-wget»	(to "find-wget")
-;; «.find-gitk»	(to "find-gitk")
+;; Â«.find-wgetÂ»	(to "find-wget")
+;; Â«.find-gitkÂ»	(to "find-gitk")
 
 
 
@@ -153,7 +153,7 @@
 ;;; |_.__/ \__, | .__/|_|  \___/ \___\___||___/___/
 ;;;        |___/|_|                                
 ;;
-;; «find-bgprocess» (to ".find-bgprocess")
+;; Â«find-bgprocessÂ» (to ".find-bgprocess")
 ;;
 (defun find-bgprocess-ne (program-and-args)
   (let ((argv (ee-split program-and-args)))
@@ -171,7 +171,7 @@
 ;;;  \___\__,_|_|_| .__/|_|  \___/ \___\___||___/___/
 ;;;               |_|                                
 ;;
-;; «find-callprocess» (to ".find-callprocess")
+;; Â«find-callprocessÂ» (to ".find-callprocess")
 ;;
 (defun find-callprocess00-ne (program-and-args)
   (let ((argv (ee-split program-and-args)))
@@ -210,7 +210,7 @@
 ;;; | .__/|_|  \___/ \___\___||___/___/_|  \___|\__, |_|\___/|_| |_|
 ;;; |_|                                         |___/               
 ;;
-;; «find-callprocessregion» (to ".find-callprocessregion")
+;; Â«find-callprocessregionÂ» (to ".find-callprocessregion")
 ;; Use this when program-and-args expects input from stdin.
 ;; Note: Code salvaged from a very old version of eev.
 ;; To do: write examples and test cases for this.
@@ -237,7 +237,7 @@
 ;;; | (_| (_) | | | | | | | | | | |_ 
 ;;;  \___\___/|_| |_| |_|_|_| |_|\__|
 ;;;                                  
-;; «find-comintprocess» (to ".find-comintprocess")
+;; Â«find-comintprocessÂ» (to ".find-comintprocess")
 ;; `find-comintprocess-ne' and `find-comintprocess' are defined in
 ;; eepitch.el. See:
 ;;   (find-eevfile "eepitch.el" "defun find-comintprocess-ne ")
@@ -246,7 +246,7 @@
 
 
 
-;; «find-wget» (to ".find-wget")
+;; Â«find-wgetÂ» (to ".find-wget")
 ;;
 (defun find-wget00 (url)
   (find-callprocess00 `("wget" "-q" "-O" "-" ,url)))
@@ -260,7 +260,7 @@
 
 
 
-;; «find-gitk» (to ".find-gitk")
+;; Â«find-gitkÂ» (to ".find-gitk")
 ;; Example: (find-eev-install-intro "find-gitk")
 ;;
 (defun find-gitk (dir)
@@ -277,8 +277,7 @@
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "defun %s "
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

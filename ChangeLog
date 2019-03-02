@@ -1,5 +1,37 @@
 2019-03-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-anchors.el: converted to utf-8.
+
+	* eev-audiovideo.el: converted to utf-8.
+
+	* eev-blinks.el: converted to utf-8.
+
+	* eev-brxxx.el: converted to utf-8.
+
+	* eev-code.el: converted to utf-8.
+
+	* eev-edit.el: converted to utf-8.
+
+	* eev-elinks.el: converted to utf-8.
+
+	* eev-env.el: converted to utf-8.
+
+	* eev-eval.el: converted to utf-8.
+
+	* eev-intro.el: converted to utf-8.
+
+	* eev-mode.el: converted to utf-8.
+
+	* eev-pdflike.el: converted to utf-8.
+
+	* eev-plinks.el: converted to utf-8.
+
+	* eev-prepared.el: converted to utf-8.
+
+	* eev-tlinks.el: converted to utf-8.
+
+	* eev-wrap.el: converted to utf-8.
+
 	* eev-edit.el: moved all keybindings to eev-mode.el.
 
 	* eev-tlinks.el (find-eev-update-links): marked as obsolete.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb27
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -55,27 +55,27 @@
 
 
 
-;; «.around-point»		(to "around-point")
-;; «.find-elinks»		(to "find-elinks")
-;; «.find-efunction-links»	(to "find-efunction-links")
-;; «.find-evariable-links»	(to "find-evariable-links")
-;; «.find-ekey-links»		(to "find-ekey-links")
-;; «.find-elongkey-links»	(to "find-elongkey-links")
-;; «.find-einfo-links»		(to "find-einfo-links")
-;; «.find-eintro»		(to "find-eintro")
+;; Â«.around-pointÂ»		(to "around-point")
+;; Â«.find-elinksÂ»		(to "find-elinks")
+;; Â«.find-efunction-linksÂ»	(to "find-efunction-links")
+;; Â«.find-evariable-linksÂ»	(to "find-evariable-links")
+;; Â«.find-ekey-linksÂ»		(to "find-ekey-links")
+;; Â«.find-elongkey-linksÂ»	(to "find-elongkey-links")
+;; Â«.find-einfo-linksÂ»		(to "find-einfo-links")
+;; Â«.find-eintroÂ»		(to "find-eintro")
 
-;; «.ee-code-c-d-pairs-eval»	(to "ee-code-c-d-pairs-eval")
-;; «.ee-code-c-d-filter»	(to "ee-code-c-d-filter")
-;; «.ee-find-xxxfile-sexps»	(to "ee-find-xxxfile-sexps")
-;; «.find-file-links»		(to "find-file-links")
-;; «.find-grep-links»		(to "find-grep-links")
-;; «.find-ekbmacro-links»	(to "find-ekbmacro-links")
-;; «.find-pdflike-page-links»	(to "find-pdflike-page-links")
-;; «.ee-hyperlink-prefix»	(to "ee-hyperlink-prefix")
-;; «.find-eface-links»		(to "find-eface-links")
-;; «.find-color-links»		(to "find-color-links")
+;; Â«.ee-code-c-d-pairs-evalÂ»	(to "ee-code-c-d-pairs-eval")
+;; Â«.ee-code-c-d-filterÂ»	(to "ee-code-c-d-filter")
+;; Â«.ee-find-xxxfile-sexpsÂ»	(to "ee-find-xxxfile-sexps")
+;; Â«.find-file-linksÂ»		(to "find-file-links")
+;; Â«.find-grep-linksÂ»		(to "find-grep-links")
+;; Â«.find-ekbmacro-linksÂ»	(to "find-ekbmacro-links")
+;; Â«.find-pdflike-page-linksÂ»	(to "find-pdflike-page-links")
+;; Â«.ee-hyperlink-prefixÂ»	(to "ee-hyperlink-prefix")
+;; Â«.find-eface-linksÂ»		(to "find-eface-links")
+;; Â«.find-color-linksÂ»		(to "find-color-links")
 
-;; «.find-here-links»		(to "find-here-links")
+;; Â«.find-here-linksÂ»		(to "find-here-links")
 
 
 
@@ -90,7 +90,7 @@
 ;;;  \__,_|_|  \___/ \__,_|_| |_|\__,_|     | .__/ \___/|_|_| |_|\__|
 ;;;                                         |_|                      
 ;;
-;; «around-point» (to ".around-point")
+;; Â«around-pointÂ» (to ".around-point")
 ;; (find-eapropos "around-point")
 
 ;; (find-elnode "Index" "* thing-at-point:")
@@ -139,7 +139,7 @@ This function is not very smart - it doesn't understand section names."
 ;;; |  _| | | | | (_| |_____|  __/ | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|      \___|_|_|_| |_|_|\_\___/
 ;;;                                                  
-;; «find-elinks»  (to ".find-elinks")
+;; Â«find-elinksÂ»  (to ".find-elinks")
 ;; `find-elinks' is an internal function used by all functions that
 ;; generate buffers with hyperlinks, like `find-efunction-links', and
 ;; by most functions that generate buffers with hyperlinks followed by
@@ -211,7 +211,7 @@ The buffer is put in Emacs Lisp mode."
 ;;; |  _| | | | | (_| |_____|  __/  _| |_| | | | | (__| |_| | (_) | | | |
 ;;; |_| |_|_| |_|\__,_|      \___|_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|
 ;;;                                                                      
-;; «find-efunction-links» (to ".find-efunction-links")
+;; Â«find-efunction-linksÂ» (to ".find-efunction-links")
 ;; `find-efunction-links' is one of the simplest functions that
 ;; generate buffers with hyperlinks. It is mentioned in
 ;; `find-eev-quick-intro':
@@ -265,7 +265,7 @@ This is an internal function used by `find-efunction-links' and
 ;;; |  _| | | | | (_| |_____|  __/\ V / (_| | |  | | (_| | |_) | |  __/
 ;;; |_| |_|_| |_|\__,_|      \___| \_/ \__,_|_|  |_|\__,_|_.__/|_|\___|
 ;;;                                                                    
-;; «find-evariable-links» (to ".find-evariable-links")
+;; Â«find-evariable-linksÂ» (to ".find-evariable-links")
 ;; (find-find-links-links "\\M-v" "evariable" "var")
 ;; A test: (find-evariable-links 'line-move-visual)
 ;;                  (eek "M-h M-v line-move-visual")
@@ -299,7 +299,7 @@ This is an internal function used by `find-efunction-links' and
 ;;; |_| |_|_| |_|\__,_|      \___|_|\_\___|\__, |
 ;;;                                        |___/ 
 ;;
-;; «find-ekey-links» (to ".find-ekey-links")
+;; Â«find-ekey-linksÂ» (to ".find-ekey-links")
 ;; (find-find-links-links "\\M-k" "ekey" "key")
 ;;
 ;; The functions in this section generate buffers with hyperlinks
@@ -385,7 +385,7 @@ See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
 	     )
 	   pos-spec-list)))
 
-;; «find-elongkey-links» (to ".find-elongkey-links")
+;; Â«find-elongkey-linksÂ» (to ".find-elongkey-links")
 ;; Test: (find-elongkey-links "C-x 4 0")
 (defun find-elongkey-links (longkey &rest pos-spec-list)
   "Like `find-ekey-links', but LONGKEY is a key sequence \"spelled out\".
@@ -444,7 +444,7 @@ This is an internal function used by `find-ekey-links' and
 ;;; |  _| | | | | (_| |_____|  __/ | | | |  _| (_) |
 ;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|_|  \___/ 
 ;;;                                                 
-;; «find-einfo-links» (to ".find-einfo-links")
+;; Â«find-einfo-linksÂ» (to ".find-einfo-links")
 ;; Tests: (progn (find-enode "Lisp Eval") (find-einfo-links))
 ;;        (progn (find-enode "Lisp Eval") (eek "M-h M-i"))
 
@@ -539,7 +539,7 @@ value of (ee-info-book-). This only works reliably for info
 ;;; |  _| | | | | (_| |_____|  __/ | | | | |_| | | (_) |
 ;;; |_| |_|_| |_|\__,_|      \___|_|_| |_|\__|_|  \___/ 
 ;;;                                                     
-;; «find-eintro» (to ".find-eintro")
+;; Â«find-eintroÂ» (to ".find-eintro")
 
 ;; Test: (ee-intro-stem "*(find-eev-quick-intro)*")
 (defun ee-intro-stem (&optional bufname)
@@ -598,8 +598,8 @@ a hack to let use use `M-h M-i' for both \"intro\" and \"info\"."
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|     | .__/ \__,_|_|_|  |___/
 ;;;                                                  |_|                     
 ;;
-;; «ee-code-c-d-pairs-eval» (to ".ee-code-c-d-pairs-eval")
-;; «ee-code-c-d-filter» (to ".ee-code-c-d-filter")
+;; Â«ee-code-c-d-pairs-evalÂ» (to ".ee-code-c-d-pairs-eval")
+;; Â«ee-code-c-d-filterÂ» (to ".ee-code-c-d-filter")
 ;; Each call to `(code-c-d C D)' generates an entry `(C D)' in the
 ;; alist `ee-code-c-d-pairs', and this is used to make
 ;; `(find-file-links FNAME)' list short hyperlinks to FNAME. Let's
@@ -705,7 +705,7 @@ Only eval CODE when (ee-expand D) is a prefix of (ee-expand FNAME)."
 ;;                          (eval code)))))
 ;;                ee-code-c-d-pairs)))
 
-;; «ee-find-xxxfile-sexps»  (to ".ee-find-xxxfile-sexps")
+;; Â«ee-find-xxxfile-sexpsÂ»  (to ".ee-find-xxxfile-sexps")
 (defun ee-find-xxxfile-sexps (fname)
   "For each (C D) in ee-code-c-d-pairs test if D is a prefix of FNAME;
 when this is true remove the prefix D from FNAME, and put the sexp
@@ -731,7 +731,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; |  _| | | | | (_| |_____|  _| | |  __/_____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|     |_| |_|_|\___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                
-;; «find-file-links» (to ".find-file-links")
+;; Â«find-file-linksÂ» (to ".find-file-links")
 ;; (find-find-links-links "f" "file" "fname")
 ;; A test: (find-file-links "~/tmp/foo")
 
@@ -779,7 +779,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; |_| |_|_| |_|\__,_|      \__, |_|  \___| .__/      |_|_|_| |_|_|\_\___/
 ;;;                          |___/         |_|                             
 ;;
-;; «find-grep-links» (to ".find-grep-links")
+;; Â«find-grep-linksÂ» (to ".find-grep-links")
 ;; (find-find-links-links "\\M-g" "grep" "")
 ;; Tests:
 ;;   (ee-find-grep-commands)
@@ -839,7 +839,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; |  _| | | | | (_| |_____| | | | | | (_| | (__| | | (_) |
 ;;; |_| |_|_| |_|\__,_|     |_| |_| |_|\__,_|\___|_|  \___/ 
 ;;;                                                         
-;; «find-ekbmacro-links» (to ".find-ekbmacro-links")
+;; Â«find-ekbmacro-linksÂ» (to ".find-ekbmacro-links")
 ;; (find-find-links-links "M" "macro" "")
 ;; (find-efunction 'find-ekbmacro-links)
 
@@ -870,7 +870,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; | .__/ \__,_|_| |_|_|_|\_\___|     | .__/ \__,_|\__, |\___|
 ;;; |_|                                |_|          |___/      
 
-;; «find-pdflike-page-links» (to ".find-pdflike-page-links")
+;; Â«find-pdflike-page-linksÂ» (to ".find-pdflike-page-links")
 ;; (find-efunction 'count-lines)
 ;;
 (defun ee-count-formfeeds (start end)
@@ -993,7 +993,7 @@ See: (find-pdf-like-intro)
 ;;; |_| |_|\__, | .__/ \___|_|  |_|_|_| |_|_|\_\    | .__/|_|  \___|_| |_/_/\_\
 ;;;        |___/|_|                                 |_|                        
 ;;
-;; «ee-hyperlink-prefix» (to ".ee-hyperlink-prefix")
+;; Â«ee-hyperlink-prefixÂ» (to ".ee-hyperlink-prefix")
 
 (defun ee-hyperlink-prefix ()
   "A lispish interface for customizing the variable `ee-hyperlink-prefix'.
@@ -1023,7 +1023,7 @@ See the comments in the source code."
 ;; See: (find-links-intro)
 ;;      (find-templates-intro)
 
-;; «find-eface-links» (to ".find-eface-links")
+;; Â«find-eface-linksÂ» (to ".find-eface-links")
 ;; (find-find-links-links "\\M-s" "eface" "face-symbol")
 ;; A test: (find-eface-links 'bold)
 
@@ -1066,7 +1066,7 @@ See the comments in the source code."
 ;;; |  _| | | | | (_| |____|  __/ (_| (_) | | (_) | | |____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|     \___|\___\___/|_|\___/|_|      |_|_|_| |_|_|\_\___/
 ;;;                                                                              
-;; «find-color-links» (to ".find-color-links")
+;; Â«find-color-linksÂ» (to ".find-color-links")
 ;; (find-find-links-links "c" "color" "initialcolor")
 ;; Tests:
 ;;   (find-ecolor-links)
@@ -1116,7 +1116,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;; |  _| | | | | (_| |_____| | | |  __/ | |  __/_____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                       
-;; «find-here-links» (to ".find-here-links")
+;; Â«find-here-linksÂ» (to ".find-here-links")
 ;; See: (find-eev-quick-intro "`M-h M-h'")
 
 ;; (find-efunction 'find-grep-links)
@@ -1440,7 +1440,7 @@ Use this when point is over a manpage name and you want links to that page."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

@@ -40,11 +40,11 @@
 
 
 
-;; «.ee-duplicate-this-line»		(to "ee-duplicate-this-line")
-;; «.ee-yank-pos-spec»			(to "ee-yank-pos-spec")
-;; «.ee-shrink-hyperlink-at-eol»	(to "ee-shrink-hyperlink-at-eol")
-;; «.ee-flip-psne-ness»			(to "ee-flip-psne-ness")
-;; «.eewrap-vldi-list-line»		(to "eewrap-vldi-list-line")
+;; Â«.ee-duplicate-this-lineÂ»		(to "ee-duplicate-this-line")
+;; Â«.ee-yank-pos-specÂ»			(to "ee-yank-pos-spec")
+;; Â«.ee-shrink-hyperlink-at-eolÂ»	(to "ee-shrink-hyperlink-at-eol")
+;; Â«.ee-flip-psne-nessÂ»			(to "ee-flip-psne-ness")
+;; Â«.eewrap-vldi-list-lineÂ»		(to "eewrap-vldi-list-line")
 
 
 
@@ -56,7 +56,7 @@
 ;;;  \__,_|\__,_| .__/|_|_|\___\__,_|\__\___|
 ;;;             |_|                          
 ;;
-;; «ee-duplicate-this-line» (to ".ee-duplicate-this-line")
+;; Â«ee-duplicate-this-lineÂ» (to ".ee-duplicate-this-line")
 ;; (define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
 
 (defun ee-duplicate-this-line ()
@@ -73,7 +73,7 @@
 ;;;  \__, |\__,_|_| |_|_|\_\
 ;;;  |___/                  
 ;;
-;; «ee-yank-pos-spec» (to ".ee-yank-pos-spec")
+;; Â«ee-yank-pos-specÂ» (to ".ee-yank-pos-spec")
 ;; (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
 
 (defun ee-yank-pos-spec ()
@@ -116,7 +116,7 @@ and you copy that hyperlink to a more permanent place."
 ;;; \__ \ | | | |  | | | | |   < 
 ;;; |___/_| |_|_|  |_|_| |_|_|\_\
 ;;;                              
-;; «ee-shrink-hyperlink-at-eol» (to ".ee-shrink-hyperlink-at-eol")
+;; Â«ee-shrink-hyperlink-at-eolÂ» (to ".ee-shrink-hyperlink-at-eol")
 ;; (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
 
 (defun ee-shrink-sexp (sexp)
@@ -148,7 +148,7 @@ and you copy that hyperlink to a more permanent place."
 ;;; |_| |_|_| .__/      | .__/|___/_| |_|\___|
 ;;;         |_|         |_|                   
 ;;
-;; «ee-flip-psne-ness» (to ".ee-flip-psne-ness")
+;; Â«ee-flip-psne-nessÂ» (to ".ee-flip-psne-ness")
 ;; (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
 
 ;; (find-eevfile "eev-insert.el" "defun ee-ill")
@@ -170,7 +170,7 @@ and you copy that hyperlink to a more permanent place."
 ;;;  \ V /| | (_| | |_____| | \__ \ ||_____| | | | | |  __/
 ;;;   \_/ |_|\__,_|_|     |_|_|___/\__|    |_|_|_| |_|\___|
 ;;;                                                        
-;; «eewrap-vldi-list-line» (to ".eewrap-vldi-list-line")
+;; Â«eewrap-vldi-list-lineÂ» (to ".eewrap-vldi-list-line")
 ;; (define-key eev-mode-map "\M-I" 'eewrap-vldi-list-line)
 ;;
 ;; In a Debian system, for each installed package named xxxx there is
@@ -225,7 +225,7 @@ then just delete the current line."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

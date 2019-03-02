@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2018mai16
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-anchors.el>
@@ -59,8 +59,8 @@
     (t (:bold t)))
   "Face used for the green glyphs (`<<' and `>>', chars 171 and 187).")
 
-;; (eepitch-set-glyph ?« ?« 'eev-glyph-face-green)
-;; (eepitch-set-glyph ?» ?» 'eev-glyph-face-green)
+;; (eepitch-set-glyph ?Â« ?Â« 'eev-glyph-face-green)
+;; (eepitch-set-glyph ?Â» ?Â» 'eev-glyph-face-green)
 
 (eepitch-set-glyph 171 171 'eev-glyph-face-green)
 (eepitch-set-glyph 187 187 'eev-glyph-face-green)
@@ -75,7 +75,7 @@
 ;;;  \__,_|_| |_|\___|_| |_|\___/|_|       |_|  \___/|_|  |_| |_| |_|\__,_|\__|
 ;;;                                                                            
 
-(defvar ee-anchor-format "«%s»" "See `ee-goto-anchor'.")
+(defvar ee-anchor-format "Â«%sÂ»" "See `ee-goto-anchor'.")
 (put   'ee-anchor-format 'safe-local-variable 'stringp)
 
 ;; A paranoid setting would be:
@@ -164,8 +164,7 @@ See `ee-goto-anchor'."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
-;; ee-anchor-format:  "defun %s "
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

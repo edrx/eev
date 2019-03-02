@@ -37,9 +37,9 @@
 ;; here:
 ;;   (find-eev "eev-mode.el" "when-not-eev-mode-map")
 
-;; «.eev-mode-map-set»		(to "eev-mode-map-set")
-;; «.when-not-eev-mode-map»	(to "when-not-eev-mode-map")
-;; «.eev-mode»			(to "eev-mode")
+;; Â«.eev-mode-map-setÂ»		(to "eev-mode-map-set")
+;; Â«.when-not-eev-mode-mapÂ»	(to "when-not-eev-mode-map")
+;; Â«.eev-modeÂ»			(to "eev-mode")
 
 
 
@@ -63,7 +63,7 @@ and: (find-eval-intro \"`M-k'\")"
 ;;; |_|\_\___|\__, |_| |_| |_|\__,_| .__/ 
 ;;;           |___/                |_|    
 ;;;
-;; «eev-mode-map-set» (to ".eev-mode-map-set")
+;; Â«eev-mode-map-setÂ» (to ".eev-mode-map-set")
 
 (defvar eev-mode-map nil)
 
@@ -156,7 +156,7 @@ and: (find-eval-intro \"`M-k'\")"
   )
 
 
-;; «when-not-eev-mode-map» (to ".when-not-eev-mode-map")
+;; Â«when-not-eev-mode-mapÂ» (to ".when-not-eev-mode-map")
 ;; Now we run the function `eev-mode-map-set' above, but we only do
 ;; that if the variable `eev-mode-map' holds nil:
 ;;
@@ -190,7 +190,7 @@ and: (find-eval-intro \"`M-k'\")"
 ;;; |  __/  __/\ V /_____| | | | | | (_) | (_| |  __/
 ;;;  \___|\___| \_/      |_| |_| |_|\___/ \__,_|\___|
 ;;;                                                  
-;; «eev-mode» (to ".eev-mode")
+;; Â«eev-modeÂ» (to ".eev-mode")
 ;; This defines `eev-mode'. Turning on eev-mode simply activates the
 ;; eev-mode-map keymap, and adds an "eev" to the mode line to remind
 ;; you this.
@@ -314,7 +314,7 @@ Other commands:
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

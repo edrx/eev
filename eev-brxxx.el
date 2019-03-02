@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jan29
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -81,11 +81,11 @@
 ;; like to bring here.
 
 
-;; «.code-brurl»		(to "code-brurl")
-;; «.ee-code-brurl-rest»	(to "ee-code-brurl-rest")
-;; «.code-brfile»		(to "code-brfile")
-;; «.ee-code-brfile-rest»	(to "ee-code-brfile-rest")
-;; «.code-brxxxs»		(to "code-brxxxs")
+;; Â«.code-brurlÂ»		(to "code-brurl")
+;; Â«.ee-code-brurl-restÂ»	(to "ee-code-brurl-rest")
+;; Â«.code-brfileÂ»		(to "code-brfile")
+;; Â«.ee-code-brfile-restÂ»	(to "ee-code-brfile-rest")
+;; Â«.code-brxxxsÂ»		(to "code-brxxxs")
 
 
 
@@ -168,7 +168,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;;                                                     
 ;; (find-tail-call-links "brurl" "f")
 
-;; «code-brurl» (to ".code-brurl")
+;; Â«code-brurlÂ» (to ".code-brurl")
 ;;
 (defun      code-brurl (f &rest rest)
   "Define a family of brxxx functions from a function that operates on URLs"
@@ -181,7 +181,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;; {(ee-S `(find-code-brurl ',f ,@(mapcar 'ee-add-quote rest)))}
 ")  (ee-code-brurl-rest rest)))
 
-;; «ee-code-brurl-rest» (to ".ee-code-brurl-rest")
+;; Â«ee-code-brurl-restÂ» (to ".ee-code-brurl-rest")
 ;; Support for extra arguments
 ;;
 (defun ee-code-brurl-rest (rest)
@@ -237,7 +237,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;;                                                     
 ;; (find-tail-call-links "brfile" "f")
 
-;; «code-brfile» (to ".code-brfile")
+;; Â«code-brfileÂ» (to ".code-brfile")
 ;; code-brfile: top-level functions
 ;;
 (defun      code-brfile (f &rest rest)
@@ -251,7 +251,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;; {(ee-S `(find-code-brfile ',f ,@(mapcar 'ee-add-quote rest)))}
 ")  (ee-code-brfile-rest rest)))
 
-;; «ee-code-brfile-rest» (to ".ee-code-brfile-rest")
+;; Â«ee-code-brfile-restÂ» (to ".ee-code-brfile-rest")
 ;; Support for extra arguments
 ;;
 (defun ee-code-brfile-rest (rest)
@@ -287,7 +287,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;; | (_| (_) | (_| |  __/_____| |_) | |   >  <  >  <  >  <\__ \
 ;;;  \___\___/ \__,_|\___|     |_.__/|_|  /_/\_\/_/\_\/_/\_\___/
 ;;;                                                             
-;; «code-brxxxs» (to ".code-brxxxs")
+;; Â«code-brxxxsÂ» (to ".code-brxxxs")
 ;; See: (find-eev "eev-pdflike.el" "code-brxxxs")
 ;;      (find-eev "eev-blinks.el" "find-w3m")
 ;;      (find-efile "net/browse-url.el")
@@ -338,6 +338,6 @@ This should be made smarter - file:// urls should be returned unchanged."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:

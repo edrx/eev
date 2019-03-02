@@ -340,8 +340,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "«%s»"
-;; ee-anchor-format:  "defun %s "
+;; coding:            utf-8-unix
+;; ee-anchor-format:  "Â«%sÂ»"
 ;; no-byte-compile:   t
 ;; End:

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb24
+;; Version:    2019mar02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -37,9 +37,9 @@
 ;; (find-eevfile "eev-mode.el" "eewrap-anchor")
 
 
-;; «.ee-template0»		(to "ee-template0")
-;; «.ee-S»			(to "ee-S")
-;; «.ee-this-line-wrapn»	(to "ee-this-line-wrapn")
+;; Â«.ee-template0Â»		(to "ee-template0")
+;; Â«.ee-SÂ»			(to "ee-S")
+;; Â«.ee-this-line-wrapnÂ»	(to "ee-this-line-wrapn")
 
 
 
@@ -58,7 +58,7 @@ The best way to change this variable interactively is by running
 ;;; |  __/  __/_____|__) |
 ;;;  \___|\___|    |____/ 
 ;;;                       
-;;; «ee-S» (to ".ee-S")
+;;; Â«ee-SÂ» (to ".ee-S")
 ;; ee-S and ee-HS, for pretty-printing of sexps (mainly for use in
 ;; ee-template0).
 ;; Tests:
@@ -99,7 +99,7 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
 ;;;  \___|\___|      \__\___|_| |_| |_| .__/|_|\__,_|\__\___|\___/ 
 ;;;                                   |_|                          
 ;;
-;; «ee-template0» (to ".ee-template0")
+;; Â«ee-template0Â» (to ".ee-template0")
 ;; The functions `ee-template00' and `ee-template0' are used by
 ;; several functions of the `eewrap-*' family and also by functions
 ;; like `find-latex-links', that create a temporary buffer with elisp
@@ -159,7 +159,7 @@ Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
 ;;; | |_| | | | \__ \_____| | | | | |  __/
 ;;;  \__|_| |_|_|___/     |_|_|_| |_|\___|
 ;;;                                       
-;; «ee-this-line-wrapn» (to ".ee-this-line-wrapn")
+;; Â«ee-this-line-wrapnÂ» (to ".ee-this-line-wrapn")
 ;; The main function in this block is `ee-this-line-wrapn' -
 ;; all the `eewrap-*' functions defined below call it.
 
@@ -221,8 +221,8 @@ have to run an \"undo\"."
 (defun ee-wrap-anchor0 (prefix anchor)
   "An internal function used by `ee-wrap-anchor'."
   (ee-template0 (ee-tolatin1 "\
-{prefix}«.{anchor}»\t(to \"{anchor}\")
-{prefix}«{anchor}» (to \".{anchor}\")")))
+{prefix}Â«.{anchor}Â»\t(to \"{anchor}\")
+{prefix}Â«{anchor}Â» (to \".{anchor}\")")))
 
 
 
@@ -250,8 +250,8 @@ have to run an \"undo\"."
 #
 #####
 
-# «.{anchor}»\t(to \"{anchor}\")
-# «{anchor}» (to \".{anchor}\")")))
+# Â«.{anchor}Â»\t(to \"{anchor}\")
+# Â«{anchor}Â» (to \".{anchor}\")")))
 
 
 
@@ -597,6 +597,6 @@ cd     {dir}"))
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:
