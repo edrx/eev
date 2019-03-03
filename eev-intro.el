@@ -8061,8 +8061,75 @@ follow these conventions:
 
 
 
+4.7. A convention about order
+-----------------------------
+(Explain why I feel natural to put the eepitch block that
+installs the lua5.1 packages at the end of the first e-script
+block, after the hyperlinks to files from that package)
+
+
+
+
+
+
+
+
 5. Tools for writing e-scripts
 ==============================
+One of my favorite ways of describing eev is as a \"tool to
+create executable logs\", but this only make sense if we clarify
+some ideas and terms. The e-script in Example 1 has two e-script
+blocks plus an index. The fist block has notes about installing
+the packages for Lua5.1 in Debian and inspecting them, and the
+second block is about downloading and using an eev-based Lua
+tutorial. Let's think of each of these blocks as a _task_.
+
+The task \"install Lua5.1\" is performed in one way if we're
+doing it for the first time, and in a different was if we're
+doing it for the n-th time with some memory of what we did in the
+previous times and of what we found important and what not.
+Performing a task like this consists of several steps, that can
+be roughly divided into \"visiting\" and \"commands\". I borrowed
+the term \"visiting\" from Emacs:
+
+  (find-enode \"Visiting\" \"Visiting Files\")
+
+Look at the first block of Example 1 again. It has several elisp
+hyperlinks to information about the packages \"lua5.1\" and
+\"lua5.1-doc\". Following those hyperlinks let us \"visit\" the
+descriptions of the two packages, their lists of files, and some
+of their directories. Then the e-script block has three URL links
+to the Lua documentation in general and to its reference manual,
+and then an eepitch block that runs an \"apt-get install\".
+
+We saw how to follow links and how to execute eepitch blocks, so
+an e-script block is \"executable\". But in what sense it is a
+\"log\"?
+
+  1. In the old days log books were always made of paper, and
+     there was nothing automatic in taking notes with them. We
+     would have to decide what to write and how to write it, and
+     we would have to alternate between the \"task\" and \"taking
+     notes\". After many years of practice people _some_ people
+     would learn how to take notes without distract themselves
+     much from the task at hand, and they would learn how to make
+     their notes at the same time concise and readable enough.
+
+  2. Nowadays, with computers, there are _some_ ways to write
+     logs automatically - for example, most shells record the
+     commands given to them - but the output is of low quality.
+
+  3. Eev takes an intermediate stance between \"notes by hand\"
+     and \"automatic notes\". It is possible to do
+     \"task\"+\"notes\" with just a few more keystrokes than for
+     doing just \"task\", but that requires learning some tricks,
+     and having some practice.
+
+The next sections discuss those tricks.
+
+
+
+
 
 5.1. Anchors-to pairs and e-script blocks
 -----------------------------------------
