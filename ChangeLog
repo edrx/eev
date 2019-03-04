@@ -1,3 +1,10 @@
+2019-03-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-intro-links): set the correct default
+	value for `stem'.
+
+	* eejump.el (eejump-6): point to (find-escripts-intro).
+
 2019-03-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-anchors.el: converted to utf-8.

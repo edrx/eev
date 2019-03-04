@@ -764,7 +764,6 @@ This is useful for for running processes that use pagers like
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "defun %s "
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:

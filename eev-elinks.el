@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -553,6 +553,7 @@ This can be used to test if the current buffer is an intro buffer."
 
 ;; Test: (find-elinks (ee-find-intro-links "FOO"))
 (defun ee-find-intro-links (&optional stem)
+  (setq stem (or stem (ee-intro-stem)))
   (let ((find-xxx-intro (ee-intern "find-%s-intro" stem))
 	(url (format "http://angg.twu.net/eev-intros/find-%s-intro.html" stem)))
     `(,(ee-H url)

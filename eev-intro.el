@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -781,9 +781,50 @@ literal ^O in a buffer by typing `C-q C-o'.
 7. Quick access to one-liners
 =============================
 
-
 7.1. `eejump'
 -------------
+Some key sequences in Emacs accept numeric arguments. For
+example, try typing `M-9 a' (not `M-9 M-a'!) - this will insert 9
+copies of the letter `a'. See:
+
+  (find-enode \"Arguments\")
+
+Eev binds the key `M-j' (`eejump') to a function that jumps to a
+place that depends on the numeric argument. For example, `M-5
+M-j' runs (find-eev-quick-intro), that reloads this intro and
+goes to the top of it, and
+
+  `M-2 M-j' runs: (find-emacs-keys-intro)
+  `M-6 M-j' runs: (find-escripts-intro)
+  `M-1 M-j' runs: (find-fline \"~/TODO\")
+
+The way to associate a number to a place to jump to - or, more
+precisely, to a single-line piece of Elisp code, i.e., a
+\"one-liner\" - is through code like this:
+
+  (defun eejump-5 () (find-eev-quick-intro))
+  (defun eejump-2 () (find-emacs-keys-intro))
+  (defun eejump-6 () (find-escripts-intro))
+  (defun eejump-1 () (find-fline \"~/TODO\"))
+
+The pattern is:
+
+  (defun eejump-<nnn> () <one-liner associated to the argument nnn>)
+
+`defun' is explained here:
+
+  (find-elnode \"Defining Functions\" \"(defun foo () 5)\")
+
+As a special case, a plain `M-j' without a prefix argument runs a
+special function, `find-eejumps', that shows a help text followed
+by all the `(defun eejump-<nnn> () ...)'s that are currently
+active. So:
+
+      `M-j' runs: (find-eejumps)
+
+Let's try to understand this from both a user's point of view and
+from a technical point of view.
+
 We may have elisp one-liners that we want to be able to execute very
 quickly, and from anywhere. For example, I keep all my notes that I
 have not organized yet in a file called \"~/TODO\", and if I type
@@ -816,14 +857,14 @@ the `1' and the `j'.
 Internally, what happens when you type `M-1 M-j' is this:
 
   `M-j' is bound to `eejump',
-  `M-1 M-j' runs `eejump' with argument 1, i.e., (eejump 1)
-  (eejump 1) runs (eejump-1)
+  `M-1 M-j' runs `eejump' with argument 1, i.e., (eejump 1),
+  (eejump 1) runs (eejump-1),
   (eejump-1) has been defined with:
 
     (defun eejump-1 () (find-fline \"~/TODO\"))
 
-So `M-1 M-j' runs the one-liner `(find-fline \"~/TODO\")',
-`M-5 M-j' runs the one-liner `(find-eev-quick-intro)',
+So `M-1 M-j' runs the one-liner `(find-fline \"~/TODO\")'.
+Similarly, `M-5 M-j' runs the one-liner `(find-eev-quick-intro)',
 and so on.
 
 
@@ -831,8 +872,8 @@ and so on.
 7.2. The list of eejump targets
 -------------------------------
 If you type `M-j' without a prefix argument then it runs
-`(find-eejumps)', that displays all the current eejump targets as
-defuns, one in each line. Try it:
+`(find-eejumps)', that displays a help text followed by all the
+current eejump targets as defuns, one in each line. Try it:
 
   (eek \"M-j\")
   (find-eejumps)
@@ -877,9 +918,9 @@ next section. Try it now:
 Let's start with an example. If we are editing a LaTeX file, say
 \"/tmp/foo.tex\", then it is convenient to have quick ways to:
 
-  c) compile \"foo.tex\" into a \"foo.pdf\",
-  d) display the resulting \"foo.pdf\",
-  e) jump to \"foo.tex\" from anywhere to edit it.
+  c) [c]ompile \"foo.tex\" into a \"foo.pdf\",
+  d) [d]isplay the resulting \"foo.pdf\",
+  e) jump to \"foo.tex\" from anywhere to [e]dit it.
 
 If our \"/tmp/foo.tex\" starts with these lines
 
@@ -3599,12 +3640,14 @@ Is is meant as both a tutorial and a sandbox.
 Note: this intro needs to be rewritten!
 Ideally it should _complement_ the material in:
   (find-eev-quick-intro \"7.1. `eejump'\")
+See the comments in:
+  (find-eev \"eejump.el\")
 
 
 
 
-The problem
-===========
+1. The problem
+==============
 Suppose that we have several files that we are working on, and we
 want a quick way to jump to (i.e., to visit) any of them with
 very few keystrokes; moreover,
@@ -3645,8 +3688,8 @@ items to our wishlist:
 
 
   
-A miniature
-===========
+2. A miniature
+==============
 My original solution was this: I used only one keybinding, `M-j',
 that acted differently when invoked with different numeric
 prefixes; when invoked as `M-1 M-j' it opened a certain file,
@@ -3688,8 +3731,8 @@ add new options temporarily...
 
 
 
-Families
-========
+3. Families
+===========
 Let's use a shorthand for key sequences: for example, `M-123j'
 instead of `M-1 M-2 M-3 M-j'.
 
@@ -3719,8 +3762,8 @@ satisfy these two (new!) wishlist items:
 
 
 
-eejump
-======
+4. `eejump'
+===========
 The definition of `eejump' that comes with eev is a bit more
 complex than the one given above, and it will not be shown
 here (it involves a tricky recursive function) but it satisfies
@@ -3759,8 +3802,8 @@ error like \"Don't know where `eejump-99*' is defined\"...
 
 
 
-eejump blocks
-=============
+5. eejump blocks
+================
 Let's a call a sequence of defuns for eejumps with the same
 prefix, like this, starting with a `(defun eejump-<prefix>* ...)',
 
@@ -3782,8 +3825,8 @@ modifying them.
 
 
 
-Making an `eejump-nn*' work
-===========================
+6. Making an `eejump-nn*' work
+==============================
 If you execute a line like 
 
   (defun eejump-9* () (find-efunction 'eejump-9*))
@@ -3815,8 +3858,8 @@ to the right places. See also:
 
 
 
-Producing `eejump-nnn's and `eejump-nnn*'s
-==========================================
+7. Producing `eejump-nnn's and `eejump-nnn*'s
+=============================================
 Look again to the block of six \"defun\"s above. Now type `M-J'
 on each of the six lines below:
 
@@ -3849,8 +3892,8 @@ get useless definitons.
 
 
 
-Permanent and temporary
-=======================
+8. Permanent and temporary
+==========================
 If you create a block like the block of six defuns above in your
 .emacs file then you'll be attributing a \"permanent\" meaning to
 `M-91j', ..., `M-992j', and if you create it in a file that is
@@ -7626,6 +7669,7 @@ More intros:  (find-eev-quick-intro)
               (find-eev-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-6 M-j'.
 
 
 
@@ -8078,11 +8122,13 @@ block, after the hyperlinks to files from that package)
 ==============================
 One of my favorite ways of describing eev is as a \"tool to
 create executable logs\", but this only make sense if we clarify
-some ideas and terms. The e-script in Example 1 has two e-script
-blocks plus an index. The fist block has notes about installing
-the packages for Lua5.1 in Debian and inspecting them, and the
-second block is about downloading and using an eev-based Lua
-tutorial. Let's think of each of these blocks as a _task_.
+some ideas and terms.
+
+The e-script in Example 1 has two _e-script blocks_ plus an
+_index_. The fist block has notes about installing the packages
+for Lua5.1 in Debian and inspecting them, and the second block is
+about downloading and using an eev-based Lua tutorial. Let's
+think of each of these blocks as a _task_.
 
 The task \"install Lua5.1\" is performed in one way if we're
 doing it for the first time, and in a different was if we're
@@ -8110,9 +8156,9 @@ an e-script block is \"executable\". But in what sense it is a
      there was nothing automatic in taking notes with them. We
      would have to decide what to write and how to write it, and
      we would have to alternate between the \"task\" and \"taking
-     notes\". After many years of practice people _some_ people
-     would learn how to take notes without distract themselves
-     much from the task at hand, and they would learn how to make
+     notes\". After many years of practice _some_ people would
+     learn how to take notes without distract themselves much
+     from the task at hand, and they would learn how to make
      their notes at the same time concise and readable enough.
 
   2. Nowadays, with computers, there are _some_ ways to write

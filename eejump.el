@@ -1,6 +1,6 @@
 ;;; eejump.el -- jump quickly to predefined places.
 
-;; Copyright (C) 2012,2016 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2016,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is (not yet?) part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb13
+;; Version:    2019mar03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -34,20 +34,52 @@
 
 ;;; Commentary:
 
-;; See: (find-eev-quick-intro "7.1. `eejump'")
-;;      (find-eev-quick-intro "7.1. `eejump'" "meta-uppercase-j")
-;;      (find-eev-quick-intro "7.2. The list of eejump targets")
-;;      (find-eevfile "eev-mode.el" "M-j" "eejump")
-;;      (find-eevfile "eev-mode.el" "M-J" "eewrap-eejump")
-;;      (find-eejump-intro)
-;; Some features are defined elsewhere:
-;;      (find-eev "eev-blinks.el" "find-eejumps")
-;;      (find-eev "eev-wrap.el" "eewrap-eejump")
+;; This file defines `eejump', that is bound to `M-j'. Its usage is
+;; explained here:
+;;
+;;   (find-eev-quick-intro "7.1. `eejump'")
+;;   (find-eev-quick-intro "7.2. The list of eejump targets")
+;;
+;; The functions `find-eejumps' - that is invoked when we type `M-j'
+;; without an argument - and `eewrap-eejump' - invoked by `M-J' - are
+;; defined in other files:
+;;
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-j" "eejump")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-J" "eewrap-eejump")
+;;   (find-eev "eev-blinks.el" "find-eejumps")
+;;   (find-eev "eev-wrap.el" "eewrap-eejump")
+;;
+;; See:
+;;
+;;   (find-eev-quick-intro "7.3. Defining eejump targets")
+;;   (find-eev-quick-intro "7.3. Defining eejump targets" "M-J")
+;;
+;; `find-eejumps' is a relatively new idea, and before implementing it
+;; `M-j' did something MUCH harder to explain. Suppose that
+;;
+;;   * `eejump-12345' was not defined,
+;;   * `eejump-1234' was not defined,
+;;   * `eejump-123' was not defined,
+;;   * `eejump-12*' was defined in my .emacs as:
+;;     (defun eejump-12* () (find-efunction 'eejump-12*))
+;;
+;; then typing `M-12345j' would run (find-efunction 'eejump-12*), that
+;; would jump to the definition of a `eejump-12*' in my .emacs; I
+;; would put all my definitions of eejumps with prefixes starting with
+;; "12" close to it. This (old) intro still describes that behavior:
+;;
+;;   (find-eejump-intro)
+;;   (find-eejump-intro "5. eejump blocks")
 
- 
+
+
+;; (define-key eev-mode-map "\M-j" 'eejump)
+;;
 (defun eejump (arg)
-  "See: (find-eev-quick-intro \"7.1. `eejump'\")
-and: (find-eejump-intro)"
+  "Execute the one-liner associated to the numeric argument ARG.
+When called without an argument execute `find-eejumps', that
+shows all the current one-liners associated to numbers.
+See: (find-eev-quick-intro \"7.1. `eejump'\")"
   (interactive "P")
   (if (null arg)
       (find-eejumps)			; was: (eejump-*)
@@ -66,48 +98,36 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 
 
 
-;; This is an "eejump block", as described in:
-;;   (find-eejump-intro "eejump blocks")
-;; You should probably copy this to your .emacs - and
-;; then start modifying it.
-;;
-;; Note that with eev-mode you can use:
-;;   M-e to follow elisp hyperlinks,   see: (find-eval-intro "`M-e'")
-;;   M-k to go back,                   see: (find-eval-intro "`M-k'")
-;;   M-j to jump to predefined places, see: (find-eejump-intro "Families")
-;;                  in particular:  M-j --> (find-efunction 'eejump-*)
-;;                                 M-2j --> (find-emacs-intro)
-;;                                 M-5j --> (find-eev-intro)
-;;                                M-50j --> (find-eev "eev-readme.el")
-;;
 (defun eejump-*   () (find-efunction 'eejump-*))
 (defun eejump-1   () (find-fline "~/TODO"))
+(defun eejump-2   () (find-emacs-keys-intro))
+(defun eejump-5   () (find-eev-quick-intro))
+(defun eejump-6   () (find-escripts-intro))
+
 (defun eejump-10  () (set-frame-font "5x7"  t))
 (defun eejump-11  () (set-frame-font "6x13" t))
-(defun eejump-2   () (find-emacs-keys-intro))
-(defun eejump-5*  () (find-efunction 'eejump-5*))
-(defun eejump-5   () (find-eev-quick-intro))
-(defun eejump-50  () (find-eev "eev-readme.el"))
-(defun eejump-59  () (find-eev-update-links))
-(defun eejump-6   () (find-freenode    "#eev"))
-(defun eejump-66  () (find-freenode-3a "#eev"))
+(defun eejump-12  () (set-frame-font "10x20" t))
 
 (defun eejump-55  () (find-fline "~/.emacs"))
-(defun eejump-552 () (find-eev "eev2-all.el"))
 (defun eejump-555 () (find-eev ""))
 
+;; Deleted:
+;; (defun eejump-50  () (find-eev "eev-readme.el"))
+;; (defun eejump-59  () (find-eev-update-links))
+;; (defun eejump-5*  () (find-efunction 'eejump-5*))
+;; (defun eejump-6   () (find-freenode    "#eev"))
+;; (defun eejump-66  () (find-freenode-3a "#eev"))
+;; (defun eejump-552 () (find-eev "eev2-all.el"))
 
-
-
-(provide 'eejump)
 
 ;; To see all current targets, run:
 ;;   (find-eejumps)
 
+(provide 'eejump)
 
-
+
+
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "defun %s "
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:
