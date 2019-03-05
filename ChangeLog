@@ -1,5 +1,26 @@
 2019-03-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-load.el: "eev-prepared.el", "eev-bounded.el" and
+	"eev-channels.el" are no longer loaded by default.
+
+	* eev-elinks.el (ee-efunctiondescr-re): treat Lisp macros as
+	functions.
+
+	* eev-beginner.el: new file.
+
+	* eev-intro.el (find-eev-quick-intro): the installation script now
+	loads "eev-beginner.el" instead of "eev-readme.el".
+
+	* eev-tlinks.el: added a "(require 'eev-wrap)".
+	(find-tkdiff): moved to eev-plinks.el.
+	(ee-upload-links, ee-download-links, find-upload-links)
+	(find-download-links, ut, dt): commented out.
+	(find-eev-install-links): use "rm -fv" instead of "rm -v".
+	(find-eev-install-links): load "eev-beginner.el" instead of
+	"eev-readme.el".
+	(find-eev-install-links): changed "eev2-all.el" to "eev-load.el"
+	everywhere.
+
 	* eev-intro.el (find-eev-quick-intro): added material in the
 	sections about links to PDFs.
 

@@ -38,6 +38,7 @@
 ;; read the source can use this as an index to them. The modules are
 ;; loaded more or less in the order that they are mentioned here:
 ;;   (find-eev-quick-intro)
+;; Some of them are `require'd twice for clarity.
 
 ;; The "eev quick intro" itself, and many other intros:
 (require 'eev-intro)	       ; (find-eev "eev-intro.el")
@@ -102,14 +103,15 @@
 ;;
 ;; Advanced (and hard to use) features that may require creating a
 ;; temporary directory, patching rcfiles, and installing Expect
-;; scripts. In the future these will no longer be loaded by default.
-;; See:
+;; scripts... see:
 ;;   (find-prepared-intro)
 ;;   (find-bounded-intro)
 ;;   (find-channels-intro)
-(require 'eev-prepared)	       ; (find-eev "eev-prepared.el")
-(require 'eev-bounded)	       ; (find-eev "eev-bounded.el")
-(require 'eev-channels)	       ; (find-eev "eev-channels.el")
+' (require 'eev-prepared)	; (find-eev "eev-prepared.el")
+' (require 'eev-bounded)	; (find-eev "eev-bounded.el")
+' (require 'eev-channels)	; (find-eev "eev-channels.el")
+;; IMPORTANT: Since 2019mar05 they are no longer loaded by default!
+;; Note the "'" at the beginning of each line!
 
 
 

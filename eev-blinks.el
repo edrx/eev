@@ -23,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -621,6 +621,9 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 
 (defvar ee-find-man-flag nil "See `find-man'.")
 
+;; See: (find-elnode "Advising Functions")
+;;      (find-elnode "Porting old advices")
+;;      (find-efunctiondescr 'defadvice)
 (defadvice Man-notify-when-ready (around find-man (man-buffer) activate)
   "After rendering a manpage jump to `ee-find-man-pos-spec-list'."
   (if (not ee-find-man-flag)

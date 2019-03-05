@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar03
+;; Version:    2019mar05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1164,7 +1164,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 (defun ee-pdftext-bufferp  () (ee-buffer-re "^pdftotext"))
 
 ;; By buffer name (when it is "*Help*")
-(defvar ee-efunctiondescr-re "^\\([^ \t\n]+\\) is a[^\t\n]*function")
+(defvar ee-efunctiondescr-re "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\)")
 (defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
 (defun  ee-find-efunctiondescr-links ()
   (let ((f (ee-efunctiondescr-bufferp)))

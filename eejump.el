@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar03
+;; Version:    2019mar05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -117,7 +117,7 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 ;; (defun eejump-5*  () (find-efunction 'eejump-5*))
 ;; (defun eejump-6   () (find-freenode    "#eev"))
 ;; (defun eejump-66  () (find-freenode-3a "#eev"))
-;; (defun eejump-552 () (find-eev "eev2-all.el"))
+;; (defun eejump-552 () (find-eev "eev-load.el"))
 
 
 ;; To see all current targets, run:

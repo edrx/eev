@@ -111,8 +111,9 @@
 ;; (find-eev "eev-brxxx.el")
 
 
-;; «.find-wget»	(to "find-wget")
-;; «.find-gitk»	(to "find-gitk")
+;; «.find-wget»		(to "find-wget")
+;; «.find-gitk»		(to "find-gitk")
+;; «.find-tkdiff»	(to "find-tkdiff")
 
 
 
@@ -266,6 +267,14 @@
 (defun find-gitk (dir)
   "Run gitk in the directory DIR."
   (ee-at0 dir '(find-bgprocess "gitk --all --date-order")))
+
+
+;; «find-tkdiff» (to ".find-tkdiff")
+(defun find-tkdiff (f1 f2)
+  (find-bgprocess `("tkdiff" ,f1 ,f2)))
+
+
+
 
 
 (provide 'eev-plinks)

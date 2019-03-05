@@ -297,12 +297,12 @@ it into the shell to run its commands.
   rm -Rv ~/eev2/
   mkdir  ~/eev2/
   cd     ~/eev2/
-  rm -v eev2.tgz
+  rm -fv eev2.tgz
   wget http://angg.twu.net/eev-current/eev2.tgz
   tar -xvzf eev2.tgz
   {
     echo '#!/bin/sh'
-    echo 'cd ~/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\" $*'
+    echo 'cd ~/eev2/ && emacs -l eev-beginner.el --eval=\"(find-eev-quick-intro)\" $*'
   } > ~/eev
   chmod 755 ~/eev
 }
@@ -1007,7 +1007,7 @@ the other ones are similar.
   |_(Copied 8 lines to the kill ring - use C-y to paste)________________|
 
 
-  5) Go to the window on the right and type `M-y'. You should get this,
+  5) Go to the window on the right and type `C-y'. You should get this,
 
    ______________________________________________________________________
   |# (find-latex-links \"/tmp/foo\")   |% (defun c () (interactive) (find-|
@@ -1822,14 +1822,74 @@ make it load eev at startup.
 
 
 
-1. Running `(find-eev-install-links)'
+
+1. Installing eev by hand
+=========================
+If you have unpacked eev in a certain directory - for example in
+~/eev2/, with:
+
+  rm -Rv ~/eev2/
+  mkdir  ~/eev2/
+  cd     ~/eev2/
+  rm -fv eev2.tgz
+  wget http://angg.twu.net/eev-current/eev2.tgz
+  tar -xvzf eev2.tgz
+
+then you can try it with:
+
+  (add-to-list 'load-path \"~/eev2/\")
+  (require 'eev-load)                 ; (find-eev \"eev-load.el\")
+  (eev-mode 1)                        ; (find-eev \"eev-mode.el\")
+
+and you can install it permanently by copying the three lines
+above to your .emacs. Note that eev-mode.el has this commentary:
+
+  ;; Turning on eev-mode simply activates the eev-mode-map keymap, and
+  ;; adds an \"eev\" to the mode line to remind you this. Turning off
+  ;; eev-mode deactivates the keymap and the reminder. 
+
+If you prefer to start with eev-mode off, omit the
+line `(eev-mode 1)' above or change it to `(eev-mode 0)'. To
+toggle eev-mode on and off, use `M-x eev'. The keybindings in
+eev-mode are listed here:
+
+  (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
+
+Years ago eev was a very invasive package that changed several
+global settings; now it's the opposite. If you load eev the only
+things that happen are:
+
+  1) Several functions and variables become defined. They ALL
+     have the prefixes \"find-\", \"ee\", \"code-\" or \"br\",
+     except for one: \"to\".
+
+  2) The standard-display-table is changed to make three
+     characters be displayed as colored glyphs: \"\" (char 15),
+     \"«\" (char 171), and \"»\" (char 187).
+     
+  3) The environment variables \"S\" and \"EEVDIR\" are set.
+
+  4) An innocuous wrapper is installed around an internal
+     function used by `man'. See:
+
+       (find-eev \"eev-blinks.el\" \"find-man\")
+
+This is all I remember now (2019mar05). I am trying to make eev
+as non-invasive as possible - to convince as many people as
+possible to install it and try it!
+
+
+
+
+
+2. Running `(find-eev-install-links)'
 =====================================
 The shell commands in
 
   (find-eev-quick-intro \"1. Installing eev\")
 
-can be obtained by running `find-eev-install-links' with these
-arguments:
+and the previous section can be obtained by running
+`find-eev-install-links' with these arguments:
 
   (find-eev-install-links \"~/eev2/\" \"~/eev\")
 
@@ -1849,7 +1909,7 @@ and execute its eepitch block.
 
 
 
-2. Changing your .emacs
+3. Changing your .emacs
 =======================
 See:
 
@@ -1861,7 +1921,7 @@ See:
 
 
 
-3. Using the git repository
+4. Using the git repository
 ===========================
 Eev has a git repository at:
 
@@ -1900,7 +1960,7 @@ incompatible with our convention of creating a script called
 
 
 
-4. Eev as an ELPA package
+5. Eev as an ELPA package
 =========================
 I started to make an Emacs \"package\" for eev but I did not go
 very far. See:
