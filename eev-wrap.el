@@ -40,6 +40,7 @@
 ;; «.ee-template0»		(to "ee-template0")
 ;; «.ee-S»			(to "ee-S")
 ;; «.ee-this-line-wrapn»	(to "ee-this-line-wrapn")
+;; «.find-eewrap-links»		(to "find-eewrap-links")
 
 
 
@@ -554,6 +555,7 @@ cd     {dir}"))
 {<}(ee-HS `(find-{stem} ,{args})){>}\"))\n")))
 
 
+;; «find-eewrap-links» (to ".find-eewrap-links")
 ;; A more standard way to create `eewrap-*' functions.
 ;; (find-find-links-links "<none>" "eewrap" "C stem args")
 ;;

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb24
+;; Version:    2019mar04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-coding.el>
@@ -37,7 +37,7 @@
 ;; files; the functions defined here make the local variables section
 ;; trick unneccessary - `ee-format-as-anchor' now uses `ee-tolatin1'
 ;; to produce a search string that works both unibyte, on UTF-8, on
-;; latin-1 files and some (most?) other encodings.
+;; latin-1 files and some (most of?) other encodings.
 ;;
 ;; NOTE: `ee-tolatin1' a hack! Conversion to latin-1 seems to work in
 ;; most cases, but I don't understand very well the reasons why... I
@@ -52,6 +52,28 @@
 ;;   http://angg.twu.net/e/emacs.e.html#unibyte-2019-search
 ;;   http://angg.twu.net/e/emacs.e.html#creating-utf8-files
 ;;   http://angg.twu.net/e/emacs.e.html#ee-re-to
+;;
+;;
+;; NOTE 2: Sorry for taking so long!! Here's what happened. This page
+;;
+;;   http://angg.twu.net/glyphs.html
+;;
+;; tells a bit about the hacked 256-char fonts that I created many
+;; years before UTF-8 became standard, and that I used for ages in
+;; some of my notes and .tex files... I wanted to maintain
+;; compatibility with the files that used those fonts, and this turned
+;; out to be very hard - these hacked fonts only worked in files and
+;; buffers in which the encoding was "raw-text",
+;;
+;;   (find-elnode "Non-ASCII Characters")
+;;   (find-elnode "Disabling Multibyte" "unibyte")
+;;   (find-elnode "Disabling Multibyte" "raw-text")
+;;
+;; and before 2019 I had a *very* poor understanding of how Emacs
+;; converts between unibyte and multibyte and between raw-text,
+;; latin-1 and utf-8...
+
+
 
 ;; «.ee-tolatin1»	(to "ee-tolatin1")
 ;; «.ee-tolatin1-re»	(to "ee-tolatin1-re")

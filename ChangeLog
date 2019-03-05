@@ -1,9 +1,23 @@
+2019-03-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): added material in the
+	sections about links to PDFs.
+
+2019-03-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-pdftotext-replace-bad-ffs): new function.
+	(find-sh-page): use `find-callprocess00' and
+	`ee-pdftotext-replace-bad-ffs'.
+	(ee-find-pdf-text): return a list instead of a string.
+	(ee-find-pdftotext-text): return a list instead of a string.
+
 2019-03-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eejump.el: rewrote most comments, deleted some `eejump-<nnn>'s, and made
+	`eejump-6': point to (find-escripts-intro).
 
 	* eev-elinks.el (ee-find-intro-links): set the correct default
 	value for `stem'.
-
-	* eejump.el (eejump-6): point to (find-escripts-intro).
 
 2019-03-02  Eduardo Ochs  <eduardoochs@gmail.com>
 

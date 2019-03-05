@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar03
+;; Version:    2019mar05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1396,6 +1396,12 @@ If you run these sexps
 
 then these hyperlinks should work:
 
+  (find-livesofanimalspage)
+  (find-livesofanimalstext)
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalstext (+ -110 113))
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
   (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
   (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
   (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
@@ -1413,7 +1419,46 @@ then these hyperlinks should work:
   (find-livesofanimalspage (+ -110 164) \"last common ground\")
   (find-livesofanimalstext (+ -110 164) \"last common ground\")
 
-[To do: explain them]
+The sexps like `(+ -110 113)' are a bit mysterious at first
+sight. We are accessing a PDF that is an excerpt of a book. The
+third page of the PDF has a \"[113]\" at its footer to indicate
+that it is the page 113 of the book. Let's use the terms _page
+number_ and _page label_ to distinguish the two numberings: in
+this case, the page whose page number is 3 is the page whose page
+label is 113. These two sexps
+
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalspage 3)
+
+are equivalent, but the first one is more human-friendly: the 113
+is a page label, and the -110 is adjustment (we call it the
+\"offset\") to convert the 113 that humans prefer to see intto
+the 3 that xpdf needs to receive.
+
+Note that the sexp
+
+  (find-livesofanimalstext 3)
+
+converts the PDF of the \"Lives of Animals\" book to text and
+goes to \"page 3\" on it by counting formfeeds from the beginning
+of the buffer, as explained here:
+
+  (find-enode \"Pages\" \"formfeed\")
+
+In this pairs of sexps,
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+the first one goes to page 3 of the PDF and ignores the string
+\"LECTURE I.\" (that is there just for humans, as a reminder of
+what is important in that page); the second sexp goes to the page
+3 of the PDF converted to text, searches for the string \"LECTURE
+I.\" and places the cursor right after the end of it.
+
+In section 10.3 we will see how to generate with just a few
+keystrokes a short hyperlink to a page of a PDF and a short
+hyperlink to a string in a page of a PDF.
 
 
 
@@ -1473,14 +1518,89 @@ that will run something similar to:
 
   (find-einfo-links \"(elisp)Top\")
 
+The code that produces the short hyperlink to an info node is not
+currently very smart. If you look at the definition of
+`find-elnode' here
+
+  (find-code-c-d \"el\" ee-emacs-lisp-directory \"elisp\")
+
+you will see that it saves the \"el\" and the \"elisp\" in global
+variables by running this:
+
+  (setq ee-info-code \"el\")
+  (setq ee-info-file \"elisp\")
+
+The short hyperlink to an info node is only produced when Info is
+visting a node in a manual whose name matches the variable
+`ee-info-file'.
+
 
 
 
 10.3. Generating short hyperlinks to intros
 -------------------------------------------
+Let's see an example. If you follow this link and type `M-h M-h',
+
+  (find-multiwindow-intro)
+
+you will get an \"*Elisp hyperlinks*\" buffer whose last line
+will be:
+
+  # (find-multiwindow-intro)
+
+which is a short hyperlink to the intro.
+
+
+
 
 10.3. Generating short hyperlinks to PDFs
 -----------------------------------------
+We saw in sections 9.3 and 9.4 that after the right preparations
+the first of these hyperlinks
+
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+
+opens a PDF in a certain page using xpdf, and the second one
+opens in an Emacs buffer the result of converting that PDF to
+text, goes to a certain page in it an searches for a string.
+
+It is difficult to make xpdf send information to Emacs, so this
+trick uses the second link. Run this,
+
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+
+mark a piece of text in it - for example, the \"no punishment\"
+in the end of the first paragraph - and copy it to the kill ring
+with `M-w'. Then type `M-h M-p' (`find-pdflike-page-links'); note
+that `M-h M-h' won't work here because `find-here-links' is not
+smart enough to detect that we are on a PDF converted to text.
+You will get an \"*Elisp hyperlinks*\" buffer that contains these
+links:
+
+  # (find-livesofanimalspage 24)
+  # (find-livesofanimalstext 24)
+  # (find-livesofanimalspage (+ -110 134))
+  # (find-livesofanimalstext (+ -110 134))
+
+  # (find-livesofanimalspage 24 \"no punishment\")
+  # (find-livesofanimalstext 24 \"no punishment\")
+  # (find-livesofanimalspage (+ -110 134) \"no punishment\")
+  # (find-livesofanimalstext (+ -110 134) \"no punishment\")
+
+Remember that we called `code-pdf-page' and `code-pdf-text' as:
+
+  (code-pdf-page \"livesofanimals\" l-o-a)
+  (code-pdf-text \"livesofanimals\" l-o-a -110)
+
+The extra argument \"-110\" to `code-pdf-text' tells `M-h M-p' to
+used \"-110\" as the offset.
+
+
+
+
+10.4. Generating short hyperlinks to anchors
+--------------------------------------------
 
 
 
@@ -6024,113 +6144,36 @@ For more information see:
 \(Re)generate: (find-templates-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-templates-intro\")
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
+              (find-escripts-intro)
+              (find-links-conv-intro)
+              (find-eev-intro)
 This buffer is _temporary_ and _editable_.
 Is is meant as both a tutorial and a sandbox.
 
 
-`ee-template0'
-==============
-\(find-efunctiondescr 'ee-template0)
-\(find-efunction      'ee-template0)
 
+This into is currently GARBAGE.
+It should be rewritten to become a tutorial on:
 
-`ee-H', `ee-S', `ee-HS'
-=======================
+  1) How to use `ee-template0' and `find-elinks':
 
+      (find-eev \"eev-wrap.el\" \"ee-template0\")
+      (find-eev \"eev-elinks.el\" \"find-elinks\")
 
+  2) A review of the conventions here:
 
-`find-find-links-links'
-=======================
-\(find-links-intro)
-\(find-find-links-links)
-\(find-efunction 'ee-stuff-around-point)
-interactive
+      (find-links-conv-intro)
+      (find-links-conv-intro \"3. Classification\")
 
+  3) How some template functions like these
 
-`find-elinks'
-=============
-\(find-efunction 'find-elinks)
+      (find-eev \"eev-tlinks.el\" \"find-find-links-links\")
+      (find-eev \"eev-tlinks.el\" \"find-intro-links\")
+      (find-eev \"eev-wrap.el\" \"find-eewrap-links\")
 
+    are used to create first versions for several functions in
+    eev...
 
-
- (find-intro-links)
-\(find-eev \"eev-tlinks.el\" \"find-intro-links\")
-\(find-eevfile \"eev-tlinks.el\")
-
-
-
-The innards: templates
-======================
-Several functions in eev besides `code-c-d' work by replacing
-some substrings in \"templates\"; they all involve calls to
-either the function `ee-template0', which is simpler, or to
-`ee-template', which is much more complex.
-
-The function `ee-template0' receives a single argument - a
-string, in which each substring surrounded by `{...}'s is to be
-replaced, and replaces each `{...}' by the result of evaluating
-the `...' in it. For example:
-
-  (ee-template0 \"a{(+ 2 3)}b\")
-            --> \"a5b\"
-
-Usually the contents of each `{...}' is the name of a variable,
-and when the result of evaluating a `{...}' is a string the
-replacement does not get `\"\"'s.
-
-The function `ee-template' receives two arguments, a list and a
-template string, and the list describes which `{...}' are to be
-replaced in the template string, and by what. For example, here,
-
-  (let ((a \"AA\")
-        (b \"BB\"))
-    (ee-template '(a
-                   b
-                   (c \"CC\"))
-      \"_{a}_{b}_{c}_{d}_\"))
-
-      --> \"_AA_BB_CC_{d}_\"
-
-the \"{d}\" is not replaced. Note that the list (a b (c \"CC\"))
-contains some variables - which get replaced by their values -
-and a pair, that specifies explicitly that every \"{c}\" should
-be replaced by \"CC\".
-
-
-
-
-Templated buffers
-=================
-Introduction
-Conventions:
-  the first line regenerates the buffer,
-  buffer names with \"**\"s,
-  (find-evariable 'ee-buffer-name)
-  code
-
-`find-elinks'
-=============
-Variant: `find-elinks-elisp'
-
-`find-e*-links'
-===============
-\(find-eev \"eev-elinks.el\")
-
-`find-*-intro'
-==============
-
-`eewrap-*'
-==========
-
-Experiments
-===========
-\(find-efunction 'find-youtubedl-links)
-\(find-efunction 'ee-hyperlinks-prefix)
-\(find-efunction 'find-newhost-links)
-\(find-efunction 'find-eface-links)
-  Note that there is no undo.
 " rest)))
 
 ;; (find-templates-intro)

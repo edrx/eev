@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -173,13 +173,25 @@
 	  (t (error "This is not a valid pos-spec: %S" pos-spec)))
     (if rest (ee-goto-rest rest))))
 
+(defun ee-pdftotext-replace-bad-ffs (bigstr)
+"Convert formfeeds that are preceded by non-newline chars into something else.
+Sometimes pdftotext return \"spurious formfeeds\" that correspond
+not to page breaks but to special printable characters, and these
+spurious formfeeds confuse `ee-goto-position-page'. This function
+finds sequence of spurious formfeeds using a heuristic that works
+in most cases - formfeeds following something that is not a
+newline are spurious - and replaces them by \"(ff)\"."
+  (replace-regexp-in-string  
+   "\\([^\n\f]\\)\\(\f+\\)" "\\1(ff)" bigstr t))
+
 ;; «find-sh-page» (to ".find-sh-page")
-(defun find-sh-page (command &rest pos-spec-list)
-  "Like `find-sh', but interpreting the car of POS-SPEC-LIST as a page."
+(defun find-sh-page (program-and-args &rest pos-spec-list)
+  "Like `find-sh', but interpreting the car of POS-SPEC-LIST as a page number."
   (interactive "sShell command: ")
   (find-eoutput-reuse
-   command
-   `(insert (shell-command-to-string ,command)))
+   (ee-unsplit program-and-args)
+   `(insert (ee-pdftotext-replace-bad-ffs
+	     (find-callprocess00 ,'program-and-args))))
   (apply 'ee-goto-position-page pos-spec-list))
 
 
@@ -323,11 +335,17 @@
 ;; (find-code-xxxpdftext-family "pdf-text")
         (code-xxxpdftext-family "pdf-text")
 
+;; (defun ee-find-pdf-text (fname)
+;;   (format "pdftotext -layout -enc Latin1 '%s' -" (ee-expand fname)))
+;; 
+;; (defun ee-find-pdftotext-text (fname)
+;;   (format "pdftotext -layout -enc Latin1 '%s' -" (ee-expand fname)))
+
 (defun ee-find-pdf-text (fname)
-  (format "pdftotext -layout -enc Latin1 '%s' -" (ee-expand fname)))
+  `("pdftotext" "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 (defun ee-find-pdftotext-text (fname)
-  (format "pdftotext -layout -enc Latin1 '%s' -" (ee-expand fname)))
+  `("pdftotext" "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 
 
