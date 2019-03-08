@@ -1445,7 +1445,7 @@ of the buffer, as explained here:
 
   (find-enode \"Pages\" \"formfeed\")
 
-In this pairs of sexps,
+In this pair of sexps,
 
   (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
   (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")

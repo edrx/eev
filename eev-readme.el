@@ -38,6 +38,9 @@
 ;;   (find-eev-install-intro)
 ;;
 ;; The rest of this file is very old.
+;; This file has been superseded by:
+;;
+;;   (find-eev "eev-beginner.el")
 
 ;; Quick instructions:
 ;;

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar04
+;; Version:    2019mar08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -122,6 +122,7 @@
 ;; «.find-pdf-page»			(to "find-pdf-page")
 ;; «.find-pdf-text»			(to "find-pdf-text")
 ;;
+;; «.find-texworkspdf-page»		(to "find-texworkspdf-page")
 ;; «.find-xdvi-page»			(to "find-xdvi-page")
 ;; «.find-djview-page»			(to "find-djview-page")
 ;; «.find-evince-page»			(to "find-evince-page")
@@ -361,6 +362,21 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;;;  \___/ \__|_| |_|\___|_|    | .__/|_|  \___/ \__, |___/
 ;;;                             |_|              |___/     
 ;;
+;; «find-texworkspdf-page» (to ".find-texworkspdf-page")
+;; TODO: make TeXworks the default PDF viewer on W$s and Macs.
+;; Tests: (find-es "texworks" "find-texworkspdf-page")
+;; See: https://tug.org/pipermail/tex-live/2019-March/043227.html
+;;      https://tug.org/pipermail/tex-live/2019-March/043229.html
+;; (find-code-xxxpdf-family "texworkspdf-page")
+        (code-xxxpdf-family "texworkspdf-page")
+
+(defun  ee-find-texworkspdf-page (fname &optional page)
+  `("texworks"
+    ,@(if page `(,(format "--position=%d" page)))
+    ,fname
+    ))
+
+
 ;; «find-xdvi-page» (to ".find-xdvi-page")
 ;; (find-code-xxxpdf-family "xdvi-page")
         (code-xxxpdf-family "xdvi-page")
