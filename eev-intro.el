@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar05
+;; Version:    2019mar10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1553,7 +1553,7 @@ which is a short hyperlink to the intro.
 
 
 
-10.3. Generating short hyperlinks to PDFs
+10.4. Generating short hyperlinks to PDFs
 -----------------------------------------
 We saw in sections 9.3 and 9.4 that after the right preparations
 the first of these hyperlinks
@@ -1599,7 +1599,7 @@ used \"-110\" as the offset.
 
 
 
-10.4. Generating short hyperlinks to anchors
+10.5. Generating short hyperlinks to anchors
 --------------------------------------------
 
 

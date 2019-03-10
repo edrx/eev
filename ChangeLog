@@ -1,7 +1,12 @@
+2019-03-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): small changes.
+
 2019-03-08  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el (ee-find-texworkspdf-page): new function.
 	(find-texworkspdf-page, code-texworkspdf-page): new functions.
+	(find-pdftools-page): new function.
 
 2019-03-05  Eduardo Ochs  <eduardoochs@gmail.com>
 

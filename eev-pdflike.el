@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar08
+;; Version:    2019mar10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -123,6 +123,7 @@
 ;; «.find-pdf-text»			(to "find-pdf-text")
 ;;
 ;; «.find-texworkspdf-page»		(to "find-texworkspdf-page")
+;; «.find-pdftools-page»		(to "find-pdftools-page")
 ;; «.find-xdvi-page»			(to "find-xdvi-page")
 ;; «.find-djview-page»			(to "find-djview-page")
 ;; «.find-evince-page»			(to "find-evince-page")
@@ -375,6 +376,20 @@ newline are spurious - and replaces them by \"(ff)\"."
     ,@(if page `(,(format "--position=%d" page)))
     ,fname
     ))
+
+
+
+;; «find-pdftools-page» (to ".find-pdftools-page")
+;; New (2019mar08). Requires: (find-epackage 'pdf-tools)
+;; See: http://angg.twu.net/find-pdf-page.html
+;; (find-code-xxxpdf-family "pdftools-page")
+        (code-xxxpdf-family "pdftools-page")
+
+(defun find-pdftools-page (fname &optional page &rest rest)
+  (pdf-tools-install)
+  (find-fline fname)
+  (pdf-view-goto-page (or page 1)))
+
 
 
 ;; «find-xdvi-page» (to ".find-xdvi-page")
