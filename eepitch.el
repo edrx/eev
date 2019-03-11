@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019feb28
+;; Version:    2019mar10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -32,17 +32,42 @@
 
 ;;; Commentary:
 
-;; 2018may30: There's a tutorial on eepitch here:
+;; Eev's central idea is that you can keep "executable logs" of what
+;; you do, in a format that is reasonably readable and that is easy to
+;; "play back" later, step by step and in any order. These "steps" are
+;; mainly of two kinds:
+;;
+;;   1) elisp hyperlinks, and
+;;   2) lines sent to shell-like programs.
+;;
+;; Eepitch is the module that implements support for (2). For a
+;; tutorial, see:
+;;
 ;;   (find-eev-quick-intro "6. Controlling shell-like programs")
-;;    http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+;;   http://angg.twu.net/eev-intros/find-eev-quick-intro.html#6
 ;;
-;; Eepitch implements a much simpler way to interact with external
-;; programs than the one shown in:
-;;   <http://angg.twu.net/eev-current/anim/channels.anim.html>
+;; For videos, see:
 ;;
-;; The comments below are VERY old and were partly superseded by this:
-;;   (find-eepitch-intro)
+;;   https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
+;;   http://angg.twu.net/#eev
+;;
+;;
+;;
+;; NOTE: some Emacs modes have ways to send lines to an interpreter;
+;; eepitch reimplements that in a minimalistic way that is quite
+;; flexible. There is a package called isend-mode - here:
+;;
+;;   https://github.com/ffevotte/isend-mode.el
+;;   (find-epackage 'isend-mode)
+;;
+;; that also generalizes this "send lines to an interpreter" thing.
+;; TODO: integrate eepitch and isend-mode!
 
+
+
+;; The comments below are VERY old and were partly superseded by this:
+;;   (find-eev-quick-intro "6. Controlling shell-like programs")
+;;
 ;; The innards
 ;; ===========
 ;; In order to understand precisely how eepitch works (consider this a

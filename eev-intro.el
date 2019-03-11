@@ -2071,31 +2071,71 @@ These ones explain advanced features that require extra setup:
   22. (find-bounded-intro)
   23. (find-channels-intro)
 
-Items 0, 3, 4, 5, 6, 9, 10, 11 should give you a good grasp of the
-main ideas - namely, that _elisp hyperlinks and interactive scripts
-can be embedded anywhere_. The other tutorials mainly show how to make
-these ideas pervasive.
+These ones are obsolete:
 
-The last item above is an index of the video tutorials, with
-scripts for downloading local copies of them and links to
-important positions in the videos.
+  24. (find-emacs-intro)
+  25. (find-defun-intro)
 
-There are also these two, ahem, \"things\", that I use in
-workshops, but that are not very eev-specific:
-
-   A. (find-emacs-intro)
-   B. (find-defun-intro)
+Item 20 is an index of the (old) video tutorials, with scripts
+for downloading local copies of them and links to important
+positions in the videos.
 
 
 
 
 
+1. `eev-mode'
+=============
 To toggle eev-mode on and off, use `M-x eev-mode'.
 
+The text below is a copy of:
+
+  (find-eev-install-intro \"1. Installing eev by hand\")
+
+Note that eev-mode.el has this commentary:
+
+  ;; Turning on eev-mode simply activates the eev-mode-map keymap, and
+  ;; adds an \"eev\" to the mode line to remind you this. Turning off
+  ;; eev-mode deactivates the keymap and the reminder. 
+
+If you prefer to start with eev-mode off, omit the
+line `(eev-mode 1)' above or change it to `(eev-mode 0)'. To
+toggle eev-mode on and off, use `M-x eev'. The keybindings in
+eev-mode are listed here:
+
+  (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
+
+Years ago eev was a very invasive package that changed several
+global settings; now it's the opposite. If you load eev the only
+things that happen are:
+
+  1) Several functions and variables become defined. They ALL
+     have the prefixes \"find-\", \"ee\", \"code-\" or \"br\",
+     except for one: \"to\".
+
+  2) The standard-display-table is changed to make three
+     characters be displayed as colored glyphs: \"\" (char 15),
+     \"«\" (char 171), and \"»\" (char 187).
+     
+  3) The environment variables \"S\" and \"EEVDIR\" are set.
+
+  4) An innocuous wrapper is installed around an internal
+     function used by `man'. See:
+
+       (find-eev \"eev-blinks.el\" \"find-man\")
+
+This is all I remember now (2019mar05). I am trying to make eev
+as non-invasive as possible - to convince as many people as
+possible to install it and try it!
+
+  (find-eev-install-intro \"1. Installing eev by hand\")
 
 
-The keybindings
-===============
+
+
+
+2. The keybindings
+==================
 `eev-mode' defines its own meanings for lots of meta-shift-letter
 key combinations - which are not normally used by Emacs - and,
 besides that, only for:
@@ -6619,7 +6659,69 @@ will present several tests that should help with troubleshooting.
 
 
 
-2. The innards
+
+
+2. Low-level tests
+==================
+Before we start please try this low-level test.
+(TODO: explain it!)
+
+2.1. Preparation
+----------------
+Make sure that the \"$EEVDIR/eegchannel\" script exists and is
+executable and check that the temporary directory \"$EEVTMPDIR/\"
+exists:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo     $EEVDIR
+cd       $EEVDIR
+pwd
+wget -nc http://angg.twu.net/eev-current/eegchannel
+chmod 755 eegchannel
+ls -lAF  $EEVDIR/eegchannel
+echo     $EEVTMPDIR
+mkdir -p $EEVTMPDIR/
+
+
+
+2.2. Test eegchannel
+--------------------
+We create a window setting like this,
+
+   ______________________
+  |          |           |
+  |          |   shell   |
+  |  this    |___________|
+  |  intro   |           |
+  |          |  shell 2  |
+  |__________|___________|
+
+and we run an eegchannel at \"shell 2\" and we send some lines to
+it from \"shell\":
+
+
+ (find-3EE '(eepitch-shell) '(eepitch-shell2))
+ (eepitch-shell2)
+$EEVDIR/eegchannel A python
+
+ (eepitch-shell)
+# Check that eeg.A.pid exists and is very recent:
+date
+ls -lAF $EEVTMPDIR/eeg.A.*
+
+# Send lines to eegchannel:
+echo 'print(2+3)' > $EEVTMPDIR/eeg.A.str
+kill -USR1    $(cat $EEVTMPDIR/eeg.A.pid)
+echo 'exit()'     > $EEVTMPDIR/eeg.A.str
+kill -USR1    $(cat $EEVTMPDIR/eeg.A.pid)
+
+
+
+
+
+3. The innards
 ==============
 Let's start with a detailed low-level view of of what we have
 just summarized as to \"save a command into a temporary file,
@@ -6638,7 +6740,7 @@ you... =(
 
 
 
-3. The protocol, in diagrams
+4. The protocol, in diagrams
 ============================
 Here's a diagram that shows roughly what we have when X is
 running both an Emacs and an xterm, each in a separate window.
@@ -6784,7 +6886,7 @@ protocol are not shown.
 
 
 
-4. Downloading and testing eechannel
+5. Downloading and testing eechannel
 ====================================
 Here I'll suppose that the directory \"~/bin/\" exists and is in
 your PATH. Run this to download the \"eechannel\" script and make
@@ -6875,7 +6977,7 @@ If that worked, we're done. =)
 
 
 
-5. Several xterms
+6. Several xterms
 =================
 http://angg.twu.net/eev-current/anim/channels.anim.html
 

@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-channels.el>
@@ -43,6 +43,12 @@
 ;;   (find-eevgrep "grep -nH -e channel *.el")
 ;;   (find-eev "anim/channels.anim")
 ;;   (find-eev "eechannel.el")
+
+
+;; «.eechannel»		(to "eechannel")
+;; «.eechannel-assert»	(to "eechannel-assert")
+;; «.eexterm»		(to "eexterm")
+
 
 
 (defun ee-read-file (fname)
@@ -89,12 +95,16 @@
 ;;       /---> eechannel-pid ----------> eechannel-pidfile
 ;;       |
 ;;      eechannel-kill
+;;
+;; «eechannel» (to ".eechannel")
 
 (defvar eechannel-default nil)
 
+;; Test: (eechannel-strfile "A")
 (defun eechannel-strfile (channel)
   (ee-expand (format "$EEVTMPDIR/eeg.%s.str" channel)))
 
+;; Test: (eechannel-pidfile "A")
 (defun eechannel-pidfile (channel)
   (ee-expand (format "$EEVTMPDIR/eeg.%s.pid" channel)))
 
@@ -138,6 +148,7 @@ If the line starts with a `' then evaluate it as lisp instead of sending it."
 ;;; |  __/  __/ (__| | | |_____| (_| \__ \__ \  __/ |  | |_
 ;;;  \___|\___|\___|_| |_|      \__,_|___/___/\___|_|   \__|
 ;;;
+;; «eechannel-assert» (to ".eechannel-assert")
 
 (defun eechannel-pid-running-p (pid)
   "Return t if a process with pid PID is running. This is linux-specific."
@@ -190,8 +201,21 @@ If the line starts with a `' then evaluate it as lisp instead of sending it."
 ;;   eexterm-args ----> eexterm-args-ne      
 ;;
 ;;   eexterm-kill -----> eechannel-kill
+;;
+;; «eexterm» (to ".eexterm")
 
-(defun eexterm-args-ne (channel prog-and-args xterm-args)
+;; Tests:
+;;   (eexterm-args-ne "A")
+;;   (eexterm-args-ne "A" '("ssh" "foo@bar") "-geometry 80x20")
+;;   (eexterm-create-ne "A")
+;;   (eexterm-create "A")
+;;   (eexterm-create "A")
+;;   (eexterm "A")
+;;   (eechannel-send "A" "echo hello")
+;;   (eechannel-send "A" "echo hello\n")
+;;   (eexterm-kill "A")
+;;
+(defun eexterm-args-ne (channel &optional prog-and-args xterm-args)
 "Return a list of arguments for running a xterm listening on CHANNEL.
 Try these examples:
   (eexterm-args-ne \"A\" nil nil)
@@ -202,11 +226,11 @@ Try these examples:
     "-e" ,(ee-expand "$EEVDIR/eegchannel") ,channel
     ,@(ee-split (or prog-and-args (ee-expand "$SHELL")))))
 
-(defun eexterm-create-ne (channel prog-and-args xterm-args)
+(defun eexterm-create-ne (channel &optional prog-and-args xterm-args)
   "Start a xterm listening on CHANNEL. See `eexterm-args-ne'."
   (find-bgprocess-ne (eexterm-args-ne channel prog-and-args xterm-args)))
 
-(defun eexterm-ne (channel prog-and-args xterm-args)
+(defun eexterm-ne (channel &optional prog-and-args xterm-args)
 "Set the default channel to CHANNEL; create an xterm listening on CHANNEL if needed."
   (interactive "sDefault channel: ")
   (setq eechannel-default channel)
@@ -214,17 +238,17 @@ Try these examples:
       (message "Reusing xterm at channel %s" channel)
     (eexterm-create-ne channel prog-and-args xterm-args)))
 
-(defun eexterm-args   (channel &optional prog-and-args xterm-args)
+(defun eexterm-args (channel &optional prog-and-args xterm-args)
   (eexterm-args-ne   channel (ee-split-and-expand prog-and-args) xterm-args))
 
 (defun eexterm-create (channel &optional prog-and-args xterm-args)
   "Create an xterm listening on CHANNEL."
   (eexterm-create-ne channel (ee-split-and-expand prog-and-args) xterm-args))
 
-(defun eexterm        (channel &optional prog-and-args xterm-args)
+(defun eexterm (channel &optional prog-and-args xterm-args)
 "Set the default channel to CHANNEL; create an xterm listening on CHANNEL if needed."
   (interactive "sDefault channel: ")
-  (eexterm-ne        channel (ee-split-and-expand prog-and-args) xterm-args))
+  (eexterm-ne channel (ee-split-and-expand prog-and-args) xterm-args))
 
 (defalias 'eechannel-xterm 'eexterm)
 

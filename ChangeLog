@@ -1,5 +1,12 @@
 2019-03-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-channels-intro): added sections with setup
+	and tests.
+
+	* eev-channels.el (eexterm-args-ne): made some arguments optional.
+	(eexterm-create-ne): made some arguments optional.
+	(eexterm-ne): made some arguments optional.
+
 	* eev-intro.el (find-eev-quick-intro): small changes.
 
 2019-03-08  Eduardo Ochs  <eduardoochs@gmail.com>
