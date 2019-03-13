@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar10
+;; Version:    2019mar13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-channels.el>
@@ -32,11 +32,13 @@
 ;;; Commentary:
 
 ;; `eechannel' is very difficult to set up and has been mostly
-;; superseded by `eepitch'. There is some documentation here,
+;; superseded by `eepitch'. There is some documentation here -
+;; including e-scripts for tests - but it is incomplete and some parts
+;; need to be rewritten:
 ;;
 ;;  (find-channels-intro)
+;;  (find-channels-intro "2. Low-level tests")
 ;;
-;; but it needs to be rewritten.
 
 
 ;; TODO: import code from:
@@ -45,9 +47,9 @@
 ;;   (find-eev "eechannel.el")
 
 
-;; «.eechannel»		(to "eechannel")
-;; «.eechannel-assert»	(to "eechannel-assert")
-;; «.eexterm»		(to "eexterm")
+;; Â«.eechannelÂ»		(to "eechannel")
+;; Â«.eechannel-assertÂ»	(to "eechannel-assert")
+;; Â«.eextermÂ»		(to "eexterm")
 
 
 
@@ -96,7 +98,7 @@
 ;;       |
 ;;      eechannel-kill
 ;;
-;; «eechannel» (to ".eechannel")
+;; Â«eechannelÂ» (to ".eechannel")
 
 (defvar eechannel-default nil)
 
@@ -148,7 +150,7 @@ If the line starts with a `' then evaluate it as lisp instead of sending it."
 ;;; |  __/  __/ (__| | | |_____| (_| \__ \__ \  __/ |  | |_
 ;;;  \___|\___|\___|_| |_|      \__,_|___/___/\___|_|   \__|
 ;;;
-;; «eechannel-assert» (to ".eechannel-assert")
+;; Â«eechannel-assertÂ» (to ".eechannel-assert")
 
 (defun eechannel-pid-running-p (pid)
   "Return t if a process with pid PID is running. This is linux-specific."
@@ -202,7 +204,7 @@ If the line starts with a `' then evaluate it as lisp instead of sending it."
 ;;
 ;;   eexterm-kill -----> eechannel-kill
 ;;
-;; «eexterm» (to ".eexterm")
+;; Â«eextermÂ» (to ".eexterm")
 
 ;; Tests:
 ;;   (eexterm-args-ne "A")
@@ -263,6 +265,6 @@ Try these examples:
 
 
 ;; Local Variables:
-;; coding:          raw-text-unix
+;; coding:          utf-8-unix
 ;; no-byte-compile: t
 ;; End:

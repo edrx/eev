@@ -388,7 +388,7 @@ newline are spurious - and replaces them by \"(ff)\"."
 (defun find-pdftools-page (fname &optional page &rest rest)
   (pdf-tools-install)
   (find-fline fname)
-  (pdf-view-goto-page (or page 1)))
+  (if page (pdf-view-goto-page (or page 1))))
 
 
 

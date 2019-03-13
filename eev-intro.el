@@ -1991,6 +1991,16 @@ installing a package with `M-x list-packages' is too hard.
 If you want to change these statistics, send me a \"hi\"!
 
 
+
+5.1. The experimental package for eev
+-------------------------------------
+There is now an EXPERIMENTAL package for eev in ELPA with a
+single autoload. It is called \"eev\" and you can install it via
+`M-x list-packages'. To use it, install it and run `M-x
+eev-beginner'. See:
+
+  (find-eev \"eev-beginner.el\")
+
 " pos-spec-list)))
 
 ;; (find-eev-install-intro)
@@ -6630,7 +6640,7 @@ Is is meant as both a tutorial and a sandbox.
 
 1. Introduction
 ===============
-Before eepitch had been invented, eev had two other ways to send
+Before eepitch had been invented eev had two other ways to send
 commands to external shell-like programs. The first way,
 described here,
 
@@ -6652,7 +6662,7 @@ listens to signals and handles them pretending that the saved
 commands came from the keyboard... and, as some people have said,
 this is \"a nightmare to set up\".
 
-Here we explain the protocol - which can be adapted to other
+Here we explain the protocol - that can be adapted to other
 cases too, like, for example, to make Emacs talk to SmallTalk
 environments and to computer algebra systems with GUIs - and we
 will present several tests that should help with troubleshooting.
@@ -6663,32 +6673,46 @@ will present several tests that should help with troubleshooting.
 
 2. Low-level tests
 ==================
-Before we start please try this low-level test.
-(TODO: explain it!)
+Before we start the theory please try these low-level tests.
+
 
 2.1. Preparation
 ----------------
-Make sure that the \"$EEVDIR/eegchannel\" script exists and is
-executable and check that the temporary directory \"$EEVTMPDIR/\"
-exists:
+Have have to make sure that:
+
+  1) \"eev-channel.el\" has been loaded,
+  2) the \"$EEVDIR/eegchannel\" script exists and is executable,
+  3) we have expect installed - eegchannel depends on it,
+  4) the temporary directory \"$EEVTMPDIR/\" exists.
+
+Here is an e-script for that:
+
+  (add-to-list 'load-path (ee-expand \"$EEVDIR\"))
+  (require 'eev-channel)
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
+sudo apt-get install expect
 echo     $EEVDIR
 cd       $EEVDIR
 pwd
 wget -nc http://angg.twu.net/eev-current/eegchannel
 chmod 755 eegchannel
 ls -lAF  $EEVDIR/eegchannel
+expect -v
+$EEVDIR/eegchannel A echo ok
 echo     $EEVTMPDIR
 mkdir -p $EEVTMPDIR/
+
+# (find-eev \"eegchannel\")
+
 
 
 
 2.2. Test eegchannel
 --------------------
-We create a window setting like this,
+In this test we create a window setting like this,
 
    ______________________
   |          |           |
@@ -6698,8 +6722,27 @@ We create a window setting like this,
   |          |  shell 2  |
   |__________|___________|
 
-and we run an eegchannel at \"shell 2\" and we send some lines to
-it from \"shell\":
+and then:
+
+  1) we run \"eegchannel A python\" at the lower shell. This runs
+     a python interpreter \"listening on channel A\";
+
+  2) we use the top shell to send the lines \"print(2+3)\" and
+     \"exit()\" \"thorugh the channel A\". In low-level terms
+     this means that for each line
+
+       a) we save it into the file \"$EEVTMPDIR/eeg.A.str\",
+
+       b) we send a signal SIGUSR1 to the process -
+          \"eegchannel\" - whose PID is stored in the file
+          \"$EEVTMPDIR/eeg.A.pid\".
+
+       c) When the eegchannel listening on the channel A receives
+          a SIGUSR1 it sends the line in \"$EEVTMPDIR/eeg.A.str\"
+          to the process that it controls (that is \"python\") \"as
+          if the user had typed it\".
+
+Here is the demo. Run it with <F8>s:
 
 
  (find-3EE '(eepitch-shell) '(eepitch-shell2))
@@ -6716,6 +6759,23 @@ echo 'print(2+3)' > $EEVTMPDIR/eeg.A.str
 kill -USR1    $(cat $EEVTMPDIR/eeg.A.pid)
 echo 'exit()'     > $EEVTMPDIR/eeg.A.str
 kill -USR1    $(cat $EEVTMPDIR/eeg.A.pid)
+
+
+
+2.3. Test `eechannel'
+---------------------
+TODO: write this.
+See:
+
+  (find-eev \"eev-channels.el\" \"eechannel\")
+
+
+2.4. Test `eexterm'
+-------------------
+TODO: write this.
+See:
+
+  (find-eev \"eev-channels.el\" \"eexterm\")
 
 
 

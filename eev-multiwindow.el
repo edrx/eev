@@ -152,7 +152,6 @@ that. This is mainly for `find-wset'."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
-;; ee-anchor-format:  "defun %s "
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:

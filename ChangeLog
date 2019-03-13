@@ -1,3 +1,14 @@
+2019-03-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el: updated the comments.
+
+	* eev-beginner.el: don't change the load-path. Added comments.
+	(eev-beginner): new function.
+
+	* eev-intro.el (find-channels-intro): added some sections.
+
+	* eev-channels.el: converted to UTF-8 and added comments.
+
 2019-03-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-channels-intro): added sections with setup

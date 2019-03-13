@@ -92,6 +92,6 @@ we set ADD-TO-E to 1."
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
+;; coding:            utf-8-unix
 ;; no-byte-compile:   t
 ;; End:

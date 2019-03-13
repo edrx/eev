@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -30,6 +30,29 @@
 
 ;;; Commentary:
 
+;; Most of the _comments_ below are obsolete. The recommended way to
+;; use this is now by running, for example,
+;;
+;;   (find-freenode-links "e" "#emacs")
+;;
+;; and then copying and pasting these lines to your .emacs:
+;;
+;;   (setq ee-freenode-ichannels "#eev #emacs")
+;;   (setq ee-freenode-achannels "#eev #emacs")
+;;   (defun e2 () (interactive) (find-freenode-2a "#emacs"))
+;;   (defun e3 () (interactive) (find-freenode-3a "#emacs"))
+;;
+;; Then `M-x e3' creates the three-window setup described here,
+;;
+;;   (find-rcirc-intro "1. The server buffer and the channel buffers")
+;;
+;; that lets you follow all the steps of the connection. Once you're
+;; sure that you're connected to the server you can use `M-x e2' to
+;; create a two-window setup with just the current buffer and the
+;; #emacs buffer.
+
+;; OBSOLETE COMMENTS:
+;;
 ;; Here we implement a very thin eev-ish layer on top of rcirc. The
 ;; main goal is:
 ;;
@@ -243,7 +266,7 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
 
 
 ;; Local Variables:
-;; coding:            raw-text-unix
+;; coding:            utf-8-unix
 ;; ee-anchor-format:  "defun %s "
 ;; no-byte-compile:   t
 ;; End:

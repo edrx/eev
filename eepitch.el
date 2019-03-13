@@ -54,7 +54,13 @@
 ;;
 ;;
 ;; NOTE: some Emacs modes have ways to send lines to an interpreter;
-;; eepitch reimplements that in a minimalistic way that is quite
+;; for example, `python-mode' has `python-shell-send-string':
+;;
+;;   (find-efile "progmodes/python.el" "(defvar python-mode-map")
+;;   (find-efile "progmodes/python.el"       "'python-shell-send-string")
+;;   (find-efile "progmodes/python.el" "(defun python-shell-send-string")
+;;
+;; Eepitch reimplements that in a minimalistic way that is quite
 ;; flexible. There is a package called isend-mode - here:
 ;;
 ;;   https://github.com/ffevotte/isend-mode.el
