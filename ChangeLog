@@ -1,3 +1,7 @@
+2019-03-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pkg.el ("eev"): added several fields.
+
 2019-03-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-rcirc.el: updated the comments.
