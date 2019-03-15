@@ -1,0 +1,27 @@
+Eev's central idea is that you can keep "executable logs" of what you
+do, in a format that is reasonably readable and that is easy to "play
+back" later, step by step and in any order. We call these executable
+logs "e-scripts". These "steps" are mainly of two kinds:
+
+   1) elisp hyperlinks, and
+   2) lines sent to shell-like programs.
+
+To run the tutorial: install this package, then type `M-x
+eev-beginner'. This will load all the main modules, activate the
+eev-mode keybindings, and open this tutorial,
+
+  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+  (find-eev-quick-intro)
+
+in a sandboxed buffer. For a list of the other sandboxed tutorials,
+run:
+
+  (find-eev-intro)
+
+For a non-technical description of what e-scripts are, see:
+
+  http://angg.twu.net/escripts.html
+
+The home page of eev is:
+
+  http://angg.twu.net/#eev
