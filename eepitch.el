@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar10
+;; Version:    2019mar15
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -68,6 +68,16 @@
 ;;
 ;; that also generalizes this "send lines to an interpreter" thing.
 ;; TODO: integrate eepitch and isend-mode!
+;;
+;;
+;;
+;; NOTE 2: eepitch is based on code that Rubikitch sent to the eev
+;; mailing list in 2006, but I rewrote his code completely several
+;; times since then. See:
+;;
+;;   http://lists.gnu.org/archive/html/eev/2006-01/msg00000.html
+;;   http://lists.gnu.org/archive/html/eev/2006-02/msg00000.html
+;;   http://lists.gnu.org/archive/html/eev/2006-02/msg00001.html
 
 
 

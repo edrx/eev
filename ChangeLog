@@ -1,4 +1,11 @@
+2019-03-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el: added pointers to the discussion in the eev mailing
+	list that generated the first version of eepitch.
+
 2019-03-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* README: new file - a README for the ELPA package.
 
 	* eev-pkg.el ("eev"): added several fields.
 

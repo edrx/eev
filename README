@@ -1,7 +1,7 @@
 Eev's central idea is that you can keep "executable logs" of what you
 do, in a format that is reasonably readable and that is easy to "play
-back" later, step by step and in any order. We call these executable
-logs "e-scripts". These "steps" are mainly of two kinds:
+back" later, step by step and in any order. We call these "executable
+logs" _e-scripts_. These "steps" are mainly of two kinds:
 
    1) elisp hyperlinks, and
    2) lines sent to shell-like programs.
