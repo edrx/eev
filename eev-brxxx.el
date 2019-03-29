@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -160,6 +160,20 @@ This should be made smarter - file:// urls should be returned unchanged."
 
 
 
+;; An internal function used by `ee-code-brurl-rest' and
+;; `ee-code-brfile-rest'. Similar to:
+;; (find-eev "eev-code.el" "ee-tail-call2")
+
+(defun ee-tail-call1 (fmt f rest)
+  "An internal function used to support keyword-argument pairs."
+  (cond ((null rest) "")
+	((keywordp (car rest))
+	 (apply (intern (format fmt (car rest)))
+		f (cdr rest)))
+	(t (error "Wrong rest: %S" rest))))
+
+
+
 ;;;                _            _                     _ 
 ;;;   ___ ___   __| | ___      | |__  _ __ _   _ _ __| |
 ;;;  / __/ _ \ / _` |/ _ \_____| '_ \| '__| | | | '__| |
@@ -169,6 +183,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;; (find-tail-call-links "brurl" "f")
 
 ;; «code-brurl» (to ".code-brurl")
+;; Test: (find-code-brurl  'find-foo :remote 'brfoo :local 'brfool :dired 'brfood)
 ;;
 (defun      code-brurl (f &rest rest)
   "Define a family of brxxx functions from a function that operates on URLs"
@@ -179,15 +194,19 @@ This should be made smarter - file:// urls should be returned unchanged."
 "Generate code for a family of functions from a function that operates on URLs"
   (concat (ee-template0 "\
 ;; {(ee-S `(find-code-brurl ',f ,@(mapcar 'ee-add-quote rest)))}
-")  (ee-code-brurl-rest rest)))
+")  (ee-code-brurl-rest f rest)))
 
 ;; «ee-code-brurl-rest» (to ".ee-code-brurl-rest")
 ;; Support for extra arguments
-;;
-(defun ee-code-brurl-rest (rest)
-  (ee-tail-call "ee-code-brurl-%S" rest))
 
-(defun ee-code-brurl-:remote (brxxx &rest rest)
+(defun ee-code-brurl-rest (f rest)
+  (cond ((null rest) "")
+	((keywordp (car rest))
+	 (apply (intern (format "ee-code-brurl-%S" (car rest)))
+		f (cdr rest)))
+	(t (error "Wrong rest: %S" rest))))
+
+(defun ee-code-brurl-:remote (f brxxx &rest rest)
   (concat (ee-template0 "
 \(defun {brxxx} (url &rest ignore)
   \"Apply `{f}' on URL.\"
@@ -195,9 +214,9 @@ This should be made smarter - file:// urls should be returned unchanged."
   (setq browse-url-browser-function '{brxxx})
   (message \"(%S %S) -> %S\" '{f} url
 	                   ({f} url)))
-")  (ee-code-brurl-rest rest)))
+")  (ee-code-brurl-rest f rest)))
 
-(defun ee-code-brurl-:local (brxxxl &rest rest)
+(defun ee-code-brurl-:local (f brxxxl &rest rest)
   (concat (ee-template0 "
 \(defun {brxxxl} (url &rest ignore)
   \"Apply `{f}' on the local url associated to URL.\"
@@ -206,9 +225,9 @@ This should be made smarter - file:// urls should be returned unchanged."
   (setq url (ee-url-to-local-url url))
   (message \"(%S %S) -> %S\" '{f} url
 	                   ({f} url)))
-")  (ee-code-brurl-rest rest)))
+")  (ee-code-brurl-rest f rest)))
 
-(defun ee-code-brurl-:dired (brxxxd &rest rest)
+(defun ee-code-brurl-:dired (f brxxxd &rest rest)
   (concat (ee-template0 "
 \(defun {brxxxd} (&rest ignore)
   \"Apply `{f}' on the url of the dired file at point.\"
@@ -216,7 +235,7 @@ This should be made smarter - file:// urls should be returned unchanged."
   (let ((url (ee-dired-to-url)))
     (message \"(%S %S) -> %S\" '{f} url
                              ({f} url))))
-")  (ee-code-brurl-rest rest)))
+")  (ee-code-brurl-rest f rest)))
 
 ;; Test:
 ;; (find-code-brurl 'pluc :remote 'brpluc :local 'brplucl :dired 'brplucd)
@@ -240,6 +259,8 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;; «code-brfile» (to ".code-brfile")
 ;; code-brfile: top-level functions
 ;;
+;; Test: (find-code-brfile 'find-bar :local 'brbarl :dired 'brbard)
+;;
 (defun      code-brfile (f &rest rest)
   "Define a family of brxxx functions from a function that operates on files"
   (eval (ee-read      (apply 'ee-code-brfile f rest))))
@@ -249,15 +270,19 @@ This should be made smarter - file:// urls should be returned unchanged."
 "Generate code for a family of functions from a function that operates on files"
   (concat (ee-template0 "\
 ;; {(ee-S `(find-code-brfile ',f ,@(mapcar 'ee-add-quote rest)))}
-")  (ee-code-brfile-rest rest)))
+")  (ee-code-brfile-rest f rest)))
 
 ;; «ee-code-brfile-rest» (to ".ee-code-brfile-rest")
 ;; Support for extra arguments
-;;
-(defun ee-code-brfile-rest (rest)
-  (ee-tail-call "ee-code-brfile-%S" rest))
 
-(defun ee-code-brfile-:local (brxxxl &rest rest)
+(defun ee-code-brfile-rest (f rest)
+  (cond ((null rest) "")
+	((keywordp (car rest))
+	 (apply (intern (format "ee-code-brfile-%S" (car rest)))
+		f (cdr rest)))
+	(t (error "Wrong rest: %S" rest))))
+
+(defun ee-code-brfile-:local (f brxxxl &rest rest)
   (concat (ee-template0 "
 \(defun {brxxxl} (url &rest ignore)
   \"Apply `{f}' on the local file name associated to URL.\"
@@ -266,9 +291,9 @@ This should be made smarter - file:// urls should be returned unchanged."
   (let ((fname (ee-url-to-fname url)))
     (message \"(%S %S) -> %S\" '{f} fname
                              ({f} fname))))
-")  (ee-code-brfile-rest rest)))
+")  (ee-code-brfile-rest f rest)))
 
-(defun ee-code-brfile-:dired (brxxxd &rest rest)
+(defun ee-code-brfile-:dired (f brxxxd &rest rest)
   (concat (ee-template0 "
 \(defun {brxxxd} (&rest ignore)
   \"Apply `{f}' on the dired file at point.\"
@@ -276,7 +301,7 @@ This should be made smarter - file:// urls should be returned unchanged."
   (let ((fname (ee-dired-to-fname)))
     (message \"(%S %S) -> %S\" '{f} fname
                              ({f} fname))))
-")  (ee-code-brfile-rest rest)))
+")  (ee-code-brfile-rest f rest)))
 
 
 

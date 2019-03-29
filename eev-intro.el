@@ -8422,7 +8422,7 @@ an e-script block is \"executable\". But in what sense it is a
      would have to decide what to write and how to write it, and
      we would have to alternate between the \"task\" and \"taking
      notes\". After many years of practice _some_ people would
-     learn how to take notes without distract themselves much
+     learn how to take notes without distracting themselves much
      from the task at hand, and they would learn how to make
      their notes at the same time concise and readable enough.
 

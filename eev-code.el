@@ -47,23 +47,11 @@
 
 ;; «.alists»		(to "alists")
 ;; «.code-c-d-pairs»	(to "code-c-d-pairs")
+;; «.ee-tail-call2»	(to "ee-tail-call2")
 ;; «.code-c-d»		(to "code-c-d")
 ;; «.code-c-d-s»	(to "code-c-d-s")
 
 
-
-
-
-;; The name "tail call" is misleading - this is recursive,
-;; but not a tail call in the usual sense.
-
-(defun ee-tail-call (fmt rest)
-  "An internal function used to support keyword-argument pairs."
-  (cond ((null rest) "")
-	((keywordp (car rest))
-	 (apply (intern (format fmt (car rest)))
-		(cdr rest)))
-	(t (error "Wrong rest: %S" rest))))
 
 
 
@@ -146,6 +134,27 @@ is used by some functions in \"eev-insert.el\".")
 
 
 
+;;;                  _        _ _                 _ _ 
+;;;   ___  ___      | |_ __ _(_) |       ___ __ _| | |
+;;;  / _ \/ _ \_____| __/ _` | | |_____ / __/ _` | | |
+;;; |  __/  __/_____| || (_| | | |_____| (_| (_| | | |
+;;;  \___|\___|      \__\__,_|_|_|      \___\__,_|_|_|
+;;;                                                   
+;; «ee-tail-call2» (to ".ee-tail-call2")
+;; The name "tail call" is misleading - this is recursive,
+;; but not a tail call in the usual sense.
+
+(defun ee-tail-call2 (fmt c d rest)
+  "An internal function used to support keyword-argument pairs."
+  (cond ((null rest) "")
+	((keywordp (car rest))
+	 (apply (intern (format fmt (car rest)))
+		c d (cdr rest)))
+	(t (error "Wrong rest: %S" rest))))
+
+
+
+
 
 ;;;                _                          _ 
 ;;;   ___ ___   __| | ___        ___       __| |
@@ -171,15 +180,14 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
   (if (stringp (car rest))
       (setq rest (cons :info rest)))
   (concat (ee-code-c-d-base c d)
-	  (ee-code-c-d-rest rest)))
+	  (ee-code-c-d-rest c d rest)))
 
 ;; Support for extra arguments
 ;;
-(defun ee-code-c-d-rest (rest)
-  (ee-tail-call "ee-code-c-d-%S" rest))
-
+(defun   ee-code-c-d-rest (c d rest)
+  (ee-tail-call2 "ee-code-c-d-%S" c d rest))
 (defun find-code-c-d-rest (c d &rest rest)
-  (find-estring-elisp (ee-code-c-d-rest rest)))
+  (find-estring-elisp (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-base (c d)
   (ee-template0 "\
@@ -198,8 +206,6 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    (defun find-{c}tag (str &rest pos-spec-list)
      (ee-use-{c}-tags)
      (apply 'ee-find-tag str pos-spec-list))
-   ;; (defun find-{c}sh (command &rest pos-spec-list)
-   ;;   (apply 'ee-find-xxxsh ee-{c}dir command pos-spec-list))
    (defun find-{c}sh (command &rest pos-spec-list)
      (apply 'find-sh-at-dir ee-{c}dir command pos-spec-list))
    (defun find-{c}sh0 (command)
@@ -212,50 +218,50 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
      (apply 'ee-find-grep ee-{c}dir grep-command-args pos-spec-list))
    "))
 
-(defun ee-code-c-d-:info (info &rest rest)
+(defun ee-code-c-d-:info (c d info &rest rest)
   (concat (ee-template0 "
-   ;; {(ee-S `(ee-code-c-d-:info ,info ,@rest))} 
+   ;; {(ee-S `(ee-code-c-d-:info ,c ,d ,info ,@rest))}
    (defun find-{c}node (page &rest pos-spec-list)
      (interactive (list \"\"))
      (setq ee-info-code \"{c}\")    ;; for M-h M-i
      (setq ee-info-file \"{info}\")    ;; for M-h M-i
      (apply 'find-node (format \"({info})%s\" page) pos-spec-list))
-   ") (ee-code-c-d-rest rest)))
+   ") (ee-code-c-d-rest c d rest)))
 
-(defun ee-code-c-d-:linfo (manual &rest rest)
+(defun ee-code-c-d-:linfo (c d manual &rest rest)
   (concat (ee-template0 "
-   ;; {(ee-S `(ee-code-c-d-:linfo ,manual ,@rest))} 
+   ;; {(ee-S `(ee-code-c-d-:linfo ,c ,d ,manual ,@rest))}
    (defun find-{c}node (section &rest pos-spec-list)
      (interactive (list \"\"))
      (apply 'ee-find-node ee-{c}dir \"{manual}\" section pos-spec-list))
-   ") (ee-code-c-d-rest rest)))
+   ") (ee-code-c-d-rest c d rest)))
 
-(defun ee-code-c-d-:gz (&rest rest)
+(defun ee-code-c-d-:gz (c d &rest rest)
  (concat (ee-template0 "
-   ;; {(ee-S `(ee-code-c-d-:gz ,@rest))} 
+   ;; {(ee-S `(ee-code-c-d-:gz ,c ,d ,@rest))}
    (defun find-{c}file (str &rest pos-spec-list)
      (interactive (list \"\"))
      (ee-use-{c}-tags)
      (apply 'find-fline-gz (ee-{c}file str) pos-spec-list))
-   ") (ee-code-c-d-rest rest)))
+   ") (ee-code-c-d-rest c d rest)))
 
-(defun ee-code-c-d-:anchor (&rest rest)
+(defun ee-code-c-d-:anchor (c d &rest rest)
  (concat (ee-template0 "
-   ;; {(ee-S `(ee-code-c-d-:anchor ,@rest))} 
+   ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
    (defun find-{c} (str &rest pos-spec-list)
      (apply 'find-anchor (ee-{c}file str) pos-spec-list))
-   ") (ee-code-c-d-rest rest)))
+   ") (ee-code-c-d-rest c d rest)))
 
-(defun ee-code-c-d-:wget (url &rest rest)
+(defun ee-code-c-d-:wget (c d url &rest rest)
  (concat (ee-template0 "
-   ;; {(ee-S `(ee-code-c-d-:wget ,url ,@rest))} 
+   ;; {(ee-S `(ee-code-c-d-:wget ,c ,d ,url ,@rest))}
    (defun ee-{c}url (semiurl) (concat \"{url}\" semiurl))
    (defun find-{c}wget (semiurl &rest pos-spec-list)
      (interactive (list \"\"))
      (apply 'find-wget (ee-{c}url semiurl) pos-spec-list))
-   ") (ee-code-c-d-rest rest)))
+   ") (ee-code-c-d-rest c d rest)))
 
-(defun ee-code-c-d-:grep (&rest rest) (ee-code-c-d-rest rest))  ; compat
+(defun ee-code-c-d-:grep (c d &rest rest) (ee-code-c-d-rest c d rest))  ; compat
 
 ;; Support functions.
 ;; Maybe I should rewrite some of them using `ee-at0'...

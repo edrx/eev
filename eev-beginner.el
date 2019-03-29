@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar13
+;; Version:    2019mar29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-beginner.el>
@@ -68,7 +68,9 @@
 
 
 ;; 2019mar13: Commented this out.
-;; (add-to-list 'load-path default-directory)
+;; 2019mar29: Uncommented - it seems that emacs25 needs this.
+(add-to-list 'load-path default-directory)
+
 
 
 ;; Load all the main modules of eev.
