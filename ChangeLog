@@ -12,6 +12,10 @@
 	functionality of `ee-tail-call' into the functions
 	`ee-code-brurl-rest' and ee-code-brfile-rest'.
 
+	* eev-code.el (ee-code-c-d-rest): moved the functionality of
+	`ee-tail-call' into the function `ee-code-c-d-rest'.
+	(ee-tail-call2): commented out.
+
 	* eev-beginner.el (load-path): uncommented the "(add-to-list
 	'load-path default-directory)"
 

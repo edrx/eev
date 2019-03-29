@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -144,14 +144,15 @@ is used by some functions in \"eev-insert.el\".")
 ;; The name "tail call" is misleading - this is recursive,
 ;; but not a tail call in the usual sense.
 
-(defun ee-tail-call2 (fmt c d rest)
-  "An internal function used to support keyword-argument pairs."
-  (cond ((null rest) "")
-	((keywordp (car rest))
-	 (apply (intern (format fmt (car rest)))
-		c d (cdr rest)))
-	(t (error "Wrong rest: %S" rest))))
-
+;; 2019mar29: commented out.
+;; Moved its functionality into `ee-code-c-d-rest'.
+;;(defun ee-tail-call2 (fmt c d rest)
+;;  "An internal function used to support keyword-argument pairs."
+;;  (cond ((null rest) "")
+;;        ((keywordp (car rest))
+;;         (apply (intern (format fmt (car rest)))
+;;                c d (cdr rest)))
+;;        (t (error "Wrong rest: %S" rest))))
 
 
 
@@ -183,9 +184,12 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
 	  (ee-code-c-d-rest c d rest)))
 
 ;; Support for extra arguments
-;;
 (defun   ee-code-c-d-rest (c d rest)
-  (ee-tail-call2 "ee-code-c-d-%S" c d rest))
+  (cond ((null rest) "")
+	((keywordp (car rest))
+	 (apply (intern (format "ee-code-c-d-%S" (car rest)))
+		c d (cdr rest)))
+	(t (error "Wrong rest: %S" rest))))
 (defun find-code-c-d-rest (c d &rest rest)
   (find-estring-elisp (ee-code-c-d-rest c d rest)))
 
