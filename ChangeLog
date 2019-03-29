@@ -1,5 +1,12 @@
 2019-03-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-template0.el: new file.
+
+	* eev-load.el: added a "(require 'eev-template0)".
+
+	* eev-wrap.el (ee-template00, ee-template0): deleted - moved to
+	the file eev-template0.el.
+
 	* eev-brxxx.el: made this file compatible with lexical binding.
 	Made the argument `f' explicit in many functions and moved the
 	functionality of `ee-tail-call' into the functions

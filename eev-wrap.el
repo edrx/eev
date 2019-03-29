@@ -1,6 +1,6 @@
 ;;; eev-wrap.el --- wrap the current line into a hyperlink
 
-;; Copyright (C) 2013,2016,2017 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2016,2017,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -42,6 +42,8 @@
 ;; «.ee-this-line-wrapn»	(to "ee-this-line-wrapn")
 ;; «.find-eewrap-links»		(to "find-eewrap-links")
 
+
+(require 'eev-template0)      ; (find-eev "eev-template0.el")
 
 
 (defvar ee-hyperlink-prefix "# "
@@ -92,65 +94,9 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
     (list 'quote obj)))
 
 
-
-;;;                  _                       _       _        ___  
-;;;   ___  ___      | |_ ___ _ __ ___  _ __ | | __ _| |_ ___ / _ \ 
-;;;  / _ \/ _ \_____| __/ _ \ '_ ` _ \| '_ \| |/ _` | __/ _ \ | | |
-;;; |  __/  __/_____| ||  __/ | | | | | |_) | | (_| | ||  __/ |_| |
-;;;  \___|\___|      \__\___|_| |_| |_| .__/|_|\__,_|\__\___|\___/ 
-;;;                                   |_|                          
-;;
 ;; «ee-template0» (to ".ee-template0")
-;; The functions `ee-template00' and `ee-template0' are used by
-;; several functions of the `eewrap-*' family and also by functions
-;; like `find-latex-links', that create a temporary buffer with elisp
-;; hyperlinks followed by a "templated string". In low-level terms,
-;;
-;;   (ee-template00 STR)
-;;
-;; replace substrings enclosed by `{}'s in STR by the result of
-;; evaluating them; in particular, it replaces each `{VAR}' in STR by
-;; the contents of the variable VAR. Here are some examples/tests:
-;;
-;;   (ee-template00 "a{(+ 2 3)}b")
-;;     -->  "a5b"
-;; 
-;;   (let ((hi "Here: ") (a 22) (b 33)) (ee-template00 "{hi}{a}+{b}={(+ a b)}"))
-;;       -->  "Here: 22+33=55"
-;;
-;;   (defun foo (a b) (ee-template00 "{a}+{b}={(+ a b)}"))
-;;   (foo 22 33)
-;;       -->  "22+33=55"
-;;
-;; `ee-template0' is like `ee-template00' but it adds a trick that
-;; makes each "{<}" and each "{>}" in STR be replaced by "{" and "}"
-;; respectively. For example:
-;;
-;;   (ee-template0 "{<} a{(+ 2 3)} {>}")
-;;       -->  "{ a5 }"
+;; Moved to: (find-eev "eev-template0.el")
 
-(defun ee-template00 (str)
-"Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
-Examples:\n
-  (ee-template00 \"a{(+ 2 3)}b\")
-    -->  \"a5b\"\n
-  (let ((hi \"Here:\") (a 22) (b 33))
-    (ee-template00 \"{hi} {a} + {b} = {(+ a b)}\"))  
-    -->  \"22 + 33 = 55\""
-  (replace-regexp-in-string
-   "{\\([^{}]+\\)}"
-   (lambda (_code_) (format "%s" (eval (read (substring _code_ 1 -1)))))
-   str 'fixedcase 'literal))
-
-(defun ee-template0 (str)
-"Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
-Substrings of the form `{<}' and `{>}' in STR are replaced by `{'
-and `}' respectively; apart from that, this is the same as
-`ee-template00'.
-Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
-             -->  \"{ 5 }\""
-  (let ((< "{") (> "}"))
-    (ee-template00 str)))
 
 
 

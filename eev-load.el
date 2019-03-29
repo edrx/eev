@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019mar29
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -51,6 +51,7 @@
 (require 'eev-eval)	       ; (find-eev "eev-eval.el")
 (require 'eev-mode)	       ; (find-eev "eev-mode.el")
 (require 'eev-anchors)	       ; (find-eev "eev-anchors.el")
+(require 'eev-template0)       ; (find-eev "eev-template0.el")
 ;;
 ;; Support for many kinds of hyperlink functions. See:
 ;;   (find-eev-quick-intro "3. Elisp hyperlinks")
