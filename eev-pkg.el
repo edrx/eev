@@ -1,4 +1,4 @@
-(define-package "eev" "20190314" "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)"
+(define-package "eev" "20190401" "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)"
   '((emacs "24.3"))
   :keywords
   '("lisp" "e-scripts")

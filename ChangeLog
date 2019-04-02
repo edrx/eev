@@ -1,5 +1,7 @@
 2019-04-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-pdflike-old.el: deleted this file.
+
 	* README: added a section "eev without eev-mode".
 
 	* eev-intro.el (find-eev-intro): small changes.
