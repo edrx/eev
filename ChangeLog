@@ -1,3 +1,15 @@
+2019-04-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* README: added a section "eev without eev-mode".
+
+	* eev-intro.el (find-eev-intro): small changes.
+	(find-eev-install-intro): small changes.
+
+	* eev-code.el (ee-code-c-d-pairs): fixed the comments.
+
+	* eev-elinks.el: Cleaned up the comments about
+	`ee-code-c-d-filter-2' and related functions.
+
 2019-03-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-template0.el: new file.

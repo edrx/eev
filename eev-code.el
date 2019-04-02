@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar29
+;; Version:    2019apr01
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -125,8 +125,8 @@ Examples: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
 (defvar ee-code-c-d-pairs nil
   "Each (code-c-d C D) call generates an entry (C (ee-expand D)) here.
 A new entry with the same C as a previous one will replace the
-previous one. This list is maintained by `ee-code-c-d-add-pair' and
-is used by some functions in \"eev-insert.el\".")
+previous one. This list is maintained by `ee-code-c-d-add-pair'
+and is used by `ee-find-xxxfile-sexps' and `find-file-links'.")
 
 (defun ee-code-c-d-add-pair (c d)
   (setq ee-code-c-d-pairs (ee-areplace ee-code-c-d-pairs c (list d))))

@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar10
+;; Version:    2019apr01
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1874,10 +1874,6 @@ things that happen are:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
 
-This is all I remember now (2019mar05). I am trying to make eev
-as non-invasive as possible - to convince as many people as
-possible to install it and try it!
-
 
 
 
@@ -2133,13 +2129,6 @@ things that happen are:
      function used by `man'. See:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
-
-This is all I remember now (2019mar05). I am trying to make eev
-as non-invasive as possible - to convince as many people as
-possible to install it and try it!
-
-  (find-eev-install-intro \"1. Installing eev by hand\")
-
 
 
 
