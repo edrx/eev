@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar29
+;; Version:    2019apr06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-beginner.el>
@@ -57,7 +57,7 @@
 ;; does not open the tutorial. See:
 ;;
 ;;    (find-eev-intro "1. `eev-mode'")
-
+;;    (find-eev "eev-load.el")
 
 
 ;; NOTE: older versions of eev loaded "eev-readme.el" instead of
@@ -82,7 +82,8 @@
 
 
 ;; This is the only autoload of eev at this moment.
-;; (find-elnode "Autoload" "magic autoload comment")
+;; See: (find-elnode "Autoload" "magic autoload comment")
+;;      (find-eev "eev-load.el" "autoloads")
 
 ;;;###autoload
 (defun eev-beginner ()

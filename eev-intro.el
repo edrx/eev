@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr01
+;; Version:    2019apr06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1649,6 +1649,9 @@ The most basic keys of eev are:
                (find-eev-quick-intro \"3. Elisp hyperlinks\")
   M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
           See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
+  M-K   - to go back without killing the buffer.
+          See: (find-eval-intro \"5. Going back\")
+               (find-eval-intro \"5. Going back\" \"`M-K' instead of `M-k'\")
   M-j   - to jump to certain predefined places - in particular,
               `M-j' takes you to the list of jump targets.
           `M-2 M-j' takes you to this help page.
@@ -1956,47 +1959,121 @@ incompatible with our convention of creating a script called
 
 
 
-5. Eev as an ELPA package
-=========================
-I started to make an Emacs \"package\" for eev but I did not go
-very far. See:
+5. Eev as an ELPA/MELPA package
+===============================
+In march 2019 I prepared a first version of an \"emacs package\"
+for eev to make it installable by `M-x list-packages' - see:
 
   (find-enode    \"Packages\")
-  (find-elnode   \"Packaging\")
   (find-efaqnode \"Packages that do not come with Emacs\")
-  (find-elnode   \"Autoload\")
 
-Eev is an atypical package and I am note sure how to handle
-autoloads in its case. I would like - *in a first moment!* - to
-make only a handful of its functions autoloadable, and to make
-each of them autoload all the main modules of eev, but I couldn't
-find (yet) how to do that...
-
-Help would be greatly appreciated!
-
-Note: _100%_ of the feedback that I received about eev in the
-last years came from people who knew practically nothing about
-Emacs or GNU/Linux before trying eev. They installed it by
-copying and pasting to a terminal the script in
-
-  (find-eev-quick-intro \"1. Installing eev\")
-
-and then invoking Emacs+eev with the \"~/eev\" script. For them
-installing a package with `M-x list-packages' is too hard.
-
-If you want to change these statistics, send me a \"hi\"!
+and sent it to the emacs-devel mailing list. Apparently it could
+go into GNU ELPA, but the developers requested several changes in
+the code, and some of them go against some important design
+decisions. I will discuss them here.
 
 
 
-5.1. The experimental package for eev
--------------------------------------
-There is now an EXPERIMENTAL package for eev in ELPA with a
-single autoload. It is called \"eev\" and you can install it via
-`M-x list-packages'. To use it, install it and run `M-x
-eev-beginner'. See:
+5.1. Byte-compilation
+---------------------
+All eev source files have a \"no-byte-compile: t\" in their local
+variables section. See:
 
+  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
+  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
+
+Here is the reason. Each call to a `code-*' function defines some
+functions dynamically - for example, `(code-c-d \"e\" ...)'
+defines `find-efile' - and the best way to inspect a function
+defined in this way is by using `find-functionpp'. Try:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"(find-code-c-d\")
+  (find-code-c-d \"e\" ee-emacs-lisp-directory \"emacs\" :gz)
+  (find-efunction-links 'find-efile)
+  (symbol-function  'find-efile)
+  (find-efunctionpp 'find-efile)
+  (find-efunctionpp 'ee-efile)
+  (find-evardescr 'ee-edir)
+
+These functions are not byte-compiled, so the contents of their
+function cells are lambda expressions, which are easy to read.
+Compare:
+
+  (symbol-function  'find-efile)
+  (find-efunctionpp 'find-efile)
+  (symbol-function  'find-file)
+  (find-efunctionpp 'find-file)
+
+The relevant sections in the manual are:
+
+  (find-elnode \"What Is a Function\")
+  (find-elnode \"What Is a Function\" \"lambda expression\")
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+  (find-elnode \"Lambda Expressions\")
+  (find-elnode \"Function Cells\")
+
+If we don't byte-compile the modules of eev then beginners will
+have a reasonable corpus of functions for which
+`find-efunctionpp' shows something readable, which is good to
+help them understand the innards of Emacs.
+
+My view is that we have a \"new\" Emacs, that enforces
+byte-compilation and uses several data structures that are
+relatively opaque, built on top on an \"old\" Emacs that uses lots
+of simpler data structures, but in which many things are messier
+and more error-prone. I would love to add to eev functions to
+inspect these new data structures, but the \"old\" Emacs is the one
+that made me fell in love with Free Software and that made me
+spend years trying to convert people... and one of the underlying
+messages of eev is \"look, you can still use these simpler
+things\". Maybe I'm using \"simpler\" in a sense that is not very
+usual, so let me quote a paragraph from an article that I wrote
+about implementing a Forth in Lua:
+
+  \"I've met many people over the years who have been Forth
+  enthusiasts in the past, and we often end up discussing what
+  made Forth so thrilling to use at that time - and what we can
+  do to adapt its ideas to the computers of today. My personal
+  impression is that Forth's main points were not the ones that I
+  listed at the beginning of this section, and that I said that
+  were easy to quantify; rather, what was most important was that
+  nothing was hidden, there were no complex data structures
+  around with \"don't-look-at-this\" parts (think on garbage
+  collection in Lua, for example, and Lua's tables - beginners
+  need to be convinced to see these things abstractly, as the
+  concrete details of the implementation are hard), and
+  everything - code, data, dictionaries, stacks - were just
+  linear sequences of bytes, that could be read and modified
+  directly if we wished to. We had total freedom, defining new
+  words was quick, and experiments were quick to make; that gave
+  us a sense of power that was totally different from, say, the
+  one that a Python user feels today because he has huge
+  libraries at his fingertips.\"
+
+    (From: http://angg.twu.net/miniforth-article.html)
+
+
+
+5.2. Dynamic binding
+--------------------
+See the comments in:
+
+  (find-eev \"eev-template0.el\")
+
+
+
+5.3. Autoloads
+--------------
+I decided to mark only one function in eev as autoloadable -
+instead of hundreds. See the comments in:
+
+  (find-eev \"eev-load.el\")
+
+and also:
+
+  (find-eev \"README\")
   (find-eev \"eev-beginner.el\")
-
 " pos-spec-list)))
 
 ;; (find-eev-install-intro)

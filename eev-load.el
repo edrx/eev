@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar29
+;; Version:    2019apr06
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -37,9 +37,53 @@
 ;; This file loads all the main modules of eev, and people who want to
 ;; read the source can use this as an index to them. The modules are
 ;; loaded more or less in the order that they are mentioned here:
+;;
 ;;   (find-eev-quick-intro)
+;;
 ;; Some of them are `require'd twice for clarity.
 
+
+
+;; «autoloads»
+;;
+;; A NOTE ABOUT AUTOLOADS
+;; ======================
+;; Almost all functions in eev can be used as elisp hyperlinks, even
+;; with `eev-mode' turned off; if eev-mode is off you just have to
+;; type `C-e C-x C-e' to execute them instead of `M-e'. For example, 
+;; most function definitions in
+;;
+;;   (find-eev "eev-blinks.el")
+;;
+;; are preceded by a test in comments, and the right way to set up
+;; autoloads in eev would be one in which each one of these tests
+;; could be executed from a state in which only the autoloads file had
+;; been loaded...
+;;
+;; The standard way to do that would be to precede *each one* of these
+;; definitions with an autoload magic comment - which would mean more
+;; than a hundred autoloads. I find that ugly, so I decided to do
+;; something different:
+;;
+;;   1) to load all the main modules run this:
+;;
+;;       (require 'eev-load)
+;;
+;;   2) to load all the modules and turn eev-mode on, run:
+;;
+;;       (require 'eev-load)
+;;       (eev-mode 1)
+;;
+;; Note that the instructions above are for people who know how to set
+;; up their load-path correctly; if you are not yet one of these
+;; people, then you should start by:
+;;
+;;   (find-eev "eev-beginner.el")
+
+
+
+;; Load all the main modules of eev:
+;;
 ;; The "eev quick intro" itself, and many other intros:
 (require 'eev-intro)	       ; (find-eev "eev-intro.el")
 ;;

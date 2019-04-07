@@ -23,7 +23,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar05
+;; Version:    2019apr06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -34,8 +34,11 @@
 
 ;;; Commentary:
 
-;; See: (find-eev-quick-intro "3. Elisp hyperlinks")
-;;      (find-links-intro "6. Basic and non-basic hyperlinks")
+;; For the general notion of elisp hyperlinks, see:
+;;   (find-eev-quick-intro "3. Elisp hyperlinks")
+;; For what are "basic elisp hyperlinks", see:
+;;   (find-links-conv-intro "3. Classification")
+;;   (find-links-conv-intro "3. Classification" "non-basic")
 
 
 

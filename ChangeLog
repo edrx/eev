@@ -1,3 +1,11 @@
+2019-04-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-install-intro): added an explanation of
+	why eev is not in ELPA yet.
+
+	* eev-load.el: added an explanation of why we have so few
+	autoloads.
+
 2019-04-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike-old.el: deleted this file.
