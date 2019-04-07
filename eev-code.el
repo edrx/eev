@@ -1,8 +1,8 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.
 
-;; Copyright (C) 2012,2018,2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet?) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
