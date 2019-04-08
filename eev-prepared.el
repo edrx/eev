@@ -250,6 +250,5 @@ See `eev' for more about $EE and the temporary script file."
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

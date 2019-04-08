@@ -950,6 +950,5 @@ Hint: install the Debian package \"unicode-data\".")
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

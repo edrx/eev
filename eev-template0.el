@@ -126,6 +126,5 @@ Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

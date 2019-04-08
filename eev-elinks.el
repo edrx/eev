@@ -1436,6 +1436,5 @@ Use this when point is over a manpage name and you want links to that page."
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

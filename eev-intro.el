@@ -1961,28 +1961,49 @@ incompatible with our convention of creating a script called
 
 5. Eev as an ELPA/MELPA package
 ===============================
-In march 2019 I prepared a first version of an \"emacs package\"
-for eev to make it installable by `M-x list-packages' - see:
+In march 2019 I prepared a first version of an emacs package for
+eev to make it installable by `M-x list-packages' - see:
 
   (find-enode    \"Packages\")
   (find-efaqnode \"Packages that do not come with Emacs\")
 
-and sent it to the emacs-devel mailing list. Apparently it could
-go into GNU ELPA, but the developers requested several changes in
-the code, and some of them go against some important design
-decisions. I will discuss them here.
+and submitted it to the emacs-devel mailing list:
+
+  http://lists.gnu.org/archive/html/emacs-devel/2019-03/msg00433.html
+
+Stefan Monnier answered, and the rest of the discussion happened
+off-list. Apparently eev could go into GNU ELPA, but some changes
+and clean-ups were needed. I implemented most of what he
+proposed/requested, but three of the things that he asked for
+would demand changes that would make eev far less elegant and far
+less useful for beginners... in rough terms, the code should 1)
+be byte-compilable, 2) be compatible with lexical binding, and 3)
+have all the autoloads. My reasons for not complying - or for not
+complying NOW - are explained in the subsections below.
+
+I will try to submit eev to MELPA in the next few days - in
+mid-april 2019. I have the feeling that the issues blocking it
+from going into ELPA will take a few years to be solved.
+
+Btw: except for Stefan's e-mails ***100%*** the feedback that I
+received about eev in the last three years came from beginners.
+I am not willing to make changes that will make eev
+beginner-UNfriendly.
+
 
 
 
 5.1. Byte-compilation
 ---------------------
-All eev source files have a \"no-byte-compile: t\" in their local
-variables section. See:
+In standard packages all elisp files should be byte-compilable
+unless there is a very strong reason - but all eev source files
+have a \"no-byte-compile: t\" in their local variables section.
+See:
 
   (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
   (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
 
-Here is the reason. Each call to a `code-*' function defines some
+Here is why. Each call to a `code-*' function defines some
 functions dynamically - for example, `(code-c-d \"e\" ...)'
 defines `find-efile' - and the best way to inspect a function
 defined in this way is by using `find-functionpp'. Try:
@@ -2018,46 +2039,59 @@ have a reasonable corpus of functions for which
 `find-efunctionpp' shows something readable, which is good to
 help them understand the innards of Emacs.
 
-My view is that we have a \"new\" Emacs, that enforces
-byte-compilation and uses several data structures that are
-relatively opaque, built on top on an \"old\" Emacs that uses lots
-of simpler data structures, but in which many things are messier
-and more error-prone. I would love to add to eev functions to
-inspect these new data structures, but the \"old\" Emacs is the one
-that made me fell in love with Free Software and that made me
-spend years trying to convert people... and one of the underlying
-messages of eev is \"look, you can still use these simpler
-things\". Maybe I'm using \"simpler\" in a sense that is not very
-usual, so let me quote a paragraph from an article that I wrote
-about implementing a Forth in Lua:
+Here is an excerpt of one of my e-mails to Stefan:
 
-  \"I've met many people over the years who have been Forth
-  enthusiasts in the past, and we often end up discussing what
-  made Forth so thrilling to use at that time - and what we can
-  do to adapt its ideas to the computers of today. My personal
-  impression is that Forth's main points were not the ones that I
-  listed at the beginning of this section, and that I said that
-  were easy to quantify; rather, what was most important was that
-  nothing was hidden, there were no complex data structures
-  around with \"don't-look-at-this\" parts (think on garbage
-  collection in Lua, for example, and Lua's tables - beginners
-  need to be convinced to see these things abstractly, as the
-  concrete details of the implementation are hard), and
-  everything - code, data, dictionaries, stacks - were just
-  linear sequences of bytes, that could be read and modified
-  directly if we wished to. We had total freedom, defining new
-  words was quick, and experiments were quick to make; that gave
-  us a sense of power that was totally different from, say, the
-  one that a Python user feels today because he has huge
-  libraries at his fingertips.\"
+  I have the impression - please correct me if I'm wrong - that
+  you're proposing to replace the `find-efunctionpp' by something
+  more modern. My view is that we have a \"new\" Emacs, that
+  enforces byte-compilation and uses several data structures that
+  are relatively opaque, built on top on an \"old\" Emacs that
+  uses lots of simpler data structures, but in which many things
+  are messier and more error-prone. I would love to add to eev
+  functions to inspect these new data structures, but the \"old\"
+  Emacs is the one that made me fell in love with Free Software
+  and that made me spend years trying to convert people... and
+  one of the underlying messages of eev is \"look, you can still
+  use these simpler things\". Maybe I'm using \"simpler\" in a
+  sense that is not very usual, so let me quote a paragraph from
+  an article that I wrote about implementing a Forth in Lua:
+
+    \"I've met many people over the years who have been Forth
+    enthusiasts in the past, and we often end up discussing what
+    made Forth so thrilling to use at that time - and what we can
+    do to adapt its ideas to the computers of today. My personal
+    impression is that Forth's main points were not the ones that
+    I listed at the beginning of this section, and that I said
+    that were easy to quantify; rather, what was most important
+    was that nothing was hidden, there were no complex data
+    structures around with \"don't-look-at-this\" parts (think on
+    garbage collection in Lua, for example, and Lua's tables -
+    beginners need to be convinced to see these things
+    abstractly, as the concrete details of the implementation are
+    hard), and everything - code, data, dictionaries, stacks -
+    were just linear sequences of bytes, that could be read and
+    modified directly if we wished to. We had total freedom,
+    defining new words was quick, and experiments were quick to
+    make; that gave us a sense of power that was totally
+    different from, say, the one that a Python user feels today
+    because he has huge libraries at his fingertips.\"
 
     (From: http://angg.twu.net/miniforth-article.html)
 
 
 
+
 5.2. Dynamic binding
 --------------------
-See the comments in:
+Dependency on dynamic binding should be avoided - see:
+
+  (find-elnode \"Dynamic Binding\")
+  (find-elnode \"Dynamic Binding Tips\")
+  (find-elnode \"Lexical Binding\")
+
+but the main function that eev uses for template strings is
+intrinsically incompatible with lexical binding. See the comments
+in its source file:
 
   (find-eev \"eev-template0.el\")
 
@@ -2066,7 +2100,8 @@ See the comments in:
 5.3. Autoloads
 --------------
 I decided to mark only one function in eev as autoloadable -
-instead of hundreds. See the comments in:
+instead of hundreds - and this is very non-standard. See the
+comments in:
 
   (find-eev \"eev-load.el\")
 
