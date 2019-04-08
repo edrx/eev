@@ -1,0 +1,3 @@
+*.elc
+eev-autoloads.el
+eev-pkg.el
