@@ -1,8 +1,8 @@
 ;;; eev-codings.el -- tricks to support both the UTF8 coding system and unibyte
 
-;; Copyright (C) 2018 Free Software Foundation, Inc.
+;; Copyright (C) 2018-2019 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet?) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

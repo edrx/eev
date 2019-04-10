@@ -1,8 +1,8 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'
 
-;; Copyright (C) 2012,2013,2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet?) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -1436,5 +1436,6 @@ Use this when point is over a manpage name and you want links to that page."
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
+;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

@@ -2,11 +2,9 @@
 ;;; The basic hyperlinks are the ones that do not depend on templates,
 ;;; and that are not created by `code-c-d' and friends.
 
-;; Copyright (C) 1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,
-;; 2009,2010,2011,2012,2013,2014,2016,2018,2019 Free Software
-;; Foundation, Inc.
+;; Copyright (C) 1999-2019 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -950,5 +948,6 @@ Hint: install the Debian package \"unicode-data\".")
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
+;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

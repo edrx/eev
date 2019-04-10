@@ -1,8 +1,8 @@
 ;;; eev-edit.el -- tools for editing (mainly refining) elisp hyperlinks.
 
-;; Copyright (C) 2012,2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet?) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -226,5 +226,6 @@ then just delete the current line."
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
+;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:
