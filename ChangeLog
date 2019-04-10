@@ -1,3 +1,15 @@
+2019-04-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eejump.el, eev-anchors.el, eev-audiovideo.el, eev-beginner.el,
+	eev-blinks.el, eev-brxxx.el, eev-channels.el, eev-code.el,
+	eev-codings.el, eev-edit.el, eev-elinks.el, eev-env.el,
+	eev-eval.el, eev-flash.el, eev-intro.el, eev-load.el, eev-mode.el,
+	eev-multiwindow.el, eev-pdflike.el, eev-plinks.el,
+	eev-prepared.el, eev-rcirc.el, eev-readme.el, eev-template0.el,
+	eev-tlinks.el, eev.el, eev2-all.el: fixed the copyright years to a
+	single range and rewrote the "(not yet?) part of GNU eev" to "part
+	of GNU eev".
+
 2019-04-08  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: new file.
