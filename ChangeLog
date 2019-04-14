@@ -1,3 +1,19 @@
+2019-04-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el: rewrote all comments and some docstrings.
+
+	* eev-rcirc.el (ee-irc-channel-around-point): commented out.
+	(ee-buffer-freenode-channel-name): commented out.
+
+2019-04-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eval-intro): new sections: "10.1.
+	Byte-compiled functions", "10.2. How `find-efunction' works", and
+	"10.3. Why eev avoids byte-compilation".
+
+	* eev-blinks.el (find-eloadhistory0, find-eloadhistory): new
+	functions.
+
 2019-04-09  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eejump.el, eev-anchors.el, eev-audiovideo.el, eev-beginner.el,

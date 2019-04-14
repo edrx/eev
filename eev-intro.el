@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr06
+;; Version:    2019apr13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2633,8 +2633,181 @@ keep the instructions visible.
 
 
 
-What else?
-==========
+10. More on functions
+=====================
+A symbol - for example `f' - can be both a varible and a
+function; its \"value as a variable\" and its \"value as a
+function\" are stored in different places. Try:
+
+  (setq f 2)
+  (setq f 5)
+  (defun f (x) (* x x))
+  (defun f (x) (* 10 x))
+  (symbol-value    'f)
+  (symbol-function 'f)
+
+This is explained here:
+
+  (find-elnode \"Symbol Components\")
+  (find-elnode \"Symbol Components\" \"value cell\")
+  (find-elnode \"Symbol Components\" \"function cell\")
+
+The content of a \"function cell\" is _usually_ a lambda
+expression. See:
+
+  (find-elnode \"Lambda Expressions\")
+  (find-elnode \"What Is a Function\")
+  (find-elnode \"What Is a Function\" \"lambda expression\")
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+
+Try:
+
+  (setq f 2)
+  (setq f 5)
+  (set 'f 2)
+  (set 'f 5)
+  (fset 'f (lambda (x) (* x x)))
+  (fset 'f (lambda (x) (* 10 x)))
+  (defun f (x) (* 10 x))
+  (defun f (x) (* x x))
+  (symbol-value    'f)
+  (symbol-function 'f)
+  (f 4)
+  (f f)
+
+  ((lambda (x) (* x x))
+   4)
+  ((lambda (x) (* 10 x))
+   4)
+
+
+
+10.1. Byte-compiled functions
+-----------------------------
+Most functions in Emacs are byte-compiled - which means that
+their function cells contain a \"byte-code\" instead of a lambda
+expression. These byte-codes are very hard for humans to read.
+See:
+
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+  (find-elnode \"Byte-Code Type\")
+  (find-elnode \"Byte Compilation\")
+  (find-elnode \"Disassembly\")
+
+Here is an example:
+
+  (find-efunctiondescr 'find-file)
+  (find-efunction      'find-file)
+  (symbol-function     'find-file)
+  (find-efunctionpp    'find-file)
+  (find-efunctiond     'find-file)
+
+The `find-efunctionpp' link above takes the content of the
+function cell of `find-file' and \"pretty-prints\" it, i.e.,
+indents it in a nice way, but the result in this case is
+unreadable... and the `find-efunctiond' link shows a decompiled
+version of that byte-code, which is only slightly better. Both
+the `find-efunctionpp' and the `find-efunctiond' links show
+internal representations that are very different from the source
+code. Compare that with a case in which the function is not
+byte-compiled:
+
+  (find-efunctiondescr 'find-fline)
+  (find-efunction      'find-fline)
+  (symbol-function     'find-fline)
+  (find-efunctionpp    'find-fline)
+
+The `(find-efunctionpp 'find-fline)' shows a lambda expression
+that is very similar to the defun that defined `find-fline'.
+
+
+
+
+10.2. How `find-efunction' works
+--------------------------------
+Eev defines hyperlink functions called `find-efunction',
+`find-evariable' and `find-eface' that are wrappers around the
+standard functions `find-function', `find-variable' and
+`find-face-definition'; the eev variants support pos-spec-lists.
+Try:
+
+  (find-efunction 'find-fline)
+  (find-function  'find-fline)
+  (find-evariable 'ee-hyperlink-prefix)
+  (find-variable  'ee-hyperlink-prefix)
+  (find-eface           'eepitch-star-face)
+  (find-face-definition 'eepitch-star-face)
+
+The Emacs functions are defined here:
+
+  (find-efile \"emacs-lisp/find-func.el\")
+
+Their inner workings are quite complex. They use `symbol-file',
+that works on the variable `load-history'. Here are some links to
+documentation and tests:
+
+  (find-efunctiondescr 'symbol-file)
+  (find-elnode \"Where Defined\")
+  (symbol-file 'find-fline          'defun)
+  (symbol-file 'ee-hyperlink-prefix 'defvar)
+  (symbol-file 'eepitch-star-face   'defface)
+  (find-epp (assoc (locate-library \"eepitch\") load-history))
+
+The functions in \"find-func.el\" use `symbol-file' to find the
+file where a given symbol was defined, and then search a defun,
+defvar of defface in it that _may be_ the definition that we are
+looking for. The eev variants use the functions
+`find-function-noselect', `find-variable-noselect' and
+`find-definition-noselect' from \"find-func.el\", that return a
+pair (BUFFER . POS). Try:
+
+  (find-efunctiondescr 'find-function-noselect)
+  (find-efunctiondescr 'find-variable-noselect)
+  (find-efunctiondescr 'find-definition-noselect)
+
+  (find-ebufferandpos (find-function-noselect 'find-fline)
+   )
+  (find-ebufferandpos (find-variable-noselect 'ee-hyperlink-prefix)
+   )
+  (find-ebufferandpos (find-definition-noselect 'eepitch-star-face 'defface)
+   )
+
+These `find-*-select' functions work quite well but are not 100%
+reliable - for example, if an elisp file has several definitions
+for the same function, variable, or face, the `find-*-select's
+don't know which ones were executed, neither which one was
+executed last, overriding the other ones... and it may return the
+position of a defun, defvar, or defface that is not the
+\"active\" one.
+
+
+
+
+10.3. Why eev avoids byte-compilation
+-------------------------------------
+All the source files of eev have a \"no-byte-compile: t\" in
+them. See:
+
+  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
+  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
+
+This is non-standard, but it is a deliberate design choice.
+
+(TODO: explain the three main reasons: it is easier to teach
+emacs to beginners if they see lots of lambda expressions and few
+byte-codes; `code-c-d' and friends define functions dynamically
+and `find-efunction' don't work on them; in a distribution with
+only the \".elc\"s of eev users wouldn't have access to the
+documentation and examples in the comments of the source files.)
+
+
+
+
+
+
+
+11. What else?
+==============
 Eev-mode defines several other key sequences similar to `M-h
 M-i'. You can get the full list here:
 
@@ -6218,14 +6391,26 @@ Rcirc and ERC. I never understood ERC well enough, and I found
 Rcirc quite easy to understand and to hack, so eev has some
 support for Rcirc (and no support for ERC).
 
+  (find-node \"(rcirc)Top\")
+  (find-node \"(erc)Top\")
+
+
 
 
 1. The server buffer and the channel buffers
 ============================================
-If you type `M-6 M-6 M-j' - or `M-e' on the line below - then eev
-runs this,
+Let's start with an example. In
 
+  (setq rcirc-default-nick \"hakuryo\")
+  (setq ee-freenode-ichannels \"#eev\")
   (find-freenode-3a \"#eev\")
+
+the first sexp tells rcirc to use the nickname \"hakuryo\" when
+connecting to an irc server; the second 
+
+then the second sexp will tell rcirc to connect to the server
+irc.freenode.net
+
 
 which tells Emacs to connect to Freenode and to the channel #eev,
 using this window setting:

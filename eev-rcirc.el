@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar13
+;; Version:    2019apr14
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -28,7 +28,82 @@
 ;;                 <http://angg.twu.net/eev-intros/find-rcirc-intro.html>
 ;;                                                (find-rcirc-intro)
 
+;; «.low-level»			(to "low-level")
+;; «.find-rcirc-buffer»		(to "find-rcirc-buffer")
+;; «.find-rcirc-buffer-2a»	(to "find-rcirc-buffer-2a")
+;; «.find-rcirc-buffer-3a»	(to "find-rcirc-buffer-3a")
+;; «.find-freenode»		(to "find-freenode")
+;; «.find-freenode-links»	(to "find-freenode-links")
+
 ;;; Commentary:
+
+;; (New comments, 2019apr14):
+;;
+;; This file - eev-rcirc.el - implements elisp hyperlinks for rcirc in
+;; a way that lets several important actions be expressed as
+;; one-liners.
+;; 
+;; 
+;; 1. Convention on channels
+;; =========================
+;; The rcirc convention for naming buffers is that if we are
+;; connected to the server irc.foobar.net then:
+;; 
+;;         *irc.foobar.net*     is the "server buffer" (with server messages),
+;;   #emacs@irc.foobar.net      is the buffer for the channel #emacs,
+;;    fsbot@irc.foobar.net      is the buffer for chatting with the user fsbot.
+;; 
+;; Note that in IRC we "/join" channels but we "/query" users. See:
+;; 
+;;   (find-node "(rcirc)rcirc commands" "/join #emacs")
+;;   (find-node "(rcirc)rcirc commands" "/query fsbot")
+;; 
+;; The eev-rcirc convention treats the "server" and the "channel" as
+;; separate parameters. The main conversion function is
+;; `ee-rcirc-buffer':
+;; 
+;;   (ee-rcirc-buffer "irc.foobar.net" nil)
+;;         -->       "*irc.foobar.net*"
+;;   (ee-rcirc-buffer "irc.foobar.net" "#emacs")
+;;         --> "#emacs@irc.foobar.net"
+;;   (ee-rcirc-buffer "irc.foobar.net" "fsbot")
+;;         -->  "fsbot@irc.foobar.net"
+;; 
+;; In IRC channel names can't have spaces, and neither can user names.
+;; Some programming languages use the term "word" for a non-empty
+;; string without spaces. The function `ee-split' accepts both strings
+;; and lists:
+;; 
+;;   (ee-split   "#emacs   fsbot   #git   gitinfo")
+;;       -->    ("#emacs" "fsbot" "#git" "gitinfo")
+;;   (ee-split '("#emacs" "fsbot" "#git" "gitinfo"))
+;;       -->    ("#emacs" "fsbot" "#git" "gitinfo")
+;; 
+;; If it receives a string it splits it into a list of words, and if
+;; it receives a list it return it unchanged.
+;; 
+;; Eev-rcirc treats channels and users in a uniform way, as words, and
+;; it accepts lists of channels and users to be given either as
+;; strings or as lists. More precisely,
+;; 
+;;   1) all the functions defined here that have an argument called
+;;      "channel" accept both a channel name and a user name,
+;; 
+;;   2) all the functions defined here that accept an argument called
+;;      "channels" accept both a string and a list; they use
+;;      `ee-split' internally to convert it to a list.
+;;
+;; and also:
+;;
+;;   3) some functions have arguments called "ichannels" and
+;;      "achannels". "Ichannels" means "initial channels": the
+;;      channels that we connect to when we connect to the server.
+;;      "Achannels" means "always channels": the channels that we
+;;      always reconnect. TODO: define precisely this "always".
+
+
+
+
 
 ;; Most of the _comments_ below are obsolete. The recommended way to
 ;; use this is now by running, for example,
@@ -51,35 +126,6 @@
 ;; create a two-window setup with just the current buffer and the
 ;; #emacs buffer.
 
-;; OBSOLETE COMMENTS:
-;;
-;; Here we implement a very thin eev-ish layer on top of rcirc. The
-;; main goal is:
-;;
-;;   instant gratification and irc-ing for late-night zombie-mode
-;;   half-brain-dead hackers
-;;
-;; which, in practical terms, means the following. Suppose that we
-;; want to ask something on the channel #foobar of Freenode; we run
-;; `M-x find-freenode-links', adjust the intended channel name to
-;; #foobar, and set `M-99j' and `M-9j' to the right hyperlinks. Then,
-;; if we are in a buffer called "stuff", `M-99j' would create this
-;; window setting:
-;;
-;;     _____________________
-;;    |          |          |
-;;    |          | freenode |
-;;    |          |  server  |
-;;    |  stuff   |  buffer  |
-;;    |          |__________|
-;;    |          |          |
-;;    |          | #foobar  |
-;;    |__________|__________|
-;;
-;; which is great for following in real-time the connection being
-;; established - I find this essential for when it is very late at
-;; night and I am half-brain-dead -, and `M-9j' just switches to the
-;; buffer of the channel #foobar.
 
 ;; Conventions on arguments:
 ;; CHANNELS can be a list ("#foo" "#bar") or a string like "#foo #bar";
@@ -88,22 +134,36 @@
 ;; if CHANNEL is nil, that means to use the server buffer.
 
 
-;; Building blocks:
-;;
+
+
+;;;                           _                    
+;;;   ___  ___       _ __ ___(_)_ __ ___     __/\__
+;;;  / _ \/ _ \_____| '__/ __| | '__/ __|____\    /
+;;; |  __/  __/_____| | | (__| | | | (_|_____/_  _\
+;;;  \___|\___|     |_|  \___|_|_|  \___|      \/  
+;;;                                                
+;; «low-level» (to ".low-level")
+;; Low-level functions. These functions have very bad names and they
+;; WILL BE TOTALLY REWRITTEN AT SOME POINT IN THE FUTURE.
+
 (defun ee-rcirc-buffer (server &optional channel)
-  "Return the name of an rcirc server (or channel, or chat) buffer."
+  "Return the name of an rcirc server buffer, or channel, or chat buffer."
   (if channel (format "%s@%s" channel server) (format "*%s*" server)))
 
 (defun ee-rcirc-process (server)
+  "If we are connected to SERVER then return its network connection process.
+SERVER must be the name of an irc server, like \"irc.freenode.net\"."
   (get-buffer-process (ee-rcirc-buffer server)))
 
 (defun ee-rcirc-connected (server)
-  "Return non-nil if we are already connected to SERVER."
+  "Return non-nil if we are already connected to irc server SERVER.
+SERVER must be the name of an irc server, like \"irc.freenode.net\"."
   (and (get-buffer           (ee-rcirc-buffer server))
        (rcirc-buffer-process (ee-rcirc-buffer server))))
 
 (defun ee-rcirc-connect (server channels)
-"Connect to the irc server SERVER, if not already connected, and join CHANNELS."
+"If we are not already connected to the irc server SERVER then connect to it
+and join the channels CHANNELS."
   (if (not (ee-rcirc-connected server))
       (rcirc-connect server nil nil nil nil (ee-split channels))))
 
@@ -121,25 +181,29 @@ CHANNEL can also be nil, meaning the server buffer, or a nick to /query."
 	(rcirc-cmd-query channel))))
 
 
-;; Medium-level words without window setup.
-;; Tests:
-;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs")
-;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" nil           "#eev")
-;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" "#eev #emacs")
-;; (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" "#eev #emacs" "#eev")
-;;
+
+;;;   __ _           _                _                    
+;;;  / _(_)_ __   __| |      _ __ ___(_)_ __ ___     __/\__
+;;; | |_| | '_ \ / _` |_____| '__/ __| | '__/ __|____\    /
+;;; |  _| | | | | (_| |_____| | | (__| | | | (_|_____/_  _\
+;;; |_| |_|_| |_|\__,_|     |_|  \___|_|_|  \___|      \/  
+;;;                                                        
+;; «find-rcirc-buffer» (to ".find-rcirc-buffer")
+;; Medium-level functions - two that only change the current buffer,
+;; then two that create window setups.
+
 (defun find-rcirc-buffer0
   (server &optional channel &rest pos-spec-list)
   "Switch to the buffer for CHANNEL on SERVER. Make no attempt to (re)connect."
   (apply 'find-ebuffer (ee-rcirc-buffer server channel) pos-spec-list))
 
+;; Test: (find-rcirc-buffer "irc.freenode.net" "#eev #emacs" nil "#eev")
 (defun find-rcirc-buffer
   (server ichannels &optional achannels channel &rest pos-spec-list)
   "Switch to the buffer for CHANNEL on SERVER.
-When not connected connect to SERVER, taking the initial list of
-channels from ICHANNELS; always make sure that we are connected
-to ACHANNELS and to CHANNEL, and switch to the buffer for
-CHANNEL.
+When not connected to SERVER connect to it, taking the initial
+list of channels from ICHANNELS; always make sure that we are
+connected to ACHANNELS and to CHANNEL.
 
 If ACHANNELS is nil (not \"\") then use the list in ICHANNELS.
 If CHANNEL is nil then switch to the server buffer."
@@ -150,12 +214,8 @@ If CHANNEL is nil then switch to the server buffer."
 
 
 
-
-;; Medium-level words with window setup
-;; Tests:
-;; (find-rcirc-buffer-2a "irc.freenode.net" "#eev" nil "#libreboot")
-;; (find-rcirc-buffer-3a "irc.freenode.net" "#eev" nil "#libreboot")
-;;
+;; «find-rcirc-buffer-2a» (to ".find-rcirc-buffer-2a")
+;; Test: (find-rcirc-buffer-2a "irc.freenode.net" "#eev" nil "#libreboot")
 (defun find-rcirc-buffer-2a
   (server ichannels &optional achannels channel &rest pos-spec-list)
   "Connect to the irc server SERVER and create this window setup:
@@ -168,13 +228,15 @@ If CHANNEL is nil then switch to the server buffer."
 ICHANNELS is the list of initial channels (used when connecting
 to the server for the first time). ACHANNELS is the list of
 channels to always (re)connect to; if nil it defaults to
-ICHANNELS. CHANNEL selects what to display in the irc buffer at
+ICHANNELS. CHANNEL selects what to display in the window at
 the right - nil means the server buffer, \"#foo\" means channel
 \"#foo\", \"nick\" means query \"nick\"."
   (find-2a
    nil
    `(find-rcirc-buffer server ichannels achannels channel ,@pos-spec-list)))
 
+;; «find-rcirc-buffer-3a» (to ".find-rcirc-buffer-3a")
+;; Test: (find-rcirc-buffer-3a "irc.freenode.net" "#eev" nil "#libreboot")
 (defun find-rcirc-buffer-3a
   (server ichannels achannels channel &rest pos-spec-list)
   "Connect to the irc server SERVER and create this window setup:
@@ -191,8 +253,8 @@ the right - nil means the server buffer, \"#foo\" means channel
 ICHANNELS is the list of initial channels (used when connecting
 to the server for the first time). ACHANNELS is the list of
 channels to always (re)connect to; if nil it defaults to
-ICHANNELS. CHANNEL selects what to display in the irc channel at
-the right - \"#foo\" means channel \"#foo\", \"nick\" means query
+ICHANNELS. CHANNEL selects what to display in the lower right
+window - \"#foo\" means channel \"#foo\", \"nick\" means query
 \"nick\"."
   (find-3a
    nil
@@ -208,31 +270,82 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
 
 ;; (find-find-links-links "{k}" "freenode" "channel")
 ;;
-(defun ee-irc-channel-around-point ()
-  (ee-stuff-around-point "#A-Za-z0-9_"))
+;; (defun ee-irc-channel-around-point ()
+;;   (ee-stuff-around-point "#A-Za-z0-9_"))
+;; 
+;; (defun ee-buffer-freenode-channel-name ()
+;;   (replace-regexp-in-string
+;;    "^\\(.*\\).irc\\.freenode\\.net" "\\1"
+;;    (buffer-name)))
 
-(defun ee-buffer-freenode-channel-name ()
-  (replace-regexp-in-string
-   "^\\(.*\\).irc\\.freenode\\.net" "\\1"
-   (buffer-name)))
 
-;; High-level
-;;
+
+
+
+;;;  _____                              _      
+;;; |  ___| __ ___  ___ _ __   ___   __| | ___ 
+;;; | |_ | '__/ _ \/ _ \ '_ \ / _ \ / _` |/ _ \
+;;; |  _|| | |  __/  __/ | | | (_) | (_| |  __/
+;;; |_|  |_|  \___|\___|_| |_|\___/ \__,_|\___|
+;;;                                            
+;; «find-freenode» (to ".find-freenode")
+
 (defvar ee-freenode-server "irc.freenode.net")
-(defvar ee-freenode-ichannels "#eev #rcirc")
-(defvar ee-freenode-achannels "#eev #rcirc")
+
+(defvar ee-freenode-ichannels "#eev #rcirc"
+  "The list of initial channels to connect to at freenode.")
+
+(defvar ee-freenode-achannels nil
+  "The list of channels that `find-freenode' always reconnects to.
+When this is nil behave as if this was a copy of `ee-freenode-ichannels'.")
 
 (defun find-freenode (&optional channel &rest pos-spec-list)
+  "Connect to freenode and switch to the buffer for channel CHANNEL.
+This is like `find-rcirc-buffer', but uses the variables
+`ee-freenode-ichannels' and `ee-freenode-achannels'."
   (apply 'find-rcirc-buffer
 	  ee-freenode-server
-	  ee-freenode-ichannels 
+	  ee-freenode-ichannels
 	  ee-freenode-achannels channel pos-spec-list))
 
 (defun find-freenode-2a (channel)
+  "Connect to freenode and create this window setup:
+   _________ ________
+  |         |        |
+  | current |  irc   |
+  | buffer  | buffer |
+  |_________|________|
+
+This is like `find-rcirc-buffer-2a' but uses
+`ee-freenode-ichannels' and `ee-freenode-achannels'."
   (find-2a nil '(find-freenode channel)))
 
 (defun find-freenode-3a (channel)
+  "Connect to freenode and create this window setup:
+   _________ _________
+  |         |         |
+  |         |   irc   |
+  |         |  server |
+  | current |_________|
+  | buffer  |         |
+  |         |   irc   |
+  |         | channel |
+  |_________|_________|
+
+This is like `find-rcirc-buffer-3a' but uses
+`ee-freenode-ichannels' and `ee-freenode-achannels'."
   (find-3a nil '(find-freenode) '(find-freenode channel)))
+
+
+
+
+;;;   __                               _            _ _       _        
+;;;  / _|_ __ ___  ___ _ __   ___   __| | ___      | (_)_ __ | | _____ 
+;;; | |_| '__/ _ \/ _ \ '_ \ / _ \ / _` |/ _ \_____| | | '_ \| |/ / __|
+;;; |  _| | |  __/  __/ | | | (_) | (_| |  __/_____| | | | | |   <\__ \
+;;; |_| |_|  \___|\___|_| |_|\___/ \__,_|\___|     |_|_|_| |_|_|\_\___/
+;;;                                                                    
+;; «find-freenode-links» (to ".find-freenode-links")
 
 (defun find-freenode-links (&optional c channel &rest pos-spec-list)
 "Visit a temporary buffer containing code for connecting to a freenode channel."
@@ -241,15 +354,16 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
   (setq channel (or channel "{channel}"))
   (apply 'find-elinks
    `((find-freenode-links ,c ,channel)
-     (find-freenode-links "{e}" "{#eev}")
      (find-freenode-links "e" "#eev")
+     (find-freenode-links)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-freenode-links)
      (find-efunction 'find-freenode-2a)
      ""
      ,(ee-template0 "\
+(setq rcirc-default-nick \"hakuryo\")
+(setq rcirc-default-nick \"{(user-login-name)}\")
 (setq ee-freenode-ichannels {(ee-pp0 ee-freenode-ichannels)})
-(setq ee-freenode-achannels {(ee-pp0 ee-freenode-achannels)})
 (setq ee-freenode-achannels nil)
 (defun {c}2 () (interactive) (find-freenode-2a \"{channel}\"))
 (defun {c}3 () (interactive) (find-freenode-3a \"{channel}\"))
@@ -267,6 +381,5 @@ the right - \"#foo\" means channel \"#foo\", \"nick\" means query
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "defun %s "
 ;; no-byte-compile:   t
 ;; End:

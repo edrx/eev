@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr06
+;; Version:    2019apr13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -56,6 +56,7 @@
 ;; «.find-w3m»			(to "find-w3m")
 ;; «.find-Package»		(to "find-Package")
 ;; «.find-epp»			(to "find-epp")
+;; «.find-eloadhistory»		(to "find-eloadhistory")
 ;; «.find-einternals»		(to "find-einternals")
 ;; «.find-einsert»		(to "find-einsert")
 ;; «.find-eunicode»		(to "find-eunicode")
@@ -773,6 +774,34 @@ explicitly. Try this: (progn (message \"foo\") \"bar\")"
 	   ;; the we get a buffer in which we can edit the code for SYMBOL.
 	   pos-spec-list)))
 
+
+
+;;;  _                 _       _     _     _                   
+;;; | | ___   __ _  __| |     | |__ (_)___| |_ ___  _ __ _   _ 
+;;; | |/ _ \ / _` |/ _` |_____| '_ \| / __| __/ _ \| '__| | | |
+;;; | | (_) | (_| | (_| |_____| | | | \__ \ || (_) | |  | |_| |
+;;; |_|\___/ \__,_|\__,_|     |_| |_|_|___/\__\___/|_|   \__, |
+;;;                                                      |___/ 
+;; «find-eloadhistory» (to ".find-eloadhistory")
+;; Display entries in the `load-history' alist.
+;; See: (find-eval-intro "10.2. How `find-efunction' works")
+;;      (find-elnode "Where Defined" "load-history")
+
+;; Tests: (find-eloadhistory0 (locate-library "eepitch"))
+;;        (find-eloadhistory0 (symbol-file 'eepitch-kill))
+(defun find-eloadhistory0 (fname &rest pos-spec-list)
+  "Hyperlink to the load-history entry for FNAME.
+FNAME must be an absolute file name."
+  (apply 'find-epp (assoc fname load-history)
+	 pos-spec-list))
+
+;; Tests: (find-eloadhistory "eepitch")
+;;        (find-eloadhistory "eepitch" "eepitch-dash")
+(defun find-eloadhistory (library &rest pos-spec-list)
+  "Hyperlink to the load-history entry for LIBRARY.
+LIBRARY is converted to an absolute file name using `locate-library'."
+  (apply 'find-epp (assoc (locate-library library) load-history)
+	 pos-spec-list))
 
 
 
