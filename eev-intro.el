@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr13
+;; Version:    2019apr14
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -6388,17 +6388,22 @@ Is is meant as both a tutorial and a sandbox.
 
 Recent versions with Emacs come with two IRC clients built-in:
 Rcirc and ERC. I never understood ERC well enough, and I found
-Rcirc quite easy to understand and to hack, so eev has some
-support for Rcirc (and no support for ERC).
+rcirc quite easy to understand and to hack, so eev has some
+support for rcirc (and no support for ERC).
 
   (find-node \"(rcirc)Top\")
   (find-node \"(erc)Top\")
 
+The eev support for rcirc consists mainly of three high-level
+functions that connect to Freenode (the IRC server where most
+discussion of free software projects happen), called
+`find-freenode', `find-freenode-2a' and `find-freenode-3a'.
 
 
 
-1. The server buffer and the channel buffers
-============================================
+
+1. The example the I use in workshops
+=====================================
 Let's start with an example. In
 
   (setq rcirc-default-nick \"hakuryo\")
@@ -6406,114 +6411,136 @@ Let's start with an example. In
   (find-freenode-3a \"#eev\")
 
 the first sexp tells rcirc to use the nickname \"hakuryo\" when
-connecting to an irc server; the second 
+connecting to an IRC server; the second sets the set of \"initial
+channels\" on Freenode to just one channel, #eev - a channel that
+is usually empty, but that doesn't require authentication; the
+third sexp is a \"sexp hyperlink to the Freenode channel #eev\".
+The third sexp:
 
-then the second sexp will tell rcirc to connect to the server
-irc.freenode.net
+  1) creates a window setting like this,
 
+       _________________________
+      |           |             |
+      |           |   Freenode  |
+      |           |    server   |
+      |           |   messages  |
+      |  current  |_____________|    
+      |  buffer   |             |
+      |           |    #eev     |
+      |           |   channel   |
+      |           |             |
+      |___________|_____________|
 
-which tells Emacs to connect to Freenode and to the channel #eev,
-using this window setting:
+  2) tells rcirc to connect to Freenode and to the channel #eev
+     in it,
 
-   _________________________
-  |           |             |
-  |           |   Freenode  |
-  |           |    server   |
-  |           |   messages  |
-  |  current  |_____________|    
-  |  buffer   |             |
-  |           |    #eev     |
-  |           |   channel   |
-  |           |             |
-  |___________|_____________|
+  3) makes the window at the left - window \"A\" in the
+     terminology of eev-multiwindow.el - the active window. See:
 
-You will then be able to watch the process of connecting to
-Freenode, which takes about 20s on my machine, by the messages
-that will appear at the Freenode server buffer; at some point
-rcirc will be allowed by the server to connect to channels, it
-will request to connect to the channel #eev, and some login
-messages, plus at list of all users connected to #eev and a
-prompt, will appear at the #eev channel buffer.
+       (find-multiwindow-intro \"3. High-level words\")
+       (find-multiwindow-intro \"3. High-level words\" \"find-3a\")
 
-`M-66j' is mostly for establishing a connection to an IRC server
-and watching if any errors occur; once we know that we are
-connected we can use `M-6j' - with just one `M-6' - which just
-takes us to the #eev channel without changing the current window
-configuration. A mnemonic: `M-66j', which is one keypress longer,
-is to be used less often - essentially only once per session, or
-when we want to check the status of our connection to Freenode.
+The connection process takes time - about 20 seconds at my
+machine - but you will be able to see in window \"B\" the server
+messages as they appear, and in window \"C\" the messages of the
+#eev channel. You can then use the window \"C\" to interact with
+the other users in #eev, and to experiment with commands. See:
 
-
-
-
-2. Messages and commands
-========================
-IRC is a command-line-ish protocol, in which lines starting with
-\"/\" are treated as commands and other lines as messages. A
-message typed at the #eev channel buffer is broadcast to all
-other users also connected to #eev; some commands, like
-
-  /join #emacs
-
-work in the same way no matter where they are typed, while
-others, like for example \"/part\", work differently when typed
-in #eev than when in #emacs. See:
-
+  (find-rcircnode \"Internet Relay Chat\" \"Once you have joined a channel\")
+  (find-rcircnode \"Getting started with rcirc\" \"To talk in a channel\")
   (find-rcircnode \"rcirc commands\" \"/join #emacs\")
-  (find-rcircnode \"rcirc commands\" \"/part\")
 
 
 
-3. Other channels
-=================
 
-where `find-freenode-3a' is based on `find-3a', described here:
+2. The two-window setting
+=========================
+Try this:
 
-  (find-multiwindow-intro \"High-level words\")
+  (find-freenode-2a \"#eev\")
 
-  (find-eev \"eev-rcirc.el\")
+It creates a window setting like
+
+   _________ ________
+  |         |        |
+  |         |        |
+  | current |  irc   |
+  | buffer  | buffer |
+  |         |        |
+  |_________|________|
+
+which is nice for when you don't want to follow the irc server
+messages.
 
 
 
-4. If you are new to IRC
+
+3. Tracking activity
+====================
+TODO: explain this:
+
+  (find-rcircnode \"Channels\" \"M-x rcirc-track-minor-mode\")
+
+and how to use it as a one-window setting. Also:
+
+  (find-efunctiondescr 'rcirc-track-minor-mode)
+  (find-efunction      'rcirc-track-minor-mode)
+  (find-evariable      'rcirc-track-minor-mode-map)
+  (find-ekeymapdescr    rcirc-track-minor-mode-map)
+
+  (find-efunctiondescr 'rcirc-next-active-buffer)
+  (find-efunction      'rcirc-next-active-buffer)
+
+  (global-set-key [f2] 'rcirc-next-active-buffer)
+
+
+
+
+4. Commands with very short names
+=================================
+We can apply this idea
+
+  (find-eev-quick-intro \"7.4. Commands with very short names\")
+  (find-eev-quick-intro \"7.4. Commands with very short names\" \"(defun c ()\")
+
+to rcirc. If you connect occasionaly to the channels #eev,
+#emacs, #git and #ruby, you can run this, or put these lines in
+your .emacs:
+
+  (setq rcirc-default-nick \"hakuryo\")
+  (defun e2 () (interactive) (find-freenode-2a \"#eev\"))
+  (defun e3 () (interactive) (find-freenode-3a \"#eev\"))
+  (defun m2 () (interactive) (find-freenode-2a \"#emacs\"))
+  (defun m3 () (interactive) (find-freenode-3a \"#emacs\"))
+  (defun g2 () (interactive) (find-freenode-2a \"#git\"))
+  (defun g3 () (interactive) (find-freenode-3a \"#git\"))
+  (defun r2 () (interactive) (find-freenode-2a \"#ruby\"))
+  (defun r3 () (interactive) (find-freenode-3a \"#ruby\"))
+
+
+
+
+5. `find-freenode-links'
 ========================
-Most of the discussions between Free Software developers still
-happen in IRC channels, and mostly at Freenode. The best way to
-understand what IRC is - for modern people, I mean - is probably
-to try this first:
+You can generate lines like the ones above by running
+`find-freenode-links'. For example:
 
-  http://webchat.freenode.net/
+  (find-freenode-links \"e\" \"#eev\")
+  (find-freenode-links \"r\" \"#ruby\")
 
-IRC is a command-line-ish protocol, in which lines starting with
-\"/\" are treated as commands and other lines are messages to be
-broadcast. Try to \"/join\" the channels \"#emacs\" and \"#eev\",
-with \"/join #emacs\" and \"/join #eev\"; in that webchat, try to
-switch between the channels you're connected to by clicking on
-the tabs at the top - and note that there is also a tab for a
-channel-ish thing that has only messages from the server. Try
-also to leave these channels with \"/part\", \"/part #emacs\",
-\"/part #eev\".
 
-In Rcirc each one of these channels, including the server
-channel, becomes an Emacs buffer. The names of these buffers will
-be:
 
-  *irc.freenode.net*
-  #emacs@irc.freenode.net
-  #eev@irc.freenode.net
+6. Other servers
+================
+TODO: explain how to use find-rcirc-buffer and how to adapt
+find-freenode-* to other servers. Example:
 
-  (defun eejump-66 () (find-freenode-3a \"#eev\"))
+  (find-rcirc-buffer-2a \"irc.debian.org\" \"#debian-live\" nil \"#debian-live\")
+  (find-rcirc-buffer-3a \"irc.debian.org\" \"#debian-live\" nil \"#debian-live\")
 
-For more information see:
+See:
 
-  (find-node \"(rcirc)Top\")
-  (find-node \"(rcirc)Internet Relay Chat\")
-  (find-node \"(rcirc)rcirc commands\")
-  httpa://www.emacswiki.org/emacs/RcIrc
-  http://www.irchelp.org/
-
-  (find-node \"(erc)Top\")
-  http://www.emacswiki.org/emacs/ErC
+  (find-eev \"eev-rcirc.el\" \"find-freenode\")
 
 " pos-spec-list)))
 

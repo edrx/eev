@@ -1,9 +1,11 @@
 2019-04-14  Eduardo Ochs  <eduardoochs@gmail.com>
 
-	* eev-rcirc.el: rewrote all comments and some docstrings.
+	* eev-intro.el (find-rcirc-intro): rewrote completely.
 
-	* eev-rcirc.el (ee-irc-channel-around-point): commented out.
+	* eev-rcirc.el: rewrote all comments and some docstrings.
+	(ee-irc-channel-around-point): commented out.
 	(ee-buffer-freenode-channel-name): commented out.
+	(find-freenode-links): small changes.
 
 2019-04-13  Eduardo Ochs  <eduardoochs@gmail.com>
 

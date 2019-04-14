@@ -37,8 +37,6 @@
 
 ;;; Commentary:
 
-;; (New comments, 2019apr14):
-;;
 ;; This file - eev-rcirc.el - implements elisp hyperlinks for rcirc in
 ;; a way that lets several important actions be expressed as
 ;; one-liners.
@@ -297,7 +295,7 @@ window - \"#foo\" means channel \"#foo\", \"nick\" means query
 
 (defvar ee-freenode-achannels nil
   "The list of channels that `find-freenode' always reconnects to.
-When this is nil behave as if this was a copy of `ee-freenode-ichannels'.")
+When this is nil act as if this was a copy of `ee-freenode-ichannels'.")
 
 (defun find-freenode (&optional channel &rest pos-spec-list)
   "Connect to freenode and switch to the buffer for channel CHANNEL.
