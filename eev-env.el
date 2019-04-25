@@ -139,6 +139,5 @@ See the source for details, examples, and tests."
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

@@ -76,7 +76,8 @@
 ;;;                                                                            
 
 (defvar ee-anchor-format "«%s»" "See `ee-goto-anchor'.")
-(put   'ee-anchor-format 'safe-local-variable 'stringp)
+;;;###autoload
+(put   'ee-anchor-format 'safe-local-variable #'stringp)
 
 ;; A paranoid setting would be:
 ;; (defvar ee-anchor-format nil "See `ee-goto-anchor'.")
@@ -165,6 +166,5 @@ See `ee-goto-anchor'."
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
-;; ee-anchor-format:  "«%s»"
 ;; no-byte-compile:   t
 ;; End:

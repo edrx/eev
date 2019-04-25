@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr06
+;; Version:    2019apr14
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1960,28 +1960,49 @@ incompatible with our convention of creating a script called
 
 5. Eev as an ELPA/MELPA package
 ===============================
-In march 2019 I prepared a first version of an \"emacs package\"
-for eev to make it installable by `M-x list-packages' - see:
+In march 2019 I prepared a first version of an emacs package for
+eev to make it installable by `M-x list-packages' - see:
 
   (find-enode    \"Packages\")
   (find-efaqnode \"Packages that do not come with Emacs\")
 
-and sent it to the emacs-devel mailing list. Apparently it could
-go into GNU ELPA, but the developers requested several changes in
-the code, and some of them go against some important design
-decisions. I will discuss them here.
+and submitted it to the emacs-devel mailing list:
+
+  http://lists.gnu.org/archive/html/emacs-devel/2019-03/msg00433.html
+
+Stefan Monnier answered, and the rest of the discussion happened
+off-list. Apparently eev could go into GNU ELPA, but some changes
+and clean-ups were needed. I implemented most of what he
+proposed/requested, but three of the things that he asked for
+would demand changes that would make eev far less elegant and far
+less useful for beginners... in rough terms, the code should 1)
+be byte-compilable, 2) be compatible with lexical binding, and 3)
+have all the autoloads. My reasons for not complying - or for not
+complying NOW - are explained in the subsections below.
+
+I will try to submit eev to MELPA in the next few days - in
+mid-april 2019. I have the feeling that the issues blocking it
+from going into ELPA will take a few years to be solved.
+
+Btw: except for Stefan's e-mails ***100%*** the feedback that I
+received about eev in the last three years came from beginners.
+I am not willing to make changes that will make eev
+beginner-UNfriendly.
+
 
 
 
 5.1. Byte-compilation
 ---------------------
-All eev source files have a \"no-byte-compile: t\" in their local
-variables section. See:
+In standard packages all elisp files should be byte-compilable
+unless there is a very strong reason - but all eev source files
+have a \"no-byte-compile: t\" in their local variables section.
+See:
 
   (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
   (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
 
-Here is the reason. Each call to a `code-*' function defines some
+Here is why. Each call to a `code-*' function defines some
 functions dynamically - for example, `(code-c-d \"e\" ...)'
 defines `find-efile' - and the best way to inspect a function
 defined in this way is by using `find-functionpp'. Try:
@@ -2017,46 +2038,59 @@ have a reasonable corpus of functions for which
 `find-efunctionpp' shows something readable, which is good to
 help them understand the innards of Emacs.
 
-My view is that we have a \"new\" Emacs, that enforces
-byte-compilation and uses several data structures that are
-relatively opaque, built on top on an \"old\" Emacs that uses lots
-of simpler data structures, but in which many things are messier
-and more error-prone. I would love to add to eev functions to
-inspect these new data structures, but the \"old\" Emacs is the one
-that made me fell in love with Free Software and that made me
-spend years trying to convert people... and one of the underlying
-messages of eev is \"look, you can still use these simpler
-things\". Maybe I'm using \"simpler\" in a sense that is not very
-usual, so let me quote a paragraph from an article that I wrote
-about implementing a Forth in Lua:
+Here is an excerpt of one of my e-mails to Stefan:
 
-  \"I've met many people over the years who have been Forth
-  enthusiasts in the past, and we often end up discussing what
-  made Forth so thrilling to use at that time - and what we can
-  do to adapt its ideas to the computers of today. My personal
-  impression is that Forth's main points were not the ones that I
-  listed at the beginning of this section, and that I said that
-  were easy to quantify; rather, what was most important was that
-  nothing was hidden, there were no complex data structures
-  around with \"don't-look-at-this\" parts (think on garbage
-  collection in Lua, for example, and Lua's tables - beginners
-  need to be convinced to see these things abstractly, as the
-  concrete details of the implementation are hard), and
-  everything - code, data, dictionaries, stacks - were just
-  linear sequences of bytes, that could be read and modified
-  directly if we wished to. We had total freedom, defining new
-  words was quick, and experiments were quick to make; that gave
-  us a sense of power that was totally different from, say, the
-  one that a Python user feels today because he has huge
-  libraries at his fingertips.\"
+  I have the impression - please correct me if I'm wrong - that
+  you're proposing to replace the `find-efunctionpp' by something
+  more modern. My view is that we have a \"new\" Emacs, that
+  enforces byte-compilation and uses several data structures that
+  are relatively opaque, built on top on an \"old\" Emacs that
+  uses lots of simpler data structures, but in which many things
+  are messier and more error-prone. I would love to add to eev
+  functions to inspect these new data structures, but the \"old\"
+  Emacs is the one that made me fell in love with Free Software
+  and that made me spend years trying to convert people... and
+  one of the underlying messages of eev is \"look, you can still
+  use these simpler things\". Maybe I'm using \"simpler\" in a
+  sense that is not very usual, so let me quote a paragraph from
+  an article that I wrote about implementing a Forth in Lua:
+
+    \"I've met many people over the years who have been Forth
+    enthusiasts in the past, and we often end up discussing what
+    made Forth so thrilling to use at that time - and what we can
+    do to adapt its ideas to the computers of today. My personal
+    impression is that Forth's main points were not the ones that
+    I listed at the beginning of this section, and that I said
+    that were easy to quantify; rather, what was most important
+    was that nothing was hidden, there were no complex data
+    structures around with \"don't-look-at-this\" parts (think on
+    garbage collection in Lua, for example, and Lua's tables -
+    beginners need to be convinced to see these things
+    abstractly, as the concrete details of the implementation are
+    hard), and everything - code, data, dictionaries, stacks -
+    were just linear sequences of bytes, that could be read and
+    modified directly if we wished to. We had total freedom,
+    defining new words was quick, and experiments were quick to
+    make; that gave us a sense of power that was totally
+    different from, say, the one that a Python user feels today
+    because he has huge libraries at his fingertips.\"
 
     (From: http://angg.twu.net/miniforth-article.html)
 
 
 
+
 5.2. Dynamic binding
 --------------------
-See the comments in:
+Dependency on dynamic binding should be avoided - see:
+
+  (find-elnode \"Dynamic Binding\")
+  (find-elnode \"Dynamic Binding Tips\")
+  (find-elnode \"Lexical Binding\")
+
+but the main function that eev uses for template strings is
+intrinsically incompatible with lexical binding. See the comments
+in its source file:
 
   (find-eev \"eev-template0.el\")
 
@@ -2065,7 +2099,8 @@ See the comments in:
 5.3. Autoloads
 --------------
 I decided to mark only one function in eev as autoloadable -
-instead of hundreds. See the comments in:
+instead of hundreds - and this is very non-standard. See the
+comments in:
 
   (find-eev \"eev-load.el\")
 
@@ -2598,8 +2633,181 @@ keep the instructions visible.
 
 
 
-What else?
-==========
+10. More on functions
+=====================
+A symbol - for example `f' - can be both a varible and a
+function; its \"value as a variable\" and its \"value as a
+function\" are stored in different places. Try:
+
+  (setq f 2)
+  (setq f 5)
+  (defun f (x) (* x x))
+  (defun f (x) (* 10 x))
+  (symbol-value    'f)
+  (symbol-function 'f)
+
+This is explained here:
+
+  (find-elnode \"Symbol Components\")
+  (find-elnode \"Symbol Components\" \"value cell\")
+  (find-elnode \"Symbol Components\" \"function cell\")
+
+The content of a \"function cell\" is _usually_ a lambda
+expression. See:
+
+  (find-elnode \"Lambda Expressions\")
+  (find-elnode \"What Is a Function\")
+  (find-elnode \"What Is a Function\" \"lambda expression\")
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+
+Try:
+
+  (setq f 2)
+  (setq f 5)
+  (set 'f 2)
+  (set 'f 5)
+  (fset 'f (lambda (x) (* x x)))
+  (fset 'f (lambda (x) (* 10 x)))
+  (defun f (x) (* 10 x))
+  (defun f (x) (* x x))
+  (symbol-value    'f)
+  (symbol-function 'f)
+  (f 4)
+  (f f)
+
+  ((lambda (x) (* x x))
+   4)
+  ((lambda (x) (* 10 x))
+   4)
+
+
+
+10.1. Byte-compiled functions
+-----------------------------
+Most functions in Emacs are byte-compiled - which means that
+their function cells contain a \"byte-code\" instead of a lambda
+expression. These byte-codes are very hard for humans to read.
+See:
+
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+  (find-elnode \"Byte-Code Type\")
+  (find-elnode \"Byte Compilation\")
+  (find-elnode \"Disassembly\")
+
+Here is an example:
+
+  (find-efunctiondescr 'find-file)
+  (find-efunction      'find-file)
+  (symbol-function     'find-file)
+  (find-efunctionpp    'find-file)
+  (find-efunctiond     'find-file)
+
+The `find-efunctionpp' link above takes the content of the
+function cell of `find-file' and \"pretty-prints\" it, i.e.,
+indents it in a nice way, but the result in this case is
+unreadable... and the `find-efunctiond' link shows a decompiled
+version of that byte-code, which is only slightly better. Both
+the `find-efunctionpp' and the `find-efunctiond' links show
+internal representations that are very different from the source
+code. Compare that with a case in which the function is not
+byte-compiled:
+
+  (find-efunctiondescr 'find-fline)
+  (find-efunction      'find-fline)
+  (symbol-function     'find-fline)
+  (find-efunctionpp    'find-fline)
+
+The `(find-efunctionpp 'find-fline)' shows a lambda expression
+that is very similar to the defun that defined `find-fline'.
+
+
+
+
+10.2. How `find-efunction' works
+--------------------------------
+Eev defines hyperlink functions called `find-efunction',
+`find-evariable' and `find-eface' that are wrappers around the
+standard functions `find-function', `find-variable' and
+`find-face-definition'; the eev variants support pos-spec-lists.
+Try:
+
+  (find-efunction 'find-fline)
+  (find-function  'find-fline)
+  (find-evariable 'ee-hyperlink-prefix)
+  (find-variable  'ee-hyperlink-prefix)
+  (find-eface           'eepitch-star-face)
+  (find-face-definition 'eepitch-star-face)
+
+The Emacs functions are defined here:
+
+  (find-efile \"emacs-lisp/find-func.el\")
+
+Their inner workings are quite complex. They use `symbol-file',
+that works on the variable `load-history'. Here are some links to
+documentation and tests:
+
+  (find-efunctiondescr 'symbol-file)
+  (find-elnode \"Where Defined\")
+  (symbol-file 'find-fline          'defun)
+  (symbol-file 'ee-hyperlink-prefix 'defvar)
+  (symbol-file 'eepitch-star-face   'defface)
+  (find-epp (assoc (locate-library \"eepitch\") load-history))
+
+The functions in \"find-func.el\" use `symbol-file' to find the
+file where a given symbol was defined, and then search a defun,
+defvar of defface in it that _may be_ the definition that we are
+looking for. The eev variants use the functions
+`find-function-noselect', `find-variable-noselect' and
+`find-definition-noselect' from \"find-func.el\", that return a
+pair (BUFFER . POS). Try:
+
+  (find-efunctiondescr 'find-function-noselect)
+  (find-efunctiondescr 'find-variable-noselect)
+  (find-efunctiondescr 'find-definition-noselect)
+
+  (find-ebufferandpos (find-function-noselect 'find-fline)
+   )
+  (find-ebufferandpos (find-variable-noselect 'ee-hyperlink-prefix)
+   )
+  (find-ebufferandpos (find-definition-noselect 'eepitch-star-face 'defface)
+   )
+
+These `find-*-select' functions work quite well but are not 100%
+reliable - for example, if an elisp file has several definitions
+for the same function, variable, or face, the `find-*-select's
+don't know which ones were executed, neither which one was
+executed last, overriding the other ones... and it may return the
+position of a defun, defvar, or defface that is not the
+\"active\" one.
+
+
+
+
+10.3. Why eev avoids byte-compilation
+-------------------------------------
+All the source files of eev have a \"no-byte-compile: t\" in
+them. See:
+
+  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
+  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
+
+This is non-standard, but it is a deliberate design choice.
+
+(TODO: explain the three main reasons: it is easier to teach
+emacs to beginners if they see lots of lambda expressions and few
+byte-codes; `code-c-d' and friends define functions dynamically
+and `find-efunction' don't work on them; in a distribution with
+only the \".elc\"s of eev users wouldn't have access to the
+documentation and examples in the comments of the source files.)
+
+
+
+
+
+
+
+11. What else?
+==============
 Eev-mode defines several other key sequences similar to `M-h
 M-i'. You can get the full list here:
 
@@ -6180,120 +6388,159 @@ Is is meant as both a tutorial and a sandbox.
 
 Recent versions with Emacs come with two IRC clients built-in:
 Rcirc and ERC. I never understood ERC well enough, and I found
-Rcirc quite easy to understand and to hack, so eev has some
-support for Rcirc (and no support for ERC).
-
-
-
-1. The server buffer and the channel buffers
-============================================
-If you type `M-6 M-6 M-j' - or `M-e' on the line below - then eev
-runs this,
-
-  (find-freenode-3a \"#eev\")
-
-which tells Emacs to connect to Freenode and to the channel #eev,
-using this window setting:
-
-   _________________________
-  |           |             |
-  |           |   Freenode  |
-  |           |    server   |
-  |           |   messages  |
-  |  current  |_____________|    
-  |  buffer   |             |
-  |           |    #eev     |
-  |           |   channel   |
-  |           |             |
-  |___________|_____________|
-
-You will then be able to watch the process of connecting to
-Freenode, which takes about 20s on my machine, by the messages
-that will appear at the Freenode server buffer; at some point
-rcirc will be allowed by the server to connect to channels, it
-will request to connect to the channel #eev, and some login
-messages, plus at list of all users connected to #eev and a
-prompt, will appear at the #eev channel buffer.
-
-`M-66j' is mostly for establishing a connection to an IRC server
-and watching if any errors occur; once we know that we are
-connected we can use `M-6j' - with just one `M-6' - which just
-takes us to the #eev channel without changing the current window
-configuration. A mnemonic: `M-66j', which is one keypress longer,
-is to be used less often - essentially only once per session, or
-when we want to check the status of our connection to Freenode.
-
-
-
-
-2. Messages and commands
-========================
-IRC is a command-line-ish protocol, in which lines starting with
-\"/\" are treated as commands and other lines as messages. A
-message typed at the #eev channel buffer is broadcast to all
-other users also connected to #eev; some commands, like
-
-  /join #emacs
-
-work in the same way no matter where they are typed, while
-others, like for example \"/part\", work differently when typed
-in #eev than when in #emacs. See:
-
-  (find-rcircnode \"rcirc commands\" \"/join #emacs\")
-  (find-rcircnode \"rcirc commands\" \"/part\")
-
-
-
-3. Other channels
-=================
-
-where `find-freenode-3a' is based on `find-3a', described here:
-
-  (find-multiwindow-intro \"High-level words\")
-
-  (find-eev \"eev-rcirc.el\")
-
-
-
-4. If you are new to IRC
-========================
-Most of the discussions between Free Software developers still
-happen in IRC channels, and mostly at Freenode. The best way to
-understand what IRC is - for modern people, I mean - is probably
-to try this first:
-
-  http://webchat.freenode.net/
-
-IRC is a command-line-ish protocol, in which lines starting with
-\"/\" are treated as commands and other lines are messages to be
-broadcast. Try to \"/join\" the channels \"#emacs\" and \"#eev\",
-with \"/join #emacs\" and \"/join #eev\"; in that webchat, try to
-switch between the channels you're connected to by clicking on
-the tabs at the top - and note that there is also a tab for a
-channel-ish thing that has only messages from the server. Try
-also to leave these channels with \"/part\", \"/part #emacs\",
-\"/part #eev\".
-
-In Rcirc each one of these channels, including the server
-channel, becomes an Emacs buffer. The names of these buffers will
-be:
-
-  *irc.freenode.net*
-  #emacs@irc.freenode.net
-  #eev@irc.freenode.net
-
-  (defun eejump-66 () (find-freenode-3a \"#eev\"))
-
-For more information see:
+rcirc quite easy to understand and to hack, so eev has some
+support for rcirc (and no support for ERC).
 
   (find-node \"(rcirc)Top\")
-  (find-node \"(rcirc)Internet Relay Chat\")
-  (find-node \"(rcirc)rcirc commands\")
-  httpa://www.emacswiki.org/emacs/RcIrc
-  http://www.irchelp.org/
-
   (find-node \"(erc)Top\")
-  http://www.emacswiki.org/emacs/ErC
+
+The eev support for rcirc consists mainly of three high-level
+functions that connect to Freenode (the IRC server where most
+discussion of free software projects happen), called
+`find-freenode', `find-freenode-2a' and `find-freenode-3a'.
+
+
+
+
+1. The example the I use in workshops
+=====================================
+Let's start with an example. In
+
+  (setq rcirc-default-nick \"hakuryo\")
+  (setq ee-freenode-ichannels \"#eev\")
+  (find-freenode-3a \"#eev\")
+
+the first sexp tells rcirc to use the nickname \"hakuryo\" when
+connecting to an IRC server; the second sets the set of \"initial
+channels\" on Freenode to just one channel, #eev - a channel that
+is usually empty, but that doesn't require authentication; the
+third sexp is a \"sexp hyperlink to the Freenode channel #eev\".
+The third sexp:
+
+  1) creates a window setting like this,
+
+       _________________________
+      |           |             |
+      |           |   Freenode  |
+      |           |    server   |
+      |           |   messages  |
+      |  current  |_____________|    
+      |  buffer   |             |
+      |           |    #eev     |
+      |           |   channel   |
+      |           |             |
+      |___________|_____________|
+
+  2) tells rcirc to connect to Freenode and to the channel #eev
+     in it,
+
+  3) makes the window at the left - window \"A\" in the
+     terminology of eev-multiwindow.el - the active window. See:
+
+       (find-multiwindow-intro \"3. High-level words\")
+       (find-multiwindow-intro \"3. High-level words\" \"find-3a\")
+
+The connection process takes time - about 20 seconds at my
+machine - but you will be able to see in window \"B\" the server
+messages as they appear, and in window \"C\" the messages of the
+#eev channel. You can then use the window \"C\" to interact with
+the other users in #eev, and to experiment with commands. See:
+
+  (find-rcircnode \"Internet Relay Chat\" \"Once you have joined a channel\")
+  (find-rcircnode \"Getting started with rcirc\" \"To talk in a channel\")
+  (find-rcircnode \"rcirc commands\" \"/join #emacs\")
+
+
+
+
+2. The two-window setting
+=========================
+Try this:
+
+  (find-freenode-2a \"#eev\")
+
+It creates a window setting like
+
+   _________ ________
+  |         |        |
+  |         |        |
+  | current |  irc   |
+  | buffer  | buffer |
+  |         |        |
+  |_________|________|
+
+which is nice for when you don't want to follow the irc server
+messages.
+
+
+
+
+3. Tracking activity
+====================
+TODO: explain this:
+
+  (find-rcircnode \"Channels\" \"M-x rcirc-track-minor-mode\")
+
+and how to use it as a one-window setting. Also:
+
+  (find-efunctiondescr 'rcirc-track-minor-mode)
+  (find-efunction      'rcirc-track-minor-mode)
+  (find-evariable      'rcirc-track-minor-mode-map)
+  (find-ekeymapdescr    rcirc-track-minor-mode-map)
+
+  (find-efunctiondescr 'rcirc-next-active-buffer)
+  (find-efunction      'rcirc-next-active-buffer)
+
+  (global-set-key [f2] 'rcirc-next-active-buffer)
+
+
+
+
+4. Commands with very short names
+=================================
+We can apply this idea
+
+  (find-eev-quick-intro \"7.4. Commands with very short names\")
+  (find-eev-quick-intro \"7.4. Commands with very short names\" \"(defun c ()\")
+
+to rcirc. If you connect occasionaly to the channels #eev,
+#emacs, #git and #ruby, you can run this, or put these lines in
+your .emacs:
+
+  (setq rcirc-default-nick \"hakuryo\")
+  (defun e2 () (interactive) (find-freenode-2a \"#eev\"))
+  (defun e3 () (interactive) (find-freenode-3a \"#eev\"))
+  (defun m2 () (interactive) (find-freenode-2a \"#emacs\"))
+  (defun m3 () (interactive) (find-freenode-3a \"#emacs\"))
+  (defun g2 () (interactive) (find-freenode-2a \"#git\"))
+  (defun g3 () (interactive) (find-freenode-3a \"#git\"))
+  (defun r2 () (interactive) (find-freenode-2a \"#ruby\"))
+  (defun r3 () (interactive) (find-freenode-3a \"#ruby\"))
+
+
+
+
+5. `find-freenode-links'
+========================
+You can generate lines like the ones above by running
+`find-freenode-links'. For example:
+
+  (find-freenode-links \"e\" \"#eev\")
+  (find-freenode-links \"r\" \"#ruby\")
+
+
+
+6. Other servers
+================
+TODO: explain how to use find-rcirc-buffer and how to adapt
+find-freenode-* to other servers. Example:
+
+  (find-rcirc-buffer-2a \"irc.debian.org\" \"#debian-live\" nil \"#debian-live\")
+  (find-rcirc-buffer-3a \"irc.debian.org\" \"#debian-live\" nil \"#debian-live\")
+
+See:
+
+  (find-eev \"eev-rcirc.el\" \"find-freenode\")
 
 " pos-spec-list)))
 
