@@ -1,6 +1,31 @@
+2019-04-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-emacs-keys-intro): point to
+	(find-refining-intro).
+
+	* eev-elinks.el (find-here-links-beginner): new function.
+
+2019-04-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-mode.el (eev-mode-map-set): new keybinding: `M-h M-w' for
+	`ee-copy-this-line-to-kill-ring'.
+
+	* eev-edit.el (ee-copy-this-line-to-kill-ring): new function.
+
+	* eev-intro.el (find-refining-intro): new function.
+
+2019-04-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (eepitch-freenode): new function.
+
 2019-04-14  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-eev-install-intro): small changes.
+
+	* eev.el: small changes.
+
 	* eev-intro.el (find-rcirc-intro): rewrote completely.
+	(find-escripts-intro): small changes.
 
 	* eev-rcirc.el: rewrote all comments and some docstrings.
 	(ee-irc-channel-around-point): commented out.

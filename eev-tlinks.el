@@ -420,9 +420,9 @@ Hello
      ,(ee-template0 "
 ;;; {stem-el} -- ???.
 
-;; Copyright (C) 2012 Free Software Foundation, Inc.
+;; Copyright (C) 2019 Free Software Foundation, Inc.
 ;;
-;; This file is (not yet?) part of GNU eev.
+;; This file is part of GNU eev.
 ;;
 ;; GNU eev is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

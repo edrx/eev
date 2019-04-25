@@ -336,6 +336,13 @@ This is like `find-rcirc-buffer-3a' but uses
 
 
 
+;; See: (find-efunction 'eepitch)
+;;      (find-efunction 'eepitch-to-buffer)
+(defun eepitch-freenode (channel)
+  (interactive) (eepitch '(find-freenode channel)))
+
+
+
 
 ;;;   __                               _            _ _       _        
 ;;;  / _|_ __ ___  ___ _ __   ___   __| | ___      | (_)_ __ | | _____ 

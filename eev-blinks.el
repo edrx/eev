@@ -1,6 +1,6 @@
 ;;; eev-blinks.el -- support for basic hyperlinks in Emacs.
-;;; The basic hyperlinks are the ones that do not depend on templates,
-;;; and that are not created by `code-c-d' and friends.
+;; The basic hyperlinks are the ones that do not depend on templates,
+;; and that are not created by `code-c-d' and friends.
 
 ;; Copyright (C) 1999-2019 Free Software Foundation, Inc.
 ;;

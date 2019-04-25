@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr01
+;; Version:    2019apr25
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1270,6 +1270,18 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 ;; Test: (find-here-links)
 ;; (progn (find-enode "Screen") (find-here-links))
+
+
+
+;; This is a hack for beginners that is explained in a tutorial. See:
+;; (find-refining-intro "4. A tip for beginners")
+;; (find-refining-intro "4. A tip for beginners" "find-here-links-beginner")
+;;
+(defun find-here-links-beginner ()
+  "A variant of `find-here-links' that creates a three-window setting."
+  (interactive)
+  (find-wset "13_o2_o_coo" nil '(find-here-links) '(eejump-1)))
+
 
 
 

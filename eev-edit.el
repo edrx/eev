@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019apr25
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -31,6 +31,7 @@
 ;;; Commentary:
 
 ;; See:
+;;   (find-refining-intro "2. Refining hyperlinks")
 ;;   (find-eval-intro "9. Producing and refining hyperlinks")
 ;;   (find-escripts-intro "5.7. Refining hyperlinks")
 ;;   (find-escripts-intro "5.8. Pointing to anchors")
@@ -42,6 +43,7 @@
 
 ;; «.ee-duplicate-this-line»		(to "ee-duplicate-this-line")
 ;; «.ee-yank-pos-spec»			(to "ee-yank-pos-spec")
+;; «.ee-copy-this-line-to-kill-ring»	(to "ee-copy-this-line-to-kill-ring")
 ;; «.ee-shrink-hyperlink-at-eol»	(to "ee-shrink-hyperlink-at-eol")
 ;; «.ee-flip-psne-ness»			(to "ee-flip-psne-ness")
 ;; «.eewrap-vldi-list-line»		(to "eewrap-vldi-list-line")
@@ -107,6 +109,30 @@ and you copy that hyperlink to a more permanent place."
   (interactive)
   (goto-char (1- (point-at-eol)))	; put point before the ")"
   (insert " " (ee-pp0 (ee-last-kill)))) ; insert pos-spec
+
+
+
+;;;   ____                        _   _     _           _ _            
+;;;  / ___|___  _ __  _   _      | |_| |__ (_)___      | (_)_ __   ___ 
+;;; | |   / _ \| '_ \| | | |_____| __| '_ \| / __|_____| | | '_ \ / _ \
+;;; | |__| (_) | |_) | |_| |_____| |_| | | | \__ \_____| | | | | |  __/
+;;;  \____\___/| .__/ \__, |      \__|_| |_|_|___/     |_|_|_| |_|\___|
+;;;            |_|    |___/                                            
+;;
+;; «ee-copy-this-line-to-kill-ring» (to ".ee-copy-this-line-to-kill-ring")
+;; (define-key eev-mode-map "\M-h\M-w" 'ee-copy-this-line-to-kill-ring)
+
+(defun ee-copy-this-line-to-kill-ring ()
+  "Copy the current line to the kill ring and highlight (\"flash\") it."
+  (interactive)
+  (let* ((start (ee-bol))
+	 (end   (save-excursion (next-line) (ee-bol)))
+	 (str   (buffer-substring start end))
+	 (msg   "Copied the current line to the kill ring - use C-y to paste"))
+    (eeflash+ start end eeflash-copy)
+    (kill-new str)
+    (message msg)))
+
 
 
 
