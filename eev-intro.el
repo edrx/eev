@@ -813,6 +813,7 @@ The pattern is:
 `defun' is explained here:
 
   (find-elnode \"Defining Functions\" \"(defun foo () 5)\")
+  (find-eval-intro \"10. More on functions\")
 
 As a special case, a plain `M-j' without a prefix argument runs a
 special function, `find-eejumps', that shows a help text followed
@@ -2164,39 +2165,40 @@ These ones explain ideas, conventions, and usage patterns:
 
    4. (find-escripts-intro)
    5. (find-links-conv-intro)
+   6. (find-refining-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-   6. (find-eval-intro)
-   7. (find-links-intro)
-   8. (find-brxxx-intro)
-   9. (find-eepitch-intro)
-  10. (find-wrap-intro)
-  11. (find-eejump-intro)
-  12. (find-anchors-intro)
-  13. (find-code-c-d-intro)
-  14. (find-pdf-like-intro)
-  15. (find-psne-intro)
+   7. (find-eval-intro)
+   8. (find-links-intro)
+   9. (find-brxxx-intro)
+  10. (find-eepitch-intro)
+  11. (find-wrap-intro)
+  12. (find-eejump-intro)
+  13. (find-anchors-intro)
+  14. (find-code-c-d-intro)
+  15. (find-pdf-like-intro)
+  16. (find-psne-intro)
 
 These are etcs:
 
-  16. (find-multiwindow-intro)
-  17. (find-audiovideo-intro)
-  18. (find-rcirc-intro)
-  19. (find-templates-intro)
-  20. (find-videos-intro)
+  17. (find-multiwindow-intro)
+  18. (find-audiovideo-intro)
+  19. (find-rcirc-intro)
+  20. (find-templates-intro)
+  21. (find-videos-intro)
 
 These ones explain advanced features that require extra setup:
 
-  21. (find-prepared-intro)
-  22. (find-bounded-intro)
-  23. (find-channels-intro)
+  22. (find-prepared-intro)
+  23. (find-bounded-intro)
+  24. (find-channels-intro)
 
 These ones are obsolete:
 
-  24. (find-emacs-intro)
-  25. (find-defun-intro)
+  25. (find-emacs-intro)
+  26. (find-defun-intro)
 
 Item 20 is an index of the (old) video tutorials, with scripts
 for downloading local copies of them and links to important
@@ -2387,7 +2389,7 @@ that:
 
 Let me explain them starting by the two middle ones. This sexp
 
-  (kill-new \"Tools-for\")
+  (kill-new \"Tools for\")
 
 puts the string \"Tools for\" on the top of the kill ring; we can
 use it to simulate what happens when the user marks a region
@@ -2398,7 +2400,7 @@ containing that string and runs `M-w'. See:
 
 Try the first two sexps below:
 
-  (kill-new \"Tools-for\")
+  (kill-new \"Tools for\")
   (eek \"<down>  M-h M-2  M-h M-y\")
   (find-escripts-intro)
 
