@@ -169,7 +169,7 @@ have to run an \"undo\"."
   "An internal function used by `ee-wrap-anchor'."
   (ee-template0 (ee-tolatin1 "\
 {prefix}«.{anchor}»\t(to \"{anchor}\")
-{prefix}«{anchor}» (to \".{anchor}\")")))
+{prefix}«{anchor}»  (to \".{anchor}\")")))
 
 
 

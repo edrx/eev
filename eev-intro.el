@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr25
+;; Version:    2019may17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2287,7 +2287,7 @@ For the full lists of keybindings, see:
 
 (defun find-refining-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-refining-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-refining-intro)
 Source code:  (find-efunction 'find-refining-intro)
 More intros:  (find-eev-quick-intro)
@@ -2486,7 +2486,7 @@ If you run the second sexp below,
 
 it will rebind the key sequence `M-h M-h' to a variant of
 `find-here-links' for beginners that creates this window
-configuration:
+configuration when invoked as `M-3 M-h M-h':
 
    _____________________
   |          |          |
@@ -2500,7 +2500,7 @@ configuration:
 
 You can then try to run the instructions in the last section with
 all the three buffers visible, switching from one buffer to
-another by clicking on their windows. Note the the order is:
+another by clicking on their windows. Note that the order is:
 
    _____________________
   |          |          |

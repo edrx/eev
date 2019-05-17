@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr25
+;; Version:    2019may17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -372,8 +372,8 @@ See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
 	   `((find-ekey-links ,key ,@pos-spec-list)
 	     ;; Convention: the first sexp always regenerates the buffer.
 	     (find-ekey-links          ,key)
-	     (eek ,(format "M-h M-k %s" longkey))
-	     (eek ,(format "M-h M-k %s" longkey+))
+	     (eek ,(format "M-h M-k  %s" longkey))
+	     (eek ,(format "M-h M-k  %s" longkey+))
 	     (find-efunctiondescr ',f)
 	     ""
 	     (find-elongkey-links      ,longkey)
@@ -1277,10 +1277,15 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;; (find-refining-intro "4. A tip for beginners")
 ;; (find-refining-intro "4. A tip for beginners" "find-here-links-beginner")
 ;;
-(defun find-here-links-beginner ()
+(defun find-here-links-3 ()
   "A variant of `find-here-links' that creates a three-window setting."
-  (interactive)
+  (interactive "P")
   (find-wset "13_o2_o_coo" nil '(find-here-links) '(eejump-1)))
+
+(defun find-here-links-beginner (&optional arg)
+  "A variant of `find-here-links' that may create a three-window setting."
+  (interactive "P")
+  (if arg (find-here-links-3) (find-here-links)))
 
 
 

@@ -1,3 +1,24 @@
+2019-05-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-here-links-3): new function.
+	(find-here-links-beginner): small changes.
+
+	* eev-intro.el: small changes.
+
+2019-05-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-dhmake-links): deleted.
+	(find-newhost-links): deleted.
+
+2019-05-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-ekey-links): added some spaces in the
+	output.
+
+2019-05-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (find-freenode-links): added some text.
+
 2019-04-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-emacs-keys-intro): point to
