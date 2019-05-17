@@ -53,8 +53,8 @@
 ;;
 ;; When, or if, you are no longer a beginner, you may want to load eev
 ;; by just adding a "(require 'eev-load)" to your ".emacs". This loads
-;; all the main modules but not turn on eev-mode on by default, and
-;; does not open the tutorial. See:
+;; all the main modules but does not turn on eev-mode on by default,
+;; and does not open the tutorial. See:
 ;;
 ;;    (find-eev-intro "1. `eev-mode'")
 ;;    (find-eev "eev-load.el")

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019apr24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -144,6 +144,7 @@ and: (find-eval-intro \"`M-k'\")"
   ;; Source: (find-eev "eev-edit.el")
   (define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
   (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
+  (define-key eev-mode-map "\M-h\M-w" 'ee-copy-this-line-to-kill-ring)
   (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
   ;;
   ;; These ones are also from: (find-eev "eev-edit.el")

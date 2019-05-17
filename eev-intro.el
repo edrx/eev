@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr14
+;; Version:    2019may17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -62,6 +62,7 @@
 ;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
 ;; «.find-eev-install-intro»	(to "find-eev-install-intro")
 ;; «.find-eev-intro»		(to "find-eev-intro")
+;; «.find-refining-intro»	(to "find-refining-intro")
 ;;
 ;; «.find-eval-intro»		(to "find-eval-intro")
 ;; «.find-links-conv-intro»	(to "find-links-conv-intro")
@@ -529,8 +530,7 @@ A way to go quickly to \"~/TODO\" is explained in section 7.1.
 A way to \"refine\" hyperlinks to make them more precise is
 explained here:
 
-  (find-eval-intro \"9. Producing and refining hyperlinks\")
-
+  (find-refining-intro \"2. Refining hyperlinks\")
 
 
 
@@ -813,6 +813,7 @@ The pattern is:
 `defun' is explained here:
 
   (find-elnode \"Defining Functions\" \"(defun foo () 5)\")
+  (find-eval-intro \"10. More on functions\")
 
 As a special case, a plain `M-j' without a prefix argument runs a
 special function, `find-eejumps', that shows a help text followed
@@ -1662,6 +1663,8 @@ The keys for creating \"hyperlinks to here\" and refining them are:
   M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
   M-h M-2   - `ee-duplicate-this-line'. See: (find-eval-intro \"M-h M-2\")
   M-h M-y   - `ee-yank-pos-spec'. See: (find-eval-intro \"M-h M-y\")
+            See also: (find-refining-intro \"2. Refining hyperlinks\")
+                      (find-refining-intro \"4. A tip for beginners\")
 
 
 2. Key sequences and how to abort them
@@ -1693,6 +1696,7 @@ the \"point\" and the \"mark\":
 
   (find-enode \"Point\")
   (find-enode \"Mark\")
+  (find-enode \"Shift Selection\")
 
 You can do cut, copy and paste by using the icons in the toolbar
 or by using the menu bar (the relevant options are under
@@ -1706,6 +1710,7 @@ or by using the menu bar (the relevant options are under
 
 See: (find-enode \"Tool Bars\")
      (find-enode \"Menu Bar\")
+     (find-emacs-keys-intro \"3. Cutting & pasting\")
 
 
 
@@ -1980,14 +1985,15 @@ be byte-compilable, 2) be compatible with lexical binding, and 3)
 have all the autoloads. My reasons for not complying - or for not
 complying NOW - are explained in the subsections below.
 
-I will try to submit eev to MELPA in the next few days - in
-mid-april 2019. I have the feeling that the issues blocking it
-from going into ELPA will take a few years to be solved.
-
 Btw: except for Stefan's e-mails ***100%*** the feedback that I
 received about eev in the last three years came from beginners.
 I am not willing to make changes that will make eev
 beginner-UNfriendly.
+
+UPDATE: in 2019apr14 eev became a part of ELPA even despite its
+quirks!!! Its ELPA page is here:
+
+  http://elpa.gnu.org/packages/eev.html
 
 
 
@@ -2159,39 +2165,40 @@ These ones explain ideas, conventions, and usage patterns:
 
    4. (find-escripts-intro)
    5. (find-links-conv-intro)
+   6. (find-refining-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-   6. (find-eval-intro)
-   7. (find-links-intro)
-   8. (find-brxxx-intro)
-   9. (find-eepitch-intro)
-  10. (find-wrap-intro)
-  11. (find-eejump-intro)
-  12. (find-anchors-intro)
-  13. (find-code-c-d-intro)
-  14. (find-pdf-like-intro)
-  15. (find-psne-intro)
+   7. (find-eval-intro)
+   8. (find-links-intro)
+   9. (find-brxxx-intro)
+  10. (find-eepitch-intro)
+  11. (find-wrap-intro)
+  12. (find-eejump-intro)
+  13. (find-anchors-intro)
+  14. (find-code-c-d-intro)
+  15. (find-pdf-like-intro)
+  16. (find-psne-intro)
 
 These are etcs:
 
-  16. (find-multiwindow-intro)
-  17. (find-audiovideo-intro)
-  18. (find-rcirc-intro)
-  19. (find-templates-intro)
-  20. (find-videos-intro)
+  17. (find-multiwindow-intro)
+  18. (find-audiovideo-intro)
+  19. (find-rcirc-intro)
+  20. (find-templates-intro)
+  21. (find-videos-intro)
 
 These ones explain advanced features that require extra setup:
 
-  21. (find-prepared-intro)
-  22. (find-bounded-intro)
-  23. (find-channels-intro)
+  22. (find-prepared-intro)
+  23. (find-bounded-intro)
+  24. (find-channels-intro)
 
 These ones are obsolete:
 
-  24. (find-emacs-intro)
-  25. (find-defun-intro)
+  25. (find-emacs-intro)
+  26. (find-defun-intro)
 
 Item 20 is an index of the (old) video tutorials, with scripts
 for downloading local copies of them and links to important
@@ -2266,6 +2273,287 @@ For the full lists of keybindings, see:
 
 ;; (find-eev-intro)
 
+
+
+;;;            __ _       _             
+;;;  _ __ ___ / _(_)_ __ (_)_ __   __ _ 
+;;; | '__/ _ \ |_| | '_ \| | '_ \ / _` |
+;;; | | |  __/  _| | | | | | | | | (_| |
+;;; |_|  \___|_| |_|_| |_|_|_| |_|\__, |
+;;;                               |___/ 
+;;
+;; «find-refining-intro» (to ".find-refining-intro")
+;; (find-intro-links "refining")
+
+(defun find-refining-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-refining-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-refining-intro)
+Source code:  (find-efunction 'find-refining-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+This buffer is _temporary_ and _editable_.
+Is is meant as both a tutorial and a sandbox.
+
+
+(find-eval-intro \"9. Producing and refining hyperlinks\")
+(find-emacs-keys-intro \"and refining them\")
+(find-eval-intro \"6. Refining hyperlinks\")
+
+
+
+
+1. Pos-spec-lists
+=================
+Most hyperlinks functions defined by eev can be \"refined\" by
+the addition of extra arguments. These extra arguments are called
+a \"pos-spec\" (or a \"pos-spec-list\") and they specify a
+position in the target buffer. The first argument means a certain
+line number, when it is a number, or the first occurrence of a
+certain string, when it is a string. Try:
+
+  (find-enode \"Command Index\")
+  (find-enode \"Command Index\" \"eval-last-sexp\")
+
+Further arguments mean either \"move down n lines\" or \"search
+for the next occurrence of a string\", depending on whether they
+are numbers or strings. Try:
+
+  (find-sh \"seq 2095 2115\")
+  (find-sh \"seq 2095 2115\" \"2100\")
+  (find-sh \"seq 2095 2115\" \"2100\" \"9\")
+  (find-sh \"seq 2095 2115\" \"2100\" 2)
+
+In most cases an empty pos-spec-list, like this,
+
+  (find-sh \"seq 2095 2115\")
+
+means: \"if the target buffer already exists then just open it\"
+- so that following that hyperlink would jump to the current
+position of the point in that buffer.
+
+Pos-spec-lists are usually interpreted by the function
+`ee-goto-position'. The first argument is interpreted in a
+special way, according to its type:
+
+    string -> jump to the first occurrence of
+              that string in the buffer
+    number -> jump to the n-th line
+
+and the other arguments are interpreted (recursively) by
+`ee-goto-rest':
+
+    string -> jump to the next occurence of that string
+    number -> move down n lines
+    list   -> evaluate the list
+
+Here is an example in which one of the arguments is a list.
+Suggestion: execute it with `M-2 M-e'.
+
+  (find-sh \"seq 2095 2115\" \"2100\" \"9\" '(eek \"!!!\"))
+
+There are some variants of `ee-goto-position' in which the first
+argument is interpreted in a different way, but we will not
+discuss them here. See:
+
+  (find-efunction 'ee-goto-anchor)
+  (find-eev \"eev-pdflike.el\" \"ee-goto-position-page\")
+
+If you want to add support for more complex pos-spec-lists, just
+replace `ee-goto-rest' with your own extended version.
+
+
+
+
+2. Refining hyperlinks
+======================
+To _refine_ a hyperlink means to add items to its pos-spec-list
+to make it point to a more precise location. For example, in the
+links below the first one points to an \"intro\", the second
+points to a section in it, and the third points to an important
+idea in that section:
+
+  (find-escripts-intro)
+  (find-escripts-intro \"5. Tools for writing e-scripts\")
+  (find-escripts-intro \"5. Tools for writing e-scripts\" \"alternate\")
+
+The paragraph where the word \"alternate\" is talks about how to
+alternate between a \"task\" and \"taking notes\" without losing
+focus on the \"task\". Eev has some keys sequences for doing
+that:
+
+  M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
+  M-h M-2   - `ee-duplicate-this-line'
+  M-h M-y   - `ee-yank-pos-spec'
+  M-h M-w   - `ee-copy-this-line-to-kill-ring'
+
+Let me explain them starting by the two middle ones. This sexp
+
+  (kill-new \"Tools for\")
+
+puts the string \"Tools for\" on the top of the kill ring; we can
+use it to simulate what happens when the user marks a region
+containing that string and runs `M-w'. See:
+
+  (find-enode \"Kill Ring\")
+  (find-emacs-keys-intro \"3. Cutting & pasting\")
+
+Try the first two sexps below:
+
+  (kill-new \"Tools for\")
+  (eek \"<down>  M-h M-2  M-h M-y\")
+  (find-escripts-intro)
+
+The `eek' duplicates the line with \"(find-escripts-intro)\" and
+then runs `M-h M-y' (`ee-yank-pos-spec') on it; `M-h M-y' is
+based on `C-y' (`yank'),
+
+  (find-enode \"Yanking\")
+
+but `M-h M-y' \"yanks\" the text at the end of the sexp, in
+quotes, as an new argument.
+
+
+
+
+3. Three buffers
+================
+One very common usage pattern involves three buffers:
+
+  1. a buffer where we are storing our notes (the \"notes
+     buffer\").
+
+  2. a buffer with something interesting that we want to create a
+     link to (the \"target buffer\"),
+
+  3. a temporary buffer with editable hyperlinks, usually created
+     by `find-here-links' (the \"elinks buffer\").
+
+Usually beginners use the file \"~/TODO\" - that can be accessed
+with `M-1 M-j' - for all the e-script notes that they create;
+learning to keep notes in several files is a skill that comes
+later.
+
+Let's take a concrete example. We found something interesting in
+section 4 of `(find-escripts-intro)', and we want to keep a link
+to that; we decided to use the string \"snip, snip\" to refine
+the hyperlink -
+
+  (find-escripts-intro)
+  (find-escripts-intro \"4. How to read an e-script\")
+  (find-escripts-intro \"snip, snip\")
+
+and we want to produce the refined hyperlink - using the keys
+from the previous section -, copy it to our notes buffer, and go
+back to the target buffer. The keys to switch buffers are shown
+below,
+
+   ________           ________           ________           ________
+  |        |         :        :         |        |         |        |
+  | target | M-h M-h : elinks : M-1 M-j | notes  | M-K M-K | target |
+  | buffer | ------> : buffer : ------> | buffer | ------> | buffer |
+  |________|         :________:         |________|         |________|
+
+but there are also some things that we need to do inside each one
+of these buffers:
+
+  a. In the target buffer: mark the string \"snip, snip\" and
+     copy it to the kill ring with `M-w' (`kill-ring-save');
+
+  b. In the elinks buffer: go to the line with the hyperlink that
+     points to the target buffer - `(find-escripts-intro)' -,
+     refine it with `M-h M-2 M-h M-y', copy its line to the kill
+     ring with `M-h M-w' (`ee-copy-this-line-to-kill-ring');
+
+  c. In the notes buffer: insert the refined hyperlink with
+     `C-y' (`yank').
+
+Note: `M-h M-w' (`ee-copy-this-line-to-kill-ring') is a key
+sequence intended for beginners. I prefer to use something like
+`C-a shift-<down> M-w'.
+
+
+
+
+4. A tip for beginners
+======================
+Some people find the instructions above hard to follow because
+they force them to remember lots of things that are off-screen.
+If you run the second sexp below,
+
+  (define-key eev-mode-map \"\\M-h\\M-h\" 'find-here-links)
+  (define-key eev-mode-map \"\\M-h\\M-h\" 'find-here-links-beginner)
+
+it will rebind the key sequence `M-h M-h' to a variant of
+`find-here-links' for beginners that creates this window
+configuration when invoked as `M-3 M-h M-h':
+
+   _____________________
+  |          |          |
+  |          |  elinks  |
+  |          |  buffer  |
+  |  target  |__________|
+  |  buffer  |          |
+  |          |  notes   |
+  |          |  buffer  |
+  |__________|__________|
+
+You can then try to run the instructions in the last section with
+all the three buffers visible, switching from one buffer to
+another by clicking on their windows. Note that the order is:
+
+   _____________________
+  |          |          |
+  |         ==> elinks  |
+  |          |  buffer  |
+  |  target  |____||____|
+  |  buffer  |    \\/    |
+  |          |  notes   |
+  |         <== buffer  |
+  |__________|__________|
+
+and note also that, in the terminology of
+
+  (find-escripts-intro \"alternate\" \"task\" \"notes\")
+
+the left side is \"task\" and the right side is \"notes\".
+
+To rebind `M-h M-h' to its original function, run this:
+
+  (define-key eev-mode-map \"\\M-h\\M-h\" 'find-here-links)
+
+or restart Emacs.
+
+The big figure below shows all the keys sequences:
+
+   _______________________________________
+  |                 |                     |
+  |                 |       elinks        |
+  |   target    `M-h M-h'   buffer:       |
+  |   buffer:   ::::::::>   `M-h M-y      |
+  |   `M-w'         |        M-h M-w'     |
+  |                 |                     |
+  |                 |        ::`M-1 M-j'  |
+  |                 |_______ :: __________|
+  |                 |        \\/           |
+  |                 |                     |
+  |             `M-K M-K'   notes         |
+  |             <::::::::   buffer:       |
+  |                 |       `C-y'         |
+  |                 |                     |
+  |_________________|_____________________|
+
+
+
+
+
+
+
+
+
+" pos-spec-list)))
+
+;; (find-refining-intro)
 
 
 
@@ -6402,8 +6690,8 @@ discussion of free software projects happen), called
 
 
 
-1. The example the I use in workshops
-=====================================
+1. The example that I use in workshops
+======================================
 Let's start with an example. In
 
   (setq rcirc-default-nick \"hakuryo\")
@@ -8504,7 +8792,7 @@ reviewed in the subsections below.
 
   # (find-fline \"/tmp/lua-intro.e\")
   # (find-anchor \"/tmp/lua-intro.e\" \"intro:types\")
-  # (defun eejump-11 () (find-fline \"/tmp/lua-intro.e\"))
+  # (defun eejump-71 () (find-fline \"/tmp/lua-intro.e\"))
 
   --snip, snip--
 
@@ -8708,7 +8996,7 @@ about downloading and using an eev-based Lua tutorial. Let's
 think of each of these blocks as a _task_.
 
 The task \"install Lua5.1\" is performed in one way if we're
-doing it for the first time, and in a different was if we're
+doing it for the first time, and in a different way if we're
 doing it for the n-th time with some memory of what we did in the
 previous times and of what we found important and what not.
 Performing a task like this consists of several steps, that can

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr14
+;; Version:    2019may11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -336,6 +336,13 @@ This is like `find-rcirc-buffer-3a' but uses
 
 
 
+;; See: (find-efunction 'eepitch)
+;;      (find-efunction 'eepitch-to-buffer)
+(defun eepitch-freenode (channel)
+  (interactive) (eepitch '(find-freenode channel)))
+
+
+
 
 ;;;   __                               _            _ _       _        
 ;;;  / _|_ __ ___  ___ _ __   ___   __| | ___      | (_)_ __ | | _____ 
@@ -345,20 +352,33 @@ This is like `find-rcirc-buffer-3a' but uses
 ;;;                                                                    
 ;; «find-freenode-links» (to ".find-freenode-links")
 
-(defun find-freenode-links (&optional c channel &rest pos-spec-list)
+(defun find-freenode-links (&optional c channels &rest pos-spec-list)
 "Visit a temporary buffer containing code for connecting to a freenode channel."
   (interactive)
   (setq c (or c "{c}"))
-  (setq channel (or channel "{channel}"))
-  (apply 'find-elinks
-   `((find-freenode-links ,c ,channel)
-     (find-freenode-links "e" "#eev")
-     (find-freenode-links)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-freenode-links)
-     (find-efunction 'find-freenode-2a)
-     ""
-     ,(ee-template0 "\
+  (setq channels (or channels "{channels}"))
+  (let ((channel (car (ee-split channels))))
+    (apply 'find-elinks
+     `((find-freenode-links ,c ,channels)
+       (find-freenode-links "e" "#eev")
+       (find-freenode-links)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;; (find-efunction 'find-freenode-links)
+       ;; (find-efunction 'find-freenode-2a)
+       ""
+       ,(ee-template0 "\
+;; To copy this to your .emacs, use:
+;; (ee-copy-rest 3 '(find-fline \"~/.emacs\"))
+
+
+
+;; Use (setq rcirc-default-nick-name ...) to set your nickname.
+;; The default is to use \"#eev\" as the list of \"initial channels\",
+;; the same list as the list of channels to always reconnect to, and
+;; `M-x e3' and `M-x e2' to create the window setups described here:
+;;
+;;   (find-rcirc-intro \"1. The example that I use in workshops\")
+;;
 (setq rcirc-default-nick \"hakuryo\")
 (setq rcirc-default-nick \"{(user-login-name)}\")
 (setq ee-freenode-ichannels {(ee-pp0 ee-freenode-ichannels)})
@@ -366,11 +386,13 @@ This is like `find-rcirc-buffer-3a' but uses
 (defun {c}2 () (interactive) (find-freenode-2a \"{channel}\"))
 (defun {c}3 () (interactive) (find-freenode-3a \"{channel}\"))
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 ;; Tests: (find-freenode-links)
 ;;        (find-freenode-links "e" "#eev")
+;;        (find-freenode-links "e" "#eev #emacs")
+;;   (find-rcirc-intro)
 
 (provide 'eev-rcirc)
 
