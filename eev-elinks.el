@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019may17
+;; Version:    2019jun10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -76,6 +76,8 @@
 
 ;; «.find-here-links»		(to "find-here-links")
 
+;; «.find-code-c-d-links»	(to "find-code-c-d-links")
+;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 
 
 
@@ -229,6 +231,7 @@ The buffer is put in Emacs Lisp mode."
   (interactive (find-function-read))
   (apply 'find-elinks
    `((find-efunction-links ',f ,@pos-spec-list)
+     (eek ,(format "M-h M-f  %s" f))
      ,@(ee-find-efunction-links f)
      )
    pos-spec-list))
@@ -267,7 +270,7 @@ This is an internal function used by `find-efunction-links' and
 ;; «find-evariable-links» (to ".find-evariable-links")
 ;; (find-find-links-links "\\M-v" "evariable" "var")
 ;; A test: (find-evariable-links 'line-move-visual)
-;;                  (eek "M-h M-v line-move-visual")
+;;                 (eek "M-h M-v  line-move-visual")
 
 ;; Moved to eev-mode.el:
 ;; (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links)
@@ -278,6 +281,7 @@ This is an internal function used by `find-efunction-links' and
   (interactive (find-function-read 'variable))
   (apply 'find-elinks
    `((find-evariable-links ',var ,@pos-spec-list)
+     (eek ,(format "M-h M-v  %s" var))
      ;; Convention: the first sexp always regenerates the buffer.
      ,var
      (describe-variable ',var)
@@ -1290,6 +1294,46 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 
 
+
+;;;   __ _           _                     _                 _ _       _        
+;;;  / _(_)_ __   __| |       ___ ___   __| | _____/\__     | (_)_ __ | | _____ 
+;;; | |_| | '_ \ / _` |_____ / __/ _ \ / _` |/ _ \    /_____| | | '_ \| |/ / __|
+;;; |  _| | | | | (_| |_____| (_| (_) | (_| |  __/_  _\_____| | | | | |   <\__ \
+;;; |_| |_|_| |_|\__,_|      \___\___/ \__,_|\___| \/       |_|_|_| |_|_|\_\___/
+;;;                                                                             
+;; «find-code-c-d-links»  (to ".find-code-c-d-links")
+
+
+;; «find-code-pdf-links»  (to ".find-code-pdf-links")
+;; Tests:
+;; (find-fline          "/usr/local/texlive/2018/texmf-dist/doc/latex/base/")
+;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf")
+;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf" "foo")
+
+(defun find-code-pdf-links (&optional fname c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks to a PDF file."
+  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (setq fname (or fname "{fname}"))
+  (setq c (or c "{c}"))
+  (let ((dir (file-name-directory fname)))
+    (apply 'find-elinks-elisp
+     `((find-code-pdf-links ,fname ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;; (find-efunction 'find-code-pdf-links)
+       ,(ee-template0 "\
+;; See: (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
+;;      (find-eev-quick-intro \"9.4. Shorter hyperlinks to PDF files\")
+
+;; (find-fline {(ee-S (file-name-directory fname))})
+;; (find-pdf-page \"{fname}\")
+;; (find-pdf-text \"{fname}\")
+\(code-pdf-page \"{c}\" \"{fname}\")
+\(code-pdf-text \"{c}\" \"{fname}\")
+;; \(find-{c}page)
+;; \(find-{c}text)
+")
+       )
+     pos-spec-list)))
 
 
 

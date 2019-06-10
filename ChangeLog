@@ -1,3 +1,14 @@
+2019-06-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* .dir-locals.el: new file.
+
+	* eev-elinks.el (find-code-pdf-links): new function.
+
+2019-05-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-efunction-links): added an `eek' link.
+	(find-evariable-links): added an ``eek' link.
+
 2019-05-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (find-here-links-3): new function.

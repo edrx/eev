@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019may17
+;; Version:    2019jun05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1456,7 +1456,7 @@ what is important in that page); the second sexp goes to the page
 3 of the PDF converted to text, searches for the string \"LECTURE
 I.\" and places the cursor right after the end of it.
 
-In section 10.3 we will see how to generate with just a few
+In section 10.4 we will see how to generate with just a few
 keystrokes a short hyperlink to a page of a PDF and a short
 hyperlink to a string in a page of a PDF.
 
@@ -1599,8 +1599,51 @@ used \"-110\" as the offset.
 
 
 
+
 10.5. Generating short hyperlinks to anchors
 --------------------------------------------
+
+
+
+
+
+
+11. Generating `code-c-d's and friends
+======================================
+There are two main ways to generate lines like these
+
+  (code-c-d      \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\")
+  (code-pdf-page \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf\")
+  (code-pdf-text \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf\")
+
+without having to type much. One way, that is somewhat confusing,
+is with `M-C' (`eewrap-code-c-d') and `M-P' (`eewrap-pdflike');
+you can test it by running the `eek' sexps below:
+
+  (eek \"<down> M-C\")
+  asy /usr/local/texlive/2019/texmf-dist/doc/asymptote/
+
+  (eek \"<down> M-P\")
+  asy /usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf
+
+We will only discuss here the other way.
+
+
+
+11.1. `find-code-c-d-links'
+---------------------------
+
+11.2. `find-code-pdf-links'
+---------------------------
+Let's call a pair of lines like the ones above, in which we have
+a call to `code-pdf-page' and a call to `code-pdf-text', both
+pointing to the same PDF file, a \"code-pdf pair\". One quick way
+to generate a code-pdf pair is to visit the directory where your
+PDF file is, put the point on the line of the PDF, and run `M-x
+find-code-pdf-links'. Try it here:
+
+  (find-fline \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
+
 
 
 
@@ -3088,6 +3131,16 @@ and `find-efunction' don't work on them; in a distribution with
 only the \".elc\"s of eev users wouldn't have access to the
 documentation and examples in the comments of the source files.)
 
+
+
+
+
+10.4. Quote and backquote
+-------------------------
+Eev uses backquote a lot and avoids macros.
+
+  (find-elnode \"Backquote\")
+  (find-elnode \"Macros\")
 
 
 
