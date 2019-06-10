@@ -967,6 +967,8 @@ See: (find-pdf-like-intro)
     (apply 'find-elinks `(
       (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
       (find-efunction 'find-pdflike-page-links)
+      (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
+      (find-eev-quick-intro "11.1. `find-pdf-links'")
       ""
       ,@(ee-pdflike-page-links page bufname offset)
       ) rest)
