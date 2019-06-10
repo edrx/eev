@@ -1,8 +1,14 @@
 2019-06-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
-	* .dir-locals.el: new file.
-
 	* eev-elinks.el (find-code-pdf-links): new function.
+	(find-pdf-links): new function.
+	(ee-pdflike-page-links): use `code-pdf-page' instead of
+	`code-pdf'.
+
+	* eev-mode.el (eev-mode-map-set): now `M-h M-p' is bound to
+	`find-pdf-links'.
+
+	* .dir-locals.el: new file.
 
 2019-05-24  Eduardo Ochs  <eduardoochs@gmail.com>
 

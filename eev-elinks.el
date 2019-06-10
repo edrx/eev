@@ -78,6 +78,7 @@
 
 ;; «.find-code-c-d-links»	(to "find-code-c-d-links")
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
+;; «.find-pdf-links»		(to "find-pdf-links")
 
 
 
@@ -923,7 +924,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
       (,find-cpage (+ ,offset ,page-) ,kill)
       (,find-ctext (+ ,offset ,page-) ,kill)
       ""
-      (code-pdf ,c ,fname)
+      (code-pdf-page ,c ,fname)
       (code-pdf-text ,c ,fname ,offset)
       ,(ee-HS bufname)
       )))
@@ -958,7 +959,7 @@ See: (find-pdf-like-intro)
       (,find-cpage (+ ,offset ,page-) ,kill)
       (,find-ctext (+ ,offset ,page-) ,kill)
       ""
-      (code-pdf ,c ,fname)
+      (code-pdf-page ,c ,fname)
       (code-pdf-text ,c ,fname ,offset)
       ,(ee-HS bufname)
     ) rest)
@@ -1303,7 +1304,6 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;;                                                                             
 ;; «find-code-c-d-links»  (to ".find-code-c-d-links")
 
-
 ;; «find-code-pdf-links»  (to ".find-code-pdf-links")
 ;; Tests:
 ;; (find-fline          "/usr/local/texlive/2018/texmf-dist/doc/latex/base/")
@@ -1311,7 +1311,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf" "foo")
 
 (defun find-code-pdf-links (&optional fname c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks to a PDF file."
+"Visit a temporary buffer containing hyperlinks and `code-pdf-*'s to a PDF file."
   (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
   (setq fname (or fname "{fname}"))
   (setq c (or c "{c}"))
@@ -1334,6 +1334,15 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ")
        )
      pos-spec-list)))
+
+;; «find-pdf-links»  (to ".find-pdf-links")
+;;
+(defun find-pdf-links ()
+"Run either `find-code-pdf-links' or `find-pdflike-page-links'."
+  (interactive)
+  (if (eq major-mode 'dired-mode)
+      (find-code-pdf-links (ee-dired-to-fname))
+    (find-pdflike-page-links)))
 
 
 
