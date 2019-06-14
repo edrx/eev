@@ -1,3 +1,11 @@
+2019-06-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-latex-links): added more links to the
+	tutorial.
+
+	* eev-elinks.el (find-code-pdf-links): made it generate a code-c-d
+	besides the code-pdf pair; added another link to the tutorial.
+
 2019-06-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (find-code-pdf-links): new function.

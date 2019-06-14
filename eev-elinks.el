@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun10
+;; Version:    2019jun12
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -76,7 +76,6 @@
 
 ;; «.find-here-links»		(to "find-here-links")
 
-;; «.find-code-c-d-links»	(to "find-code-c-d-links")
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
 
@@ -1304,8 +1303,6 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;; |  _| | | | | (_| |_____| (_| (_) | (_| |  __/_  _\_____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|      \___\___/ \__,_|\___| \/       |_|_|_| |_|_|\_\___/
 ;;;                                                                             
-;; «find-code-c-d-links»  (to ".find-code-c-d-links")
-
 ;; «find-code-pdf-links»  (to ".find-code-pdf-links")
 ;; Tests:
 ;; (find-fline          "/usr/local/texlive/2018/texmf-dist/doc/latex/base/")
@@ -1325,8 +1322,12 @@ This needs a temporary directory; see: (find-prepared-intro)"
        ,(ee-template0 "\
 ;; See: (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
 ;;      (find-eev-quick-intro \"9.4. Shorter hyperlinks to PDF files\")
+;;      (find-eev-quick-intro \"11.1. `find-pdf-links'\")
 
 ;; (find-fline {(ee-S (file-name-directory fname))})
+\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; \(find-{c}file \"\")
+
 ;; (find-pdf-page \"{fname}\")
 ;; (find-pdf-text \"{fname}\")
 \(code-pdf-page \"{c}\" \"{fname}\")

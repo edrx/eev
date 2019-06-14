@@ -1647,7 +1647,8 @@ the PDF, and type `M-h M-p' (`find-pdf-links'). Try it here:
 
 The exact action of `M-h M-p' depends on the major mode. If
 you're in dired mode then it supposes that you want links to the
-PDF on the current line, including a code-pdf pair, and it runs
+current directory and to the PDF on the current line - including
+a `code-c-d' and a code-pdf pair - and it runs
 `find-code-pdf-links'. The first line of the buffer will be
 something like:
 

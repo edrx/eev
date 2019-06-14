@@ -1230,7 +1230,14 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
        (find-latex-links "/tmp/test")
        ;; Convention: the first sexp always regenerates the buffer.
        ;; (find-efunction 'find-latex-links)
-       (find-eev-quick-intro "`find-latex-links'")
+       (find-eev-quick-intro "7.5. `find-latex-links'")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "change the \"{stem}\"")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "top line")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "(ee-copy-rest ...)")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "`C-y'")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "save the file foo.tex")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "execute the three defuns")
+       ""
        (ee-copy-rest 1 '(find-fline ,(concat stem ".tex")))
        ""
        ,(ee-template0 "\
