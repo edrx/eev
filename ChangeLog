@@ -1,3 +1,12 @@
+2019-06-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-emacs-keys-intro): list `M-h M-k', `M-h M-f',
+	and `M-h M-p' among the basic keys of eev.
+	(find-links-intro): Rewrote the section "The first line
+	regenerates the buffer".
+
+	* eev-eval.el (ee-eval-sexp-eol): changes in the docstring.
+
 2019-06-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-latex-links): added more links to the

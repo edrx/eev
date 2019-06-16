@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun10
+;; Version:    2019jun16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1739,6 +1739,13 @@ The keys for creating \"hyperlinks to here\" and refining them are:
             See also: (find-refining-intro \"2. Refining hyperlinks\")
                       (find-refining-intro \"4. A tip for beginners\")
 
+Some other keys that create buffers with elisp hyperlinks:
+  M-h M-k   - (find-eev \"eev-elinks.el\" \"find-ekey-links\")
+  M-h M-f   - (find-eev \"eev-elinks.el\" \"find-efunction-links\")
+  M-h M-p   - (find-eev-quick-intro \"11.1. `find-pdf-links'\")
+    See also: (find-links-intro \"5. The first line regenerates the buffer\")
+
+
 
 2. Key sequences and how to abort them
 ======================================
@@ -3215,7 +3222,7 @@ hyperlinks in scripts]
 
 (defun find-links-conv-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-links-conv-intro)*"))
-    (apply 'find-estring "\
+    (apply 'find-eintro "\
 \(Re)generate: (find-links-conv-intro)
 Source code:  (find-efunction 'find-links-conv-intro)
 More intros:  (find-eev-quick-intro)
@@ -3900,8 +3907,39 @@ Try this, with `M-2 M-e' on each line:
 
 5. The first line regenerates the buffer
 ========================================
-\[To do: explain this convention with examples; explain the
-conventions for the \"variants of the first line\"\]
+Most of the \"M-h commands\" generate buffers with elisp
+hyperlinks in which the the first line \"regenerates the
+buffers\". This means two things:
+
+  1. You can copy the first to your notes, and it will work as a
+     link to that buffer. For example:
+
+     (find-efunction 'next-line)
+     (find-evariable 'line-move-visual)
+     (find-latex-links \"/tmp/mytest\")
+     (find-latex-links \"~/latextest\")
+     (find-code-pdf-links \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\")
+     (find-code-pdf-links \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\" \"{c}\")
+     (find-code-pdf-links \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\" \"asy\")
+
+     A good way to compare the results of the two
+     `find-latex-links' and the three `find-code-pdf-links' sexps
+     above is to run them with `M-2 M-e'. The prefix `M-2' to
+     `M-e' makes the \"target\" of a sexp be displayed in a
+     second window without switching to it. See:
+
+       (find-efunctiondescr 'ee-eval-sexp-eol)
+       (find-multiwindow-intro \"find-2a\")
+
+  2. You can change the arguments of the sexp in the first line
+     and run it again, and this will regenerate the buffer with
+     some modifications. This was explained here:
+
+     (find-eev-quick-intro \"7.5. `find-latex-links'\" \"change the \\\"{stem}\\\"\")
+     (find-eev-quick-intro \"11.1. `find-pdf-links'\" \"adjust by hand\")
+
+\[To do: explain how this works in more complex templates.
+Example:\]
 
   (find-find-links-links)
   (find-find-links-links \"\\\\M-u\")
@@ -3909,6 +3947,7 @@ conventions for the \"variants of the first line\"\]
   (find-find-links-links \"\\\\M-u\" \"USERTEST\" \"a\")
   (find-find-links-links \"\\\\M-u\" \"USERTEST\" \"a b\")
   (find-find-links-links \"\\\\M-u\" \"USERTEST\" \"a b c\")
+
 
 
 
