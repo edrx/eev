@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun16
+;; Version:    2019jun21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -62,6 +62,7 @@
 ;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
 ;; «.find-eev-install-intro»	(to "find-eev-install-intro")
 ;; «.find-eev-intro»		(to "find-eev-intro")
+;; «.find-here-links-intro»	(to "find-here-links-intro")
 ;; «.find-refining-intro»	(to "find-refining-intro")
 ;;
 ;; «.find-eval-intro»		(to "find-eval-intro")
@@ -268,7 +269,7 @@ More intros:  (find-emacs-keys-intro)
               (find-links-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 The quickest way to open or recreate this is with `M-5 M-j'.
 
 
@@ -525,7 +526,13 @@ The elisp hyperlink
 
 opens this tutorial.
 
-Cutting and pasting is explained briefly in section 5.2.
+The best way to learn how to create very quickly these
+\"hyperlinks to things we saw or visited\" and to copy them to
+our notes is explained in a separate tutorial:
+
+  (find-here-links-intro)
+
+Cutting and pasting is explained briefly in section 5.2, below.
 A way to go quickly to \"~/TODO\" is explained in section 7.1.
 A way to \"refine\" hyperlinks to make them more precise is
 explained here:
@@ -539,7 +546,7 @@ explained here:
 ===============================
 Try these links (some of them need the Emacs manuals installed):
 
-  (find-emacs-intro \"Cutting & pasting\")
+  (find-emacs-keys-intro \"Cutting & pasting\")
   (find-node \"(emacs)Screen\")
   (find-efunctiondescr 'find-file)
   (find-efunction-links 'find-file)
@@ -1709,7 +1716,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 The quickest way to open or recreate this is with `M-2 M-j'.
 
 
@@ -1732,7 +1739,12 @@ The most basic keys of eev are:
   <f8>  - See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
   M-T   - See: (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
 
-The keys for creating \"hyperlinks to here\" and refining them are:
+The beginner's way of creating \"hyperlinks to here\" is with:
+  M-h M-3   - (find-here-links-intro \"4. `find-here-links-3'\")
+  M-h M-1   - (find-here-links-intro \"5. `find-here-links-1'\")
+  M-h M-w   - (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
+
+The other keys for creating hyperlinks to here and refining them are:
   M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
   M-h M-2   - `ee-duplicate-this-line'. See: (find-eval-intro \"M-h M-2\")
   M-h M-y   - `ee-yank-pos-spec'. See: (find-eval-intro \"M-h M-y\")
@@ -1893,7 +1905,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -2229,7 +2241,7 @@ Main intros:  (find-eev-quick-intro)
               (find-eev-intro)
 Index to the source files: (find-eev \"eev-load.el\")
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 Here is a list of all the available sandbox-y tutorials that
@@ -2355,6 +2367,206 @@ For the full lists of keybindings, see:
 
 
 
+;;;  _                         _ _       _        
+;;; | |__   ___ _ __ ___      | (_)_ __ | | _____ 
+;;; | '_ \ / _ \ '__/ _ \_____| | | '_ \| |/ / __|
+;;; | | | |  __/ | |  __/_____| | | | | |   <\__ \
+;;; |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
+;;;                                               
+;; «find-here-links-intro»  (to ".find-here-links-intro")
+;; (find-intro-links "here-links")
+
+(defun find-here-links-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-here-links-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-here-links-intro)
+Source code:  (find-efunction 'find-here-links-intro)
+More intros:  (find-eev-quick-intro)
+              (find-refining-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+
+1. Alternating between \"task\" and \"notes\"
+=========================================
+In the old days log books were always made of paper, and there
+was nothing automatic in taking notes with them. We would have to
+decide what to write and how to write it, and we would have to
+alternate between the \"task\" and \"taking notes\". After many
+years of practice _some_ people would learn how to take notes
+without distracting themselves much from the task at hand, and
+they would learn how to make their notes at the same time concise
+and readable enough.
+
+Nowadays, with computers, there are _some_ ways to write logs
+automatically - for example, most shells record the commands
+given to them - but the output is of low quality.
+
+Eev takes an intermediate stance between \"notes by hand\"
+and \"automatic notes\". It is possible to do
+\"task\"+\"notes\" with just a few more keystrokes than for
+doing just \"task\", but that requires learning some tricks,
+and having some practice.
+
+
+
+
+2. \"Here\"
+=========
+In this tutorial we will learn the basic technique for creating
+an elisp hyperlink to \"here\" and copying it to our notes.
+\"Here\" means the current Emacs buffer; we saw in the main
+tutorial that elisp hyperlinks like
+
+  (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
+  (find-emacs-keys-intro \"3. Cutting & pasting\")
+  (find-fline \"~/\")
+  (find-eevfile \"\")
+  (find-eevfile \"eev-blinks.el\")
+  (find-efunctiondescr 'find-file)
+  (find-enode \"Modes\")
+  (find-elnode \"Defining Functions\" \"(defun foo () 5)\")
+  (find-man \"date\")
+
+open eev tutorials (`find-xxx-intro's), directories, files,
+descriptions of emacs functions, sections of manuals in \"info\"
+format, and manpages. All the elisp hyperlinks above are of the
+kind described in the first paragraphs of this section of the
+main tutorial:
+
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
+
+They (usually) create a new buffer, and it is possible to \"go
+back\" from that buffer with `M-k' of `M-K':
+
+  (find-eval-intro \"5. Going back\")
+
+
+
+
+3. `find-here-links'
+====================
+Eev has a function, called `find-here-links' and bound to `M-h
+M-h', that is able to distinguish several kinds of \"here\"s.
+When we run it it creates a temporary buffer with lots of elisp
+hyperlinks, and when we have enough practice we can spot in a
+second which of its hyperlinks is the \"hyperlink to here\" that
+we want to copy to our notes.
+
+This tutorial is about a _variant_ of `find-here-links' that is
+more suitable for beginners.
+
+
+
+
+4. `find-here-links-3'
+======================
+Suppose that you are in a buffer with something interesting -
+\"here\" -, and you want to generate a hyperlink to it and copy
+that hyperlink to your notes. Some terminology:
+
+  1. The target of that hyperlink will be the \"here\" buffer, so
+     let's call the \"here\" buffer the \"target buffer\" from
+     now on.
+
+  2. `find-here-links' creates a temporary buffer with several
+     elisp hyperlinks - let's call that buffer the \"elinks
+     buffer\".
+
+  3. Beginners start by putting all their (executable) notes in a
+     single file, \"~/TODO\"; remember that `M-1 M-j' jumps to
+     that file. The \"notes buffer\" is a buffer visiting the
+     file \"~/TODO\".
+
+The key sequence `M-h M-3' saves the current window configuration
+in a variable called `ee-window-configuration-before-M-h-M-3',
+creates a 3-window setting like this,
+
+   _____________________
+  |          |          |
+  |          |  elinks  |
+  |          |  buffer  |
+  |  target  |__________|
+  |  buffer  |          |
+  |          |  notes   |
+  |          |  buffer  |
+  |__________|__________|
+
+and puts the cursor at the elinks buffer.
+
+
+
+
+5. `find-here-links-1'
+======================
+After creating the three windows described above we will usually
+want to select a line from the elinks buffer - the right one,
+i.e., the one with a hyperlink to the target buffer - and copy it
+to the notes buffer; the next section explains how to do this.
+
+After copying the hyperlink - or after deciding that we don't
+want to copy it - we want to restore the original window
+configuration that we had before typing `M-h M-3'. We can do that
+by typing `M-h M-1' (`find-here-links-1'); I chose to use the
+suffix \"1\" because in most cases the original window
+configuration has a single window with the target buffer in it,
+and the \"1\" is a reference to this:
+
+  (find-emacs-keys-intro \"6. Windows\" \"C-x 1\")
+
+
+
+
+6. Copying the hyperlink
+========================
+When you are a beginner, the easiest way to copy an elisp
+hyperlink from the elinks buffer to the target buffer is to put
+the cursor on the line with the hyperlink, then type `M-h M-w'
+(`ee-copy-this-line-to-kill-ring'), and then go to the notes
+buffer and copy it to there with `C-y' or with the entry \"Edit
+-> Paste\" in the menu bar. When you become a slightly more
+advanced user the easiest way is the one with the key sequences
+described here:
+
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+
+
+
+
+7. Refining your hyperlinks
+===========================
+After learning the technique above, that was based on the keys:
+
+  M-h M-3  -- find-here-links-3
+  M-h M-w  -- ee-copy-this-line-to-kill-ring
+  C-y      -- yank, i.e., paste; see: (find-enode \"Kill Ring\")
+  M-h M-1  -- find-here-links-1
+
+The next steps are to learn how:
+
+  a) Refine hyperlinks. See:
+
+       (find-refining-intro \"1. Pos-spec-lists\")
+       (find-refining-intro \"2. Refining hyperlinks\")
+
+  b) Work with a single window. See:
+
+       (find-refining-intro \"3. Three buffers\")
+
+  c) Use other keys that create buffers with hyperlinks. See:
+
+       (find-emacs-keys-intro \"Some other keys that create\")
+
+
+" pos-spec-list)))
+
+;; (find-here-links-intro)
+
+
+
+
 ;;;            __ _       _             
 ;;;  _ __ ___ / _(_)_ __ (_)_ __   __ _ 
 ;;; | '__/ _ \ |_| | '_ \| | '_ \ / _` |
@@ -2373,7 +2585,7 @@ Source code:  (find-efunction 'find-refining-intro)
 More intros:  (find-eev-quick-intro)
               (find-eval-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 (find-eval-intro \"9. Producing and refining hyperlinks\")
@@ -3229,7 +3441,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -3684,7 +3896,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -3918,12 +4130,11 @@ buffers\". This means two things:
      (find-evariable 'line-move-visual)
      (find-latex-links \"/tmp/mytest\")
      (find-latex-links \"~/latextest\")
-     (find-code-pdf-links \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\")
      (find-code-pdf-links \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\" \"{c}\")
      (find-code-pdf-links \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/\" \"asy\")
 
      A good way to compare the results of the two
-     `find-latex-links' and the three `find-code-pdf-links' sexps
+     `find-latex-links' and the two `find-code-pdf-links' sexps
      above is to run them with `M-2 M-e'. The prefix `M-2' to
      `M-e' makes the \"target\" of a sexp be displayed in a
      second window without switching to it. See:
@@ -4077,7 +4288,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-wrap-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial (for eepitch) and a sandbox.
+It is meant as both a tutorial (for eepitch) and a sandbox.
 
 
 
@@ -4313,7 +4524,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -4546,7 +4757,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -4838,7 +5049,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -4984,7 +5195,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -5155,7 +5366,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -5509,7 +5720,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -5733,7 +5944,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -5929,7 +6140,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -6358,7 +6569,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -6792,7 +7003,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -6980,7 +7191,7 @@ More intros:  (find-eev-quick-intro)
               (find-links-conv-intro)
               (find-eev-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -7032,7 +7243,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -7262,7 +7473,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -7356,7 +7567,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -7866,7 +8077,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -8165,7 +8376,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 Note: this intro needs to be rewritten!
@@ -8391,7 +8602,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -8584,7 +8795,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 
 
@@ -8655,7 +8866,7 @@ Source code:  (find-efunction 'find-escripts-intro)
 More intros:  (find-eev-quick-intro)
               (find-eev-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 The quickest way to open or recreate this is with `M-6 M-j'.
 
 

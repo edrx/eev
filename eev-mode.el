@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun10
+;; Version:    2019jun21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -142,7 +142,9 @@ and: (find-eval-intro \"`M-k'\")"
   ;; See: (find-eval-intro "Producing and refining hyperlinks")
   ;;      (find-eval-intro "`M-h M-2'")
   ;; Source: (find-eev "eev-edit.el")
+  (define-key eev-mode-map "\M-h\M-1" 'find-here-links-1)
   (define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
+  (define-key eev-mode-map "\M-h\M-3" 'find-here-links-3)
   (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
   (define-key eev-mode-map "\M-h\M-w" 'ee-copy-this-line-to-kill-ring)
   (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)

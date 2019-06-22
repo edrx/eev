@@ -75,6 +75,8 @@
 ;; «.find-color-links»		(to "find-color-links")
 
 ;; «.find-here-links»		(to "find-here-links")
+;; «.find-here-links-beginner»	(to "find-here-links-beginner")
+;; «.find-here-links-3»		(to "find-here-links-3")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -1258,6 +1260,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
   `(,(ee-H "See: ")
     (find-eev-quick-intro "4.1. `find-here-links'")
     (find-emacs-keys-intro "1. Basic keys (eev)" "M-h M-h")
+    (find-here-links-intro "4. `find-here-links-3'")
     ))
 
 ;; (find-find-links-links "\\M-h" "here" "")
@@ -1279,19 +1282,41 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 
 
+;; «find-here-links-beginner»  (to ".find-here-links-beginner")
 ;; This is a hack for beginners that is explained in a tutorial. See:
 ;; (find-refining-intro "4. A tip for beginners")
 ;; (find-refining-intro "4. A tip for beginners" "find-here-links-beginner")
 ;;
+;; «find-here-links-3»  (to ".find-here-links-3")
+(defvar ee-window-configuration-before-M-h-M-3 nil)
+
 (defun find-here-links-3 ()
-  "A variant of `find-here-links' that creates a three-window setting."
-  (interactive "P")
+  "A variant of `find-here-links' that creates a three-window setting.
+Before creating the three windows this function tries to save the
+current window configuration to the variable
+`ee-window-configuration-before-M-h-M-3', but if that variable is
+not nil we abort instead of overwriting it.
+See: (find-here-links-intro \"4. `find-here-links-3'\")"
+  (interactive)
+  (if ee-window-configuration-before-M-h-M-3
+      (error))
+  (setq ee-window-configuration-before-M-h-M-3
+	(current-window-configuration))
   (find-wset "13_o2_o_coo" nil '(find-here-links) '(eejump-1)))
+
+(defun find-here-links-1 ()
+  "Restore the window configuration before `find-here-links-3'.
+See: (find-here-links-intro \"5. `find-here-links-1'\")"
+  (interactive)
+  (set-window-configuration ee-window-configuration-before-M-h-M-3)
+  (setq ee-window-configuration-before-M-h-M-3 nil))
+
 
 (defun find-here-links-beginner (&optional arg)
   "A variant of `find-here-links' that may create a three-window setting."
   (interactive "P")
   (if arg (find-here-links-3) (find-here-links)))
+
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019may16
+;; Version:    2019jun21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -299,7 +299,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 Hello
 =====
