@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun21
+;; Version:    2019jun22
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2252,47 +2252,48 @@ recommended reading order. These are the basic ones:
    1. (find-emacs-keys-intro)
    2. (find-eev-intro)
    3. (find-eev-install-intro)
+   4. (find-here-links-intro)
+   5. (find-refining-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-   4. (find-escripts-intro)
-   5. (find-links-conv-intro)
-   6. (find-refining-intro)
+   6. (find-escripts-intro)
+   7. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-   7. (find-eval-intro)
-   8. (find-links-intro)
-   9. (find-brxxx-intro)
-  10. (find-eepitch-intro)
-  11. (find-wrap-intro)
-  12. (find-eejump-intro)
-  13. (find-anchors-intro)
-  14. (find-code-c-d-intro)
-  15. (find-pdf-like-intro)
-  16. (find-psne-intro)
+   8. (find-eval-intro)
+   9. (find-links-intro)
+  10. (find-brxxx-intro)
+  11. (find-eepitch-intro)
+  12. (find-wrap-intro)
+  13. (find-eejump-intro)
+  14. (find-anchors-intro)
+  15. (find-code-c-d-intro)
+  16. (find-pdf-like-intro)
+  17. (find-psne-intro)
 
 These are etcs:
 
-  17. (find-multiwindow-intro)
-  18. (find-audiovideo-intro)
-  19. (find-rcirc-intro)
-  20. (find-templates-intro)
-  21. (find-videos-intro)
+  18. (find-multiwindow-intro)
+  19. (find-audiovideo-intro)
+  20. (find-rcirc-intro)
+  21. (find-templates-intro)
+  22. (find-videos-intro)
 
 These ones explain advanced features that require extra setup:
 
-  22. (find-prepared-intro)
-  23. (find-bounded-intro)
-  24. (find-channels-intro)
+  23. (find-prepared-intro)
+  24. (find-bounded-intro)
+  25. (find-channels-intro)
 
 These ones are obsolete:
 
-  25. (find-emacs-intro)
-  26. (find-defun-intro)
+  26. (find-emacs-intro)
+  27. (find-defun-intro)
 
-Item 20 is an index of the (old) video tutorials, with scripts
+Item 22 is an index of the (old) video tutorials, with scripts
 for downloading local copies of them and links to important
 positions in the videos.
 

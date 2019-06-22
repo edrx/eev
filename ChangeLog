@@ -1,3 +1,8 @@
+2019-06-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el: make `find-pdf-page' use texworks on M$ Windows.
+	(ee-pdftotext-program, ee-texworks-program): new variables.
+
 2019-06-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-here-links-intro): new function.
