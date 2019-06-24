@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun23
+;; Version:    2019jun24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1807,7 +1807,7 @@ The beginner's way of creating \"hyperlinks to here\" is with:
   M-h M-w   - (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
 
 The other keys for creating hyperlinks to here and refining them are:
-  M-h M-h   - `find-here-links'. See: (find-eev-quick-intro \"`M-h M-h'\")
+  M-h M-h   - `find-here-links': (find-eev-quick-intro \"4.1. `find-here-links'\")
   M-h M-2   - `ee-duplicate-this-line'. See: (find-eval-intro \"M-h M-2\")
   M-h M-y   - `ee-yank-pos-spec'. See: (find-eval-intro \"M-h M-y\")
             See also: (find-refining-intro \"2. Refining hyperlinks\")
@@ -2573,19 +2573,45 @@ and the \"1\" is a reference to this:
 
   (find-emacs-keys-intro \"6. Windows\" \"C-x 1\")
 
+Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
+
+   _______________           _____________________           ________________ 
+  |               |	    |          |          |	    |                |
+  |               |	    |          |  elinks  |	    |                |
+  |               | 	    |          |  buffer  |	    |                |
+  |    target     | M-m M-3 |  target  |__________| M-h M-1 |     target     |
+  |    buffer     | ------> |  buffer  |          | ------> |     buffer     |
+  |               |	    |          |  notes   |	    |                |
+  |               |	    |          |  buffer  |	    |                |
+  |_______________|	    |__________|__________|	    |________________|
+
 
 
 
 6. Copying the hyperlink
 ========================
 When you are a beginner, the easiest way to copy an elisp
-hyperlink from the elinks buffer to the target buffer is to put
+hyperlink from the elinks buffer to the notes buffer is to put
 the cursor on the line with the hyperlink, then type `M-h M-w'
 (`ee-copy-this-line-to-kill-ring'), and then go to the notes
 buffer and copy it to there with `C-y' or with the entry \"Edit
--> Paste\" in the menu bar. When you become a slightly more
-advanced user the easiest way is the one with the key sequences
-described here:
+-> Paste\" in the menu bar. Note that in the three-window setting
+copying a hyperlink from the elinks buffer to the notes buffer
+means copying it from the upper right window to the lower right
+window:
+
+   _____________________
+  |          |          |
+  |          |  elinks  |
+  |          |  buffer  |
+  |  target  |____||____|
+  |  buffer  |    \\/    |
+  |          |  notes   |
+  |          |  buffer  |
+  |__________|__________|
+
+When you become a slightly more advanced user the easiest way is
+the one with the key sequences described here:
 
   (find-eev-quick-intro \"5.2. Cutting and pasting\")
 
