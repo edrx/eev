@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun12
+;; Version:    2019jun23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -234,6 +234,8 @@ The buffer is put in Emacs Lisp mode."
   (apply 'find-elinks
    `((find-efunction-links ',f ,@pos-spec-list)
      (eek ,(format "M-h M-f  %s" f))
+     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
+     ""
      ,@(ee-find-efunction-links f)
      )
    pos-spec-list))
@@ -242,23 +244,24 @@ The buffer is put in Emacs Lisp mode."
   "Return a list of hyperlinks for F (a function symbol).
 This is an internal function used by `find-efunction-links' and
 `find-ekey-links'."
-  `((where-is ',f)
-    (describe-function ',f)
-    (find-efunctiondescr ',f)
+  `((find-efunctiondescr ',f)
     (find-efunction ',f)
     (find-efunctionpp ',f)
     (find-efunctiond ',f)
-    ;; (find-eCfunction ',f)		; obsolete
-    (find-estring (documentation ',f))
-    (find-estring (documentation ',f t))
-    (symbol-file ',f 'defun)
-    (find-fline (symbol-file ',f 'defun))
     ""
     ,@(if (commandp f)
 	  `((Info-goto-emacs-command-node ',f)
 	    (find-enode "Command Index" ,(format "* %S:" f))
 	    ))
     (find-elnode "Index" ,(format "* %S:" f))
+    ""
+    (where-is ',f)
+    (symbol-file ',f 'defun)
+    (find-fline (symbol-file ',f 'defun))
+    (find-estring (documentation ',f))
+    (find-estring (documentation ',f t))
+    (describe-function ',f)
+    ;; (find-eCfunction ',f)		; obsolete
     ))
 
 
@@ -377,14 +380,15 @@ See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
     (apply 'find-elinks
 	   `((find-ekey-links ,key ,@pos-spec-list)
 	     ;; Convention: the first sexp always regenerates the buffer.
-	     (find-ekey-links          ,key)
-	     (eek ,(format "M-h M-k  %s" longkey))
-	     (eek ,(format "M-h M-k  %s" longkey+))
-	     (find-efunctiondescr ',f)
-	     ""
 	     (find-elongkey-links      ,longkey)
 	     (find-elongkey-links      ,longkey+)
 	     (find-efunction-links    ',f)
+	     (eek ,(format "M-h M-k  %s" longkey))
+	     (eek ,(format "M-h M-k  %s" longkey+))
+	     (eek ,(format "M-h M-f  %s" f))
+	     ;; (find-efunctiondescr ',f)
+	     ""
+	     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
 	     ""
 	     ,@(ee-find-eboundkey-links key f)
 	     )
@@ -403,6 +407,7 @@ See `read-kbd-macro' and `edmacro-mode' for the format."
 	   `((find-elongkey-links   ,longkey)
 	     (find-ekey-links       ,key)
 	     (find-efunction-links ',f)
+	     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
 	     ""
 	     ,@(ee-find-eboundkey-links key f)
 	     )
@@ -413,23 +418,24 @@ See `read-kbd-macro' and `edmacro-mode' for the format."
   "From KEY and its binding, F, produce a list of hyperlinks.
 This is an internal function used by `find-ekey-links' and
 `find-elongkey-links'."
-  `((where-is ',f)
-    (describe-function ',f)
-    (find-efunctiondescr ',f)
+  `((find-efunctiondescr ',f)
+    (find-ekeydescr ,key)
     (find-efunction ',f)
     (find-efunctionpp ',f)
     (find-efunctiond ',f)
-    (find-estring (documentation ',f))
-    (find-estring (documentation ',f t))
     ""
-    (describe-key ,key)
-    (describe-key-briefly ,key)
-    (find-ekeydescr ,key)
     (Info-goto-emacs-key-command-node ,key)
     (Info-goto-emacs-command-node ',f)
     (find-enode "Command Index" ,(format "* %S:" f))
     (find-elnode "Index" ,(format "* %S:" f))
     ""
+    (describe-key-briefly ,key)
+    (find-estring (documentation ',f))
+    (find-estring (documentation ',f t))
+    (describe-key ,key)
+    (describe-function ',f)
+    ""
+    (where-is ',f)
     (key-description ,key)
     (format-kbd-macro ,key)
     (format-kbd-macro ,key t)
@@ -938,42 +944,14 @@ See: (find-pdf-like-intro)
   (setq page    (or page (ee-current-page)))
   (setq bufname (or bufname (buffer-name)))
   (setq offset  (or offset ee-page-offset))
-  (let* ((c          ee-page-c)
-	 (fname      ee-page-fname)
-	 (find-cpage (ee-intern "find-%spage" c))
-	 (find-ctext (ee-intern "find-%stext" c))
-	 (kill       (or (ee-last-kill) ""))
-	 (page-      (- page offset))
-	 )
-    ;;
-    '(apply 'find-elinks `(
-      (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
-      (find-efunction 'find-pdflike-page-links)
-      ""
-      (,find-cpage ,page)
-      (,find-ctext ,page)
-      (,find-cpage (+ ,offset ,page-))
-      (,find-ctext (+ ,offset ,page-))
-      ""
-      (,find-cpage ,page ,kill)
-      (,find-ctext ,page ,kill)
-      (,find-cpage (+ ,offset ,page-) ,kill)
-      (,find-ctext (+ ,offset ,page-) ,kill)
-      ""
-      (code-pdf-page ,c ,fname)
-      (code-pdf-text ,c ,fname ,offset)
-      ,(ee-HS bufname)
-    ) rest)
-    ;;
-    (apply 'find-elinks `(
-      (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
-      (find-efunction 'find-pdflike-page-links)
-      (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
-      (find-eev-quick-intro "11.1. `find-pdf-links'")
-      ""
-      ,@(ee-pdflike-page-links page bufname offset)
-      ) rest)
-    ))
+  (apply 'find-elinks `(
+    (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
+    ;; (find-efunction 'find-pdflike-page-links)
+    (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
+    (find-eev-quick-intro "11.1. `find-pdf-links'")
+    ""
+    ,@(ee-pdflike-page-links page bufname offset)
+    ) rest))
 
 ;; (find-pdflike-page-links)
 ;; (find-angg ".emacs.papers" "kopkadaly")
@@ -1345,7 +1323,8 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
        ;; Convention: the first sexp always regenerates the buffer.
        ;; (find-efunction 'find-code-pdf-links)
        ,(ee-template0 "\
-;; See: (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
 ;;      (find-eev-quick-intro \"9.4. Shorter hyperlinks to PDF files\")
 ;;      (find-eev-quick-intro \"11.1. `find-pdf-links'\")
 

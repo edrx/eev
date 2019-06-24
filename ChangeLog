@@ -1,3 +1,15 @@
+2019-06-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-eboundkey-links): reordered the links.
+
+	* eev-intro.el (find-eev-quick-intro): new section: "4.2.
+	`find-ekey-links' and friends".
+
+	* eev-elinks.el (find-ekey-links): added an (eek "M-h M-f ...").
+
+	* eev-beginner.el (eev-beginner): do not bind `M-h M-h' to
+	`find-here-links-beginner'.
+
 2019-06-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el: make `find-pdf-page' use texworks on M$ Windows.

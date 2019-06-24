@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun22
+;; Version:    2019jun23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -470,26 +470,30 @@ For example,
   (find-efunction-links 'find-file)
 
 creates this buffer, and switches to it:
-   ___________________________________________________________
-  |# (find-efunction-links 'find-file)                        |
-  |# (where-is 'find-file)                                    |
-  |# (describe-function 'find-file)                           |
-  |# (find-efunctiondescr 'find-file)                         |
-  |# (find-efunction 'find-file)                              |
-  |# (find-efunctionpp 'find-file)                            |
-  |# (find-efunctiond 'find-file)                             |
-  |# (find-estring (documentation 'find-file))                |
-  |# (find-estring (documentation 'find-file t))              |
-  |# (symbol-file 'find-file 'defun)                          |
-  |# (find-fline (symbol-file 'find-file 'defun))             |
-  |                                                           |
-  |# (Info-goto-emacs-command-node 'find-file)                |
-  |# (find-enode \"Command Index\" \"* find-file:\")              |
-  |# (find-elnode \"Index\" \"* find-file:\")                     |
-  |                                                           |
-  |                                                           |
-  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)--|
-  |___________________________________________________________|
+   ____________________________________________________________________ 
+  |# (find-efunction-links 'find-file)                                 |
+  |# (eek \"M-h M-f  find-file\")                                        |
+  |# (find-eev-quick-intro \"4.2. `find-ekey-links' and  friends\")      |
+  |                                                                    |
+  |# (find-efunctiondescr 'find-file)                                  |
+  |# (find-efunction 'find-file)                                       |
+  |# (find-efunctionpp 'find-file)                                     |
+  |# (find-efunctiond 'find-file)                                      |
+  |                                                                    |
+  |# (Info-goto-emacs-command-node 'find-file)                         |
+  |# (find-enode \"Command Index\" \"* find-file:\")                       |
+  |# (find-elnode \"Index\" \"* find-file:\")                              |
+  |                                                                    |
+  |# (where-is 'find-file)                                             |
+  |# (symbol-file 'find-file 'defun)                                   |
+  |# (find-fline (symbol-file 'find-file 'defun))                      |
+  |# (find-estring (documentation 'find-file))                         |
+  |# (find-estring (documentation 'find-file t))                       |
+  |# (describe-function 'find-file)                                    |
+  |                                                                    |
+  |                                                                    |
+  | -:**-  *Elisp hyperlinks*   All L1    (Fundamental eev)  ----------|
+  |____________________________________________________________________|
 
 
 
@@ -508,23 +512,24 @@ elisp hyperlinks buffer containing some hyperlinks to \"here\" - and how
 it does that depends on the major mode and on the name of the current
 buffer. For example, typing `M-h M-h' here generates:
 
-   ____________________________________________________________
-  |# See:                                                      |
-  |# (find-links-intro \"`find-here-links'\")                    |
-  |# (find-efunctiondescr 'eev-mode \"M-h M-h\")                 |
-  |                                                            |
-  |http://angg.twu.net/eev-intros/find-eev-quick-intro.html    |
-  |# (find-eev-quick-intro)                                    |
-  |                                                            |
-  |                                                            |
-  |--:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)  -|
-  |____________________________________________________________|
+   ___________________________________________________________________ 
+  |# See:                                                             |
+  |# (find-eev-quick-intro \"4.1. `find-here-links'\")                  |
+  |# (find-emacs-keys-intro \"1. Basic keys (eev)\" \"M-h M-h\")          |
+  |# (find-here-links-intro \"4. `find-here-links-3'\")                 |
+  |                                                                   |
+  |# http://angg.twu.net/eev-intros/find-eev-quick-intro.html         |
+  |# (find-eev-quick-intro)                                           |
+  |                                                                   |
+  |                                                                   |
+  | -:**-  *Elisp hyperlinks*   All L1     (Fundamental eev)  --------|
+  |___________________________________________________________________|
 
 The elisp hyperlink
 
   # (find-eev-quick-intro)
 
-opens this tutorial.
+at the end opens this tutorial.
 
 The best way to learn how to create very quickly these
 \"hyperlinks to things we saw or visited\" and to copy them to
@@ -538,6 +543,58 @@ A way to \"refine\" hyperlinks to make them more precise is
 explained here:
 
   (find-refining-intro \"2. Refining hyperlinks\")
+
+
+
+
+4.2. `find-ekey-links' and friends
+----------------------------------
+Emacs is huge and you will probably want to save in your notes
+many links about keys and functions that look interesting - using
+`M-2 M-j' from time to time to visit
+
+  (find-emacs-keys-intro)
+
+and learning the keys listed there will not be enough.
+
+Try the eek links below:
+
+  (eek \"M-h M-k  C-x 4 0\")
+  (eek \"M-h M-k  C-x 4 0  ;; kill-buffer-and-window\")
+  (eek \"M-h M-k  C-s\")
+  (eek \"M-h M-k  C-s  ;; isearch-forward\")
+  (eek \"M-h M-f  isearch-forward\")
+
+  (eek \"M-h M-k  M-h M-k  ;; find-ekey-links\")
+  (eek \"M-h M-k  M-h M-f  ;; find-efunction-links\")
+
+You will notice that:
+
+  1. they create temporary buffers with lots of elisp hyperlinks,
+
+  2. you can \"go back\" from these buffers with `M-k',
+
+  3. the function name after the \";;\" is a comment and is
+     ignored by Emacs (but is useful for humans),
+
+  4. you can copy these hyperlinks to your \"~/TODO\",
+
+  5. the \"M-h M-k\" and \"M-h M-f\" in the beginning are
+     reminders that we can use `M-h M-k <key-sequence>' and `M-h
+     M-f <function-name>' to create help buffers about other keys
+     and functions,
+
+  6. for _some_ keys and functions, but not all, the hyperlinks
+     like
+
+       (Info-goto-emacs-key-command-node \"\\C-s\")
+       (Info-goto-emacs-command-node 'isearch-forward)
+       (find-enode \"Command Index\" \"* isearch-forward:\")
+       (find-elnode \"Index\" \"* defun:\")
+
+     that appear near the bottom of the elisp hyperlinks buffers,
+     point to relevant points in the Emacs manuals - see the next
+     section.
 
 
 
@@ -2022,11 +2079,6 @@ Eev has a git repository at:
 
   https://github.com/edrx/eev.git
 
-All recent changes are being made at the \"UTF-8\" branch and I
-haven't learned yet how to make the master branch point to
-UTF-8... so if you clone the repository you'll have to do a
-\"checkout UTF-8\" the go to the most recent version.
-
 Try this:
 
  (eepitch-shell)
@@ -2036,7 +2088,6 @@ rm -Rfv /tmp/eev2
 mkdir   /tmp/eev2/
 cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
 cd      /tmp/eev2/
-git checkout UTF-8
 # (find-gitk \"/tmp/eev2/\")
 {
   echo '#!/bin/sh'
@@ -2589,9 +2640,11 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-(find-eval-intro \"9. Producing and refining hyperlinks\")
-(find-emacs-keys-intro \"and refining them\")
-(find-eval-intro \"6. Refining hyperlinks\")
+
+This tutorial supposes that you already know how to
+create \"hyperlinks to here\" - see:
+  (find-here-links-intro)
+  (find-emacs-keys-intro \"and refining them\")
 
 
 
@@ -2770,6 +2823,10 @@ sequence intended for beginners. I prefer to use something like
 
 4. A tip for beginners
 ======================
+TODO: Rewrite this section! It was mostly superseded by:
+
+  (find-here-links-intro \"4. `find-here-links-3'\")
+
 Some people find the instructions above hard to follow because
 they force them to remember lots of things that are off-screen.
 If you run the second sexp below,

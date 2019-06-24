@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun17
+;; Version:    2019jun23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-beginner.el>
@@ -90,10 +90,6 @@
   "Load all basic modules of eev, turn eev-mode on, and open a tutorial."
   (interactive)
   (require 'eev-load)
-  ;;
-  ;; See:   (find-eev "eev-elinks.el" "find-here-links-beginner")
-  (define-key eev-mode-map "\M-h\M-h" 'find-here-links-beginner)
-  ;;
   (eev-mode 1)
   (find-eev-quick-intro))
 
