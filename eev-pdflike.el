@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun22
+;; Version:    2019jun24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -347,10 +347,10 @@ newline are spurious - and replaces them by \"(ff)\"."
 (defvar ee-pdftotext-program "pdftotext")
 
 (defun ee-find-pdf-text (fname)
-  `(ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
+  `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 (defun ee-find-pdftotext-text (fname)
-  `(ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
+  `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 
 
@@ -377,7 +377,7 @@ newline are spurious - and replaces them by \"(ff)\"."
 (defvar ee-texworks-program "texworks")
 
 (defun  ee-find-texworkspdf-page (fname &optional page)
-  `(ee-texworks-program
+  `(,ee-texworks-program
     ,@(if page `(,(format "--position=%d" page)))
     ,fname
     ))

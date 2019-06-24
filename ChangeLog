@@ -1,11 +1,18 @@
+2019-06-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-pdf-text, ee-find-pdftotext-text)
+	(ee-find-texworkspdf-page): added the missing ","s.
+
 2019-06-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (ee-find-eboundkey-links): reordered the links.
+	(ee-find-efunction-links): reordered the links.
+	(find-efunction-links): reordered the links.
+	(find-elongkey-links): reordered the links.
+	(find-ekey-links): reordered the links.
 
 	* eev-intro.el (find-eev-quick-intro): new section: "4.2.
 	`find-ekey-links' and friends".
-
-	* eev-elinks.el (find-ekey-links): added an (eek "M-h M-f ...").
 
 	* eev-beginner.el (eev-beginner): do not bind `M-h M-h' to
 	`find-here-links-beginner'.

@@ -584,7 +584,12 @@ You will notice that:
      M-f <function-name>' to create help buffers about other keys
      and functions,
 
-  6. for _some_ keys and functions, but not all, the hyperlinks
+  6. some of the hyperlinks use low-level representations for key
+     sequences - you don't need to understand them. An example:
+
+       (find-ekey-links \"\\^X40\")
+
+  7. for _some_ keys and functions, but not all, the hyperlinks
      like
 
        (Info-goto-emacs-key-command-node \"\\C-s\")
@@ -592,7 +597,7 @@ You will notice that:
        (find-enode \"Command Index\" \"* isearch-forward:\")
        (find-elnode \"Index\" \"* defun:\")
 
-     that appear near the bottom of the elisp hyperlinks buffers,
+     that appear near the middle of the elisp hyperlinks buffers,
      point to relevant points in the Emacs manuals - see the next
      section.
 
@@ -1809,8 +1814,8 @@ The other keys for creating hyperlinks to here and refining them are:
                       (find-refining-intro \"4. A tip for beginners\")
 
 Some other keys that create buffers with elisp hyperlinks:
-  M-h M-k   - (find-eev \"eev-elinks.el\" \"find-ekey-links\")
-  M-h M-f   - (find-eev \"eev-elinks.el\" \"find-efunction-links\")
+  M-h M-k   - (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+  M-h M-f   - (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
   M-h M-p   - (find-eev-quick-intro \"11.1. `find-pdf-links'\")
     See also: (find-links-intro \"5. The first line regenerates the buffer\")
 
