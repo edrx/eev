@@ -262,6 +262,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
 More intros:  (find-emacs-keys-intro)
+              (find-here-links-intro)
               (find-eev-intro)
               (find-links-conv-intro)
               (find-escripts-intro)
@@ -2579,7 +2580,7 @@ Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
   |               |	    |          |          |	    |                |
   |               |	    |          |  elinks  |	    |                |
   |               | 	    |          |  buffer  |	    |                |
-  |    target     | M-m M-3 |  target  |__________| M-h M-1 |     target     |
+  |    target     | M-h M-3 |  target  |__________| M-h M-1 |     target     |
   |    buffer     | ------> |  buffer  |          | ------> |     buffer     |
   |               |	    |          |  notes   |	    |                |
   |               |	    |          |  buffer  |	    |                |

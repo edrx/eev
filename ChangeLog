@@ -1,5 +1,8 @@
 2019-06-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-elinks.el (find-here-links-3): ask if the user wants to
+	overwrite `ee-window-configuration-before-M-h-M-3'.
+
 	* eev-intro.el (find-here-links-intro): added some figures.
 
 	* eev-pdflike.el (ee-find-pdf-text, ee-find-pdftotext-text)
