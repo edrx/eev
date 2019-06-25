@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar10
+;; Version:    2019jun24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -131,6 +131,7 @@
 ;; «.find-djvutxt-text»			(to "find-djvutxt-text")
 ;;
 ;; «.aliases»				(to "aliases")
+;; «.aliases-windows»			(to "aliases-windows")
 ;; «.code-brxxxs»			(to "code-brxxxs")
 
 
@@ -343,11 +344,13 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; (defun ee-find-pdftotext-text (fname)
 ;;   (format "pdftotext -layout -enc Latin1 '%s' -" (ee-expand fname)))
 
+(defvar ee-pdftotext-program "pdftotext")
+
 (defun ee-find-pdf-text (fname)
-  `("pdftotext" "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
+  `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 (defun ee-find-pdftotext-text (fname)
-  `("pdftotext" "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
+  `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 
 
@@ -371,8 +374,10 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; (find-code-xxxpdf-family "texworkspdf-page")
         (code-xxxpdf-family "texworkspdf-page")
 
+(defvar ee-texworks-program "texworks")
+
 (defun  ee-find-texworkspdf-page (fname &optional page)
-  `("texworks"
+  `(,ee-texworks-program
     ,@(if page `(,(format "--position=%d" page)))
     ,fname
     ))
@@ -508,6 +513,15 @@ may want to put here code that cleans up that page information.")
 ;; (find-code-xxxpdf-alias "djvu"       "djview-page")
 ;; (find-code-xxxpdf-alias "pdf"        "xpdf-page")
 ;; (find-code-xxxpdf-alias "evince"     "evince-page")
+
+
+
+;; «aliases-windows»  (to ".aliases-windows")
+;; (find-elnode "System Environment")
+;; (find-evardescr 'system-type)
+(if (eq system-type 'windows-nt)
+    (code-xxxpdf-alias "pdf-page" "texworkspdf-page"))
+
 
 
 ;; «code-brxxxs» (to ".code-brxxxs")

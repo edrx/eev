@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019may16
+;; Version:    2019jun21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -299,7 +299,7 @@ More intros:  (find-eev-quick-intro)
               (find-eval-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
-Is is meant as both a tutorial and a sandbox.
+It is meant as both a tutorial and a sandbox.
 
 Hello
 =====
@@ -1230,7 +1230,14 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
        (find-latex-links "/tmp/test")
        ;; Convention: the first sexp always regenerates the buffer.
        ;; (find-efunction 'find-latex-links)
-       (find-eev-quick-intro "`find-latex-links'")
+       (find-eev-quick-intro "7.5. `find-latex-links'")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "change the \"{stem}\"")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "top line")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "(ee-copy-rest ...)")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "`C-y'")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "save the file foo.tex")
+       (find-eev-quick-intro "7.5. `find-latex-links'" "execute the three defuns")
+       ""
        (ee-copy-rest 1 '(find-fline ,(concat stem ".tex")))
        ""
        ,(ee-template0 "\

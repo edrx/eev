@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019jun16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -202,7 +202,22 @@ other: set EE-ARG to ARG and eval (ee-last-sexp)."
 
 (defun ee-eval-sexp-eol (&optional arg)
 "Go to the end of line, then run `ee-eval-last-sexp'.
-See: (find-eval-intro)"
+By default, evaluate sexp before eol, and print value in minibuffer.
+This is eev's variant of `C-e C-x C-e', and it can behave in
+several different ways depending on the prefix argument ARG.
+See: (find-eev-quick-intro \"`M-0 M-e'\")
+
+If ARG is:
+  nil:  evaluate the sexp with `debug-on-error' turned off
+    0:  highlight the sexp temporarily
+    1:  show the sexp as a string
+    2:  show the target of the sexp in another window
+    3:  same, but also switch to the new window
+    4:  evaluate the sexp in debug mode
+    5:  run the sexp with `debug-on-error' turned on
+    8:  eval then pretty-print the result in another buffer
+    9:  a hack for testing `call-interactively'
+other: set EE-ARG to ARG and eval (ee-last-sexp)."
   (interactive "P")
   (end-of-line)
   (ee-eval-last-sexp arg))

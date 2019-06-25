@@ -111,6 +111,7 @@
 ;; (find-eev "eev-brxxx.el")
 
 
+;; «.find-urlretrieve»	(to "find-urlretrieve")
 ;; «.find-wget»		(to "find-wget")
 ;; «.find-gitk»		(to "find-gitk")
 ;; «.find-tkdiff»	(to "find-tkdiff")
@@ -243,6 +244,48 @@
 ;; eepitch.el. See:
 ;;   (find-eevfile "eepitch.el" "defun find-comintprocess-ne ")
 ;;   (find-eevfile "eepitch.el" "defun find-comintprocess ")
+
+
+
+
+;;;             _                _        _                
+;;;  _   _ _ __| |      _ __ ___| |_ _ __(_) _____   _____ 
+;;; | | | | '__| |_____| '__/ _ \ __| '__| |/ _ \ \ / / _ \
+;;; | |_| | |  | |_____| | |  __/ |_| |  | |  __/\ V /  __/
+;;;  \__,_|_|  |_|     |_|  \___|\__|_|  |_|\___| \_/ \___|
+;;;                                                        
+;; «find-urlretrieve»  (to ".find-urlretrieve")
+;; See: (find-node "(url)Retrieving URLs" "url-retrieve-synchronously")
+;; Tests: http://angg.twu.net/e/emacs.e.html#find-urlretrieve
+;;                    (find-es "emacs"      "find-urlretrieve")
+;;
+(defun find-urlretrieve00 (url &rest pos-spec-list)
+  "Download URL with `url-retrieve-synchronously'. Show the full response."
+  (apply 'find-ebuffer (url-retrieve-synchronously url) pos-spec-list))
+
+(defun ee-urlretrieve-3 (url)
+  "Download URL with `url-retrieve-synchronously'. Return status, headers, body."
+  (find-urlretrieve00 url 1 "\n\n")
+  (let* ((header (buffer-substring 1 (- (point) 1)))
+	 (body   (buffer-substring (point) (point-max)))
+	 (status (replace-regexp-in-string "\n.*" "" header)))
+    (ee-kill-this-buffer)
+    (list status header body)))
+
+(defun find-urlretrieve0 (url)
+  "Download URL with `url-retrieve-synchronously'. Return body as a raw string."
+  (let* ((shb (ee-urlretrieve-3 url))
+	 (status (nth 0 shb))
+	 (body   (nth 2 shb)))
+    (if (equal status "HTTP/1.1 200 OK")
+	body
+      (error "%s -> %s" url status))))
+
+(defun find-urlretrieve (url &rest pos-spec-list)
+  "Download URL with `url-retrieve-synchronously'.
+TODO: detect the encoding!!!"
+  (let ((ee-buffer-name url))
+    (apply 'find-estring (find-urlretrieve0 url) pos-spec-list)))
 
 
 

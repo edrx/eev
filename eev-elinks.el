@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun10
+;; Version:    2019jun24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -75,8 +75,9 @@
 ;; «.find-color-links»		(to "find-color-links")
 
 ;; «.find-here-links»		(to "find-here-links")
+;; «.find-here-links-beginner»	(to "find-here-links-beginner")
+;; «.find-here-links-3»		(to "find-here-links-3")
 
-;; «.find-code-c-d-links»	(to "find-code-c-d-links")
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
 
@@ -233,6 +234,8 @@ The buffer is put in Emacs Lisp mode."
   (apply 'find-elinks
    `((find-efunction-links ',f ,@pos-spec-list)
      (eek ,(format "M-h M-f  %s" f))
+     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
+     ""
      ,@(ee-find-efunction-links f)
      )
    pos-spec-list))
@@ -241,23 +244,24 @@ The buffer is put in Emacs Lisp mode."
   "Return a list of hyperlinks for F (a function symbol).
 This is an internal function used by `find-efunction-links' and
 `find-ekey-links'."
-  `((where-is ',f)
-    (describe-function ',f)
-    (find-efunctiondescr ',f)
+  `((find-efunctiondescr ',f)
     (find-efunction ',f)
     (find-efunctionpp ',f)
     (find-efunctiond ',f)
-    ;; (find-eCfunction ',f)		; obsolete
-    (find-estring (documentation ',f))
-    (find-estring (documentation ',f t))
-    (symbol-file ',f 'defun)
-    (find-fline (symbol-file ',f 'defun))
     ""
     ,@(if (commandp f)
 	  `((Info-goto-emacs-command-node ',f)
 	    (find-enode "Command Index" ,(format "* %S:" f))
 	    ))
     (find-elnode "Index" ,(format "* %S:" f))
+    ""
+    (where-is ',f)
+    (symbol-file ',f 'defun)
+    (find-fline (symbol-file ',f 'defun))
+    (find-estring (documentation ',f))
+    (find-estring (documentation ',f t))
+    (describe-function ',f)
+    ;; (find-eCfunction ',f)		; obsolete
     ))
 
 
@@ -376,14 +380,15 @@ See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
     (apply 'find-elinks
 	   `((find-ekey-links ,key ,@pos-spec-list)
 	     ;; Convention: the first sexp always regenerates the buffer.
-	     (find-ekey-links          ,key)
-	     (eek ,(format "M-h M-k  %s" longkey))
-	     (eek ,(format "M-h M-k  %s" longkey+))
-	     (find-efunctiondescr ',f)
-	     ""
 	     (find-elongkey-links      ,longkey)
 	     (find-elongkey-links      ,longkey+)
 	     (find-efunction-links    ',f)
+	     (eek ,(format "M-h M-k  %s" longkey))
+	     (eek ,(format "M-h M-k  %s" longkey+))
+	     (eek ,(format "M-h M-f  %s" f))
+	     ;; (find-efunctiondescr ',f)
+	     ""
+	     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
 	     ""
 	     ,@(ee-find-eboundkey-links key f)
 	     )
@@ -402,6 +407,7 @@ See `read-kbd-macro' and `edmacro-mode' for the format."
 	   `((find-elongkey-links   ,longkey)
 	     (find-ekey-links       ,key)
 	     (find-efunction-links ',f)
+	     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
 	     ""
 	     ,@(ee-find-eboundkey-links key f)
 	     )
@@ -412,23 +418,24 @@ See `read-kbd-macro' and `edmacro-mode' for the format."
   "From KEY and its binding, F, produce a list of hyperlinks.
 This is an internal function used by `find-ekey-links' and
 `find-elongkey-links'."
-  `((where-is ',f)
-    (describe-function ',f)
-    (find-efunctiondescr ',f)
+  `((find-efunctiondescr ',f)
+    (find-ekeydescr ,key)
     (find-efunction ',f)
     (find-efunctionpp ',f)
     (find-efunctiond ',f)
-    (find-estring (documentation ',f))
-    (find-estring (documentation ',f t))
     ""
-    (describe-key ,key)
-    (describe-key-briefly ,key)
-    (find-ekeydescr ,key)
     (Info-goto-emacs-key-command-node ,key)
     (Info-goto-emacs-command-node ',f)
     (find-enode "Command Index" ,(format "* %S:" f))
     (find-elnode "Index" ,(format "* %S:" f))
     ""
+    (describe-key-briefly ,key)
+    (find-estring (documentation ',f))
+    (find-estring (documentation ',f t))
+    (describe-key ,key)
+    (describe-function ',f)
+    ""
+    (where-is ',f)
     (key-description ,key)
     (format-kbd-macro ,key)
     (format-kbd-macro ,key t)
@@ -937,42 +944,14 @@ See: (find-pdf-like-intro)
   (setq page    (or page (ee-current-page)))
   (setq bufname (or bufname (buffer-name)))
   (setq offset  (or offset ee-page-offset))
-  (let* ((c          ee-page-c)
-	 (fname      ee-page-fname)
-	 (find-cpage (ee-intern "find-%spage" c))
-	 (find-ctext (ee-intern "find-%stext" c))
-	 (kill       (or (ee-last-kill) ""))
-	 (page-      (- page offset))
-	 )
-    ;;
-    '(apply 'find-elinks `(
-      (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
-      (find-efunction 'find-pdflike-page-links)
-      ""
-      (,find-cpage ,page)
-      (,find-ctext ,page)
-      (,find-cpage (+ ,offset ,page-))
-      (,find-ctext (+ ,offset ,page-))
-      ""
-      (,find-cpage ,page ,kill)
-      (,find-ctext ,page ,kill)
-      (,find-cpage (+ ,offset ,page-) ,kill)
-      (,find-ctext (+ ,offset ,page-) ,kill)
-      ""
-      (code-pdf-page ,c ,fname)
-      (code-pdf-text ,c ,fname ,offset)
-      ,(ee-HS bufname)
-    ) rest)
-    ;;
-    (apply 'find-elinks `(
-      (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
-      (find-efunction 'find-pdflike-page-links)
-      (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
-      (find-eev-quick-intro "11.1. `find-pdf-links'")
-      ""
-      ,@(ee-pdflike-page-links page bufname offset)
-      ) rest)
-    ))
+  (apply 'find-elinks `(
+    (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
+    ;; (find-efunction 'find-pdflike-page-links)
+    (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
+    (find-eev-quick-intro "11.1. `find-pdf-links'")
+    ""
+    ,@(ee-pdflike-page-links page bufname offset)
+    ) rest))
 
 ;; (find-pdflike-page-links)
 ;; (find-angg ".emacs.papers" "kopkadaly")
@@ -1259,6 +1238,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
   `(,(ee-H "See: ")
     (find-eev-quick-intro "4.1. `find-here-links'")
     (find-emacs-keys-intro "1. Basic keys (eev)" "M-h M-h")
+    (find-here-links-intro "4. `find-here-links-3'")
     ))
 
 ;; (find-find-links-links "\\M-h" "here" "")
@@ -1280,19 +1260,48 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 
 
+;; «find-here-links-beginner»  (to ".find-here-links-beginner")
 ;; This is a hack for beginners that is explained in a tutorial. See:
 ;; (find-refining-intro "4. A tip for beginners")
 ;; (find-refining-intro "4. A tip for beginners" "find-here-links-beginner")
 ;;
-(defun find-here-links-3 ()
-  "A variant of `find-here-links' that creates a three-window setting."
-  (interactive "P")
-  (find-wset "13_o2_o_coo" nil '(find-here-links) '(eejump-1)))
-
 (defun find-here-links-beginner (&optional arg)
   "A variant of `find-here-links' that may create a three-window setting."
   (interactive "P")
   (if arg (find-here-links-3) (find-here-links)))
+
+;; «find-here-links-3»  (to ".find-here-links-3")
+;; See: (find-here-links-intro "4. `find-here-links-3'")
+;;      (find-here-links-intro "5. `find-here-links-1'")
+;;
+(defvar ee-window-configuration-before-M-h-M-3 nil)
+
+(defun find-here-links-3 ()
+  "A variant of `find-here-links' that creates a three-window setting.
+Before creating the three windows this function tries to save the
+current window configuration to the variable
+`ee-window-configuration-before-M-h-M-3', but if that variable is
+not nil we abort instead of overwriting it.
+See: (find-here-links-intro \"4. `find-here-links-3'\")"
+  (interactive)
+  (if ee-window-configuration-before-M-h-M-3
+      (let ((overwrite
+	     (yes-or-no-p "Overwrite `ee-window-configuration-before-M-h-M-3'? ")))
+	(if (not overwrite)
+	    (error))))
+  (setq ee-window-configuration-before-M-h-M-3
+	(current-window-configuration))
+  (find-wset "13_o2_o_coo" nil '(find-here-links) '(eejump-1)))
+
+(defun find-here-links-1 ()
+  "Restore the window configuration before `find-here-links-3'.
+See: (find-here-links-intro \"5. `find-here-links-1'\")"
+  (interactive)
+  (set-window-configuration ee-window-configuration-before-M-h-M-3)
+  (setq ee-window-configuration-before-M-h-M-3 nil))
+
+
+
 
 
 
@@ -1304,8 +1313,6 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;; |  _| | | | | (_| |_____| (_| (_) | (_| |  __/_  _\_____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|      \___\___/ \__,_|\___| \/       |_|_|_| |_|_|\_\___/
 ;;;                                                                             
-;; «find-code-c-d-links»  (to ".find-code-c-d-links")
-
 ;; «find-code-pdf-links»  (to ".find-code-pdf-links")
 ;; Tests:
 ;; (find-fline          "/usr/local/texlive/2018/texmf-dist/doc/latex/base/")
@@ -1323,10 +1330,15 @@ This needs a temporary directory; see: (find-prepared-intro)"
        ;; Convention: the first sexp always regenerates the buffer.
        ;; (find-efunction 'find-code-pdf-links)
        ,(ee-template0 "\
-;; See: (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
 ;;      (find-eev-quick-intro \"9.4. Shorter hyperlinks to PDF files\")
+;;      (find-eev-quick-intro \"11.1. `find-pdf-links'\")
 
 ;; (find-fline {(ee-S (file-name-directory fname))})
+\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; \(find-{c}file \"\")
+
 ;; (find-pdf-page \"{fname}\")
 ;; (find-pdf-text \"{fname}\")
 \(code-pdf-page \"{c}\" \"{fname}\")
