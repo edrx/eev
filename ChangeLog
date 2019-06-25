@@ -1,5 +1,8 @@
 2019-06-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-plinks.el (find-urlretrieve00, ee-urlretrieve-3)
+	(find-urlretrieve0, find-urlretrieve): new functions.
+
 	* eev-elinks.el (find-here-links-3): ask if the user wants to
 	overwrite `ee-window-configuration-before-M-h-M-3'.
 
