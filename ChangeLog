@@ -1,3 +1,7 @@
+2019-06-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-sh-man-fontify): new function.
+
 2019-06-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (find-urlretrieve00, ee-urlretrieve-3)

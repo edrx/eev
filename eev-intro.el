@@ -143,9 +143,11 @@ Returns a list like this: (defun find-xxx-intro ...)."
     (if (ee-bad-line line)
 	(error "Current line contains evil characters")
       line)))
+(defun ee-intro-sourcep ()
+  (equal (buffer-name) "eev-intro.el"))
 
 (defun find-intro-intro ()
-"If we're in the defun for `find-foo-intro' run (find-foo-intro (ee-last-kill))."
+"If we're in the defun for `find-foo-intro' run (find-foo-intro (ee-this-line))."
   (interactive)
   (funcall (cadr (ee-intro-sexp-here)) (ee-this-line)))
 
@@ -163,7 +165,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 (defun find-intro-dual ()
   (interactive)
-  (if (equal (buffer-name) "eev-intro.el")
+  (if (ee-intro-sourcep)
       (progn (eval (ee-intro-sexp-here))
 	     (find-c2b nil '(find-intro-intro)))
     (find-c2a '(find-intro-source) nil)))

@@ -711,7 +711,8 @@ This is useful for for running processes that use pagers like
 ;; Main interpreted languages
 (defun eepitch-lua51  () (interactive) (eepitch-comint "lua51"  "lua5.1"))
 (defun eepitch-python () (interactive) (eepitch-comint "python" "python"))
-(defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb1.8"))
+(defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb"))
+(defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb --simple-prompt"))
 (defun eepitch-perl () (interactive) (eepitch-comint "perl" "perl -d -e 42"))
 
 ;; Tcl

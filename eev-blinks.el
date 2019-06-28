@@ -608,6 +608,16 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
     (prog1 (apply 'find-sh fullcmd pos-spec-list)
            (setq default-directory dir))))
 
+(defun find-sh-man-fontify (command &rest pos-spec-list)
+  "Like `find-sh', but runs `Man-fontify-manpage' on the output."
+  (apply 'find-eoutput-reuse
+	 command
+	 `(progn
+	    (insert (shell-command-to-string ,command))
+	    (goto-char (point-min))
+	    (Man-fontify-manpage))
+	 pos-spec-list))
+
 
 
 ;;;   __ _           _                             
