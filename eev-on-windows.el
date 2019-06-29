@@ -58,8 +58,9 @@
 ;;   (mkdir eev-tar-dir   t)
 ;;   (setq  eev-tar-contents nil)
 ;;   (setq  eev-tar-contents (find-urlretrieve0 eev-tar-url))
-;;   (length eev-tar-contents)
-;;   (ee-write-string eev-tar-contents eev-tar-fname)
+;;   (length (setq eev-tar-contents (find-urlretrieve0 eev-tar-url)))
+;;   (write-region eev-tar-contents nil eev-tar-fname)
+;;   
 ;;   (find-2a nil '(find-fline eev-tar-fname 1 '(tar-untar-buffer)))
 ;;   (eek "C-x o C-x 4 0")
 ;;   (find-2a nil '(find-fline eev-tar-dir nil '(eek "g")))
@@ -80,7 +81,6 @@
 
 
 ;; «add-to-PATH»  (to ".add-to-PATH")
-;; https://unix.stackexchange.com/questions/311339/why-was-colon-chosen-as-path-separator
 
 ;; (setq mylist '(22 33 44))
 ;; (add-to-list 'mylist 44)
@@ -105,9 +105,8 @@
   (setq dir  (ee-dospath-to-dos dir))
   (setq path (ee-dospath-to-dos path))
   (let* ((list (ee-dospath-split path))
-	 (newlist (cons dir (delete dir list)))
-	 (newpath (ee-dospath-unsplit newlist)))
-    newpath))
+	 (newlist (cons dir (delete dir list))))
+    (ee-dospath-unsplit newlist)))
 
 (defun add-to-PATH (dir)
   (setenv "PATH" (ee-dospath-add (getenv "PATH") dir)))

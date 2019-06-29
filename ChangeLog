@@ -1,3 +1,9 @@
+2019-06-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el (eeit, ee-insert-test, ee-insert-test-lua)
+	(ee-insert-test-python, ee-insert-test-ruby, ee-insert-test-sh)
+	(ee-insert-test-tcl): new functions.
+
 2019-06-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-sh-man-fontify): new function.
