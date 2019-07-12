@@ -1058,32 +1058,34 @@ echo     '{url}' >> ~/.psne.log
        (find-fline ,dir)
        ""
        ,(ee-template0 "\
+# {url}
+
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
 # rm -Rfv {dir}
 cd      {ee-git-dir}
-git clone --depth 1 {url}
+git clone {url}
 cd      {dir}
-git pull --depth 1
+
+# git pull --depth 1
 # git pull
+# git reset
+# git clean -dfx
+# git reset --hard
+
 # (find-fline \"{ee-git-dir}\")
 # (find-fline \"{dir}\")
+# (find-gitk  \"{dir}\")
 
 # (code-c-d \"{c}\" \"{dir}\")
 # (find-{c}file \"\")
-# (find-gitk \"{dir}\")
-
-git clean -dfx
-git reset --hard
-
-git pull
 ")
      )
    pos-spec-list)))
 
-;; Test by typing `M-h g' on this git url:
-;; https://github.com/kikito/inspect.lua
+;; Test:
+;; (find-git-links "https://github.com/kikito/inspect.lua" "inspectlua")
 
 
 

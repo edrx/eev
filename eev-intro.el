@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun24
+;; Version:    2019jul12
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1398,75 +1398,163 @@ For the technical details of the implementation, see here:
 
 9.3. Hyperlinks to PDF files
 ----------------------------
-If you run this e-script
+Let's start by downloading a PDF file to use in our examples. If you
+run this e-script
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-#         https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-mkdir -p $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
-cd       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
-wget -nc  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  cd
+  wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
 you will download a local copy of J.M. Coetzee's \"The Lives of
-Animals\" into this directory:
+Animals\" into your home directory. To check that the PDF has been
+downloaded, use:
 
-  (find-fline      \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
-  (find-fline \"~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
+  (find-fline \"~/\")
+  (find-fline \"~/\"  \"Coetzee99.pdf\")
+  (find-sh0 \"ls -l ~/Coetzee99.pdf\")
 
-The full idea behind these \"local copies\" is explained here:
+Eev also implements another way, called \"psne\", to download local
+copies of files from the internet. \"Psne-ing\" a URL like
+
+  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+downloads it to a local file with a name like:
+
+       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  ~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+that is _much_ longer that just \"~/Coetzee99.pdf\", but that has the
+advantage of preserving more information about the URL from which the
+file came. Sometimes this extra information feels clumsy, though.
+Psne-ing is discussed a more advanced tutorial,
 
   (find-psne-intro)
 
-If you have xpdf installed then the second sexp here,
+but let's use the home directory for the moment.
 
-  (setq l-o-a \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf\")
-  (find-pdf-page l-o-a)
+If you have xpdf installed then this sexp
 
-should work as a \"hyperlink to the PDF\": it calls xpdf as
-external program to open that PDF file. The main keys of xpdf
-are:
+  (find-pdf-page \"~/Coetzee99.pdf\")
+
+should work as a \"hyperlink to the PDF\": it calls xpdf as external
+program - like we did with browsers in section 3.1 - to display the
+PDF file that we downloaded.
+
+The main keys of xpdf are:
 
   q         quit xpdf
-  alt-f     toggle full-screen; use twice to fit document to page
   PageDown  scroll down/go to next page
   PageUp    scroll up/go to previous page
-  0         set zoom to 125%
+  arrows    scroll within the current page
   +         zoom in one step
   -         zoom out out step
-  arrows    scroll within the current page
+  0         set zoom to 125%
+  alt-f     toggle full-screen; use twice to fit document to page
 
-Also, if you have the program pdftotext installed (hint: apt-get
-install poppler-utils!) then this
+Note that `q' \"goes back to Emacs\".
 
-  (find-pdf-text l-o-a)
+If you have the program pdftotext installed - hint: \"apt-get install
+poppler-utils\"! - then you can also display PDFs in another way. This
+sexp
 
-should work as a \"hyperlink to the text of the PDF\".
+  (find-pdf-text \"~/Coetzee99.pdf\")
 
-You can use these two sexps
-
-  (ee-find-pdf-text l-o-a)
-  (ee-find-pdf-page l-o-a)
-
-to see exactly how the `find-pdf-page' and the `find-pdf-text'
-sexps above invoke xpdf and pdftotext; note that `find-pdf-page'
-uses `find-bgprocess' and `find-pdf-text' uses `find-sh'.
-
-The functions above accept extra arguments, that are interpreted
-as a page number and as strings to look for, but it's easier to
-discuss them using shorter hyperlinks.
+work as a \"hyperlink to the _text_ of the PDF\": it extracts the text
+from the PDF using the program \"pdftotext\" and displays that in an
+Emacs buffer.
 
 
 
 
-9.4. Shorter hyperlinks to PDF files
+9.4. Hyperlinks to pages of PDF files
+-------------------------------------
+It is possible to create hyperlinks that point to a specific page in a
+PDF file. Compare what happens when you run these sexps:
+
+  (find-pdf-page \"~/Coetzee99.pdf\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 1)
+  (find-pdf-page \"~/Coetzee99.pdf\" 1 \"The Lives of Animals\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3)
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
+
+The top three sexps open the PDF at page 1 - the default. The bottom
+three sexps open it at page 3. The arguments after the number are
+ignored by Emacs - they are there to make these links more expressive
+for humans.
+
+The hyperlinks to the text of a PDF interpret the numeric number as a
+page number and the following arguments as strings to search for. Try:
+
+  (find-pdf-text \"~/Coetzee99.pdf\" 1)
+  (find-pdf-text \"~/Coetzee99.pdf\" 1 \"The Lives of Animals\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3)
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
+
+For more information about these string arguments, see:
+
+  (find-refining-intro \"1. Pos-spec-lists\")
+
+A pair of sexps like this, in which both point to the same
+position of a PDF,
+
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
+
+will be called a `find-pdf'-pair.
+
+Both `find-pdf-page' and `find-pdf-text' invoke external programs -
+but how, exactly? Let's take a look at a hack that shows this. If you
+prepend an \"ee-\" to `find-pdf-page' and `find-pdf-text' sexps, like
+in:
+
+  (ee-find-pdf-page \"~/Coetzee99.pdf\")
+  (ee-find-pdf-page \"~/Coetzee99.pdf\" 3)
+  (ee-find-pdf-text \"~/Coetzee99.pdf\")
+  (ee-find-pdf-text \"~/Coetzee99.pdf\" 3)
+
+you will get sexps that stop just before invoking the external
+programs - they just show how these externals programs _would be_
+invoked, i.e., they show the options that would be passed to them. The
+results of the sexps above will be lists like these:
+
+  (\"xpdf\" \"-fullscreen\" \"~/Coetzee99.pdf\")
+  (\"xpdf\" \"-fullscreen\" \"~/Coetzee99.pdf\" \"3\")
+  (\"pdftotext\" \"-layout\" \"-enc\" \"Latin1\" \"~/Coetzee99.pdf\" \"-\")
+  (\"pdftotext\" \"-layout\" \"-enc\" \"Latin1\" \"~/Coetzee99.pdf\" \"-\")
+
+Note that `ee-find-pdf-text' does not pass the argument \"3\" to
+\"pdftotext\". A sexp like
+
+  (find-pdf-text \"~/Coetzee99.pdf\" 3)
+
+first produces the conversion to text of the full PDF, and then
+finds the page 3 in it by counting formfeeds, as described here:
+
+  (find-enode \"Pages\" \"formfeed\")
+
+In this pair of sexps,
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+
+
+
+
+
+9.5. Shorter hyperlinks to PDF files
 ------------------------------------
 If you run these sexps
 
-  (code-pdf-page \"livesofanimals\" l-o-a)
-  (code-pdf-text \"livesofanimals\" l-o-a -110)
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
 
-then these hyperlinks should work:
+they will define the functions `find-livesofanimalspage' and
+`find-livesofanimalstext', and then these hyperlinks should work:
 
   (find-livesofanimalspage)
   (find-livesofanimalstext)
@@ -1491,20 +1579,59 @@ then these hyperlinks should work:
   (find-livesofanimalspage (+ -110 164) \"last common ground\")
   (find-livesofanimalstext (+ -110 164) \"last common ground\")
 
-The sexps like `(+ -110 113)' are a bit mysterious at first
-sight. We are accessing a PDF that is an excerpt of a book. The
-third page of the PDF has a \"[113]\" at its footer to indicate
-that it is the page 113 of the book. Let's use the terms _page
-number_ and _page label_ to distinguish the two numberings: in
-this case, the page whose page number is 3 is the page whose page
-label is 113. These two sexps
+Hyperlinks like
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+behave roughly as abbreviations for:
+
+  (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+  (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+Let's introduce some terminology. Remember that we call a pair of
+sexps like
+
+  (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+  (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+a \"`find-pdf'-pair\"; a pair like
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+will be called a \"short `find-pdf'-pair\", and a pair like
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+
+will be called a `code-pdf'-pair.
+
+
+
+
+9.6. A convention on page numbers
+---------------------------------
+The `(+ -110 113)'s in
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+are a bit mysterious at first sight. 
+
+We are accessing a PDF that is an excerpt of a book. The third
+page of the PDF has a \"[113]\" at its footer to indicate that it
+is the page 113 of the book. Let's use the terms _page number_
+and _page label_ to distinguish the two numberings: in this case,
+the page whose page number is 3 is the page whose page label is
+113. These two sexps
 
   (find-livesofanimalspage (+ -110 113))
   (find-livesofanimalspage 3)
 
 are equivalent, but the first one is more human-friendly: the 113
 is a page label, and the -110 is adjustment (we call it the
-\"offset\") to convert the 113 that humans prefer to see intto
+\"offset\") to convert the 113 that humans prefer to see into
 the 3 that xpdf needs to receive.
 
 Note that the sexp
@@ -1531,6 +1658,17 @@ I.\" and places the cursor right after the end of it.
 In section 10.4 we will see how to generate with just a few
 keystrokes a short hyperlink to a page of a PDF and a short
 hyperlink to a string in a page of a PDF.
+
+
+
+
+9.7. Generating links to PDFs
+-----------------------------
+If you run this
+
+  (find-code-pdf-links \"~/Coetzee99.pdf\")
+
+you will get a buffer with lots of hyperlinks, like this:
 
 
 
@@ -1628,7 +1766,7 @@ which is a short hyperlink to the intro.
 10.4. Generating short hyperlinks to PDFs
 -----------------------------------------
 We saw in sections 9.3 and 9.4 that after the right preparations
-the first of these hyperlinks
+the first of these hyperlinks - a \"short `find-pdf'-pair\" -
 
   (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
   (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
@@ -5462,16 +5600,18 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+Note: this intro is being rewritten!
+Some sections of the main tutorial
 
-Note: this intro needs to be rewritten!
-Ideally it should _complement_ the material in:
-  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
+  (find-eev-quick-intro)
+
+are being moved to here...
 
 
 
 
-PDF-like documents
-==================
+1. PDF-like documents
+=====================
 Let's introduce a bit of (improvised!) terminology: we will say
 that a document is \"PDF-like\" when it is in a format like PDF,
 PostScript, DVI or DJVU - i.e., divided into pages. Emacs has a
@@ -5485,309 +5625,387 @@ PDF-like documents.
 
 
 
-Two test documents
-==================
-The following script creates two PDF-like documents - a DVI and a
-PDF - that we will use in the examples below.
+2. Preparation
+==============
+We need to start by downloading a PDF file to use in our
+examples. If you run this e-script
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-cd /tmp/
-cat > /tmp/foo.tex <<'%%%'
-\\documentclass[12pt,oneside]{book}
-\\begin{document}
-\\Huge
-\\frontmatter
-a \\newpage
-b \\newpage
-c \\newpage
-\\mainmatter
-\\chapter{One}
-\\newpage foo
-\\chapter{Two}
-\\end{document}
-%%%
-   latex foo.tex
-pdflatex foo.tex
+  cd
+  wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
-In these two documents the page _names_ do not correspond to the
-page _numbers_; the pages are named \"i\", \"ii\", \"iii\",
-\"1\", \"2\", \"3\", but their numbers are 1, 2, 3, 4, 5, 6.
-In a table:
+you will download a local copy of J.M. Coetzee's \"The Lives of
+Animals\" into your home directory. To check that the PDF has been
+downloaded, use:
 
-  number  name  contents
-  ----------------------
-    1        i      a
-    2       ii      b
-    3      iii      c
-    4        1      Chapter 1 - One
-    5        2      foo
-    6        3      Chapter 3 - Two
+  (find-fline \"~/\")
+  (find-fline \"~/\"  \"Coetzee99.pdf\")
+  (find-sh0 \"ls -l ~/Coetzee99.pdf\")
 
+Eev also implements another way, called \"psne\", to download
+local copies of files from the internet.\"Psne-ing\" a URL like
 
+  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
+downloads it to a local file with a name like:
 
-Using external viewers
-======================
-The following sexps can be used to open the documents
-\"/tmp/foo.dvi\" and \"/tmp/foo.pdf\" on the first page of
-Chapter 1 - i.e., the page whose number is 4, and whose \"name\"
-is 1 - using two of my favorite viewers, xdvi and xpdf, and a
-low-level function, `find-bgprocess':
+       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  ~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
-  (find-bgprocess '(\"xdvi\" \"+4\" \"/tmp/foo.dvi\"))
-  (find-bgprocess '(\"xpdf\" \"/tmp/foo.pdf\" \"4\"))
+that is _much_ longer that just \"~/Coetzee99.pdf\"; this has the
+advantage of preserving more information about the URL from which
+the file came, but sometimes these longer names feels clumsy.
+Psne-ing is discussed a more advanced tutorial:
 
-Alternatively, we can invoke these viewers like this,
+  (find-psne-intro)
 
-  (find-xdvi-page \"/tmp/foo.dvi\" 4)
-  (find-xpdf-page \"/tmp/foo.pdf\" 4)
-
-or, as they ignore extra arguments, like this,
-
-  (find-xdvi-page \"/tmp/foo.dvi\" (+ 3 1) \"Chapter 1\")
-  (find-xpdf-page \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
-
-where the `(+ 3 1)' and the \"Chapter 1\" are just to make these
-links more readable by humans. The `3' is what we will call the
-\"offset\" of the document: a quantity that can be added to page
-\"names\" (outside the \"front matter\" of the document) to
-convert them to page \"numbers\".
-
-Let's introduce more terminology. Programs like xdvi and xpdf are
-\"external viewers for PDF-like documents\", but that's too long,
-so let's shorten this to \"external PDF-like viewers\", or
-\"external viewers\", or just \"viewers\"; `find-xdvi-page',
-`find-xpdf-page' and similar functions are \"medium-level viewing
-words\".
+In this tutorial we will use the home directory and the shorter
+file name.
 
 
 
 
-The high-level way
-==================
-File names of PDF-like documents are often very long - especially
-for documents that we have \"psne\"-ed from the web. To avoid
-having to keep copies of these file names everywhere we can use
-`code-c-d'-like words - like these:
-
-  (code-xdvi \"fd\" \"/tmp/foo.dvi\")
-  (code-xpdf \"fp\" \"/tmp/foo.pdf\")
-  (find-fdpage (+ 3 1) \"Chapter 1\")
-  (find-fppage (+ 3 1) \"Chapter 1\")
-
-Each medium-level viewing word has an associated code-c-d-like
-word - that creates \"high-level viewing words\". In the example
-above, we used `code-xdvi' to create the high-level viewing word
-`find-fdpage', that invokes `find-xdvi-page', and `code-xpdf' to
-create the high-level viewing word `find-fppage', which invokes
-`find-xpdf-page',
-
-Note that the \"fd\" in `find-fdpage' stands for not only the
-filename - \"/tmp/foo.dvi\" - but also for the medium-level word
-to be used - `find-xdvi-page'; same for \"fp\".
-
-
-
-
-Default external viewers
-========================
-We saw that for each of the supported formats of PDF-like
-documents - DVI, PostScript, PDF, DJVU - there are medium-level
-and high-level viewing words that use specific programs; for
-example, for \"xpdf\" we have `find-xpdf-page' and `code-xpdf',
-and for \"evince\" we have `find-evince-page' and `code-evince'.
-But for each of the formats we also have words that use the
-current default viewer for that format:
-
-  Format       Medium-level     High-level
-  ----------------------------------------
-  DVI          find-dvi-page    code-dvi
-  PostScript   find-ps-page     code-ps
-  PDF          find-pdf-page    code-pdf
-  DJVU         find-djvu-page   code-djvu
-
-The four `find-<formatname>-page' words above are aliases to
-`find-<viewername>-page' names, and to change a default viewer
-you should use a `defalias' on the `find-', like these:
-
-  (defalias 'find-pdf-page 'find-evince-page)
-  (defalias 'find-pdf-page 'find-xdpf-page)
-
-After running a `defalias' like the above all the high-level
-viewing words defined using `code-pdf' will automatically switch
-to the new default viewer (because words defined with `code-pdf'
-call `find-pdf-page').
-
-
-
-
-PDF-like documents as text
+3. Hyperlinks to PDF files
 ==========================
-Some PDF-like documents can be converted to text - usually uglily
-and imprecisely, but the result is often useful anyway - by
-external programs like \"pdftotext\" and \"djvutxt\". The
-medium-level sexps below invoke these programs on the given
-filenames and displays their output in an Emacs buffer:
+If you have xpdf installed then this sexp
 
-  (find-pdftotext-text \"/tmp/foo.pdf\")
-  (find-djvutxt-text   \"/tmp/foo.djvu\")
+  (find-pdf-page \"~/Coetzee99.pdf\")
 
-We can also use the correspondent generic medium-level words,
-that are aliases to the default converters:
+should work as a \"hyperlink to the PDF\": it calls xpdf as an
+external program - like we did with browsers in the main tutorial -
 
-  (find-pdf-text  \"/tmp/foo.pdf\")
-  (find-djvu-text \"/tmp/foo.djvu\")
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"find-firefox\")
 
-As the output of these converters is also divided into pages -
-with formfeeds as separators - it is easy to jump to specific
-pages in the output, and if the first argument after the file
-name is a number it is interpreted as a page number; string
-arguments coming after that are interpreted as strings to be
-search (forward) for. So these links make sense:
+to display the PDF file that we downloaded.
 
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1))
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
+The main keys of xpdf are:
 
-and note that the following pair of links make sense too - the
-first one calls an external viewer, the second one opens the
-conversion to text:
+  q         quit xpdf
+  PageDown  scroll down/go to next page
+  PageUp    scroll up/go to previous page
+  arrows    scroll within the current page
+  +         zoom in one step
+  -         zoom out out step
+  0         set zoom to 125%
+  alt-f     toggle full-screen; use twice to fit document to page
 
-  (find-pdf-page \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
+Note that `q' \"goes back to Emacs\".
 
-Note that they both point to the same page... The argument
-\"Chapter 1\" is ignored in the first link, but when a pair of
-links like that appear on consecutive lines it is clear for human
-readers that they are both links to the same place, only rendered
-in different ways. Note that the passage from this:
+If you have the program pdftotext installed - hint: \"apt-get install
+poppler-utils\"! - then you can also display PDFs in another way. This
+sexp
 
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1))
+  (find-pdf-text \"~/Coetzee99.pdf\")
 
-to this:
-
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1))
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
-
-is a special case of \"refining hyperlinks\", an idea that we saw
-in:
-
-  (find-eval-intro \"Refining hyperlinks\")
+work as a \"hyperlink to the _text_ of the PDF\": it extracts the text
+from the PDF using the program \"pdftotext\" and displays that in an
+Emacs buffer.
 
 
 
 
-High-level hyperlinks to pdf-like documents
-===========================================
-By executing
+4. Hyperlinks to pages of PDF files
+===================================
+It is possible to create hyperlinks that point to a specific page in a
+PDF file. Compare what happens when you run these sexps:
 
-  (code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
+  (find-pdf-page \"~/Coetzee99.pdf\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 1)
+  (find-pdf-page \"~/Coetzee99.pdf\" 1 \"The Lives of Animals\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3)
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
 
-we can use shorter hyperlinks, like
+The top three sexps open the PDF at page 1 - the default. The bottom
+three sexps open it at page 3. The arguments after the number are
+ignored by Emacs - they are there to make these links more expressive
+for humans.
 
-  (find-fppage (+ 3 1) \"Chapter 1\")
-  (find-fptext (+ 3 1) \"Chapter 1\")
+The hyperlinks to the text of a PDF interpret the numeric number as a
+page number and the following arguments as strings to search for. Try:
 
-instead of the longer forms with `find-pdf-page' and
-`find-pdf-text'. This works exactly like `code-c-d', as explained
-here:
+  (find-pdf-text \"~/Coetzee99.pdf\" 1)
+  (find-pdf-text \"~/Coetzee99.pdf\" 1 \"The Lives of Animals\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3)
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
 
-  (find-code-c-d-intro)
+For more information about these string arguments, see:
 
-Try these sexps to see the code that the `code-pdf' and the
-`code-pdf-text' above execute:
+  (find-refining-intro \"1. Pos-spec-lists\")
 
-  (find-code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (find-code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
+A pair of sexps like this, in which both point to the same
+position of a PDF,
 
-There is a wrapping comand for producing these
-`code-pdf'/`code-pdf-text' pairs quickly - `M-P'. Try it here:
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
 
-  fp /tmp/foo.pdf
-
+will be called a `find-pdf'-pair.
 
 
 
-Producing and refining hyperlinks to pages
+
+5. A convention on page numbers
+===============================
+The `(+ -110 113)'s in
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+are a bit mysterious at first sight. 
+
+We are accessing a PDF that is an excerpt of a book. The third
+page of the PDF has a \"[113]\" at its footer to indicate that it
+is the page 113 of the book. Let's use the terms _page number_
+and _page label_ to distinguish the two numberings: in this case,
+the page whose page number is 3 is the page whose page label is
+113. These two sexps
+
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalspage 3)
+
+are equivalent, but the first one is more human-friendly: the 113
+is a page label, and the -110 is adjustment (we call it the
+\"offset\") to convert the 113 that humans prefer to see into
+the 3 that xpdf needs to receive.
+
+
+
+
+
+6. How the external programs are called
+=======================================
+Both `find-pdf-page' and `find-pdf-text' invoke external programs -
+but how, exactly? Let's take a look at a hack that shows this. If
+you prepend an \"ee-\" to `find-pdf-page' and `find-pdf-text' sexps,
+like in:
+
+  (ee-find-pdf-page \"~/Coetzee99.pdf\")
+  (ee-find-pdf-page \"~/Coetzee99.pdf\" 3)
+  (ee-find-pdf-text \"~/Coetzee99.pdf\")
+  (ee-find-pdf-text \"~/Coetzee99.pdf\" 3)
+
+you will get sexps that stop just before invoking the external
+programs - they just show how these externals programs _would be_
+invoked, i.e., they show the options that would be passed to them. The
+results of the sexps above will be lists like these:
+
+  (\"xpdf\" \"-fullscreen\" \"~/Coetzee99.pdf\")
+  (\"xpdf\" \"-fullscreen\" \"~/Coetzee99.pdf\" \"3\")
+  (\"pdftotext\" \"-layout\" \"-enc\" \"Latin1\" \"~/Coetzee99.pdf\" \"-\")
+  (\"pdftotext\" \"-layout\" \"-enc\" \"Latin1\" \"~/Coetzee99.pdf\" \"-\")
+
+Note that `ee-find-pdf-text' does not pass the argument \"3\" to
+\"pdftotext\". A sexp like
+
+  (find-pdf-text \"~/Coetzee99.pdf\" 3)
+
+first produces the conversion to text of the full PDF, and then
+finds the page 3 in it by counting formfeeds, as described here:
+
+  (find-enode \"Pages\" \"formfeed\")
+
+
+
+
+
+7. Shorter hyperlinks to PDF files
+==================================
+If you run these sexps
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+
+they will define the functions `find-livesofanimalspage' and
+`find-livesofanimalstext', and then these hyperlinks should work:
+
+  (find-livesofanimalspage)
+  (find-livesofanimalstext)
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalstext (+ -110 113))
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalspage (+ -110 164) \"last common ground\")
+  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+
+Hyperlinks like
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+behave roughly as abbreviations for:
+
+  (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+  (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+
+
+
+8. `find-pdf'-pairs
+===================
+Let's introduce some terminology. Remember that we call a pair of
+sexps like
+
+  (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+  (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+a \"`find-pdf'-pair\"; a pair like
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+will be called a \"short `find-pdf'-pair\", as in:
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+
+and a pair like
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+
+will be called a `code-pdf'-pair.
+
+The \"livesofanimals\" will the called the _stem_. The \"-110\"
+will be called the _offset_.
+
+
+
+
+9. Generating three pairs
+=========================
+Eev has a high-level function that generates at once, for a
+single PDF file, a `find-pdf'-pair, a `code-pdf'-pair, and a
+short `find-pdf'-pair. To see what it produces, try:
+
+  (find-code-pdf-links \"~/Coetzee99.pdf\")
+  (find-code-pdf-links \"~/Coetzee99.pdf\" \"livesofanimals\")
+
+`find-code-pdf-links' is somewhat similar to `find-latex-links',
+in this aspect:
+
+  (find-eev-quick-intro \"7.5. `find-latex-links'\" \"change the \\\"{stem}\\\"\")
+
+If you run just
+
+  (find-code-pdf-links \"~/Coetzee99.pdf\")
+
+it will generate a buffer that has \"{c}\"s in several places and
+that follows the convention that \"the first line regenerates the
+buffer\". If you substitute the \"{c}\" in the top sexp by
+\"livesofanimals\" and type `M-e' the buffer will be recreated
+with each \"{c}\" replaced by \"livesofanimals\".
+
+The user-friendly way to run `find-code-pdf-links' is by typing
+`M-h M-p' in Dired mode. If you want to generate the three pairs
+for a file \"~/foo/bar/story.pdf\" then visit the directory
+\"~/foo/bar/\", put the cursor on the line that lists the file
+\"story.pdf\", and type `M-h M-p'. Try it with our test file:
+
+  (find-fline \"~/\"  \"Coetzee99.pdf\")
+
+
+
+10. Generating a pair with the page number
 ==========================================
-We also have something like this
+If you type `M-h M-p' and you're not in Dired mode then `M-h M-p'
+will try to generate a short `find-pdf'-pair pointing to the
+current position in the current page of the current PDF
+file (converted to text). The function bound to `M-h M-p' tries
+to guess four things: the stem, the offset, the page number, and
+the string to the be used as a pos-spec. Let's see first a
+situation where everything works. Run the four sexps below and
+type `M-h M-p':
 
-  (find-eval-intro \"Producing and refining hyperlinks\")
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+  (kill-new \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
 
-for pdf-like documents, that will let us produce hyperlinks to
-the current page of the current pdf-like document very quickly,
-but it depends on several hacks.
+You will get an elisp hyperlinks buffer whose middle links are
+four short `find-pdf'-pairs, all pointing to the current page:
 
-Note that the functions `code-pdf', `code-pdf-text',
-`find-xxxpage', `find-xxxtext', set the global variables
-`ee-page-c', `ee-page-fname', and `ee-page-offset'. You can
-inspect their definitions with:
+  # (find-livesofanimalspage 17)
+  # (find-livesofanimalstext 17)
+  # (find-livesofanimalspage (+ -110 127))
+  # (find-livesofanimalstext (+ -110 127))
 
-  (find-code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (find-code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
+  # (find-livesofanimalspage 17 \"wrong thoughts\")
+  # (find-livesofanimalstext 17 \"wrong thoughts\")
+  # (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  # (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
 
-Here's how these variables are used. Try this:
+The second and the fourth pairs use \"(+ -110 127)\" instead of
+\"17\" as the page number; the third and the fourth pairs point
+to the string \"wrong thoughts\" in the page.
 
-  (code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
-  (kill-new \"Two\")
-  (eek \"M-h M-p\")
 
-You should get a page with several hyperlinks to the \"current
-page\" of the current pdf-like document, including some like
-these:
 
-  (find-fppage 1)
-  (find-fptext 1)
-  (find-fppage (+ 3 -2))
-  (find-fptext (+ 3 -2))
 
-  (find-fppage 1 \"Two\")
-  (find-fptext 1 \"Two\")
-  (find-fppage (+ 3 -2) \"Two\")
-  (find-fptext (+ 3 -2) \"Two\")
+11. How `M-h M-p' guesses everything
+====================================
+The method that `M-h M-p' uses to guess the stem, the offset, the
+page and the pos-spec is so error-prone and gives unexpected
+results so often that it's worth to describe it in detail.
 
-Where did the \"fp\", the \"1\", the \"3\", the \"-2\" and the
-\"Two\" above come from?
+  1. The stem is taken from the global variable `ee-page-c'.
 
-The page number, which in the links above is sometimes \"1\",
-sometimes \"(+ 3 -2)\", is obtained by counting the number of
-formfeeds before point; this makes sense only when we are
-visiting the buffer generated by \"(find-fptext ...)\". The
-\"fp\" is taken from the variable `ee-page-c', which was set by
-`(code-pdf-text \"fp\" ...)' or by `(find-fptext ...)'; same for \"3\",
-which is taken from the variable `ee-page-offset'. Finally, the \"Two\"
-is the last kill, from the top of the kill-ring; we usually set it by
-selecting a region of text from the `(find-fptext ...)' buffer and
-typing `M-w'.
+  2. Every call to a function like `find-xxxtext' sets
+     `ee-page-c' to \"xxx\" - for example, a call to
+     `find-livesofanimalstext' sets `ee-page-c' to
+     \"find-livesofanimalstext\". So `ee-page-c' usually holds
+     the stem of the last function of the form `find-xxxtext'
+     that was run.
 
-An alternative way to produce hyperlinks to pages, which, as the hack
-above, also uses `ee-page-c' and `ee-page-offset', is to prepare a
-series of lines with a page number followed by a text that will play a
-similar role to the \"last kill\", and then type `M-Q' on each line. Try
-this below, by first executing the `code-pdf-text' then typing four
-`M-Q's.
+  3. The offset is taken from the global variable
+     `ee-page-offset'.
 
-  (code-pdf      \"debt\" \"~/books/graeber__debt.pdf\")
-  (code-pdf-text \"debt\" \"~/books/graeber__debt.pdf\" 8)
+  4. A call to, say, `find-livesofanimalstext', sets
+     `ee-page-offset' to the offset that was declared here:
 
-   1 1 On The Experience of Moral Confusion
-  21 2 The Myth of Barter
-  43 3 Primordial Debts
-  73 4 Cruelty and Redemption
+       (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
 
-It is usually not hard to produce such page-number-plus-text
-lines for `M-Q' from the table of contents of a book. The ones
-above were extracted from
+     So `ee-page-offset' usually holds the offset of the last
+     function of the form `find-xxxtext' that was run.
 
-  (find-debttext 7 \"Contents\")
+  5. The page number is obtained by counting the number of
+     formfeeds between the beginning of the buffer and the
+     current position. If there are 16 formfeeds then the current
+     page is 17.
 
-with a bit of fiddling by hand and keyboard macros. Keyboard
-macros are VERY useful; if you don't use them yet, see:
+  6. The pos-spec - \"wrong thoughts\" in the example - is the
+     string in the top of the kill ring. See:
 
-  (find-enode \"Keyboard Macros\")
+       (find-refining-intro \"2. Refining hyperlinks\" \"kill-new\")
+
+If you want to see an example where `M-h M-p' guesses everything
+wrong you can type `M-h M-p' here... as we're not in Dired mode
+`M-h M-p' will think that we're in the conversion to text of
+\"livesofanimals\", in page 1, and it will generate hyperlinks to
+that page of the book!
+
+
+
+12. Another way to generate `code-pdf'-pairs
+============================================
+\[Explain M-P]
+
 " rest)))
 
 ;; (find-pdf-like-intro)

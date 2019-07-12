@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun24
+;; Version:    2019jul11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -306,7 +306,7 @@ newline are spurious - and replaces them by \"(ff)\"."
         (code-xxxpdf-family "xpdf-page")
 
 (defvar ee-find-xpdf-page-options '("-fullscreen"))
-(defun  ee-find-xpdf-page (fname &optional page)
+(defun  ee-find-xpdf-page (fname &optional page &rest rest)
   `("xpdf"
     ,@ee-find-xpdf-page-options
     ,fname
@@ -346,10 +346,10 @@ newline are spurious - and replaces them by \"(ff)\"."
 
 (defvar ee-pdftotext-program "pdftotext")
 
-(defun ee-find-pdf-text (fname)
+(defun ee-find-pdf-text (fname &rest rest)
   `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
-(defun ee-find-pdftotext-text (fname)
+(defun ee-find-pdftotext-text (fname &rest rest)
   `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
 

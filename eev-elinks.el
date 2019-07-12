@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun24
+;; Version:    2019jul12
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -947,8 +947,10 @@ See: (find-pdf-like-intro)
   (apply 'find-elinks `(
     (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
     ;; (find-efunction 'find-pdflike-page-links)
-    (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
-    (find-eev-quick-intro "11.1. `find-pdf-links'")
+    ;; (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
+    ;; (find-eev-quick-intro "11.1. `find-pdf-links'")
+    (find-pdf-like-intro "10. Generating a pair with the page number")
+    (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
     ""
     ,@(ee-pdflike-page-links page bufname offset)
     ) rest))
@@ -1328,12 +1330,17 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
     (apply 'find-elinks-elisp
      `((find-code-pdf-links ,fname ,c ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       ;; Shortened versions of the first sexp:
+       ,(ee-if-prefixp "~/"  "~/"  fname '`(find-code-pdf-links ,fname+ ,c))
+       ,(ee-if-prefixp "$S/" "$S/" fname '`(find-code-pdf-links ,fname+ ,c))
+       ;;
        ;; (find-efunction 'find-code-pdf-links)
        ,(ee-template0 "\
 ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
-;;      (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
-;;      (find-eev-quick-intro \"9.4. Shorter hyperlinks to PDF files\")
-;;      (find-eev-quick-intro \"11.1. `find-pdf-links'\")
+;;      (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
+;;      (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
 
 ;; (find-fline {(ee-S (file-name-directory fname))})
 \(code-c-d \"{c}\" \"{(file-name-directory fname)}\")

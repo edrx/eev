@@ -1,3 +1,31 @@
+2019-07-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-pdf-like-intro): rewrote completely.
+
+2019-07-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-xpdf-page): added "&rest rest".
+	(ee-find-pdf-text): added "&rest rest".
+	(ee-find-pdftotext-text): added "&rest rest".
+
+2019-07-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): rewrote the section "9.3.
+	Hyperlinks to PDF files" and split it in two; the new section is:
+	"9.4. Hyperlinks to pages of PDF files". The old section 9.4,
+	"9.4. Shorter hyperlinks to PDF files", was renumbered to 9.5 and
+	split into "9.5. Shorter hyperlinks to PDF files" and "9.6. A
+	convention on page numbers".
+
+2019-07-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-git-links): small changes.
+
+2019-07-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-code-pdf-links): show shorter variants of
+	the first sexp when possible.
+
 2019-06-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-wrap.el (eeit, ee-insert-test, ee-insert-test-lua)
