@@ -1,4 +1,15 @@
+2019-07-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): many changes.
+
 2019-07-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-here-links-intro): small changes.
+	(find-eev-quick-intro): rewrote the section that teaches how to
+	use Info mode and the sections about hyperlinks to PDF files.
+
+	* eev-elinks.el (find-code-pdf-links, find-pdflike-page-links):
+	point to sections of `(find-pdf-like-intro)'.
 
 	* eev-intro.el (find-pdf-like-intro): rewrote completely.
 
