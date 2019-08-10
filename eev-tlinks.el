@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun21
+;; Version:    2019aug08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1068,18 +1068,18 @@ cd      {ee-git-dir}
 git clone {url}
 cd      {dir}
 
-# git pull --depth 1
-# git pull
-# git reset
-# git clean -dfx
-# git reset --hard
-
 # (find-fline \"{ee-git-dir}\")
 # (find-fline \"{dir}\")
 # (find-gitk  \"{dir}\")
 
 # (code-c-d \"{c}\" \"{dir}\")
 # (find-{c}file \"\")
+
+# git pull --depth 1
+# git pull
+# git reset
+# git clean -dfx
+# git reset --hard
 ")
      )
    pos-spec-list)))

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun16
+;; Version:    2019aug05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -40,7 +40,7 @@
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "When you type `M-e'")
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "numeric prefixes")
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "`M-0 M-e'")
-;; Note that `M-2 M-e' and `M-2 M-e' only make sense when the sexp is
+;; Note that `M-2 M-e' and `M-3 M-e' only make sense when the sexp is
 ;; a hyperlink.
 
 
@@ -61,7 +61,8 @@
 
 ;; See (find-efunction 'eval-last-sexp-1)
 (defun ee-backward-sexp ()
-  "An internal function used by `ee-eval-last-sexp'."
+  "Like `(forward-sexp -1)' but always uses elisp syntax.
+This is an internal function used by `ee-eval-last-sexp'."
   (interactive)
   (with-syntax-table emacs-lisp-mode-syntax-table
     (forward-sexp -1)
@@ -72,7 +73,8 @@
   (point))
 
 (defun ee-forward-sexp ()
-  "An internal function used by `ee-eval-last-sexp'."
+  "Like `(forward-sexp 1)' but always uses elisp syntax.
+This is an internal function used by `ee-eval-last-sexp'."
   (interactive)
   (with-syntax-table emacs-lisp-mode-syntax-table
     (forward-sexp 1))

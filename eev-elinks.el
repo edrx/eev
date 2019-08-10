@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jul12
+;; Version:    2019aug06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1112,6 +1112,9 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;   (find-eevfile "eev-mode.el" "\\M-h\\M-h")
 ;; (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
 
+;; TODO: support cases like these:
+;;   (find-efunctiondescr 'condition-case)
+
 ;; Some tools for detecting which kind of buffer we're in.
 (defun ee-buffer-re (re)
   (if (string-match re (buffer-name))
@@ -1146,7 +1149,8 @@ This needs a temporary directory; see: (find-prepared-intro)"
 (defun ee-pdftext-bufferp  () (ee-buffer-re "^pdftotext"))
 
 ;; By buffer name (when it is "*Help*")
-(defvar ee-efunctiondescr-re "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\)")
+(defvar ee-efunctiondescr-re
+  "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\|special form\\)")
 (defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
 (defun  ee-find-efunctiondescr-links ()
   (let ((f (ee-efunctiondescr-bufferp)))
@@ -1321,18 +1325,23 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
 ;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf")
 ;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf" "foo")
 
+;; See: (find-efunction 'ee-if-prefixp)
+(defun ee-shorten-file-name (fname)
+  "Shorten FNAME if possible to make it start with \"$S/\" or \"~/\"."
+  (or (ee-if-prefixp "$S/" "$S/" fname 'fname+)
+      (ee-if-prefixp "~/"  "~/"  fname 'fname+)
+      fname))
+
 (defun find-code-pdf-links (&optional fname c &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks and `code-pdf-*'s to a PDF file."
   (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (if fname (setq fname (ee-shorten-file-name fname)))
   (setq fname (or fname "{fname}"))
   (setq c (or c "{c}"))
   (let ((dir (file-name-directory fname)))
     (apply 'find-elinks-elisp
      `((find-code-pdf-links ,fname ,c ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
-       ;; Shortened versions of the first sexp:
-       ,(ee-if-prefixp "~/"  "~/"  fname '`(find-code-pdf-links ,fname+ ,c))
-       ,(ee-if-prefixp "$S/" "$S/" fname '`(find-code-pdf-links ,fname+ ,c))
        ;;
        ;; (find-efunction 'find-code-pdf-links)
        ,(ee-template0 "\
