@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug08
+;; Version:    2019aug11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -64,6 +64,7 @@
 ;; «.find-youtubedl-links»	(to "find-youtubedl-links")
 ;; «.find-psne-links»		(to "find-psne-links")
 ;; «.find-git-links»		(to "find-git-links")
+;; «.find-apt-get-source-links»	(to "find-apt-get-source-links")
 ;; «.find-eev-video-links»	(to "find-eev-video-links")
 ;;
 ;; «.find-latex-links»		(to "find-latex-links")
@@ -1086,6 +1087,57 @@ cd      {dir}
 
 ;; Test:
 ;; (find-git-links "https://github.com/kikito/inspect.lua" "inspectlua")
+
+
+
+;;;              _                   _                                     
+;;;   __ _ _ __ | |_       __ _  ___| |_      ___  ___  _   _ _ __ ___ ___ 
+;;;  / _` | '_ \| __|____ / _` |/ _ \ __|____/ __|/ _ \| | | | '__/ __/ _ \
+;;; | (_| | |_) | ||_____| (_| |  __/ ||_____\__ \ (_) | |_| | | | (_|  __/
+;;;  \__,_| .__/ \__|     \__, |\___|\__|    |___/\___/ \__,_|_|  \___\___|
+;;;       |_|             |___/                                            
+;;
+;; «find-apt-get-source-links»  (to ".find-apt-get-source-links")
+;; (find-find-links-links "{k}" "apt-get-source" "pkg")
+;; A test: (find-apt-get-source-links)
+
+(defun find-apt-get-source-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing a script for apt-get source."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (let ((letter (replace-regexp-in-string "^\\(\\(lib\\)?.\\).*" "\\1" pkg)))
+    (apply 'find-elinks
+     `((find-apt-get-source-links ,pkg ,@pos-spec-list)
+       (find-apt-get-source-links "lua5.1")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-apt-get-source-links)
+       ""
+       ,(ee-template0 "\
+# https://packages.debian.org/search?searchon=sourcenames&keywords={pkg}
+# https://packages.debian.org/source/sid/{pkg}
+# http://deb.debian.org/debian/pool/main/{letter}/{pkg}/
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-sh \"apt-cache show    {pkg}\")
+# (find-sh \"apt-cache showsrc {pkg}\")
+rm -Rv /tmp/d/
+mkdir  /tmp/d/
+cd     /tmp/d/
+sudo apt-get build-dep -y   {pkg}
+     apt-get source         {pkg}   2>&1 | tee osource
+     apt-get source --build {pkg}   2>&1 | tee osourceb
+
+# (find-fline \"/tmp/d/\")
+
+")
+       )
+     pos-spec-list)))
+
+;; Test: (find-apt-get-source-links)
+
+
 
 
 

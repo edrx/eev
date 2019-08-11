@@ -1,4 +1,10 @@
+2019-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-apt-get-source-links): new function.
+
 2019-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-explain.el: new file.
 
 	* eev-intro.el (find-three-main-keys-intro): new function.
 	(find-creating-links-intro): new function.
