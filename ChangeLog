@@ -1,6 +1,24 @@
+2019-08-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-shell3, eepitch-lua52, eepitch-lua53): new
+	functions.
+
+	* eev-audiovideo.el (find-mpv-video, ee-find-mpv-video)
+	(code-mpv-video, find-code-mpv-video, ee-code-mpv-video)
+	(ee-find-mpv-audio, find-mpv-audio, code-mpv-audio)
+	(find-code-mpv-audio, ee-code-mpv-audio): new functions.
+	(ee-mpv-video-options, ee-mpv-term-options)
+	(ee-mpv-audio-options): new variables.
+
 2019-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-audiovideo.el (ee-mpv-video-options): new variable.
+	(ee-mpv-video-options, ee-find-mpv-video): num funcions.
+
 	* eev-tlinks.el (find-apt-get-source-links): new function.
+
+	* eepitch.el (eepitch-lua52, eepitch-lua53, eepitch-shell3): new
+	functions.
 
 2019-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
 

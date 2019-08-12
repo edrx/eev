@@ -9889,9 +9889,10 @@ Also:
 
   (insert \"HELLO\")
 
-\[In this video we will also use `M-3 M-e' to open a hyperlink in
-the right window.]
-
+\[In this video we will also use `M-2 M-e' and `M-3 M-e' - they
+create two-window settings with the \"target\" of the sexp in the
+right window... but the idea of the \"target\" of a sexp only
+makes sense when that sexp behaves as a hyperlink...]
 
 
 
@@ -9934,13 +9935,17 @@ and some display their output in the echo area:
 
 
 Note: `find-fline' is a contraction of `find-file-line'...
-`find-fline' is better for hyperlinks than `find-file' for
-reasons explained in other tutorials:
+`find-fline' is better for hyperlinks than `find-file' because it
+can be \"refined\" to point to a precise place in a file. See:
 
-  (find-links-conv-intro \"4. Elisp hyperlinks: some conventions\")
-  (find-links-conv-intro \"messy\")
   (find-refining-intro \"2. Refining hyperlinks\")
 
+See also:
+
+  (find-enode \"Major Modes\")
+  (find-enode \"Major Modes\" \"Dired\")
+  (find-links-conv-intro \"4. Elisp hyperlinks: some conventions\")
+  (find-links-conv-intro \"messy\")
 
 
 

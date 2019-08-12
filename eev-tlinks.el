@@ -1069,6 +1069,10 @@ cd      {ee-git-dir}
 git clone {url}
 cd      {dir}
 
+git branch --list -a
+git for-each-ref
+PAGER=cat git log --oneline --graph --all -20
+
 # (find-fline \"{ee-git-dir}\")
 # (find-fline \"{dir}\")
 # (find-gitk  \"{dir}\")

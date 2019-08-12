@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar02
+;; Version:    2019aug12
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -36,6 +36,11 @@
 ;;   (find-audiovideo-intro)
 ;;
 ;; but that needs to be rewritten...
+
+;; «.find-mpv-video»	(to "find-mpv-video")
+;; «.find-mpv-audio»	(to "find-mpv-audio")
+;; «.find-termplayer»	(to "find-termplayer")
+
 
 
 
@@ -223,6 +228,87 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
         (find-mplayer {(ee-S fname)} time)))
   "))
 
+
+
+;;;                                 _     _            
+;;;  _ __ ___  _ ____   __   __   _(_) __| | ___  ___  
+;;; | '_ ` _ \| '_ \ \ / /___\ \ / / |/ _` |/ _ \/ _ \ 
+;;; | | | | | | |_) \ V /_____\ V /| | (_| |  __/ (_) |
+;;; |_| |_| |_| .__/ \_/       \_/ |_|\__,_|\___|\___/ 
+;;;           |_|                                      
+;;
+;; «find-mpv-video»  (to ".find-mpv-video")
+;; Experimental! To use it run:
+;; (defun find-video (&rest rest) (apply 'find-mpv-video rest))
+;;
+(defun    find-mpv-video (fname &optional pos &rest rest)
+  "Open FNAME with mpv, with a GUI (in fullscreen mode, for video files)."
+  (interactive "sFile name: ")
+  (find-bgprocess (ee-find-mpv-video fname pos)))
+(defvar     ee-mpv-video-options '("--fs" "--osd-level=2"))
+(defun ee-find-mpv-video (fname &optional pos &rest rest)
+  `("mpv"
+    ,fname
+    ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
+    ,@ee-mpv-video-options
+    ))
+
+(defun      code-mpv-video (c fname)
+  (eval (ee-read      (ee-code-mpv-video c fname))))
+(defun find-code-mpv-video (c fname)
+  (find-estring-elisp (ee-code-mpv-video c fname)))
+(defun   ee-code-mpv-video (c fname)
+  (ee-template0 "\
+    ;; {(ee-S `(find-code-mpv-video ,c ,fname))} 
+    ;;
+    (defun find-{c} (&optional time &rest rest)
+      (interactive (list (ee-time-around-point)))
+      (setq ee-audiovideo-last 'find-{c})
+      (if (eq time t)
+        \"Just setting the default video\"
+        (find-mpv-video {(ee-S fname)} time)))
+  "))
+
+
+
+;; «find-mpv-audio»  (to ".find-mpv-audio")
+;; (find-es "mplayer" "mpv-audio")
+;;
+(setq  ee-mpv-term-options '("xterm" "-geometry" "+200+100" "-e"))
+(setq  ee-mpv-audio-options '("--vid=no"))
+(defun ee-find-mpv-audio (fname &optional pos &rest rest)
+  `(,@ee-mpv-term-options
+    "mpv"
+    ,fname
+    ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
+    ,@(ee-mpv-audio-options)
+    ))
+(defun    find-mpv-audio (fname &optional pos &rest rest)
+  "Open FNAME with mpv, without a GUI (in a terminal - for audio files)."
+  (interactive "sFile name: ")
+  (find-bgprocess (ee-find-mpv-audio fname pos)))
+
+(defun      code-mpv-audio (c fname)
+  (eval (ee-read      (ee-code-mpv-audio c fname))))
+(defun find-code-mpv-audio (c fname)
+  (find-estring-elisp (ee-code-mpv-audio c fname)))
+(defun   ee-code-mpv-audio (c fname)
+  (ee-template0 "\
+    ;; {(ee-S `(find-code-mpv-audio ,c ,fname))} 
+    ;;
+    (defun find-{c} (&optional time &rest rest)
+      (interactive (list (ee-time-around-point)))
+      (setq ee-audioaudio-last 'find-{c})
+      (if (eq time t)
+        \"Just setting the default audio\"
+        (find-mpv-audio {(ee-S fname)} time)))
+  "))
+
+
+
+
+
+
 (defalias      'find-video      'find-mplayer)
 (defalias      'code-video      'code-mplayer)
 (defalias 'find-code-video 'find-code-mplayer)
@@ -240,6 +326,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;; | (_| (_) | (_| |  __/_____| (_| | |_| | (_| | | (_) |
 ;;;  \___\___/ \__,_|\___|      \__,_|\__,_|\__,_|_|\___/ 
 
+;; «find-termplayer»  (to ".find-termplayer")
 ;; mplayer in an xterm, for audio files
 ;;
 (defvar     ee-termplayer-term-options '("xterm" "-geometry" "+200+100" "-e"))

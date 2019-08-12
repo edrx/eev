@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar15
+;; Version:    2019aug11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -425,6 +425,7 @@ scratch."
   (eepitch '(shell)))
 
 (defun eepitch-shell2  () (interactive) (eepitch '(shell "*shell 2*")))
+(defun eepitch-shell3  () (interactive) (eepitch '(shell "*shell 3*")))
 (defun eepitch-eshell  () (interactive) (eepitch '(eshell)))
 
 
@@ -710,6 +711,8 @@ This is useful for for running processes that use pagers like
 
 ;; Main interpreted languages
 (defun eepitch-lua51  () (interactive) (eepitch-comint "lua51"  "lua5.1"))
+(defun eepitch-lua52  () (interactive) (eepitch-comint "lua52"  "lua5.2"))
+(defun eepitch-lua53  () (interactive) (eepitch-comint "lua53"  "lua5.3"))
 (defun eepitch-python () (interactive) (eepitch-comint "python" "python"))
 (defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb"))
 (defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb --simple-prompt"))
