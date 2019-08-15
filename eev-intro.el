@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug10
+;; Version:    2019aug15
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -6356,22 +6356,29 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+Prerequisite:
+  (find-pdf-like-intro)
+This intro is being rewritten.
+
+
+
+
 1. Time offsets
 ===============
 Links to audio and video files are similar to links to pdf-like
 documents, but instead of page numbers we use \"time offsets\" to
 refer to positions. Time offsets are strings like 1:23, 12:34, or
 1:23:45. The sexp hyperlinks below should all work if you have the
-files that they refer to:
+files that they refer to, and if you have mpv and xterm installed:
 
   (find-audio \"/tmp/mysong.mp3\")
   (find-audio \"/tmp/mysong.mp3\" \"1:23\")
-  (find-audio \"/tmp/mysong.mp3\" \"1:23\" \"comment are ignored\")
+  (find-audio \"/tmp/mysong.mp3\" \"1:23\" \"comments are ignored\")
   (find-video \"/tmp/myvideo.mp4\")
   (find-video \"/tmp/myvideo.mp4\" \"1:23\")
-  (find-video \"/tmp/myvideo.mp4\" \"1:23\" \"comment are ignored\")
+  (find-video \"/tmp/myvideo.mp4\" \"1:23\" \"comments are ignored\")
 
-Note that they work by invoking an external player - mplayer, by
+Note that they work by invoking an external player - mpv, by
 default - and its error messages appear here:
 
   (find-ebuffer \"*Messages*\")
@@ -6379,8 +6386,141 @@ default - and its error messages appear here:
 
 
 
-2. Shorter hyperlinks to audio and video files
-==============================================
+2. `eev-avadj-mode'
+===================
+\"avadj-mode\" is a shorthand for \"audio/video adjust mode\".
+When `eev-avadj-mode' is active we get keys for adjusting time
+offsets quickly and for playing again the default audio or video
+file at a given time offset, all of this without moving the
+point. The keys are:
+
+  M--    decrease the time offset by one second
+  M-+    increase the time offset by one second
+  M-=    same as M-+, for convenience
+  M-p    play the default audio/video file at a time offset
+
+You can toggle eev-avadj-mode on and off with `M-x
+eev-avadj-mode', or with these sexps:
+
+  (eev-avadj-mode 0)
+  (eev-avadj-mode)
+
+When it is on you will see an \"avadj\" at the mode line. Let's
+examine `M--' and `M-+' first. With eev-avadj-mode on, try typing
+several `M--'s and `M-+'s (or `M-='s) on the line below:
+
+  This time offset - 9:59 - will change
+
+Now, as an exercise, try to use `M--'s and `M-+'s/`M-='s, plus
+`M-h M-2' (`ee-duplicate-this-line') and other more standard
+editing commands, to convert this line
+
+  (find-exampleaudio \"0:00\")
+
+into:
+
+  (find-exampleaudio \"0:00\")
+  (find-exampleaudio \"0:12\" \"blah\")
+  (find-exampleaudio \"0:30\" \"bleh\")
+
+That should give you an idea of how to index audio or video files
+- by creating elisp hyperlinks, with comments, to specific
+positions in them. Of course in a real-world situation we would
+execute these sexps occasionally to check if they are really
+pointing to the right places, and then make further adjustments;
+we are not doing that yet.
+
+The idea of a \"default audio/video file\" will be explained
+later.
+
+
+
+
+3. The time-from-bol
+====================
+All the keys in eev-avadj-mode operate on the \"time-from-bol\"
+of the current line: the first occurrence, in the current line,
+of a string that looks like a time offset. Note that the search
+starts from the beginning of the line (\"-from-bol\"), and if
+there are several possibilities, the first one is chosen.
+
+Remember that `M-e' has a variant that just highlights what would
+be executed, instead of evaluating a sexp:
+
+  (find-eval-intro \"`M-0 M-e'\")
+
+`M-p' also has something like this: `M-0 M-p' highlights the
+time-from-bol and displays in the echo area the sexp that it
+would execute to invoke a player - instead of running that sexp.
+Try to evaluate these sexps:
+
+  (code-audio \"sunwillset\" \"~/Zoe_Keating/Sun_Will_Set.ogg\")
+  (find-sunwillset)
+  ;; ^ don't worry if this fails - we are only calling it
+  ;;   to set `ee-audiovideo-last'
+
+and now try `M-0 M-p' on these lines:
+
+  ;; 4:19 blah
+  ;; 2:19
+
+For more realistic examples, see:
+
+  (find-videos-intro)
+
+
+
+
+4. Short hyperlinks to audio and video files
+============================================
+This sexp
+
+  (code-video \"eevtk2video\" \"~/eev-videos/three-keys-2.mp4\")
+
+defines a function `find-eevtk2video'. Note that the function
+definition in
+
+  (find-code-video \"eevtk2video\" \"~/eev-videos/three-keys-2.mp4\")
+
+has this line:
+
+  (setq ee-audiovideo-last 'find-eevtk2video)
+
+Every call to a function with a name like `find-*audio' or
+`find-*video' sets the variable `ee-audiovideo-last'.
+
+
+
+
+4.1. `find-code-audiovideo-links'
+---------------------------------
+The easist way to produce `code-audio' or `code-video' hyperlinks
+uses `M-h M-a', that calls `find-code-audiovideo-links' and is
+very similar to:
+
+  (find-pdf-like-intro \"9. Generating three pairs\")
+  (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
+
+A test:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  mkdir ~/eev-videos/
+  cd    ~/eev-videos/
+  wget -nc http://angg.twu.net/eev-videos/three-keys-2.mp4
+
+  # (find-code-audiovideo-links \"~/eev-videos/three-keys-2.mp4\" \"eevtk2\")
+  # (find-fline \"~/eev-videos/\")
+  # (find-fline \"~/eev-videos/\" \"three-keys-2.mp4\")
+  #   ^ Type `M-h M-a' on the line with the .mp4
+
+\[Todo: explain M-p in eev-avadj-mode]
+
+
+
+4.2. `eewrap-audiovideo'
+------------------------
 If you type `M-V' (`eewrap-audiovideo') on a line containing a
 shorthand word and a file name of an audio or video file, for
 example, here,
@@ -6416,7 +6556,7 @@ each call to a short hyperlink of the form `find-xxxaudio' or
 
 
 
-3. Passing options to mplayer
+5. Passing options to mplayer
 =============================
 By default mplayer is called with just a few command-line options,
 besides the ones that tell it at what position to start playing -
@@ -6434,86 +6574,6 @@ If you want to change this you should redefine these functions:
 
 
   
-
-
-
-4. `eev-avadj-mode'
-===================
-\"avadj-mode\" is a shorthand for \"audio/video adjust mode\".
-When `eev-avadj-mode' is active we get keys for adjusting time
-offsets quickly and for playing again the default audio or video
-file at a given time offset, all of this without moving the
-point. The keys are:
-
-  M--    decrease the time offset by one second
-  M-+    increase the time offset by one second
-  M-=    same as M-+, for convenience
-  M-p    play the default audio/video file at a time offset
-
-You can toggle eev-avadj-mode on and off with `M-x
-eev-avadj-mode', or with this sexp:
-
-  (eev-avadj-mode)
-
-When it is on you will see an \"avadj\" at the mode line. Let's
-examine `M--' and `M-+' first. With eev-avadj-mode on, try typing
-several `M--'s and `M-+'s (or `M-='s) on the line below:
-
-  This time offset - 9:59 - will change
-
-Now, as an exercise, try to use `M--'s and `M-+'s/`M-='s, plus
-`M-h M-2' (`ee-duplicate-this-line') and other more standard
-editing commands, to convert this line
-
-  (find-exampleaudio \"0:00\")
-
-into:
-
-  (find-exampleaudio \"0:00\")
-  (find-exampleaudio \"0:12\" \"blah\")
-  (find-exampleaudio \"0:30\" \"bleh\")
-
-That should give you an idea of how to index audio or video files
-- by creating elisp hyperlinks, with comments, to specific
-positions in them. Of course in a real-world situation we would
-execute these sexps occasionally to check if they are really
-pointing to the right places, and then make further adjustments;
-we are not doing that yet.
-
-
-
-5. The time-from-bol
-====================
-All the keys in eev-avadj-mode operate on the \"time-from-bol\"
-of the current line: the first occurrence, in the current line,
-of a string that looks like a time offset. Note that the search
-starts from the beginning of the line (\"-from-bol\"), and if
-there are several possibilities, the first one is chosen.
-
-Remember that `M-e' has a variant that just highlights what would
-be executed, instead of evaluating a sexp:
-
-  (find-eval-intro \"`M-0 M-e'\")
-
-`M-p' also has something like this: `M-0 M-p' highlights the
-time-from-bol and displays in the echo area the sexp that it
-would execute to invoke a player - instead of running that sexp.
-Try to evaluate these sexps:
-
-  (code-audio \"sunwillset\" \"~/Zoe_Keating/Sun_Will_Set.ogg\")
-  (find-sunwillset)
-  ;; ^ don't worry if this fails - we are only calling it
-  ;;   to set `ee-audiovideo-last'
-
-and now try `M-0 M-p' on these lines:
-
-  ;; 4:19 blah
-  ;; 2:19 
-
-For more realistic examples, see:
-
-  (find-videos-intro)
-
 
 
 
@@ -6730,29 +6790,6 @@ To change the dir strings \"~/videos/\", \"~/videos/tech/\", \"/tmp/videos/\",
 \"/tmp/\", that appear in the second block of `find-youtubedl-links'
 buffers, change the variables `ee-youtubedl-dir', `ee-youtubedl-dir2',
 `ee-youtubedl-dir3', `ee-youtubedl-dir4.'
-
-
-
-How to download
-===============
-
-
-
-Test the download
-=================
-
-
-Create short links
-==================
-
-
-
-
-  (find-youtubedl-links \"/tmp/\" \"TITLE\" \"abcdefghijk\" \".mp4\" \"{stem}\")
-  (find-youtubedl-links nil nil \"abcdefghijk\")
-
-  (find-eev \"eev-audiovideo.el\")
-  (find-eev \"eev-audiovideo.el\" \"eev-avadj-mode\")
 
 " pos-spec-list)))
 

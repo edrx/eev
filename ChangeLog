@@ -1,7 +1,17 @@
-2019-08-12  Eduardo Ochs  <eduardoochs@gmail.com>
+2019-08-15  Eduardo Ochs  <eduardoochs@gmail.com>
 
-	* eepitch.el (eepitch-shell3, eepitch-lua52, eepitch-lua53): new
-	functions.
+	* eev-audiovideo.el (find-video, code-video, find-code-video)
+	(find-audio, code-audio, find-code-audio): these aliases now point
+	to the corresponding mpv-video and mpv-audio functions.
+
+	* eev-intro.el (find-audiovideo-intro): rewrote many sections.
+
+	* eev-mode.el (eev-mode-map-set): new binding: `M-h M-a' ->
+	`find-code-audiovideo-links'.
+
+	* eev-elinks.el (find-code-audiovideo-links): new function.
+
+2019-08-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (find-mpv-video, ee-find-mpv-video)
 	(code-mpv-video, find-code-mpv-video, ee-code-mpv-video)

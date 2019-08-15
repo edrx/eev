@@ -37,9 +37,11 @@
 ;;
 ;; but that needs to be rewritten...
 
+;; «.find-mplayer»	(to "find-mplayer")
+;; «.find-termplayer»	(to "find-termplayer")
 ;; «.find-mpv-video»	(to "find-mpv-video")
 ;; «.find-mpv-audio»	(to "find-mpv-audio")
-;; «.find-termplayer»	(to "find-termplayer")
+;; «.aliases»		(to "aliases")
 
 
 
@@ -197,7 +199,20 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;;  \___\___/ \__,_|\___|      \_/ |_|\__,_|\___|\___/ 
 ;;;                                                     
 
-;; mplayer for video files
+;;;                  _                       
+;;;  _ __ ___  _ __ | | __ _ _   _  ___ _ __ 
+;;; | '_ ` _ \| '_ \| |/ _` | | | |/ _ \ '__|
+;;; | | | | | | |_) | | (_| | |_| |  __/ |   
+;;; |_| |_| |_| .__/|_|\__,_|\__, |\___|_|   
+;;;           |_|            |___/           
+;;
+;; «find-mplayer»  (to ".find-mplayer")
+;; Play video files with mplayer.
+;; Note that:
+;; 1. mplayer is obsolete - see https://en.wikipedia.org/wiki/Mpv_(media_player)
+;; 2. this should be called `find-mplayer-video' to follow the conventions on
+;;    hyphens in: (find-eevfile "eev-pdflike.el")
+;; 3. this is very old code.
 ;;
 (defun    find-mplayer (fname &optional pos &rest rest)
   "Open FNAME with mplayer, with a GUI (in fullscreen mode, for video files)."
@@ -227,6 +242,56 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
         \"Just setting the default video\"
         (find-mplayer {(ee-S fname)} time)))
   "))
+
+
+;;;  _                            _                       
+;;; | |_ ___ _ __ _ __ ___  _ __ | | __ _ _   _  ___ _ __ 
+;;; | __/ _ \ '__| '_ ` _ \| '_ \| |/ _` | | | |/ _ \ '__|
+;;; | ||  __/ |  | | | | | | |_) | | (_| | |_| |  __/ |   
+;;;  \__\___|_|  |_| |_| |_| .__/|_|\__,_|\__, |\___|_|   
+;;;                        |_|            |___/           
+;;
+;; «find-termplayer»  (to ".find-termplayer")
+;; Play audio files with mplayer (in an xterm).
+;; Note that:
+;; 1. mplayer is obsolete - see https://en.wikipedia.org/wiki/Mpv_(media_player)
+;; 2. this should be called `find-mplayer-audio' to follow the conventions on
+;;    hyphens in: (find-eevfile "eev-pdflike.el")
+;; 3. this is very old code.
+;;
+(defvar     ee-termplayer-term-options '("xterm" "-geometry" "+200+100" "-e"))
+(defvar     ee-termplayer-options ())
+(defun ee-mplayer-audio-options () ee-termplayer-options)
+(defun ee-find-termplayer (fname &optional pos &rest rest)
+  `(,@ee-termplayer-term-options
+    "mplayer"
+    ,fname
+    ,@(if pos `("-ss" ,(ee-secs-to-mm:ss pos)))
+    ,@(ee-mplayer-audio-options)
+    ))
+(defun    find-termplayer (fname &optional pos &rest rest)
+  "Open FNAME with mplayer, without a GUI (in a terminal - for audio files)."
+  (interactive "sFile name: ")
+  (find-bgprocess (ee-find-termplayer fname pos)))
+
+(defun      code-termplayer (c fname)
+  (eval (ee-read      (ee-code-termplayer c fname))))
+(defun find-code-termplayer (c fname)
+  (find-estring-elisp (ee-code-termplayer c fname)))
+(defun   ee-code-termplayer (c fname)
+  (ee-template0 "\
+    ;; {(ee-S `(find-code-termplayer ,c ,fname))} 
+    ;;
+    (defun find-{c} (&optional time &rest rest)
+      (interactive (list (ee-time-around-point)))
+      (setq ee-audiovideo-last 'find-{c})
+      (if (eq time t)
+        \"Just setting the default audio\"
+        (find-termplayer {(ee-S fname)} time)))
+  "))
+
+
+
 
 
 
@@ -271,17 +336,26 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 
-;; «find-mpv-audio»  (to ".find-mpv-audio")
-;; (find-es "mplayer" "mpv-audio")
+;;;                                            _ _       
+;;;  _ __ ___  _ ____   __      __ _ _   _  __| (_) ___  
+;;; | '_ ` _ \| '_ \ \ / /____ / _` | | | |/ _` | |/ _ \ 
+;;; | | | | | | |_) \ V /_____| (_| | |_| | (_| | | (_) |
+;;; |_| |_| |_| .__/ \_/       \__,_|\__,_|\__,_|_|\___/ 
+;;;           |_|                                        
 ;;
-(setq  ee-mpv-term-options '("xterm" "-geometry" "+200+100" "-e"))
-(setq  ee-mpv-audio-options '("--vid=no"))
+;; «find-mpv-audio»  (to ".find-mpv-audio")
+;; Play audio with mpv (running in an xterm).
+;; This is immature code. My notes are here:
+;;   (find-es "mplayer" "mpv-audio")
+;;
+(defvar ee-mpv-term-options '("xterm" "-geometry" "+200+100" "-e"))
+(defvar ee-mpv-audio-options '("--vid=no"))
 (defun ee-find-mpv-audio (fname &optional pos &rest rest)
   `(,@ee-mpv-term-options
     "mpv"
     ,fname
     ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
-    ,@(ee-mpv-audio-options)
+    ,@ee-mpv-audio-options
     ))
 (defun    find-mpv-audio (fname &optional pos &rest rest)
   "Open FNAME with mpv, without a GUI (in a terminal - for audio files)."
@@ -307,12 +381,24 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 
+;;;        _ _                     
+;;;   __ _| (_) __ _ ___  ___  ___ 
+;;;  / _` | | |/ _` / __|/ _ \/ __|
+;;; | (_| | | | (_| \__ \  __/\__ \
+;;;  \__,_|_|_|\__,_|___/\___||___/
+;;;                                
+;; «aliases»  (to ".aliases")
 
+(defalias      'find-video      'find-mpv-video)
+(defalias      'code-video      'code-mpv-video)
+(defalias 'find-code-video 'find-code-mpv-video)
 
-(defalias      'find-video      'find-mplayer)
-(defalias      'code-video      'code-mplayer)
-(defalias 'find-code-video 'find-code-mplayer)
+(defalias      'find-audio      'find-mpv-audio)
+(defalias      'code-audio      'code-mpv-audio)
+(defalias 'find-code-audio 'find-code-mpv-audio)
 
+;; (find-code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
+        (code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
 ;; (find-code-brfile 'find-video :local 'brvideol :dired 'brvideod)
         (code-brfile 'find-video :local 'brvideol :dired 'brvideod)
 
@@ -326,46 +412,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;; | (_| (_) | (_| |  __/_____| (_| | |_| | (_| | | (_) |
 ;;;  \___\___/ \__,_|\___|      \__,_|\__,_|\__,_|_|\___/ 
 
-;; «find-termplayer»  (to ".find-termplayer")
-;; mplayer in an xterm, for audio files
-;;
-(defvar     ee-termplayer-term-options '("xterm" "-geometry" "+200+100" "-e"))
-(defvar     ee-termplayer-options ())
-(defun ee-mplayer-audio-options () ee-termplayer-options)
-(defun ee-find-termplayer (fname &optional pos &rest rest)
-  `(,@ee-termplayer-term-options
-    "mplayer"
-    ,fname
-    ,@(if pos `("-ss" ,(ee-secs-to-mm:ss pos)))
-    ,@(ee-mplayer-audio-options)
-    ))
-(defun    find-termplayer (fname &optional pos &rest rest)
-  "Open FNAME with mplayer, without a GUI (in a terminal - for audio files)."
-  (interactive "sFile name: ")
-  (find-bgprocess (ee-find-termplayer fname pos)))
 
-(defun      code-termplayer (c fname)
-  (eval (ee-read      (ee-code-termplayer c fname))))
-(defun find-code-termplayer (c fname)
-  (find-estring-elisp (ee-code-termplayer c fname)))
-(defun   ee-code-termplayer (c fname)
-  (ee-template0 "\
-    ;; {(ee-S `(find-code-termplayer ,c ,fname))} 
-    ;;
-    (defun find-{c} (&optional time &rest rest)
-      (interactive (list (ee-time-around-point)))
-      (setq ee-audiovideo-last 'find-{c})
-      (if (eq time t)
-        \"Just setting the default audio\"
-        (find-termplayer {(ee-S fname)} time)))
-  "))
-
-(defalias      'find-audio      'find-termplayer)
-(defalias      'code-audio      'code-termplayer)
-(defalias 'find-code-audio 'find-code-termplayer)
-
-;; (find-code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
-        (code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
 
 
 

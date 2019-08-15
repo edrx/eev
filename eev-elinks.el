@@ -80,6 +80,7 @@
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
+;; «.find-code-audiovideo-links»  (to "find-code-audiovideo-links")
 
 
 
@@ -1373,6 +1374,45 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
   (if (eq major-mode 'dired-mode)
       (find-code-pdf-links (ee-dired-to-fname))
     (find-pdflike-page-links)))
+
+
+
+;; «find-code-audiovideo-links»  (to ".find-code-audiovideo-links")
+;;
+(defun find-code-audiovideo-links (&optional fname c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks and..."
+  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (if fname (setq fname (ee-shorten-file-name fname)))
+  (setq fname (or fname "{fname}"))
+  (setq c (or c "{c}"))
+  (let ((dir (file-name-directory fname)))
+    (apply 'find-elinks-elisp
+     `((find-code-audiovideo-links ,fname ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;;
+       ;; (find-efunction 'find-code-pdf-links)
+       ,(ee-template0 "\
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
+;;      (find-audiovideo-intro \"2.1. `find-code-audiovideo-links'\")
+
+;; (find-fline {(ee-S (file-name-directory fname))})
+\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; \(find-{c}file \"\")
+
+;; (find-audio \"{fname}\")
+\(code-audio \"{c}audio\" \"{fname}\")
+;; \(find-{c}audio)
+
+;; (find-video \"{fname}\")
+\(code-video \"{c}video\" \"{fname}\")
+;; \(find-{c}video)
+")
+       )
+     pos-spec-list)))
+
+;; Tests:
+;; (find-code-audiovideo-links "~/eev-videos/three-keys-2.mp4")
 
 
 
