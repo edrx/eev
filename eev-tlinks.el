@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug11
+;; Version:    2019aug17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -527,6 +527,21 @@ http://packages.ubuntu.org/{pkgname}
  (eepitch-shell2)
 sudo apt-get install    {pkgname}
 sudo apt-get install -y {pkgname}
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-man \"8 apt-cache\")
+apt-cache show {pkgname}
+apt-cache search {pkgname}
+apt-cache depends {pkgname}
+apt-cache rdepends {pkgname}
+
+apt-cache showpkg {pkgname}
+
+# (find-man \"1 dpkg-query\")
+apt-file search {pkgname}
+dpkg-query --search {pkgname}
 ")
       ) rest)))
 

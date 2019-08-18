@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug15
+;; Version:    2019aug16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2306,10 +2306,14 @@ These ones explain advanced features that require extra setup:
   24. (find-bounded-intro)
   25. (find-channels-intro)
 
+This one is used in a video:
+
+  26. (find-three-main-keys-intro)
+
 These ones are obsolete:
 
-  26. (find-emacs-intro)
-  27. (find-defun-intro)
+  27. (find-emacs-intro)
+  28. (find-defun-intro)
 
 Item 22 is an index of the (old) video tutorials, with scripts
 for downloading local copies of them and links to important
@@ -9801,7 +9805,12 @@ This can also be used to generate links to info nodes.
 
 
 
-
+;;;  _   _                                     _         _                  
+;;; | |_| |__  _ __ ___  ___   _ __ ___   __ _(_)_ __   | | _____ _   _ ___ 
+;;; | __| '_ \| '__/ _ \/ _ \ | '_ ` _ \ / _` | | '_ \  | |/ / _ \ | | / __|
+;;; | |_| | | | | |  __/  __/ | | | | | | (_| | | | | | |   <  __/ |_| \__ \
+;;;  \__|_| |_|_|  \___|\___| |_| |_| |_|\__,_|_|_| |_| |_|\_\___|\__, |___/
+;;;                                                               |___/     
 
 ;; «find-three-main-keys-intro»  (to ".find-three-main-keys-intro")
 ;; (find-intro-links "three-main-keys")
@@ -9821,6 +9830,7 @@ This can also be used to generate links to info nodes.
   A mini tutorial
     Eduardo Ochs
     http://angg.twu.net/#eev
+    http://angg.twu.net/#eev-three-main-keys
     (Version: 2019aug09)
 
   Eev's central idea is that you can keep \"executable logs\" of
@@ -10062,6 +10072,14 @@ See:
 
 
 
+Btw, the videos that I produced using this \"script\" are here:
+  http://angg.twu.net/#eev-three-main-keys
+  Version in English:
+    http://www.youtube.com/watch?v=s0_48wzWFbU
+    http://angg.twu.net/eev-videos/three-keys-2.mp4
+  Version in Portuguese:
+    http://www.youtube.com/watch?v=GUuCpmLItTs
+    http://angg.twu.net/eev-videos/three-keys-1-pt.mp4
 
 " pos-spec-list)))
 
