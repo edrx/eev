@@ -93,6 +93,7 @@
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
+;; «.find-what-sexps-can-do-intro»	(to "find-what-sexps-can-do-intro")
 ;; «.find-creating-links-intro»		(to "find-creating-links-intro")
 
 
@@ -10084,6 +10085,131 @@ Btw, the videos that I produced using this \"script\" are here:
 " pos-spec-list)))
 
 ;; (find-three-main-keys-intro)
+
+
+
+
+;;; __        ___           _                                               
+;;; \ \      / / |__   __ _| |_   ___  _____  ___ __  ___    ___ __ _ _ __  
+;;;  \ \ /\ / /| '_ \ / _` | __| / __|/ _ \ \/ / '_ \/ __|  / __/ _` | '_ \ 
+;;;   \ V  V / | | | | (_| | |_  \__ \  __/>  <| |_) \__ \ | (_| (_| | | | |
+;;;    \_/\_/  |_| |_|\__,_|\__| |___/\___/_/\_\ .__/|___/  \___\__,_|_| |_|
+;;;                                            |_|                          
+;;
+;; «find-what-sexps-can-do-intro»  (to ".find-what-sexps-can-do-intro")
+;; (find-intro-links "what-sexps-can-do")
+
+(defun find-what-sexps-can-do-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-what-sexps-can-do-intro)*"))
+    (apply 'find-eintro "\
+
+  What Lisp expressions can do:
+  A mini tutorial
+    Eduardo Ochs
+    http://angg.twu.net/#eev
+    http://angg.twu.net/#eev-screencasts
+    (Version: 2019aug20)
+
+  Everybody knows that Emacs is written in Lisp and that one of
+  its main key sequences, `C-x C-e', executes the Lisp expression
+  before the cursor and shows the result in the echo area... this
+  can be used to calculate,
+
+       (* 2 3)
+               (* 4 5)
+    (+ (* 2 3) (* 4 5))
+
+  and can be used to call external programs - for examples, here
+  he have some Lisp expressions that invoke a video player,
+
+  (find-video \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (code-video \"punchandjudyvideo\" \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (find-punchandjudyvideo)
+  (find-punchandjudyvideo \"0:00\")
+  (find-punchandjudyvideo \"0:10\" \"calls the baby\")
+  (find-punchandjudyvideo \"0:40\" \"where's the baby\")
+  (find-punchandjudyvideo \"1:04\" \"right position\")
+  (find-punchandjudyvideo \"1:17\" \"he will sing the baby to sleep\")
+  (find-punchandjudyvideo \"1:33\" \"1-2-3\")
+  (find-punchandjudyvideo \"1:48\" \"baby downstairs\")
+  (find-punchandjudyvideo \"3:12\" \"slaps\")
+  (find-punchandjudyvideo \"3:50\" \"1-2-3\")
+  (find-punchandjudyvideo \"4:34\" \"you keep an eye on mr Punch\")
+  (find-punchandjudyvideo \"4:46\" \"hat\")
+  (find-punchandjudyvideo \"5:03\" \"hat\")
+  (find-punchandjudyvideo \"5:25\" \"did you see him?\")
+  (find-punchandjudyvideo \"5:55\" \"clown\")
+  (find-punchandjudyvideo \"6:14\" \"slaps\")
+  (find-punchandjudyvideo \"6:52\" \"sausages\")
+  (find-punchandjudyvideo \"7:24\" \"crocodile\")
+  (find-punchandjudyvideo \"8:07\" \"crocodile + sausages\")
+  (find-punchandjudyvideo \"8:32\" \"another scene\")
+  (find-punchandjudyvideo \"8:39\" \"fight\")
+  (find-punchandjudyvideo \"9:03\" \"clown\")
+  (find-punchandjudyvideo \"9:45\" \"mr punch\")
+
+  and here we have some Lisp expressions that open a PDF at a
+  given page:
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+  (find-livesofanimalspage)
+  (find-livesofanimalstext)
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalstext (+ -110 113))
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalspage (+ -110 133) \"To write that book I had to think\")
+  (find-livesofanimalstext (+ -110 133) \"To write that book I had to think\")
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalspage (+ -110 164) \"last common ground\")
+  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+
+
+
+
+Preparation:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd
+wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# http://www.youtube.com/watch?v=K6LmZ0A1s9U
+# http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+mkdir ~/eev-videos/
+cd    ~/eev-videos/
+wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+
+# (find-eev \"eev-audiovideo.el\" \"find-mpv-video\" \"ee-mpv-video-options\")
+# (setq ee-mpv-video-options '(\"--fs\" \"--osd-level=2\"))
+# (setq ee-mpv-video-options        '(\"--osd-level=2\"))
+
+
+# (find-fline \"~/eev-videos/\")
+
+
+
+" pos-spec-list)))
+
+;; (find-what-sexps-can-do-intro)
 
 
 

@@ -1403,10 +1403,15 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
 ;; (find-audio \"{fname}\")
 \(code-audio \"{c}audio\" \"{fname}\")
 ;; \(find-{c}audio)
+;; \(find-{c}audio \"0:00\")
 
 ;; (find-video \"{fname}\")
 \(code-video \"{c}video\" \"{fname}\")
 ;; \(find-{c}video)
+;; \(find-{c}video \"0:00\")
+
+;; (eev-avadj-mode 0)
+;; (eev-avadj-mode)
 ")
        )
      pos-spec-list)))

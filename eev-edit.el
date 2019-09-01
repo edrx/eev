@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr25
+;; Version:    2019aug29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -122,16 +122,39 @@ and you copy that hyperlink to a more permanent place."
 ;; «ee-copy-this-line-to-kill-ring» (to ".ee-copy-this-line-to-kill-ring")
 ;; (define-key eev-mode-map "\M-h\M-w" 'ee-copy-this-line-to-kill-ring)
 
-(defun ee-copy-this-line-to-kill-ring ()
-  "Copy the current line to the kill ring and highlight (\"flash\") it."
+(defun ee-copy-this-line-to-kill-ring (&optional arg)
+  "Copy the current line to the kill ring and highlight (\"flash\") it.
+With a prefix argument run `ee-copy-preceding-tag-to-kill-ring' instead."
+  (interactive "P")
+  (if arg (ee-copy-preceding-tag-to-kill-ring)
+    (let* ((start (ee-bol))
+	   (end   (save-excursion (next-line) (ee-bol)))
+	   (str   (buffer-substring start end))
+	   (msg   "Copied the current line to the kill ring - use C-y to paste"))
+      (eeflash+ start end eeflash-copy)
+      (kill-new str)
+      (message msg))))
+
+
+;; Experimental, 2019aug29
+;; (defun ee-tag-re () (ee-tolatin1 "«\\([!-~]+\\)»"))
+(defun ee-tag-re () "«\\([!-~]+\\)»")
+
+(defun ee-copy-preceding-tag-to-kill-ring ()
+  "Copy the preceding tag to the kill ring and highlight (\"flash\") it.
+A \"tag\" is the string between \"«»\"s in an anchor."
   (interactive)
-  (let* ((start (ee-bol))
-	 (end   (save-excursion (next-line) (ee-bol)))
-	 (str   (buffer-substring start end))
-	 (msg   "Copied the current line to the kill ring - use C-y to paste"))
-    (eeflash+ start end eeflash-copy)
-    (kill-new str)
-    (message msg)))
+  (save-excursion
+    (if (re-search-backward (ee-tag-re))
+	(let* ((start (match-beginning 1))
+	       (end   (match-end 1))
+	       (str   (ee-no-properties (match-string 1)))
+	       (msg   (format "Copied \"%s\" to the kill ring" str)))
+	  (eeflash start end eeflash-copy)
+	  (kill-new str)
+	  (message msg))
+      (error "No preceding tag!"))))
+    
 
 
 

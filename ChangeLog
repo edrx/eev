@@ -1,3 +1,19 @@
+2019-08-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-edit.el (ee-copy-this-line-to-kill-ring): use
+	`ee-copy-preceding-tag-to-kill-ring' when called with an argument.
+	(ee-tag-re, ee-copy-preceding-tag-to-kill-ring): new functions.
+
+2019-08-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-what-sexps-can-do-intro): new intro (script
+	for a video).
+
+2019-08-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-code-audiovideo-links): added calls to
+	`eev-avadj-mode'.
+
 2019-08-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-debpkg-links): small changes.
