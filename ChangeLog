@@ -1,3 +1,136 @@
+2019-08-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-edit.el (ee-copy-this-line-to-kill-ring): use
+	`ee-copy-preceding-tag-to-kill-ring' when called with an argument.
+	(ee-tag-re, ee-copy-preceding-tag-to-kill-ring): new functions.
+
+2019-08-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-what-sexps-can-do-intro): new intro (script
+	for a video).
+
+2019-08-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-code-audiovideo-links): added calls to
+	`eev-avadj-mode'.
+
+2019-08-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-debpkg-links): small changes.
+
+2019-08-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (find-video, code-video, find-code-video)
+	(find-audio, code-audio, find-code-audio): these aliases now point
+	to the corresponding mpv-video and mpv-audio functions.
+
+	* eev-intro.el (find-audiovideo-intro): rewrote many sections.
+
+	* eev-mode.el (eev-mode-map-set): new binding: `M-h M-a' ->
+	`find-code-audiovideo-links'.
+
+	* eev-elinks.el (find-code-audiovideo-links): new function.
+
+2019-08-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (find-mpv-video, ee-find-mpv-video)
+	(code-mpv-video, find-code-mpv-video, ee-code-mpv-video)
+	(ee-find-mpv-audio, find-mpv-audio, code-mpv-audio)
+	(find-code-mpv-audio, ee-code-mpv-audio): new functions.
+	(ee-mpv-video-options, ee-mpv-term-options)
+	(ee-mpv-audio-options): new variables.
+
+2019-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (ee-mpv-video-options): new variable.
+	(ee-mpv-video-options, ee-find-mpv-video): num funcions.
+
+	* eev-tlinks.el (find-apt-get-source-links): new function.
+
+	* eepitch.el (eepitch-lua52, eepitch-lua53, eepitch-shell3): new
+	functions.
+
+2019-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-explain.el: new file.
+
+	* eev-intro.el (find-three-main-keys-intro): new function.
+	(find-creating-links-intro): new function.
+
+2019-08-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-here-links-intro): new section: "1.1. Reading
+	and writing".
+
+2019-08-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-git-links): small changes.
+
+2019-08-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-efunctiondescr-re): added support for special
+	forms (e.g., condition-case).
+	(ee-shorten-file-name): new function.
+	(find-code-pdf-links): use `ee-shorten-file-name'.
+
+2019-08-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-eval.el (ee-backward-sexp, ee-forward-sexp): changed the
+	docstrings.
+
+2019-07-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-goto-position): added support for `:end'.
+
+2019-07-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): many changes.
+
+2019-07-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-here-links-intro): small changes.
+	(find-eev-quick-intro): rewrote the section that teaches how to
+	use Info mode and the sections about hyperlinks to PDF files.
+
+	* eev-elinks.el (find-code-pdf-links, find-pdflike-page-links):
+	point to sections of `(find-pdf-like-intro)'.
+
+	* eev-intro.el (find-pdf-like-intro): rewrote completely.
+
+2019-07-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-xpdf-page): added "&rest rest".
+	(ee-find-pdf-text): added "&rest rest".
+	(ee-find-pdftotext-text): added "&rest rest".
+
+2019-07-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): rewrote the section "9.3.
+	Hyperlinks to PDF files" and split it in two; the new section is:
+	"9.4. Hyperlinks to pages of PDF files". The old section 9.4,
+	"9.4. Shorter hyperlinks to PDF files", was renumbered to 9.5 and
+	split into "9.5. Shorter hyperlinks to PDF files" and "9.6. A
+	convention on page numbers".
+
+2019-07-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-git-links): small changes.
+
+2019-07-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-code-pdf-links): show shorter variants of
+	the first sexp when possible.
+
+2019-06-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el (eeit, ee-insert-test, ee-insert-test-lua)
+	(ee-insert-test-python, ee-insert-test-ruby, ee-insert-test-sh)
+	(ee-insert-test-tcl): new functions.
+
+2019-06-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-sh-man-fontify): new function.
+
 2019-06-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (find-urlretrieve00, ee-urlretrieve-3)

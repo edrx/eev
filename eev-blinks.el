@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun17
+;; Version:    2019aug10
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -145,6 +145,8 @@ they skip the first \"absolute\" pos-spec."
 			(goto-char (point-min))	  ; (goto-char (point-min))
 			(search-forward pos-spec) ; (search-forward pos-spec)
 			(point))))		  ;
+	  ((eq pos-spec :end)
+	   (goto-char (point-max)))
 	  (t (error "This is not a valid pos-spec: %S" pos-spec)))
     (if rest (ee-goto-rest rest))))
 
@@ -607,6 +609,16 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
   (let ((fullcmd (format "cd %s\n%s" dir command)))
     (prog1 (apply 'find-sh fullcmd pos-spec-list)
            (setq default-directory dir))))
+
+(defun find-sh-man-fontify (command &rest pos-spec-list)
+  "Like `find-sh', but runs `Man-fontify-manpage' on the output."
+  (apply 'find-eoutput-reuse
+	 command
+	 `(progn
+	    (insert (shell-command-to-string ,command))
+	    (goto-char (point-min))
+	    (Man-fontify-manpage))
+	 pos-spec-list))
 
 
 

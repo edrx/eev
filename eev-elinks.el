@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun24
+;; Version:    2019aug06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -80,6 +80,7 @@
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
+;; «.find-code-audiovideo-links»  (to "find-code-audiovideo-links")
 
 
 
@@ -947,8 +948,10 @@ See: (find-pdf-like-intro)
   (apply 'find-elinks `(
     (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
     ;; (find-efunction 'find-pdflike-page-links)
-    (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
-    (find-eev-quick-intro "11.1. `find-pdf-links'")
+    ;; (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
+    ;; (find-eev-quick-intro "11.1. `find-pdf-links'")
+    (find-pdf-like-intro "10. Generating a pair with the page number")
+    (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
     ""
     ,@(ee-pdflike-page-links page bufname offset)
     ) rest))
@@ -1110,6 +1113,9 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;   (find-eevfile "eev-mode.el" "\\M-h\\M-h")
 ;; (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
 
+;; TODO: support cases like these:
+;;   (find-efunctiondescr 'condition-case)
+
 ;; Some tools for detecting which kind of buffer we're in.
 (defun ee-buffer-re (re)
   (if (string-match re (buffer-name))
@@ -1144,7 +1150,8 @@ This needs a temporary directory; see: (find-prepared-intro)"
 (defun ee-pdftext-bufferp  () (ee-buffer-re "^pdftotext"))
 
 ;; By buffer name (when it is "*Help*")
-(defvar ee-efunctiondescr-re "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\)")
+(defvar ee-efunctiondescr-re
+  "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\|special form\\)")
 (defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
 (defun  ee-find-efunctiondescr-links ()
   (let ((f (ee-efunctiondescr-bufferp)))
@@ -1319,21 +1326,31 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
 ;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf")
 ;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf" "foo")
 
+;; See: (find-efunction 'ee-if-prefixp)
+(defun ee-shorten-file-name (fname)
+  "Shorten FNAME if possible to make it start with \"$S/\" or \"~/\"."
+  (or (ee-if-prefixp "$S/" "$S/" fname 'fname+)
+      (ee-if-prefixp "~/"  "~/"  fname 'fname+)
+      fname))
+
 (defun find-code-pdf-links (&optional fname c &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks and `code-pdf-*'s to a PDF file."
   (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (if fname (setq fname (ee-shorten-file-name fname)))
   (setq fname (or fname "{fname}"))
   (setq c (or c "{c}"))
   (let ((dir (file-name-directory fname)))
     (apply 'find-elinks-elisp
      `((find-code-pdf-links ,fname ,c ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       ;;
        ;; (find-efunction 'find-code-pdf-links)
        ,(ee-template0 "\
 ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
-;;      (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
-;;      (find-eev-quick-intro \"9.4. Shorter hyperlinks to PDF files\")
-;;      (find-eev-quick-intro \"11.1. `find-pdf-links'\")
+;;      (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
+;;      (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
 
 ;; (find-fline {(ee-S (file-name-directory fname))})
 \(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
@@ -1357,6 +1374,50 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
   (if (eq major-mode 'dired-mode)
       (find-code-pdf-links (ee-dired-to-fname))
     (find-pdflike-page-links)))
+
+
+
+;; «find-code-audiovideo-links»  (to ".find-code-audiovideo-links")
+;;
+(defun find-code-audiovideo-links (&optional fname c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks and..."
+  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (if fname (setq fname (ee-shorten-file-name fname)))
+  (setq fname (or fname "{fname}"))
+  (setq c (or c "{c}"))
+  (let ((dir (file-name-directory fname)))
+    (apply 'find-elinks-elisp
+     `((find-code-audiovideo-links ,fname ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;;
+       ;; (find-efunction 'find-code-pdf-links)
+       ,(ee-template0 "\
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
+;;      (find-audiovideo-intro \"2.1. `find-code-audiovideo-links'\")
+
+;; (find-fline {(ee-S (file-name-directory fname))})
+\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; \(find-{c}file \"\")
+
+;; (find-audio \"{fname}\")
+\(code-audio \"{c}audio\" \"{fname}\")
+;; \(find-{c}audio)
+;; \(find-{c}audio \"0:00\")
+
+;; (find-video \"{fname}\")
+\(code-video \"{c}video\" \"{fname}\")
+;; \(find-{c}video)
+;; \(find-{c}video \"0:00\")
+
+;; (eev-avadj-mode 0)
+;; (eev-avadj-mode)
+")
+       )
+     pos-spec-list)))
+
+;; Tests:
+;; (find-code-audiovideo-links "~/eev-videos/three-keys-2.mp4")
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun21
+;; Version:    2019aug17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -64,6 +64,7 @@
 ;; «.find-youtubedl-links»	(to "find-youtubedl-links")
 ;; «.find-psne-links»		(to "find-psne-links")
 ;; «.find-git-links»		(to "find-git-links")
+;; «.find-apt-get-source-links»	(to "find-apt-get-source-links")
 ;; «.find-eev-video-links»	(to "find-eev-video-links")
 ;;
 ;; «.find-latex-links»		(to "find-latex-links")
@@ -526,6 +527,21 @@ http://packages.ubuntu.org/{pkgname}
  (eepitch-shell2)
 sudo apt-get install    {pkgname}
 sudo apt-get install -y {pkgname}
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-man \"8 apt-cache\")
+apt-cache show {pkgname}
+apt-cache search {pkgname}
+apt-cache depends {pkgname}
+apt-cache rdepends {pkgname}
+
+apt-cache showpkg {pkgname}
+
+# (find-man \"1 dpkg-query\")
+apt-file search {pkgname}
+dpkg-query --search {pkgname}
 ")
       ) rest)))
 
@@ -1058,32 +1074,89 @@ echo     '{url}' >> ~/.psne.log
        (find-fline ,dir)
        ""
        ,(ee-template0 "\
+# {url}
+
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
 # rm -Rfv {dir}
 cd      {ee-git-dir}
-git clone --depth 1 {url}
+git clone {url}
 cd      {dir}
-git pull --depth 1
-# git pull
+
+git branch --list -a
+git for-each-ref
+PAGER=cat git log --oneline --graph --all -20
+
 # (find-fline \"{ee-git-dir}\")
 # (find-fline \"{dir}\")
+# (find-gitk  \"{dir}\")
 
 # (code-c-d \"{c}\" \"{dir}\")
 # (find-{c}file \"\")
-# (find-gitk \"{dir}\")
 
-git clean -dfx
-git reset --hard
-
-git pull
+# git pull --depth 1
+# git pull
+# git reset
+# git clean -dfx
+# git reset --hard
 ")
      )
    pos-spec-list)))
 
-;; Test by typing `M-h g' on this git url:
-;; https://github.com/kikito/inspect.lua
+;; Test:
+;; (find-git-links "https://github.com/kikito/inspect.lua" "inspectlua")
+
+
+
+;;;              _                   _                                     
+;;;   __ _ _ __ | |_       __ _  ___| |_      ___  ___  _   _ _ __ ___ ___ 
+;;;  / _` | '_ \| __|____ / _` |/ _ \ __|____/ __|/ _ \| | | | '__/ __/ _ \
+;;; | (_| | |_) | ||_____| (_| |  __/ ||_____\__ \ (_) | |_| | | | (_|  __/
+;;;  \__,_| .__/ \__|     \__, |\___|\__|    |___/\___/ \__,_|_|  \___\___|
+;;;       |_|             |___/                                            
+;;
+;; «find-apt-get-source-links»  (to ".find-apt-get-source-links")
+;; (find-find-links-links "{k}" "apt-get-source" "pkg")
+;; A test: (find-apt-get-source-links)
+
+(defun find-apt-get-source-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing a script for apt-get source."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (let ((letter (replace-regexp-in-string "^\\(\\(lib\\)?.\\).*" "\\1" pkg)))
+    (apply 'find-elinks
+     `((find-apt-get-source-links ,pkg ,@pos-spec-list)
+       (find-apt-get-source-links "lua5.1")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-apt-get-source-links)
+       ""
+       ,(ee-template0 "\
+# https://packages.debian.org/search?searchon=sourcenames&keywords={pkg}
+# https://packages.debian.org/source/sid/{pkg}
+# http://deb.debian.org/debian/pool/main/{letter}/{pkg}/
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-sh \"apt-cache show    {pkg}\")
+# (find-sh \"apt-cache showsrc {pkg}\")
+rm -Rv /tmp/d/
+mkdir  /tmp/d/
+cd     /tmp/d/
+sudo apt-get build-dep -y   {pkg}
+     apt-get source         {pkg}   2>&1 | tee osource
+     apt-get source --build {pkg}   2>&1 | tee osourceb
+
+# (find-fline \"/tmp/d/\")
+
+")
+       )
+     pos-spec-list)))
+
+;; Test: (find-apt-get-source-links)
+
+
 
 
 

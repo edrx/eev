@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun24
+;; Version:    2019aug16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -91,6 +91,12 @@
 ;; «.find-org-intro»		(to "find-org-intro")
 ;; «.find-escripts-intro»	(to "find-escripts-intro")
 
+;; Videos:
+;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
+;; «.find-what-sexps-can-do-intro»	(to "find-what-sexps-can-do-intro")
+;; «.find-creating-links-intro»		(to "find-creating-links-intro")
+
+
 ;; See: (find-anchors-intro)
 
 
@@ -143,9 +149,11 @@ Returns a list like this: (defun find-xxx-intro ...)."
     (if (ee-bad-line line)
 	(error "Current line contains evil characters")
       line)))
+(defun ee-intro-sourcep ()
+  (equal (buffer-name) "eev-intro.el"))
 
 (defun find-intro-intro ()
-"If we're in the defun for `find-foo-intro' run (find-foo-intro (ee-last-kill))."
+"If we're in the defun for `find-foo-intro' run (find-foo-intro (ee-this-line))."
   (interactive)
   (funcall (cadr (ee-intro-sexp-here)) (ee-this-line)))
 
@@ -163,7 +171,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 (defun find-intro-dual ()
   (interactive)
-  (if (equal (buffer-name) "eev-intro.el")
+  (if (ee-intro-sourcep)
       (progn (eval (ee-intro-sexp-here))
 	     (find-c2b nil '(find-intro-intro)))
     (find-c2a '(find-intro-source) nil)))
@@ -262,13 +270,10 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 \(Re)generate: (find-eev-quick-intro)
 Source code:  (find-efunction 'find-eev-quick-intro)
 More intros:  (find-emacs-keys-intro)
-              (find-here-links-intro)
               (find-eev-intro)
-              (find-links-conv-intro)
-              (find-escripts-intro)
-              (find-eval-intro)
-              (find-links-intro)
-              (find-eepitch-intro)
+              (find-here-links-intro)
+              (find-refining-intro)
+              (find-pdf-like-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 The quickest way to open or recreate this is with `M-5 M-j'.
@@ -421,8 +426,20 @@ something like
   sudo apt-get install emacs24-el
   sudo apt-get install emacs24-common-non-dfsg
 
-may work - but \"emacs24-common-non-dfsg\" may need you to enable
-access to the \"non-free\" respository... ask for help if you need!
+or
+
+  sudo apt-get install emacs-el
+  sudo apt-get install emacs-common-non-dfsg
+
+may work - but for \"...-non-dfsg\" packages may need you to
+enable access to the \"non-free\" respository... ask for help if
+you need!
+
+An important difference between elisp hyperlinks and browser
+hyperlinks is discussed here:
+
+  (find-links-conv-intro \"1. Security vs. transparency\")
+
 
 
 
@@ -651,37 +668,85 @@ The Emacs manuals are in \"info\" format, which means:
              |-- Appendix A 
              `-- Index
 
-  c) each node also has a short name. Elisp hyperlinks use the
-     (internal) name of the manual and the short name to jump straight
-     to a node in a manual. The table below has some examples:
+  c) each node has both a short name and a long name (its title),
+     and they may be different. For example, the hyperlinks below
 
-       Manual (full name)   Node \"number\"    elisp hyperlink
-       -----------------------------------------------------
-       Emacs                Top             (find-node \"(emacs)\")
-       Emacs                7               (find-node \"(emacs)Basic\")
-       Emacs                7.4             (find-node \"(emacs)Basic Undo\")
-       Emacs                Concept Index   (find-node \"(emacs)Concept Index\")
-       Emacs Lisp           Top             (find-node \"(elisp)\")
+       (find-node \"(emacs)Intro\")
+       (find-node \"(emacs)Screen\")
 
-  d) Emacs uses \"Info mode\" when displaying nodes of manuals in info
-     format. These are the most important keys of Info mode:
+     point to nodes whose titles are \"Introduction\" and \"The
+     Organization of the Screen\",
 
-       q         exit                (go back to some other buffer) 
+  d) each manual also has a short name, also called its
+     _filename_, and several kinds of long names and titles. The
+     `find-node' links use the filename in parenthesis followed
+     by the short node name. For example:
+
+       Manual title                       elisp hyperlink
+       ----------------------------------------------------------
+       GNU Emacs Manual                 (find-node \"(emacs)\"Top)
+       Emacs Lisp / GNU Emacs Lisp
+         Reference Manual               (find-node \"(elisp)\"Top)
+       An Introduction to 
+         Programming in Emacs Lisp      (find-node \"(eintr)\"Top)
+
+  e) The \"Info directory\" lists all the installed info manuals.
+     You can access it with:
+
+       (find-node \"(dir)Top\")
+
+     The main Emacs manuals appear grouped together there. Try:
+
+       (find-node \"(dir)Top\" \"extensible self-documenting\")
+
+     You will see something like this:
+
+       Emacs
+       * Emacs:               The extensible self-documenting text editor.
+       * Emacs FAQ:           Frequently Asked Questions about Emacs.
+       * Elisp:               The Emacs Lisp Reference Manual.
+       * Emacs Lisp Intro:    A simple introduction to Emacs Lisp 
+                                programming.
+
+  f) Emacs uses \"Info mode\" when displaying nodes of manuals in
+     info format. In Info mode the tool bar displays icons
+     meaning \"back\", \"forward\", \"previous\", \"next\",
+     \"home\", etc, and you can click on these icons to navigate
+     from the current node to other nodes. The main keys of Info
+     mode are worth learning, though - the full list of keys can
+     be found here,
+
+       (find-efunctiondescr 'Info-mode)
+
+     and the main ones are:
+
+       q         exit             (go back to some other buffer) 
        (arrows)  move point
        RET       follow link at point
        TAB       move to next link
        BACKTAB   move to prev link
-       n         next                (1->2->3->Appendix A; 3.1.1->3.1.1->3.1.2)
-       p         previous            (1<-2<-3<-Appendix A; 3.1.1<-3.1.1<-3.1.2)
-       u         up                  (Top<-1<-1.1; 1<-1.2; 3<-3.1<-3.1.2, etc)
-       ]         forward-node        (Top->1->1.1->1.2->2->3->3.1->...->Index)
-       [         backward-node       (Top<-1<-1.1<-1.2<-2<-3<-3.1<-...<-Index)
+       u         move \"up\" from this node
+       n         move to the \"next\" node of this node
+       p         move to the \"previous\" node of this node
+       [         go backward one node, considering all nodes as
+                 forming one sequence
+       ]         go forward one node, considering all nodes as
+                 forming one sequence
 
-Try the keys above now - they are VERY important! Use:
+       d         go to the Info directory node.
+       l         move back in history to the last node you were at.
+       r         move forward in history to the node you returned from
+                 after using `l'
+       L         go to menu of visited nodes
+       T         go to table of contents of the current Info file
 
-  (eek \"<down> M-3 M-e  ;; open the hyperlink below in another window\")
-  (find-node \"(emacs)Basic\")
-  (find-node \"(emacs)Major Modes\")
+    Try the keys above now - if you execute the `eek' sexp below
+    it will split the window, keep these instructions in the left
+    window and open and Info buffer at the right.
+
+      (eek \"<down> M-3 M-e  ;; open the hyperlink below in the right window\")
+      (find-node \"(emacs)Basic\")
+      (find-node \"(emacs)Major Modes\")
 
 
 
@@ -816,6 +881,29 @@ echo ...and bye >> /tmp/o
 print(open(\"/tmp/o\").read())
 
 
+  It is possible to display all the targets at the same time,
+  using advanced features that are explained here:
+
+    (find-multiwindow-intro \"find-3EE\")
+
+  Here is a demo:
+
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
 
 
 6.3. Creating eepitch blocks: `M-T'
@@ -937,6 +1025,12 @@ So `M-1 M-j' runs the one-liner `(find-fline \"~/TODO\")'.
 Similarly, `M-5 M-j' runs the one-liner `(find-eev-quick-intro)',
 and so on.
 
+We will sometimes refer to the one-liner associated to the
+argument nnn as the \"eejump target associated to nnn\", or just
+as the \"target associated to nnn\".
+
+
+
 
 
 7.2. The list of eejump targets
@@ -1034,7 +1128,7 @@ the other ones are similar.
 
        # (find-latex-links \"/tmp/foo\")
 
-     You should get:
+     You should get something like:
 
    _____________________________________________________________________
   |# (find-latex-links \"/tmp/foo\")                                      |
@@ -1394,141 +1488,58 @@ For the technical details of the implementation, see here:
 
 
 
+
 9.3. Hyperlinks to PDF files
 ----------------------------
-If you run this e-script
+This section was moved to another tutorial! See:
+
+  (find-pdf-like-intro \"2. Preparation\")
+  (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
+
+Here is a very short summary. If you have run the preparation, by
+executing the eepitch block below with <f8>s,
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-#         https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-mkdir -p $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
-cd       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/
-wget -nc  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  cd
+  wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
-you will download a local copy of J.M. Coetzee's \"The Lives of
-Animals\" into this directory:
+then these sexps will be hyperlinks to a page of a PDF, and to
+some string in it...
 
-  (find-fline      \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
-  (find-fline \"~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
-
-The full idea behind these \"local copies\" is explained here:
-
-  (find-psne-intro)
-
-If you have xpdf installed then the second sexp here,
-
-  (setq l-o-a \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf\")
-  (find-pdf-page l-o-a)
-
-should work as a \"hyperlink to the PDF\": it calls xpdf as
-external program to open that PDF file. The main keys of xpdf
-are:
-
-  q         quit xpdf
-  alt-f     toggle full-screen; use twice to fit document to page
-  PageDown  scroll down/go to next page
-  PageUp    scroll up/go to previous page
-  0         set zoom to 125%
-  +         zoom in one step
-  -         zoom out out step
-  arrows    scroll within the current page
-
-Also, if you have the program pdftotext installed (hint: apt-get
-install poppler-utils!) then this
-
-  (find-pdf-text l-o-a)
-
-should work as a \"hyperlink to the text of the PDF\".
-
-You can use these two sexps
-
-  (ee-find-pdf-text l-o-a)
-  (ee-find-pdf-page l-o-a)
-
-to see exactly how the `find-pdf-page' and the `find-pdf-text'
-sexps above invoke xpdf and pdftotext; note that `find-pdf-page'
-uses `find-bgprocess' and `find-pdf-text' uses `find-sh'.
-
-The functions above accept extra arguments, that are interpreted
-as a page number and as strings to look for, but it's easier to
-discuss them using shorter hyperlinks.
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
 
 
 
 
 9.4. Shorter hyperlinks to PDF files
 ------------------------------------
-If you run these sexps
+...and the `code-pdf-page' and `code-pdf-text' sexps below
 
-  (code-pdf-page \"livesofanimals\" l-o-a)
-  (code-pdf-text \"livesofanimals\" l-o-a -110)
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
 
-then these hyperlinks should work:
-
-  (find-livesofanimalspage)
-  (find-livesofanimalstext)
-  (find-livesofanimalspage (+ -110 113))
-  (find-livesofanimalstext (+ -110 113))
-  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
-  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
-  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
-  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
-  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
-  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
-  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
-  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
-  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
-  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
-  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
-  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
-  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
-  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
-  (find-livesofanimalspage (+ -110 164) \"last common ground\")
-  (find-livesofanimalstext (+ -110 164) \"last common ground\")
-
-The sexps like `(+ -110 113)' are a bit mysterious at first
-sight. We are accessing a PDF that is an excerpt of a book. The
-third page of the PDF has a \"[113]\" at its footer to indicate
-that it is the page 113 of the book. Let's use the terms _page
-number_ and _page label_ to distinguish the two numberings: in
-this case, the page whose page number is 3 is the page whose page
-label is 113. These two sexps
-
-  (find-livesofanimalspage (+ -110 113))
-  (find-livesofanimalspage 3)
-
-are equivalent, but the first one is more human-friendly: the 113
-is a page label, and the -110 is adjustment (we call it the
-\"offset\") to convert the 113 that humans prefer to see intto
-the 3 that xpdf needs to receive.
-
-Note that the sexp
-
-  (find-livesofanimalstext 3)
-
-converts the PDF of the \"Lives of Animals\" book to text and
-goes to \"page 3\" on it by counting formfeeds from the beginning
-of the buffer, as explained here:
-
-  (find-enode \"Pages\" \"formfeed\")
-
-In this pair of sexps,
+define the functions `find-livesofanimalspage' and
+`find-livesofanimalstext', and the two sexps below
 
   (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
   (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
 
-the first one goes to page 3 of the PDF and ignores the string
-\"LECTURE I.\" (that is there just for humans, as a reminder of
-what is important in that page); the second sexp goes to the page
-3 of the PDF converted to text, searches for the string \"LECTURE
-I.\" and places the cursor right after the end of it.
+are now short hyperlinks to a page of a PDF, and to a string in
+it.
 
-In section 10.4 we will see how to generate with just a few
-keystrokes a short hyperlink to a page of a PDF and a short
-hyperlink to a string in a page of a PDF.
+
+
+9.5. Hyperlinks to audio and video files
+----------------------------------------
+Eev has some support for creating hyperlinks and short hyperlinks
+to positions in audio files and video files, but it is not as
+mature as the support for hyperlinks to positions in PDF files.
+See:
+
+  (find-audiovideo-intro)
 
 
 
@@ -1541,7 +1552,7 @@ hyperlink to a string in a page of a PDF.
 ------------------------------------------
 If you run this
 
-  (code-c-d \"foo\"  \"/tmp/FOO\")
+  (code-c-d \"foo\"  \"/tmp/FOO/\")
   (code-c-d \"bar\"  \"/tmp/FOO/BAR/\")
   (code-c-d \"plic\" \"/tmp/FOO/BAR/PLIC/\")
 
@@ -1549,19 +1560,30 @@ then these five links will all point to the same file:
 
   (find-file  \"/tmp/FOO/BAR/PLIC/bletch\")
   (find-fline \"/tmp/FOO/BAR/PLIC/bletch\")
-  (find-foofile       \"/BAR/PLIC/bletch\")
+  (find-foofile        \"BAR/PLIC/bletch\")
   (find-barfile            \"PLIC/bletch\")
   (find-plicfile                \"bletch\")
- 
-Note that the last three are short hyperlinks. If you open that
-file and then type `M-h M-h' this will run `find-here-links',
-that will run:
 
+That file does not exist, but that is not important in the tests.
+Note that the last three sexps are short hyperlinks. If you run
+
+  (eek \"<down> M-3 M-e  ;; open the hyperlink below in the right window\")
   (find-file-links \"/tmp/FOO/BAR/PLIC/bletch\")
 
-and this will create an elisp hyperlinks buffer in which the last
-sexps will be the three different short hyperlinks to
+it will create an elisp hyperlinks buffer in which the last sexps
+will be the three different short hyperlinks to
 \"/tmp/FOO/BAR/PLIC/bletch\" above.
+
+Remember that `find-here-links' - i.e., `M-h M-h' - can act in
+several different ways depending on the context, i.e., depending
+on what is \"here\". If you type `M-h M-h' in a buffer visiting a
+file it runs a slight variation of `find-file-links' on that
+file, and if you visit our test file with, say,
+
+  (find-plicfile                \"bletch\")
+
+and type `M-h M-h' there then one of the hyperlinks that will be
+shown will be exactly the one with `find-plicfile'.
 
 This works for all files. If you visit a file and type `M-h M-h'
 then the last hyperlinks in the temporary buffer will be the
@@ -1625,47 +1647,10 @@ which is a short hyperlink to the intro.
 
 10.4. Generating short hyperlinks to PDFs
 -----------------------------------------
-We saw in sections 9.3 and 9.4 that after the right preparations
-the first of these hyperlinks
+This section was moved to:
 
-  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-pdf-like-intro \"9. Generating three pairs\")
 
-opens a PDF in a certain page using xpdf, and the second one
-opens in an Emacs buffer the result of converting that PDF to
-text, goes to a certain page in it an searches for a string.
-
-It is difficult to make xpdf send information to Emacs, so this
-trick uses the second link. Run this,
-
-  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
-
-mark a piece of text in it - for example, the \"no punishment\"
-in the end of the first paragraph - and copy it to the kill ring
-with `M-w'. Then type `M-h M-p' (`find-pdf-links'); note that
-`M-h M-h' won't work here because `find-here-links' is not smart
-enough to detect that we are on a PDF converted to text. You will
-get an \"*Elisp hyperlinks*\" buffer that contains these links:
-
-  # (find-livesofanimalspage 24)
-  # (find-livesofanimalstext 24)
-  # (find-livesofanimalspage (+ -110 134))
-  # (find-livesofanimalstext (+ -110 134))
-
-  # (find-livesofanimalspage 24 \"no punishment\")
-  # (find-livesofanimalstext 24 \"no punishment\")
-  # (find-livesofanimalspage (+ -110 134) \"no punishment\")
-  # (find-livesofanimalstext (+ -110 134) \"no punishment\")
-
-Remember that we called `code-pdf-page' and `code-pdf-text' as:
-
-  (code-pdf-page \"livesofanimals\" l-o-a)
-  (code-pdf-text \"livesofanimals\" l-o-a -110)
-
-The extra argument \"-110\" to `code-pdf-text' tells `M-h M-p' to
-used \"-110\" as the offset.
-
-See the section 11.1 for more on `M-h M-p'.
 
 
 
@@ -1702,48 +1687,10 @@ We will only discuss here the other way.
 
 11.1. `find-pdf-links'
 ----------------------
-Let's call a pair of lines like this,
+This section was moved to:
 
-  (code-pdf-page \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf\")
-  (code-pdf-text \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf\")
-
-in which we have a call to `code-pdf-page' and a call to
-`code-pdf-text', both pointing to the same PDF file, a \"code-pdf
-pair\". One quick way to generate a code-pdf pair is to visit the
-directory where your PDF file is, put the point on the line of
-the PDF, and type `M-h M-p' (`find-pdf-links'). Try it here:
-
-  (find-fline \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/\")
-
-The exact action of `M-h M-p' depends on the major mode. If
-you're in dired mode then it supposes that you want links to the
-current directory and to the PDF on the current line - including
-a `code-c-d' and a code-pdf pair - and it runs
-`find-code-pdf-links'. The first line of the buffer will be
-something like:
-
-  ;; (find-code-pdf-links \"$S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf\" \"{c}\")
-
-where the \"{c}\" is something that you have to adjust by hand
-and then execute the first line again to regenerate the buffer -
-like in `find-latex-links', that was described in section 7.5.
-
-If you're not it dired mode then `find-pdf-links' supposes that
-you're in a buffer generated by a short hyperlink to the text of
-a PDF file, and it runs the function `find-pdflike-page-links'.
-Try `M-h M-p' in the buffer generated by the sexp below:
-
-  (find-livesofanimalstext (+ -110 134))
-
-`find-pdflike-page-links' is not very smart. It has to guess the
-stem (\"livesofanimals\"), the offset (-110), the current page,
-and the string that you want to use in the pos-spec. It takes the
-stem and the offset from the global variables `ee-page-c' and
-`ee-page-offset', that probably were set by the last call to a
-function of the form `find-___text', and it guesses the current
-page by counting formfeeds, and guesses that the pos-spec string
-is in the top of the kill ring.
-
+  (find-pdf-like-intro \"8. `find-pdf'-pairs\")
+  (find-pdf-like-intro \"9. Generating three pairs\")
 
 
 
@@ -1817,7 +1764,8 @@ The other keys for creating hyperlinks to here and refining them are:
 Some other keys that create buffers with elisp hyperlinks:
   M-h M-k   - (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
   M-h M-f   - (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
-  M-h M-p   - (find-eev-quick-intro \"11.1. `find-pdf-links'\")
+  M-h M-p   - (find-pdf-like-intro \"9. Generating three pairs\")
+              (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
     See also: (find-links-intro \"5. The first line regenerates the buffer\")
 
 
@@ -1976,11 +1924,13 @@ The installation instructions in
 
   (find-eev-quick-intro \"1. Installing eev\")
 
-describe a way to install eev that uses the directory \"~/eev2/\" for
-elisp files and that creates a secript \"~/eev\" that starts Emacs,
-loads eev, and runs `(find-eev-quick-intro)'. Here we describe several
-ways to install eev in other places and how to change your .emacs to
-make it load eev at startup.
+describe a way to install eev that uses the directory \"~/eev2/\"
+for elisp files and that creates a secript \"~/eev\" that starts
+Emacs, loads eev, and runs `(find-eev-quick-intro)'. Here we
+describe several ways to install eev in other places and how to
+change your .emacs to make it load eev at startup, but lots of
+things are obsolete or incomplete in this intro - many things
+have changed since eev become an ELPA package!
 
 
 
@@ -2075,6 +2025,18 @@ See:
   (find-elnode \"Init Examples\")
   (find-elnode \"Init File Examples\")
   (find-eev-install-links \"~/eev2/\" \"~/eev\" \"\" 2 \".emacs\")
+
+
+
+3.1. Adding directories to the load-path
+----------------------------------------
+
+3.2. `package-initialize'
+-------------------------
+  (find-es \"emacs\" \"package-initialize\")
+
+3.3. Keeping both the git and the ELPA versions
+-----------------------------------------------
 
 
 
@@ -2311,24 +2273,24 @@ recommended reading order. These are the basic ones:
    3. (find-eev-install-intro)
    4. (find-here-links-intro)
    5. (find-refining-intro)
+   6. (find-pdf-like-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-   6. (find-escripts-intro)
-   7. (find-links-conv-intro)
+   7. (find-escripts-intro)
+   8. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-   8. (find-eval-intro)
-   9. (find-links-intro)
-  10. (find-brxxx-intro)
-  11. (find-eepitch-intro)
-  12. (find-wrap-intro)
-  13. (find-eejump-intro)
-  14. (find-anchors-intro)
-  15. (find-code-c-d-intro)
-  16. (find-pdf-like-intro)
+   9. (find-eval-intro)
+  10. (find-links-intro)
+  11. (find-brxxx-intro)
+  12. (find-eepitch-intro)
+  13. (find-wrap-intro)
+  14. (find-eejump-intro)
+  15. (find-anchors-intro)
+  16. (find-code-c-d-intro)
   17. (find-psne-intro)
 
 These are etcs:
@@ -2345,10 +2307,14 @@ These ones explain advanced features that require extra setup:
   24. (find-bounded-intro)
   25. (find-channels-intro)
 
+This one is used in a video:
+
+  26. (find-three-main-keys-intro)
+
 These ones are obsolete:
 
-  26. (find-emacs-intro)
-  27. (find-defun-intro)
+  27. (find-emacs-intro)
+  28. (find-defun-intro)
 
 Item 22 is an index of the (old) video tutorials, with scripts
 for downloading local copies of them and links to important
@@ -2440,9 +2406,23 @@ For the full lists of keybindings, see:
 \(Re)generate: (find-here-links-intro)
 Source code:  (find-efunction 'find-here-links-intro)
 More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
               (find-refining-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+
+
+
+This intro will be merged with
+  (find-refining-intro)
+at some point...
+
+
+
+Eev's central idea is that you can keep \"executable logs\" of
+what you do, in a format that is reasonably readable and that is
+easy to \"play back\" later, step by step and in any order. We
+call these executable logs, or executable notes, \"e-scripts\".
 
 
 
@@ -2467,6 +2447,59 @@ and \"automatic notes\". It is possible to do
 \"task\"+\"notes\" with just a few more keystrokes than for
 doing just \"task\", but that requires learning some tricks,
 and having some practice.
+
+
+
+1.1. Reading and writing
+------------------------
+Learning eev is like learning to read and write. We first learn
+_how to read_, and we learn _how to write_ in a second stage,
+when we have read a lot and we are able to read what we write.
+
+Learning eev is also like learning to use paper notebooks. It is
+much easier to understand the notes and ideas what we wrote
+ourselves in our notebooks than to understand what other people
+wrote in their notebooks... when we go back to what _we_ wrote we
+are able to reconnect with what we were thinking, even when our
+notes are quite terse because we did not write down all details -
+and we can't do that with other people's notes.
+
+So: we have to first learn how to _read_ executable notes in
+order to be able to _write_ our own executable notes, but after
+learning the basics we will usually find it much easier to read
+our own executable notes than to read other people's notes...
+
+This is very similar to what happens in programming. Programmers
+usually takes years, and a lot of effort, to learn to write code
+and comments that other people find readable, and what they do
+after that is not that they write super-readable code all the
+time - instead they _adjust_ the level of readability of their
+code depending on the situation: they write the code that will be
+used and read by other people in a cleaner, more readable style
+with lots of comments, and they write \"throwaway code\" that
+they will only run once in a very terse, and often messy, style.
+
+Most of my executable notes are written - or rather, \"appear\" -
+when I am learning something and I am switching rather mindlessly
+between \"task\" and \"notes\" as I explained in the previous
+section. What I write looks like throwaway code, only worse -
+because I usually leave lots of unfinished parts intermixed with
+the parts that run, without marking clearly which are which...
+but when I go through my notes about a task again I usually clean
+my notes a bit. For me going through my executable notes about a
+task again always involves a bit of _rewriting_ - which is
+something that programmers often do with their own code, but that
+we don't do much with paper notebooks.
+
+Anyway: be prepared to create executable notes that are almost
+unreadable, even by you when you go back to them a few hours
+later - that's normal, that's how things are, and you can, and
+WILL, rewrite the most useful parts...
+
+Note that this \"intro\" is about writing elisp hyperlinks. The
+tricks for writing eepitch blocks and index-anchor pairs are
+discussed elsewhere.
+
 
 
 
@@ -3145,6 +3178,12 @@ quicker than recreating it anew.
 
 6. Refining hyperlinks
 ======================
+Note: this, and some of the following sections, were rewritten
+and moved to:
+
+  (find-refining-intro \"1. Pos-spec-lists\")
+  (find-refining-intro \"2. Refining hyperlinks\")
+
 Most hyperlinks functions defined by eev can be \"refined\" by
 the addition of extra arguments. These extra arguments are called
 a \"pos-spec\" (or a \"pos-spec-list\") and they specify a
@@ -5460,16 +5499,21 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+Note: you will need a basic understanding of eepitch and
+code-c-d to understand parts of this intro. See:
 
-Note: this intro needs to be rewritten!
-Ideally it should _complement_ the material in:
+  (find-eev-quick-intro \"6.1. The main key: <F8>\")
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
   (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
+  (find-eev-quick-intro \"9.5. Shorter hyperlinks to PDF files\")
 
 
 
 
-PDF-like documents
-==================
+
+1. PDF-like documents
+=====================
 Let's introduce a bit of (improvised!) terminology: we will say
 that a document is \"PDF-like\" when it is in a format like PDF,
 PostScript, DVI or DJVU - i.e., divided into pages. Emacs has a
@@ -5483,309 +5527,392 @@ PDF-like documents.
 
 
 
-Two test documents
-==================
-The following script creates two PDF-like documents - a DVI and a
-PDF - that we will use in the examples below.
+2. Preparation
+==============
+We need to start by downloading a PDF file to use in our
+examples. If you run this e-script
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-cd /tmp/
-cat > /tmp/foo.tex <<'%%%'
-\\documentclass[12pt,oneside]{book}
-\\begin{document}
-\\Huge
-\\frontmatter
-a \\newpage
-b \\newpage
-c \\newpage
-\\mainmatter
-\\chapter{One}
-\\newpage foo
-\\chapter{Two}
-\\end{document}
-%%%
-   latex foo.tex
-pdflatex foo.tex
+  cd
+  wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
-In these two documents the page _names_ do not correspond to the
-page _numbers_; the pages are named \"i\", \"ii\", \"iii\",
-\"1\", \"2\", \"3\", but their numbers are 1, 2, 3, 4, 5, 6.
-In a table:
+you will download a local copy of J.M. Coetzee's \"The Lives of
+Animals\" into your home directory. To check that the PDF has been
+downloaded, use:
 
-  number  name  contents
-  ----------------------
-    1        i      a
-    2       ii      b
-    3      iii      c
-    4        1      Chapter 1 - One
-    5        2      foo
-    6        3      Chapter 3 - Two
+  (find-fline \"~/\")
+  (find-fline \"~/\"  \"Coetzee99.pdf\")
+  (find-sh0 \"ls -l ~/Coetzee99.pdf\")
 
+Eev also implements another way, called \"psne\", to download
+local copies of files from the internet.\"Psne-ing\" a URL like
 
+  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
+downloads it to a local file with a name like:
 
-Using external viewers
-======================
-The following sexps can be used to open the documents
-\"/tmp/foo.dvi\" and \"/tmp/foo.pdf\" on the first page of
-Chapter 1 - i.e., the page whose number is 4, and whose \"name\"
-is 1 - using two of my favorite viewers, xdvi and xpdf, and a
-low-level function, `find-bgprocess':
+       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  ~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
 
-  (find-bgprocess '(\"xdvi\" \"+4\" \"/tmp/foo.dvi\"))
-  (find-bgprocess '(\"xpdf\" \"/tmp/foo.pdf\" \"4\"))
+that is _much_ longer that just \"~/Coetzee99.pdf\"; this has the
+advantage of preserving more information about the URL from which
+the file came, but sometimes these longer names feels clumsy.
+Psne-ing is discussed a more advanced tutorial:
 
-Alternatively, we can invoke these viewers like this,
+  (find-psne-intro)
 
-  (find-xdvi-page \"/tmp/foo.dvi\" 4)
-  (find-xpdf-page \"/tmp/foo.pdf\" 4)
-
-or, as they ignore extra arguments, like this,
-
-  (find-xdvi-page \"/tmp/foo.dvi\" (+ 3 1) \"Chapter 1\")
-  (find-xpdf-page \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
-
-where the `(+ 3 1)' and the \"Chapter 1\" are just to make these
-links more readable by humans. The `3' is what we will call the
-\"offset\" of the document: a quantity that can be added to page
-\"names\" (outside the \"front matter\" of the document) to
-convert them to page \"numbers\".
-
-Let's introduce more terminology. Programs like xdvi and xpdf are
-\"external viewers for PDF-like documents\", but that's too long,
-so let's shorten this to \"external PDF-like viewers\", or
-\"external viewers\", or just \"viewers\"; `find-xdvi-page',
-`find-xpdf-page' and similar functions are \"medium-level viewing
-words\".
+In this tutorial we will use the home directory and the shorter
+file name.
 
 
 
 
-The high-level way
-==================
-File names of PDF-like documents are often very long - especially
-for documents that we have \"psne\"-ed from the web. To avoid
-having to keep copies of these file names everywhere we can use
-`code-c-d'-like words - like these:
-
-  (code-xdvi \"fd\" \"/tmp/foo.dvi\")
-  (code-xpdf \"fp\" \"/tmp/foo.pdf\")
-  (find-fdpage (+ 3 1) \"Chapter 1\")
-  (find-fppage (+ 3 1) \"Chapter 1\")
-
-Each medium-level viewing word has an associated code-c-d-like
-word - that creates \"high-level viewing words\". In the example
-above, we used `code-xdvi' to create the high-level viewing word
-`find-fdpage', that invokes `find-xdvi-page', and `code-xpdf' to
-create the high-level viewing word `find-fppage', which invokes
-`find-xpdf-page',
-
-Note that the \"fd\" in `find-fdpage' stands for not only the
-filename - \"/tmp/foo.dvi\" - but also for the medium-level word
-to be used - `find-xdvi-page'; same for \"fp\".
-
-
-
-
-Default external viewers
-========================
-We saw that for each of the supported formats of PDF-like
-documents - DVI, PostScript, PDF, DJVU - there are medium-level
-and high-level viewing words that use specific programs; for
-example, for \"xpdf\" we have `find-xpdf-page' and `code-xpdf',
-and for \"evince\" we have `find-evince-page' and `code-evince'.
-But for each of the formats we also have words that use the
-current default viewer for that format:
-
-  Format       Medium-level     High-level
-  ----------------------------------------
-  DVI          find-dvi-page    code-dvi
-  PostScript   find-ps-page     code-ps
-  PDF          find-pdf-page    code-pdf
-  DJVU         find-djvu-page   code-djvu
-
-The four `find-<formatname>-page' words above are aliases to
-`find-<viewername>-page' names, and to change a default viewer
-you should use a `defalias' on the `find-', like these:
-
-  (defalias 'find-pdf-page 'find-evince-page)
-  (defalias 'find-pdf-page 'find-xdpf-page)
-
-After running a `defalias' like the above all the high-level
-viewing words defined using `code-pdf' will automatically switch
-to the new default viewer (because words defined with `code-pdf'
-call `find-pdf-page').
-
-
-
-
-PDF-like documents as text
+3. Hyperlinks to PDF files
 ==========================
-Some PDF-like documents can be converted to text - usually uglily
-and imprecisely, but the result is often useful anyway - by
-external programs like \"pdftotext\" and \"djvutxt\". The
-medium-level sexps below invoke these programs on the given
-filenames and displays their output in an Emacs buffer:
+If you have xpdf installed then this sexp
 
-  (find-pdftotext-text \"/tmp/foo.pdf\")
-  (find-djvutxt-text   \"/tmp/foo.djvu\")
+  (find-pdf-page \"~/Coetzee99.pdf\")
 
-We can also use the correspondent generic medium-level words,
-that are aliases to the default converters:
+should work as a \"hyperlink to the PDF\": it calls xpdf as an
+external program - like we did with browsers in the main tutorial -
 
-  (find-pdf-text  \"/tmp/foo.pdf\")
-  (find-djvu-text \"/tmp/foo.djvu\")
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"find-firefox\")
 
-As the output of these converters is also divided into pages -
-with formfeeds as separators - it is easy to jump to specific
-pages in the output, and if the first argument after the file
-name is a number it is interpreted as a page number; string
-arguments coming after that are interpreted as strings to be
-search (forward) for. So these links make sense:
+to display the PDF file that we downloaded.
 
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1))
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
+The main keys of xpdf are:
 
-and note that the following pair of links make sense too - the
-first one calls an external viewer, the second one opens the
-conversion to text:
+  q         quit xpdf
+  PageDown  scroll down/go to next page
+  PageUp    scroll up/go to previous page
+  arrows    scroll within the current page
+  +         zoom in one step
+  -         zoom out out step
+  0         set zoom to 125%
+  alt-f     toggle full-screen; use twice to fit document to page
 
-  (find-pdf-page \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
+Note that `q' \"goes back to Emacs\".
 
-Note that they both point to the same page... The argument
-\"Chapter 1\" is ignored in the first link, but when a pair of
-links like that appear on consecutive lines it is clear for human
-readers that they are both links to the same place, only rendered
-in different ways. Note that the passage from this:
+If you have the program pdftotext installed - hint: \"apt-get install
+poppler-utils\"! - then you can also display PDFs in another way. This
+sexp
 
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1))
+  (find-pdf-text \"~/Coetzee99.pdf\")
 
-to this:
-
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1))
-  (find-pdf-text \"/tmp/foo.pdf\" (+ 3 1) \"Chapter 1\")
-
-is a special case of \"refining hyperlinks\", an idea that we saw
-in:
-
-  (find-eval-intro \"Refining hyperlinks\")
+work as a \"hyperlink to the _text_ of the PDF\": it extracts the text
+from the PDF using the program \"pdftotext\" and displays that in an
+Emacs buffer.
 
 
 
 
-High-level hyperlinks to pdf-like documents
-===========================================
-By executing
+4. Hyperlinks to pages of PDF files
+===================================
+It is possible to create hyperlinks that point to a specific page in a
+PDF file. Compare what happens when you run these sexps:
 
-  (code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
+  (find-pdf-page \"~/Coetzee99.pdf\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 1)
+  (find-pdf-page \"~/Coetzee99.pdf\" 1 \"The Lives of Animals\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3)
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
 
-we can use shorter hyperlinks, like
+The top three sexps open the PDF at page 1 - the default. The bottom
+three sexps open it at page 3. The arguments after the number are
+ignored by Emacs - they are there to make these links more expressive
+for humans.
 
-  (find-fppage (+ 3 1) \"Chapter 1\")
-  (find-fptext (+ 3 1) \"Chapter 1\")
+The hyperlinks to the text of a PDF interpret the numeric number as a
+page number and the following arguments as strings to search for. Try:
 
-instead of the longer forms with `find-pdf-page' and
-`find-pdf-text'. This works exactly like `code-c-d', as explained
-here:
+  (find-pdf-text \"~/Coetzee99.pdf\" 1)
+  (find-pdf-text \"~/Coetzee99.pdf\" 1 \"The Lives of Animals\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3)
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
 
-  (find-code-c-d-intro)
+For more information about these string arguments, see:
 
-Try these sexps to see the code that the `code-pdf' and the
-`code-pdf-text' above execute:
+  (find-refining-intro \"1. Pos-spec-lists\")
 
-  (find-code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (find-code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
+A pair of sexps like this, in which both point to the same
+position of a PDF,
 
-There is a wrapping comand for producing these
-`code-pdf'/`code-pdf-text' pairs quickly - `M-P'. Try it here:
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\" \"[113]\")
 
-  fp /tmp/foo.pdf
-
+will be called a `find-pdf'-pair.
 
 
 
-Producing and refining hyperlinks to pages
+
+5. A convention on page numbers
+===============================
+The `(+ -110 113)'s in
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+are a bit mysterious at first sight. 
+
+We are accessing a PDF that is an excerpt of a book. The third
+page of the PDF has a \"[113]\" at its footer to indicate that it
+is the page 113 of the book. Let's use the terms _page number_
+and _page label_ to distinguish the two numberings: in this case,
+the page whose page number is 3 is the page whose page label is
+113. These two sexps
+
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalspage 3)
+
+are equivalent, but the first one is more human-friendly: the 113
+is a page label, and the -110 is adjustment (we call it the
+\"offset\") to convert the 113 that humans prefer to see into
+the 3 that xpdf needs to receive.
+
+
+
+
+
+6. How the external programs are called
+=======================================
+Both `find-pdf-page' and `find-pdf-text' invoke external programs -
+but how, exactly? Let's take a look at a hack that shows this. If
+you prepend an \"ee-\" to `find-pdf-page' and `find-pdf-text' sexps,
+like in:
+
+  (ee-find-pdf-page \"~/Coetzee99.pdf\")
+  (ee-find-pdf-page \"~/Coetzee99.pdf\" 3)
+  (ee-find-pdf-text \"~/Coetzee99.pdf\")
+  (ee-find-pdf-text \"~/Coetzee99.pdf\" 3)
+
+you will get sexps that stop just before invoking the external
+programs - they just show how these externals programs _would be_
+invoked, i.e., they show the options that would be passed to them. The
+results of the sexps above will be lists like these:
+
+  (\"xpdf\" \"-fullscreen\" \"~/Coetzee99.pdf\")
+  (\"xpdf\" \"-fullscreen\" \"~/Coetzee99.pdf\" \"3\")
+  (\"pdftotext\" \"-layout\" \"-enc\" \"Latin1\" \"~/Coetzee99.pdf\" \"-\")
+  (\"pdftotext\" \"-layout\" \"-enc\" \"Latin1\" \"~/Coetzee99.pdf\" \"-\")
+
+Note that `ee-find-pdf-text' does not pass the argument \"3\" to
+\"pdftotext\". A sexp like
+
+  (find-pdf-text \"~/Coetzee99.pdf\" 3)
+
+first produces the conversion to text of the full PDF, and then
+finds the page 3 in it by counting formfeeds, as described here:
+
+  (find-enode \"Pages\" \"formfeed\")
+
+
+
+
+
+7. Shorter hyperlinks to PDF files
+==================================
+If you run these sexps
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+
+they will define the functions `find-livesofanimalspage' and
+`find-livesofanimalstext', and then these hyperlinks should work:
+
+  (find-livesofanimalspage)
+  (find-livesofanimalstext)
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalstext (+ -110 113))
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalspage (+ -110 133) \"To write that book I had to think\")
+  (find-livesofanimalstext (+ -110 133) \"To write that book I had to think\")
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalspage (+ -110 164) \"last common ground\")
+  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+
+Hyperlinks like
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+behave roughly as abbreviations for:
+
+  (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+  (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+
+
+
+8. `find-pdf'-pairs
+===================
+Let's introduce some terminology. Remember that we call a pair of
+sexps like
+
+  (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+  (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+a \"`find-pdf'-pair\"; a pair like
+
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+
+will be called a \"short `find-pdf'-pair\", as in:
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+
+and a pair like
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+
+will be called a `code-pdf'-pair.
+
+The \"livesofanimals\" will the called the _stem_. The \"-110\"
+will be called the _offset_.
+
+
+
+
+9. Generating three pairs
+=========================
+Eev has a high-level function that generates at once, for a
+single PDF file, a `find-pdf'-pair, a `code-pdf'-pair, and a
+short `find-pdf'-pair. To see what it produces, try:
+
+  (find-code-pdf-links \"~/Coetzee99.pdf\")
+  (find-code-pdf-links \"~/Coetzee99.pdf\" \"livesofanimals\")
+
+`find-code-pdf-links' is somewhat similar to `find-latex-links',
+in this aspect:
+
+  (find-eev-quick-intro \"7.5. `find-latex-links'\" \"change the \\\"{stem}\\\"\")
+
+If you run just
+
+  (find-code-pdf-links \"~/Coetzee99.pdf\")
+
+it will generate a buffer that has \"{c}\"s in several places and
+that follows the convention that \"the first line regenerates the
+buffer\". If you substitute the \"{c}\" in the top sexp by
+\"livesofanimals\" and type `M-e' the buffer will be recreated
+with each \"{c}\" replaced by \"livesofanimals\".
+
+The user-friendly way to run `find-code-pdf-links' is by typing
+`M-h M-p' in Dired mode. If you want to generate the three pairs
+for a file \"~/foo/bar/story.pdf\" then visit the directory
+\"~/foo/bar/\", put the cursor on the line that lists the file
+\"story.pdf\", and type `M-h M-p'. Try it with our test file:
+
+  (find-fline \"~/\" \"Coetzee99.pdf\")
+
+
+
+10. Generating a pair with the page number
 ==========================================
-We also have something like this
+If you type `M-h M-p' and you're not in Dired mode then `M-h M-p'
+will try to generate a short `find-pdf'-pair pointing to the
+current position in the current page of the current PDF
+file (converted to text). The function bound to `M-h M-p' tries
+to guess four things: the stem, the offset, the page number, and
+the string to the be used as a pos-spec. Let's see first a
+situation where everything works. Run the four sexps below and
+type `M-h M-p':
 
-  (find-eval-intro \"Producing and refining hyperlinks\")
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+  (kill-new \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
 
-for pdf-like documents, that will let us produce hyperlinks to
-the current page of the current pdf-like document very quickly,
-but it depends on several hacks.
+You will get an elisp hyperlinks buffer whose middle links are
+four short `find-pdf'-pairs, all pointing to the current page:
 
-Note that the functions `code-pdf', `code-pdf-text',
-`find-xxxpage', `find-xxxtext', set the global variables
-`ee-page-c', `ee-page-fname', and `ee-page-offset'. You can
-inspect their definitions with:
+  # (find-livesofanimalspage 17)
+  # (find-livesofanimalstext 17)
+  # (find-livesofanimalspage (+ -110 127))
+  # (find-livesofanimalstext (+ -110 127))
 
-  (find-code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (find-code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
+  # (find-livesofanimalspage 17 \"wrong thoughts\")
+  # (find-livesofanimalstext 17 \"wrong thoughts\")
+  # (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  # (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
 
-Here's how these variables are used. Try this:
+The second and the fourth pairs use \"(+ -110 127)\" instead of
+\"17\" as the page number; the third and the fourth pairs point
+to the string \"wrong thoughts\" in the page.
 
-  (code-pdf      \"fp\" \"/tmp/foo.pdf\")
-  (code-pdf-text \"fp\" \"/tmp/foo.pdf\" 3)
-  (kill-new \"Two\")
-  (eek \"M-h M-p\")
 
-You should get a page with several hyperlinks to the \"current
-page\" of the current pdf-like document, including some like
-these:
 
-  (find-fppage 1)
-  (find-fptext 1)
-  (find-fppage (+ 3 -2))
-  (find-fptext (+ 3 -2))
 
-  (find-fppage 1 \"Two\")
-  (find-fptext 1 \"Two\")
-  (find-fppage (+ 3 -2) \"Two\")
-  (find-fptext (+ 3 -2) \"Two\")
+11. How `M-h M-p' guesses everything
+====================================
+The method that `M-h M-p' uses to guess the stem, the offset, the
+page and the pos-spec is so error-prone and gives unexpected
+results so often that it's worth to describe it in detail.
 
-Where did the \"fp\", the \"1\", the \"3\", the \"-2\" and the
-\"Two\" above come from?
+  1. The stem is taken from the global variable `ee-page-c'.
 
-The page number, which in the links above is sometimes \"1\",
-sometimes \"(+ 3 -2)\", is obtained by counting the number of
-formfeeds before point; this makes sense only when we are
-visiting the buffer generated by \"(find-fptext ...)\". The
-\"fp\" is taken from the variable `ee-page-c', which was set by
-`(code-pdf-text \"fp\" ...)' or by `(find-fptext ...)'; same for \"3\",
-which is taken from the variable `ee-page-offset'. Finally, the \"Two\"
-is the last kill, from the top of the kill-ring; we usually set it by
-selecting a region of text from the `(find-fptext ...)' buffer and
-typing `M-w'.
+  2. Every call to a function like `find-xxxtext' sets
+     `ee-page-c' to \"xxx\" - for example, a call to
+     `find-livesofanimalstext' sets `ee-page-c' to
+     \"find-livesofanimalstext\". So `ee-page-c' usually holds
+     the stem of the last function of the form `find-xxxtext'
+     that was run.
 
-An alternative way to produce hyperlinks to pages, which, as the hack
-above, also uses `ee-page-c' and `ee-page-offset', is to prepare a
-series of lines with a page number followed by a text that will play a
-similar role to the \"last kill\", and then type `M-Q' on each line. Try
-this below, by first executing the `code-pdf-text' then typing four
-`M-Q's.
+  3. The offset is taken from the global variable
+     `ee-page-offset'.
 
-  (code-pdf      \"debt\" \"~/books/graeber__debt.pdf\")
-  (code-pdf-text \"debt\" \"~/books/graeber__debt.pdf\" 8)
+  4. A call to, say, `find-livesofanimalstext', sets
+     `ee-page-offset' to the offset that was declared here:
 
-   1 1 On The Experience of Moral Confusion
-  21 2 The Myth of Barter
-  43 3 Primordial Debts
-  73 4 Cruelty and Redemption
+       (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
 
-It is usually not hard to produce such page-number-plus-text
-lines for `M-Q' from the table of contents of a book. The ones
-above were extracted from
+     So `ee-page-offset' usually holds the offset of the last
+     function of the form `find-xxxtext' that was run.
 
-  (find-debttext 7 \"Contents\")
+  5. The page number is obtained by counting the number of
+     formfeeds between the beginning of the buffer and the
+     current position. If there are 16 formfeeds then the current
+     page is 17.
 
-with a bit of fiddling by hand and keyboard macros. Keyboard
-macros are VERY useful; if you don't use them yet, see:
+  6. The pos-spec - \"wrong thoughts\" in the example - is the
+     string in the top of the kill ring. See:
 
-  (find-enode \"Keyboard Macros\")
+       (find-refining-intro \"2. Refining hyperlinks\" \"kill-new\")
+
+If you want to see an example where `M-h M-p' guesses everything
+wrong you can type `M-h M-p' here... as we're not in Dired mode
+`M-h M-p' will think that we're in the conversion to text of
+\"livesofanimals\", in page 1, and it will generate hyperlinks to
+that page of the book!
+
+
+
+12. Another way to generate `code-pdf'-pairs
+============================================
+\[Explain M-P. Example:]
+
+  (eek \"<down> M-P  ;; eewrap-pdflike\")
+  livesofanimals ~/Coetzee99.pdf
+
 " rest)))
 
 ;; (find-pdf-like-intro)
@@ -6234,22 +6361,29 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+Prerequisite:
+  (find-pdf-like-intro)
+This intro is being rewritten.
+
+
+
+
 1. Time offsets
 ===============
 Links to audio and video files are similar to links to pdf-like
 documents, but instead of page numbers we use \"time offsets\" to
 refer to positions. Time offsets are strings like 1:23, 12:34, or
 1:23:45. The sexp hyperlinks below should all work if you have the
-files that they refer to:
+files that they refer to, and if you have mpv and xterm installed:
 
   (find-audio \"/tmp/mysong.mp3\")
   (find-audio \"/tmp/mysong.mp3\" \"1:23\")
-  (find-audio \"/tmp/mysong.mp3\" \"1:23\" \"comment are ignored\")
+  (find-audio \"/tmp/mysong.mp3\" \"1:23\" \"comments are ignored\")
   (find-video \"/tmp/myvideo.mp4\")
   (find-video \"/tmp/myvideo.mp4\" \"1:23\")
-  (find-video \"/tmp/myvideo.mp4\" \"1:23\" \"comment are ignored\")
+  (find-video \"/tmp/myvideo.mp4\" \"1:23\" \"comments are ignored\")
 
-Note that they work by invoking an external player - mplayer, by
+Note that they work by invoking an external player - mpv, by
 default - and its error messages appear here:
 
   (find-ebuffer \"*Messages*\")
@@ -6257,8 +6391,141 @@ default - and its error messages appear here:
 
 
 
-2. Shorter hyperlinks to audio and video files
-==============================================
+2. `eev-avadj-mode'
+===================
+\"avadj-mode\" is a shorthand for \"audio/video adjust mode\".
+When `eev-avadj-mode' is active we get keys for adjusting time
+offsets quickly and for playing again the default audio or video
+file at a given time offset, all of this without moving the
+point. The keys are:
+
+  M--    decrease the time offset by one second
+  M-+    increase the time offset by one second
+  M-=    same as M-+, for convenience
+  M-p    play the default audio/video file at a time offset
+
+You can toggle eev-avadj-mode on and off with `M-x
+eev-avadj-mode', or with these sexps:
+
+  (eev-avadj-mode 0)
+  (eev-avadj-mode)
+
+When it is on you will see an \"avadj\" at the mode line. Let's
+examine `M--' and `M-+' first. With eev-avadj-mode on, try typing
+several `M--'s and `M-+'s (or `M-='s) on the line below:
+
+  This time offset - 9:59 - will change
+
+Now, as an exercise, try to use `M--'s and `M-+'s/`M-='s, plus
+`M-h M-2' (`ee-duplicate-this-line') and other more standard
+editing commands, to convert this line
+
+  (find-exampleaudio \"0:00\")
+
+into:
+
+  (find-exampleaudio \"0:00\")
+  (find-exampleaudio \"0:12\" \"blah\")
+  (find-exampleaudio \"0:30\" \"bleh\")
+
+That should give you an idea of how to index audio or video files
+- by creating elisp hyperlinks, with comments, to specific
+positions in them. Of course in a real-world situation we would
+execute these sexps occasionally to check if they are really
+pointing to the right places, and then make further adjustments;
+we are not doing that yet.
+
+The idea of a \"default audio/video file\" will be explained
+later.
+
+
+
+
+3. The time-from-bol
+====================
+All the keys in eev-avadj-mode operate on the \"time-from-bol\"
+of the current line: the first occurrence, in the current line,
+of a string that looks like a time offset. Note that the search
+starts from the beginning of the line (\"-from-bol\"), and if
+there are several possibilities, the first one is chosen.
+
+Remember that `M-e' has a variant that just highlights what would
+be executed, instead of evaluating a sexp:
+
+  (find-eval-intro \"`M-0 M-e'\")
+
+`M-p' also has something like this: `M-0 M-p' highlights the
+time-from-bol and displays in the echo area the sexp that it
+would execute to invoke a player - instead of running that sexp.
+Try to evaluate these sexps:
+
+  (code-audio \"sunwillset\" \"~/Zoe_Keating/Sun_Will_Set.ogg\")
+  (find-sunwillset)
+  ;; ^ don't worry if this fails - we are only calling it
+  ;;   to set `ee-audiovideo-last'
+
+and now try `M-0 M-p' on these lines:
+
+  ;; 4:19 blah
+  ;; 2:19
+
+For more realistic examples, see:
+
+  (find-videos-intro)
+
+
+
+
+4. Short hyperlinks to audio and video files
+============================================
+This sexp
+
+  (code-video \"eevtk2video\" \"~/eev-videos/three-keys-2.mp4\")
+
+defines a function `find-eevtk2video'. Note that the function
+definition in
+
+  (find-code-video \"eevtk2video\" \"~/eev-videos/three-keys-2.mp4\")
+
+has this line:
+
+  (setq ee-audiovideo-last 'find-eevtk2video)
+
+Every call to a function with a name like `find-*audio' or
+`find-*video' sets the variable `ee-audiovideo-last'.
+
+
+
+
+4.1. `find-code-audiovideo-links'
+---------------------------------
+The easist way to produce `code-audio' or `code-video' hyperlinks
+uses `M-h M-a', that calls `find-code-audiovideo-links' and is
+very similar to:
+
+  (find-pdf-like-intro \"9. Generating three pairs\")
+  (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
+
+A test:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  mkdir ~/eev-videos/
+  cd    ~/eev-videos/
+  wget -nc http://angg.twu.net/eev-videos/three-keys-2.mp4
+
+  # (find-code-audiovideo-links \"~/eev-videos/three-keys-2.mp4\" \"eevtk2\")
+  # (find-fline \"~/eev-videos/\")
+  # (find-fline \"~/eev-videos/\" \"three-keys-2.mp4\")
+  #   ^ Type `M-h M-a' on the line with the .mp4
+
+\[Todo: explain M-p in eev-avadj-mode]
+
+
+
+4.2. `eewrap-audiovideo'
+------------------------
 If you type `M-V' (`eewrap-audiovideo') on a line containing a
 shorthand word and a file name of an audio or video file, for
 example, here,
@@ -6294,7 +6561,7 @@ each call to a short hyperlink of the form `find-xxxaudio' or
 
 
 
-3. Passing options to mplayer
+5. Passing options to mplayer
 =============================
 By default mplayer is called with just a few command-line options,
 besides the ones that tell it at what position to start playing -
@@ -6312,86 +6579,6 @@ If you want to change this you should redefine these functions:
 
 
   
-
-
-
-4. `eev-avadj-mode'
-===================
-\"avadj-mode\" is a shorthand for \"audio/video adjust mode\".
-When `eev-avadj-mode' is active we get keys for adjusting time
-offsets quickly and for playing again the default audio or video
-file at a given time offset, all of this without moving the
-point. The keys are:
-
-  M--    decrease the time offset by one second
-  M-+    increase the time offset by one second
-  M-=    same as M-+, for convenience
-  M-p    play the default audio/video file at a time offset
-
-You can toggle eev-avadj-mode on and off with `M-x
-eev-avadj-mode', or with this sexp:
-
-  (eev-avadj-mode)
-
-When it is on you will see an \"avadj\" at the mode line. Let's
-examine `M--' and `M-+' first. With eev-avadj-mode on, try typing
-several `M--'s and `M-+'s (or `M-='s) on the line below:
-
-  This time offset - 9:59 - will change
-
-Now, as an exercise, try to use `M--'s and `M-+'s/`M-='s, plus
-`M-h M-2' (`ee-duplicate-this-line') and other more standard
-editing commands, to convert this line
-
-  (find-exampleaudio \"0:00\")
-
-into:
-
-  (find-exampleaudio \"0:00\")
-  (find-exampleaudio \"0:12\" \"blah\")
-  (find-exampleaudio \"0:30\" \"bleh\")
-
-That should give you an idea of how to index audio or video files
-- by creating elisp hyperlinks, with comments, to specific
-positions in them. Of course in a real-world situation we would
-execute these sexps occasionally to check if they are really
-pointing to the right places, and then make further adjustments;
-we are not doing that yet.
-
-
-
-5. The time-from-bol
-====================
-All the keys in eev-avadj-mode operate on the \"time-from-bol\"
-of the current line: the first occurrence, in the current line,
-of a string that looks like a time offset. Note that the search
-starts from the beginning of the line (\"-from-bol\"), and if
-there are several possibilities, the first one is chosen.
-
-Remember that `M-e' has a variant that just highlights what would
-be executed, instead of evaluating a sexp:
-
-  (find-eval-intro \"`M-0 M-e'\")
-
-`M-p' also has something like this: `M-0 M-p' highlights the
-time-from-bol and displays in the echo area the sexp that it
-would execute to invoke a player - instead of running that sexp.
-Try to evaluate these sexps:
-
-  (code-audio \"sunwillset\" \"~/Zoe_Keating/Sun_Will_Set.ogg\")
-  (find-sunwillset)
-  ;; ^ don't worry if this fails - we are only calling it
-  ;;   to set `ee-audiovideo-last'
-
-and now try `M-0 M-p' on these lines:
-
-  ;; 4:19 blah
-  ;; 2:19 
-
-For more realistic examples, see:
-
-  (find-videos-intro)
-
 
 
 
@@ -6608,29 +6795,6 @@ To change the dir strings \"~/videos/\", \"~/videos/tech/\", \"/tmp/videos/\",
 \"/tmp/\", that appear in the second block of `find-youtubedl-links'
 buffers, change the variables `ee-youtubedl-dir', `ee-youtubedl-dir2',
 `ee-youtubedl-dir3', `ee-youtubedl-dir4.'
-
-
-
-How to download
-===============
-
-
-
-Test the download
-=================
-
-
-Create short links
-==================
-
-
-
-
-  (find-youtubedl-links \"/tmp/\" \"TITLE\" \"abcdefghijk\" \".mp4\" \"{stem}\")
-  (find-youtubedl-links nil nil \"abcdefghijk\")
-
-  (find-eev \"eev-audiovideo.el\")
-  (find-eev \"eev-audiovideo.el\" \"eev-avadj-mode\")
 
 " pos-spec-list)))
 
@@ -8961,6 +9125,12 @@ The quickest way to open or recreate this is with `M-6 M-j'.
 
 
 
+This intro will be merged with
+  (find-here-links-intro)
+at some point...
+
+
+
 Eev's central idea is that you can keep \"executable logs\" of
 what you do, in a format that is reasonably readable and that is
 easy to \"play back\" later, step by step and in any order. We
@@ -9632,6 +9802,469 @@ This can also be used to generate links to info nodes.
 ;; (find-escripts-intro)
 
 
+
+
+
+
+;;;  _   _                                     _         _                  
+;;; | |_| |__  _ __ ___  ___   _ __ ___   __ _(_)_ __   | | _____ _   _ ___ 
+;;; | __| '_ \| '__/ _ \/ _ \ | '_ ` _ \ / _` | | '_ \  | |/ / _ \ | | / __|
+;;; | |_| | | | | |  __/  __/ | | | | | | (_| | | | | | |   <  __/ |_| \__ \
+;;;  \__|_| |_|_|  \___|\___| |_| |_| |_|\__,_|_|_| |_| |_|\_\___|\__, |___/
+;;;                                                               |___/     
+
+;; «find-three-main-keys-intro»  (to ".find-three-main-keys-intro")
+;; (find-intro-links "three-main-keys")
+;; (find-three-main-keys-intro)
+
+;; Used in this video:
+;; http://angg.twu.net/index.html#eev-three-main-keys
+;; A version in English in coming soon!
+
+(defun find-three-main-keys-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-three-main-keys-intro)*"))
+    (apply 'find-eintro "\
+
+
+
+  The three basic keys of eev:
+  A mini tutorial
+    Eduardo Ochs
+    http://angg.twu.net/#eev
+    http://angg.twu.net/#eev-three-main-keys
+    (Version: 2019aug09)
+
+  Eev's central idea is that you can keep \"executable logs\" of
+  what you do, in a format that is reasonably readable and that is
+  easy to \"play back\" later, step by step and in any order.
+
+  The is the second of the mini-tutorials.
+  The first one was on a way to install eev \"for total beginners\"
+  that creates a script called ~/eev that starts Emacs with eev-mode on
+  and opens the main sandboxed tutorial of eev:
+
+    (find-eev-quick-intro)
+
+  The `(find-*-intro)'s are interactive tutorials.
+  The mini-tutorials are videos.
+  This mini-tutorial is about the basic ideas that you need to understand
+  to run the interactive tutorials.
+                                       ^
+                                       |
+                                  three keys!
+
+
+
+  In Emacs terminology `C-e' is `control-e',
+                   and `M-e' is `alt-e'.
+          We pronounce `M-e' as `meta-e'.
+  Some old keyboards had a \"meta key\".
+  See: https://en.wikipedia.org/wiki/Meta_key
+
+  Some keys in Emacs recognize numeric prefixes.
+  For example, `M-4 M-2 a' inserts 42 `a's.
+
+  Lisp is a programming language that uses:
+    1. lots of lists
+    2. lots of parentheses - they delimit the lists
+    3. no \",\"s between the elements of these lists
+    4. the name of a function at the beginning of the list,
+       the arguments for the function after that.
+
+  These lists without commas are called \"sexps\".
+  See: https://en.wikipedia.org/wiki/Sexp
+
+  These sexp are Lisp expressions (programs!):
+
+       (* 2 3)
+               (* 4 5)
+    (+ (* 2 3) (* 4 5))
+
+  they return these results:
+
+       (* 2 3)            --> 6
+               (* 4 5)    --> 20
+    (+ (* 2 3) (* 4 5))   --> 26
+
+  This is a sexp with \"side effects\":
+
+    (insert \"HELLO\")
+
+
+  SPOILER: The basic keys of eev are:
+
+  M-e   - to follow an elisp hyperlink. (Elisp = Emacs Lisp)
+          Mnemonic: \"(e)valuate\"/\"(e)xecute\".
+  M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
+  M-j   - to (j)ump to certain predefined places. For example:
+
+       M-2 M-j  runs:  (find-emacs-keys-intro)
+       M-5 M-j  runs:  (find-eev-quick-intro)
+           M-j  takes you to the list of jump targets.
+
+  You just need to learn `M-e', `M-k' and `M-j' keys to navigate:
+    1. the sandboxed tutorials for eev,
+    2. the list of all most important keys,
+    3. and the Emacs manuals!
+
+  This mini-tutorial is BASED on these parts of the main tutorial:
+    (find-eev-quick-intro)
+    (find-eev-quick-intro \"2. Evaluating Lisp\")
+    (find-eev-quick-intro \"3. Elisp hyperlinks\")
+    (find-eev-quick-intro \"7.1. `eejump'\")
+    (find-eev-quick-intro \"7.1. `eejump'\" \"numeric arguments\")
+
+
+
+
+
+2. Evaluating Lisp
+==================
+When you type `M-e' emacs moves the point to the end of the
+current line, then runs a variant of `C-x C-e'. Try this on each
+line of the block below:
+
+  (+ (* 2 3)
+     (* 4 5)
+     )
+
+`M-e' accepts several different numeric prefixes that alter its
+behavior. We are only interested in one of them now - `M-0 M-e'
+highlights the sexp for a fraction of a second insted of executing it.
+Try it above.
+
+Also:
+
+  (insert \"HELLO\")
+
+\[In this video we will also use `M-2 M-e' and `M-3 M-e' - they
+create two-window settings with the \"target\" of the sexp in the
+right window... but the idea of the \"target\" of a sexp only
+makes sense when that sexp behaves as a hyperlink...]
+
+
+
+3. Elisp hyperlinks
+===================
+Each one of the sexps below makes Emacs \"go somewhere\" if you execute
+it with `M-e'. Executing sexps like those - we will call them \"elisp
+hyperlinks\" - is like following a hyperlink in a browser.
+
+In a browser you can \"go back\" after following a hyperlink because the
+previous page is kept in the memory somehow. In Emacs+eev the easiest
+way to \"go back\" is with `M-k', which runs a function called
+`ee-kill-this-buffer'. If you follow one of the links below with
+`M-e', it creates a new buffer and displays it. If you then type `M-k'
+this new buffer is killed, and Emacs displays the buffer that was just
+below it, which is this tutorial... try it! Here are some nice elisp
+hyperlinks:
+
+  (find-file  \"~/eev-current/eev-flash.el\")
+  (find-fline \"~/eev-current/eev-flash.el\")
+  (find-fline \"~/eev-current/\")
+  (find-fline \"/tmp/\")
+  (find-efunctiondescr 'find-file)
+  (find-man \"date\")
+  (find-man \"sleep\")
+  (find-sh  \"date; sleep 1; date\")
+  (find-node \"(emacs)Lisp Eval\")
+  (find-enode       \"Lisp Eval\")
+  (find-efunction 'find-file)
+
+Not all elisp hyperlinks \"go somewhere\"; some are like buttons that
+perform an action, like the one below, that acts as if the user had
+pressed a series of keys,
+
+  (eek \"<down> C-a H E L L O ! <up> C-e\")
+
+and some display their output in the echo area:
+
+  (find-sh0 \"date\")
+
+
+Note: `find-fline' is a contraction of `find-file-line'...
+`find-fline' is better for hyperlinks than `find-file' because it
+can be \"refined\" to point to a precise place in a file. See:
+
+  (find-refining-intro \"2. Refining hyperlinks\")
+
+See also:
+
+  (find-enode \"Major Modes\")
+  (find-enode \"Major Modes\" \"Dired\")
+  (find-links-conv-intro \"4. Elisp hyperlinks: some conventions\")
+  (find-links-conv-intro \"messy\")
+
+
+
+7.1. `eejump'
+-------------
+Some key sequences in Emacs accept numeric arguments. For
+example, try typing `M-9 a' (not `M-9 M-a'!) - this will insert 9
+copies of the letter `a'. See:
+
+  (find-enode \"Arguments\")
+
+Eev binds the key `M-j' (`eejump') to a function that jumps to a
+place that depends on the numeric argument. For example, `M-5
+M-j' runs (find-eev-quick-intro), that reloads this intro and
+goes to the top of it, and
+
+  `M-2 M-j' runs: (find-emacs-keys-intro)
+  `M-6 M-j' runs: (find-escripts-intro)
+  `M-1 M-j' runs: (find-fline \"~/TODO\")
+
+
+
+7.2. The list of eejump targets
+-------------------------------
+If you type `M-j' without a prefix argument then it runs
+`(find-eejumps)', that displays a help text followed by all the
+current eejump targets as defuns, one in each line. Try it:
+
+  (eek \"M-j\")
+  (find-eejumps)
+
+You will see that two of those entries are:
+
+  (defun eejump-1 () (find-fline \"~/TODO\"))
+  (defun eejump-5 () (find-eev-quick-intro))
+
+The help text starts with:
+
+  ;; (find-eejumps)
+  ;; See: (find-eev-quick-intro \"7.1. `eejump'\")
+  ;;      (find-emacs-keys-intro \"1. Basic keys (eev)\")
+  ;; For example,
+  ;;     M-1 M-j  runs:  (find-fline \"~/TODO\")
+  ;;     M-2 M-j  runs:  (find-emacs-keys-intro)
+  ;;     M-5 M-j  runs:  (find-eev-quick-intro)
+  ;; Current eejump targets:
+
+So if your mind goes blank and you forget everything except for
+`M-j' and `M-e' you can just type `M-j' and follow one of the
+elisp hyperlinks in the help text.
+
+
+
+
+What are the next steps?
+========================
+Next steps:
+
+  1) Learn e-script blocks:
+
+      (find-eev-quick-intro \"6.1. The main key: <F8>\")
+      (find-eev-quick-intro \"6.2. Other targets\" \"display all\")
+
+  2) Learn how to use index-anchor pairs:
+
+      (find-eev-quick-intro \"8.1. Introduction: `to'\")
+
+  3) Learn how to write your executable notes and put them here:
+
+      `M-1 M-j' runs: (find-fline \"~/TODO\")
+
+Etc, etc, etc...
+Note that learning to read comes after learning to write!...
+See: 
+
+  (find-here-links-intro \"1.1. Reading and writing\")
+
+
+
+Btw, the videos that I produced using this \"script\" are here:
+  http://angg.twu.net/#eev-three-main-keys
+  Version in English:
+    http://www.youtube.com/watch?v=s0_48wzWFbU
+    http://angg.twu.net/eev-videos/three-keys-2.mp4
+  Version in Portuguese:
+    http://www.youtube.com/watch?v=GUuCpmLItTs
+    http://angg.twu.net/eev-videos/three-keys-1-pt.mp4
+
+" pos-spec-list)))
+
+;; (find-three-main-keys-intro)
+
+
+
+
+;;; __        ___           _                                               
+;;; \ \      / / |__   __ _| |_   ___  _____  ___ __  ___    ___ __ _ _ __  
+;;;  \ \ /\ / /| '_ \ / _` | __| / __|/ _ \ \/ / '_ \/ __|  / __/ _` | '_ \ 
+;;;   \ V  V / | | | | (_| | |_  \__ \  __/>  <| |_) \__ \ | (_| (_| | | | |
+;;;    \_/\_/  |_| |_|\__,_|\__| |___/\___/_/\_\ .__/|___/  \___\__,_|_| |_|
+;;;                                            |_|                          
+;;
+;; «find-what-sexps-can-do-intro»  (to ".find-what-sexps-can-do-intro")
+;; (find-intro-links "what-sexps-can-do")
+
+(defun find-what-sexps-can-do-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-what-sexps-can-do-intro)*"))
+    (apply 'find-eintro "\
+
+  What Lisp expressions can do:
+  A mini tutorial
+    Eduardo Ochs
+    http://angg.twu.net/#eev
+    http://angg.twu.net/#eev-screencasts
+    (Version: 2019aug20)
+
+  Everybody knows that Emacs is written in Lisp and that one of
+  its main key sequences, `C-x C-e', executes the Lisp expression
+  before the cursor and shows the result in the echo area... this
+  can be used to calculate,
+
+       (* 2 3)
+               (* 4 5)
+    (+ (* 2 3) (* 4 5))
+
+  and can be used to call external programs - for examples, here
+  he have some Lisp expressions that invoke a video player,
+
+  (find-video \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (code-video \"punchandjudyvideo\" \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (find-punchandjudyvideo)
+  (find-punchandjudyvideo \"0:00\")
+  (find-punchandjudyvideo \"0:10\" \"calls the baby\")
+  (find-punchandjudyvideo \"0:40\" \"where's the baby\")
+  (find-punchandjudyvideo \"1:04\" \"right position\")
+  (find-punchandjudyvideo \"1:17\" \"he will sing the baby to sleep\")
+  (find-punchandjudyvideo \"1:33\" \"1-2-3\")
+  (find-punchandjudyvideo \"1:48\" \"baby downstairs\")
+  (find-punchandjudyvideo \"3:12\" \"slaps\")
+  (find-punchandjudyvideo \"3:50\" \"1-2-3\")
+  (find-punchandjudyvideo \"4:34\" \"you keep an eye on mr Punch\")
+  (find-punchandjudyvideo \"4:46\" \"hat\")
+  (find-punchandjudyvideo \"5:03\" \"hat\")
+  (find-punchandjudyvideo \"5:25\" \"did you see him?\")
+  (find-punchandjudyvideo \"5:55\" \"clown\")
+  (find-punchandjudyvideo \"6:14\" \"slaps\")
+  (find-punchandjudyvideo \"6:52\" \"sausages\")
+  (find-punchandjudyvideo \"7:24\" \"crocodile\")
+  (find-punchandjudyvideo \"8:07\" \"crocodile + sausages\")
+  (find-punchandjudyvideo \"8:32\" \"another scene\")
+  (find-punchandjudyvideo \"8:39\" \"fight\")
+  (find-punchandjudyvideo \"9:03\" \"clown\")
+  (find-punchandjudyvideo \"9:45\" \"mr punch\")
+
+  and here we have some Lisp expressions that open a PDF at a
+  given page:
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+  (find-livesofanimalspage)
+  (find-livesofanimalstext)
+  (find-livesofanimalspage (+ -110 113))
+  (find-livesofanimalstext (+ -110 113))
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
+  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
+  (find-livesofanimalspage (+ -110 133) \"To write that book I had to think\")
+  (find-livesofanimalstext (+ -110 133) \"To write that book I had to think\")
+  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
+  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
+  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
+  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
+  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
+  (find-livesofanimalspage (+ -110 164) \"last common ground\")
+  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+
+
+
+
+Preparation:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd
+wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# http://www.youtube.com/watch?v=K6LmZ0A1s9U
+# http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+mkdir ~/eev-videos/
+cd    ~/eev-videos/
+wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+
+# (find-eev \"eev-audiovideo.el\" \"find-mpv-video\" \"ee-mpv-video-options\")
+# (setq ee-mpv-video-options '(\"--fs\" \"--osd-level=2\"))
+# (setq ee-mpv-video-options        '(\"--osd-level=2\"))
+
+
+# (find-fline \"~/eev-videos/\")
+
+
+
+" pos-spec-list)))
+
+;; (find-what-sexps-can-do-intro)
+
+
+
+
+
+
+;; «find-creating-links-intro»  (to ".find-creating-links-intro")
+;; (find-intro-links "creating-links")
+
+(defun find-creating-links-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-creating-links-intro)*"))
+    (apply 'find-eintro "\
+
+
+  Some quick ways to generate
+  elisp hyperlinks in eev -
+  A mini tutorial
+    Eduardo Ochs
+    http://angg.twu.net/#eev
+    (Version: 2019jun17)
+
+
+
+  From other tutorials:
+    (find-escripts-intro \"5. Tools for writing e-scripts\")
+    (find-emacs-keys-intro \"beginner's way\")
+    (find-here-links-intro)
+    (find-here-links-intro \"4. `find-here-links-3'\")
+    (find-here-links-intro \"5. `find-here-links-1'\")
+    (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
+
+
+
+1. Basic keys (eev)
+===================
+(...)
+
+The beginner's way of creating \"hyperlinks to here\" is with:
+  M-h M-3   - (find-here-links-intro \"4. `find-here-links-3'\")
+  M-h M-1   - (find-here-links-intro \"5. `find-here-links-1'\")
+  M-h M-w   - (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
+
+
+
+
+" pos-spec-list)))
+
+;; (find-creating-links-intro)
+
+
+
+
+
+
+;; (find-intro-links "creating-links")
 
 
 
