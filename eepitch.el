@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.
 
-;; Copyright (C) 2012,2015,2018 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018,2019 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug11
+;; Version:    2019sep26
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -29,6 +29,21 @@
 ;;                 <http://angg.twu.net/eev-intros/find-eepitch-intro.html>
 ;;                                                (find-eev-quick-intro)
 ;;                                                (find-eepitch-intro)
+
+
+;; «.eepitch»			(to "eepitch")
+;; «.eepitch-this-line»		(to "eepitch-this-line")
+;; «.eepitch-shell»		(to "eepitch-shell")
+;; «.eepitch-kill»		(to "eepitch-kill")
+;; «.ee-expand»			(to "ee-expand")
+;; «.find-comintprocess»	(to "find-comintprocess")
+;;
+;; «.eewrap-eepitch»		(to "eewrap-eepitch")
+;; «.glyphs»			(to "glyphs")
+;; «.set-glyphs»		(to "set-glyphs")
+;; «.set-keys»			(to "set-keys")
+;;
+;; «.eepitch-langs»		(to "eepitch-langs")
 
 ;;; Commentary:
 
@@ -40,11 +55,13 @@
 ;;   1) elisp hyperlinks, and
 ;;   2) lines sent to shell-like programs.
 ;;
-;; Eepitch is the module that implements support for (2). For a
-;; tutorial, see:
+;; Eepitch is the module that implements support for (2). For
+;; tutorials, see:
 ;;
 ;;   (find-eev-quick-intro "6. Controlling shell-like programs")
+;;   (find-eepitch-intro)
 ;;   http://angg.twu.net/eev-intros/find-eev-quick-intro.html#6
+;;   http://angg.twu.net/eev-intros/find-eepitch-intro.html
 ;;
 ;; For videos, see:
 ;;
@@ -212,12 +229,15 @@ This function is used by `eepitch-this-line'."
 
 
 
-;;;                     
-;;;   ___ ___  _ __ ___ 
-;;;  / __/ _ \| '__/ _ \
-;;; | (_| (_) | | |  __/
-;;;  \___\___/|_|  \___|
-;;;                     
+;;;                  _ _       _     
+;;;   ___  ___ _ __ (_) |_ ___| |__  
+;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ 
+;;; |  __/  __/ |_) | | || (__| | | |
+;;;  \___|\___| .__/|_|\__\___|_| |_|
+;;;           |_|                    
+;;
+;; «eepitch»  (to ".eepitch")
+;; See: (find-eepitch-intro "2.3. `(eepitch)'")
 
 (defvar eepitch-regexp "^\\(.*\\)"
 "The regexp used by `eepitch-this-line' to determine what is a red-star line.
@@ -330,6 +350,18 @@ which does all the hard work."
   (eepitch-prepare)
   (list 'Target: eepitch-buffer-name))	; feedback (for <f8> and `M-e')
 
+
+
+
+;;;                  _ _       _           _   _     _           _ _            
+;;;   ___  ___ _ __ (_) |_ ___| |__       | |_| |__ (_)___      | (_)_ __   ___ 
+;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ _____| __| '_ \| / __|_____| | | '_ \ / _ \
+;;; |  __/  __/ |_) | | || (__| | | |_____| |_| | | | \__ \_____| | | | | |  __/
+;;;  \___|\___| .__/|_|\__\___|_| |_|      \__|_| |_|_|___/     |_|_|_| |_|\___|
+;;;           |_|                                                               
+;;
+;; «eepitch-this-line»  (to ".eepitch-this-line")
+
 (defun eepitch-eval-at-target-window (code)
   "Run CODE at the eepitch-target-window."
   (eepitch-prepare)
@@ -370,6 +402,9 @@ and: `eepitch', `eepitch-regexp', `eepitch-comment-regexp'."
 ;;; |  __/  __/ |_) | | || (__| | | |_____|   <| | | |
 ;;;  \___|\___| .__/|_|\__\___|_| |_|     |_|\_\_|_|_|
 ;;;           |_|                                     
+;;
+;; «eepitch-kill»  (to ".eepitch-kill")
+;; See: (find-eepitch-intro "2.2. `(eepitch-kill)'")
 
 (defun ee-kill-buffer (buffer)
   "Kill BUFFER if it exists, asking for fewer confirmations than usual."
@@ -418,6 +453,9 @@ scratch."
 ;;; |  __/  __/ |_) | | || (__| | | |_____\__ \ | | |  __/ | |
 ;;;  \___|\___| .__/|_|\__\___|_| |_|     |___/_| |_|\___|_|_|
 ;;;           |_|                                             
+;;
+;; «eepitch-shell»  (to ".eepitch-shell")
+;; See: (find-eepitch-intro "2.2. `(eepitch-shell)'")
 
 (defun eepitch-shell ()
   "Same as (eepitch '(shell)). See `eepitch' and `eewrap-eepitch'."
@@ -430,12 +468,14 @@ scratch."
 
 
 
-;;;                      _       _   
-;;;   ___ ___  _ __ ___ (_)_ __ | |_ 
-;;;  / __/ _ \| '_ ` _ \| | '_ \| __|
-;;; | (_| (_) | | | | | | | | | | |_ 
-;;;  \___\___/|_| |_| |_|_|_| |_|\__|
-;;;                                  
+;;;                                                  _ 
+;;;   ___  ___        _____  ___ __   __ _ _ __   __| |
+;;;  / _ \/ _ \_____ / _ \ \/ / '_ \ / _` | '_ \ / _` |
+;;; |  __/  __/_____|  __/>  <| |_) | (_| | | | | (_| |
+;;;  \___|\___|      \___/_/\_\ .__/ \__,_|_| |_|\__,_|
+;;;                           |_|                      
+;;
+;; «ee-expand»  (to ".ee-expand")
 
 (defun ee-expand (fname)
 "Expand \"~\"s and \"$ENVVAR\"s in file names, but only at the beginning."
@@ -453,6 +493,17 @@ scratch."
 This function is used by `find-comintprocess', `find-bgprocess'
 and `find-callprocess'."
   (mapcar 'ee-expand (ee-split str)))
+
+
+
+;;;                      _       _   
+;;;   ___ ___  _ __ ___ (_)_ __ | |_ 
+;;;  / __/ _ \| '_ ` _ \| | '_ \| __|
+;;; | (_| (_) | | | | | | | | | | |_ 
+;;;  \___\___/|_| |_| |_|_|_| |_|\__|
+;;;                                  
+;; «find-comintprocess»  (to ".find-comintprocess")
+;; See: (find-eepitch-intro "2.5. `find-comintprocess'")
 
 (defun find-comintprocess-ne (name &optional program-and-args)
   "Switch to the buffer named *NAME* and run the command PROGRAM-AND-ARGS there.
@@ -477,25 +528,36 @@ See: (find-eepitch-intro)"
 
 
 
-
-
-
-;;;                  _ _       _               _       
-;;;   ___  ___ _ __ (_) |_ ___| |__         __| | ___  
-;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ _____ / _` |/ _ \ 
-;;; |  __/  __/ |_) | | || (__| | | |_____| (_| | (_) |
-;;;  \___|\___| .__/|_|\__\___|_| |_|      \__,_|\___/ 
-;;;           |_|                                      
+;;;                           
+;;; __      ___ __ __ _ _ __  
+;;; \ \ /\ / / '__/ _` | '_ \ 
+;;;  \ V  V /| | | (_| | |_) |
+;;;   \_/\_/ |_|  \__,_| .__/ 
+;;;                    |_|    
 ;;
-(defun eepitch-make-suffix (arg)
-  (cond ((null arg) "")
-	((stringp arg) (format " %s" arg))
-	((numberp arg) (format " (%s)" arg))))
+;; «eewrap-eepitch»  (to ".eewrap-eepitch")
+;; See: (find-eev-quick-intro "6.3. Creating eepitch blocks: `M-T'")
+;;      (find-eev-quick-intro "wrap")
+;;      (find-wrap-intro)
 
-(defun eepitch-do (program-and-args &optional suffix)
-  (eepitch-comint (format "%s%s" (ee-unsplit program-and-args)
-			  (eepitch-make-suffix suffix))
-		  program-and-args))
+(defun ee-no-properties (str)
+  (setq str (copy-sequence str))
+  (set-text-properties 0 (length str) nil str)
+  str)
+
+;; (defun eepitch-delete-and-extract-line ()
+;;   (delete-and-extract-region (ee-bol) (ee-eol)))
+
+(defun ee-this-line-extract ()
+  "Delete the contents of the current line and return it as a string."
+  (delete-and-extract-region (ee-bol) (ee-eol)))
+
+(defun eewrap-eepitch () (interactive)
+  (let* ((fmt   " (eepitch-%s)\n (eepitch-kill)\n (eepitch-%s)")
+	 (li    (ee-this-line-extract))
+	 (newli (format fmt li li)))
+    (insert newli))
+  (ee-next-line 1))
 
 
 
@@ -506,6 +568,8 @@ See: (find-eepitch-intro)"
 ;;;  \__, |_|\__, | .__/|_| |_|___/
 ;;;  |___/   |___/|_|              
 ;;;
+;; «glyphs»  (to ".glyphs")
+;; See: (find-eev-quick-intro "6.4. Red stars")
 ;; More glyphs:
 ;;   (find-eev "eev-anchors.el")
 ;;   (find-anchors-intro)
@@ -533,44 +597,14 @@ to make it work similarly in unibyte and multibyte buffers."
       (eepitch-set-glyph0 (make-char 'eight-bit pos) char face)))
 
 
-;;;                           
-;;; __      ___ __ __ _ _ __  
-;;; \ \ /\ / / '__/ _` | '_ \ 
-;;;  \ V  V /| | | (_| | |_) |
-;;;   \_/\_/ |_|  \__,_| .__/ 
-;;;                    |_|    
-;;
-;; See: (find-eev-quick-intro "6.3. Creating eepitch blocks: `M-T'")
-;;      (find-eev-quick-intro "wrap")
-;;      (find-wrap-intro)
-
-(defun ee-no-properties (str)
-  (setq str (copy-sequence str))
-  (set-text-properties 0 (length str) nil str)
-  str)
-
-;; (defun eepitch-delete-and-extract-line ()
-;;   (delete-and-extract-region (ee-bol) (ee-eol)))
-
-(defun ee-this-line-extract ()
-  "Delete the contents of the current line and return it as a string."
-  (delete-and-extract-region (ee-bol) (ee-eol)))
-
-(defun eewrap-eepitch () (interactive)
-  (let* ((fmt   " (eepitch-%s)\n (eepitch-kill)\n (eepitch-%s)")
-	 (li    (ee-this-line-extract))
-	 (newli (format fmt li li)))
-    (insert newli))
-  (ee-next-line 1))
-
-
-
 ;;;           _           _             _         
 ;;;  ___  ___| |_    __ _| |_   _ _ __ | |__  ___ 
 ;;; / __|/ _ \ __|  / _` | | | | | '_ \| '_ \/ __|
 ;;; \__ \  __/ |_  | (_| | | |_| | |_) | | | \__ \
 ;;; |___/\___|\__|  \__, |_|\__, | .__/|_| |_|___/
 ;;;                 |___/   |___/|_|              
+;;
+;; «set-glyphs»  (to ".set-glyphs")
 
 (if (not standard-display-table)
     (setq standard-display-table (make-display-table)))
@@ -583,24 +617,35 @@ to make it work similarly in unibyte and multibyte buffers."
 ;;; \__ \  __/ |_  |   <  __/ |_| \__ \
 ;;; |___/\___|\__| |_|\_\___|\__, |___/
 ;;;                          |___/     
-
+;;
+;; «set-keys»  (to ".set-keys")
+;; Moved to: (find-eev "eev-mode.el" "eev-mode-map-set")
 ;; (global-set-key [f8]   'eepitch-this-line)
 ;; (global-set-key "\M-T" 'eewrap-eepitch)
 
-(provide 'eepitch)
 
 
-;;;  _____           _          __   _   _                               
-;;; | ____|_ __   __| |   ___  / _| | |_| |__   ___    ___ ___  _ __ ___ 
-;;; |  _| | '_ \ / _` |  / _ \| |_  | __| '_ \ / _ \  / __/ _ \| '__/ _ \
-;;; | |___| | | | (_| | | (_) |  _| | |_| | | |  __/ | (_| (_) | | |  __/
-;;; |_____|_| |_|\__,_|  \___/|_|    \__|_| |_|\___|  \___\___/|_|  \___|
-;;;                                                                      
-;;; ----------------------------------------------------------------------
-;;; ----------------------------------------------------------------------
-;;; ----------------------------------------------------------------------
 
 
+
+
+
+;;;                  _ _       _               _       
+;;;   ___  ___ _ __ (_) |_ ___| |__         __| | ___  
+;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ _____ / _` |/ _ \ 
+;;; |  __/  __/ |_) | | || (__| | | |_____| (_| | (_) |
+;;;  \___|\___| .__/|_|\__\___|_| |_|      \__,_|\___/ 
+;;;           |_|                                      
+;;
+(defun eepitch-make-suffix (arg)
+  (cond ((null arg) "")
+	((stringp arg) (format " %s" arg))
+	((numberp arg) (format " (%s)" arg))))
+
+(defun eepitch-do (program-and-args &optional suffix)
+  (eepitch-comint (format "%s%s" (ee-unsplit program-and-args)
+			  (eepitch-make-suffix suffix))
+		  program-and-args))
 
 
 ;;;                      _       _                  _           
@@ -689,15 +734,19 @@ This is useful for for running processes that use pagers like
 
 
 
+
 ;;;  _                                                  
 ;;; | |    __ _ _ __   __ _ _   _  __ _  __ _  ___  ___ 
 ;;; | |   / _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \/ __|
 ;;; | |__| (_| | | | | (_| | |_| | (_| | (_| |  __/\__ \
 ;;; |_____\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___||___/
 ;;;                   |___/             |___/           
+;;
+;; «eepitch-langs»  (to ".eepitch-langs")
+;; See: (find-eepitch-intro "2.4. `(eepitch-python)'")
 
-;; Shells
-;; The first three are defined above.
+;; Shells:
+;; These three are commented out because they are defined above.
 ;; (defun eepitch-shell  () (interactive) (eepitch '(shell)))
 ;; (defun eepitch-shell2 () (interactive) (eepitch '(shell "*shell 2*")))
 ;; (defun eepitch-eshell () (interactive) (eepitch '(eshell)))
@@ -709,22 +758,24 @@ This is useful for for running processes that use pagers like
 (defun eepitch-zsh  () (interactive) (eepitch-comint-de "zsh" "zsh"))
 (defun eepitch-scsh () (interactive) (eepitch-comint "scsh" "scsh"))
 
-;; Main interpreted languages
+;; Main interpreted languages:
 (defun eepitch-lua51  () (interactive) (eepitch-comint "lua51"  "lua5.1"))
 (defun eepitch-lua52  () (interactive) (eepitch-comint "lua52"  "lua5.2"))
 (defun eepitch-lua53  () (interactive) (eepitch-comint "lua53"  "lua5.3"))
-(defun eepitch-python () (interactive) (eepitch-comint "python" "python"))
+(defun eepitch-julia  () (interactive) (eepitch-comint "julia"  "julia"))
+(defun eepitch-python  () (interactive) (eepitch-comint "python"  "python"))
+(defun eepitch-python3 () (interactive) (eepitch-comint "python3" "python3"))
 (defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb"))
 (defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb --simple-prompt"))
 (defun eepitch-perl () (interactive) (eepitch-comint "perl" "perl -d -e 42"))
 
-;; Tcl
+;; Tcl:
 (defun eepitch-tcl     () (interactive) (eepitch-comint "tclsh"   "tclsh"))
 (defun eepitch-tclsh   () (interactive) (eepitch-comint "tclsh"   "tclsh"))
 (defun eepitch-wish    () (interactive) (eepitch-comint "wish"    "wish"))
 (defun eepitch-expect  () (interactive) (eepitch-comint "expect"  "expect"))
 
-;; Lisps and Schemes
+;; Lisps and Schemes:
 ;; It would be better to run them in Slime.
 (defun eepitch-sbcl   () (interactive) (eepitch-comint "sbcl" "sbcl"))
 (defun eepitch-gcl    () (interactive) (eepitch-comint "gcl"  "gcl"))
@@ -736,7 +787,7 @@ This is useful for for running processes that use pagers like
   (eepitch-comint "tinyscheme" "tinyscheme"))
 
 
-;; Haskell, ML, Erlang, Coq
+;; Haskell, ML, Erlang, Coq:
 (defun eepitch-hugs   () (interactive) (eepitch-comint "hugs" "hugs"))
 (defun eepitch-hugs98 () (interactive) (eepitch-comint "hugs" "hugs -98"))
 (defun eepitch-ghci   () (interactive) (eepitch-comint "ghci" "ghci"))
@@ -746,25 +797,25 @@ This is useful for for running processes that use pagers like
 (defun eepitch-erl    () (interactive) (eepitch-comint "erl" "erl"))
 (defun eepitch-coqtop () (interactive) (eepitch-comint "coqtop" "coqtop"))
 
-;; Forth
+;; Forth:
 (defun eepitch-gforth () (interactive) (eepitch '(run-forth "gforth")))
 (defun eepitch-gforth () (interactive) (eepitch-comint "gforth" "gforth"))
 (defun eepitch-pforth () (interactive) (eepitch-comint "pforth" "pforth"))
 (defun eepitch-yforth () (interactive) (eepitch-comint "yforth" "yforth"))
 
-;; Mathematics
+;; Mathematics:
 (defun eepitch-maxima () (interactive) (eepitch-comint "maxima" "maxima"))
 (defun eepitch-octave () (interactive) (eepitch-comint "octave" "octave"))
 (defun eepitch-R () (interactive)
   (eepitch '(ee-with-pager-cat (find-comintprocess "R" "R"))))
 
-;; Plotters.
+;; Plotters:
 ;; We force GhostScript's resolution to make its window fit on the screen.
 (defun eepitch-gs () (interactive) (eepitch-comint "gs" "gs -r45"))
 (defun eepitch-gs () (interactive) (eepitch-comint "gs" "gs -r60"))
 (defun eepitch-gnuplot () (interactive) (eepitch-comint "gnuplot" "gnuplot"))
 
-;; Java-based languages
+;; Java-based languages:
 (defun eepitch-bsh () (interactive)
   (eepitch-de '(find-comintprocess "bsh" "bsh")))
 (defun eepitch-scala () (interactive)
@@ -805,6 +856,9 @@ This is useful for for running processes that use pagers like
 ;; Pulseaudio (this is to interact with its daemon)
 (defun eepitch-pacmd () (interactive) (eepitch-comint "pacmd" "pacmd"))
 
+
+
+(provide 'eepitch)
 
 
 

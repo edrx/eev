@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug16
+;; Version:    2019sep24
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -273,6 +273,7 @@ More intros:  (find-emacs-keys-intro)
               (find-eev-intro)
               (find-here-links-intro)
               (find-refining-intro)
+              (find-eepitch-intro)
               (find-pdf-like-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
@@ -793,9 +794,9 @@ and pasting. The module of eev that controls shell-like programs - it
 is called \"eepitch\" - uses `<F8>' and `M-T'. Note that it is
 `alt-shift-t', to not interfere with Emacs's `M-t'.
 
-The sections below were adapted from:
+For more details see:
 
-  (find-eepitch-intro \"The main key: <F8>\")
+  (find-eepitch-intro)
 
 
 
@@ -1789,6 +1790,11 @@ More about TAB - for completion: (find-enode \"Completion\")
 More about modes:                (find-enode \"Major Modes\")
                                  (find-enode \"Minor Modes\")
                                  (find-enode \"Dired\")
+
+See also: (find-enode \"Mode Line\" \"(MAJOR MINOR)\")
+          (find-enode \"Mode Line\" \" MAJOR is the name\")
+          (find-enode \"Mode Line\" \" BUF \")
+          (find-enode \"Mode Line\" \" BUF \" \"name of the buffer\")
 
 
 
@@ -4421,15 +4427,351 @@ It is meant as both a tutorial (for eepitch) and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-Ideally it should _complement_ the material in:
+
+This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
 
+In this intro we suppose that the reader knows what is a terminal
+and what is a shell. In Unix-like systems the terminal and the
+shell are clearly different programs, and it's easy to understand
+how a terminal can be used to run other programs that are not
+shells (e.g., a Python interpreter; see \"REPL\" below); in
+Windows most people don't know that the \"DOS window\" is in fact
+a Windows console running cmd.exe. Some links:
+  https://en.wikipedia.org/wiki/Pipeline_(Unix)
+  https://en.wikipedia.org/wiki/Unix_philosophy
+  https://en.wikipedia.org/wiki/Unix-like
+  https://en.wikipedia.org/wiki/Shell_(computing)
+  https://en.wikipedia.org/wiki/Shell_(computing)#Text_(CLI)_shells
+  https://en.wikipedia.org/wiki/Shell_script
+  https://en.wikipedia.org/wiki/Command-line_interface
+  https://en.wikipedia.org/wiki/Command-line_interface#Command-line_interpreter
+  https://en.wikipedia.org/wiki/Read-eval-print_loop (\"REPL\")
+  https://en.wikipedia.org/wiki/Terminal_emulator
+  https://en.wikipedia.org/wiki/Text_terminal
+  https://en.wikipedia.org/wiki/MS-DOS#Windows_command-line_interface
+  https://en.wikipedia.org/wiki/Windows_Console
+  https://en.wikipedia.org/wiki/Cmd.exe
 
 
 
-The motivation for eepitch: taking notes and redoing
-====================================================
+
+
+1. Some demos
+=============
+Let's start with the simplest case. If you put the cursor on the
+first line that starts with a red star below and type the key
+<f8> six times,
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo \"We are at: $PWD\"
+cd /tmp/
+echo \"We changed to: $(pwd)\"
+
+you will notice that each <f8> does something with the current
+line and move the cursor to the next line; first three <f8>s - on
+the lines that start with red stars - create a window setting
+like this,
+
+   ________________________________
+  |                |               |
+  |     notes      |    target     |
+  |     buffer     |    buffer     |
+  |  (this intro)  |  (\"*shell*\")  |
+  |                |               |
+  |________________|_______________|
+  
+and the last three <f8>s - on \"non-red star lines\" - send the
+lines
+
+  echo \"We are at: $PWD\"
+  cd /tmp/
+  echo \"We changed to: $(pwd)\"
+
+to the \"target buffer\", that in this case is the buffer with a
+terminal running a shell; the shell behaves exactly is if the the
+user had typed those three lines at its prompt.
+
+
+
+
+1.1. Another target
+-------------------
+If you put the cursor at the first red star line below and type
+<f8> six times you will get something very similar to the example
+above,
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+1 + 2
+print(\"Hello \" +
+      \"world\")
+
+but now the window setting will be like this:
+
+   ________________________________
+  |                |               |
+  |     notes      |     target    |
+  |     buffer     |     buffer    |
+  |  (this intro)  |  (\"*python*\") |
+  |                |               |
+  |________________|_______________|
+
+and the target buffer will be called \"*python*\", and it
+contains a terminal running a Python interpreter.
+
+
+
+
+1.2. Two targets
+----------------
+The demo below uses an advanced feature - the function
+`find-3EE', explained at:
+
+  (find-multiwindow-intro \"find-3EE\")
+
+to create a 3-window setup like this:
+
+   _______________________
+  |          |            |
+  |          |  *shell*   |
+  |  notes   |____________|
+  |  buffer  |            |
+  |          |  *python*  |
+  |__________|____________|
+
+Some non-red star lines in it send the current line to the
+\"*shell*\" buffer, and some send the current line to the
+\"*python*\" buffer. The red star lines with \"(eepitch-shell)\"
+set the target to \"*shell*\", and the red star lines with with
+\"(eepitch-python)\" set the target to \"*python*\". Try it! Put
+the cursor on the first red star line below, then type <f8>
+twelve times:
+
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
+1.3. Two targets, two windows
+-----------------------------
+The demo below is similar to the one with three windows in the
+previous section, but it uses just two windows - and the window
+at the right alternates between \"*shell*\" and \"*python*\":
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
+
+
+2. How <f8> works
+=================
+The key <f8> works in one way when the cursor is on a line that
+starts with a red star - it executes everything at the right of
+the \"\" as Lisp code, and then moves down - and in a totally
+different way on non-red star lines: on non-red star lines it
+makes sure that the target buffer is being displayed, then sends
+the current line to the target buffer \"as if the user had typed
+it\", then moves down.
+
+
+
+
+2.1. Eepitch blocks
+-------------------
+A block of three red star lines like
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+or
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+
+is called an \"eepitch block\". The _final effect_ of typing <f8>
+thrice on an eepitch block like this
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+is easy to describe: after the third <f8> we get a window setting
+like this,
+
+   ________________________
+  |          |             |
+  |  notes   |    target   |
+  |  buffer  |    buffer   |
+  |          | (\"*shell*\") |
+  |          |             |
+  |__________|_____________|
+
+where the target buffer is running a _new_ shell...
+
+
+
+2.2. `(eepitch-kill)'
+---------------------
+The effect of running <f8> on a line like
+
+ (eepitch-kill)
+
+is to kill the current target. More precisely, `(eepitch-kill)'
+kills a buffer with the name stored in the variable
+`eepitch-buffer-name', if a buffer with that name exists; in the
+examples above the target buffer names are always either
+\"*shell*\" or \"*python*\". If we are in a window setting like
+this and the target is \"*shell*\"
+
+   ________________________
+  |          |             |
+  |  notes   |    target   |
+  |  buffer  |    buffer   |
+  |          | (\"*shell*\") |
+  |          |             |
+  |__________|_____________|
+
+and we run `(eepitch-kill)' the window setting becomes this:
+
+   _____________________
+  |          |          |
+  |  notes   |   some   |
+  |  buffer  |  other   |
+  |          |  buffer  |
+  |          |          |
+  |__________|__________|
+
+which may be confusing...
+
+
+
+
+2.2. `(eepitch-shell)'
+----------------------
+The effect of running <f8> on a line like
+
+ (eepitch-shell)
+
+can be *roughly* described as:
+
+  a) Set the name of the target buffer to \"*shell*\".
+
+  b) If the target buffer does not exist, create it - by
+     running `(shell)'.
+
+  c) If the target buffer is not being display then display it -
+     by creating a two-window setting with the target buffer at
+     the right.
+
+This is a simplification, though... the sexp
+
+  (eepitch-shell)
+
+runs this,
+
+  (eepitch '(shell))
+
+and the name of the target buffer is obtained from the
+sexp `(shell)' by running it in a certain way.
+
+
+
+
+2.3. `(eepitch)'
+----------------
+The documentation for `eepitch' says:
+
+  (eepitch CODE)
+
+  Set up a target for eepitch and make sure it is displayed in
+  another window.
+  The argument CODE must be a \"shell-like sexp\", i.e., one that
+  when evaluated always switches to a buffer with a fixed name,
+  and when that buffer does not exists it creates it.
+
+For example, running `(shell)' switches to a buffer whose name is
+\"*shell*\"; the name of the target buffer can obtained
+from the sexp `(shell)' by running this:
+
+  (save-window-excursion
+    (shell)
+    (setq eepitch-buffer-name
+	  (buffer-name (current-buffer))))
+
+
+
+
+2.4. `(eepitch-python)'
+-----------------------
+The effect of running <f8> on a line like
+
+ (eepitch-python)
+
+is very similar to `(eepitch-shell)', but it uses \"*python*\" as
+the name of the target buffer. `(eepitch-python)' is defined as:
+
+  (eepitch '(find-comintprocess \"python\" \"python\"))
+
+
+
+
+2.5. `find-comintprocess'
+-------------------------
+The sexp
+
+  (find-comintprocess \"buffer name\" \"program and args\")
+
+switches to a buffer called \"*buffer name*\" and if that buffer
+does not have an associated process then it runs \"program and
+args\" there in comint mode. See:
+
+  (find-enode \"Shell Mode\" \"Comint mode\")
+  (find-elnode \"Process Buffers\")
+
+
+
+
+
+
+
+   (find-enode \"Shell\")
+   (find-enode \"Terminal emulator\")
+
+1. Motivation
+=============
 Suppose that we have to do some reasonably complex task using a
 shell, and that we want to take notes of what we do because we
 might have to do something similar later.
@@ -4467,8 +4809,10 @@ explained later.
 
 
 
-The main key: <F8>
-==================
+
+
+2. The main key: <F8>
+=====================
 Emacs can run a shell in a buffer, and it can split its frame
 into windows, like this:
    ___________________
@@ -4514,8 +4858,8 @@ echo \"We changed to: $(pwd)\"
 
 
 
-Other targets
-=============
+3. Other targets
+================
 Just like `(eepitch-shell)' creates a shell buffer and sets the
 eepitch target to it, `(eepitch-python)' creates a buffer with a
 Python interpreter and uses it as the eepitch target. Try:
@@ -4557,8 +4901,8 @@ print(open(\"/tmp/o\").read())
 
 
 
-More on eepitch-kill
-====================
+4. More on eepitch-kill
+=======================
 Note that `(eepitch-kill)' kills the _current_ target, that may
 or may not be a shell buffer, a Python interaction buffer, etc...
 That explains the first line in blocks like:
@@ -4582,8 +4926,8 @@ erasing all definitions done in previous sessions.
 
 
 
-Creating eepitch blocks: `M-T'
-==============================
+5. Creating eepitch blocks: `M-T'
+=================================
 Write just \"shell\" or \"python\" in a line, then type
 `M-T' (i.e., meta-shift-t) there. The line will be turned into
 three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
@@ -4599,8 +4943,8 @@ pwd
 
 
 
-Red stars
-=========
+6. Red stars
+============
 Eepitch.el sets the glyph for the char 15 to a red star in the
 standard display table. In layman's terms: eepitch.el tells Emacs
 that the character 15 should be displayed as a red star. The
@@ -4610,8 +4954,8 @@ literal ^O in a buffer by typing `C-q C-o'.
 
 
 
-For more information
-====================
+7. For more information
+=======================
 On hyperlinks:               (find-eval-intro)
 On keys similar to `M-T':    (find-wrap-intro)
 An older text about eepitch:

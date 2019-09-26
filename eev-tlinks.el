@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug17
+;; Version:    2019sep23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -517,6 +517,8 @@ Try this: (find-debpkg-links \"bash\")"
 {ee-H}(find-sh \"grep-aptavail -P {pkgname}\")
 
 http://packages.debian.org/{pkgname}
+http://packages.debian.org/sid/{pkgname}
+http://packages.debian.org/source/sid/{pkgname}
 http://packages.debian.org/src:{pkgname}
 http://ftp.debian.org/debian/pool/main/{p}/{pkgname}/
 http://backports.org/debian/pool/main/{p}/{pkgname}/

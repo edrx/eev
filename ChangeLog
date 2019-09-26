@@ -1,3 +1,25 @@
+2019-09-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): small changes.
+
+	* eepitch.el: rewrote lots of comments.
+
+2019-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-emacs-keys-intro): added links about the mode
+	line.
+
+2019-09-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-find-eejumps-header): small changes in the
+	header.
+
+	* eev-intro.el (find-eepitch-intro): rewrote most of the text.
+
+2019-09-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-debpkg-links): added links to Sid.
+
 2019-08-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-edit.el (ee-copy-this-line-to-kill-ring): use
