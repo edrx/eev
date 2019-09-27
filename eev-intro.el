@@ -4710,8 +4710,8 @@ sexp `(shell)' by running it in a certain way.
 
 
 
-2.3. `(eepitch)'
-----------------
+2.3. `eepitch'
+--------------
 The documentation for `eepitch' says:
 
   (eepitch CODE)

@@ -1,3 +1,14 @@
+2019-09-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-file-name-nondirectory-slash): new function.
+	(ee-file-expand-wildcards-slash): new function.
+	(ee-find-epackage-links0): new function.
+	(find-epackage-links): new function.
+	(ee-find-epackage-links): use `ee-find-epackage-links0'.
+
+	* eev-edit.el (ee-tag-re-utf-8): new variable.
+	(ee-tag-re): use `ee-tag-re-utf-8'.
+
 2019-09-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-quick-intro): small changes.

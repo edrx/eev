@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug29
+;; Version:    2019sep27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -138,7 +138,8 @@ With a prefix argument run `ee-copy-preceding-tag-to-kill-ring' instead."
 
 ;; Experimental, 2019aug29
 ;; (defun ee-tag-re () (ee-tolatin1 "«\\([!-~]+\\)»"))
-(defun ee-tag-re () "«\\([!-~]+\\)»")
+(defvar ee-tag-re-utf-8 "«\\([!-~]+\\)»")
+(defun  ee-tag-re () ee-tag-re-utf-8)
 
 (defun ee-copy-preceding-tag-to-kill-ring ()
   "Copy the preceding tag to the kill ring and highlight (\"flash\") it.

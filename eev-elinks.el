@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug06
+;; Version:    2019sep27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -73,6 +73,7 @@
 ;; «.ee-hyperlink-prefix»	(to "ee-hyperlink-prefix")
 ;; «.find-eface-links»		(to "find-eface-links")
 ;; «.find-color-links»		(to "find-color-links")
+;; «.find-epackage-links»	(to "find-epackage-links")
 
 ;; «.find-here-links»		(to "find-here-links")
 ;; «.find-here-links-beginner»	(to "find-here-links-beginner")
@@ -1093,6 +1094,68 @@ This needs a temporary directory; see: (find-prepared-intro)"
 
 
 
+;;;   __ _           _                             _                          _ 
+;;;  / _(_)_ __   __| |       ___ _ __   __ _  ___| | ____ _  __ _  ___      | |
+;;; | |_| | '_ \ / _` |_____ / _ \ '_ \ / _` |/ __| |/ / _` |/ _` |/ _ \_____| |
+;;; |  _| | | | | (_| |_____|  __/ |_) | (_| | (__|   < (_| | (_| |  __/_____| |
+;;; |_| |_|_| |_|\__,_|      \___| .__/ \__,_|\___|_|\_\__,_|\__, |\___|     |_|
+;;;                              |_|                         |___/              
+;;
+;; «find-epackage-links»  (to ".find-epackage-links")
+;; Tests: (find-epackage-links "eev")
+;;        (find-estring (ee-find-epackage-links0 "0x0"))
+;;        (find-estring (ee-find-epackage-links0 "eev"))
+;;
+(defun find-epackage-links (&optional pkgname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for an Emacs package."
+  (interactive)
+  (setq pkgname (or pkgname "{pkgname}"))
+  (apply 'find-elinks
+   `((find-epackage-links ,pkgname ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-epackage-links)
+     (find-elpafile "")
+     ""
+     ,(ee-find-epackage-links0 pkgname)
+     )
+   pos-spec-list))
+
+(defun ee-find-epackage-links0 (pkgname)
+  "This is an internal function used by `find-epackage-links'."
+  (let* ((spkgname (format "\n  %s " pkgname))
+	 (pattern (format "%s%s-*" ee-elpadir pkgname))
+	 (fnames (ee-file-expand-wildcards-slash pattern))
+	 (sexps (mapcar (lambda (s) (list 'find-elpafile s)) fnames))
+	 (sexps (reverse sexps))
+	 (lines (mapconcat 'ee-HS sexps "\n"))
+	 )
+    (ee-template0 "\
+# (find-epackages {(ee-S spkgname)})
+# (find-epackage '{pkgname})
+{lines}
+
+# http://elpa.gnu.org/packages/{pkgname}.html
+# http://melpa.org/#/{pkgname}
+")))
+
+
+(defun ee-file-name-nondirectory-slash (fname)
+  "Like `file-name-nondirectory', but appends a / to FNAME if it is a directory.
+This is an internal function used by `ee-find-epackage-links'."
+  (concat (file-name-nondirectory fname)
+	  (if (file-directory-p fname) "/" "")))
+
+(defun ee-file-expand-wildcards-slash (pattern)
+  "Like `file-expand-wildcards' but with `ee-file-name-nondirectory-slash' & sort.
+This is an internal function used by `ee-find-epackage-links'."
+  (let* ((fnames0 (file-expand-wildcards pattern))
+	 (fnames1 (mapcar 'ee-file-name-nondirectory-slash fnames0))
+	 (fnames2 (sort fnames1 'string<)))
+    fnames2))
+
+
+
+
 
 ;;;   __ _           _       _                         _ _       _        
 ;;;  / _(_)_ __   __| |     | |__   ___ _ __ ___      | (_)_ __ | | _____ 
@@ -1176,8 +1239,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 (defun  ee-epackage-bufferp () (ee-buffer-help ee-epackage-re 1))
 (defun  ee-find-epackage-links ()
   (let ((p (ee-epackage-bufferp)))
-    `((find-epackages ,(format "\n  %s " p) t)
-      (find-epackage ',p))))
+    (list (ee-find-epackage-links0 p))))
 
 ;; By buffer name (when the mode is man)
 (defvar ee-man-re "^\\*Man \\(.*\\)\\*$")
