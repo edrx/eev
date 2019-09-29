@@ -1104,7 +1104,6 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;; «find-epackage-links»  (to ".find-epackage-links")
 ;; Tests: (find-epackage-links "eev")
 ;;        (find-estring (ee-find-epackage-links0 "0x0"))
-;;        (find-estring (ee-find-epackage-links0 "eev"))
 ;;
 (defun find-epackage-links (&optional pkgname &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for an Emacs package."

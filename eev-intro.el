@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep24
+;; Version:    2019sep29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2231,6 +2231,53 @@ and also:
 
   (find-eev \"README\")
   (find-eev \"eev-beginner.el\")
+
+
+
+6. Updates, sep. 2019
+---------------------
+These are the current ways to download and install eev:
+
+  1. as an Emacs package, with `M-x list-packages';
+
+  2. as an Emacs package, by downloading a file named
+     eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
+     links like these ones,
+
+       http://elpa.gnu.org/packages/eev.html
+       http://elpa.gnu.org/packages/eev-20190902.tar
+       http://angg.twu.net/eev-current/
+       http://angg.twu.net/eev-current/eev-20190902.tar
+
+     and then running `M-x package-install-file';
+
+  3. by using the script in section 1, that downloads a .tgz from
+
+       http://angg.twu.net/eev-current/eev2.tgz ,
+
+     unpacks it in the directory ~/eev/ and creates a script
+     called \"~/eev\" that starts Emacs loading eev and opening
+     the main tutorial,
+
+  4. by downloading the .tgz above and unpacking it, and then
+     running these lines yourself:
+
+       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+       (require 'eev-load)
+       (eev-mode 1)               ; optional
+
+  5. by downloading the git repo and then running this:
+
+       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+       (require 'eev-load)
+       (eev-mode 1)               ; optional
+
+
+
+See:
+  (find-eev \"eev-load.el\")
+  (find-eev \"eev-mode.el\")
+
 " pos-spec-list)))
 
 ;; (find-eev-install-intro)
@@ -4756,19 +4803,87 @@ The sexp
 
 switches to a buffer called \"*buffer name*\" and if that buffer
 does not have an associated process then it runs \"program and
-args\" there in comint mode. See:
+args\" there in comint mode.
 
-  (find-enode \"Shell Mode\" \"Comint mode\")
-  (find-elnode \"Process Buffers\")
+The sexp
+
+  (eepitch-comint \"buffer name\" \"program and args\")
+
+works as an abbreviation for:
+
+  (eepitch '(find-comintprocess \"buffer name\" \"program and args\"))
+
+Most `eepitch-<lang>' functions are defined using
+`eepitch-comint'. See:
+
+  (find-eev \"eepitch.el\" \"eepitch-langs\")
+  (find-eev \"eepitch.el\" \"find-comintprocess\")
+  (find-eev \"eepitch.el\" \"find-comintprocess\" \"defun eepitch-comint \")
+
+
+
+
+3. Test blocks
+==============
+Suppose that we have a file \"foo.py\" containing this (without
+the indentation):
+
+  def square (x):
+      return x*x
+
+  \"\"\"
+   (eepitch-python)
+   (eepitch-kill)
+   (eepitch-python)
+  execfile(\"foo.py\", globals())
+  print(square(5))
+
+  \"\"\"
+
+Python treats everything between the first and the second
+`\"\"\"'s as a multiline comment, and ignores it - but for us
+this multiline comment contains an eepitch block that starts a
+Python interpreter, then a line that loads \"foo.py\" in it, then
+a line that tests the function \"square\" defined in foo.py. We
+call the block between the `\"\"\"'s a \"test block\".
+
+A \"test block\" is a multiline comment in a Python script, a Lua
+script, or in a script in one of the other supported languages -
+we call them the \"ambient script\" and the \"ambient language\"
+- that contains at least:
+
+  1) an eepitch block that runs an interpreter for the ambient
+     language,
+
+  2) a line that loads the ambient script in that interpreter,
+
+  3) code that tests functions defined in the ambient script.
+
+We can insert a test block in the current buffer by running `M-x
+ee-insert-test-python', `M-x ee-insert-test-lua', etc... for the
+list of supported languages, see:
+
+  (find-eev \"eev-testblocks.el\" \"ee-insert-test\")
+
+These `ee-insert-test-<lang>'s use the name of the current buffer
+in the line that loads the ambient script into in the
+interpreter.
+
+The command `M-x eeit' runs `ee-insert-test', that tries to
+detect the ambient language from major mode and then runs the
+correct `ee-insert-test-<lang>' based on it. `M-x eeit' is
+currently not very smart - see the source:
+
+  (find-eev \"eev-testblocks.el\" \"ee-insert-test\")
 
 
 
 
 
+-=-=-=-=-
+Old stuff:
 
 
-   (find-enode \"Shell\")
-   (find-enode \"Terminal emulator\")
 
 1. Motivation
 =============

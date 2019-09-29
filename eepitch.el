@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep26
+;; Version:    2019sep28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -36,6 +36,7 @@
 ;; «.eepitch-shell»		(to "eepitch-shell")
 ;; «.eepitch-kill»		(to "eepitch-kill")
 ;; «.ee-expand»			(to "ee-expand")
+;; «.ee-split-and-expand»	(to "ee-split-and-expand")
 ;; «.find-comintprocess»	(to "find-comintprocess")
 ;;
 ;; «.eewrap-eepitch»		(to "eewrap-eepitch")
@@ -85,6 +86,15 @@
 ;;
 ;; that also generalizes this "send lines to an interpreter" thing.
 ;; TODO: integrate eepitch and isend-mode!
+;;
+;; See also the `run-<lang>' functions:
+;;
+;;   (find-eapropos "^run-*")
+;;   (find-eapropos "^inferior-*")
+;;   (find-enode "External Lisp" "run-lisp")
+;;   (find-enode "Executing Lisp" "Inferior Lisp mode")
+;;   (find-enode "Executing Lisp" "Inferior Scheme mode")
+;;   (find-elnode "Example Major Modes" "inferior Lisp job")
 ;;
 ;;
 ;;
@@ -475,7 +485,13 @@ scratch."
 ;;;  \___|\___|      \___/_/\_\ .__/ \__,_|_| |_|\__,_|
 ;;;                           |_|                      
 ;;
-;; «ee-expand»  (to ".ee-expand")
+;; «ee-expand»            (to ".ee-expand")
+;; «ee-split-and-expand»  (to ".ee-split-and-expand")
+;; Tests: (ee-split              "ls   ~/foo")
+;;        (ee-split-and-expand   "ls   ~/foo")
+;;        (ee-split            '("ls" "~/foo"))
+;;        (ee-split-and-expand '("ls" "~/foo"))
+;;        (ee-split-and-expand '("ls" "~/foo bar"))
 
 (defun ee-expand (fname)
 "Expand \"~\"s and \"$ENVVAR\"s in file names, but only at the beginning."
@@ -487,12 +503,19 @@ scratch."
 		 (match-string 3 fname)))
 	(t fname)))
 
-(defun ee-split (str) (if (stringp str) (split-string str "[ \t\n]+") str))
+(defun ee-split (str)
+  "If STR is a string, split it on whitespace and return the resulting list.
+If STR if a list, return it unchanged."
+  (if (stringp str)
+      (split-string str "[ \t\n]+")
+    str))
+
 (defun ee-split-and-expand (str)
 "Convert STR to a list (if it's a string) and apply `ee-expand' to each element.
 This function is used by `find-comintprocess', `find-bgprocess'
 and `find-callprocess'."
   (mapcar 'ee-expand (ee-split str)))
+
 
 
 
@@ -504,6 +527,13 @@ and `find-callprocess'."
 ;;;                                  
 ;; «find-comintprocess»  (to ".find-comintprocess")
 ;; See: (find-eepitch-intro "2.5. `find-comintprocess'")
+;;      (find-eev "eev-plinks.el" "find-comintprocess")
+;;      (find-eev "eev-plinks.el" "find-bgprocess")
+;;      (find-enode "Shell Mode" "Comint mode")
+;;      (find-enode "Terminal emulator")
+;;      (find-elnode "Process Buffers")
+;; This is a variant of `find-bgprocess' that runs the process inside
+;; an Emacs buffer.
 
 (defun find-comintprocess-ne (name &optional program-and-args)
   "Switch to the buffer named *NAME* and run the command PROGRAM-AND-ARGS there.
@@ -743,7 +773,7 @@ This is useful for for running processes that use pagers like
 ;;;                   |___/             |___/           
 ;;
 ;; «eepitch-langs»  (to ".eepitch-langs")
-;; See: (find-eepitch-intro "2.4. `(eepitch-python)'")
+;; See: (find-eepitch-intro "2.5. `find-comintprocess'")
 
 ;; Shells:
 ;; These three are commented out because they are defined above.

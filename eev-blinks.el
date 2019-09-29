@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep24
+;; Version:    2019sep27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -318,10 +318,14 @@ then go to the position specified by POS-SPEC-LIST.\n
 	 "*Packages*" pos-spec-list))
 
 ;; Test: (find-epackage 'bdo)
+;; Note: `M-x find-epackage' currently doesn't work well.
+;;  See: (find-elnode "Interactive Codes" "S" "An interned symbol")
+;;       (find-elnode "Index" "* read-no-blanks-input:")
 ;;
 (defun find-epackage (&optional pkg-desc &rest pos-spec-list)
   "Hyperlink to the output of `describe-package'."
-  (interactive "P")
+  ;; (interactive "Spackage name: ")
+  (interactive (list (intern (read-no-blanks-input "Package name: " ""))))
   (apply 'find-wottb-call '(describe-package pkg-desc)
 	 "*Help*" pos-spec-list))
 

@@ -242,9 +242,7 @@
 ;; «find-comintprocess» (to ".find-comintprocess")
 ;; `find-comintprocess-ne' and `find-comintprocess' are defined in
 ;; eepitch.el. See:
-;;   (find-eevfile "eepitch.el" "defun find-comintprocess-ne ")
-;;   (find-eevfile "eepitch.el" "defun find-comintprocess ")
-
+;;   (find-eev "eepitch.el" "find-comintprocess")
 
 
 

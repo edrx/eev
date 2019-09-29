@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar29
+;; Version:    2019sep28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -41,7 +41,6 @@
 ;; «.ee-S»			(to "ee-S")
 ;; «.ee-this-line-wrapn»	(to "ee-this-line-wrapn")
 ;; «.find-eewrap-links»		(to "find-eewrap-links")
-;; «.ee-insert-test»		(to "ee-insert-test")
 
 
 (require 'eev-template0)      ; (find-eev "eev-template0.el")
@@ -521,92 +520,6 @@ cd     {dir}"))
    pos-spec-list))
 
 ;; Test: (find-eewrap-links)
-
-
-
-
-
-;;;                  _                     _        _            _   
-;;;   ___  ___      (_)_ __  ___  ___ _ __| |_     | |_ ___  ___| |_ 
-;;;  / _ \/ _ \_____| | '_ \/ __|/ _ \ '__| __|____| __/ _ \/ __| __|
-;;; |  __/  __/_____| | | | \__ \  __/ |  | ||_____| ||  __/\__ \ |_ 
-;;;  \___|\___|     |_|_| |_|___/\___|_|   \__|     \__\___||___/\__|
-;;;                                                                  
-;; «ee-insert-test»  (to ".ee-insert-test")
-;; Insert a "test block" in a Lua/Python/Ruby/shell/Tcl script.
-
-(defalias 'eeit 'ee-insert-test)
-
-(defun ee-insert-test ()
-  "Insert an \"test block\" - an eepitch block in a multiline comment."
-  (interactive)
-  (cond ((eq major-mode 'lua-mode)    (ee-insert-test-lua))
-        ((eq major-mode 'python-mode) (ee-insert-test-python))
-        ((eq major-mode 'ruby-mode)   (ee-insert-test-ruby))
-        ((eq major-mode 'sh-mode)     (ee-insert-test-sh))
-        ((eq major-mode 'tcl-mode)    (ee-insert-test-tcl))
-	(t (error "ee-insert-test: Unsupported major mode"))))
-
-(defun ee-insert-test-lua ()
-  (interactive)
-  (insert (format "
---[[
- (eepitch-lua51)
- (eepitch-kill)
- (eepitch-lua51)
-dofile \"%s\"
-
---]]
-" (buffer-name))))
-
-(defun ee-insert-test-python ()
-  (interactive)
-  (insert (format "
-\"\"\"
- (eepitch-python)
- (eepitch-kill)
- (eepitch-python)
-execfile(\"%s\", globals())
-
-\"\"\"
-" (buffer-name))))
-
-(defun ee-insert-test-ruby ()
-  (interactive)
-  (insert (format "
-=begin
- (eepitch-ruby)
- (eepitch-kill)
- (eepitch-ruby)
-load \"%s\"
-
-=end
-" (buffer-name))))
-
-(defun ee-insert-test-sh ()
-  (interactive)
-  (insert (format "
-: <<'%%%%%%%%%%'
- (eepitch-sh)
- (eepitch-kill)
- (eepitch-sh)
-. %s
-
-%%%%%%%%%%
-" (buffer-name))))
-
-(defun ee-insert-test-tcl ()
-  (interactive)
-  (insert (format "
-set COMMENTED_OUT {
- (eepitch-tclsh)
- (eepitch-kill)
- (eepitch-tclsh)
-source %s
-
-}
-" (buffer-name))))
-
 
 
 

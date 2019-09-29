@@ -1,3 +1,20 @@
+2019-09-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eepitch-intro): rewrote some sections, added
+	a section about \"test blocks\".
+
+	* eev-testblocks.el: new file.
+	(eeit, ee-insert-test, ee-insert-test-lua)
+	(ee-insert-test-python, ee-insert-test-ruby, ee-insert-test-sh)
+	(ee-insert-test-tcl): moved all these functions from eev-wrap.el
+	to eev-testblocks.el.
+
+	* eev-load.el: load eev-testblocks.el.
+
+2019-09-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-install-intro): small changes.
+
 2019-09-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (ee-file-name-nondirectory-slash): new function.

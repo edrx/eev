@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr06
+;; Version:    2019sep29
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -139,6 +139,7 @@
 (require 'eev-codings)	       ; (find-eev "eev-codings.el")
 (require 'eev-env)	       ; (find-eev "eev-env.el")
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
+(require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
 ;;
 ;; Hyperlinks to audio, video, and IRC. Not well documented. See:
 ;;   (find-audiovideo-intro)
