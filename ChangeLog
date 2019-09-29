@@ -2,6 +2,8 @@
 
 	* eev-intro.el (find-eepitch-intro): rewrote some sections, added
 	a section about \"test blocks\".
+	(find-eev-intro): small changes.
+	(find-eev-install-intro): rewrote almost everything.
 
 	* eev-testblocks.el: new file.
 	(eeit, ee-insert-test, ee-insert-test-lua)

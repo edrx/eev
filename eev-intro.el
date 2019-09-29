@@ -1926,56 +1926,67 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-The installation instructions in
+Note: this intro contains lots of very technical information!
+If you're a beginner you should skip this - but if you use
+Windows then this page may be relevant to you:
+  http://angg.twu.net/installing-eev-on-windows.html
+
+
+
+
+1. Beginners and experts
+========================
+When I teach Emacs and eev to beginners in workshops I install
+Emacs and eev in their machines using a \"beginners setup\" like
+the one described here,
 
   (find-eev-quick-intro \"1. Installing eev\")
 
-describe a way to install eev that uses the directory \"~/eev2/\"
-for elisp files and that creates a secript \"~/eev\" that starts
-Emacs, loads eev, and runs `(find-eev-quick-intro)'. Here we
-describe several ways to install eev in other places and how to
-change your .emacs to make it load eev at startup, but lots of
-things are obsolete or incomplete in this intro - many things
-have changed since eev become an ELPA package!
+that lets them start Emacs displaying the main eev tutorial and
+with eev-mode on; then I teach them how to use `M-e' to follow
+elisp hyperlinks, and I show them that if they type just `M-j'
+they get a page with some nice & important hyperlinks at its
+header... then usually in less that five minutes - with a bit of
+help - they figure out how to navigate the documentation and how
+to do the exercises.
+
+When I show eev to long-time Emacs users I recommend them to
+install eev using an \"expert setup\" that is very
+non-instrusive, and that does not turn eev-mode on. With eev
+installed but eev-mode off all elisp hyperlinks functions are
+still available, even the ones that define \"shorter
+hyperlinks\", like the ones described in these sections,
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
+
+and people can execute sexps with `C-x C-e'. People using the
+expert setup can turn eev-mode - i.e., its keybindings - on and
+off with `M-x eev-mode', and they can go to the tutorials using
+`M-x find-eev-quick-intro', or `M-5 M-j', or `M-j'... I try to
+assume that long-time Emacsers are too busy with their other
+things, and that it's ok if they only spend 5 minutes per month
+playing with the eev tutorials.
 
 
 
 
-1. Installing eev by hand
-=========================
-If you have unpacked eev in a certain directory - for example in
-~/eev2/, with:
 
-  rm -Rv ~/eev2/
-  mkdir  ~/eev2/
-  cd     ~/eev2/
-  rm -fv eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
-  tar -xvzf eev2.tgz
+2. The expert setup
+===================
+The \"expert setup\" described above corresponds to downloading
+eev and then running something equivalent to this:
 
-then you can try it with:
+  (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+  (require 'eev-load)
 
-  (add-to-list 'load-path \"~/eev2/\")
-  (require 'eev-load)                 ; (find-eev \"eev-load.el\")
-  (eev-mode 1)                        ; (find-eev \"eev-mode.el\")
+If you installed eev with `M-x list-packages' - see:
 
-and you can install it permanently by copying the three lines
-above to your .emacs. Note that eev-mode.el has this commentary:
+  (find-enode \"Packages\")
 
-  ;; Turning on eev-mode simply activates the eev-mode-map keymap, and
-  ;; adds an \"eev\" to the mode line to remind you this. Turning off
-  ;; eev-mode deactivates the keymap and the reminder. 
+then the line that adjusts the load-path should not be needed.
 
-If you prefer to start with eev-mode off, omit the
-line `(eev-mode 1)' above or change it to `(eev-mode 0)'. To
-toggle eev-mode on and off, use `M-x eev'. The keybindings in
-eev-mode are listed here:
-
-  (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
-
-Years ago eev was a very invasive package that changed several
-global settings; now it's the opposite. If you load eev the only
-things that happen are:
+Here's what `(require 'eev-load)' does:
 
   1) Several functions and variables become defined. They ALL
      have the prefixes \"find-\", \"ee\", \"code-\" or \"br\",
@@ -1992,64 +2003,107 @@ things that happen are:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
 
+Eev has very few autoloads, so eev-load.el loads all source files
+except for eev-beginner.el. See:
+
+  (find-eev \"eev-load.el\")
+  (find-eev \"eev-load.el\" \"autoloads\")
 
 
 
 
-2. Running `(find-eev-install-links)'
-=====================================
-The shell commands in
+3. The beginner setup
+=====================
+The \"beginner setup\" corresponds to the expert setup plus this:
+
+  (eev-beginner)
+
+where `eev-beginner' turns eev-mode on and runs:
+
+  (find-eev-quick-intro)
+
+See:
+
+  (find-eev \"eev-beginner.el\")
+  
+If you have installed eev by following these instructions
 
   (find-eev-quick-intro \"1. Installing eev\")
 
-and the previous section can be obtained by running
-`find-eev-install-links' with these arguments:
+then the script \"~/eev\" will run `(eev-beginner)' for you.
 
-  (find-eev-install-links \"~/eev2/\" \"~/eev\")
-
-Note that `(find-eev-install-links)' is somehow similar to this,
-
-  (find-eev-quick-intro \"7.3. `find-latex-links'\")
-
-and follows most of the same conventions.
-
-If you want to install eev in a more permanent place the default
-way is to run `(find-eev-install-links)' with these arguments,
-
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
-
-and execute its eepitch block.
+In the beginner setup for Windows people have to execute `M-x
+eev-beginner' by hand when they start Emacs.
 
 
 
 
-3. Changing your .emacs
-=======================
+4. `eev-mode'
+=============
+Turning on eev-mode simply activates the eev-mode-map keymap, and
+adds an \"eev\" to the mode line to remind you this. Turning off
+eev-mode deactivates the keymap and the reminder.
+
 See:
 
-  (find-elnode \"Init File\" \".emacs\")
-  (find-elnode \"Init Examples\")
-  (find-elnode \"Init File Examples\")
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"\" 2 \".emacs\")
-
-
-
-3.1. Adding directories to the load-path
-----------------------------------------
-
-3.2. `package-initialize'
--------------------------
-  (find-es \"emacs\" \"package-initialize\")
-
-3.3. Keeping both the git and the ELPA versions
------------------------------------------------
+  (find-eev \"eev-mode.el\")
+  (find-eev \"eev-mode.el\" \"eev-mode\")
+  (find-efunctiondescr        'eev-mode)
+  (find-eminormodekeymapdescr 'eev-mode)
+  (find-efunctiondescr        'eev-avadj-mode)
+  (find-eminormodekeymapdescr 'eev-avadj-mode)
 
 
 
 
-4. Using the git repository
-===========================
-Eev has a git repository at:
+5. Ways to download eev
+=======================
+These are the current ways to download and install eev:
+
+  1. as an Emacs package, with `M-x list-packages';
+
+  2. as an Emacs package, by downloading a file named
+     eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
+     links like these ones,
+
+       http://elpa.gnu.org/packages/eev.html
+       http://elpa.gnu.org/packages/eev-20190929.tar
+       http://angg.twu.net/eev-current/
+       http://angg.twu.net/eev-current/eev-20190929.tar
+
+     and then running `M-x package-install-file';
+
+  3. by using the script in section 1, that downloads a .tgz from
+
+       http://angg.twu.net/eev-current/eev2.tgz ,
+
+     unpacks it in the directory ~/eev/ and creates a script
+     called \"~/eev\" that starts Emacs loading eev and opening
+     the main tutorial,
+
+  4. by downloading the .tgz above and unpacking it, and then
+     running these lines yourself:
+
+       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+       (require 'eev-load)
+       (eev-mode 1)               ; optional
+
+  5. by downloading the git repo from
+
+       https://github.com/edrx/eev.git
+
+     and then running this:
+
+       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+       (require 'eev-load)
+       (eev-mode 1)               ; optional
+
+
+
+
+5.1. Using the git repository
+-----------------------------
+The git repository for eev is at:
 
   https://github.com/edrx/eev.git
 
@@ -2058,18 +2112,18 @@ Try this:
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-rm -Rfv /tmp/eev2
-mkdir   /tmp/eev2/
-cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
-cd      /tmp/eev2/
-# (find-gitk \"/tmp/eev2/\")
-{
-  echo '#!/bin/sh'
-  echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
-} > /tmp/eev
-chmod 755 /tmp/eev
+  rm -Rfv /tmp/eev2
+  mkdir   /tmp/eev2/
+  cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
+  cd      /tmp/eev2/
+  # (find-gitk \"/tmp/eev2/\")
+  {
+    echo '#!/bin/sh'
+    echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+  } > /tmp/eev
+  chmod 755 /tmp/eev
 
-and run the script in /tmp/eev if you want to.
+  /tmp/eev
 
 Note the \"cd ... && git clone URL .\". This is needed because if
 we don't specify a directory after the URL in \"git clone\" then
@@ -2079,8 +2133,46 @@ incompatible with our convention of creating a script called
 
 
 
+5.2. Installation quirks
+------------------------
+There were a couple of situations around may/2019 which I was
+helping friends who had installed eev on Windows with `M-x
+list-packages' and we found out that we had to add
+a `(package-initialize)' to their \".emacs\"s to make things
+work... I still need to understand this. See:
 
-5. Eev as an ELPA/MELPA package
+  (find-es \"emacs\" \"package-initialize\")
+
+If you have installed both an eev from ELPA and an eev from the
+.tgz or from the git repo then one of them will be found first in
+the load-path. Check with one.
+
+
+
+
+
+6. `find-eev-install-links'
+===========================
+There is this,
+
+  (find-eev-install-links)
+
+but I sort of forgot it, and I haven't updated it recently...
+note that it is somehow similar to this,
+
+  (find-eev-quick-intro \"7.5. `find-latex-links'\")
+
+and follows most of the same conventions. See:
+
+  (find-elnode \"Init File\" \".emacs\")
+  (find-elnode \"Init Examples\")
+  (find-elnode \"Init File Examples\")
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"\" 2 \".emacs\")
+
+
+
+
+7. Eev as an ELPA/MELPA package
 ===============================
 In march 2019 I prepared a first version of an emacs package for
 eev to make it installable by `M-x list-packages' - see:
@@ -2115,7 +2207,7 @@ quirks!!! Its ELPA page is here:
 
 
 
-5.1. Byte-compilation
+7.1. Byte-compilation
 ---------------------
 In standard packages all elisp files should be byte-compilable
 unless there is a very strong reason - but all eev source files
@@ -2203,7 +2295,7 @@ Here is an excerpt of one of my e-mails to Stefan:
 
 
 
-5.2. Dynamic binding
+7.2. Dynamic binding
 --------------------
 Dependency on dynamic binding should be avoided - see:
 
@@ -2219,7 +2311,7 @@ in its source file:
 
 
 
-5.3. Autoloads
+7.3. Autoloads
 --------------
 I decided to mark only one function in eev as autoloadable -
 instead of hundreds - and this is very non-standard. See the
@@ -2231,48 +2323,6 @@ and also:
 
   (find-eev \"README\")
   (find-eev \"eev-beginner.el\")
-
-
-
-6. Updates, sep. 2019
----------------------
-These are the current ways to download and install eev:
-
-  1. as an Emacs package, with `M-x list-packages';
-
-  2. as an Emacs package, by downloading a file named
-     eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
-     links like these ones,
-
-       http://elpa.gnu.org/packages/eev.html
-       http://elpa.gnu.org/packages/eev-20190902.tar
-       http://angg.twu.net/eev-current/
-       http://angg.twu.net/eev-current/eev-20190902.tar
-
-     and then running `M-x package-install-file';
-
-  3. by using the script in section 1, that downloads a .tgz from
-
-       http://angg.twu.net/eev-current/eev2.tgz ,
-
-     unpacks it in the directory ~/eev/ and creates a script
-     called \"~/eev\" that starts Emacs loading eev and opening
-     the main tutorial,
-
-  4. by downloading the .tgz above and unpacking it, and then
-     running these lines yourself:
-
-       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
-       (require 'eev-load)
-       (eev-mode 1)               ; optional
-
-  5. by downloading the git repo and then running this:
-
-       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
-       (require 'eev-load)
-       (eev-mode 1)               ; optional
-
-
 
 See:
   (find-eev \"eev-load.el\")
@@ -2417,10 +2467,18 @@ things that happen are:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
 
+TODO: update the text above! I rewrote most
+of `(find-eev-install-intro)' in 2019sep29... See:
+
+  (find-eev-install-intro \"1. Beginners and experts\")
+  (find-eev-install-intro \"2. The expert setup\" \"Here's what\")
+  (find-eev-install-intro \"4. `eev-mode'\")
 
 
 
-2. The keybindings
+
+
+3. The keybindings
 ==================
 `eev-mode' defines its own meanings for lots of meta-shift-letter
 key combinations - which are not normally used by Emacs - and,
@@ -2434,6 +2492,7 @@ besides that, only for:
 
 For the full lists of keybindings, see:
 
+  (find-eev \"eev-mode.el\" \"eev-mode\")
   (find-efunctiondescr        'eev-mode)
   (find-eminormodekeymapdescr 'eev-mode)
   (find-efunctiondescr        'eev-avadj-mode)
@@ -4477,6 +4536,10 @@ It is meant as both a tutorial (for eepitch) and a sandbox.
 
 This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
+
+This (old) video shows a demo like the one in section 1.3:
+  https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
+The relevant part is from t=16s to t=25s.
 
 In this intro we suppose that the reader knows what is a terminal
 and what is a shell. In Unix-like systems the terminal and the
