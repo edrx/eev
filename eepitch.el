@@ -864,6 +864,7 @@ This is useful for for running processes that use pagers like
 ;; JavaScript
 ;; MozRepl is a Javascript REPL in a running Mozilla browser.
 ;; See: https://github.com/bard/mozrepl/wiki/tutorial
+(defun eepitch-nodejs () (interactive) (eepitch-comint "nodejs" "nodejs"))
 (defun eepitch-smjs () (interactive) (eepitch-comint "smjs" "smjs"))
 (defun eepitch-mozrepl () (interactive)
   (eepitch-comint "mozrepl" "telnet localhost 4242"))

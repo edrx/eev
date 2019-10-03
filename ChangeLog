@@ -1,7 +1,26 @@
+2019-10-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-brxxx-intro): added several new sections.
+
+	* eev-pdflike.el (brpdfl, brpdfd): new functions.
+
+2019-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-psne-intro): small changes.
+
+2019-10-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-nodejs): new function (thx @Lunks).
+
+2019-09-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-multiwindow-intro): small changes.
+	(find-eev-intro): rearranged the order or the list.
+
 2019-09-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eepitch-intro): rewrote some sections, added
-	a section about \"test blocks\".
+	a section about "test blocks".
 	(find-eev-intro): small changes.
 	(find-eev-install-intro): rewrote almost everything.
 

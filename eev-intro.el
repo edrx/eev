@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep29
+;; Version:    2019oct03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1951,11 +1951,11 @@ help - they figure out how to navigate the documentation and how
 to do the exercises.
 
 When I show eev to long-time Emacs users I recommend them to
-install eev using an \"expert setup\" that is very
-non-instrusive, and that does not turn eev-mode on. With eev
-installed but eev-mode off all elisp hyperlinks functions are
-still available, even the ones that define \"shorter
-hyperlinks\", like the ones described in these sections,
+install eev using an \"expert setup\" that is very non-intrusive,
+and that does not turn eev-mode on. With eev installed but
+eev-mode off all elisp hyperlinks functions are still available,
+even the ones that define \"shorter hyperlinks\", like the ones
+described in these sections,
 
   (find-eev-quick-intro \"9. Shorter hyperlinks\")
   (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
@@ -2067,9 +2067,9 @@ These are the current ways to download and install eev:
      links like these ones,
 
        http://elpa.gnu.org/packages/eev.html
-       http://elpa.gnu.org/packages/eev-20190929.tar
+       http://elpa.gnu.org/packages/eev-20191003.tar
        http://angg.twu.net/eev-current/
-       http://angg.twu.net/eev-current/eev-20190929.tar
+       http://angg.twu.net/eev-current/eev-20191003.tar
 
      and then running `M-x package-install-file';
 
@@ -2373,34 +2373,34 @@ recommended reading order. These are the basic ones:
    0. (find-eev-quick-intro)
    1. (find-emacs-keys-intro)
    2. (find-eev-intro)
-   3. (find-eev-install-intro)
-   4. (find-here-links-intro)
-   5. (find-refining-intro)
-   6. (find-pdf-like-intro)
+   3. (find-here-links-intro)
+   4. (find-refining-intro)
+   5. (find-pdf-like-intro)
+   6. (find-eepitch-intro)
+   7. (find-audiovideo-intro)
+   8. (find-rcirc-intro)
+   9. (find-eev-install-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-   7. (find-escripts-intro)
-   8. (find-links-conv-intro)
+  10. (find-escripts-intro)
+  11. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-   9. (find-eval-intro)
-  10. (find-links-intro)
-  11. (find-brxxx-intro)
-  12. (find-eepitch-intro)
-  13. (find-wrap-intro)
-  14. (find-eejump-intro)
-  15. (find-anchors-intro)
-  16. (find-code-c-d-intro)
-  17. (find-psne-intro)
+  12. (find-eval-intro)
+  13. (find-links-intro)
+  14. (find-brxxx-intro)
+  15. (find-wrap-intro)
+  16. (find-eejump-intro)
+  17. (find-anchors-intro)
+  18. (find-code-c-d-intro)
+  19. (find-psne-intro)
 
 These are etcs:
 
-  18. (find-multiwindow-intro)
-  19. (find-audiovideo-intro)
-  20. (find-rcirc-intro)
+  20. (find-multiwindow-intro)
   21. (find-templates-intro)
   22. (find-videos-intro)
 
@@ -6456,16 +6456,21 @@ that page of the book!
 \(Re)generate: (find-brxxx-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-brxxx-intro\")
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
+              (find-eev-intro)
+              (find-psne-intro)
+              (find-pdf-like-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-It expands an idea that was mentioned briefly at:
+This intro expands an idea that was mentioned briefly at:
   (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+and combines it with the idea of \"local copies\" from:
+  (find-psne-intro \"the second way\")
+  (find-psne-intro \"1. Local copies of files from the internet\")
+  (find-psne-intro \"5. `browse-url' and friends\")
+
 
 
 
@@ -6473,10 +6478,176 @@ It expands an idea that was mentioned briefly at:
 ===============
 We saw in
 
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+
+that eev defines some functions with names starting with `br'
+that are similar to `browse-url', and we saw in
+
+  (find-psne-intro \"the second way\")
+  (find-psne-intro \"1. Local copies of files from the internet\")
+  (find-psne-intro \"3. The new way: M-x brep\")
+
+how to create local copies of files; after downloading a local
+copy of, say,
+
+  http://www.gnu.org/software/emacs/emacs-paper.html
+
+into
+
+  $S/http/www.gnu.org/software/emacs/emacs-paper.html
+
+you can open the local copy by running `M-x browse-url', `M-x brg'
+or `M-x brff' on the \"file:///\" URL below,
+
+  file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
+
+but note that the \"file:///\" URL has an \"edrx\" - my username
+- in the middle of the file name, so this only works without
+changes if you use \"edrx\" as your username...
+
+
+
+
+2. The `l' variants
+===================
+After creating `brg' and `brff' I created variants of them that
+would open the local copy of the URL at point instead of the
+original URL... or, more precisely, that would open the result of
+applying `ee-url-to-local-url' to the original URL. Try:
+
+  (ee-url-to-local-url
+   \"http://www.gnu.org/software/emacs/emacs-paper.html\")
+
+These variants were called `brgl' and `brffl' - I used the
+convention that the suffix `l' meant \"open the local copy\".
+
+
+
+3. The `d' variants
+===================
+After creating `brgl' and `brffl' I realized that it would be
+easy to create variants of them that would work in dired mode.
+If we visit a directory - for example, this one,
+
+  (find-fline \"$S/http/www.gnu.org/software/emacs/\")
+
+and we put the point in a line with an HTML on it - for example,
+on the line with the \"emacs-paper.html\", then typing `M-x brgd'
+there converts the full pathname of the file at point to a
+\"file:///\" URL, like this,
+
+                          $S/http/www.gnu.org/software/emacs/emacs-paper.html
+  -> file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
+
+and opens the resulting \"file:///\" url with `brg' or `brff'.
+
+These variants were called `brgd' and `brffd' - I used the
+convention that the suffix `d' meant \"open in Dired\".
+
+
+
+
+4. `brxxx'-functions
+====================
+`browse-url' has several variants, with names like
+`browse-url-firefox' and `browse-url-chromium', that open the URL
+at point using specific programs. See:
+
+  (find-epackage 'browse-url)
+  (find-enode \"Browse-URL\")
+
+We say that `brg', `brgl' and `brgd' are \"`brxxx'-functions\"
+with \"base function\" `find-googlechrome'; `brgl' is the `l' (or
+\"local\") variant, and `brgd' is the `d' (or \"dired\") variant;
+`brg' is sometimes called the \"remote\" variant.
+
+
+
+
+5. `code-brurl'
+===============
+Remember that `code-c-d' generates lisp code and executes it, and
+that `find-code-c-d' generates the same lisp code as `code-c-d'
+but displays it instead of executing it; this was explained, with
+examples, here:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+Eev has a function called `code-brurl' that works like `code-c-d'
+and that creates several `brxxx'-functions with the same base
+function. To understand what the `code-brurl' sexp below does,
+
+  ;; From:
+  ;; (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
+  ;; (find-eev \"eev-brxxx.el\" \"code-brxxxs\" \"brg\")
+
+  (code-brurl 'find-googlechrome  :remote 'brg  :local 'brgl  :dired 'brgd)
+
+We run:
+
+  (find-code-brurl 'find-googlechrome  :remote 'brg  :local 'brgl  :dired 'brgd)
+
+Note that the base function in this example is
+`find-googlechrome', that is a function that expects a URL.
+
+
+
+
+6. `code-brfile'
+================
+We saw how to create `brxxx'-functions using `find-googlechrome'
+as the base function; remember that `find-googlechrome' is a
+function that expects a URL.
+
+If we download a local copy of a PDF, like we did here,
+
+  (find-pdf-like-intro \"2. Preparation\")
+
+      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+then it makes sense to have a `brxxx'-function, called `brpdfl',
+that we can run on the \"https://\" URL above, and that will open
+the \"$S/https/\" file corresponding to the URL using
+`find-pdf-page'... but `find-pdf-page' is a function that expects
+a filename, not a URL, so `code-brurl' wouldn't work...
+
+What we want can be done by the sexp below:
+
+  ;; From:
+  ;; (find-eev \"eev-pdflike.el\" \"code-brxxxs\")
+  ;; (find-eev \"eev-pdflike.el\" \"code-brxxxs\" \"brpdfl\")
+  (code-brfile 'find-pdf-page  :local 'brpdfl  :dired 'brpdfd)
+
+To understand what it does, run:
+
+  (find-code-brfile 'find-pdf-page  :local 'brpdfl  :dired 'brpdfd)
+
+and read the docstrings.
+
+Note that in the previous section we had a \":remote 'brg\", that
+defined a remote variant. It doesn't make sense to apply
+`find-pdf-page' to a remote URL, so we don't have a \":remote\"
+here.
+
+
+
+
+Old stuff:
+(TODO: revise it!)
+
+
+
+
+7. Old introduction
+===================
+We saw in
+
   (find-psne-intro)
   (find-psne-intro \"M-x brep\")
   (find-psne-intro \"M-x brfl\")
-  (find-psne-intro \"`browse-url' and friends\")
+  (find-psne-intro \"5. `browse-url' and friends\")
 
 that we can use `M-x brep' to download local copies of files from
 the internet, and that `M-x brfl' on a URL runs `find-fline' on
@@ -6498,7 +6669,7 @@ brxxx-functions from base functions.
 
 
 
-2. A first example
+8. A first example
 ==================
 Let's define two trivial base functions, one that expects a URL,
 and another one that expects a file name:
@@ -6556,7 +6727,7 @@ to that URL.
 
 
 
-3. The conversions
+9. The conversions
 ==================
 One underlying idea behind all this is that we have two
 conversion functions, one from URLs to file names, and another
@@ -6584,8 +6755,8 @@ execute:
 
 
 
-4. Naming conventions for brxxx-functions
-=========================================
+10. Naming conventions for brxxx-functions
+==========================================
 By convention, each name for a brxxx-function is composed of a
 prefix, a stem, and a suffix. The prefix is always \"br\", the
 stem is a mnemonic for the base function, and the suffix is
@@ -6624,8 +6795,8 @@ In our example with `foo-url' and `foo-file' we had:
 
 
 
-5. Calling `code-brurl' and `code-brfile'
-=========================================
+11. Calling `code-brurl' and `code-brfile'
+==========================================
 
   (code-brurl '<U-function>
                    :remote 'br<stem>   :local 'br<stem>l   :dired 'br<stem>d)
@@ -6648,8 +6819,8 @@ curious about the inspirations behind it, here they are:
 
 
 
-6. The dired variation
-======================
+12. The dired variation
+=======================
 
 In dired mode each line corresponds to a file
 
@@ -6687,10 +6858,21 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-It expands an idea that was mentioned briefly at:
-  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
-  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\" \"local copies\")
+
+Note: this intro is being rewritten!
+We mentioned briefly in
+
+  (find-pdf-like-intro \"2. Preparation\")
+
+that there are two \"natural\" ways to store a local copy of a
+file from the internet... here we will discuss the second way, in
+which the conversion from URL to a local file name works like
+this:
+
+      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+
 
 
 
@@ -7571,7 +7753,7 @@ and the letter \"E\" is a variant of \"e\" that uses
 variant of `find-3ee' that restarts both targets. Let's adapt
 this example,
 
-  (find-eepitch-intro \"Other targets\")
+  (find-eepitch-intro \"3. Other targets\")
 
 to make it show the two eepitch targets at once in a three-window
 settings. It becomes:
@@ -7681,6 +7863,10 @@ moves down, to create tutorials for Emacs modes. An example:
 
 10. A tutorial for Info mode
 ============================
+Note: this is obsolete! It was superseded by:
+
+  (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
+
 Here's a mini-tutorial for Info mode, demonstrating how to
 navigate in Info using the usual movement keys, plus TAB,
 <backtab>, RET, l (last), u (up), n (next), p (prev), q (quit),
