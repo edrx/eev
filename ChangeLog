@@ -1,3 +1,22 @@
+2019-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-esubstitutecommandkeys): new function.
+	(ee-find-eejumps-header): small changes.
+
+	* eev-mode.el (eev-mode-help): small changes.
+
+2019-10-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-audiovideo-intro): new section: "4.3. A
+	demo".
+
+2019-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-efunction-links): added two links that
+	refer to `load-history'.
+
+	* eev-intro.el (find-brxxx-intro): small changes.
+
 2019-10-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-brxxx-intro): added several new sections.

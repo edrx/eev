@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep23
+;; Version:    2019oct14
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -884,6 +884,8 @@ Example:
     (if (>= (length hash) 11)
 	(substring hash -11))))
 
+;; Test: (find-youtubedl-links nil nil "K6LmZ0A1s9U")
+;;
 (defun find-youtubedl-links (&optional dir title hash ext- stem &rest rest)
   "Visit a temporary buffer containing hyperlinks for youtube-dl."
   (interactive)

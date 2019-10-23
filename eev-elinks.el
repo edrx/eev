@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep27
+;; Version:    2019oct04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -260,6 +260,8 @@ This is an internal function used by `find-efunction-links' and
     (where-is ',f)
     (symbol-file ',f 'defun)
     (find-fline (symbol-file ',f 'defun))
+    (find-epp (assoc (symbol-file ',f 'defun) load-history))
+    (find-estring (mapconcat 'identity (mapcar 'car load-history) "\n"))
     (find-estring (documentation ',f))
     (find-estring (documentation ',f t))
     (describe-function ',f)

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019oct03
+;; Version:    2019oct15
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1774,13 +1774,13 @@ Some other keys that create buffers with elisp hyperlinks:
 2. Key sequences and how to abort them
 ======================================
 See: (find-enode \"Keys\" \"key sequence\")
-     (find-enode \"User Input\" \"`Control-a'\" \"usually written `C-a'\")
+     (find-enode \"User Input\" \"Control-a\" \"C-a\")
      (find-enode \"User Input\" \"<META> key\")
      (find-enode \"Completion\" \"<TAB>\")
      (find-enode \"Minibuffer History\" \"<UP>\" \"<DOWN>\")
 
 <ESC> <ESC> <ESC>                (find-enode \"Quitting\")
-C-g   keyboard-quit              (find-enode \"Quitting\" \"`C-g'\")
+C-g   keyboard-quit              (find-enode \"Quitting\" \"C-g\")
 M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
 
 More about the minibuffer:       (find-enode \"Minibuffer\")
@@ -1793,6 +1793,7 @@ More about modes:                (find-enode \"Major Modes\")
 
 See also: (find-enode \"Mode Line\" \"(MAJOR MINOR)\")
           (find-enode \"Mode Line\" \" MAJOR is the name\")
+          (find-enode \"Mode Line\" \" MINOR is a list\")
           (find-enode \"Mode Line\" \" BUF \")
           (find-enode \"Mode Line\" \" BUF \" \"name of the buffer\")
 
@@ -1961,12 +1962,21 @@ described in these sections,
   (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
 
 and people can execute sexps with `C-x C-e'. People using the
-expert setup can turn eev-mode - i.e., its keybindings - on and
-off with `M-x eev-mode', and they can go to the tutorials using
-`M-x find-eev-quick-intro', or `M-5 M-j', or `M-j'... I try to
-assume that long-time Emacsers are too busy with their other
-things, and that it's ok if they only spend 5 minutes per month
-playing with the eev tutorials.
+expert setup can turn eev-mode on and off - i.e., activate and
+disactivate its keybindings - with `M-x eev-mode', and when
+`eev-mode' is on they can go to the main tutorials with:
+
+  `M-5 M-j'  -  (find-eev-quick-intro)
+  `M-2 M-j'  -  (find-emacs-keys-intro)
+
+or by following the links at the header of the page displayed by
+`M-j'. Try:
+
+      `M-j'  -  (find-eejumps)
+
+I try to assume that long-time Emacsers are too busy with their
+other things, and that it's ok if they only spend 5 minutes per
+month playing with the eev tutorials.
 
 
 
@@ -2403,21 +2413,22 @@ These are etcs:
   20. (find-multiwindow-intro)
   21. (find-templates-intro)
   22. (find-videos-intro)
+  23. (find-what-sexps-can-do-intro)
 
 These ones explain advanced features that require extra setup:
 
-  23. (find-prepared-intro)
-  24. (find-bounded-intro)
-  25. (find-channels-intro)
+  24. (find-prepared-intro)
+  25. (find-bounded-intro)
+  26. (find-channels-intro)
 
 This one is used in a video:
 
-  26. (find-three-main-keys-intro)
+  27. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  27. (find-emacs-intro)
-  28. (find-defun-intro)
+  28. (find-emacs-intro)
+  29. (find-defun-intro)
 
 Item 22 is an index of the (old) video tutorials, with scripts
 for downloading local copies of them and links to important
@@ -6512,14 +6523,14 @@ changes if you use \"edrx\" as your username...
 ===================
 After creating `brg' and `brff' I created variants of them that
 would open the local copy of the URL at point instead of the
-original URL... or, more precisely, that would open the result of
+original URL - or, more precisely, that would open the result of
 applying `ee-url-to-local-url' to the original URL. Try:
 
   (ee-url-to-local-url
    \"http://www.gnu.org/software/emacs/emacs-paper.html\")
 
 These variants were called `brgl' and `brffl' - I used the
-convention that the suffix `l' meant \"open the local copy\".
+convention that the suffix `l' meant \"use the local copy\".
 
 
 
@@ -6532,17 +6543,16 @@ If we visit a directory - for example, this one,
   (find-fline \"$S/http/www.gnu.org/software/emacs/\")
 
 and we put the point in a line with an HTML on it - for example,
-on the line with the \"emacs-paper.html\", then typing `M-x brgd'
-there converts the full pathname of the file at point to a
+on the line with the \"emacs-paper.html\" - then typing `M-x
+brgd' there converts the full pathname of the file at point to a
 \"file:///\" URL, like this,
 
                           $S/http/www.gnu.org/software/emacs/emacs-paper.html
   -> file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
 
-and opens the resulting \"file:///\" url with `brg' or `brff'.
+and opens the resulting \"file:///\" url with `brg'.
 
-These variants were called `brgd' and `brffd' - I used the
-convention that the suffix `d' meant \"open in Dired\".
+The suffix `d' means \"use the file in this line in dired\".
 
 
 
@@ -7262,6 +7272,55 @@ audio or video file, starting from some given time offset. The
 default is always what is stored in `ee-audiovideo-last', and
 each call to a short hyperlink of the form `find-xxxaudio' or
 `find-xxxvideo' sets that variable.
+
+
+
+4.3. A demo
+-----------
+Here's some code to test `find-video' and `code-video'. Make sure
+that you have mpv installed, and run this escript block:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  # http://www.youtube.com/watch?v=K6LmZ0A1s9U
+  # http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+  mkdir ~/eev-videos/
+  cd    ~/eev-videos/
+  wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+
+It will download a copy of a video from youtube; I prepared the
+.mp4 by running \"youtube-dl -f 18\" on the youtube URL and
+renaming the result.
+
+Then try:
+
+  (find-video \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (code-video \"punchandjudyvideo\" \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (find-punchandjudyvideo)
+  (find-punchandjudyvideo \"0:00\")
+  (find-punchandjudyvideo \"0:10\" \"calls the baby\")
+  (find-punchandjudyvideo \"0:40\" \"where's the baby\")
+  (find-punchandjudyvideo \"1:04\" \"right position\")
+  (find-punchandjudyvideo \"1:17\" \"he will sing the baby to sleep\")
+  (find-punchandjudyvideo \"1:33\" \"1-2-3\")
+  (find-punchandjudyvideo \"1:48\" \"baby downstairs\")
+  (find-punchandjudyvideo \"3:12\" \"slaps\")
+  (find-punchandjudyvideo \"3:50\" \"1-2-3\")
+  (find-punchandjudyvideo \"4:34\" \"you keep an eye on mr Punch\")
+  (find-punchandjudyvideo \"4:46\" \"hat\")
+  (find-punchandjudyvideo \"5:03\" \"hat\")
+  (find-punchandjudyvideo \"5:25\" \"did you see him?\")
+  (find-punchandjudyvideo \"5:55\" \"clown\")
+  (find-punchandjudyvideo \"6:14\" \"slaps\")
+  (find-punchandjudyvideo \"6:52\" \"sausages\")
+  (find-punchandjudyvideo \"7:24\" \"crocodile\")
+  (find-punchandjudyvideo \"8:07\" \"crocodile + sausages\")
+  (find-punchandjudyvideo \"8:32\" \"another scene\")
+  (find-punchandjudyvideo \"8:39\" \"fight\")
+  (find-punchandjudyvideo \"9:03\" \"clown\")
+  (find-punchandjudyvideo \"9:45\" \"mr punch\")
+
 
 
 
