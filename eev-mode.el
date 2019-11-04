@@ -251,6 +251,8 @@ Commands to generate pages with lists of hyperlinks:
   \\[find-eface-links] -- hyperlinks to a face (default: face at point)
   \\[find-debpkg-links] -- hyperlinks about a Debian package
   \\[find-ecolor-links]   -- hyperlinks to a color
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+  (find-here-links-intro)
 Commands to edit hyperlinks:
   \\[ee-duplicate-this-line] -- duplicate this line
   \\[ee-yank-pos-spec] -- yank into pos-spec-list

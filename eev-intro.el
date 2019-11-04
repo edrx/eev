@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019oct15
+;; Version:    2019nov04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -797,6 +797,7 @@ is called \"eepitch\" - uses `<F8>' and `M-T'. Note that it is
 For more details see:
 
   (find-eepitch-intro)
+  (find-wrap-intro \"2. <M-T>: produce an eepitch block\")
 
 
 
@@ -2412,27 +2413,28 @@ These are etcs:
 
   20. (find-multiwindow-intro)
   21. (find-templates-intro)
-  22. (find-videos-intro)
-  23. (find-what-sexps-can-do-intro)
+  22. (find-org-intro)
+  23. (find-videos-intro)
+  24. (find-what-sexps-can-do-intro)
 
 These ones explain advanced features that require extra setup:
 
-  24. (find-prepared-intro)
-  25. (find-bounded-intro)
-  26. (find-channels-intro)
+  25. (find-prepared-intro)
+  26. (find-bounded-intro)
+  27. (find-channels-intro)
 
 This one is used in a video:
 
-  27. (find-three-main-keys-intro)
+  28. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  28. (find-emacs-intro)
-  29. (find-defun-intro)
+  29. (find-emacs-intro)
+  30. (find-defun-intro)
 
-Item 22 is an index of the (old) video tutorials, with scripts
-for downloading local copies of them and links to important
-positions in the videos.
+Item 23 is an index of old video tutorials, with scripts for
+downloading local copies of them and links to important positions
+in the videos.
 
 
 
@@ -9820,46 +9822,138 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Google Tech talk by Carsten Dominik (2008)
-==========================================
-http://orgmode.org/talks.html
-http://orgmode.org/worg/org-tutorials/org-screencasts/org-mode-google-tech-talk.html
-http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-taking and project planning
-\(find-youtubedl-links \"/sda5/videos/\" \"Emacs_Org-mode_-_a_system_for_note-taking_and_project_planning\" \"oJTwQvgfgMM\" \".flv\" \"carsten2008\")
-                     (ee-youtubedl-hash-to-fname \"oJTwQvgfgMM\")
-\(setq ee-carsten2008 (ee-youtubedl-hash-to-fname \"oJTwQvgfgMM\"))
-\(code-mplayer \"carsten2008\" ee-carsten2008)
-\(find-carsten2008 \"0:00\")
+Eev does some things similar to Org, but using a different
+approach and different design principles. This sandboxed tutorial
+is a _first attempt_ to show to Org users how to use Org and eev
+at the same time, in the same files (or buffers).
 
-\(eev-avadj-mode 1)
-\(find-carsten2008 t)
+Note: I wrote this after giving a presentation about eev in the
+EmacsConf 2019 and getting some help from Org users there (mainly
+Amin Bandali). Link:
 
-1:20 Carsten Start
-1:50 History
-2:15 Working with Text Files
-3:58 Notes (not tasks) based project planning
-5:50 Outline mode - fixing
-9:56 Structure Editing
-11:00 Note taking other supports
-13:35 Meta data Intro
-14:57 tags
-15:26 Timeplanning
-15:53 Properties
-16:02 Meta data propagation
-16:49 Special Meta entry interfaces
-17:55 DateTime interface
-18:24 Column view
-19:20 Capture with remember
-23:02 Collect and Display
-23:52 Sparse tree
-25:47 Agenda view
-27:27 Exporting and publishing
-29:05 Tables
-31:34 Calc
-32:44 Radio tables
-34:53 Context sensitive keys
-38:13 How is org used
-40:55 Evolved Software software
+  http://angg.twu.net/emacsconf2019.html
+
+
+
+
+1. Preparation
+==============
+Run these sexps:
+
+  (code-c-d \"org\" (ee-locate-library \"org.el\") \"org\" :gz)
+  (require 'org)
+  (require 'ob-sh)
+  ;; or: (require 'ob-shell)
+  (require 'ob-python)
+
+
+
+2. Toggling org-mode on and off
+===============================
+Use these sexps,
+
+  (org-mode)
+  (fundamental-mode)
+
+or `M-x org-mode' and `M-x fundamental-mode'.
+
+
+
+3. Comment blocks
+=================
+If you are using an org file that is meant for exporting you can
+mark as comments the more eev-ish parts in it, like this...
+
+# (find-orgnode \"Comment lines\")
+# (find-orgnode \"Exporting\")
+
+#+BEGIN_COMMENT
+# Run the eepitch block below to download a copy of my messy
+# notes on org. See:
+# (find-eev-quick-intro \"6. Controlling shell-like programs\")
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd /tmp/
+rm -fv org.e
+wget http://angg.twu.net/e/org.e
+
+#+END_COMMENT
+
+
+
+
+4. Running code from my org.e
+=============================
+The code in comments in the previous section downloads a local
+copy of my executable notes (i.e., my \"e-scripts\") on Org. Run
+it, and compare:
+
+# http://angg.twu.net/e/org.e.html#git
+# (find-anchor \"/tmp/org.e\" \"git\")
+
+The URL above points to my notes on downloading Org from git and
+compiling its docs. The sexp hyperlinks below it lets you execute
+these notes.
+
+
+
+
+5. Evaluating source blocks
+===========================
+You can execute a source block in Org and display its results
+with `C-c C-c'. See:
+
+# (find-orgnode \"Working With Source Code\")
+# (find-orgnode \"Evaluating code blocks\")
+
+Try it here:
+
+#+BEGIN_SRC sh
+seq 200 204
+#+END_SRC
+
+Compare that with:
+
+# (find-sh \"seq 200 204\")
+
+and compare
+
+#+BEGIN_SRC python
+def square (x):
+    return x*x
+
+print(square(5))
+#+END_SRC
+
+with:
+
+#+BEGIN_COMMENT
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+def square (x):
+    return x*x
+
+print(square(5))
+
+#+END_COMMENT
+
+
+
+
+5. Sectioning
+=============
+Not yet!
+How do I mark a section as \"don't export this\"?
+
+  (find-orgnode \"Headlines\")
+  (find-orgnode \"Global and local cycling\")
+  (find-efunctiondescr 'org-mode \"TAB\" \"org-cycle\")
+  (find-efunctiondescr 'org-shifttab)
+
+
 
 " pos-spec-list)))
 
