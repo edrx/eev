@@ -1,3 +1,106 @@
+2019-11-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-org-intro): rewrote everything.
+	(find-eev-intro): added `find-org-intro' to the index.
+
+2019-10-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-mode.el (eev-mode-help): small changes.
+
+2019-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-brxxx.el (brwget): new function.
+
+2019-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-esubstitutecommandkeys): new function.
+	(ee-find-eejumps-header): small changes.
+
+	* eev-mode.el (eev-mode-help): small changes.
+
+2019-10-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-audiovideo-intro): new section: "4.3. A
+	demo".
+
+2019-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-efunction-links): added two links that
+	refer to `load-history'.
+
+	* eev-intro.el (find-brxxx-intro): small changes.
+
+2019-10-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-brxxx-intro): added several new sections.
+
+	* eev-pdflike.el (brpdfl, brpdfd): new functions.
+
+2019-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-psne-intro): small changes.
+
+2019-10-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-nodejs): new function (thx @Lunks).
+
+2019-09-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-multiwindow-intro): small changes.
+	(find-eev-intro): rearranged the order or the list.
+
+2019-09-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eepitch-intro): rewrote some sections, added
+	a section about "test blocks".
+	(find-eev-intro): small changes.
+	(find-eev-install-intro): rewrote almost everything.
+
+	* eev-testblocks.el: new file.
+	(eeit, ee-insert-test, ee-insert-test-lua)
+	(ee-insert-test-python, ee-insert-test-ruby, ee-insert-test-sh)
+	(ee-insert-test-tcl): moved all these functions from eev-wrap.el
+	to eev-testblocks.el.
+
+	* eev-load.el: load eev-testblocks.el.
+
+2019-09-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-install-intro): small changes.
+
+2019-09-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-file-name-nondirectory-slash): new function.
+	(ee-file-expand-wildcards-slash): new function.
+	(ee-find-epackage-links0): new function.
+	(find-epackage-links): new function.
+	(ee-find-epackage-links): use `ee-find-epackage-links0'.
+
+	* eev-edit.el (ee-tag-re-utf-8): new variable.
+	(ee-tag-re): use `ee-tag-re-utf-8'.
+
+2019-09-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): small changes.
+
+	* eepitch.el: rewrote lots of comments.
+
+2019-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-emacs-keys-intro): added links about the mode
+	line.
+
+2019-09-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-find-eejumps-header): small changes in the
+	header.
+
+	* eev-intro.el (find-eepitch-intro): rewrote most of the text.
+
+2019-09-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-debpkg-links): added links to Sid.
+
 2019-08-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-edit.el (ee-copy-this-line-to-kill-ring): use

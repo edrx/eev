@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug15
+;; Version:    2019oct16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -212,7 +212,7 @@ and: (find-eval-intro \"`M-k'\")"
 (defvar eev-mode-lighter " eev")
 (defvar eev-mode-help "Toggle eev mode, i.e, activate or deactivate the `eev-mode-map' keymap.
 With a prefix argument ARG, turn eev-mode on if positive, else off.
-See: (find-eev-intro)
+See: (find-emacs-keys-intro \"1. Basic keys (eev)\")
 \\<eev-mode-map>
 Commands to follow hyperlinks:
   \\[ee-eval-sexp-eol] -- go to the end of line, then do \\[ee-eval-last-sexp]
@@ -244,12 +244,6 @@ Commands to convert the current line into hyperlinks:
     See: (find-wrap-intro)
 Commands to generate pages with lists of hyperlinks:
   \\[find-here-links]  -- \"hyperlinks to here\", which supersedes all these:
-    \\[find-file-links]   -- hyperlinks to the current file
-    \\[find-find-eintro-or-einfo-links] -- hyperlinks to the current intro, or Info node
-    \\[find-grep-links] -- hyperlinks to `find-xxxgrep' sexps
-    \\[find-manpage-links] -- hyperlinks to a manpage (ask for name)
-    \\[find-last-manpage-links]   -- hyperlinks to a manpage (being viewed)
-    See: (find-links-intro \"`find-here-links'\")
   \\[find-efunction-links] -- hyperlinks to an Emacs function
   \\[find-ekey-links] -- hyperlinks to a key sequence and to the function
              associated to it
@@ -257,6 +251,8 @@ Commands to generate pages with lists of hyperlinks:
   \\[find-eface-links] -- hyperlinks to a face (default: face at point)
   \\[find-debpkg-links] -- hyperlinks about a Debian package
   \\[find-ecolor-links]   -- hyperlinks to a color
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+  (find-here-links-intro)
 Commands to edit hyperlinks:
   \\[ee-duplicate-this-line] -- duplicate this line
   \\[ee-yank-pos-spec] -- yank into pos-spec-list
@@ -290,6 +286,14 @@ Other commands:
 
 ;; Deleted code:
 ;;
+;;  \\[find-here-links]  -- \"hyperlinks to here\", which supersedes all these:
+;;    \\[find-file-links]   -- hyperlinks to the current file
+;;    \\[find-find-eintro-or-einfo-links] -- hyperlinks to the current intro, or Info node
+;;    \\[find-grep-links] -- hyperlinks to `find-xxxgrep' sexps
+;;    \\[find-manpage-links] -- hyperlinks to a manpage (ask for name)
+;;    \\[find-last-manpage-links]   -- hyperlinks to a manpage (being viewed)
+;;    See: (find-links-intro \"`find-here-links'\")
+
 ;; Run the default bounded action (usually `eev-bounded'):
 ;; (define-key eev-mode-map [f3]   'eeb-default)
 ;; Steppers:

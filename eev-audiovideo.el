@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug12
+;; Version:    2019sep29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -37,6 +37,7 @@
 ;;
 ;; but that needs to be rewritten...
 
+;; «.eev-avadj-mode»	(to "eev-avadj-mode")
 ;; «.find-mplayer»	(to "find-mplayer")
 ;; «.find-termplayer»	(to "find-termplayer")
 ;; «.find-mpv-video»	(to "find-mpv-video")
@@ -140,13 +141,6 @@
   (list ee-audiovideo-last time))
 
 
-;;;                                  _  _                           _      
-;;;   __ _     __   __      __ _  __| |(_)      _ __ ___   ___   __| | ___ 
-;;;  / _` |____\ \ / /____ / _` |/ _` || |_____| '_ ` _ \ / _ \ / _` |/ _ \
-;;; | (_| |_____\ V /_____| (_| | (_| || |_____| | | | | | (_) | (_| |  __/
-;;;  \__,_|      \_/       \__,_|\__,_|/ |     |_| |_| |_|\___/ \__,_|\___|
-;;;                                  |__/                                  
-;;
 (defun ee-time-from-bol-rerun (&optional arg)
   "Play the current audio or video starting at '(ee-time-from-bol)'.
 With a prefix of 0 just display what would be done. See:
@@ -159,6 +153,18 @@ With a prefix of 0 just display what would be done. See:
 	     (eval sexp)
 	     (message "%S" sexp)))))
 
+
+
+;;;                       _  _                           _      
+;;;   __ ___   ____ _  __| |(_)      _ __ ___   ___   __| | ___ 
+;;;  / _` \ \ / / _` |/ _` || |_____| '_ ` _ \ / _ \ / _` |/ _ \
+;;; | (_| |\ V / (_| | (_| || |_____| | | | | | (_) | (_| |  __/
+;;;  \__,_| \_/ \__,_|\__,_|/ |     |_| |_| |_|\___/ \__,_|\___|
+;;;                       |__/                                  
+;;
+;; «eev-avadj-mode»  (to ".eev-avadj-mode")
+;; See: (find-audiovideo-intro "2. `eev-avadj-mode'")
+;;
 (setq eev-avadj-mode-map (make-sparse-keymap))
 (define-key eev-avadj-mode-map "\M--" 'ee-time-from-bol-shift-)
 (define-key eev-avadj-mode-map "\M-=" 'ee-time-from-bol-shift)
@@ -176,17 +182,6 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;; (eev-avadj-mode 1)
 ;; 1:15 foo
 
-;; (find-eev "eev-mode.el")
-;; (find-code-video "thecompanyofwolves" "/sda5/torrents/The_Company_of_Wolves/The_Company_Of_Wolves.avi")
-;;      (code-video "thecompanyofwolves" "/sda5/torrents/The_Company_of_Wolves/The_Company_Of_Wolves.avi")
-
-;; 0:00 (ee-time-from-bol-shift -100)
-;; 0:00 (ee-time-from-bol-shift -10)
-;; 1:23 (if (ee-time-from-bol) (replace-match "abcd" t t)) 
-;; 1:23 (if (ee-time-from-bol) (save-excursion (replace-match "abcd" t t)))
-
-;; Ideally `M-1 M-x find-chomskyvideo' should use `ee-time-from-bol'...
-;; (find-elnode "Index" "* replace-match:")
 
 
 

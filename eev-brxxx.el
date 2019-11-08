@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar29
+;; Version:    2019oct27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -313,7 +313,9 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;;  \___\___/ \__,_|\___|     |_.__/|_|  /_/\_\/_/\_\/_/\_\___/
 ;;;                                                             
 ;; «code-brxxxs» (to ".code-brxxxs")
-;; See: (find-eev "eev-pdflike.el" "code-brxxxs")
+;; See: (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
+;;      (find-eev-quick-intro "3.1. Non-elisp hyperlinks" "brg")
+;;      (find-eev "eev-pdflike.el" "code-brxxxs")
 ;;      (find-eev "eev-blinks.el" "find-w3m")
 ;;      (find-efile "net/browse-url.el")
 
@@ -328,6 +330,8 @@ This should be made smarter - file:// urls should be returned unchanged."
 (code-brurl 'find-firefox          :remote 'brff :local 'brffl :dired 'brffd)
 (code-brurl 'find-googlechrome     :remote 'brg  :local 'brgl  :dired 'brgd)
 (code-brurl 'find-w3m              :remote 'brw  :local 'brwl  :dired 'brwd)
+
+(code-brurl 'find-wget             :remote 'brwget)
 
 (code-brfile 'find-fline                         :local 'brfl)
 

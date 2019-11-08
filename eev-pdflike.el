@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jul11
+;; Version:    2019oct03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -525,8 +525,10 @@ may want to put here code that cleans up that page information.")
 
 
 ;; «code-brxxxs» (to ".code-brxxxs")
-
+;; See: (find-brxxx-intro "6. `code-brfile'")
+(code-brfile 'find-pdf-page    :local 'brpdfl      :dired 'brpdfd)
 (code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
+
 (code-brfile 'find-djvu-text   :local 'brdjvutextl :dired 'brdjvutextd)
 (code-brfile 'find-xpdf-page   :local 'brxpdfl     :dired 'brxpdfd)
 (code-brfile 'find-evince-page :local 'brevincel   :dired 'brevinced)

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug16
+;; Version:    2019nov04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -273,6 +273,7 @@ More intros:  (find-emacs-keys-intro)
               (find-eev-intro)
               (find-here-links-intro)
               (find-refining-intro)
+              (find-eepitch-intro)
               (find-pdf-like-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
@@ -793,9 +794,10 @@ and pasting. The module of eev that controls shell-like programs - it
 is called \"eepitch\" - uses `<F8>' and `M-T'. Note that it is
 `alt-shift-t', to not interfere with Emacs's `M-t'.
 
-The sections below were adapted from:
+For more details see:
 
-  (find-eepitch-intro \"The main key: <F8>\")
+  (find-eepitch-intro)
+  (find-wrap-intro \"2. <M-T>: produce an eepitch block\")
 
 
 
@@ -1773,13 +1775,13 @@ Some other keys that create buffers with elisp hyperlinks:
 2. Key sequences and how to abort them
 ======================================
 See: (find-enode \"Keys\" \"key sequence\")
-     (find-enode \"User Input\" \"`Control-a'\" \"usually written `C-a'\")
+     (find-enode \"User Input\" \"Control-a\" \"C-a\")
      (find-enode \"User Input\" \"<META> key\")
      (find-enode \"Completion\" \"<TAB>\")
      (find-enode \"Minibuffer History\" \"<UP>\" \"<DOWN>\")
 
 <ESC> <ESC> <ESC>                (find-enode \"Quitting\")
-C-g   keyboard-quit              (find-enode \"Quitting\" \"`C-g'\")
+C-g   keyboard-quit              (find-enode \"Quitting\" \"C-g\")
 M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
 
 More about the minibuffer:       (find-enode \"Minibuffer\")
@@ -1789,6 +1791,12 @@ More about TAB - for completion: (find-enode \"Completion\")
 More about modes:                (find-enode \"Major Modes\")
                                  (find-enode \"Minor Modes\")
                                  (find-enode \"Dired\")
+
+See also: (find-enode \"Mode Line\" \"(MAJOR MINOR)\")
+          (find-enode \"Mode Line\" \" MAJOR is the name\")
+          (find-enode \"Mode Line\" \" MINOR is a list\")
+          (find-enode \"Mode Line\" \" BUF \")
+          (find-enode \"Mode Line\" \" BUF \" \"name of the buffer\")
 
 
 
@@ -1920,56 +1928,76 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-The installation instructions in
+Note: this intro contains lots of very technical information!
+If you're a beginner you should skip this - but if you use
+Windows then this page may be relevant to you:
+  http://angg.twu.net/installing-eev-on-windows.html
+
+
+
+
+1. Beginners and experts
+========================
+When I teach Emacs and eev to beginners in workshops I install
+Emacs and eev in their machines using a \"beginners setup\" like
+the one described here,
 
   (find-eev-quick-intro \"1. Installing eev\")
 
-describe a way to install eev that uses the directory \"~/eev2/\"
-for elisp files and that creates a secript \"~/eev\" that starts
-Emacs, loads eev, and runs `(find-eev-quick-intro)'. Here we
-describe several ways to install eev in other places and how to
-change your .emacs to make it load eev at startup, but lots of
-things are obsolete or incomplete in this intro - many things
-have changed since eev become an ELPA package!
+that lets them start Emacs displaying the main eev tutorial and
+with eev-mode on; then I teach them how to use `M-e' to follow
+elisp hyperlinks, and I show them that if they type just `M-j'
+they get a page with some nice & important hyperlinks at its
+header... then usually in less that five minutes - with a bit of
+help - they figure out how to navigate the documentation and how
+to do the exercises.
+
+When I show eev to long-time Emacs users I recommend them to
+install eev using an \"expert setup\" that is very non-intrusive,
+and that does not turn eev-mode on. With eev installed but
+eev-mode off all elisp hyperlinks functions are still available,
+even the ones that define \"shorter hyperlinks\", like the ones
+described in these sections,
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
+
+and people can execute sexps with `C-x C-e'. People using the
+expert setup can turn eev-mode on and off - i.e., activate and
+disactivate its keybindings - with `M-x eev-mode', and when
+`eev-mode' is on they can go to the main tutorials with:
+
+  `M-5 M-j'  -  (find-eev-quick-intro)
+  `M-2 M-j'  -  (find-emacs-keys-intro)
+
+or by following the links at the header of the page displayed by
+`M-j'. Try:
+
+      `M-j'  -  (find-eejumps)
+
+I try to assume that long-time Emacsers are too busy with their
+other things, and that it's ok if they only spend 5 minutes per
+month playing with the eev tutorials.
 
 
 
 
-1. Installing eev by hand
-=========================
-If you have unpacked eev in a certain directory - for example in
-~/eev2/, with:
 
-  rm -Rv ~/eev2/
-  mkdir  ~/eev2/
-  cd     ~/eev2/
-  rm -fv eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
-  tar -xvzf eev2.tgz
+2. The expert setup
+===================
+The \"expert setup\" described above corresponds to downloading
+eev and then running something equivalent to this:
 
-then you can try it with:
+  (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+  (require 'eev-load)
 
-  (add-to-list 'load-path \"~/eev2/\")
-  (require 'eev-load)                 ; (find-eev \"eev-load.el\")
-  (eev-mode 1)                        ; (find-eev \"eev-mode.el\")
+If you installed eev with `M-x list-packages' - see:
 
-and you can install it permanently by copying the three lines
-above to your .emacs. Note that eev-mode.el has this commentary:
+  (find-enode \"Packages\")
 
-  ;; Turning on eev-mode simply activates the eev-mode-map keymap, and
-  ;; adds an \"eev\" to the mode line to remind you this. Turning off
-  ;; eev-mode deactivates the keymap and the reminder. 
+then the line that adjusts the load-path should not be needed.
 
-If you prefer to start with eev-mode off, omit the
-line `(eev-mode 1)' above or change it to `(eev-mode 0)'. To
-toggle eev-mode on and off, use `M-x eev'. The keybindings in
-eev-mode are listed here:
-
-  (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
-
-Years ago eev was a very invasive package that changed several
-global settings; now it's the opposite. If you load eev the only
-things that happen are:
+Here's what `(require 'eev-load)' does:
 
   1) Several functions and variables become defined. They ALL
      have the prefixes \"find-\", \"ee\", \"code-\" or \"br\",
@@ -1986,64 +2014,107 @@ things that happen are:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
 
+Eev has very few autoloads, so eev-load.el loads all source files
+except for eev-beginner.el. See:
+
+  (find-eev \"eev-load.el\")
+  (find-eev \"eev-load.el\" \"autoloads\")
 
 
 
 
-2. Running `(find-eev-install-links)'
-=====================================
-The shell commands in
+3. The beginner setup
+=====================
+The \"beginner setup\" corresponds to the expert setup plus this:
+
+  (eev-beginner)
+
+where `eev-beginner' turns eev-mode on and runs:
+
+  (find-eev-quick-intro)
+
+See:
+
+  (find-eev \"eev-beginner.el\")
+  
+If you have installed eev by following these instructions
 
   (find-eev-quick-intro \"1. Installing eev\")
 
-and the previous section can be obtained by running
-`find-eev-install-links' with these arguments:
+then the script \"~/eev\" will run `(eev-beginner)' for you.
 
-  (find-eev-install-links \"~/eev2/\" \"~/eev\")
-
-Note that `(find-eev-install-links)' is somehow similar to this,
-
-  (find-eev-quick-intro \"7.3. `find-latex-links'\")
-
-and follows most of the same conventions.
-
-If you want to install eev in a more permanent place the default
-way is to run `(find-eev-install-links)' with these arguments,
-
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"#\")
-
-and execute its eepitch block.
+In the beginner setup for Windows people have to execute `M-x
+eev-beginner' by hand when they start Emacs.
 
 
 
 
-3. Changing your .emacs
-=======================
+4. `eev-mode'
+=============
+Turning on eev-mode simply activates the eev-mode-map keymap, and
+adds an \"eev\" to the mode line to remind you this. Turning off
+eev-mode deactivates the keymap and the reminder.
+
 See:
 
-  (find-elnode \"Init File\" \".emacs\")
-  (find-elnode \"Init Examples\")
-  (find-elnode \"Init File Examples\")
-  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"\" 2 \".emacs\")
-
-
-
-3.1. Adding directories to the load-path
-----------------------------------------
-
-3.2. `package-initialize'
--------------------------
-  (find-es \"emacs\" \"package-initialize\")
-
-3.3. Keeping both the git and the ELPA versions
------------------------------------------------
+  (find-eev \"eev-mode.el\")
+  (find-eev \"eev-mode.el\" \"eev-mode\")
+  (find-efunctiondescr        'eev-mode)
+  (find-eminormodekeymapdescr 'eev-mode)
+  (find-efunctiondescr        'eev-avadj-mode)
+  (find-eminormodekeymapdescr 'eev-avadj-mode)
 
 
 
 
-4. Using the git repository
-===========================
-Eev has a git repository at:
+5. Ways to download eev
+=======================
+These are the current ways to download and install eev:
+
+  1. as an Emacs package, with `M-x list-packages';
+
+  2. as an Emacs package, by downloading a file named
+     eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
+     links like these ones,
+
+       http://elpa.gnu.org/packages/eev.html
+       http://elpa.gnu.org/packages/eev-20191003.tar
+       http://angg.twu.net/eev-current/
+       http://angg.twu.net/eev-current/eev-20191003.tar
+
+     and then running `M-x package-install-file';
+
+  3. by using the script in section 1, that downloads a .tgz from
+
+       http://angg.twu.net/eev-current/eev2.tgz ,
+
+     unpacks it in the directory ~/eev/ and creates a script
+     called \"~/eev\" that starts Emacs loading eev and opening
+     the main tutorial,
+
+  4. by downloading the .tgz above and unpacking it, and then
+     running these lines yourself:
+
+       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+       (require 'eev-load)
+       (eev-mode 1)               ; optional
+
+  5. by downloading the git repo from
+
+       https://github.com/edrx/eev.git
+
+     and then running this:
+
+       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
+       (require 'eev-load)
+       (eev-mode 1)               ; optional
+
+
+
+
+5.1. Using the git repository
+-----------------------------
+The git repository for eev is at:
 
   https://github.com/edrx/eev.git
 
@@ -2052,18 +2123,18 @@ Try this:
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-rm -Rfv /tmp/eev2
-mkdir   /tmp/eev2/
-cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
-cd      /tmp/eev2/
-# (find-gitk \"/tmp/eev2/\")
-{
-  echo '#!/bin/sh'
-  echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
-} > /tmp/eev
-chmod 755 /tmp/eev
+  rm -Rfv /tmp/eev2
+  mkdir   /tmp/eev2/
+  cd      /tmp/eev2/ && git clone https://github.com/edrx/eev.git .
+  cd      /tmp/eev2/
+  # (find-gitk \"/tmp/eev2/\")
+  {
+    echo '#!/bin/sh'
+    echo 'cd /tmp/eev2/ && emacs -l eev-readme.el --eval=\"(find-eev-quick-intro)\"'
+  } > /tmp/eev
+  chmod 755 /tmp/eev
 
-and run the script in /tmp/eev if you want to.
+  /tmp/eev
 
 Note the \"cd ... && git clone URL .\". This is needed because if
 we don't specify a directory after the URL in \"git clone\" then
@@ -2073,8 +2144,46 @@ incompatible with our convention of creating a script called
 
 
 
+5.2. Installation quirks
+------------------------
+There were a couple of situations around may/2019 which I was
+helping friends who had installed eev on Windows with `M-x
+list-packages' and we found out that we had to add
+a `(package-initialize)' to their \".emacs\"s to make things
+work... I still need to understand this. See:
 
-5. Eev as an ELPA/MELPA package
+  (find-es \"emacs\" \"package-initialize\")
+
+If you have installed both an eev from ELPA and an eev from the
+.tgz or from the git repo then one of them will be found first in
+the load-path. Check with one.
+
+
+
+
+
+6. `find-eev-install-links'
+===========================
+There is this,
+
+  (find-eev-install-links)
+
+but I sort of forgot it, and I haven't updated it recently...
+note that it is somehow similar to this,
+
+  (find-eev-quick-intro \"7.5. `find-latex-links'\")
+
+and follows most of the same conventions. See:
+
+  (find-elnode \"Init File\" \".emacs\")
+  (find-elnode \"Init Examples\")
+  (find-elnode \"Init File Examples\")
+  (find-eev-install-links \"~/eev2/\" \"~/eev\" \"\" 2 \".emacs\")
+
+
+
+
+7. Eev as an ELPA/MELPA package
 ===============================
 In march 2019 I prepared a first version of an emacs package for
 eev to make it installable by `M-x list-packages' - see:
@@ -2109,7 +2218,7 @@ quirks!!! Its ELPA page is here:
 
 
 
-5.1. Byte-compilation
+7.1. Byte-compilation
 ---------------------
 In standard packages all elisp files should be byte-compilable
 unless there is a very strong reason - but all eev source files
@@ -2197,7 +2306,7 @@ Here is an excerpt of one of my e-mails to Stefan:
 
 
 
-5.2. Dynamic binding
+7.2. Dynamic binding
 --------------------
 Dependency on dynamic binding should be avoided - see:
 
@@ -2213,7 +2322,7 @@ in its source file:
 
 
 
-5.3. Autoloads
+7.3. Autoloads
 --------------
 I decided to mark only one function in eev as autoloadable -
 instead of hundreds - and this is very non-standard. See the
@@ -2225,6 +2334,11 @@ and also:
 
   (find-eev \"README\")
   (find-eev \"eev-beginner.el\")
+
+See:
+  (find-eev \"eev-load.el\")
+  (find-eev \"eev-mode.el\")
+
 " pos-spec-list)))
 
 ;; (find-eev-install-intro)
@@ -2270,55 +2384,57 @@ recommended reading order. These are the basic ones:
    0. (find-eev-quick-intro)
    1. (find-emacs-keys-intro)
    2. (find-eev-intro)
-   3. (find-eev-install-intro)
-   4. (find-here-links-intro)
-   5. (find-refining-intro)
-   6. (find-pdf-like-intro)
+   3. (find-here-links-intro)
+   4. (find-refining-intro)
+   5. (find-pdf-like-intro)
+   6. (find-eepitch-intro)
+   7. (find-audiovideo-intro)
+   8. (find-rcirc-intro)
+   9. (find-eev-install-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-   7. (find-escripts-intro)
-   8. (find-links-conv-intro)
+  10. (find-escripts-intro)
+  11. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-   9. (find-eval-intro)
-  10. (find-links-intro)
-  11. (find-brxxx-intro)
-  12. (find-eepitch-intro)
-  13. (find-wrap-intro)
-  14. (find-eejump-intro)
-  15. (find-anchors-intro)
-  16. (find-code-c-d-intro)
-  17. (find-psne-intro)
+  12. (find-eval-intro)
+  13. (find-links-intro)
+  14. (find-brxxx-intro)
+  15. (find-wrap-intro)
+  16. (find-eejump-intro)
+  17. (find-anchors-intro)
+  18. (find-code-c-d-intro)
+  19. (find-psne-intro)
 
 These are etcs:
 
-  18. (find-multiwindow-intro)
-  19. (find-audiovideo-intro)
-  20. (find-rcirc-intro)
+  20. (find-multiwindow-intro)
   21. (find-templates-intro)
-  22. (find-videos-intro)
+  22. (find-org-intro)
+  23. (find-videos-intro)
+  24. (find-what-sexps-can-do-intro)
 
 These ones explain advanced features that require extra setup:
 
-  23. (find-prepared-intro)
-  24. (find-bounded-intro)
-  25. (find-channels-intro)
+  25. (find-prepared-intro)
+  26. (find-bounded-intro)
+  27. (find-channels-intro)
 
 This one is used in a video:
 
-  26. (find-three-main-keys-intro)
+  28. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  27. (find-emacs-intro)
-  28. (find-defun-intro)
+  29. (find-emacs-intro)
+  30. (find-defun-intro)
 
-Item 22 is an index of the (old) video tutorials, with scripts
-for downloading local copies of them and links to important
-positions in the videos.
+Item 23 is an index of old video tutorials, with scripts for
+downloading local copies of them and links to important positions
+in the videos.
 
 
 
@@ -2364,10 +2480,18 @@ things that happen are:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
 
+TODO: update the text above! I rewrote most
+of `(find-eev-install-intro)' in 2019sep29... See:
+
+  (find-eev-install-intro \"1. Beginners and experts\")
+  (find-eev-install-intro \"2. The expert setup\" \"Here's what\")
+  (find-eev-install-intro \"4. `eev-mode'\")
 
 
 
-2. The keybindings
+
+
+3. The keybindings
 ==================
 `eev-mode' defines its own meanings for lots of meta-shift-letter
 key combinations - which are not normally used by Emacs - and,
@@ -2381,6 +2505,7 @@ besides that, only for:
 
 For the full lists of keybindings, see:
 
+  (find-eev \"eev-mode.el\" \"eev-mode\")
   (find-efunctiondescr        'eev-mode)
   (find-eminormodekeymapdescr 'eev-mode)
   (find-efunctiondescr        'eev-avadj-mode)
@@ -4421,15 +4546,423 @@ It is meant as both a tutorial (for eepitch) and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-Ideally it should _complement_ the material in:
+
+This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
 
+This (old) video shows a demo like the one in section 1.3:
+  https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
+The relevant part is from t=16s to t=25s.
+
+In this intro we suppose that the reader knows what is a terminal
+and what is a shell. In Unix-like systems the terminal and the
+shell are clearly different programs, and it's easy to understand
+how a terminal can be used to run other programs that are not
+shells (e.g., a Python interpreter; see \"REPL\" below); in
+Windows most people don't know that the \"DOS window\" is in fact
+a Windows console running cmd.exe. Some links:
+  https://en.wikipedia.org/wiki/Pipeline_(Unix)
+  https://en.wikipedia.org/wiki/Unix_philosophy
+  https://en.wikipedia.org/wiki/Unix-like
+  https://en.wikipedia.org/wiki/Shell_(computing)
+  https://en.wikipedia.org/wiki/Shell_(computing)#Text_(CLI)_shells
+  https://en.wikipedia.org/wiki/Shell_script
+  https://en.wikipedia.org/wiki/Command-line_interface
+  https://en.wikipedia.org/wiki/Command-line_interface#Command-line_interpreter
+  https://en.wikipedia.org/wiki/Read-eval-print_loop (\"REPL\")
+  https://en.wikipedia.org/wiki/Terminal_emulator
+  https://en.wikipedia.org/wiki/Text_terminal
+  https://en.wikipedia.org/wiki/MS-DOS#Windows_command-line_interface
+  https://en.wikipedia.org/wiki/Windows_Console
+  https://en.wikipedia.org/wiki/Cmd.exe
 
 
 
-The motivation for eepitch: taking notes and redoing
-====================================================
+
+
+1. Some demos
+=============
+Let's start with the simplest case. If you put the cursor on the
+first line that starts with a red star below and type the key
+<f8> six times,
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo \"We are at: $PWD\"
+cd /tmp/
+echo \"We changed to: $(pwd)\"
+
+you will notice that each <f8> does something with the current
+line and move the cursor to the next line; first three <f8>s - on
+the lines that start with red stars - create a window setting
+like this,
+
+   ________________________________
+  |                |               |
+  |     notes      |    target     |
+  |     buffer     |    buffer     |
+  |  (this intro)  |  (\"*shell*\")  |
+  |                |               |
+  |________________|_______________|
+  
+and the last three <f8>s - on \"non-red star lines\" - send the
+lines
+
+  echo \"We are at: $PWD\"
+  cd /tmp/
+  echo \"We changed to: $(pwd)\"
+
+to the \"target buffer\", that in this case is the buffer with a
+terminal running a shell; the shell behaves exactly is if the the
+user had typed those three lines at its prompt.
+
+
+
+
+1.1. Another target
+-------------------
+If you put the cursor at the first red star line below and type
+<f8> six times you will get something very similar to the example
+above,
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+1 + 2
+print(\"Hello \" +
+      \"world\")
+
+but now the window setting will be like this:
+
+   ________________________________
+  |                |               |
+  |     notes      |     target    |
+  |     buffer     |     buffer    |
+  |  (this intro)  |  (\"*python*\") |
+  |                |               |
+  |________________|_______________|
+
+and the target buffer will be called \"*python*\", and it
+contains a terminal running a Python interpreter.
+
+
+
+
+1.2. Two targets
+----------------
+The demo below uses an advanced feature - the function
+`find-3EE', explained at:
+
+  (find-multiwindow-intro \"find-3EE\")
+
+to create a 3-window setup like this:
+
+   _______________________
+  |          |            |
+  |          |  *shell*   |
+  |  notes   |____________|
+  |  buffer  |            |
+  |          |  *python*  |
+  |__________|____________|
+
+Some non-red star lines in it send the current line to the
+\"*shell*\" buffer, and some send the current line to the
+\"*python*\" buffer. The red star lines with \"(eepitch-shell)\"
+set the target to \"*shell*\", and the red star lines with with
+\"(eepitch-python)\" set the target to \"*python*\". Try it! Put
+the cursor on the first red star line below, then type <f8>
+twelve times:
+
+ (find-3EE '(eepitch-shell) '(eepitch-python))
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
+1.3. Two targets, two windows
+-----------------------------
+The demo below is similar to the one with three windows in the
+previous section, but it uses just two windows - and the window
+at the right alternates between \"*shell*\" and \"*python*\":
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+echo Hello... > /tmp/o
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+ (eepitch-shell)
+echo ...and bye >> /tmp/o
+
+ (eepitch-python)
+print(open(\"/tmp/o\").read())
+
+
+
+
+
+
+2. How <f8> works
+=================
+The key <f8> works in one way when the cursor is on a line that
+starts with a red star - it executes everything at the right of
+the \"\" as Lisp code, and then moves down - and in a totally
+different way on non-red star lines: on non-red star lines it
+makes sure that the target buffer is being displayed, then sends
+the current line to the target buffer \"as if the user had typed
+it\", then moves down.
+
+
+
+
+2.1. Eepitch blocks
+-------------------
+A block of three red star lines like
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+or
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+
+is called an \"eepitch block\". The _final effect_ of typing <f8>
+thrice on an eepitch block like this
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+is easy to describe: after the third <f8> we get a window setting
+like this,
+
+   ________________________
+  |          |             |
+  |  notes   |    target   |
+  |  buffer  |    buffer   |
+  |          | (\"*shell*\") |
+  |          |             |
+  |__________|_____________|
+
+where the target buffer is running a _new_ shell...
+
+
+
+2.2. `(eepitch-kill)'
+---------------------
+The effect of running <f8> on a line like
+
+ (eepitch-kill)
+
+is to kill the current target. More precisely, `(eepitch-kill)'
+kills a buffer with the name stored in the variable
+`eepitch-buffer-name', if a buffer with that name exists; in the
+examples above the target buffer names are always either
+\"*shell*\" or \"*python*\". If we are in a window setting like
+this and the target is \"*shell*\"
+
+   ________________________
+  |          |             |
+  |  notes   |    target   |
+  |  buffer  |    buffer   |
+  |          | (\"*shell*\") |
+  |          |             |
+  |__________|_____________|
+
+and we run `(eepitch-kill)' the window setting becomes this:
+
+   _____________________
+  |          |          |
+  |  notes   |   some   |
+  |  buffer  |  other   |
+  |          |  buffer  |
+  |          |          |
+  |__________|__________|
+
+which may be confusing...
+
+
+
+
+2.2. `(eepitch-shell)'
+----------------------
+The effect of running <f8> on a line like
+
+ (eepitch-shell)
+
+can be *roughly* described as:
+
+  a) Set the name of the target buffer to \"*shell*\".
+
+  b) If the target buffer does not exist, create it - by
+     running `(shell)'.
+
+  c) If the target buffer is not being display then display it -
+     by creating a two-window setting with the target buffer at
+     the right.
+
+This is a simplification, though... the sexp
+
+  (eepitch-shell)
+
+runs this,
+
+  (eepitch '(shell))
+
+and the name of the target buffer is obtained from the
+sexp `(shell)' by running it in a certain way.
+
+
+
+
+2.3. `eepitch'
+--------------
+The documentation for `eepitch' says:
+
+  (eepitch CODE)
+
+  Set up a target for eepitch and make sure it is displayed in
+  another window.
+  The argument CODE must be a \"shell-like sexp\", i.e., one that
+  when evaluated always switches to a buffer with a fixed name,
+  and when that buffer does not exists it creates it.
+
+For example, running `(shell)' switches to a buffer whose name is
+\"*shell*\"; the name of the target buffer can obtained
+from the sexp `(shell)' by running this:
+
+  (save-window-excursion
+    (shell)
+    (setq eepitch-buffer-name
+	  (buffer-name (current-buffer))))
+
+
+
+
+2.4. `(eepitch-python)'
+-----------------------
+The effect of running <f8> on a line like
+
+ (eepitch-python)
+
+is very similar to `(eepitch-shell)', but it uses \"*python*\" as
+the name of the target buffer. `(eepitch-python)' is defined as:
+
+  (eepitch '(find-comintprocess \"python\" \"python\"))
+
+
+
+
+2.5. `find-comintprocess'
+-------------------------
+The sexp
+
+  (find-comintprocess \"buffer name\" \"program and args\")
+
+switches to a buffer called \"*buffer name*\" and if that buffer
+does not have an associated process then it runs \"program and
+args\" there in comint mode.
+
+The sexp
+
+  (eepitch-comint \"buffer name\" \"program and args\")
+
+works as an abbreviation for:
+
+  (eepitch '(find-comintprocess \"buffer name\" \"program and args\"))
+
+Most `eepitch-<lang>' functions are defined using
+`eepitch-comint'. See:
+
+  (find-eev \"eepitch.el\" \"eepitch-langs\")
+  (find-eev \"eepitch.el\" \"find-comintprocess\")
+  (find-eev \"eepitch.el\" \"find-comintprocess\" \"defun eepitch-comint \")
+
+
+
+
+3. Test blocks
+==============
+Suppose that we have a file \"foo.py\" containing this (without
+the indentation):
+
+  def square (x):
+      return x*x
+
+  \"\"\"
+   (eepitch-python)
+   (eepitch-kill)
+   (eepitch-python)
+  execfile(\"foo.py\", globals())
+  print(square(5))
+
+  \"\"\"
+
+Python treats everything between the first and the second
+`\"\"\"'s as a multiline comment, and ignores it - but for us
+this multiline comment contains an eepitch block that starts a
+Python interpreter, then a line that loads \"foo.py\" in it, then
+a line that tests the function \"square\" defined in foo.py. We
+call the block between the `\"\"\"'s a \"test block\".
+
+A \"test block\" is a multiline comment in a Python script, a Lua
+script, or in a script in one of the other supported languages -
+we call them the \"ambient script\" and the \"ambient language\"
+- that contains at least:
+
+  1) an eepitch block that runs an interpreter for the ambient
+     language,
+
+  2) a line that loads the ambient script in that interpreter,
+
+  3) code that tests functions defined in the ambient script.
+
+We can insert a test block in the current buffer by running `M-x
+ee-insert-test-python', `M-x ee-insert-test-lua', etc... for the
+list of supported languages, see:
+
+  (find-eev \"eev-testblocks.el\" \"ee-insert-test\")
+
+These `ee-insert-test-<lang>'s use the name of the current buffer
+in the line that loads the ambient script into in the
+interpreter.
+
+The command `M-x eeit' runs `ee-insert-test', that tries to
+detect the ambient language from major mode and then runs the
+correct `ee-insert-test-<lang>' based on it. `M-x eeit' is
+currently not very smart - see the source:
+
+  (find-eev \"eev-testblocks.el\" \"ee-insert-test\")
+
+
+
+
+
+-=-=-=-=-
+Old stuff:
+
+
+
+1. Motivation
+=============
 Suppose that we have to do some reasonably complex task using a
 shell, and that we want to take notes of what we do because we
 might have to do something similar later.
@@ -4467,8 +5000,10 @@ explained later.
 
 
 
-The main key: <F8>
-==================
+
+
+2. The main key: <F8>
+=====================
 Emacs can run a shell in a buffer, and it can split its frame
 into windows, like this:
    ___________________
@@ -4514,8 +5049,8 @@ echo \"We changed to: $(pwd)\"
 
 
 
-Other targets
-=============
+3. Other targets
+================
 Just like `(eepitch-shell)' creates a shell buffer and sets the
 eepitch target to it, `(eepitch-python)' creates a buffer with a
 Python interpreter and uses it as the eepitch target. Try:
@@ -4557,8 +5092,8 @@ print(open(\"/tmp/o\").read())
 
 
 
-More on eepitch-kill
-====================
+4. More on eepitch-kill
+=======================
 Note that `(eepitch-kill)' kills the _current_ target, that may
 or may not be a shell buffer, a Python interaction buffer, etc...
 That explains the first line in blocks like:
@@ -4582,8 +5117,8 @@ erasing all definitions done in previous sessions.
 
 
 
-Creating eepitch blocks: `M-T'
-==============================
+5. Creating eepitch blocks: `M-T'
+=================================
 Write just \"shell\" or \"python\" in a line, then type
 `M-T' (i.e., meta-shift-t) there. The line will be turned into
 three - an \" (eepitch-xxx)\", an \" (eepitch-kill)\", and an
@@ -4599,8 +5134,8 @@ pwd
 
 
 
-Red stars
-=========
+6. Red stars
+============
 Eepitch.el sets the glyph for the char 15 to a red star in the
 standard display table. In layman's terms: eepitch.el tells Emacs
 that the character 15 should be displayed as a red star. The
@@ -4610,8 +5145,8 @@ literal ^O in a buffer by typing `C-q C-o'.
 
 
 
-For more information
-====================
+7. For more information
+=======================
 On hyperlinks:               (find-eval-intro)
 On keys similar to `M-T':    (find-wrap-intro)
 An older text about eepitch:
@@ -5934,16 +6469,21 @@ that page of the book!
 \(Re)generate: (find-brxxx-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-brxxx-intro\")
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
+              (find-eev-intro)
+              (find-psne-intro)
+              (find-pdf-like-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-It expands an idea that was mentioned briefly at:
+This intro expands an idea that was mentioned briefly at:
   (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+and combines it with the idea of \"local copies\" from:
+  (find-psne-intro \"the second way\")
+  (find-psne-intro \"1. Local copies of files from the internet\")
+  (find-psne-intro \"5. `browse-url' and friends\")
+
 
 
 
@@ -5951,10 +6491,175 @@ It expands an idea that was mentioned briefly at:
 ===============
 We saw in
 
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+
+that eev defines some functions with names starting with `br'
+that are similar to `browse-url', and we saw in
+
+  (find-psne-intro \"the second way\")
+  (find-psne-intro \"1. Local copies of files from the internet\")
+  (find-psne-intro \"3. The new way: M-x brep\")
+
+how to create local copies of files; after downloading a local
+copy of, say,
+
+  http://www.gnu.org/software/emacs/emacs-paper.html
+
+into
+
+  $S/http/www.gnu.org/software/emacs/emacs-paper.html
+
+you can open the local copy by running `M-x browse-url', `M-x brg'
+or `M-x brff' on the \"file:///\" URL below,
+
+  file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
+
+but note that the \"file:///\" URL has an \"edrx\" - my username
+- in the middle of the file name, so this only works without
+changes if you use \"edrx\" as your username...
+
+
+
+
+2. The `l' variants
+===================
+After creating `brg' and `brff' I created variants of them that
+would open the local copy of the URL at point instead of the
+original URL - or, more precisely, that would open the result of
+applying `ee-url-to-local-url' to the original URL. Try:
+
+  (ee-url-to-local-url
+   \"http://www.gnu.org/software/emacs/emacs-paper.html\")
+
+These variants were called `brgl' and `brffl' - I used the
+convention that the suffix `l' meant \"use the local copy\".
+
+
+
+3. The `d' variants
+===================
+After creating `brgl' and `brffl' I realized that it would be
+easy to create variants of them that would work in dired mode.
+If we visit a directory - for example, this one,
+
+  (find-fline \"$S/http/www.gnu.org/software/emacs/\")
+
+and we put the point in a line with an HTML on it - for example,
+on the line with the \"emacs-paper.html\" - then typing `M-x
+brgd' there converts the full pathname of the file at point to a
+\"file:///\" URL, like this,
+
+                          $S/http/www.gnu.org/software/emacs/emacs-paper.html
+  -> file:///home/edrx/snarf/http/www.gnu.org/software/emacs/emacs-paper.html
+
+and opens the resulting \"file:///\" url with `brg'.
+
+The suffix `d' means \"use the file in this line in dired\".
+
+
+
+
+4. `brxxx'-functions
+====================
+`browse-url' has several variants, with names like
+`browse-url-firefox' and `browse-url-chromium', that open the URL
+at point using specific programs. See:
+
+  (find-epackage 'browse-url)
+  (find-enode \"Browse-URL\")
+
+We say that `brg', `brgl' and `brgd' are \"`brxxx'-functions\"
+with \"base function\" `find-googlechrome'; `brgl' is the `l' (or
+\"local\") variant, and `brgd' is the `d' (or \"dired\") variant;
+`brg' is sometimes called the \"remote\" variant.
+
+
+
+
+5. `code-brurl'
+===============
+Remember that `code-c-d' generates lisp code and executes it, and
+that `find-code-c-d' generates the same lisp code as `code-c-d'
+but displays it instead of executing it; this was explained, with
+examples, here:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+Eev has a function called `code-brurl' that works like `code-c-d'
+and that creates several `brxxx'-functions with the same base
+function. To understand what the `code-brurl' sexp below does,
+
+  ;; From:
+  ;; (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
+  ;; (find-eev \"eev-brxxx.el\" \"code-brxxxs\" \"brg\")
+
+  (code-brurl 'find-googlechrome  :remote 'brg  :local 'brgl  :dired 'brgd)
+
+We run:
+
+  (find-code-brurl 'find-googlechrome  :remote 'brg  :local 'brgl  :dired 'brgd)
+
+Note that the base function in this example is
+`find-googlechrome', that is a function that expects a URL.
+
+
+
+
+6. `code-brfile'
+================
+We saw how to create `brxxx'-functions using `find-googlechrome'
+as the base function; remember that `find-googlechrome' is a
+function that expects a URL.
+
+If we download a local copy of a PDF, like we did here,
+
+  (find-pdf-like-intro \"2. Preparation\")
+
+      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+then it makes sense to have a `brxxx'-function, called `brpdfl',
+that we can run on the \"https://\" URL above, and that will open
+the \"$S/https/\" file corresponding to the URL using
+`find-pdf-page'... but `find-pdf-page' is a function that expects
+a filename, not a URL, so `code-brurl' wouldn't work...
+
+What we want can be done by the sexp below:
+
+  ;; From:
+  ;; (find-eev \"eev-pdflike.el\" \"code-brxxxs\")
+  ;; (find-eev \"eev-pdflike.el\" \"code-brxxxs\" \"brpdfl\")
+  (code-brfile 'find-pdf-page  :local 'brpdfl  :dired 'brpdfd)
+
+To understand what it does, run:
+
+  (find-code-brfile 'find-pdf-page  :local 'brpdfl  :dired 'brpdfd)
+
+and read the docstrings.
+
+Note that in the previous section we had a \":remote 'brg\", that
+defined a remote variant. It doesn't make sense to apply
+`find-pdf-page' to a remote URL, so we don't have a \":remote\"
+here.
+
+
+
+
+Old stuff:
+(TODO: revise it!)
+
+
+
+
+7. Old introduction
+===================
+We saw in
+
   (find-psne-intro)
   (find-psne-intro \"M-x brep\")
   (find-psne-intro \"M-x brfl\")
-  (find-psne-intro \"`browse-url' and friends\")
+  (find-psne-intro \"5. `browse-url' and friends\")
 
 that we can use `M-x brep' to download local copies of files from
 the internet, and that `M-x brfl' on a URL runs `find-fline' on
@@ -5976,7 +6681,7 @@ brxxx-functions from base functions.
 
 
 
-2. A first example
+8. A first example
 ==================
 Let's define two trivial base functions, one that expects a URL,
 and another one that expects a file name:
@@ -6034,7 +6739,7 @@ to that URL.
 
 
 
-3. The conversions
+9. The conversions
 ==================
 One underlying idea behind all this is that we have two
 conversion functions, one from URLs to file names, and another
@@ -6062,8 +6767,8 @@ execute:
 
 
 
-4. Naming conventions for brxxx-functions
-=========================================
+10. Naming conventions for brxxx-functions
+==========================================
 By convention, each name for a brxxx-function is composed of a
 prefix, a stem, and a suffix. The prefix is always \"br\", the
 stem is a mnemonic for the base function, and the suffix is
@@ -6102,8 +6807,8 @@ In our example with `foo-url' and `foo-file' we had:
 
 
 
-5. Calling `code-brurl' and `code-brfile'
-=========================================
+11. Calling `code-brurl' and `code-brfile'
+==========================================
 
   (code-brurl '<U-function>
                    :remote 'br<stem>   :local 'br<stem>l   :dired 'br<stem>d)
@@ -6126,8 +6831,8 @@ curious about the inspirations behind it, here they are:
 
 
 
-6. The dired variation
-======================
+12. The dired variation
+=======================
 
 In dired mode each line corresponds to a file
 
@@ -6165,10 +6870,21 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-It expands an idea that was mentioned briefly at:
-  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
-  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\" \"local copies\")
+
+Note: this intro is being rewritten!
+We mentioned briefly in
+
+  (find-pdf-like-intro \"2. Preparation\")
+
+that there are two \"natural\" ways to store a local copy of a
+file from the internet... here we will discuss the second way, in
+which the conversion from URL to a local file name works like
+this:
+
+      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+
+
 
 
 
@@ -6558,6 +7274,55 @@ audio or video file, starting from some given time offset. The
 default is always what is stored in `ee-audiovideo-last', and
 each call to a short hyperlink of the form `find-xxxaudio' or
 `find-xxxvideo' sets that variable.
+
+
+
+4.3. A demo
+-----------
+Here's some code to test `find-video' and `code-video'. Make sure
+that you have mpv installed, and run this escript block:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  # http://www.youtube.com/watch?v=K6LmZ0A1s9U
+  # http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+  mkdir ~/eev-videos/
+  cd    ~/eev-videos/
+  wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+
+It will download a copy of a video from youtube; I prepared the
+.mp4 by running \"youtube-dl -f 18\" on the youtube URL and
+renaming the result.
+
+Then try:
+
+  (find-video \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (code-video \"punchandjudyvideo\" \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
+  (find-punchandjudyvideo)
+  (find-punchandjudyvideo \"0:00\")
+  (find-punchandjudyvideo \"0:10\" \"calls the baby\")
+  (find-punchandjudyvideo \"0:40\" \"where's the baby\")
+  (find-punchandjudyvideo \"1:04\" \"right position\")
+  (find-punchandjudyvideo \"1:17\" \"he will sing the baby to sleep\")
+  (find-punchandjudyvideo \"1:33\" \"1-2-3\")
+  (find-punchandjudyvideo \"1:48\" \"baby downstairs\")
+  (find-punchandjudyvideo \"3:12\" \"slaps\")
+  (find-punchandjudyvideo \"3:50\" \"1-2-3\")
+  (find-punchandjudyvideo \"4:34\" \"you keep an eye on mr Punch\")
+  (find-punchandjudyvideo \"4:46\" \"hat\")
+  (find-punchandjudyvideo \"5:03\" \"hat\")
+  (find-punchandjudyvideo \"5:25\" \"did you see him?\")
+  (find-punchandjudyvideo \"5:55\" \"clown\")
+  (find-punchandjudyvideo \"6:14\" \"slaps\")
+  (find-punchandjudyvideo \"6:52\" \"sausages\")
+  (find-punchandjudyvideo \"7:24\" \"crocodile\")
+  (find-punchandjudyvideo \"8:07\" \"crocodile + sausages\")
+  (find-punchandjudyvideo \"8:32\" \"another scene\")
+  (find-punchandjudyvideo \"8:39\" \"fight\")
+  (find-punchandjudyvideo \"9:03\" \"clown\")
+  (find-punchandjudyvideo \"9:45\" \"mr punch\")
+
 
 
 
@@ -7049,7 +7814,7 @@ and the letter \"E\" is a variant of \"e\" that uses
 variant of `find-3ee' that restarts both targets. Let's adapt
 this example,
 
-  (find-eepitch-intro \"Other targets\")
+  (find-eepitch-intro \"3. Other targets\")
 
 to make it show the two eepitch targets at once in a three-window
 settings. It becomes:
@@ -7159,6 +7924,10 @@ moves down, to create tutorials for Emacs modes. An example:
 
 10. A tutorial for Info mode
 ============================
+Note: this is obsolete! It was superseded by:
+
+  (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
+
 Here's a mini-tutorial for Info mode, demonstrating how to
 navigate in Info using the usual movement keys, plus TAB,
 <backtab>, RET, l (last), u (up), n (next), p (prev), q (quit),
@@ -9053,46 +9822,138 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Google Tech talk by Carsten Dominik (2008)
-==========================================
-http://orgmode.org/talks.html
-http://orgmode.org/worg/org-tutorials/org-screencasts/org-mode-google-tech-talk.html
-http://www.youtube.com/watch?v=oJTwQvgfgMM Emacs Org-mode - a system for note-taking and project planning
-\(find-youtubedl-links \"/sda5/videos/\" \"Emacs_Org-mode_-_a_system_for_note-taking_and_project_planning\" \"oJTwQvgfgMM\" \".flv\" \"carsten2008\")
-                     (ee-youtubedl-hash-to-fname \"oJTwQvgfgMM\")
-\(setq ee-carsten2008 (ee-youtubedl-hash-to-fname \"oJTwQvgfgMM\"))
-\(code-mplayer \"carsten2008\" ee-carsten2008)
-\(find-carsten2008 \"0:00\")
+Eev does some things similar to Org, but using a different
+approach and different design principles. This sandboxed tutorial
+is a _first attempt_ to show to Org users how to use Org and eev
+at the same time, in the same files (or buffers).
 
-\(eev-avadj-mode 1)
-\(find-carsten2008 t)
+Note: I wrote this after giving a presentation about eev in the
+EmacsConf 2019 and getting some help from Org users there (mainly
+Amin Bandali). Link:
 
-1:20 Carsten Start
-1:50 History
-2:15 Working with Text Files
-3:58 Notes (not tasks) based project planning
-5:50 Outline mode - fixing
-9:56 Structure Editing
-11:00 Note taking other supports
-13:35 Meta data Intro
-14:57 tags
-15:26 Timeplanning
-15:53 Properties
-16:02 Meta data propagation
-16:49 Special Meta entry interfaces
-17:55 DateTime interface
-18:24 Column view
-19:20 Capture with remember
-23:02 Collect and Display
-23:52 Sparse tree
-25:47 Agenda view
-27:27 Exporting and publishing
-29:05 Tables
-31:34 Calc
-32:44 Radio tables
-34:53 Context sensitive keys
-38:13 How is org used
-40:55 Evolved Software software
+  http://angg.twu.net/emacsconf2019.html
+
+
+
+
+1. Preparation
+==============
+Run these sexps:
+
+  (code-c-d \"org\" (ee-locate-library \"org.el\") \"org\" :gz)
+  (require 'org)
+  (require 'ob-sh)
+  ;; or: (require 'ob-shell)
+  (require 'ob-python)
+
+
+
+2. Toggling org-mode on and off
+===============================
+Use these sexps,
+
+  (org-mode)
+  (fundamental-mode)
+
+or `M-x org-mode' and `M-x fundamental-mode'.
+
+
+
+3. Comment blocks
+=================
+If you are using an org file that is meant for exporting you can
+mark as comments the more eev-ish parts in it, like this...
+
+# (find-orgnode \"Comment lines\")
+# (find-orgnode \"Exporting\")
+
+#+BEGIN_COMMENT
+# Run the eepitch block below to download a copy of my messy
+# notes on org. See:
+# (find-eev-quick-intro \"6. Controlling shell-like programs\")
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd /tmp/
+rm -fv org.e
+wget http://angg.twu.net/e/org.e
+
+#+END_COMMENT
+
+
+
+
+4. Running code from my org.e
+=============================
+The code in comments in the previous section downloads a local
+copy of my executable notes (i.e., my \"e-scripts\") on Org. Run
+it, and compare:
+
+# http://angg.twu.net/e/org.e.html#git
+# (find-anchor \"/tmp/org.e\" \"git\")
+
+The URL above points to my notes on downloading Org from git and
+compiling its docs. The sexp hyperlinks below it lets you execute
+these notes.
+
+
+
+
+5. Evaluating source blocks
+===========================
+You can execute a source block in Org and display its results
+with `C-c C-c'. See:
+
+# (find-orgnode \"Working With Source Code\")
+# (find-orgnode \"Evaluating code blocks\")
+
+Try it here:
+
+#+BEGIN_SRC sh
+seq 200 204
+#+END_SRC
+
+Compare that with:
+
+# (find-sh \"seq 200 204\")
+
+and compare
+
+#+BEGIN_SRC python
+def square (x):
+    return x*x
+
+print(square(5))
+#+END_SRC
+
+with:
+
+#+BEGIN_COMMENT
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+def square (x):
+    return x*x
+
+print(square(5))
+
+#+END_COMMENT
+
+
+
+
+5. Sectioning
+=============
+Not yet!
+How do I mark a section as \"don't export this\"?
+
+  (find-orgnode \"Headlines\")
+  (find-orgnode \"Global and local cycling\")
+  (find-efunctiondescr 'org-mode \"TAB\" \"org-cycle\")
+  (find-efunctiondescr 'org-shifttab)
+
+
 
 " pos-spec-list)))
 
