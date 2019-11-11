@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019nov04
+;; Version:    2019nov11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -9905,12 +9905,15 @@ these notes.
 You can execute a source block in Org and display its results
 with `C-c C-c'. See:
 
-# (find-orgnode \"Working With Source Code\")
+# (find-orgnode \"Working with source code\")
 # (find-orgnode \"Evaluating code blocks\")
+# (find-orgnode \"Evaluating code blocks\" \":results output\")
+# (find-orgnode \"Results of evaluation\" \":results output\")
+# (find-orgnode \"results\" \"output\")
 
 Try it here:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :results output
 seq 200 204
 #+END_SRC
 
@@ -9920,7 +9923,7 @@ Compare that with:
 
 and compare
 
-#+BEGIN_SRC python
+#+BEGIN_SRC python :results output
 def square (x):
     return x*x
 
