@@ -35,7 +35,9 @@
 ;; See this for a (rough) classification of eev's hyperlink functions
 ;; into several classes:
 ;;
-;;   (find-links-intro "6. Basic and non-basic hyperlinks")
+;;   (find-links-conv-intro "3. Classification")
+;;   (find-links-conv-intro "3. Classification" "`find-elinks'")
+;;   (find-links-conv-intro "3. Classification" "`find-elinks'+")
 ;;
 ;; In this file we define `find-elinks' and several functions based on
 ;; it that generate relatively simple elisp hyperlinks buffers -

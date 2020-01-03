@@ -1,3 +1,22 @@
+2020-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el: rewrote many comments.
+
+	* eev-intro.el (find-audiovideo-intro): new section: "4.4. The
+	default audio/video file".
+
+	* eev-blinks.el (ee-find-man-pos-spec-list): `defvar'ed. Was
+	undeclared before.
+
+2020-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-git-links): use "export PAGER=cat".
+
+2019-11-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): rewrote the section 7.2 to
+	explain how beginners should use `M-j' without a prefix argument.
+
 2019-11-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-org-intro): use \":results output\" (thx Ken

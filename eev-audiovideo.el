@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep29
+;; Version:    2020jan03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -31,12 +31,63 @@
 
 ;;; Commentary:
 
-;; There is an introduction to these features here,
+;; This file implements links to audio or video files _at certain time
+;; offsets_. Here are two examples, in a long syntax:
+;;
+;;   (find-video "~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4")
+;;   (find-video "~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4" "1:17")
+;;
+;; There are also the usual shorter hyperlinks, like this,
+;;
+;;   (find-punchandjudyvideo "1:04" "right position")
+;;
+;; and a very compact syntax, used by `eev-avadj-mode', in which `M-p'
+;; plays the default audio or video file at the first time offset that
+;; can the parsed in the current line (the "time from BOL"). See:
 ;;
 ;;   (find-audiovideo-intro)
+;;   (find-audiovideo-intro "1. Time offsets")
+;;   (find-audiovideo-intro "4. Short hyperlinks to audio and video files")
+;;   (find-audiovideo-intro "4.3. A demo")
+;;   (find-audiovideo-intro "4.4. The default audio/video file")
+;;   (find-audiovideo-intro "4.4. The default audio/video file" "`M-p'")
 ;;
-;; but that needs to be rewritten...
+;; NOTE: I am not aware of other packages - for emacs or not - that
+;; implement links that play audio or video files at given time
+;; offsets... but in 2020jan03 a guy called stardiviner sent this
+;; proposal to the Org mailing list:
+;;
+;;   https://lists.gnu.org/archive/html/emacs-orgmode/2020-01/msg00007.html
 
+
+
+;; Historical note:
+;;
+;; I wrote a first version of this in 2011 or 2012, and some time
+;; later a friend - Rafael Duarte Pinheiro - helped me to create a way
+;; to play my indexed audios in a browser. Here is an example:
+;;
+;;   http://angg.twu.net/audios/2011dec13-ict.html
+;;
+;; I used these indexed audios to show what was happening in the
+;; banana meetings of the Banana Institute of Science and Technology
+;; of the banana campus in which I work, that is part of a banana
+;; university in a banana republic.
+;;
+;; My tools for indexed audios later became one third of my "tools for
+;; activists", that are documented here:
+;;
+;;   http://angg.twu.net/ferramentas-para-ativistas.html#audios-introducao
+;;
+;; but everything there is in Portuguese.
+;;
+;; In 2014 I had a burn-out and stopped working on these tools for
+;; activists.
+
+
+
+
+;; «.ee-time-from-bol»	(to "ee-time-from-bol")
 ;; «.eev-avadj-mode»	(to "eev-avadj-mode")
 ;; «.find-mplayer»	(to "find-mplayer")
 ;; «.find-termplayer»	(to "find-termplayer")
@@ -68,6 +119,8 @@
 ;;; | |_| | | | | | |  __/_____|  _| | | (_) | | | | | |_____| |_) | (_) | |
 ;;;  \__|_|_| |_| |_|\___|     |_| |_|  \___/|_| |_| |_|     |_.__/ \___/|_|
 ;;;                                                                         
+;; «ee-time-from-bol»  (to ".ee-time-from-bol")
+
 (defvar ee-time-regexp
 	"\\(?:\\([0-9]?[0-9]\\):\\)?\\([0-9]?[0-9]\\):\\([0-9][0-9]\\)")
 
@@ -77,10 +130,14 @@
     (if (re-search-forward regexp limit t repeat)
 	(match-string-no-properties 0))))
 
+;; Test: 98:76:54 3:21 (ee-time-from-bol)
+;;
 (defun ee-time-from-bol ()
   "Try this: 98:76:54 3:21 (ee-time-from-bol)"
   (ee-re-search-from (ee-bol) ee-time-regexp (ee-eol)))
 
+;; Test: 98:76:54 3:21 (ee-time-from-bol-flash)
+;;
 (defun ee-time-from-bol-flash () (interactive)
   "Try this: 98:76:54 3:21 (ee-time-from-bol-flash)"
   (if (ee-time-from-bol)
@@ -97,6 +154,12 @@
 ;;; | |_| | | | | | |  __/_____\__ \ | | | |  _| |_ 
 ;;;  \__|_|_| |_| |_|\___|     |___/_| |_|_|_|  \__|
 ;;;                                                 
+;; Tests:
+;; (ee-time-to-seconds "1:00:00")
+;; (ee-seconds-to-time   5)
+;; (ee-seconds-to-time 300)
+;; (ee-time+ -20 "0:05")
+
 (defun ee-time-to-seconds (time)
   (save-match-data
     (if (string-match ee-time-regexp time)
@@ -127,19 +190,20 @@
   (ee-time-from-bol-shift (- (or seconds 1))))
 
 
+
 ;;;  _           _                     _ _         __      _     _            
 ;;; | | __ _ ___| |_    __ _ _   _  __| (_) ___   / /_   _(_) __| | ___  ___  
 ;;; | |/ _` / __| __|  / _` | | | |/ _` | |/ _ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
 ;;; | | (_| \__ \ |_  | (_| | |_| | (_| | | (_) / /  \ V /| | (_| |  __/ (_) |
 ;;; |_|\__,_|___/\__|  \__,_|\__,_|\__,_|_|\___/_/    \_/ |_|\__,_|\___|\___/ 
 ;;;                                                                           
-;;
+;; See: (find-audiovideo-intro "4.4. The default audio/video file")
+
 (defvar ee-audiovideo-last nil
   "See: (find-audiovideo-intro \"The current audio or video\")")
 
 (defun ee-audiovideo-sexp (time)
   (list ee-audiovideo-last time))
-
 
 (defun ee-time-from-bol-rerun (&optional arg)
   "Play the current audio or video starting at '(ee-time-from-bol)'.
@@ -418,7 +482,10 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;;                                
 
 ;; Convert between a number of seconds (a number)
-;; and a "minutes:seconds" thing (a string)
+;; and a "minutes:seconds" thing (a string).
+;; OBSOLETE.
+;; TODO: convert all calls to `ee-secs-to-mm:ss' to `ee-seconds-to-time' and
+;;               all calls to `ee-mm:ss-to-secs' to `ee-time-to-seconds'.
 ;;
 (defun ee-secs-to-mm:ss (n)
   "Force N - a number of seconds or an \"mm:ss\" string - to the mm:ss format"
@@ -433,13 +500,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
       (+ (* 60 (car ms)) (cadr ms)))))
 
 
-;;;  _   _                                                     
-;;; | |_(_)_ __ ___   ___       _ __ ___  __ _  _____  ___ __  
-;;; | __| | '_ ` _ \ / _ \_____| '__/ _ \/ _` |/ _ \ \/ / '_ \ 
-;;; | |_| | | | | | |  __/_____| | |  __/ (_| |  __/>  <| |_) |
-;;;  \__|_|_| |_| |_|\___|     |_|  \___|\__, |\___/_/\_\ .__/ 
-;;;                                      |___/          |_|    
-;;
+;; Old notes on time regexps:
 ;; (find-elnode "Time Parsing")
 ;; (seconds-to-time 4000)
 ;; (float-time '(0 4000 0))

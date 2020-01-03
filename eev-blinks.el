@@ -637,10 +637,11 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;; Tests:
 ;;   (find-man "1 cat")
 
-(defvar ee-find-man-flag nil "See `find-man'.")
+(defvar ee-find-man-flag          nil "See `find-man'.")
+(defvar ee-find-man-pos-spec-list nil "See `find-man'.")
 
 ;; See: (find-elnode "Advising Functions")
-;;      (find-elnode "Porting old advices")
+;;      (find-elnode "Porting old advice")
 ;;      (find-efunctiondescr 'defadvice)
 (defadvice Man-notify-when-ready (around find-man (man-buffer) activate)
   "After rendering a manpage jump to `ee-find-man-pos-spec-list'."

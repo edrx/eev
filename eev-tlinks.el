@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019oct14
+;; Version:    2020jan02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -41,6 +41,10 @@
 ;; The functions here are one complexity step above the functions in:
 ;;   (find-eev "eev-elinks.el")
 ;;
+;; See:
+;;   (find-links-conv-intro "3. Classification")
+;;   (find-links-conv-intro "3. Classification" "find-elinks")
+
 ;; NOTE (written in 2019mar05): some of the functions here are very
 ;; old and ugly and I haven't used them in ages. They will be deleted
 ;; in the next few months.
@@ -1088,9 +1092,10 @@ cd      {ee-git-dir}
 git clone {url}
 cd      {dir}
 
+export PAGER=cat
 git branch --list -a
 git for-each-ref
-PAGER=cat git log --oneline --graph --all -20
+git log --oneline --graph --all -20
 
 # (find-fline \"{ee-git-dir}\")
 # (find-fline \"{dir}\")
@@ -1332,6 +1337,8 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 
 ;; Tests: (find-latex-links)
 ;;        (find-latex-links "/tmp/foo")
+;;        (find-latex-links "/tmp/foo" 2)
+;;        (find-latex-links "/tmp/foo" 2 "copy-rest")
 
 
 
