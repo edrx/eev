@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jan01
+;; Version:    2020jan04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -3118,7 +3118,83 @@ The big figure below shows all the keys sequences:
 
 
 
+5. Pointing to anchors
+======================
+We saw in
 
+  (find-eev-quick-intro \"8. Anchors\")
+
+how to create anchors and how to point to anchors in the same
+file with `to', and we saw briefly in
+
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+
+that the extra argument `:anchor' in
+
+  (code-c-d \"eev\" ee-eev-source-directory :anchor)
+
+let us abbreviate the links below, that point to anchors,
+
+  (find-eevfile            \"eev-blinks.el\" \"«find-wottb»\")
+  (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
+
+as just:
+
+  (find-eev \"eev-blinks.el\" \"find-wottb\")
+
+If you are in a file that has anchors there are two key sequences
+that you can use to create a link to that anchors in it very
+quickly. Remember that `M-h M-w' is a variant of `M-w' that
+copies the current line to the kill ring; as a bonus, `M-h M-w'
+highlights the current line for a brief while, and displays this
+message in the echo area:
+
+  Copied the current line to the kill ring - use C-y to paste
+
+If you run `M-h M-w' with the prefix argument 1, i.e., with `M-1
+M-h M-w', it copies the previous anchor instead of the current
+line. Try it now - `M-1 M-h M-w' will flash the \"find-wottb\"
+above and will say:
+
+  Copied \"find-wottb\" to the kill ring
+
+If you try `M-1 M-h M-w' at the target of this sexp, on in the
+lines after the target,
+
+  (find-eev \"eev-blinks.el\" \"find-wottb\")
+
+the anchor \"find-wottb\" will be copied to the kill ring... if
+you then type `M-h M-h' or `M-h M-3', go to the line with
+
+  (find-eevfile \"eev-blinks.el\")
+
+in it and type `M-h M-y' it will become this,
+
+  (find-eevfile \"eev-blinks.el\" \"find-wottb\")
+
+that is ALMOST a link to the anchor \"find-wottb\" in the file
+\"eev-blinks.el\" - we need to delete the \"file\" in
+`find-eevfile' to make it become a link to an anchor. It turns
+out that eev has a key that does exactly that: `M-h M--'. See:
+
+  (eek \"M-h M-k  M-h M--  ;; ee-shrink-hyperlink-at-eol\")
+  (find-eev \"eev-edit.el\" \"ee-shrink-hyperlink-at-eol\")
+
+I use this so much that I got used to typing this sequence of
+keys VERY quickly:
+
+  M-1 M-h M-w
+      M-h M-h
+  (<down> several times)
+      M-h M-2
+      M-h M-y
+      M-h M--
+      M-h M-w
+
+I don't touch-type, and for me it became natural do hold the meta
+key down with my left thumb while I type `M-1hwhh' and
+`M-h2hyh-hw'... I would be nice to have a way to do this same
+series of actions using keys that are good for touch typists.
 
 
 
@@ -8352,6 +8428,17 @@ functions, take a look at:
 This tutorial is for people who want to learn how to _write_
 their own templated functions.
 
+To learn how to write your own templated functions you need to:
+
+  1) learn how to use `ee-template0' by reading its source code
+     and playing with examples in the source and here,
+
+  2) learn how to use `find-elinks' - same thing,
+
+  3) learn how to use `find-find-links-links', that is a horrible
+     kludge that works well enough so I never cleaned it up.
+
+
 
 
 
@@ -8361,6 +8448,20 @@ See:
 
   (find-efunction 'ee-template0)
   (find-eev \"eev-template0.el\")
+
+Try:
+
+  (ee-template00 \"a{(+ 2 3)}b\")
+ 
+  (let ((hi \"Here: \")
+        (a 22)
+        (b 33))
+    (ee-template00 \"{hi}{a}+{b}={(+ a b)}\"))
+
+  (defun foo (a b) (ee-template00 \"{a}+{b}={(+ a b)}\"))
+  (foo 22 33)
+
+  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
 
 
 
@@ -8372,34 +8473,154 @@ See:
   (find-efunction 'find-elinks)
   (find-eev \"eev-elinks.el\" \"find-elinks\")
 
+Now try these examples. They are multi-line versions with
+comments of the examples in the source file.
+
+   (find-elinks
+     '((a sexp)
+       \"a string\")
+     )
+
+Now try these examples. They are longer, multi-line versions of
+the examples in the source file.
+
+   (find-elinks
+     '((a sexp)
+       \"a string\")
+     )
+
+   (find-elinks
+     '((a sexp)
+       \"a string\")
+     \"st\")
+
+   (find-elinks
+     '((a sexp)
+       \"a string\")
+     \"st\" \"i\")
+
+   (find-elinks
+     '((a sexp)
+       (another sexp)
+       (sexps get comment signs)
+       (strings in sexps: \"foo  bar\")
+       (newlines in strings in sexps get backslashed: \"\\n\")
+       (ticks in sexps: 'a '(b c))
+       (nils in sexps: nil () (nil nil))
+       \"a string\"
+       \"another string\"
+       \"strings don't get comment signs\"
+       \"empty strings become empty lines\"
+       \"\"
+       \"newlines in strings\\nbecome real newlines\"
+       \"nils are dropped:\"
+       nil
+       \"see?\"
+       \"\"
+       (another sexp)
+       )
+     )
+
+Normally the first argument to `find-elinks' is backquoted. See:
+
+  (find-elnode \"Backquote\")
+
+Try:
+
+  `(foo ,(+ 2 3) bar)
+  `(foo ,'(+ 2 3) bar)
+  `(foo ,(list 2 3) bar)
+  `(foo ,@(list 2 3) bar)
+
+See:
+
+  (find-eev \"eev-elinks.el\" \"find-efunction-links\")
+
+The first argument to `find-elinks' is called LIST. Elements of
+LIST that are sexps are converted to strings using `ee-HS'. See:
+
+  (find-eev \"eev-wrap.el\" \"ee-S\")
+
+
 
 
 4. `find-find-links-links'
 ==========================
+ALL my `find-*-links' started as quick hacks.
+SOME of them were useful enough to deserve being cleaned up.
+A FEW of them ended up in:
 
+  http://angg.twu.net/eev-current/eev-elinks.el.html
+  http://angg.twu.net/eev-current/eev-tlinks.el.html
+  (find-eev \"eev-elinks.el\")
+  (find-eev \"eev-tlinks.el\")
+
+...but there are lots of other `find-*-links' functions in:
+
+  http://angg.twu.net/.emacs.templates.html
+
+They are trivial to write. I start with a skeleton that I obtain by
+running `M-x find-find-links-links', and then I modify the first line
+in that buffer, regenerate, modify, regenerate, and so on until happy.
+Run each of the sexps below with `M-2 M-e' to compare the buffers that
+they generate:
+
+  (find-find-links-links \"{k}\" \"{stem}\" \"{args}\")
+  (find-find-links-links \"\\\\M-u\" \"{stem}\" \"{args}\")
+  (find-find-links-links \"\\\\M-u\" \"macports\" \"{args}\")
+  (find-find-links-links \"\\\\M-u\" \"macports\" \"pkgname\")
+  (find-find-links-links \"\\\\M-u\" \"macports\" \"pkgname anotherarg\")
+
+
+
+
+So: start by running something like
+
+  (find-find-links-links \"\\\\M-u\" \"macports\" \"pkgname\")
+  (find-find-links-links \"\\\\M-u\" \"homebrew\" \"pkgname\")
+
+then copy the
+
+\(define-key eev-mode-map \"\\M-h\\M-u\" 'find-macports-links)
+
+\(defun find-macports-links (&optional pkgname &rest pos-spec-list)
+\"Visit a temporary buffer containing hyperlinks for foo.\"
+  (interactive)
+  (setq pkgname (or pkgname \"{pkgname}\"))
+  (apply 'find-elinks
+   `((find-macports-links ,pkgname ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-macports-links)
+     \"\"
+     ,(ee-template0 \"\\
+\")
+     )
+   pos-spec-list))
+
+;; Test: (find-macports-links ___)
+
+to your notes, replace the `(interactive)' by
+
+  (interactive (list (ee-debpkgname-ask)))
+
+and start adding things to the string in (ee-template0 \"...\").
+
+I will try to update this intro in the next days:
+
+  (find-templates-intro)
+  http://angg.twu.net/eev-intros/find-templates-intro.html
+
+
+
+
+
+Etc:
+
+  (find-links-conv-intro)
+  (find-links-conv-intro \"3. Classification\")
   (find-eev \"eev-tlinks.el\" \"find-find-links-links\")
-
-
-
-
-  1) How to use `ee-template0' and `find-elinks':
-
-      (find-eev \"eev-wrap.el\" \"ee-template0\")
-      (find-eev \"eev-elinks.el\" \"find-elinks\")
-
-  2) A review of the conventions here:
-
-      (find-links-conv-intro)
-      (find-links-conv-intro \"3. Classification\")
-
-  3) How some template functions like these
-
-      (find-eev \"eev-tlinks.el\" \"find-find-links-links\")
-      (find-eev \"eev-tlinks.el\" \"find-intro-links\")
-      (find-eev \"eev-wrap.el\" \"find-eewrap-links\")
-
-    are used to create first versions for several functions in
-    eev...
+  (find-eev \"eev-tlinks.el\" \"find-intro-links\")
+  (find-eev \"eev-wrap.el\" \"find-eewrap-links\")
 
 " rest)))
 

@@ -1,5 +1,7 @@
 2020-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-testblocks.el (ee-insert-test-idris): new function.
+
 	* eev-audiovideo.el: rewrote many comments.
 
 	* eev-intro.el (find-audiovideo-intro): new section: "4.4. The
