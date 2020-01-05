@@ -1,3 +1,8 @@
+2020-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-templates-intro): rewrote the whole intro.
+	(find-refining-intro): new section: "5. Pointing to anchors".
+
 2020-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-testblocks.el (ee-insert-test-idris): new function.
