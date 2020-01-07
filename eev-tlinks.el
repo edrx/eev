@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jan02
+;; Version:    2020jan07
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -58,6 +58,8 @@
 ;; «.ee-copy-rest»		(to "ee-copy-rest")
 ;;
 ;; «.find-find-links-links»	(to "find-find-links-links")
+;; «.ee-ffll-functions»		(to "ee-ffll-functions")
+;;
 ;; «.find-intro-links»		(to "find-intro-links")
 ;; «.find-pdflikedef-links»	(to "find-pdflikedef-links")
 ;; «.find-eev-header-links»	(to "find-eev-header-links")
@@ -206,9 +208,8 @@ See: (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")"
 ;;;                                                     
 ;;
 ;; «find-find-links-links» (to ".find-find-links-links")
-;; See:
-;; (find-eev "eev-template.el" "find-find-links-links")
-;; (find-find-links-links "u" "find-links" "k stem args")
+;; See:  (find-templates-intro "horrible" "kludge")
+;; Test: (find-find-links-links "u" "find-links" "k stem args")
 
 (defun ee-prepend-commas (str)
   (save-match-data
@@ -263,6 +264,114 @@ This is an internal function used by `find-{stem}-links'.\"
   `(
     ))")
      ) pos-spec-list))
+
+
+
+
+
+;;;                   __  __ _ _ _            
+;;;   ___  ___       / _|/ _| | | |     __/\__
+;;;  / _ \/ _ \_____| |_| |_| | | |_____\    /
+;;; |  __/  __/_____|  _|  _| | | |_____/_  _\
+;;;  \___|\___|     |_| |_| |_|_|_|       \/  
+;;;                                           
+;; «ee-ffll-functions»  (to ".ee-ffll-functions")
+;; Low-level functions used by find-find-links-links-new.
+;;
+;; The original `find-find-links-links' whas a horrible kludge.
+;; See: (find-templates-intro "horrible" "kludge")
+;; This is an attempt to rewrite it.
+;; It was inspired by discussions with Marc Simpson.
+;; Version (of the ee-ffll-functions and find-find-links-links-new):
+;; 2020jan07.
+;; Status: `find-find-links-links-new' doesn't exist yet, but the
+;; tests below work.
+
+;; Tests:
+;; (ee-ffll-optional "")
+;; (ee-ffll-optional "foo bar")
+;; (ee-ffll-comma-args "plic bletch")
+;; (find-estring (ee-ffll-setqs "  " "foo bar"))
+;; (find-estring (ee-ffll-lets "  " "foo bar"))
+;; (find-estring-elisp (ee-ffll-defun-without-lets "mytask" "foo bar"))
+;; (find-estring-elisp (ee-ffll-defun-with-lets "mytask" "foo bar" "plc bltch"))
+;; (find-estring-elisp (ee-ffll-defun "mytask" "foo bar"))
+;; (find-estring-elisp (ee-ffll-defun "mytask" "foo bar" "plic bletch"))
+;;
+(defun ee-ffll-optional (args)
+  (if (< 0 (length (split-string args)))
+      (concat "&optional " args " ")
+    ""))
+	 
+(defun ee-ffll-setqs (spaces args)
+  (mapconcat (lambda (arg) (format "%s(setq %s (or %s \"{%s}\"))\n"
+				   spaces arg arg arg))
+	     (split-string args)
+	     ""))
+
+(defun ee-ffll-lets (spaces vars)
+  (format "let* (%s)"
+	  (mapconcat (lambda (var) (format "(%s \"{%s}\")" var var))
+		     (split-string vars)
+		     (concat "\n" spaces "       "))))
+
+(defun ee-ffll-comma-args (args)
+  (mapconcat (lambda (arg) (format ",%s " arg))
+	     (split-string args)
+	     ""))
+
+(defun ee-ffll-defun-without-lets (stem args)
+  (let* ((optional   (ee-ffll-optional args))
+	 (setqs      (ee-ffll-setqs "  " args))
+	 (comma-args (ee-ffll-comma-args args))
+	 )
+    (ee-template0 "\
+(defun find-{stem}-links ({optional}&rest pos-spec-list)
+\"Visit a temporary buffer containing hyperlinks for {stem}.\"
+  (interactive)
+{setqs}\
+  (apply
+   'find-elinks
+   `((find-{stem}-links {comma-args},@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-{stem}-links)
+     \"\"
+     ,(ee-template0 \"\\
+\")
+     )
+   pos-spec-list))
+")))
+
+(defun ee-ffll-defun-with-lets (stem args vars)
+  (let* ((optional   (ee-ffll-optional   args))
+	 (setqs      (ee-ffll-setqs "  " args))
+	 (comma-args (ee-ffll-comma-args args))
+	 (lets       (ee-ffll-lets "  "  vars))
+	 )
+    (ee-template0 "\
+(defun find-{stem}-links ({optional}&rest pos-spec-list)
+\"Visit a temporary buffer containing hyperlinks for {stem}.\"
+  (interactive)
+{setqs}\
+  ({lets}
+    (apply
+     'find-elinks
+     `((find-{stem}-links {comma-args},@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-{stem}-links)
+       \"\"
+       ,(ee-template0 \"\\
+\")
+       )
+     pos-spec-list)))
+")))
+
+(defun ee-ffll-defun (stem args &optional vars)
+  (if (equal vars "") (setq vars nil))
+  (if vars (ee-ffll-defun-with-lets stem args vars)
+     (ee-ffll-defun-without-lets stem args)))
+
+
 
 
 

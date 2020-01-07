@@ -1,3 +1,8 @@
+2020-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el: added `(code-c-d "elpa" "~/.emacs.d/elpa/")' -
+	`find-epackage-links' depends on this.
+
 2020-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-templates-intro): rewrote the whole intro.

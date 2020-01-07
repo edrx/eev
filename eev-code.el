@@ -338,8 +338,13 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 ;; (find-equailfile "")
 ;; (find-equailfile "latin-ltx.el")
 
+;; Debian:
 (code-c-d "ud"   "/usr/share/doc/" :gz)  ; (find-udfile "bash/")
 (code-c-d "vldi" "/var/lib/dpkg/info/")	 ; (find-vldifile "bash.list")
+
+;; Used by `find-epackage-links':
+(code-c-d "elpa" "~/.emacs.d/elpa/")
+;; (find-elpafile "")
 
 
 
