@@ -71,6 +71,7 @@
 ;; «.find-youtubedl-links»	(to "find-youtubedl-links")
 ;; «.find-psne-links»		(to "find-psne-links")
 ;; «.find-git-links»		(to "find-git-links")
+;; «.find-fossil-links»		(to "find-fossil-links")
 ;; «.find-apt-get-source-links»	(to "find-apt-get-source-links")
 ;; «.find-eev-video-links»	(to "find-eev-video-links")
 ;;
@@ -1252,6 +1253,61 @@ git log --oneline --graph --all -20
 
 ;; Test:
 ;; (find-git-links "https://github.com/kikito/inspect.lua" "inspectlua")
+
+
+
+
+;; «find-fossil-links»  (to ".find-fossil-links")
+;; Skel: (find-find-links-links-new "fossil" "url subdir c" "")
+;; Test: (find-fossil-links "http://fossil.0branch.com/oorexx-mode")
+;; See:  https://fossil-scm.org/
+;;
+(defun ee-fossil-url-stem (url) (ee-git-url-stem url))
+
+(defun find-fossil-links (&optional url subdir c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for fossil."
+  (interactive (list (ee-url-at-point)))
+  (setq url (or url "{url}"))
+  (setq subdir (or subdir (ee-fossil-url-stem url) "{subdir}"))
+  (setq c (or c (replace-regexp-in-string "[-.]" "" subdir) "{c}"))
+  (apply
+   'find-elinks
+   `((find-fossil-links ,url ,subdir ,c ,@pos-spec-list)
+     (find-fossil-links "{url}" "{subdir}" "{c}")
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-fossil-links)
+     ""
+     ,(ee-template0 "\
+# (find-sh \"fossil help\")
+# (find-sh \"fossil help clone\")
+# (find-sh \"fossil help pull\")
+# (find-sh \"fossil help all\")
+# (find-sh \"fossil help open\")
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# rm -fv ~/usrc/fossil-repos/{subdir}.fsl
+mkdir -p ~/usrc/fossil-repos/
+cd       ~/usrc/fossil-repos/
+
+fossil clone {url}    {subdir}.fsl
+fossil pull  {url} -R {subdir}.fsl
+fossil all ls
+
+# cd        ~/usrc/{subdir}/ && fossil close
+# rm -Rfv   ~/usrc/{subdir}/
+mkdir -p    ~/usrc/{subdir}/
+cd          ~/usrc/{subdir}/
+fossil open ~/usrc/fossil-repos/{subdir}.fsl
+
+# (code-c-d \"{c}\" \"~/usrc/{subdir}/\")
+# (find-{c}file \"\")
+")
+     )
+   pos-spec-list))
+
+
 
 
 
