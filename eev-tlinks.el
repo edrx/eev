@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jan07
+;; Version:    2020jan08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -59,6 +59,7 @@
 ;;
 ;; «.find-find-links-links»	(to "find-find-links-links")
 ;; «.ee-ffll-functions»		(to "ee-ffll-functions")
+;; «.find-find-links-links-new»	(to "find-find-links-links-new")
 ;;
 ;; «.find-intro-links»		(to "find-intro-links")
 ;; «.find-pdflikedef-links»	(to "find-pdflikedef-links")
@@ -370,6 +371,33 @@ This is an internal function used by `find-{stem}-links'.\"
   (if (equal vars "") (setq vars nil))
   (if vars (ee-ffll-defun-with-lets stem args vars)
      (ee-ffll-defun-without-lets stem args)))
+
+
+;; «find-find-links-links-new»  (to ".find-find-links-links-new")
+;; Test: (find-find-links-links-new)
+;;
+(defun find-find-links-links-new (&optional stem args vars &rest pos-spec-list)
+"Visit a temporary buffer containing a skeleton of a find-*-links function."
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (setq args (or args "{args}"))
+  (setq vars (or vars "{vars}"))
+  (apply 'find-elinks-elisp
+   `((find-find-links-links-new ,stem ,args ,vars ,@pos-spec-list)
+     (find-find-links-links-new "mytask" "foo bar" "" ,@pos-spec-list)
+     (find-find-links-links-new "mytask" "foo bar" "plic bletch" ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-find-links-links-new)
+     ""
+     ,(ee-template0 ";; <find-{stem}-links>")
+     ,(concat ";; Skel: " (ee-S `(find-find-links-links-new ,stem ,args ,vars)))
+     ";;"
+     ,(ee-ffll-defun stem args vars)
+     )
+   pos-spec-list))
+
+
+
 
 
 

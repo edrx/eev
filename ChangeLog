@@ -1,3 +1,13 @@
+2020-01-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-find-links-links-new): new function.
+
+2020-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-ffll-optional, ee-ffll-setqs, ee-ffll-lets)
+	(ee-ffll-comma-args, ee-ffll-defun-without-lets)
+	(ee-ffll-defun-with-lets, ee-ffll-defun): new functions.
+
 2020-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-code.el: added `(code-c-d "elpa" "~/.emacs.d/elpa/")' -
