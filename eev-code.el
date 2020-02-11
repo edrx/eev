@@ -328,6 +328,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (code-c-d "e"      ee-emacs-lisp-directory "emacs" :gz) ; (find-enode   "Top")
 (code-c-d "el"     ee-emacs-lisp-directory "elisp" :gz) ; (find-elnode  "Top")
 (code-c-d "eli"    ee-emacs-lisp-directory "eintr" :gz) ; (find-elinode "Top")
+(code-c-d "cl"     (ee-efile "emacs-lisp/") "cl"   :gz) ; (find-clnode  "Top")
 (code-c-d "eleim"  ee-emacs-leim-directory :gz)
 (code-c-d "equail" (ee-eleimfile "quail/") :gz)
 (code-c-d "eetc"   data-directory :gz)

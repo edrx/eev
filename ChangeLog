@@ -1,6 +1,35 @@
 2020-01-08  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-hlinks.el: new file.
+	(ee-buffer-re, ee-buffer-eq, ee-buffer-help0)
+	(ee-buffer-help-re0, ee-buffer-help, ee-grep-bufferp)
+	(ee-man-bufferp, ee-rcirc-bufferp, ee-info-bufferp)
+	(ee-dired-bufferp, ee-wdired-bufferp, ee-w3m-bufferp)
+	(ee-custom-bufferp, ee-epackages-bufferp, ee-intro-bufferp)
+	(ee-freenode-bufferp, ee-ecolors-bufferp, ee-efaces-bufferp)
+	(ee-pdftext-bufferp, ee-efunctiondescr-bufferp)
+	(ee-find-efunctiondescr-links, ee-evardescr-bufferp)
+	(ee-find-evardescr-links, ee-efunctiondescr-re, ee-evardescr-re)
+	(ee-efacedescr-re, ee-efacedescr-bufferp)
+	(ee-find-efacedescr-links, ee-epackage-re, ee-epackage-bufferp)
+	(ee-find-epackage-links, ee-man-re, ee-find-man-links)
+	(ee-custom-re, ee-find-custom-links, ee-file-bufferp)
+	(ee-find-efaces-links, ee-find-ecolors-links)
+	(ee-find-epackages-links, ee-find-pdftext-links)
+	(ee-find-here-links, find-here-links-test, ee-find-here-links0)
+	(find-here-links, find-here-links-beginner)
+	(ee-window-configuration-before-M-h-M-3, find-here-links-3)
+	(find-here-links-1): all these functions and variables were moved
+	from eev-elinks.el to eev-hlinks.el.
+
+	* eev-intro.el (find-links-conv-intro): mention eev-hlinks.el in
+	the classification in the section "3. Classification".
+
 	* eev-tlinks.el (find-find-links-links-new): new function.
+	(find-fossil-links, ee-fossil-url-stem): new functions.
+
+	* eev-code.el: added a `(code-c-d "cl" ...)', for the Common Lisp
+	extensions.
 
 2020-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
 

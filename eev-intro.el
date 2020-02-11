@@ -3966,7 +3966,12 @@ We start from some observations:
      `find-code-pdf-page' as its associated debugging function,
      and so on.
 
-  f) If we call the hyperlinks in the items above \"non-basic\"
+  f) `find-here-links' and its variants create temporary buffers
+     that violate this convention:
+
+       (find-links-intro \"5. The first line regenerates the buffer\")
+
+  g) If we call the hyperlinks in the items above \"non-basic\"
      then we get - by exclusion! - a notion of what are \"basic
      hyperlinks\".
 
@@ -3977,6 +3982,7 @@ and a hyperlink to the source file at the right:
   External processes:               (find-eev \"eev-plinks.el\")
   `find-elinks':                    (find-eev \"eev-elinks.el\")
   `find-elinks'+`ee-template0':     (find-eev \"eev-tlinks.el\")
+  `find-here-links':                (find-eev \"eev-hlinks.el\")
   `code-c-d' and `find-code-c-d':   (find-eev \"eev-code.el\")
   `code-pdf*' and `find-code-pdf*': (find-eev \"eev-pdflike.el\")
 
@@ -8543,8 +8549,28 @@ LIST that are sexps are converted to strings using `ee-HS'. See:
 
 
 
+4. Skels
+========
+Many functions in eev have comments that start with \";; Skel:\",
+like this:
 
-4. `find-find-links-links'
+  ;; Skel: (find-find-links-links-new \"fossil\" \"url subdir c\" \"\")
+
+A comment like that before a function means that I wrote that
+function by first running that sexp and then modifying the code
+that that sexp generated, that was a \"skeleton\".
+
+Try:
+
+  (find-find-links-links-new \"fossil\" \"url subdir c\" \"\")
+  (find-eev \"eev-tlinks.el\" \"find-fossil-links\")
+  (find-eevgrep \"grep --color -nH --null -e Skel: *.el\")
+
+
+
+
+
+5. `find-find-links-links'
 ==========================
 ALL my `find-*-links' started as quick hacks.
 SOME of them were useful enough to deserve being cleaned up.
