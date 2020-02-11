@@ -35,8 +35,8 @@
 ;;
 ;; in the local variables section at the end of (at least some) of his
 ;; files; the functions defined here make the local variables section
-;; trick unneccessary - `ee-format-as-anchor' now uses `ee-tolatin1'
-;; to produce a search string that works both unibyte, on UTF-8, on
+;; trick unnecessary - `ee-format-as-anchor' now uses `ee-tolatin1' to
+;; produce a search string that works both unibyte, on UTF-8, on
 ;; latin-1 files and some (most of?) other encodings.
 ;;
 ;; NOTE: `ee-tolatin1' a hack! Conversion to latin-1 seems to work in

@@ -221,7 +221,7 @@
 2019-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (ee-mpv-video-options): new variable.
-	(ee-mpv-video-options, ee-find-mpv-video): num funcions.
+	(ee-mpv-video-options, ee-find-mpv-video): new functions.
 
 	* eev-tlinks.el (find-apt-get-source-links): new function.
 

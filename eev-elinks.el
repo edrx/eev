@@ -774,6 +774,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
   (setq fname (or fname (or (buffer-file-name) default-directory)))
   `(,(ee-if-prefixp "~/" "~/" fname '`(find-fline ,fname+))
     ,(ee-if-prefixp "$S/http/"   "http://" fname '(ee-H fname+))
+    ,(ee-if-prefixp "$S/https/" "https://" fname '(ee-H fname+))
     ,(ee-if-prefixp "$S/shttp/" "shttp://" fname '(ee-H fname+))
     ""
     (find-file ,fname)		; non-refinable

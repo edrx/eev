@@ -522,8 +522,8 @@ CODE argument, and process the POS-SPEC-LIST."
 (defun find-estring (string &rest pos-spec-list)
   "Visit a temporary buffer whose contents are given by STR.
 The default name for the buffer is \"*string*\", but this can be
-overriden by setting `ee-buffer-name' to another name with a `let'.
-If the buffer already exists its contents are destroyed.
+overridden by setting `ee-buffer-name' to another name with a
+`let'. If the buffer already exists its contents are destroyed.
 The buffer is not made read-only."
   (apply 'find-eoutput-rerun (or ee-buffer-name "*string*")
 	 `(insert ,string) pos-spec-list))
@@ -552,7 +552,7 @@ See: (find-anchors-intro \"WARNING: some glyphs need raw-text-unix\")"
 (defun find-estring-lv (string &rest pos-spec-list)
   "Visit a temporary buffer whose contents are given by STR.
 The default name for the buffer is \"*string*\", but this can be
-overriden by setting `ee-buffer-name' to another name with a `let'.
+overridden by setting `ee-buffer-name' to another name with a `let'.
 If the buffer already exists its contents are destroyed.
 The buffer is not made read-only.
 The \"Local variables:\" section in the buffer is processed."
@@ -724,7 +724,7 @@ it doesn't convert relative filenames into urls. See
 ;;   (find-fline   "/var/lib/dpkg/status" "\nPackage: bash\n")
 
 (defun find-Package (fname &optional packagename &rest pos-spec-list)
-  "Hyperlink to \"Package: \" achors in Debian package control files.
+  "Hyperlink to \"Package: \" anchors in Debian package control files.
 See: `find-status', `find-available', (find-man \"grep-dctrl\")"
   (find-fline fname)
   (apply 'ee-goto-position

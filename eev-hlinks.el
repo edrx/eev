@@ -125,7 +125,7 @@
 ;;
 ;; «ee-types-of-here»  (to ".ee-types-of-here")
 ;; New code. Not working yet. Commented out.
-;; Uglyness: `ee-add-type-of-here' runs `sort' too often.
+;; Ugliness: `ee-add-type-of-here' runs `sort' too often.
 ;; See: (find-eev "eev-code.el" "alists")
 ;;      (find-elnode "Sequence Functions" "Function: sort ")
 

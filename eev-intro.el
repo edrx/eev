@@ -327,7 +327,7 @@ start it again by typing \"~/eev\" again in the shell prompt.
 
 Eventually you will learn how go get out of everything and how to undo
 almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
-This tutorial is intented to make you learn the most essential things
+This tutorial is intended to make you learn the most essential things
 in the first ten minutes - including how to navigate in Emacs's
 manuals.
 
@@ -372,7 +372,7 @@ line of the block below:
 
 `M-e' accepts several different numeric prefixes that alter its
 behavior. We are only interested in one of them now - `M-0 M-e'
-highlights the sexp for a fraction of a second insted of executing it.
+highlights the sexp for a fraction of a second instead of executing it.
 Try it above.
 
 
@@ -433,7 +433,7 @@ or
   sudo apt-get install emacs-common-non-dfsg
 
 may work - but for \"...-non-dfsg\" packages may need you to
-enable access to the \"non-free\" respository... ask for help if
+enable access to the \"non-free\" repository... ask for help if
 you need!
 
 An important difference between elisp hyperlinks and browser
@@ -1656,7 +1656,7 @@ variables by running this:
   (setq ee-info-file \"elisp\")
 
 The short hyperlink to an info node is only produced when Info is
-visting a node in a manual whose name matches the variable
+visiting a node in a manual whose name matches the variable
 `ee-info-file'.
 
 
@@ -2910,7 +2910,7 @@ special way, according to its type:
 and the other arguments are interpreted (recursively) by
 `ee-goto-rest':
 
-    string -> jump to the next occurence of that string
+    string -> jump to the next occurrence of that string
     number -> move down n lines
     list   -> evaluate the list
 
@@ -3267,14 +3267,14 @@ but eev-mode implements a shorthand for it: `M-e'. Try it here:
 
 `M-e' accepts several different numeric prefixes that alter its
 behavior. We are only interested in one of them now - `M-0 M-e'
-highlights the sexp for a fraction of a second insted of
+highlights the sexp for a fraction of a second instead of
 executing it. Try it above.
 
 In some rare occasions we might want to run something like `M-e'
 but without moving to the end of the line first. Eev-mode
 implements a key binding for that: `M-E' (meta-shift-e). As an
 exercise, try to use `M-0 M-E' at several positions below, to
-hightlight the subsexps `(* 2 3)', `(* 4 5)', and `4'.
+highlight the subsexps `(* 2 3)', `(* 4 5)', and `4'.
 
   (+ (* 2 3) (* 4 5))
 
@@ -3464,7 +3464,7 @@ special way, according to its type:
 and the other arguments are interpreted (recursively) by
 `ee-goto-rest':
 
-    string -> jump to the next occurence of that string
+    string -> jump to the next occurrence of that string
     number -> move down n lines
     list   -> evaluate the list
 
@@ -3500,7 +3500,7 @@ argument in the pos-spec-list by running `ee-format-as-anchor' on
 it [TODO: document this], and the ones based on
 `ee-goto-position-page' jump to the n-th \"page\" of a buffer if
 the first argument of the pos-spec-list is a number, n; for
-exemple, if n is 234 that will jump to the 233-th formfeed (233
+example, if n is 234 that will jump to the 233-th formfeed (233
 and not 234 because the page 1 is before the first formfeed). For
 more on \"pages\", see:
 
@@ -3576,7 +3576,7 @@ keep the instructions visible.
 
 10. More on functions
 =====================
-A symbol - for example `f' - can be both a varible and a
+A symbol - for example `f' - can be both a variable and a
 function; its \"value as a variable\" and its \"value as a
 function\" are stored in different places. Try:
 
@@ -5782,7 +5782,7 @@ it is not empty, then `M-J' produces a definition for an
 Note that `M-J' is quite dumb - it doesn't check if the first
 \"word\" is a number, nor if the second is a sexp. Use it with
 care! Try using `M-J' on the \"a b ...\" lines below - you will
-get useless definitons.
+get useless definitions.
 
   a  b  c  d
   a  b  c
@@ -6083,7 +6083,7 @@ lists, like this (NOTE: do not execute these defuns!):
 and they both invoke `ee-code-c-d', which does all the template
 work and returns a big string; `ee-code-c-d' passes its `rest'
 argument to a recursive function called `ee-code-c-d-rest', and
-for each one of the suported keywords there is a corresponding
+for each one of the supported keywords there is a corresponding
 function, also recursive; for `:info' it is called
 `ee-code-c-d-:info'. Their specifications are like this:
 
@@ -7450,7 +7450,7 @@ the way to play again the \"default audio/video file\" is by
 running the function `find-punchandjudyvideo'.
 
 This is similar to what the `find-xxxtext' functions do - they
-store some informations about the last PDF opened with a
+store some information about the last PDF opened with a
 `find-xxxtext' function into global variables. See:
 
   (find-pdf-like-intro \"11. How `M-h M-p' guesses everything\")
@@ -7648,7 +7648,7 @@ to `find-youtubedl-links' below:
 
 In the second one we get a buffer where all occurrences
 of \"{title}\" have been substituted by \"TITLE\", and all
-occurrences of \"{ext-}\" by \".mp4\". What happenned was that
+occurrences of \"{ext-}\" by \".mp4\". What happened was that
 
   (ee-youtubedl-guess* \"/tmp/\" \"abcdefghijk\")
      --> (\"/tmp/TITLE-abcdefghijk.mp4.part\")
@@ -8330,7 +8330,7 @@ We can apply this idea
   (find-eev-quick-intro \"7.4. Commands with very short names\")
   (find-eev-quick-intro \"7.4. Commands with very short names\" \"(defun c ()\")
 
-to rcirc. If you connect occasionaly to the channels #eev,
+to rcirc. If you connect occasionally to the channels #eev,
 #emacs, #git and #ruby, you can run this, or put these lines in
 your .emacs:
 
@@ -9092,7 +9092,7 @@ and then:
      a python interpreter \"listening on channel A\";
 
   2) we use the top shell to send the lines \"print(2+3)\" and
-     \"exit()\" \"thorugh the channel A\". In low-level terms
+     \"exit()\" \"through the channel A\". In low-level terms
      this means that for each line
 
        a) we save it into the file \"$EEVTMPDIR/eeg.A.str\",
@@ -9703,7 +9703,7 @@ player. All this is explained here:
 30:21 remember that the first line regenerates the buffer...
 31:07 we use that to select a directory for installation.
 31:40 an eepitch block
-31:53 emacs is made to handle anyting that looks like text...
+31:53 emacs is made to handle anything that looks like text...
 32:38 running terminals inside Emacs
 32:52 the best of both worlds
 33:50 f8
@@ -11202,7 +11202,7 @@ line of the block below:
 
 `M-e' accepts several different numeric prefixes that alter its
 behavior. We are only interested in one of them now - `M-0 M-e'
-highlights the sexp for a fraction of a second insted of executing it.
+highlights the sexp for a fraction of a second instead of executing it.
 Try it above.
 
 Also:

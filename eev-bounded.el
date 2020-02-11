@@ -35,7 +35,7 @@
 ;; This file adds support for "bounded functions" to eev. For example:
 ;; `M-x eev' saves the region between point and mark into the
 ;; temporary script file; `M-x eev-bounded' saves the region around
-;; point, up to the first occurences of a certain delimiters before
+;; point, up to the first occurrences of a certain delimiters before
 ;; and after point, into the temporary script file.
 ;;
 ;; Big letters courtesy of Figlet.
