@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jan04
+;; Version:    2020feb20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -90,6 +90,8 @@
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
 ;; «.find-org-intro»		(to "find-org-intro")
 ;; «.find-escripts-intro»	(to "find-escripts-intro")
+
+;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -1747,7 +1749,7 @@ This section was moved to:
 ;;;                                               |___/     
 ;;
 ;; «find-emacs-keys-intro» (to ".find-emacs-keys-intro")
-;; (find-intro-links "emacs-keys")
+;; Skel: (find-intro-links "emacs-keys")
 
 (defun find-emacs-keys-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-emacs-keys-intro)*"))
@@ -1770,15 +1772,17 @@ The most basic keys of eev are:
   M-e   - to follow a hyperlink.  Mnemonic: \"(e)valuate\"/\"(e)xecute\".
           See: (find-eev-quick-intro \"2. Evaluating Lisp\")
                (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  M-j   - to jump to certain predefined places.  In particular,
+              `M-j' takes you to a buffer with basic help and a
+                    list of jump targets. See:
+                    (find-eev-quick-intro \"7.2. The list of eejump targets\")
+          `M-2 M-j' takes you to this help page.
+          `M-5 M-j' takes you to: (find-eev-quick-intro)
   M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
           See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
   M-K   - to go back without killing the buffer.
           See: (find-eval-intro \"5. Going back\")
                (find-eval-intro \"5. Going back\" \"`M-K' instead of `M-k'\")
-  M-j   - to jump to certain predefined places - in particular,
-              `M-j' takes you to the list of jump targets.
-          `M-2 M-j' takes you to this help page.
-          `M-5 M-j' takes you to: (find-eev-quick-intro)
   <f8>  - See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
   M-T   - See: (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
 
@@ -1944,7 +1948,7 @@ M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
 ;;;                           
 
 ;; «find-eev-install-intro» (to ".find-eev-install-intro")
-;; (find-intro-links "eev-install")
+;; Skel: (find-intro-links "eev-install")
 
 (defun find-eev-install-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-eev-install-intro)*"))
@@ -2389,7 +2393,7 @@ See:
 ;;;  \___|\___| \_/  
 ;;;                  
 ;; This works as an index.
-;; (find-intro-links "eev")
+;; Skel: (find-intro-links "eev")
 ;; «find-eev-intro»  (to ".find-eev-intro")
 
 (defun find-eev-intro (&rest rest) (interactive)
@@ -2423,47 +2427,52 @@ recommended reading order. These are the basic ones:
    8. (find-rcirc-intro)
    9. (find-eev-install-intro)
 
+This is a very basic tutorial intended mainly for M$ Windows
+users:
+
+  10. (find-windows-beginner-intro)
+
 These ones explain ideas, conventions, and usage patterns:
 
-  10. (find-escripts-intro)
-  11. (find-links-conv-intro)
+  11. (find-escripts-intro)
+  12. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  12. (find-eval-intro)
-  13. (find-links-intro)
-  14. (find-brxxx-intro)
-  15. (find-wrap-intro)
-  16. (find-eejump-intro)
-  17. (find-anchors-intro)
-  18. (find-code-c-d-intro)
-  19. (find-psne-intro)
+  13. (find-eval-intro)
+  14. (find-links-intro)
+  15. (find-brxxx-intro)
+  16. (find-wrap-intro)
+  17. (find-eejump-intro)
+  18. (find-anchors-intro)
+  19. (find-code-c-d-intro)
+  10. (find-psne-intro)
 
 These are etcs:
 
-  20. (find-multiwindow-intro)
-  21. (find-templates-intro)
-  22. (find-org-intro)
-  23. (find-videos-intro)
-  24. (find-what-sexps-can-do-intro)
+  21. (find-multiwindow-intro)
+  22. (find-templates-intro)
+  23. (find-org-intro)
+  24. (find-videos-intro)
+  25. (find-what-sexps-can-do-intro)
 
 These ones explain advanced features that require extra setup:
 
-  25. (find-prepared-intro)
-  26. (find-bounded-intro)
-  27. (find-channels-intro)
+  26. (find-prepared-intro)
+  27. (find-bounded-intro)
+  28. (find-channels-intro)
 
 This one is used in a video:
 
-  28. (find-three-main-keys-intro)
+  29. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  29. (find-emacs-intro)
-  30. (find-defun-intro)
+  30. (find-emacs-intro)
+  31. (find-defun-intro)
 
-Item 23 is an index of old video tutorials, with scripts for
+Item 24 is an index of old video tutorials, with scripts for
 downloading local copies of them and links to important positions
 in the videos.
 
@@ -2554,7 +2563,7 @@ For the full lists of keybindings, see:
 ;;; |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
 ;;;                                               
 ;; «find-here-links-intro»  (to ".find-here-links-intro")
-;; (find-intro-links "here-links")
+;; Skel: (find-intro-links "here-links")
 
 (defun find-here-links-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-here-links-intro)*"))
@@ -2848,7 +2857,7 @@ The next steps are to learn how:
 ;;;                               |___/ 
 ;;
 ;; «find-refining-intro» (to ".find-refining-intro")
-;; (find-intro-links "refining")
+;; Skel: (find-intro-links "refining")
 
 (defun find-refining-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-refining-intro)*"))
@@ -3212,7 +3221,7 @@ series of actions using keys that are good for touch typists.
 ;;;  \___| \_/ \__,_|_|
 ;;;                    
 ;; «find-eval-intro»  (to ".find-eval-intro")
-;; (find-intro-links "eval")
+;; Skel: (find-intro-links "eval")
 ;; (find-TH "eev-article" "hyperlinks")
 ;;      http://angg.twu.net/eev-article.html#hyperlinks
 ;;   file:///home/edrx/TH/L/eev-article.html#hyperlinks
@@ -3791,7 +3800,7 @@ hyperlinks in scripts]
 ;;; |_|_|_| |_|_|\_\___/      \___\___/|_| |_|\_/ \___|_| |_|\__|_|\___/|_| |_|___/
 ;;;                                                                                
 ;; «find-links-conv-intro» (to ".find-links-conv-intro")
-;; (find-intro-links "links-conv")
+;; Skel: (find-intro-links "links-conv")
 
 (defun find-links-conv-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-links-conv-intro)*"))
@@ -4251,7 +4260,7 @@ be expanded later:
 ;;; | | | | | |   <\__ \
 ;;; |_|_|_| |_|_|\_\___/
 ;;;                     
-;; (find-intro-links "links")
+;; Skel: (find-intro-links "links")
 ;; «find-links-intro»  (to ".find-links-intro")
 
 (defun find-links-intro (&rest rest) (interactive)
@@ -4642,7 +4651,7 @@ scripts etc\]
 ;;;           |_|                    
 ;;
 ;; «find-eepitch-intro»  (to ".find-eepitch-intro")
-;; (find-intro-links "eepitch")
+;; Skel: (find-intro-links "eepitch")
 ;; (find-eev "eepitch.readme")
 
 (defun find-eepitch-intro (&rest rest) (interactive)
@@ -5288,7 +5297,7 @@ What functions can generate target buffers:
 ;;;   \_/\_/ |_|  \__,_| .__/ 
 ;;;                    |_|    
 ;;
-;; (find-intro-links "wrap")
+;; Skel: (find-intro-links "wrap")
 ;; «find-wrap-intro»  (to ".find-wrap-intro")
 
 (defun find-wrap-intro (&rest rest) (interactive)
@@ -5814,7 +5823,7 @@ then you'll be attributing just a \"temporary\" meaning to
 ;;;  \__,_|_| |_|\___|_| |_|\___/|_|  |___/
 ;;;                                        
 ;; «find-anchors-intro» (to ".find-anchors-intro")
-;; (find-intro-links "anchors")
+;; Skel: (find-intro-links "anchors")
 
 (defun find-anchors-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-anchors-intro)*"))
@@ -7173,7 +7182,7 @@ The details on how to create these \"brxxx functions\" are here:
 ;;;  \__,_|\__,_|\__,_|_|\___/_/    \_/ |_|\__,_|\___|\___/ 
 ;;;                                                         
 ;; «find-audiovideo-intro» (to ".find-audiovideo-intro")
-;; (find-intro-links "audiovideo")
+;; Skel: (find-intro-links "audiovideo")
 
 (defun find-audiovideo-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-audiovideo-intro)*"))
@@ -7759,7 +7768,7 @@ buffers, change the variables `ee-youtubedl-dir', `ee-youtubedl-dir2',
 ;;; |_| |_| |_|\__,_|_|\__|_| \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/  
 ;;;                                                               
 ;; «find-multiwindow-intro» (to ".find-multiwindow-intro")
-;; (find-intro-links "multiwindow")
+;; Skel: (find-intro-links "multiwindow")
 
 (defun find-multiwindow-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-multiwindow-intro)*"))
@@ -8197,7 +8206,7 @@ Here:
 ;;; |_|  \___|_|_|  \___|
 ;;;                      
 ;; «find-rcirc-intro» (to ".find-rcirc-intro")
-;; (find-intro-links "rcirc")
+;; Skel: (find-intro-links "rcirc")
 
 (defun find-rcirc-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-rcirc-intro)*"))
@@ -8385,7 +8394,7 @@ See:
 ;;;                   |_|                         
 ;;
 ;; «find-templates-intro» (to ".find-templates-intro")
-;; (find-intro-links "templates")
+;; Skel: (find-intro-links "templates")
 
 (defun find-templates-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-templates-intro)*"))
@@ -8893,7 +8902,7 @@ But try these:
 ;;; |_.__/ \___/ \__,_|_| |_|\__,_|\___|\__,_|
 ;;;                                           
 ;; «find-bounded-intro» (to ".find-bounded-intro")
-;; (find-intro-links "bounded")
+;; Skel: (find-intro-links "bounded")
 (defun find-bounded-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-bounded-intro)*"))
     (apply 'find-eintro "\
@@ -8986,7 +8995,7 @@ so you should do something like this, but for your favourite key:
 ;;;  \___|_| |_|\__,_|_| |_|_| |_|\___|_|___/
 ;;;                                          
 ;; «find-channels-intro» (to ".find-channels-intro")
-;; (find-intro-links "channels")
+;; Skel: (find-intro-links "channels")
 
 (defun find-channels-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-channels-intro)*"))
@@ -9496,7 +9505,7 @@ How to set it up
 ;;;   \_/ |_|\__,_|\___|\___/|___/
 ;;;                               
 ;; «find-videos-intro» (to ".find-videos-intro")
-;; (find-intro-links "videos")
+;; Skel: (find-intro-links "videos")
 
 (defun find-videos-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-videos-intro)*"))
@@ -9796,7 +9805,7 @@ use this sexp to help you:
 ;;;  \__,_|\___|_|  \__,_|_| |_|
 ;;;                             
 ;; «find-defun-intro»  (to ".find-defun-intro")
-;; (find-intro-links "defun")
+;; Skel: (find-intro-links "defun")
 
 (defun find-defun-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-defun-intro)*"))
@@ -10020,7 +10029,7 @@ returns nil. But just as
 ;;;  \___|_| |_| |_|\__,_|\___|___/     |_|_| |_|\__|_|  \___/ 
 ;;;                                                            
 ;; «find-emacs-intro» (to ".find-emacs-intro")
-;; (find-intro-links "emacs")
+;; Skel: (find-intro-links "emacs")
 
 (defun find-emacs-intro (&rest rest) (interactive)
   (let ((ee-buffer-name "*(find-emacs-intro)*"))
@@ -10214,7 +10223,7 @@ C-x e   -- call-last-kbd-macro          (find-enode \"Keyboard Macros\")
 
 
 ;; «find-org-intro» (to ".find-org-intro")
-;; (find-intro-links "org")
+;; Skel: (find-intro-links "org")
 
 (defun find-org-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-org-intro)*"))
@@ -10382,7 +10391,7 @@ How do I mark a section as \"don't export this\"?
 ;;;                            |_|            
 
 ;; «find-escripts-intro» (to ".find-escripts-intro")
-;; (find-intro-links "escripts")
+;; Skel: (find-intro-links "escripts")
 
 (defun find-escripts-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-escripts-intro)*"))
@@ -11076,6 +11085,394 @@ This can also be used to generate links to info nodes.
 
 
 
+;;; __        ___        _                _                       
+;;; \ \      / / |      | |__   ___  __ _(_)_ __  _ __   ___ _ __ 
+;;;  \ \ /\ / / __)_____| '_ \ / _ \/ _` | | '_ \| '_ \ / _ \ '__|
+;;;   \ V  V /\__ \_____| |_) |  __/ (_| | | | | | | | |  __/ |   
+;;;    \_/\_/ (   /     |_.__/ \___|\__, |_|_| |_|_| |_|\___|_|   
+;;;            |_|                  |___/                         
+;;
+;; «find-windows-beginner-intro»  (to ".find-windows-beginner-intro")
+;; Skel: (find-intro-links "windows-beginner")
+
+(defun find-windows-beginner-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-windows-beginner-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-windows-beginner-intro)
+Source code:  (find-efunction 'find-windows-beginner-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eval-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-3 M-j'.
+
+
+
+
+This is a tutorial on how to install Emacs and eev on M$ Windows.
+If you're a W$ user you should start by reading it online, at:
+
+  http://angg.twu.net/eev-intros/find-windows-beginner-intro.html
+
+After getting eev installed on your machine you can access it
+from Emacs by typing `M-3 M-j'.
+
+
+
+
+
+0. Introduction
+===============
+My favorite exposition of what eev is is this presentation, called
+\"How to record executable notes with eev - and how to play them back\":
+
+  http://angg.twu.net/emacsconf2019.html
+  http://angg.twu.net/LATEX/2019emacsconf.pdf (slides)
+  http://www.youtube.com/watch?v=86yiRG8YJD0  (video)
+
+The video ends with a demo that shows a non-trivial example of
+\"executable notes\".  The most interesting part of that demo shows how
+to use eev to send commands to an external program - a unix shell,
+being run in interactive mode. Here's a link to that part (the t=938
+tells youtube to jump to 15:38):
+
+  http://www.youtube.com/watch?v=86yiRG8YJD0&t=938
+
+These notes are an attempt - ongoing, and work in progress! - to help
+Windows users with installing Emacs, eev, and Lua, and with trying to
+use Emacs on Windows to send commands to external programs - currently
+first to the crappy shell that comes with Windows, and after that to
+Lua.  A future version of these instructions will also include how to
+install Python, how to run it interactively from Emacs, and how to
+send commands to it.
+
+I don't have easy access to Windows machines, so I'm having to ask
+friends to try this for me.  Also, Linux/*NIXes are Windows are
+totally different planets - it's common for Windows people, even
+programmers, to have practically zero experience with terminals,
+a.k.a. with \"the Command Line\"...  in *NIXes this is so inconceivable
+that after discovering that many Windows programmers don't know how to
+use terminals I spent more than one week trying to figure out how to
+proceed.
+
+Version of these instructions: 2020feb20.
+
+
+
+
+1. Download and install Emacs
+=============================
+Official instructions:
+https://www.gnu.org/software/emacs/download.html#windows
+
+Download one of the .zips below:
+http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/
+http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/README
+http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/emacs-26.3-i686.zip     (32 bits)
+http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/emacs-26.3-x86_64.zip   (64 bits)
+
+then unpack the .zip and create a desktop icon or shortcut to
+<emacsdir>/bin/runemacs.exe.
+
+Note: don't use Emacs25 on Windows - it can't access the package repository!  The details are here:
+https://emacs.stackexchange.com/questions/233/how-to-proceed-on-package-el-signature-check-failure/52823#52823
+
+
+
+
+2. Key sequences and how to quit
+================================
+Most people who use Emacs do many things by using key sequences - for
+example `C-x C-s' to save the current file.
+
+`C-x C-s' is the Emacs notation for \"control-x control-s\". This
+notation is explained here:
+
+  (find-enode \"User Input\" \"<Ctrl>\" \"a\" \"C-a\")
+  (find-enode \"User Input\" \"<Meta>-a\" \"M-a\" \"<Alt>\")
+
+The best way to learn key sequences when you are a beginner is by
+using the menu bar:
+
+  (find-enode \"Menu Bar\")
+
+for example, in the \"File\" menu the last option is:
+
+  Quit             C-x C-c
+
+If you type just `C-x' and wait the `C-x' will be displayed in the
+\"Echo area\" at the bottom of the screen.  This is explained here:
+
+  (find-enode \"Echo Area\")
+
+  The line at the very bottom of the frame is the \"echo area\".  It is
+  used to display small amounts of text for various purposes.
+
+     The echo area is so-named because one of the things it is used
+  for is \"echoing\", which means displaying the characters of a
+  multi-character command as you type.  Single-character commands are
+  not echoed.  Multi-character commands (*note Keys) are echoed if you
+  pause for more than a second in the middle of a command.  Emacs then
+  echoes all the characters of the command so far, to prompt you for
+  the rest.  Once echoing has started, the rest of the command echoes
+  immediately as you type it.  This behavior is designed to give
+  confident users fast response, while giving hesitant users maximum
+  feedback.
+
+     The echo area is also used to display an \"error message\" when a
+  command cannot do its job.  Error messages may be accompanied by
+  beeping or by flashing the screen.
+
+There are several ways to abort a key sequence in the middle.  They
+are explained here,
+
+  (find-enode \"Quitting\")
+
+but what I recommend to beginners is: if you are stuck in the middle
+of a key sequence and don't know how to abort it, just go to the
+\"File\" menu, use the option \"Quit\", and restart Emacs.
+
+
+
+
+3. Using M-x and installing eev
+===============================
+We can run commands by name by using `M-x'.  `M-x' uses the last line
+of the screen as a \"minibuffer\" - see:
+
+  (find-enode \"Minibuffer\")
+  (find-enode \"Basic Minibuffer\" \"it appears in the echo area\")
+  (find-enode \"M-x\" \"Running Commands by Name\")
+
+To install eev,
+  1. run `M-x list-packages',
+  2. select \"eev\" at the list of packages,
+  3. click on \"install\".
+
+To load eev and enter its tutorial, run
+  `M-x eev-beginner'.
+
+The tutorial looks like this:
+  (find-eev-quick-intro)
+
+
+
+
+4. Understanding buffers and the mode line
+==========================================
+It's good to be able to interpret the mode line - it gives a lot of
+information about where we are.  See:
+
+  (find-enode \"Mode Line\")
+
+For example, after running `M-x eev-beginner' the mode line says this:
+
+  -:**-  *(find-eev-quick-intro)*   Top L1     (Fundamental eev) ---
+
+The best way to understand what each component means is by moving the
+mouse pointer onto it and looking at the help that is displayed.  The
+main components in this case are:
+
+   \"**\" - this buffer is read-write and has been modified.  See:
+
+      (find-enode \"Mode Line\" \"**\")
+
+   \"*(find-eev-quick-intro)*\" - the name of this buffer.
+
+      A curiosity: this buffer is not associated to a file!  If you
+      try to save it with `C-x C-s' or with the \"Save\" option in the
+      \"File\" menu you will get a prompt in the minibuffer that starts
+      with:
+
+        File to save in:
+
+      For more information on buffers and files, see:
+
+        (find-enode \"Mode Line\" \" BUF \" \"name of the buffer\")
+        (find-enode \"Buffers\" \"Most buffers are made by visiting files\")
+        (find-enode \"Basic Files\")
+
+   \"Top L1\" - see:
+
+      (find-enode \"Mode Line\" \"Top\")
+      (find-enode \"Mode Line\" \"line number at point\")
+      (find-enode \"Point\")
+
+   \"(Fundamental eev)\" - see:
+
+      (find-enode \"Mode Line\" \"(MAJOR MINOR)\")
+      (find-enode \"Mode Line\" \"major mode\")
+      (find-enode \"Mode Line\" \"minor modes\")
+
+
+
+
+5. More on modes
+================
+The \"eev\" in the mode line means that the key bindings defined by eev
+are \"active\".  The main key bindings of eev are listed here,
+
+  (find-emacs-keys-intro \"1. Basic keys (eev)\")
+
+and if you want more details about whats is an \"active keymap\" you can
+read these sections of the manual:
+
+  (find-enode \"Key Bindings\")
+  (find-enode \"Keymaps\")
+  (find-enode \"Local Keymaps\")
+
+The five main major modes that beginners need to learn about are the
+Fundamental Mode, the Help Mode, the Info Mode, Dired Mode, and Shell
+mode.  In the Fundamental Mode most \"basic\" keys are interpreted as
+editing keys - see:
+
+  (find-enode \"Major Modes\" \"Fundamental mode\")
+  (find-enode \"Keymaps\" \"self-inserting character\")
+
+
+
+
+5.1. Eev mode
+-------------
+The three main keys of Eev Mode are these ones:
+
+  M-e   - to follow a hyperlink.  Mnemonic: \"(e)valuate\"/\"(e)xecute\".
+          See: (find-eev-quick-intro \"2. Evaluating Lisp\")
+               (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  M-j   - to jump to certain predefined places.  In particular,
+              `M-j' takes you to a buffer with basic help and a
+                    list of jump targets. See:
+                    (find-eev-quick-intro \"7.2. The list of eejump targets\")
+          `M-2 M-j' takes you to this help page.
+          `M-5 M-j' takes you to: (find-eev-quick-intro)
+  M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
+          See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
+
+The text above was taken from:
+
+  (find-emacs-keys-intro \"1. Basic keys (eev)\")
+
+From this point onwards I will suppose that the reader knows how to
+use at least `M-e' and `M-j'.
+
+Note the Eev mode is a global minor mode.  The next subsections are
+about the other four main major modes - besides Fundamental mode.
+
+
+
+
+5.2. Help Mode
+--------------
+Most help commands in Emacs display buffers in Help Mode.  For
+example, if you run `C-h f Info-mode' or execute one of the sexps
+below
+
+  (find-efunctiondescr 'Info-mode)
+  (find-efunctiondescr 'help-mode)
+  (find-efunctiondescr 'dired-mode)
+
+you will get buffers in Help Mode - they are read-only, and if you
+type `q' in them this be interpreted as `quit' rather than as \"insert
+the character `q'\".
+
+
+
+5.3. Info Mode
+--------------
+The key sequence `C-h r' opens the Emacs manual in Info Mode.  This is
+a read-only mode like Help Mode, but more keys become navigation keys.
+The main ones are:
+
+  q     Quit Info: reselect previously selected buffer.
+  RET   Follow a node reference near point.
+  n     Move to the \"next\" node of this node.
+  p     Move to the \"previous\" node of this node.
+  u     Move \"up\" from this node.
+
+Also, the tool bar changes completely, and it shows icons
+corresponding to the main navigation keys.  See:
+
+  (find-enode \"Tool Bars\")
+
+
+
+5.4. Dired Mode
+---------------
+Dired Mode lets you navigate the directory structure.  You can enter
+it by typing `C-x C-f RET'.  If you type `RET' on a line that shows a
+directory this will be interpreted as \"enter that directory\", and
+`RET' on a line that shows a file is interpreted as \"open that file\".
+See:
+
+  (find-enode \"Dired\")
+  (find-enode \"Dired Enter\" \"C-x C-f\")
+  (find-enode \"ls in Lisp\")
+
+
+
+5.5. Shell Mode
+---------------
+Emacs can run terminals inside its buffers - and by default that
+terminal runs the default shell.  In Windows the default shell is
+\"cmd.exe\", that is reminiscent of MS-DOS, and is VERY clumsly.  See:
+
+  https://en.wikipedia.org/wiki/Windows_Console
+  https://en.wikipedia.org/wiki/Command-line_interface
+  https://en.wikipedia.org/wiki/MS-DOS#Windows_command-line_interface
+  https://en.wikipedia.org/wiki/Cmd.exe
+  https://en.wikipedia.org/wiki/Batch_file
+  https://en.wikipedia.org/wiki/Terminal_emulator
+
+If you run `M-x shell' you will get a shell buffer.  See:
+
+  (find-enode \"Interactive Shell\")
+
+especially this part of the first paragraph:
+
+  To give input to the subshell, go to the end of the buffer and type
+  the input, terminated by <RET>.
+
+As an exercise, try to give these commands to the Windows shell:
+
+  dir
+  cd
+  cd ..
+  dir
+
+
+
+
+6. Lua
+======
+Lua is a programming language that many people - like me - find
+much better and much simpler than Python.  The examples of
+\"controlling shell-like programs\" in the main tutorials of eev
+use Python because it comes installed by default in all modern
+*NIXes... see:
+
+  (find-eev-quick-intro \"6.2. Other targets\")
+  (find-eepitch-intro \"1.1. Another target\")
+
+but on Windows Lua is easier to install than Python, so let's
+start by it and leave Python to a second stage.
+
+Try to follow the instructions here:
+
+  (find-windows-eepitch-lua-links nil)
+
+
+[Unfinished!!!]
+
+
+
+
+" pos-spec-list)))
+
+;; (find-windows-beginner-intro)
+
+
+
 
 
 ;;;  _   _                                     _         _                  
@@ -11086,7 +11483,7 @@ This can also be used to generate links to info nodes.
 ;;;                                                               |___/     
 
 ;; «find-three-main-keys-intro»  (to ".find-three-main-keys-intro")
-;; (find-intro-links "three-main-keys")
+;; Skel: (find-intro-links "three-main-keys")
 ;; (find-three-main-keys-intro)
 
 ;; Used in this video:
@@ -11369,7 +11766,7 @@ Btw, the videos that I produced using this \"script\" are here:
 ;;;                                            |_|                          
 ;;
 ;; «find-what-sexps-can-do-intro»  (to ".find-what-sexps-can-do-intro")
-;; (find-intro-links "what-sexps-can-do")
+;; Skel: (find-intro-links "what-sexps-can-do")
 
 (defun find-what-sexps-can-do-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-what-sexps-can-do-intro)*"))
@@ -11489,7 +11886,7 @@ wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.
 
 
 ;; «find-creating-links-intro»  (to ".find-creating-links-intro")
-;; (find-intro-links "creating-links")
+;; Skel: (find-intro-links "creating-links")
 
 (defun find-creating-links-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-creating-links-intro)*"))
@@ -11536,7 +11933,7 @@ The beginner's way of creating \"hyperlinks to here\" is with:
 
 
 
-;; (find-intro-links "creating-links")
+;; Skel: (find-intro-links "creating-links")
 
 
 

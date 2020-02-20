@@ -1,3 +1,22 @@
+2020-02-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): new function.
+	(find-eev-intro): added `(find-windows-beginner-intro)' to the
+	list of intros.
+	(find-emacs-keys-intro): stress that `M-j' is one of the most
+	basic keys.
+
+	* eejump.el (eejump-3): new function - make `M-3 M-j' jump to
+	`(find-windows-beginner-intro)'.
+
+	* eev-tlinks.el (find-intro-links): added a "Skel:".
+
+	* eev-elinks.el (find-extra-file-links): new function.
+	(find-code-audiovideo-links): small changes.
+
+	* eev-mode.el (eev-mode-map-set): bind `M-h M-e' to
+	`find-extra-file-links'.
+
 2020-02-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-windows-eepitch-lua-links): new function.

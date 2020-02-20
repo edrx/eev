@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar05
+;; Version:    2020feb20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -101,6 +101,7 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 (defun eejump-*   () (find-efunction 'eejump-*))
 (defun eejump-1   () (find-fline "~/TODO"))
 (defun eejump-2   () (find-emacs-keys-intro))
+(defun eejump-3   () (find-windows-beginner-intro))
 (defun eejump-5   () (find-eev-quick-intro))
 (defun eejump-6   () (find-escripts-intro))
 

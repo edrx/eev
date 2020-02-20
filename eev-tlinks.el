@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020feb16
+;; Version:    2020feb20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -79,6 +79,7 @@
 ;; «.find-lua-links»			(to "find-lua-links")
 ;; «.find-escreenshot-links»		(to "find-escreenshot-links")
 ;; «.find-windows-eepitch-lua-links»	(to "find-windows-eepitch-lua-links")
+;; «.find-extra-file-links»		(to "find-extra-file-links")
 
 
 (require 'eev-env)
@@ -432,7 +433,7 @@ See: (find-eev \"eev-intro.el\")"
 ;; (find-{stem}-intro)
 
 ;; <find-{stem}-intro>
-;; (find-intro-links \"{stem}\")
+;; Skel: (find-intro-links \"{stem}\")
 
 \(defun find-{stem}-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name \"*(find-{stem}-intro)*\"))
@@ -1724,7 +1725,7 @@ dofile \"{fname0}\"
 ;;      (find-eev-quick-intro \"6.1. The main key: <F8>\")
 ;;      (find-eepitch-intro \"1.1. Another target\")
 ;;    and the test sexp is:
-;;      (eepitch-comint \"lua52\" \"{dir}\" \"lua52.exe\")
+;;      (eepitch-comint \"lua52\" \"{dir}lua52.exe\")
 ;;
 ;; 7) If you got a prompt like this one
 ;;
@@ -1759,6 +1760,84 @@ os.exit()
 ")
      )
    pos-spec-list))
+
+
+
+
+
+;; «find-extra-file-links»  (to ".find-extra-file-links")
+;; Skel: (find-find-links-links-new "extra-file" "fname c" "dir")
+;;
+(defun find-extra-file-links (&optional fname c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for extra-file."
+  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (if fname (setq fname (ee-shorten-file-name fname)))
+  (setq fname (or fname "{fname}"))
+  (setq c (or c "{c}"))
+  (let* ((dir (file-name-directory fname)))
+    (apply
+     'find-elinks-elisp
+     `((find-extra-file-links ,fname ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;; (find-efunction 'find-extra-file-links)
+       ;; ""
+       ,(ee-template0 "\
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
+;;      (find-audiovideo-intro \"2.1. `find-extra-file-links'\")
+
+;; Links to this directory:
+;; (find-fline {(ee-S (file-name-directory fname))})
+\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; (find-{c}file \"\")
+
+;; Links to a PDF file:
+;; (find-pdf-page \"{fname}\")
+;; (find-pdf-text \"{fname}\")
+\(code-pdf-page \"{c}\" \"{fname}\")
+\(code-pdf-text \"{c}\" \"{fname}\")
+;; (find-{c}page)
+;; (find-{c}text)
+
+;; Links to an audio file:
+;; (find-audio \"{fname}\")
+\(code-audio \"{c}audio\" \"{fname}\")
+;; (find-{c}audio)
+;; (find-{c}audio \"0:00\")
+
+;; Links to a video file:
+;; (find-video \"{fname}\")
+\(code-video \"{c}video\" \"{fname}\")
+;; (find-{c}video)
+;; (find-{c}video \"0:00\")
+;;
+;; (eev-avadj-mode 0)
+;; (eev-avadj-mode)
+
+;; Links to an shell-like program (for eepitch):
+;; (eepitch-comint \"{c}\" \"{fname}\")
+
+(defun eepitch-{c} () (interactive)
+  (eepitch-comint \"{c}\"
+     \"{fname}\"))
+
+;; Test:
+
+ (eepitch-{c})
+ (eepitch-kill)
+ (eepitch-{c})
+")
+       )
+     pos-spec-list)))
+
+;; Tests:
+;; (find-extra-file-links "~/eev-videos/three-keys-2.mp4")
+
+
+
+
+
+
 
 
 
