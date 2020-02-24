@@ -1,4 +1,4 @@
-;;; eev-channels.el -- control external processes usign signals,
+;;; eev-channels.el -- control external processes using signals,
 ;;; temporary files, and Expect scripts.
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.

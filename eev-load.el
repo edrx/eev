@@ -1,7 +1,7 @@
 ;;; eev-load.el -- load all the main modules of eev.
 ;;; This can also be used as an index to the main source files.
 
-;; Copyright (C) 2019 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -104,6 +104,7 @@
 (require 'eev-plinks)	       ; (find-eev "eev-plinks.el")
 (require 'eev-elinks)	       ; (find-eev "eev-elinks.el")
 (require 'eev-tlinks)	       ; (find-eev "eev-tlinks.el")
+(require 'eev-hlinks)	       ; (find-eev "eev-hlinks.el")
 ;;
 ;; The `brxxx' functions. See:
 ;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks")

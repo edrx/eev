@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019oct16
+;; Version:    2020feb20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -118,6 +118,7 @@ and: (find-eval-intro \"`M-k'\")"
   ;; Source: (find-eev "eev-elinks.el")
   (define-key eev-mode-map "\M-h\M-a" 'find-code-audiovideo-links)
   (define-key eev-mode-map "\M-h\M-d" 'find-debpkg-links)
+  (define-key eev-mode-map "\M-h\M-e" 'find-extra-file-links)
   (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links)
   (define-key eev-mode-map "\M-h\M-g" 'find-grep-links)
   (define-key eev-mode-map "\M-h\M-h" 'find-here-links)

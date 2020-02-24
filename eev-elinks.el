@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019oct04
+;; Version:    2020feb20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -35,7 +35,9 @@
 ;; See this for a (rough) classification of eev's hyperlink functions
 ;; into several classes:
 ;;
-;;   (find-links-intro "6. Basic and non-basic hyperlinks")
+;;   (find-links-conv-intro "3. Classification")
+;;   (find-links-conv-intro "3. Classification" "`find-elinks'")
+;;   (find-links-conv-intro "3. Classification" "`find-elinks'+")
 ;;
 ;; In this file we define `find-elinks' and several functions based on
 ;; it that generate relatively simple elisp hyperlinks buffers -
@@ -75,13 +77,24 @@
 ;; «.find-color-links»		(to "find-color-links")
 ;; «.find-epackage-links»	(to "find-epackage-links")
 
+;; «.find-code-pdf-links»	(to "find-code-pdf-links")
+;; «.find-pdf-links»		(to "find-pdf-links")
+;; «.find-extra-file-links»	(to "find-extra-file-links")
+;; «.find-code-audiovideo-links»  (to "find-code-audiovideo-links")
+
+
+
+;; The functions in these sections were moved to:
+;;   (find-eev "eev-hlinks.el")
+;;
 ;; «.find-here-links»		(to "find-here-links")
 ;; «.find-here-links-beginner»	(to "find-here-links-beginner")
 ;; «.find-here-links-3»		(to "find-here-links-3")
+;; «find-here-links»		(to ".find-here-links")
+;; «find-here-links-beginner»	(to ".find-here-links-beginner")
+;; «find-here-links-3»		(to ".find-here-links-3")
 
-;; «.find-code-pdf-links»	(to "find-code-pdf-links")
-;; «.find-pdf-links»		(to "find-pdf-links")
-;; «.find-code-audiovideo-links»  (to "find-code-audiovideo-links")
+
 
 
 
@@ -277,7 +290,7 @@ This is an internal function used by `find-efunction-links' and
 ;;; |_| |_|_| |_|\__,_|      \___| \_/ \__,_|_|  |_|\__,_|_.__/|_|\___|
 ;;;                                                                    
 ;; «find-evariable-links» (to ".find-evariable-links")
-;; (find-find-links-links "\\M-v" "evariable" "var")
+;; Skel: (find-find-links-links-old "\\M-v" "evariable" "var")
 ;; A test: (find-evariable-links 'line-move-visual)
 ;;                 (eek "M-h M-v  line-move-visual")
 
@@ -312,7 +325,7 @@ This is an internal function used by `find-efunction-links' and
 ;;;                                        |___/ 
 ;;
 ;; «find-ekey-links» (to ".find-ekey-links")
-;; (find-find-links-links "\\M-k" "ekey" "key")
+;; Skel: (find-find-links-links-old "\\M-k" "ekey" "key")
 ;;
 ;; The functions in this section generate buffers with hyperlinks
 ;; about a key sequence. Like this,
@@ -743,7 +756,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; |_| |_|_| |_|\__,_|     |_| |_|_|\___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                
 ;; «find-file-links» (to ".find-file-links")
-;; (find-find-links-links "f" "file" "fname")
+;; Skel: (find-find-links-links-old "f" "file" "fname")
 ;; A test: (find-file-links "~/tmp/foo")
 
 ;; Moved to eev-mode.el:
@@ -762,6 +775,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
   (setq fname (or fname (or (buffer-file-name) default-directory)))
   `(,(ee-if-prefixp "~/" "~/" fname '`(find-fline ,fname+))
     ,(ee-if-prefixp "$S/http/"   "http://" fname '(ee-H fname+))
+    ,(ee-if-prefixp "$S/https/" "https://" fname '(ee-H fname+))
     ,(ee-if-prefixp "$S/shttp/" "shttp://" fname '(ee-H fname+))
     ""
     (find-file ,fname)		; non-refinable
@@ -791,7 +805,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;;                          |___/         |_|                             
 ;;
 ;; «find-grep-links» (to ".find-grep-links")
-;; (find-find-links-links "\\M-g" "grep" "")
+;; Skel: (find-find-links-links-old "\\M-g" "grep" "")
 ;; Tests:
 ;;   (ee-find-grep-commands)
 ;;   (ee-find-grep-functions "~/eev-current/")
@@ -851,7 +865,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; |_| |_|_| |_|\__,_|     |_| |_| |_|\__,_|\___|_|  \___/ 
 ;;;                                                         
 ;; «find-ekbmacro-links» (to ".find-ekbmacro-links")
-;; (find-find-links-links "M" "macro" "")
+;; Skel: (find-find-links-links-old "M" "macro" "")
 ;; (find-efunction 'find-ekbmacro-links)
 
 ;; Moved to eev-mode.el:
@@ -909,7 +923,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 (defun ee-region-or-last-kill ()
   (or (ee-region) (ee-last-kill)))
 
-;; (find-find-links-links "\\M-p" "pdflike-page" "page bufname offset")
+;; Skel: (find-find-links-links-old "\\M-p" "pdflike-page" "page bufname offset")
 
 ;; Moved to eev-mode.el:
 ;; (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
@@ -1011,7 +1025,7 @@ See the comments in the source code."
 ;;      (find-templates-intro)
 
 ;; «find-eface-links» (to ".find-eface-links")
-;; (find-find-links-links "\\M-s" "eface" "face-symbol")
+;; Skel: (find-find-links-links-old "\\M-s" "eface" "face-symbol")
 ;; A test: (find-eface-links 'bold)
 
 ;; Moved to eev-mode.el:
@@ -1054,7 +1068,7 @@ See the comments in the source code."
 ;;; |_| |_|_| |_|\__,_|     \___|\___\___/|_|\___/|_|      |_|_|_| |_|_|\_\___/
 ;;;                                                                              
 ;; «find-color-links» (to ".find-color-links")
-;; (find-find-links-links "c" "color" "initialcolor")
+;; Skel: (find-find-links-links-old "c" "color" "initialcolor")
 ;; Tests:
 ;;   (find-ecolor-links)
 ;;   (find-ecolor-links "sienna")
@@ -1158,220 +1172,6 @@ This is an internal function used by `ee-find-epackage-links'."
 
 
 
-;;;   __ _           _       _                         _ _       _        
-;;;  / _(_)_ __   __| |     | |__   ___ _ __ ___      | (_)_ __ | | _____ 
-;;; | |_| | '_ \ / _` |_____| '_ \ / _ \ '__/ _ \_____| | | '_ \| |/ / __|
-;;; |  _| | | | | (_| |_____| | | |  __/ | |  __/_____| | | | | |   <\__ \
-;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
-;;;                                                                       
-;; «find-here-links» (to ".find-here-links")
-;; See: (find-eev-quick-intro "`M-h M-h'")
-
-;; (find-efunction 'find-grep-links)
-;; (find-efunction 'find-einfo-links)
-;; (find-efunction 'find-file-links)
-;; (find-find-links-links "\\M-h" "here" "")
-;; (find-efunction 'find-ecolors)
-
-;; Moved the key binding to:
-;;   (find-eevfile "eev-mode.el" "\\M-h\\M-h")
-;; (define-key eev-mode-map "\M-h\M-h" 'find-here-links)
-
-;; TODO: support cases like these:
-;;   (find-efunctiondescr 'condition-case)
-
-;; Some tools for detecting which kind of buffer we're in.
-(defun ee-buffer-re (re)
-  (if (string-match re (buffer-name))
-      (match-string 1 (buffer-name))))
-(defun ee-buffer-eq (str) (string= str (buffer-name)))
-
-(defun ee-buffer-help0    () (ee-buffer-eq "*Help*"))
-(defun ee-buffer-help-re0 (re n)
-  (if (ee-buffer-help0)
-      (save-excursion
-	(goto-char (point-min))
-	(if (looking-at re) (match-string n)))))
-
-(defun ee-buffer-help (re n) (intern (or (ee-buffer-help-re0 re n) "nil")))
-
-;; By major mode
-(defun ee-grep-bufferp      () (eq major-mode 'grep-mode))
-(defun ee-man-bufferp       () (eq major-mode 'Man-mode))
-(defun ee-rcirc-bufferp     () (eq major-mode 'rcirc-mode))
-(defun ee-info-bufferp      () (eq major-mode 'Info-mode))
-(defun ee-dired-bufferp     () (eq major-mode 'dired-mode))
-(defun ee-wdired-bufferp    () (eq major-mode 'wdired-mode))
-(defun ee-w3m-bufferp       () (eq major-mode 'w3m-mode))
-(defun ee-custom-bufferp    () (eq major-mode 'Custom-mode))
-(defun ee-epackages-bufferp () (eq major-mode 'package-menu-mode))
-
-;; By buffer name
-(defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))
-(defun ee-freenode-bufferp () (ee-buffer-re "^\\(.*\\).freenode\\.net"))
-(defun ee-ecolors-bufferp  () (ee-buffer-eq "*Colors*"))
-(defun ee-efaces-bufferp   () (ee-buffer-eq "*Faces*"))
-(defun ee-pdftext-bufferp  () (ee-buffer-re "^pdftotext"))
-
-;; By buffer name (when it is "*Help*")
-(defvar ee-efunctiondescr-re
-  "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\|special form\\)")
-(defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
-(defun  ee-find-efunctiondescr-links ()
-  (let ((f (ee-efunctiondescr-bufferp)))
-    `((find-efunction-links ',f)
-      (find-efunctiondescr ',f))))
-
-(defvar ee-evardescr-re "^\\([^ \t\n]+\\) is a variable")
-(defun  ee-evardescr-bufferp () (ee-buffer-help ee-evardescr-re 1))
-(defun  ee-find-evardescr-links ()
-  (let ((v (ee-evardescr-bufferp)))
-    `((find-evariable-links ',v)
-      (find-evardescr ',v))))
-
-(defvar ee-efacedescr-re "^Face: \\([^ \t\n]+\\)")
-(defun  ee-efacedescr-bufferp () (ee-buffer-help ee-efacedescr-re 1))
-(defun  ee-find-efacedescr-links ()
-  (let ((f (ee-efacedescr-bufferp)))
-    `((find-eface-links ',f)
-      (find-efacedescr ',f))))
-
-(defvar ee-epackage-re "^\\([^ \t\n]+\\) is a[ -~]+ package")
-(defun  ee-epackage-bufferp () (ee-buffer-help ee-epackage-re 1))
-(defun  ee-find-epackage-links ()
-  (let ((p (ee-epackage-bufferp)))
-    (list (ee-find-epackage-links0 p))))
-
-;; By buffer name (when the mode is man)
-(defvar ee-man-re "^\\*Man \\(.*\\)\\*$")
-(defun  ee-find-man-links () 
-  (let ((mp (ee-buffer-re ee-man-re)))
-    `((find-man ,mp))))
-
-(defvar ee-custom-re "^\\*Customize Group: \\(.*\\)\\*$")
-(defun  ee-find-custom-links () 
-  (let* ((name   (ee-buffer-re ee-custom-re))
-	 (symbol (intern (downcase (replace-regexp-in-string " " "-" name)))))
-    `((find-customizegroup ',symbol))))
-
-;; Other cases
-(defun ee-file-bufferp     () buffer-file-name)
-
-
-
-(defun ee-find-efaces-links    () `((find-efaces)))
-(defun ee-find-ecolors-links   () `((find-ecolors)))
-(defun ee-find-epackages-links () `((find-epackages)))
-(defun ee-find-pdftext-links   () (ee-pdflike-page-links))
-
-;; to to:
-;; ee-find-w3m-links
-;; ee-find-ecolor-links
-;; 
-
-(defun ee-find-here-links ()
-  (cond ;; by major mode
-	((ee-info-bufferp)      (cons "" (ee-find-info-links)))      ; M-h M-i
-	((ee-man-bufferp)       (cons "" (ee-find-man-links)))       ; ?
-	((ee-grep-bufferp)      (cons "" (ee-find-grep-links)))	     ; M-h M-g
-	((ee-w3m-bufferp)       (cons "" (ee-find-w3m-links)))	     ; M-h M-w
-	((ee-dired-bufferp)     (cons "" (ee-find-file-links)))	     ; M-h f
-	((ee-wdired-bufferp)    (cons "" (ee-find-file-links)))	     ; M-h f
-	((ee-custom-bufferp)    (cons "" (ee-find-custom-links)))    ; ?
-	((ee-epackages-bufferp) (cons "" (ee-find-epackages-links))) ; ?
-	;; by buffer name
-	((ee-intro-bufferp)     (cons "" (ee-find-intro-links)))     ; M-h M-i
-	((ee-freenode-bufferp)  (cons "" (ee-find-freenode-links)))  ; ?
-	((ee-ecolors-bufferp)   (cons "" (ee-find-ecolors-links)))   ; ?
-	((ee-efaces-bufferp)    (cons "" (ee-find-efaces-links)))    ; ?
-	((ee-pdftext-bufferp)   (cons "" (ee-find-pdftext-links)))   ; ?
-	;; by buffer name, when it is "*Help*"
-	((ee-efunctiondescr-bufferp) (cons "" (ee-find-efunctiondescr-links)))
-	((ee-efacedescr-bufferp)     (cons "" (ee-find-efacedescr-links)))
-	((ee-evardescr-bufferp)      (cons "" (ee-find-evardescr-links)))
-	((ee-epackage-bufferp)       (cons "" (ee-find-epackage-links)))
-	;; other cases
-	((ee-file-bufferp)      (cons "" (ee-find-file-links)))	   ; M-h f
-	(t (list "" "Not implemented!" "See:"
-		 '(find-efunction 'ee-find-here-links)))
-	))
-
-(defun find-here-links-test (sexp)
-"See: (find-links-intro \"`find-here-links'\")"
-  (find-wset "13o_2o_o" sexp '(find-here-links)))
-
-;; (find-man "1 cat")
-;; (progn (find-man "1 cat") (buffer-name))
-;; (find-eevfile "eev-rcirc.el")
-
-(defun ee-find-here-links0 ()
-  `(,(ee-H "See: ")
-    (find-eev-quick-intro "4.1. `find-here-links'")
-    (find-emacs-keys-intro "1. Basic keys (eev)" "M-h M-h")
-    (find-here-links-intro "4. `find-here-links-3'")
-    ))
-
-;; (find-find-links-links "\\M-h" "here" "")
-;;
-(defun find-here-links (&rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks pointing to here."
-  (interactive)
-  (apply 'find-elinks
-   `(;; The first line of a find-here-links buffer DOES NOT
-     ;; regenerates the buffer - instead the first lines point to
-     ;; help pages.
-     ,@(ee-find-here-links0)
-     ,@(ee-find-here-links)
-     )
-   pos-spec-list))
-
-;; Test: (find-here-links)
-;; (progn (find-enode "Screen") (find-here-links))
-
-
-
-;; «find-here-links-beginner»  (to ".find-here-links-beginner")
-;; This is a hack for beginners that is explained in a tutorial. See:
-;; (find-refining-intro "4. A tip for beginners")
-;; (find-refining-intro "4. A tip for beginners" "find-here-links-beginner")
-;;
-(defun find-here-links-beginner (&optional arg)
-  "A variant of `find-here-links' that may create a three-window setting."
-  (interactive "P")
-  (if arg (find-here-links-3) (find-here-links)))
-
-;; «find-here-links-3»  (to ".find-here-links-3")
-;; See: (find-here-links-intro "4. `find-here-links-3'")
-;;      (find-here-links-intro "5. `find-here-links-1'")
-;;
-(defvar ee-window-configuration-before-M-h-M-3 nil)
-
-(defun find-here-links-3 ()
-  "A variant of `find-here-links' that creates a three-window setting.
-Before creating the three windows this function tries to save the
-current window configuration to the variable
-`ee-window-configuration-before-M-h-M-3', but if that variable is
-not nil we abort instead of overwriting it.
-See: (find-here-links-intro \"4. `find-here-links-3'\")"
-  (interactive)
-  (if ee-window-configuration-before-M-h-M-3
-      (let ((overwrite
-	     (yes-or-no-p "Overwrite `ee-window-configuration-before-M-h-M-3'? ")))
-	(if (not overwrite)
-	    (error))))
-  (setq ee-window-configuration-before-M-h-M-3
-	(current-window-configuration))
-  (find-wset "13_o2_o_coo" nil '(find-here-links) '(eejump-1)))
-
-(defun find-here-links-1 ()
-  "Restore the window configuration before `find-here-links-3'.
-See: (find-here-links-intro \"5. `find-here-links-1'\")"
-  (interactive)
-  (set-window-configuration ee-window-configuration-before-M-h-M-3)
-  (setq ee-window-configuration-before-M-h-M-3 nil))
-
-
-
 
 
 
@@ -1417,14 +1217,14 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
 
 ;; (find-fline {(ee-S (file-name-directory fname))})
 \(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
-;; \(find-{c}file \"\")
+;; (find-{c}file \"\")
 
 ;; (find-pdf-page \"{fname}\")
 ;; (find-pdf-text \"{fname}\")
 \(code-pdf-page \"{c}\" \"{fname}\")
 \(code-pdf-text \"{c}\" \"{fname}\")
-;; \(find-{c}page)
-;; \(find-{c}text)
+;; (find-{c}page)
+;; (find-{c}text)
 ")
        )
      pos-spec-list)))
@@ -1440,41 +1240,137 @@ See: (find-here-links-intro \"5. `find-here-links-1'\")"
 
 
 
-;; «find-code-audiovideo-links»  (to ".find-code-audiovideo-links")
+;; «find-extra-file-links»  (to ".find-extra-file-links")
+;; Skel: (find-find-links-links-new "extra-file" "fname c" "dir")
 ;;
-(defun find-code-audiovideo-links (&optional fname c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks and..."
+(defun find-extra-file-links (&optional fname c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for extra-file."
   (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
   (if fname (setq fname (ee-shorten-file-name fname)))
   (setq fname (or fname "{fname}"))
   (setq c (or c "{c}"))
-  (let ((dir (file-name-directory fname)))
-    (apply 'find-elinks-elisp
+  (let* ((dir (file-name-directory fname)))
+    (apply
+     'find-elinks-elisp
+     `((find-extra-file-links ,fname ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;; (find-efunction 'find-extra-file-links)
+       ;; ""
+       ,(ee-template0 "\
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
+;;      (find-audiovideo-intro \"2.1. `find-extra-file-links'\")
+
+;; Links to this directory:
+;; (find-fline {(ee-S (file-name-directory fname))})
+\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; (find-{c}file \"\")
+
+;; Links to a PDF file:
+;; (find-pdf-page \"{fname}\")
+;; (find-pdf-text \"{fname}\")
+\(code-pdf-page \"{c}\" \"{fname}\")
+\(code-pdf-text \"{c}\" \"{fname}\")
+;; (find-{c}page)
+;; (find-{c}text)
+
+;; Links to an audio file:
+;; (find-audio \"{fname}\")
+\(code-audio \"{c}audio\" \"{fname}\")
+;; (find-{c}audio)
+;; (find-{c}audio \"0:00\")
+
+;; Links to a video file:
+;; (find-video \"{fname}\")
+\(code-video \"{c}video\" \"{fname}\")
+;; (find-{c}video)
+;; (find-{c}video \"0:00\")
+;;
+;; (eev-avadj-mode 0)
+;; (eev-avadj-mode)
+
+;; Links to an shell-like program (for eepitch):
+;; (eepitch-comint \"{c}\" \"{fname}\")
+
+(defun eepitch-{c} () (interactive)
+  (eepitch-comint \"{c}\"
+     \"{fname}\"))
+
+;; Test:
+
+ (eepitch-{c})
+ (eepitch-kill)
+ (eepitch-{c})
+")
+       )
+     pos-spec-list)))
+
+;; Tests:
+;; (find-extra-file-links "~/eev-videos/three-keys-2.mp4")
+
+
+
+;; «find-code-audiovideo-links»  (to ".find-code-audiovideo-links")
+;; Skel: (find-find-links-links-new "code-audiovideo" "fname c" "dir")
+;;
+(defun find-code-audiovideo-links (&optional fname c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for code-audiovideo."
+  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (if fname (setq fname (ee-shorten-file-name fname)))
+  (setq fname (or fname "{fname}"))
+  (setq c (or c "{c}"))
+  (let* ((dir (file-name-directory fname)))
+    (apply
+     'find-elinks-elisp
      `((find-code-audiovideo-links ,fname ,c ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
-       ;;
-       ;; (find-efunction 'find-code-pdf-links)
+       ;; (find-efunction 'find-code-audiovideo-links)
+       ;; ""
        ,(ee-template0 "\
 ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
 ;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
 ;;      (find-audiovideo-intro \"2.1. `find-code-audiovideo-links'\")
 
+;; Links to this directory:
 ;; (find-fline {(ee-S (file-name-directory fname))})
 \(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
-;; \(find-{c}file \"\")
+;; (find-{c}file \"\")
 
+;; Links to a PDF file:
+;; (find-pdf-page \"{fname}\")
+;; (find-pdf-text \"{fname}\")
+\(code-pdf-page \"{c}\" \"{fname}\")
+\(code-pdf-text \"{c}\" \"{fname}\")
+;; (find-{c}page)
+;; (find-{c}text)
+
+;; Links to an audio file:
 ;; (find-audio \"{fname}\")
 \(code-audio \"{c}audio\" \"{fname}\")
-;; \(find-{c}audio)
-;; \(find-{c}audio \"0:00\")
+;; (find-{c}audio)
+;; (find-{c}audio \"0:00\")
 
+;; Links to a video file:
 ;; (find-video \"{fname}\")
 \(code-video \"{c}video\" \"{fname}\")
-;; \(find-{c}video)
-;; \(find-{c}video \"0:00\")
-
+;; (find-{c}video)
+;; (find-{c}video \"0:00\")
+;;
 ;; (eev-avadj-mode 0)
 ;; (eev-avadj-mode)
+
+;; Links to an shell-like program (for eepitch):
+;; (eepitch-comint \"{c}\" \"{fname}\")
+
+(defun eepitch-{c} () (interactive)
+  (eepitch-comint \"{c}\"
+     \"{fname}\"))
+
+;; Test:
+
+ (eepitch-{c})
+ (eepitch-kill)
+ (eepitch-{c})
 ")
        )
      pos-spec-list)))

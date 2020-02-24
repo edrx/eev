@@ -60,6 +60,7 @@
         ((eq major-mode 'ruby-mode)   (ee-insert-test-ruby))
         ((eq major-mode 'sh-mode)     (ee-insert-test-sh))
         ((eq major-mode 'tcl-mode)    (ee-insert-test-tcl))
+        ((eq major-mode 'idris-mode)  (ee-insert-test-idris))
 	(t (error "ee-insert-test: Unsupported major mode"))))
 
 (defun ee-insert-test-lua ()
@@ -120,6 +121,15 @@ set COMMENTED_OUT {
 source %s
 
 }
+" (buffer-name))))
+
+(defun ee-insert-test-idris ()
+  (interactive)
+  (insert (format "
+{-
+ (eepitch-to-buffer \"*idris-repl*\")
+
+-}
 " (buffer-name))))
 
 

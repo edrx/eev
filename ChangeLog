@@ -1,3 +1,101 @@
+2020-02-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): new function.
+	(find-eev-intro): added `(find-windows-beginner-intro)' to the
+	list of intros.
+	(find-emacs-keys-intro): stress that `M-j' is one of the most
+	basic keys.
+
+	* eejump.el (eejump-3): new function - make `M-3 M-j' jump to
+	`(find-windows-beginner-intro)'.
+
+	* eev-tlinks.el (find-intro-links): added a "Skel:".
+
+	* eev-elinks.el (find-extra-file-links): new function.
+	(find-code-audiovideo-links): small changes.
+
+	* eev-mode.el (eev-mode-map-set): bind `M-h M-e' to
+	`find-extra-file-links'.
+
+2020-02-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-windows-eepitch-lua-links): new function.
+
+2020-01-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el: new file.
+	(ee-buffer-re, ee-buffer-eq, ee-buffer-help0)
+	(ee-buffer-help-re0, ee-buffer-help, ee-grep-bufferp)
+	(ee-man-bufferp, ee-rcirc-bufferp, ee-info-bufferp)
+	(ee-dired-bufferp, ee-wdired-bufferp, ee-w3m-bufferp)
+	(ee-custom-bufferp, ee-epackages-bufferp, ee-intro-bufferp)
+	(ee-freenode-bufferp, ee-ecolors-bufferp, ee-efaces-bufferp)
+	(ee-pdftext-bufferp, ee-efunctiondescr-bufferp)
+	(ee-find-efunctiondescr-links, ee-evardescr-bufferp)
+	(ee-find-evardescr-links, ee-efunctiondescr-re, ee-evardescr-re)
+	(ee-efacedescr-re, ee-efacedescr-bufferp)
+	(ee-find-efacedescr-links, ee-epackage-re, ee-epackage-bufferp)
+	(ee-find-epackage-links, ee-man-re, ee-find-man-links)
+	(ee-custom-re, ee-find-custom-links, ee-file-bufferp)
+	(ee-find-efaces-links, ee-find-ecolors-links)
+	(ee-find-epackages-links, ee-find-pdftext-links)
+	(ee-find-here-links, find-here-links-test, ee-find-here-links0)
+	(find-here-links, find-here-links-beginner)
+	(ee-window-configuration-before-M-h-M-3, find-here-links-3)
+	(find-here-links-1): all these functions and variables were moved
+	from eev-elinks.el to eev-hlinks.el.
+
+	* eev-intro.el (find-links-conv-intro): mention eev-hlinks.el in
+	the classification in the section "3. Classification".
+
+	* eev-tlinks.el (find-find-links-links-new): new function.
+	(find-fossil-links, ee-fossil-url-stem): new functions.
+
+	* eev-code.el: added a `(code-c-d "cl" ...)', for the Common Lisp
+	extensions.
+
+2020-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-ffll-optional, ee-ffll-setqs, ee-ffll-lets)
+	(ee-ffll-comma-args, ee-ffll-defun-without-lets)
+	(ee-ffll-defun-with-lets, ee-ffll-defun): new functions.
+
+2020-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el: added `(code-c-d "elpa" "~/.emacs.d/elpa/")' -
+	`find-epackage-links' depends on this.
+
+2020-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-templates-intro): rewrote the whole intro.
+	(find-refining-intro): new section: "5. Pointing to anchors".
+
+2020-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-idris): new function.
+
+	* eev-audiovideo.el: rewrote many comments.
+
+	* eev-intro.el (find-audiovideo-intro): new section: "4.4. The
+	default audio/video file".
+
+	* eev-blinks.el (ee-find-man-pos-spec-list): `defvar'ed. Was
+	undeclared before.
+
+2020-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-git-links): use "export PAGER=cat".
+
+2019-11-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): rewrote the section 7.2 to
+	explain how beginners should use `M-j' without a prefix argument.
+
+2019-11-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-org-intro): use \":results output\" (thx Ken
+	Mankoff)
+
 2019-11-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-org-intro): rewrote everything.
@@ -146,7 +244,7 @@
 2019-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (ee-mpv-video-options): new variable.
-	(ee-mpv-video-options, ee-find-mpv-video): num funcions.
+	(ee-mpv-video-options, ee-find-mpv-video): new functions.
 
 	* eev-tlinks.el (find-apt-get-source-links): new function.
 
