@@ -1729,7 +1729,7 @@ dofile \"{fname0}\"
 ;;
 ;; 7) If you got a prompt like this one
 ;;
-;;      Lua 5.2.4  Copyright (C) 1994-2015 Lua.org, PUC-Rio
+;;      Lua ...blabla... PUC-Rio
 ;;      > 
 ;;
 ;;    in the right window in the test in item (6) then everything is
