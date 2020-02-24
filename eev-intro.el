@@ -11163,9 +11163,6 @@ Version of these instructions: 2020feb20.
 
 1. Download and install Emacs
 =============================
-Official instructions:
-https://www.gnu.org/software/emacs/download.html#windows
-
 Download one of the .zips below:
 http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/
 http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/README
@@ -11174,6 +11171,9 @@ http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/emacs-26.3-x86_64.zip   (64 b
 
 then unpack the .zip and create a desktop icon or shortcut to
 <emacsdir>/bin/runemacs.exe.
+
+The official instructions are here (but you don't need them):
+https://www.gnu.org/software/emacs/download.html#windows
 
 Note: don't use Emacs25 on Windows - it can't access the package repository!  The details are here:
 https://emacs.stackexchange.com/questions/233/how-to-proceed-on-package-el-signature-check-failure/52823#52823

@@ -1,3 +1,7 @@
+2020-02-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev.el: updated the "Version:" (for ELPA).
+
 2020-02-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-windows-beginner-intro): new function.
@@ -9,10 +13,10 @@
 	* eejump.el (eejump-3): new function - make `M-3 M-j' jump to
 	`(find-windows-beginner-intro)'.
 
-	* eev-tlinks.el (find-intro-links): added a "Skel:".
+	* eev-elinks.el (find-code-audiovideo-links): small changes.
 
-	* eev-elinks.el (find-extra-file-links): new function.
-	(find-code-audiovideo-links): small changes.
+	* eev-tlinks.el (find-extra-file-links): new function.
+	(find-intro-links): added a "Skel:".
 
 	* eev-mode.el (eev-mode-map-set): bind `M-h M-e' to
 	`find-extra-file-links'.
