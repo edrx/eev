@@ -79,7 +79,6 @@
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
-;; «.find-extra-file-links»	(to "find-extra-file-links")
 ;; «.find-code-audiovideo-links»  (to "find-code-audiovideo-links")
 
 
@@ -1237,76 +1236,6 @@ This is an internal function used by `ee-find-epackage-links'."
   (if (eq major-mode 'dired-mode)
       (find-code-pdf-links (ee-dired-to-fname))
     (find-pdflike-page-links)))
-
-
-
-;; «find-extra-file-links»  (to ".find-extra-file-links")
-;; Skel: (find-find-links-links-new "extra-file" "fname c" "dir")
-;;
-(defun find-extra-file-links (&optional fname c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for extra-file."
-  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
-  (if fname (setq fname (ee-shorten-file-name fname)))
-  (setq fname (or fname "{fname}"))
-  (setq c (or c "{c}"))
-  (let* ((dir (file-name-directory fname)))
-    (apply
-     'find-elinks-elisp
-     `((find-extra-file-links ,fname ,c ,@pos-spec-list)
-       ;; Convention: the first sexp always regenerates the buffer.
-       ;; (find-efunction 'find-extra-file-links)
-       ;; ""
-       ,(ee-template0 "\
-;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
-;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
-;;      (find-audiovideo-intro \"2.1. `find-extra-file-links'\")
-
-;; Links to this directory:
-;; (find-fline {(ee-S (file-name-directory fname))})
-\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
-;; (find-{c}file \"\")
-
-;; Links to a PDF file:
-;; (find-pdf-page \"{fname}\")
-;; (find-pdf-text \"{fname}\")
-\(code-pdf-page \"{c}\" \"{fname}\")
-\(code-pdf-text \"{c}\" \"{fname}\")
-;; (find-{c}page)
-;; (find-{c}text)
-
-;; Links to an audio file:
-;; (find-audio \"{fname}\")
-\(code-audio \"{c}audio\" \"{fname}\")
-;; (find-{c}audio)
-;; (find-{c}audio \"0:00\")
-
-;; Links to a video file:
-;; (find-video \"{fname}\")
-\(code-video \"{c}video\" \"{fname}\")
-;; (find-{c}video)
-;; (find-{c}video \"0:00\")
-;;
-;; (eev-avadj-mode 0)
-;; (eev-avadj-mode)
-
-;; Links to an shell-like program (for eepitch):
-;; (eepitch-comint \"{c}\" \"{fname}\")
-
-(defun eepitch-{c} () (interactive)
-  (eepitch-comint \"{c}\"
-     \"{fname}\"))
-
-;; Test:
-
- (eepitch-{c})
- (eepitch-kill)
- (eepitch-{c})
-")
-       )
-     pos-spec-list)))
-
-;; Tests:
-;; (find-extra-file-links "~/eev-videos/three-keys-2.mp4")
 
 
 

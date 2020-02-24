@@ -1770,7 +1770,9 @@ os.exit()
 ;;
 (defun find-extra-file-links (&optional fname c &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for extra-file."
-  (interactive (list (and (eq major-mode 'dired-mode) (ee-dired-to-fname))))
+  (interactive (list (if (eq major-mode 'dired-mode)
+			 (ee-dired-to-fname)
+		       buffer-file-name)))
   (if fname (setq fname (ee-shorten-file-name fname)))
   (setq fname (or fname "{fname}"))
   (setq c (or c "{c}"))
@@ -1786,9 +1788,10 @@ os.exit()
 ;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
 ;;      (find-audiovideo-intro \"2.1. `find-extra-file-links'\")
 
-;; Links to this directory:
-;; (find-fline {(ee-S (file-name-directory fname))})
-\(code-c-d \"{c}\" \"{(file-name-directory fname)}\")
+;; Links to this file and directory:
+;; (find-fline {(ee-S fname)})
+;; (find-fline {(ee-S dir)})
+\(code-c-d \"{c}\" \"{dir}\")
 ;; (find-{c}file \"\")
 
 ;; Links to a PDF file:
