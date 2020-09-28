@@ -1,3 +1,50 @@
+2020-09-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-elisp-intro): new function.
+	(find-creating-links-intro): deleted.
+	(find-what-sexps-can-do-intro): deleted.
+	(find-eev-intro): small adjustments.
+
+2020-08-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eepitch-intro): added links to
+	<http://angg.twu.net/emacsconf2019.html> and to its video.
+
+2020-08-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-julia-mode): new function.
+
+2020-08-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test): rewritten.
+	(ee-insert-test-lua): deleted.
+	(ee-insert-test-lua-mode): new function.
+	(ee-insert-test-python): deleted.
+	(ee-insert-test-python-mode): new function.
+	(ee-insert-test-ruby): deleted.
+	(ee-insert-test-ruby-mode): new function.
+	(ee-insert-test-sh): deleted.
+	(ee-insert-test-sh-mode): new function.
+	(ee-insert-test-tcl): deleted.
+	(ee-insert-test-tcl-mode): new function.
+	(ee-insert-test-idris): deleted.
+	(ee-insert-test-idris-mode): new function.
+	(ee-insert-test-haskell): deleted.
+	(ee-insert-test-haskell-mode): new function.
+
+	* eev-intro.el (find-eepitch-intro): added documentation for the
+	new `M-x ee-insert-test'.
+
+2020-07-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-epackage-links0): added a link to
+	`find-epackage-links'.
+
+2020-04-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test): add ee-insert-test-haskell.
+	(ee-insert-test-haskell): new function.
+
 2020-02-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: updated the "Version:" (for ELPA).

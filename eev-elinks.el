@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020feb20
+;; Version:    2020jul22
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1145,6 +1145,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 	 )
     (ee-template0 "\
 # (find-epackages {(ee-S spkgname)})
+# (find-epackage-links '{pkgname})
 # (find-epackage '{pkgname})
 {lines}
 

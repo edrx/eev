@@ -1071,6 +1071,7 @@ cd {dir}
 {ee-youtubedl-command} -F    'http://www.youtube.com/watch?v={hash}'
 {ee-youtubedl-command} -f 18 'http://www.youtube.com/watch?v={hash}'
 {ee-youtubedl-command} -f 18 --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
+{ee-youtubedl-command}       --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
 
 # (find-es \"video\" \"youtube-dl\")
 # (find-fline \"{dir}\" \"{hash}\")
@@ -1729,7 +1730,7 @@ dofile \"{fname0}\"
 ;;
 ;; 7) If you got a prompt like this one
 ;;
-;;      Lua 5.2.4  Copyright (C) 1994-2015 Lua.org, PUC-Rio
+;;      Lua 5.2.4  ... 1994-2015 Lua.org, PUC-Rio
 ;;      > 
 ;;
 ;;    in the right window in the test in item (6) then everything is
