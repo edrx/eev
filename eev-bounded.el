@@ -42,6 +42,9 @@
 
 ;; See: (find-bounded-intro)
 
+;; «.code-bounded»	(to "code-bounded")
+;; «.obsolete»		(to "obsolete")
+
 
 
 
@@ -80,6 +83,7 @@ This function does not move point."
 ;;; | (_| (_) | (_| |  __/_____| |_) | (_) | |_| | | | | (_| |  __/ (_| |
 ;;;  \___\___/ \__,_|\___|     |_.__/ \___/ \__,_|_| |_|\__,_|\___|\__,_|
 ;;;                                                                      
+;; «code-bounded»  (to ".code-bounded")
 ;; See: (find-bounded-intro "Defining new bounded functions")
 
 (defun       code-bounded (newf f delim &optional adjust face dur)
@@ -155,6 +159,7 @@ See: (find-bounded-intro)\"
 ;;; | (_) | |_) \__ \ (_) | |  __/ ||  __/
 ;;;  \___/|_.__/|___/\___/|_|\___|\__\___|
 ;;;                                       
+;; «obsolete»  (to ".obsolete")
 ;; Obsolete code that I don't want to delete yet
 ;; (mainly because the docstrings have some good ideas in them)
 
@@ -325,6 +330,6 @@ echo $[1+2]
 
 
 ;; Local Variables:
-;; coding:          raw-text-unix
+;; coding:          utf-8-unix
 ;; no-byte-compile: t
 ;; End:

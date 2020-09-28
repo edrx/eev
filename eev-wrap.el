@@ -198,7 +198,7 @@ have to run an \"undo\"."
 #####
 
 # «.{anchor}»\t(to \"{anchor}\")
-# «{anchor}» (to \".{anchor}\")")))
+# «{anchor}»  (to \".{anchor}\")")))
 
 
 

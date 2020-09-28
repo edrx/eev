@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020feb20
+;; Version:    2020sep28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -42,16 +42,17 @@
 ;;      quite technical (and incomplete),
 ;;   5) a guide to the source files.
 ;;
-;; As of jan/2019, the work to make (find-eev-quick-intro) central is
-;; almost complete (...)
+;; In 2019 the work to make (find-eev-quick-intro) central was
+;; completed. The only autoloaded function of eev is `eev-beginner',
+;; that loads all the main modules of eev, turns eev-mode on, and runs
+;; (find-eev-quick-intro). See:
 ;;
+;;   (find-eevfile "eev-beginner.el" "defun eev-beginner ")
+;;
+
 ;; To use this, simply execute any of the sexps below:
 ;;   (find-eev-quick-intro)
 ;;   (find-eev-intro)
-;;   (find-eval-intro)
-;;   (find-eepitch-intro)
-;;   (find-wrap-intro)
-;;   (find-code-c-d-intro)
 
 
 ;; Quick index:
@@ -95,8 +96,8 @@
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
-;; «.find-what-sexps-can-do-intro»	(to "find-what-sexps-can-do-intro")
-;; «.find-creating-links-intro»		(to "find-creating-links-intro")
+;;
+;; «.find-elisp-intro»		(to "find-elisp-intro")
 
 
 ;; See: (find-anchors-intro)
@@ -1816,7 +1817,7 @@ See: (find-enode \"Keys\" \"key sequence\")
      (find-enode \"Minibuffer History\" \"<UP>\" \"<DOWN>\")
 
 <ESC> <ESC> <ESC>                (find-enode \"Quitting\")
-C-g   keyboard-quit              (find-enode \"Quitting\" \"C-g\")
+C-g   keyboard-quit (\"get out\")  (find-enode \"Quitting\" \"C-g\")
 M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
 
 More about the minibuffer:       (find-enode \"Minibuffer\")
@@ -2425,37 +2426,37 @@ recommended reading order. These are the basic ones:
    6. (find-eepitch-intro)
    7. (find-audiovideo-intro)
    8. (find-rcirc-intro)
-   9. (find-eev-install-intro)
+   9. (find-elisp-intro)
+  10. (find-eev-install-intro)
 
 This is a very basic tutorial intended mainly for M$ Windows
 users:
 
-  10. (find-windows-beginner-intro)
+  11. (find-windows-beginner-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  11. (find-escripts-intro)
-  12. (find-links-conv-intro)
+  12. (find-escripts-intro)
+  13. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  13. (find-eval-intro)
-  14. (find-links-intro)
-  15. (find-brxxx-intro)
-  16. (find-wrap-intro)
-  17. (find-eejump-intro)
-  18. (find-anchors-intro)
-  19. (find-code-c-d-intro)
-  10. (find-psne-intro)
+  14. (find-eval-intro)
+  15. (find-links-intro)
+  16. (find-brxxx-intro)
+  17. (find-wrap-intro)
+  18. (find-eejump-intro)
+  19. (find-anchors-intro)
+  20. (find-code-c-d-intro)
+  21. (find-psne-intro)
 
 These are etcs:
 
-  21. (find-multiwindow-intro)
-  22. (find-templates-intro)
-  23. (find-org-intro)
-  24. (find-videos-intro)
-  25. (find-what-sexps-can-do-intro)
+  22. (find-multiwindow-intro)
+  23. (find-templates-intro)
+  24. (find-org-intro)
+  25. (find-videos-intro)
 
 These ones explain advanced features that require extra setup:
 
@@ -2472,7 +2473,7 @@ These ones are obsolete:
   30. (find-emacs-intro)
   31. (find-defun-intro)
 
-Item 24 is an index of old video tutorials, with scripts for
+Item 25 is an index of old video tutorials, with scripts for
 downloading local copies of them and links to important positions
 in the videos.
 
@@ -3223,9 +3224,9 @@ series of actions using keys that are good for touch typists.
 ;; «find-eval-intro»  (to ".find-eval-intro")
 ;; Skel: (find-intro-links "eval")
 ;; (find-TH "eev-article" "hyperlinks")
+;; (find-TH "eev-article" "forward-and-back")
 ;;      http://angg.twu.net/eev-article.html#hyperlinks
 ;;   file:///home/edrx/TH/L/eev-article.html#hyperlinks
-;; (find-TH "eev-article" "forward-and-back")
 ;; (find-efunction 'ee-eval-last-sexp)
 
 (defun find-eval-intro (&rest rest) (interactive)
@@ -3241,9 +3242,11 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-Ideally it should _complement_ the material in:
+
+Note: this intro is messy and VERY old!
+TODO: integrate it with:
   (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-elisp-intro)
 
 
 
@@ -4671,6 +4674,10 @@ It is meant as both a tutorial (for eepitch) and a sandbox.
 This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
 
+My video for the EmacsConf2019 has a simple demo of eepitch:
+  https://www.youtube.com/watch?v=86yiRG8YJD0&t=956
+  http://angg.twu.net/emacsconf2019.html
+
 This (old) video shows a demo like the one in section 1.3:
   https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
 The relevant part is from t=16s to t=25s.
@@ -5057,21 +5064,21 @@ we call them the \"ambient script\" and the \"ambient language\"
   3) code that tests functions defined in the ambient script.
 
 We can insert a test block in the current buffer by running `M-x
-ee-insert-test-python', `M-x ee-insert-test-lua', etc... for the
-list of supported languages, see:
+ee-insert-test', or `M-x eeit'. The current implementation of M-x
+ee-insert-test' uses the name of the major mode to decide which
+other function to call. If you are in a buffer in which the value
+of the variable
 
-  (find-eev \"eev-testblocks.el\" \"ee-insert-test\")
+  major-mode
 
-These `ee-insert-test-<lang>'s use the name of the current buffer
-in the line that loads the ambient script into in the
-interpreter.
+is `FooBar-mode' then `M-x eeit' tries to run the function
+`ee-insert-test-FooBar-mode', and yields an error if that
+function does not exist. To add support for `FooBar-mode' to `M-x
+eeit', just define a function with the right name. See the source
+for examples:
 
-The command `M-x eeit' runs `ee-insert-test', that tries to
-detect the ambient language from major mode and then runs the
-correct `ee-insert-test-<lang>' based on it. `M-x eeit' is
-currently not very smart - see the source:
+  (find-eev \"eev-testblocks.el\")
 
-  (find-eev \"eev-testblocks.el\" \"ee-insert-test\")
 
 
 
@@ -7870,12 +7877,12 @@ interpreter for a simple language of window commands and sexp
 hyperlinks, in the which window setup above could be expressed
 like this:
 
-  `(\"13o\"
+  '(\"13o\"
     (find-ebuffer \"B\")
     \"2o\"
     (find-ebuffer \"C\")
     \"o\"
-   )
+    )
 
 `find-wset' supports something like that, but with all the window
 command strings collapsed into a single one, with \"_\"s meaning
@@ -9819,7 +9826,8 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-Note: this intro needs to be rewritten!
+Note: this intro needs to be integrated with:
+  (find-elisp-intro)
 I wrote it for a mini-tutorial on Lisp that I gave.
 It complements this:
   (find-eev-quick-intro \"2. Evaluating Lisp\")
@@ -11758,182 +11766,419 @@ Btw, the videos that I produced using this \"script\" are here:
 
 
 
-;;; __        ___           _                                               
-;;; \ \      / / |__   __ _| |_   ___  _____  ___ __  ___    ___ __ _ _ __  
-;;;  \ \ /\ / /| '_ \ / _` | __| / __|/ _ \ \/ / '_ \/ __|  / __/ _` | '_ \ 
-;;;   \ V  V / | | | | (_| | |_  \__ \  __/>  <| |_) \__ \ | (_| (_| | | | |
-;;;    \_/\_/  |_| |_|\__,_|\__| |___/\___/_/\_\ .__/|___/  \___\__,_|_| |_|
-;;;                                            |_|                          
+;;;   __ _           _            _ _                 _       _             
+;;;  / _(_)_ __   __| |       ___| (_)___ _ __       (_)_ __ | |_ _ __ ___  
+;;; | |_| | '_ \ / _` |_____ / _ \ | / __| '_ \ _____| | '_ \| __| '__/ _ \ 
+;;; |  _| | | | | (_| |_____|  __/ | \__ \ |_) |_____| | | | | |_| | | (_) |
+;;; |_| |_|_| |_|\__,_|      \___|_|_|___/ .__/      |_|_| |_|\__|_|  \___/ 
+;;;                                      |_|                                
 ;;
-;; «find-what-sexps-can-do-intro»  (to ".find-what-sexps-can-do-intro")
-;; Skel: (find-intro-links "what-sexps-can-do")
+;; «find-elisp-intro»  (to ".find-elisp-intro")
+;; Skel: (find-intro-links "elisp")
 
-(defun find-what-sexps-can-do-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-what-sexps-can-do-intro)*"))
+(defun find-elisp-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-elisp-intro)*"))
     (apply 'find-eintro "\
+\(Re)generate: (find-elisp-intro)
+Source code:  (find-efunction 'find-elisp-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
 
-  What Lisp expressions can do:
-  A mini tutorial
-    Eduardo Ochs
-    http://angg.twu.net/#eev
-    http://angg.twu.net/#eev-screencasts
-    (Version: 2019aug20)
 
-  Everybody knows that Emacs is written in Lisp and that one of
-  its main key sequences, `C-x C-e', executes the Lisp expression
-  before the cursor and shows the result in the echo area... this
-  can be used to calculate,
 
-       (* 2 3)
-               (* 4 5)
-    (+ (* 2 3) (* 4 5))
+This intro is a very quick introduction to Emacs Lisp. Its intent
+is not to teach people how to _write_ Elisp code, only to teach
+them how to _read_ Elisp code.
 
-  and can be used to call external programs - for examples, here
-  he have some Lisp expressions that invoke a video player,
-
-  (find-video \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
-  (code-video \"punchandjudyvideo\" \"~/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\")
-  (find-punchandjudyvideo)
-  (find-punchandjudyvideo \"0:00\")
-  (find-punchandjudyvideo \"0:10\" \"calls the baby\")
-  (find-punchandjudyvideo \"0:40\" \"where's the baby\")
-  (find-punchandjudyvideo \"1:04\" \"right position\")
-  (find-punchandjudyvideo \"1:17\" \"he will sing the baby to sleep\")
-  (find-punchandjudyvideo \"1:33\" \"1-2-3\")
-  (find-punchandjudyvideo \"1:48\" \"baby downstairs\")
-  (find-punchandjudyvideo \"3:12\" \"slaps\")
-  (find-punchandjudyvideo \"3:50\" \"1-2-3\")
-  (find-punchandjudyvideo \"4:34\" \"you keep an eye on mr Punch\")
-  (find-punchandjudyvideo \"4:46\" \"hat\")
-  (find-punchandjudyvideo \"5:03\" \"hat\")
-  (find-punchandjudyvideo \"5:25\" \"did you see him?\")
-  (find-punchandjudyvideo \"5:55\" \"clown\")
-  (find-punchandjudyvideo \"6:14\" \"slaps\")
-  (find-punchandjudyvideo \"6:52\" \"sausages\")
-  (find-punchandjudyvideo \"7:24\" \"crocodile\")
-  (find-punchandjudyvideo \"8:07\" \"crocodile + sausages\")
-  (find-punchandjudyvideo \"8:32\" \"another scene\")
-  (find-punchandjudyvideo \"8:39\" \"fight\")
-  (find-punchandjudyvideo \"9:03\" \"clown\")
-  (find-punchandjudyvideo \"9:45\" \"mr punch\")
-
-  and here we have some Lisp expressions that open a PDF at a
-  given page:
-
-  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
-  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
-  (find-livesofanimalspage)
-  (find-livesofanimalstext)
-  (find-livesofanimalspage (+ -110 113))
-  (find-livesofanimalstext (+ -110 113))
-  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
-  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
-  (find-livesofanimalspage (+ -110 127) \"wrong thoughts\")
-  (find-livesofanimalstext (+ -110 127) \"wrong thoughts\")
-  (find-livesofanimalspage (+ -110 132) \"into the place of their victims\")
-  (find-livesofanimalstext (+ -110 132) \"into the place of their victims\")
-  (find-livesofanimalspage (+ -110 133) \"To write that book I had to think\")
-  (find-livesofanimalstext (+ -110 133) \"To write that book I had to think\")
-  (find-livesofanimalspage (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalstext (+ -110 134) \"woke up haggard in the mornings\")
-  (find-livesofanimalspage (+ -110 143) \"Babies have no self-consciousness\")
-  (find-livesofanimalstext (+ -110 143) \"Babies have no self-consciousness\")
-  (find-livesofanimalspage (+ -110 145) \"squirrel doing its thinking\")
-  (find-livesofanimalstext (+ -110 145) \"squirrel doing its thinking\")
-  (find-livesofanimalspage (+ -110 147) \"Rilke's panther\")
-  (find-livesofanimalstext (+ -110 147) \"Rilke's panther\")
-  (find-livesofanimalspage (+ -110 162) \"a grasp of the meaning\")
-  (find-livesofanimalstext (+ -110 162) \"a grasp of the meaning\")
-  (find-livesofanimalspage (+ -110 164) \"last common ground\")
-  (find-livesofanimalstext (+ -110 164) \"last common ground\")
+TODO: integrate this with these older intros:
+  (find-eval-intro)
+  (find-defun-intro)
 
 
 
 
-Preparation:
+1. Introduction
+===============
+The main tutorial for eev starts by explaining the syntax of Emacs
+Lisp - \"Elisp\" from here onwards - using a simple example. To evaluate
+this sexp
 
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-cd
-wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+     (+ (* 2 3) (* 4 5))
 
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-# http://www.youtube.com/watch?v=K6LmZ0A1s9U
-# http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
-mkdir ~/eev-videos/
-cd    ~/eev-videos/
-wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+Emacs evaluates first its subexpressions, (* 2 3) and (* 4 5), and
+then it calls `+' with the results - i.e., it runs (+ 6 20). Try:
 
-# (find-eev \"eev-audiovideo.el\" \"find-mpv-video\" \"ee-mpv-video-options\")
-# (setq ee-mpv-video-options '(\"--fs\" \"--osd-level=2\"))
-# (setq ee-mpv-video-options        '(\"--osd-level=2\"))
+           2
+             3
+        (* 2 3)
+                   4
+                     5
+                (* 4 5)
+     (+ (* 2 3) (* 4 5))
+  (list (* 2 3) (* 4 5))
 
+In last sexp the function `list' receives two numbers, 6 and 20, but
+returns a list, (6 20), not a number - and this is an introduction to
+the idea that Elisp functions can receive all kinds of Elips objects
+and return all kinds of Elisp objects.
 
-# (find-fline \"~/eev-videos/\")
+Elisp objects include:
 
+  numbers, like 0, 4, -42, and 2.5,
+  strings, like \"foo\" and \"bar\",
+  symbols, like `*', `+' and `list', and
+  lists, like (6 20), (* 2 3), and (+ (* 2 3) (* 4 5)).
 
+The ones listed above are the only ones that we will treat in this
+introduction. For more on the other types of list objects, see:
 
-" pos-spec-list)))
-
-;; (find-what-sexps-can-do-intro)
+  (find-elnode \"Lisp Data Types\")
+  (find-elnode \"Programming Types\")
+  (find-elnode \"Editing Types\")
 
 
 
 
 
-
-;; «find-creating-links-intro»  (to ".find-creating-links-intro")
-;; Skel: (find-intro-links "creating-links")
-
-(defun find-creating-links-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-creating-links-intro)*"))
-    (apply 'find-eintro "\
-
-
-  Some quick ways to generate
-  elisp hyperlinks in eev -
-  A mini tutorial
-    Eduardo Ochs
-    http://angg.twu.net/#eev
-    (Version: 2019jun17)
-
-
-
-  From other tutorials:
-    (find-escripts-intro \"5. Tools for writing e-scripts\")
-    (find-emacs-keys-intro \"beginner's way\")
-    (find-here-links-intro)
-    (find-here-links-intro \"4. `find-here-links-3'\")
-    (find-here-links-intro \"5. `find-here-links-1'\")
-    (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
-
-
-
-1. Basic keys (eev)
+2. Lists and conses
 ===================
-(...)
+Lists are implemented using \"cons\"es. For details and lots of great
+diagrams see these two articles in the Wikipedia:
 
-The beginner's way of creating \"hyperlinks to here\" is with:
-  M-h M-3   - (find-here-links-intro \"4. `find-here-links-3'\")
-  M-h M-1   - (find-here-links-intro \"5. `find-here-links-1'\")
-  M-h M-w   - (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
+  https://en.wikipedia.org/wiki/Cons
+  https://en.wikipedia.org/wiki/Cons#Lists
+  https://en.wikipedia.org/wiki/Cons#Trees
+  https://en.wikipedia.org/wiki/S-expression
 
+The last one explains in detail what are \"sexp\"s.
+
+The function `cons' \"constructs\" a bigger list by prepending an
+element to it:
+
+           (list 22 33)
+  (cons 11 (list 22 33))
+        (list 11 22 33)
+
+The functions `car' and `cdr' both receive a list and return the
+components of its first cons. The `car' of a list is its first
+element, and the `cdr' of the list is the \"rest\" of the list. Try:
+
+             (list 11 22 33)
+       (cons 11 (list 22 33))
+  (car (cons 11 (list 22 33)))
+  (cdr (cons 11 (list 22 33)))
+
+        (car (list 11 22 33))
+                              (cdr (list 11 22 33))
+  (cons (car (list 11 22 33)) (cdr (list 11 22 33)))
+
+
+
+
+3. `quote'
+==========
+Not all functions evaluate their arguments. For example, `quote'
+expects a single argument and returns it unchanged, without evaluating
+it. Try:
+
+            (* 2 3)
+         (+ (* 2 3) (* 4 5))
+  (quote    (* 2 3))
+  (quote (+ (* 2 3) (* 4 5)))
+
+Elisp has an abbreviation for `quote' - a single \"'\". Try:
+
+         (quote (* 2 3))
+               '(* 2 3)
+
+  (quote       '(* 2 3))
+  (quote (quote (* 2 3)))
+
+Elisp has several other functions besides `quote' that do not evaluate
+their arguments. These functions are called \"special forms\" and we
+will see more about them in section 5, 6, 8, and 9.
+
+  (find-elnode \"Special Forms\")
+
+
+
+
+4. Symbols
+==========
+Note that symbols and strings are different:
+
+               (quote *)
+                     '*
+                     \"*\"
+  (symbol-name (quote *))
+  (symbol-name       '*)
+
+Numbers and strings \"evaluate to themselves\". Try:
+
+           22
+          \"22\"
+        (+ 22   33)
+  (concat \"22\" \"33\")
+
+If you need more evidence that 22 and \"22\" are different run the sexps
+below - they give errors! Numbers can be added but not concatened, and
+strings can be concatenated but not added.
+
+      (+ \"22\" \"33\")
+  (concat 22   33)
+
+
+
+
+5. Variables
+============
+When we evaluate a list like (* 2 3) the symbol in the beginning of
+the list, `*', is interpreted as the name of a function... but when we
+evaluate a symbol by itself it is interpreted as the name of a
+variable, and it returns the value of that variable. Try:
+
+  (set 'a 2)
+        a
+  (* 10 a)
+
+  (set 'a 3)
+        a
+  (* 10 a)
+
+We will often write examples like the one above more compactly, like
+this:
+
+  (set 'a 2)
+  (set 'a 3)
+        a
+  (* 10 a)
+
+If you execute lines 1, 3, and 4 in it you get one behavior, and if
+you execute lines 2, 3, and 4 you get the other one.
+
+Again: note that evaluating the symbol `a' returns the value of a \"as
+a variable\".
+
+The function `setq' works like `set' but it doesn't expect us to quote
+explicitly its first argument. Try:
+
+  (set 'a 2)
+  (setq a 2)
+  (set 'a (* 2 3))
+  (setq a (* 2 3))
+        a
+  (* 10 a)
+
+`setq' is a special form - it doesn't evaluate its first argument but
+evaluates the second one. See:
+
+  (find-elnode \"Setting Variables\" \"Special Form: setq\")
+
+
+
+
+6. Defining functions
+=====================
+Each symbol has a value \"as a variable\" and a value \"as a function\",
+and these two values are independent from one another. We can define
+functions with `defun'. Try:
+
+  (defun foo (a) (* 10  a))
+  (defun foo (a) (* 100 a))
+        (foo  2)
+        (foo  3)
+
+   (setq foo 2)
+   (setq foo 3)
+    (foo foo)
+
+                    foo
+     (symbol-value 'foo)
+  (symbol-function 'foo)
+
+Function definitions are stored as lists starting with the symbol
+`lambda' (\"lambda expressions\"). If you are a beginner you should
+treat the details of this as a curiosity - but try the example below:
+
+  (defun foo         (a) (* 10  a))
+  (defun foo         (a) (* 100 a))
+  (fset 'foo (lambda (a) (* 10  a))
+  (fset 'foo (lambda (a) (* 100 a))
+
+  (symbol-function 'foo)
+                   (foo foo)
+
+For more information, see:
+
+  (find-elnode \"Lambda Expressions\")
+  (find-elnode \"Defining Functions\" \"defun name args\")
+  (find-elnode \"Function Names\")
+  (find-elnode \"Symbol Components\")
+  (find-elnode \"Function Cells\")
+  (find-elnode \"Function Cells\" \"symbol-function symbol\")
+  (find-elnode \"Function Cells\" \"fset symbol definition\")
+
+Not all functions are represented as lambda expressions. The functions
+of Emacs that are implemented in C are represented as \"subr\"s, that
+are one of the kinds of objects that I said that I wouldn't discuss in
+this introduction. See:
+
+  (symbol-function '+)
+  (find-elnode \"Programming Types\" \"Primitive Function Type\")
+  (find-elnode \"Primitive Function Type\" \"subrs\")
+
+Also, functions can be byte-compiled, and they can expect and
+receive any number of arguments. See:
+
+  (find-eval-intro \"10.1. Byte-compiled functions\")
+  (find-elnode \"Defining Functions\" \"defun bar (a &optional b &rest c)\")
+
+
+
+
+7. `read' and `eval'
+====================
+We've been evaluating all sexps with `M-e'... but try:
+
+                   '(* 2 3)
+             (eval '(* 2 3))
+
+           (setq a '(* 2 3))
+           (setq a '(* 4 5))
+                 a
+           (eval a)
+
+                   \"(* 2 3)\"
+             (read \"(* 2 3)\")
+       (eval (read \"(* 2 3)\"))
+
+It turns out the `M-e' first extracts a sexp from the current buffer
+as a string, then `read' converts that string to a Lisp object -
+usually a list or symbol -, and `eval' evaluates that list or symbol.
+There is a also a function `prin1-to-string' that does the opposite of
+`read', as in the diagram below:
+
+                     read
+   \"(* 2 3)\" ----------------->  (* 2 3)
+             <-----------------      |
+               prin1-to-string       |
+                                     |
+                                     v
+                                     6
+
+Try:
+
+                    (*  2  3)
+                   '(*  2  3)
+  (prin1-to-string '(*  2  3))
+
+So: programs and functions can be represented as lists, and also as
+strings that be converted into lists by `read'; they can be inspected,
+edited and modified on-the-fly; and we can write Lisp code that
+generates and evaluates more Lisp code. Eev does this in a handful of
+situations - for example:
+
+  (find-eev-quick-intro \"find-code-c-d\")
+  (find-here-links-intro \"4. `find-here-links-3'\")
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+
+The idea that programs are lists is far more powerful than it
+looks at first sight. See, for example:
+
+  https://sep.yimg.com/ty/cdn/paulgraham/bbnexcerpts.txt
+  http://www.paulgraham.com/diff.html
+  http://www.paulgraham.com/lisp.html
+  (find-elnode \"Simple Macro\")
+
+Some functions in eev expect code that is meant to be `eval'-ed
+later. For example:
+
+  (find-multiwindow-intro \"(find-wset\" \"13o_2o_o\")
+  (find-wset \"13o_2o_o\" '(find-ebuffer \"B\") '(find-ebuffer \"C\"))
+
+The functions in the `code-c-d' family produce code that is first
+`read' and then `eval'-ed. See:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")
+
+
+
+
+
+8. `let' and `let*'
+===================
+
+  (find-elnode \"Local Variables\" \"Special Form: let \")
+  (find-elnode \"Local Variables\" \"Special Form: let* \")
+
+
+
+
+9. More on strings
+==================
+Strings in Elisp can span several lines and can contain many
+kinds of backslashed \"escape sequences\", like \"\\n\". Elisp
+also has a syntax for characters, that starts with a \"?\" and
+supports the same escape sequences as strings. See:
+
+  (find-elnode \"Basic Char Syntax\")
+  (find-elnode \"Character Type\")
+
+Remember - from
+
+  (find-eev-quick-intro \"2. Evaluating Lisp\" \"`M-0 M-e'\")
+
+that `M-0 M-e' and `M-0 M-E' highlight the sexp before point...
+you can use that to check the extent of a string whose
+backslashes are hard to interpret visually. For example:
+
+  \"\\
+  \\\\\\\"\\\\\\\\\"
+
+
+
+
+
+
+10. Backquote
+=============
+The backquote, \"`\", works like the quote, \"'\", but when a
+backquoted list is evaluated it is processed recursively and its
+components preceded by \",\" or \",@\" are evaluated and replaced
+by their values. The details are quite tricky - try these
+examples:
+
+  `(foo     ,(+ 2 3) bar)
+  `(foo    ,'(+ 2 3) bar)
+  `(foo  ,(list 2 3) bar)
+  `(foo ,@(list 2 3) bar)
+
+and see:
+
+  (find-elnode \"Backquote\")
+
+The functions in eev that use `find-elinks' typically use
+backquotes a lot. See:
+
+  (find-links-conv-intro \"3. Classification\")
+  (find-eev \"eev-elinks.el\" \"find-elinks\")
+  (find-eev \"eev-elinks.el\" \"find-efunction-links\")
+
+They are the hardest ones to read in the eev source.
 
 
 
 " pos-spec-list)))
 
-;; (find-creating-links-intro)
+;; (find-elisp-intro)
 
 
 
 
 
-
-;; Skel: (find-intro-links "creating-links")
 
 
 
