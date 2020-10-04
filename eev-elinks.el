@@ -1117,14 +1117,16 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;;                              |_|                         |___/              
 ;;
 ;; «find-epackage-links»  (to ".find-epackage-links")
-;; Tests: (find-epackage-links "eev")
+;; Skel:  (find-find-links-links-new "epackage" "pkgname" "")
+;; Tests: (find-epackage-links "0x0")
 ;;        (find-estring (ee-find-epackage-links0 "0x0"))
 ;;
 (defun find-epackage-links (&optional pkgname &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for an Emacs package."
   (interactive)
   (setq pkgname (or pkgname "{pkgname}"))
-  (apply 'find-elinks
+  (apply
+   'find-elinks
    `((find-epackage-links ,pkgname ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-epackage-links)

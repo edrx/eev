@@ -200,8 +200,7 @@ A \"tag\" is the string between \"«»\"s in an anchor."
 ;;
 ;; «ee-flip-psne-ness» (to ".ee-flip-psne-ness")
 ;; (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
-
-;; (find-eevfile "eev-insert.el" "defun ee-ill")
+;; See: (find-psne-intro "6. `ee-flip-psne-ness'")
 
 (defun ee-flip-psne-ness ()
   (interactive)
