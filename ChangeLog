@@ -1,3 +1,20 @@
+2020-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-psne-intro): added two new sections, one on
+	`ee-flip-psne-ness' and another one on the origin of the name
+	"psne".
+
+	* eev-mode.el (eev-mode-map-set): Commented out the binding of
+	`M-s' to `ee-flip-psne-ness'.
+
+	* eev-blinks.el (ee-find-eejumps-header): added a link to the
+	header.
+
+2020-09-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): added an item about the
+	menu bar to the section "4.2. `find-ekey-links' and friends".
+
 2020-09-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-elisp-intro): new function.

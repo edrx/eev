@@ -1,6 +1,6 @@
 ;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020feb20
+;; Version:    2020oct02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -152,7 +152,10 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
   ;;
   ;; These ones are also from: (find-eev "eev-edit.el")
-  (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
+  ;; See: (find-psne-intro "6. `ee-flip-psne-ness'")
+  ;;   (find-eev "eev-edit.el" "ee-flip-psne-ness")
+  ;;
+  ;; (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
   (define-key eev-mode-map "\M-I" 'eewrap-vldi-list-line)
   ;;
   ;; Obsolete:
