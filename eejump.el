@@ -103,6 +103,7 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 (defun eejump-2   () (find-emacs-keys-intro))
 (defun eejump-3   () (find-windows-beginner-intro))
 (defun eejump-5   () (find-eev-quick-intro))
+(defun eejump-50  () (find-eev-intro))
 (defun eejump-6   () (find-escripts-intro))
 
 (defun eejump-10  () (set-frame-font "5x7"  t))

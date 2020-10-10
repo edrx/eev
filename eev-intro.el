@@ -307,7 +307,7 @@ this video (from 2016!):
 
   http://angg.twu.net/eev-videos/video-eev-quick-0.mp4
 
-Open the page at
+To run it, open the page at
 
   http://angg.twu.net/eev-intros/find-eev-quick-intro.html
 
@@ -2446,6 +2446,7 @@ Main intros:  (find-eev-quick-intro)
 Index to the source files: (find-eev \"eev-load.el\")
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-5 M-0 M-j'.
 
 
 Here is a list of all the available sandbox-y tutorials that
@@ -3486,6 +3487,8 @@ are numbers or strings. Try:
 
 7. Pos-spec-lists
 =================
+[Moved to:] (find-refining-intro \"1. Pos-spec-lists\")
+
 The optional arguments that refine a hyperlink form what we call
 a \"pos-spec-list\". For example, the pos-spec-list here has two
 elements,
@@ -3667,128 +3670,6 @@ Try:
    4)
   ((lambda (x) (* 10 x))
    4)
-
-
-
-10.1. Byte-compiled functions
------------------------------
-Most functions in Emacs are byte-compiled - which means that
-their function cells contain a \"byte-code\" instead of a lambda
-expression. These byte-codes are very hard for humans to read.
-See:
-
-  (find-elnode \"What Is a Function\" \"byte-code function\")
-  (find-elnode \"Byte-Code Type\")
-  (find-elnode \"Byte Compilation\")
-  (find-elnode \"Disassembly\")
-
-Here is an example:
-
-  (find-efunctiondescr 'find-file)
-  (find-efunction      'find-file)
-  (symbol-function     'find-file)
-  (find-efunctionpp    'find-file)
-  (find-efunctiond     'find-file)
-
-The `find-efunctionpp' link above takes the content of the
-function cell of `find-file' and \"pretty-prints\" it, i.e.,
-indents it in a nice way, but the result in this case is
-unreadable... and the `find-efunctiond' link shows a decompiled
-version of that byte-code, which is only slightly better. Both
-the `find-efunctionpp' and the `find-efunctiond' links show
-internal representations that are very different from the source
-code. Compare that with a case in which the function is not
-byte-compiled:
-
-  (find-efunctiondescr 'find-fline)
-  (find-efunction      'find-fline)
-  (symbol-function     'find-fline)
-  (find-efunctionpp    'find-fline)
-
-The `(find-efunctionpp 'find-fline)' shows a lambda expression
-that is very similar to the defun that defined `find-fline'.
-
-
-
-
-10.2. How `find-efunction' works
---------------------------------
-Eev defines hyperlink functions called `find-efunction',
-`find-evariable' and `find-eface' that are wrappers around the
-standard functions `find-function', `find-variable' and
-`find-face-definition'; the eev variants support pos-spec-lists.
-Try:
-
-  (find-efunction 'find-fline)
-  (find-function  'find-fline)
-  (find-evariable 'ee-hyperlink-prefix)
-  (find-variable  'ee-hyperlink-prefix)
-  (find-eface           'eepitch-star-face)
-  (find-face-definition 'eepitch-star-face)
-
-The Emacs functions are defined here:
-
-  (find-efile \"emacs-lisp/find-func.el\")
-
-Their inner workings are quite complex. They use `symbol-file',
-that works on the variable `load-history'. Here are some links to
-documentation and tests:
-
-  (find-efunctiondescr 'symbol-file)
-  (find-elnode \"Where Defined\")
-  (symbol-file 'find-fline          'defun)
-  (symbol-file 'ee-hyperlink-prefix 'defvar)
-  (symbol-file 'eepitch-star-face   'defface)
-  (find-epp (assoc (locate-library \"eepitch\") load-history))
-
-The functions in \"find-func.el\" use `symbol-file' to find the
-file where a given symbol was defined, and then search a defun,
-defvar of defface in it that _may be_ the definition that we are
-looking for. The eev variants use the functions
-`find-function-noselect', `find-variable-noselect' and
-`find-definition-noselect' from \"find-func.el\", that return a
-pair (BUFFER . POS). Try:
-
-  (find-efunctiondescr 'find-function-noselect)
-  (find-efunctiondescr 'find-variable-noselect)
-  (find-efunctiondescr 'find-definition-noselect)
-
-  (find-ebufferandpos (find-function-noselect 'find-fline)
-   )
-  (find-ebufferandpos (find-variable-noselect 'ee-hyperlink-prefix)
-   )
-  (find-ebufferandpos (find-definition-noselect 'eepitch-star-face 'defface)
-   )
-
-These `find-*-select' functions work quite well but are not 100%
-reliable - for example, if an elisp file has several definitions
-for the same function, variable, or face, the `find-*-select's
-don't know which ones were executed, neither which one was
-executed last, overriding the other ones... and it may return the
-position of a defun, defvar, or defface that is not the
-\"active\" one.
-
-
-
-
-10.3. Why eev avoids byte-compilation
--------------------------------------
-All the source files of eev have a \"no-byte-compile: t\" in
-them. See:
-
-  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
-  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
-
-This is non-standard, but it is a deliberate design choice.
-
-(TODO: explain the three main reasons: it is easier to teach
-emacs to beginners if they see lots of lambda expressions and few
-byte-codes; `code-c-d' and friends define functions dynamically
-and `find-efunction' don't work on them; in a distribution with
-only the \".elc\"s of eev users wouldn't have access to the
-documentation and examples in the comments of the source files.)
-
-
 
 
 
@@ -4314,13 +4195,13 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro is being rewritten!
-Ideally it should _complement_ the material in:
-  (find-eev-quick-intro \"3. Elisp hyperlinks\")
-
-
-
-
+Note: this intro is obsolete!
+I need to move some parts of it to other intros and then delete it.
+  See: (find-here-links-intro)
+       (find-refining-intro)
+       (find-templates-intro)
+       (find-links-conv-intro \"3. Classification\")
+       (find-links-conv-intro \"3. Classification\" \"regenerate\")
 
 
 
@@ -5112,7 +4993,35 @@ function does not exist. To add support for `FooBar-mode' to `M-x
 eeit', just define a function with the right name. See the source
 for examples:
 
-  (find-eev \"eev-testblocks.el\")
+  (find-eev \"eev-testblocks.el\" \"examples\")
+
+
+
+
+3.1. `find-eeit-links'
+----------------------
+If you run this,
+
+  (find-eeit-links 'lua-mode)
+
+you will get a buffer with:
+
+  a) links to inspect the current definition of
+     `ee-insert-test-lua-mode',
+
+  b) links that let you compare that with the `ee-insert-test-'s
+     for other major modes,
+
+  c) a barebones `(defun ...)' that lets you redefine
+     `ee-insert-test-lua-mode'.
+
+If you run `find-eeit-links' interactively with `M-x' then it
+will run as:
+
+  (find-eeit-links <current-major-mode>)
+
+and you can use that to inspect the `ee-insert-test-' support for
+the current major mode, or to implement it yourself.
 
 
 
@@ -8520,6 +8429,9 @@ It is meant as both a tutorial and a sandbox.
 
 
 This intro is being rewritten!
+The prerequisites for understand this are:
+  (find-elisp-intro)
+  (find-links-conv-intro \"3. Classification\")
 
 
 
@@ -8559,8 +8471,7 @@ To learn how to write your own templated functions you need to:
 
   2) learn how to use `find-elinks' - same thing,
 
-  3) learn how to use `find-find-links-links', that is a horrible
-     kludge that works well enough so I never cleaned it up.
+  3) learn how to use `find-find-links-links-new'.
 
 
 
@@ -8690,6 +8601,9 @@ Try:
 
 5. `find-find-links-links'
 ==========================
+(Note: `find-find-links-links' is obsolete, and is superseded by
+`find-find-links-links-new')
+
 ALL my `find-*-links' started as quick hacks.
 SOME of them were useful enough to deserve being cleaned up.
 A FEW of them ended up in:
@@ -11356,9 +11270,10 @@ of the screen as a \"minibuffer\" - see:
   (find-enode \"M-x\" \"Running Commands by Name\")
 
 To install eev,
-  1. run `M-x list-packages',
-  2. select \"eev\" at the list of packages,
-  3. click on \"install\".
+  1. run `M-x package-initialize',
+  2. run `M-x list-packages',
+  3. select \"eev\" at the list of packages,
+  4. click on \"install\".
 
 To load eev and enter its tutorial, run
   `M-x eev-beginner'.
@@ -12270,6 +12185,183 @@ backquotes a lot. See:
   (find-eev \"eev-elinks.el\" \"find-efunction-links\")
 
 They are the hardest ones to read in the eev source.
+
+
+
+
+11. Byte-compiled functions
+===========================
+Most functions in Emacs are byte-compiled - which means that
+their function cells contain a \"byte-code\" instead of a lambda
+expression. These byte-codes are very hard for humans to read.
+See:
+
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+  (find-elnode \"Byte-Code Type\")
+  (find-elnode \"Byte Compilation\")
+  (find-elnode \"Disassembly\")
+
+Here is an example:
+
+  (find-efunctiondescr 'find-file)
+  (find-efunction      'find-file)
+  (symbol-function     'find-file)
+  (find-efunctionpp    'find-file)
+  (find-efunctiond     'find-file)
+
+The `find-efunctionpp' link above takes the content of the
+function cell of `find-file' and \"pretty-prints\" it, i.e.,
+indents it in a nice way, but the result in this case is
+unreadable... and the `find-efunctiond' link shows a decompiled
+version of that byte-code, which is only slightly better. Both
+the `find-efunctionpp' and the `find-efunctiond' links show
+internal representations that are very different from the source
+code. Compare that with a case in which the function is not
+byte-compiled:
+
+  (find-efunctiondescr 'find-fline)
+  (find-efunction      'find-fline)
+  (symbol-function     'find-fline)
+  (find-efunctionpp    'find-fline)
+
+The `(find-efunctionpp 'find-fline)' shows a lambda expression
+that is very similar to the defun that defined `find-fline'.
+
+
+
+
+
+11.1. Why eev avoids byte-compilation
+-------------------------------------
+All the source files of eev have a \"no-byte-compile: t\" in
+them. See:
+
+  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
+  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
+  (find-enode \"Specifying File Variables\")
+
+This `no-byte-compile: t' is non-standard, but it is a deliberate
+design choice. I tried to make eev as beginner-friendly as
+possible, and beginners find byte-compiled functions confusing,
+so I avoided them as much as possible. Remember that several
+functions in eev define other functions - for example:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"mass-produced\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+and if you try to understand what a hyperlink function like one
+below does by typing `M-h M-f' on it,
+
+  (find-efile \"subr.el\")
+
+then the `find-efunction' link in the `M-h M-f' buffer will not
+work - but the `find-efunctionpp' link will. Try:
+
+  (find-efunction   'find-efile)
+  (find-efunctionpp 'find-efile)
+
+
+
+
+
+11.2. How `find-efunction' works
+--------------------------------
+Eev defines hyperlink functions called `find-efunction',
+`find-evariable' and `find-eface' that are wrappers around the
+standard Emacs functions `find-function', `find-variable' and
+`find-face-definition'; the eev variants support pos-spec-lists.
+Try:
+
+  (find-efunction 'find-fline)
+  (find-function  'find-fline)
+  (find-evariable 'ee-hyperlink-prefix)
+  (find-variable  'ee-hyperlink-prefix)
+  (find-eface           'eepitch-star-face)
+  (find-face-definition 'eepitch-star-face)
+
+The Emacs functions are defined here:
+
+  (find-efile \"emacs-lisp/find-func.el\")
+
+and their inner workings are quite complex. To begin with, hey
+use `symbol-file', that works on the variable `load-history'.
+Here are some links to documentation and tests:
+
+  (find-efunctiondescr 'symbol-file)
+  (find-elnode \"Where Defined\")
+  (symbol-file 'find-fline          'defun)
+  (symbol-file 'find-efile          'defun)
+  (symbol-file 'ee-hyperlink-prefix 'defvar)
+  (symbol-file 'eepitch-star-face   'defface)
+  (find-eloadhistory \"eepitch\")
+  (find-eloadhistory \"eepitch\" \"eepitch-star-face\")
+
+The functions in \"find-func.el\" use `symbol-file' to find the
+file where a given symbol was defined, and then search for a
+defun, defvar of defface in it that _looks like_ the definition
+that we are looking for.
+
+Emacs knows that `find-efile' was defined in \"eev-code.el\",
+because of:
+
+  (symbol-file 'find-efile          'defun)
+  (find-eloadhistory \"eev-code\" \"find-efile\")
+
+but if we run
+
+  (find-function 'find-efile)
+
+this will fail, because Emacs will look for something like
+\"(defun find-efile \" in \"eev-code.el\", and it will not find
+it; it doesn't know that `find-efile' was defined by this
+`code-c-d':
+
+  (find-eev \"eev-code.el\" \"code-c-d-s\")
+  (find-eev \"eev-code.el\" \"code-c-d-s\" \"\\\"e\\\"\")
+
+Let's be even more precise. \"find-func.el\" defines these
+low-level functions,
+
+  (find-efunctiondescr 'find-function-noselect)
+  (find-efunctiondescr 'find-variable-noselect)
+  (find-efunctiondescr 'find-definition-noselect)
+
+that return structures of the form (BUFFER . POS), and eev
+defines a function
+
+  (find-efunctiondescr 'find-ebufferandpos)
+  (find-efunction      'find-ebufferandpos)
+
+that jumps to a (BUFFER . POS); `find-efunction' and friends are
+implemented using `find-ebufferandpos'. Try: 
+
+  (find-ebufferandpos
+   (find-function-noselect 'find-fline)
+   )
+  (find-ebufferandpos
+   (find-variable-noselect 'ee-hyperlink-prefix)
+   )
+  (find-ebufferandpos
+   (find-definition-noselect 'eepitch-star-face 'defface)
+   )
+
+These `find-*-noselect' functions work quite well but are not
+100% reliable - for example, if an elisp file has several
+definitions for the same function, variable, or face, the
+`find-*-noselect's don't know which ones were executed, neither
+which one was executed last, overriding the other ones... and it
+may return the position of a defun, defvar, or defface that is
+not the \"active\" one. In eev redefinitions like these ones
+
+  (code-pdf-page \"foomanual\" \"/usr/src/foo-1.2.3/manual.pdf\")
+  (code-pdf-page \"foomanual\" \"/usr/src/foo-1.2.4/manual.pdf\")
+
+are quite common, and
+
+  (find-efunctionpp 'find-foomanualpage)
+
+will give you information about the current definition.
 
 
 

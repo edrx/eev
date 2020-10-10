@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020feb20
+;; Version:    2020oct06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -80,6 +80,8 @@
 ;; «.find-escreenshot-links»		(to "find-escreenshot-links")
 ;; «.find-windows-eepitch-lua-links»	(to "find-windows-eepitch-lua-links")
 ;; «.find-extra-file-links»		(to "find-extra-file-links")
+;; «.find-emacs-tangents-links»		(to "find-emacs-tangents-links")
+;; «.find-eeit-links»			(to "find-eeit-links")
 
 
 (require 'eev-env)
@@ -413,22 +415,24 @@ This is an internal function used by `find-{stem}-links'.\"
 ;;; |_|_| |_|\__|_|  \___/      |_|_|_| |_|_|\_\___/
 ;;;                                                 
 ;; «find-intro-links»  (to ".find-intro-links")
-;; (find-find-links-links "i" "intro" "stem")
-;; A test: (find-intro-links)
-
+;; Skel: (find-find-links-links-new "intro" "stem" "")
+;; Test: (find-intro-links)
+;;
 (defun find-intro-links (&optional stem &rest pos-spec-list)
 "Visit a temporary buffer with a skeleton for defining `find-<STEM>-intro'.
 All `find-*-intro' functions in eev-intro.el were written using this.
 See: (find-eev \"eev-intro.el\")"
   (interactive)
   (setq stem (or stem "{stem}"))
-  (apply 'find-elinks-elisp
-   `((find-intro-links ,stem    ,@pos-spec-list)
+  (apply
+   'find-elinks-elisp
+   `((find-intro-links ,stem ,@pos-spec-list)
      (find-intro-links "{stem}" ,@pos-spec-list)
      (find-intro-links "foo"    ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-intro-links)
-    ,(ee-template0 "\
+     ""
+     ,(ee-template0 "\
 ;; (ee-copy-rest 1 '(find-eev \"eev-intro.el\"))
 ;; (find-{stem}-intro)
 
@@ -441,7 +445,7 @@ See: (find-eev \"eev-intro.el\")"
 \\(Re)generate: (find-{stem}-intro)
 Source code:  (find-efunction 'find-{stem}-intro)
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
+              (find-eev-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
@@ -451,7 +455,9 @@ Hello
 \" pos-spec-list)))
 
 ;; (find-{stem}-intro)
-")) pos-spec-list))
+")
+     )
+   pos-spec-list))
 
 ;; (find-intro-links)
 ;; (find-intro-links "emacs")
@@ -1838,6 +1844,103 @@ os.exit()
 ;; (find-extra-file-links "~/eev-videos/three-keys-2.mp4")
 
 
+
+
+
+;; «find-emacs-tangents-links»  (to ".find-emacs-tangents-links")
+;; Skel: (find-find-links-links-new "emacs-tangents" "yyyy mm dd msg txtstem" "")
+;; Test: (find-emacs-tangents-links "2020" "10" "05")
+;;
+(defun find-emacs-tangents-links (&optional yyyy mm dd msg txtstem &rest pos-spec-list)
+"Visit a temporary buffer with hyperlinks to a post in emacs-tangents."
+  (interactive)
+  (setq yyyy (or yyyy "{yyyy}"))
+  (setq mm (or mm "{mm}"))
+  (setq dd (or dd "{dd}"))
+  (setq msg (or msg "{msg}"))
+  (setq txtstem (or txtstem "{txtstem}"))
+  (apply
+   'find-elinks
+   `((find-emacs-tangents-links ,yyyy ,mm ,dd ,msg ,txtstem ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-emacs-tangents-links "2020" "10" "05" "msg00000" "txts2ETp920ql")
+     (find-emacs-tangents-links "2018" "01" "29" "msg00025" "txtJ1ftXqItdm")
+     (find-efunction 'find-emacs-tangents-links)
+     ""
+     ,(ee-template0 "\
+# https://sachachua.com/blog/{yyyy}/
+# https://sachachua.com/blog/{yyyy}/{mm}/
+# https://sachachua.com/blog/{yyyy}/{mm}/{yyyy}-{mm}-{dd}-emacs-news/
+# https://lists.gnu.org/archive/html/emacs-tangents/{yyyy}-{mm}/
+# https://lists.gnu.org/archive/html/emacs-tangents/{yyyy}-{mm}/{msg}.html
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-fline \"~/usrc/emacs-tangents/\")
+# (find-fline \"~/usrc/emacs-tangents/{yyyy}-{mm}-{dd}-emacs-news.org\")
+
+mkdir -p ~/usrc/emacs-tangents/
+cd       ~/usrc/emacs-tangents/
+# rm -v     {yyyy}-{mm}-{dd}-emacs-news.org
+wget -nc -O {yyyy}-{mm}-{dd}-emacs-news.org \\
+  https://lists.gnu.org/archive/html/emacs-tangents/{yyyy}-{mm}/{txtstem}.txt
+")
+     )
+   pos-spec-list))
+
+
+
+
+;; «find-eeit-links»  (to ".find-eeit-links")
+;; Skel: (find-find-links-links-new "eeit" "majormode" "majormodestr eeitfunstr eeitfun")
+;; See:  (find-eepitch-intro "3.1. `find-eeit-links'")
+;; Test: (find-eeit-links 'lua-mode)
+;;
+(defun find-eeit-links (&optional majormode &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eeit."
+  (interactive)
+  (setq majormode (or majormode major-mode))
+  (let* ((majormodestr (symbol-name majormode))
+         (eeitfunstr (concat "ee-insert-test-" majormodestr))
+         (eeitfun (intern eeitfunstr)))
+    (apply
+     'find-elinks-elisp
+     `((find-eeit-links ',majormode ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;; ""
+       ,(ee-template0 "\
+;; (find-efunction 'find-eeit-links)
+;; (find-eepitch-intro \"3. Test blocks\")
+;; (find-eepitch-intro \"3.1. `find-eeit-links'\")
+;; (find-eev \"eev-testblocks.el\" \"examples\")
+
+;; Current definition:
+;; (find-efunction              '{eeitfun})
+;; (find-efunctionpp            '{eeitfun})
+;; (find-epp (ee-defun-sexp-for '{eeitfun}))
+
+
+;; <{eeitfunstr}>
+;;
+(defun {eeitfunstr} ()
+  (interactive)
+  (insert (format \"
+--[[
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+dofile \\\"%s\\\"
+
+--]]
+\" (buffer-name))))
+
+;; Test:
+;; ({eeitfunstr})
+
+")
+       )
+     pos-spec-list)))
 
 
 

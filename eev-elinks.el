@@ -76,6 +76,7 @@
 ;; «.find-eface-links»		(to "find-eface-links")
 ;; «.find-color-links»		(to "find-color-links")
 ;; «.find-epackage-links»	(to "find-epackage-links")
+;; «.ee-package-dir»		(to "ee-package-dir")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -1117,59 +1118,124 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;;                              |_|                         |___/              
 ;;
 ;; «find-epackage-links»  (to ".find-epackage-links")
-;; Skel:  (find-find-links-links-new "epackage" "pkgname" "")
-;; Tests: (find-epackage-links "0x0")
-;;        (find-estring (ee-find-epackage-links0 "0x0"))
+;; Skel: (find-find-links-links-new "epackage" "pkg c d" "")
+;; Test: (find-epackage-links 'lua-mode)
+;;       (find-epackage-links 'tetris)
+;;       (find-epackage-links 'foo)
 ;;
-(defun find-epackage-links (&optional pkgname &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for an Emacs package."
-  (interactive)
-  (setq pkgname (or pkgname "{pkgname}"))
+(defun find-epackage-links (&optional pkg c d &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for an Emacs package.
+PKG must be a symbol; C and D are arguments for `code-c-d'.
+If D is t then try to use `ee-package-dir' to get the directory."
+  (interactive (list (symbol-at-point)))
+  (setq pkg (or pkg "{pkg}"))
+  (setq c (or c (replace-regexp-in-string "[-]" "" (symbol-name pkg))))
+  (setq d (cond ((eq d t) (ee-package-dir pkg))
+		((eq d nil) "{d}")
+		(t d)))
   (apply
    'find-elinks
-   `((find-epackage-links ,pkgname ,@pos-spec-list)
+   `((find-epackage-links ,(ee-add-quote pkg) ,c ,d ,@pos-spec-list)
+     (find-epackage-links ,(ee-add-quote pkg) ,c t ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-epackage-links)
      (find-elpafile "")
      ""
-     ,(ee-find-epackage-links0 pkgname)
+     ,(ee-find-epackage-links0 pkg c d)
      )
    pos-spec-list))
 
-(defun ee-find-epackage-links0 (pkgname)
+(defun ee-find-epackage-links0 (pkg c d)
   "This is an internal function used by `find-epackage-links'."
-  (let* ((spkgname (format "\n  %s " pkgname))
-	 (pattern (format "%s%s-*" ee-elpadir pkgname))
-	 (fnames (ee-file-expand-wildcards-slash pattern))
-	 (sexps (mapcar (lambda (s) (list 'find-elpafile s)) fnames))
-	 (sexps (reverse sexps))
-	 (lines (mapconcat 'ee-HS sexps "\n"))
+  (let* ((spkg (format "\n  %s " pkg))
+	 (findelpafiles0 (ee-package-findelpafiles pkg))
+	 (findelpafiles1 (reverse findelpafiles0))
+	 (findelpafiles (mapconcat 'ee-HS findelpafiles1 "\n"))
 	 )
     (ee-template0 "\
-# (find-epackages {(ee-S spkgname)})
-# (find-epackage-links '{pkgname})
-# (find-epackage '{pkgname})
-{lines}
+# (find-epackages {(ee-S spkg)})
+# (find-epackage-links '{pkg})
+# (find-epackage '{pkg})
+{findelpafiles}
 
-# http://elpa.gnu.org/packages/{pkgname}.html
-# http://melpa.org/#/{pkgname}
+# (ee-package-dir '{pkg})
+# (find-epp (ee-package-desc '{pkg}))
+
+# (code-c-d \"{c}\" \"{d}\")
+# (find-{c}file \"\")
+
+# http://elpa.gnu.org/packages/{pkg}.html
+# http://melpa.org/#/{pkg}
 ")))
 
 
-(defun ee-file-name-nondirectory-slash (fname)
-  "Like `file-name-nondirectory', but appends a / to FNAME if it is a directory.
-This is an internal function used by `ee-find-epackage-links'."
-  (concat (file-name-nondirectory fname)
-	  (if (file-directory-p fname) "/" "")))
+
+;; Tests: (find-fline ee-elpadir)
+;;        (find-fline "~/.emacs.d/elpa/" "lua-mode-")
+;;        (ee-file-expand-wildcards-slash "~/.emacs.d/elpa/lua-mode-*")
+;;        (ee-package-findelpafiles "lua-mode")
+;;
+(defun ee-package-findelpafiles (pkgname)
+  "Convert a PKGNAME to a list of `(find-elpafile ...)' sexps."
+  (let* ((pattern (format "%s%s-*" ee-elpadir pkgname))
+	 (fnames (ee-file-expand-wildcards-slash pattern)))
+    (mapcar (lambda (s) (list 'find-elpafile s)) fnames)))
 
 (defun ee-file-expand-wildcards-slash (pattern)
-  "Like `file-expand-wildcards' but with `ee-file-name-nondirectory-slash' & sort.
-This is an internal function used by `ee-find-epackage-links'."
+"Like `file-expand-wildcards' but with `ee-file-name-nondirectory-slash' & sort."
   (let* ((fnames0 (file-expand-wildcards pattern))
 	 (fnames1 (mapcar 'ee-file-name-nondirectory-slash fnames0))
 	 (fnames2 (sort fnames1 'string<)))
     fnames2))
 
+(defun ee-file-name-nondirectory-slash (fname)
+"Like `file-name-nondirectory', but appends a / to FNAME if it is a directory."
+  (concat (file-name-nondirectory fname)
+	  (if (file-directory-p fname) "/" "")))
+
+
+
+
+;; «ee-package-dir»  (to ".ee-package-dir")
+;; This function converts a package name (a symbol) into the directory
+;; in which that package was installed (or nil), using functions from
+;; "package.el".
+;;
+;; Tests: (require 'package)
+;;        (package-initialize)
+;;        (ee-package-dir 'lua-mode)
+;;        (ee-package-dir 'tetris)
+;;        (ee-package-dir 'foo)
+;;        (ee-package-desc 'lua-mode)
+;;        (ee-package-desc 'tetris)
+;;        (ee-package-desc 'foo)
+;;
+;; WARNING: the function `ee-package-dir' and its dependency
+;; `ee-package-desc' use several functions from "package.el", and I
+;; don't understand package.el well enough!
+;;
+;; See: (find-efile "emacs-lisp/package.el" "(cl-defstruct (package-desc")
+;;      (find-efunction 'describe-package-1)
+;;      (find-efunction 'describe-package-1 "(let* ((desc ")
+;;
+(defun ee-package-dir (pkg)
+"Convert the name of the package PKG to the directory where it was installed."
+  (let* ((desc (ee-package-desc pkg))
+	 (dir (and desc (package-desc-dir desc))))
+    (if (stringp dir)
+	(replace-regexp-in-string
+	 "\\([^/]\\)$" "\\1/"
+	 (ee-shorten-file-name dir)))))
+
+(defun ee-package-desc (pkg)
+"An internal function used by `ee-package-dir'.
+Convert PKG - a symbol - to a package-desc structure (or to nil)."
+  (or (if (package-desc-p pkg) pkg)
+      (cadr (assq pkg package-alist))
+      (let ((built-in (assq pkg package--builtins)))
+	(if built-in
+	    (package--from-builtin built-in)
+	  (cadr (assq pkg package-archive-contents))))))
 
 
 
