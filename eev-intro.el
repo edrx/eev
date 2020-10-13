@@ -11302,13 +11302,44 @@ because when it was created it pointed to the commit with message
                  \\  /
                   A
 
+NEXT STEPS: explain how to use git merge both from the command
+line and from magit; explain HEAD, master, and tags. Point to man
+pages in man and text format and to sections in Scott Chacon's
+book. I NEED LOTS OF HELP HERE.
+
   (find-man \"git-merge\")
+  (find-gitinternalspage)
+  (find-gitinternalstext)
 
 
 
 
 
+3. A second repository
+======================
+HELP PLEEEASEEEE
 
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rfv /tmp/git-test/repo2/
+  mkdir   /tmp/git-test/repo2/
+  cd      /tmp/git-test/repo2/
+  .       /tmp/git-test/git-defs
+  # (find-fline \"/tmp/git-test/git-defs\")
+
+  git clone /tmp/git-test/repo1/ .
+  ls -lAF
+
+  # (find-gitk  \"/tmp/git-test/repo2/\")
+  # (find-fline \"/tmp/git-test/repo2/\")
+  # (find-fline \"/tmp/git-test/repo2/.git/\")
+  # (find-fline \"/tmp/git-test/repo2/.git/config\")
+
+  # (find-man \"1 git-remote\")
+  # (find-progitpage (+ 24  36) \"Adding Remote Repositories\")
+  # (find-progittext (+ 24  36) \"Adding Remote Repositories\")
 
 " pos-spec-list)))
 
