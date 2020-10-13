@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jul22
+;; Version:    2020oct11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -894,39 +894,36 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; | |_) | (_| |  _| | |   <  __/_____| |_) | (_| | (_| |  __/
 ;;; | .__/ \__,_|_| |_|_|_|\_\___|     | .__/ \__,_|\__, |\___|
 ;;; |_|                                |_|          |___/      
-
-;; «find-pdflike-page-links» (to ".find-pdflike-page-links")
-;; (find-efunction 'count-lines)
 ;;
-(defun ee-count-formfeeds (start end)
-  (save-excursion
-    (save-restriction
-      (narrow-to-region start end)
-      (goto-char (point-min))
-      (save-match-data
-	(let ((done 0))
-	  (while (re-search-forward "[\f]" nil t 1)
-	    (setq done (+ 1 done)))
-	  done)))))
-
-(defun ee-current-page ()
-  (+ 1 (ee-count-formfeeds (point-min) (point))))
-
-(defun ee-last-kill ()
-  (if (stringp (car kill-ring))
-    (ee-no-properties (car kill-ring))))
-
-(defun ee-region ()
-  (if (region-active-p)
-      (buffer-substring-no-properties (point) (mark))))
-
-(defun ee-region-or-last-kill ()
-  (or (ee-region) (ee-last-kill)))
-
-;; Skel: (find-find-links-links-old "\\M-p" "pdflike-page" "page bufname offset")
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
+;; «find-pdflike-page-links» (to ".find-pdflike-page-links")
+;; The function `find-pdflike-page-links' is called from
+;; `find-pdf-links' (`M-h M-p') when you call it in a buffer that is
+;; not in dired mode. See:
+;;   (to "find-pdf-links")
+;;   (find-pdf-like-intro "10. Generating a pair with the page number")
+;;   (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
+;;
+;; Skel: (find-find-links-links-new "pdflike-page" "page bufname offset" "")
+;;
+(defun find-pdflike-page-links (&optional page bufname offset &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks to a pdf-like document.
+See: (find-pdf-like-intro)
+     (find-pdf-like-intro \"refining hyperlinks to pages\")"
+  (interactive)
+  (setq page    (or page (ee-current-page)))
+  (setq bufname (or bufname (buffer-name)))
+  (setq offset  (or offset ee-page-offset))
+  (apply
+   'find-elinks
+   `((find-pdflike-page-links ,page ,bufname ,offset ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-pdf-like-intro "10. Generating a pair with the page number")
+     (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
+     ;; (find-efunction 'find-pdflike-page-links)
+     ""
+     ,@(ee-pdflike-page-links page bufname offset)
+     )
+   pos-spec-list))
 
 (defun ee-pdflike-page-links (&optional page bufname offset)
   (setq page    (or page (ee-current-page)))
@@ -954,33 +951,37 @@ when this is true remove the prefix D from FNAME, and put the sexp
       ,(ee-HS bufname)
       )))
 
-(defun find-pdflike-page-links (&optional page bufname offset &rest rest)
-"Visit a temporary buffer containing hyperlinks to a pdf-like document.
-See: (find-pdf-like-intro)
-     (find-pdf-like-intro \"refining hyperlinks to pages\")"
-  (interactive)
-  (setq page    (or page (ee-current-page)))
-  (setq bufname (or bufname (buffer-name)))
-  (setq offset  (or offset ee-page-offset))
-  (apply 'find-elinks `(
-    (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
-    ;; (find-efunction 'find-pdflike-page-links)
-    ;; (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
-    ;; (find-eev-quick-intro "11.1. `find-pdf-links'")
-    (find-pdf-like-intro "10. Generating a pair with the page number")
-    (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
-    ""
-    ,@(ee-pdflike-page-links page bufname offset)
-    ) rest))
+;; These are internal functions used by `find-pdflike-page-links' and
+;; `ee-pdflike-page-links'.
 
-;; (find-pdflike-page-links)
-;; (find-angg ".emacs.papers" "kopkadaly")
-;; (code-pdftotext "kopkadaly4" "~/books/__comp/kopka_daly__a_guide_to_latex_4th_ed.pdf" 12)
-;; (find-code-pdftotext "kopkadaly4" "~/books/__comp/kopka_daly__a_guide_to_latex_4th_ed.pdf" 12)
-;; (ee-page-parameters "kopkadaly4" 12)
-;; (find-kopkadaly4page (+ 12 287) "13.1   The picture environment")
-;; (find-kopkadaly4text            "13.1   The picture environment")
-;; (find-kopkadaly4text)
+;; Based on: (find-efunction 'count-lines)
+;;
+(defun ee-count-formfeeds (start end)
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (save-match-data
+	(let ((done 0))
+	  (while (re-search-forward "[\f]" nil t 1)
+	    (setq done (+ 1 done)))
+	  done)))))
+
+(defun ee-current-page ()
+  (+ 1 (ee-count-formfeeds (point-min) (point))))
+
+(defun ee-last-kill ()
+  (if (stringp (car kill-ring))
+    (ee-no-properties (car kill-ring))))
+
+(defun ee-region ()
+  (if (region-active-p)
+      (buffer-substring-no-properties (point) (mark))))
+
+(defun ee-region-or-last-kill ()
+  (or (ee-region) (ee-last-kill)))
+
+
 
 
 
@@ -1252,10 +1253,8 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
 ;;; |_| |_|_| |_|\__,_|      \___\___/ \__,_|\___| \/       |_|_|_| |_|_|\_\___/
 ;;;                                                                             
 ;; «find-code-pdf-links»  (to ".find-code-pdf-links")
-;; Tests:
-;; (find-fline          "/usr/local/texlive/2018/texmf-dist/doc/latex/base/")
-;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf")
-;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf" "foo")
+;; See: (to "find-pdf-links")
+;;      (find-pdf-like-intro "9. Generating three pairs" "find-code-pdf-links")
 
 ;; See: (find-efunction 'ee-if-prefixp)
 (defun ee-shorten-file-name (fname)
@@ -1297,7 +1296,30 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
        )
      pos-spec-list)))
 
+
+
 ;; «find-pdf-links»  (to ".find-pdf-links")
+;; This function - usually bound to `M-h M-p' - behaves in one way
+;; when invoked from dired buffers and in a totally different way when
+;; invoked from other buffers. In a dired buffer it supposes that the
+;; current line contains the name of a PDF, and it generates a buffer
+;; whose main part is a pair `code-pdf-page'/`code-pdf-text' that lets
+;; you define short hyperlinks to that PDF. See:
+;;
+;;   (find-pdf-like-intro "7. Shorter hyperlinks to PDF files")
+;;   (find-pdf-like-intro "9. Generating three pairs" "`M-h M-p' in Dired mode")
+;;
+;; When the current buffer is not in dired mode this function supposes
+;; that the buffer contains the "text" of a PDF, as explained here:
+;;
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files" "find-pdf-text")
+;;
+;; and it tries to generate short hyperlinks to the current page of
+;; it, making lots of guesses, and often guessing everything wrong.
+;; See:
+;;
+;;   (find-pdf-like-intro "10. Generating a pair with the page number")
+;;   (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
 ;;
 (defun find-pdf-links ()
 "Run either `find-code-pdf-links' or `find-pdflike-page-links'."

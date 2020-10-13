@@ -1,3 +1,20 @@
+2020-10-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-git-intro): new function.
+
+	* eev-tlinks.el (find-texlive-links): new function.
+	(find-pdflikedef-links): deleted.
+	(find-find-links-links): marked (informally) as obsolete.
+	(find-find-links-links-old): new alias.
+	(find-psne-links): use "wget -nc" by default.
+
+	* eev-brxxx.el: rewrote the comments in the beginning of the file.
+
+2020-10-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-pdflike-page-links): rewrote using
+	`find-find-links-links-new'.
+
 2020-10-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-testblocks.el (ee-insert-test-tuareg-mode): new function.

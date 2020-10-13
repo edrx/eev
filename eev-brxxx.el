@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019oct27
+;; Version:    2020oct12
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -34,47 +34,90 @@
 
 ;;; Commentary:
 
-;; See: (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
-;;      (find-psne-intro "Local copies")
-;;      (find-brxxx-intro)
+;; The section
 ;;
-;; The main functions here are `code-brurl' and `code-brfile', that
-;; lets us mass-define "brxxx functions" based on a given function
-;; that expects urls - in the case of `code-brurl' - or on a function
-;; that expects file names - in the case of `code-brfile'.
+;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
 ;;
-;; Try these tests to see the kind of code that is generated:
+;; of the main tutorial mentions the functions `brff' and `brg', that
+;; are eev-ish variants of `browse-url'. They are explained in more
+;; details here:
 ;;
-;;   (find-code-brurl  'find-foo :remote 'brfoo :local 'brfool :dired 'brfood)
-;;   (find-code-brfile 'find-bar                :local 'brbarl :dired 'brbard)
+;;   (find-brxxx-intro)
 ;;
-;; The functions `brfoo', `brfool' and `brbarl' operate on the
-;; url-at-point, and the functions `brfood' and `brbard' operate on
-;; the file at the current line and only work in dired mode. The
-;; functions `brfool' and `brbarl' call `find-foo' and `find-bar' on
-;; the _local copy_ of the url that they receive, like this:
+;; These `brxxx's are "mass-produced" by the functions `code-brurl'
+;; and `code-brfile', that work similarly to `code-c-d'. Try these
+;; tests to see the code that they generate:
 ;;
-;;   (brfool "http://some/url")
-;;     --> (find-foo (ee-url-to-local-url "http://some/url"))
-;;     --> (find-foo (concat "file://" (ee-expand "$S/http/some/url")))
+;;   (find-code-brfile 'find-FOO                :local 'brFOOL :dired 'brFOOD)
+;;   (find-code-brurl  'find-QUX :remote 'brQUX :local 'brQUXL :dired 'brQUXD)
 ;;
-;;   (brbarl "http://some/url")
-;;     --> (find-bar (ee-url-to-fname "http://some/url"))
-;;     --> (find-bar (ee-expand "$S/http/some/url"))
+;; The first argument of `code-brurl' and `find-code-brurl' is the
+;; name of a function that expects a URL; the first argument of
+;; `code-brfile' and `find-code-brfile' is the name of a function that
+;; expects a filename. The other arguments are pairs made of a keyword
+;; and a name of a function to define.
 ;;
-;; Try the sexps above with:
+;; Here is a simple test. Let's define `find-FOO' as function that
+;; expects a filename and displays it in the right window, and
+;; `find-QUX' as a function that expects a URL and displays it in the
+;; right window:
 ;;
-;;   (defun find-foo (url)   (find-2a nil '(find-estring url)))
-;;   (defun find-bar (fname) (find-2a nil '(find-estring fname)))
-;;   (code-brurl  'find-foo :remote 'brfoo :local 'brfool :dired 'brfood)
-;;   (code-brfile 'find-bar                :local 'brbarl :dired 'brbard)
+;;   (defun find-FOO (url)   (find-2a nil '(find-estring url)))
+;;   (defun find-QUX (fname) (find-2a nil '(find-estring fname)))
+;;   (find-FOO "/tmp/a-filename")
+;;   (find-QUX "http://some/url")
 ;;
-;; The idea of local copies is explained here:
+;; Now let's define the `brFOO*' and `brQUX*' functions:
 ;;
-;;   (find-psne-intro "Local copies")
+;;   (find-code-brfile 'find-FOO                :local 'brFOOL :dired 'brFOOD)
+;;        (code-brfile 'find-FOO                :local 'brFOOL :dired 'brFOOD)
+;;   (find-code-brurl  'find-QUX :remote 'brQUX :local 'brQUXL :dired 'brQUXD)
+;;        (code-brurl  'find-QUX :remote 'brQUX :local 'brQUXL :dired 'brQUXD)
 ;;
+;; The function `brQUX', that was defined with `:remote', acts like
+;; `browse-url', but using `find-QUX' as its "browser": it calls
+;; `find-QUX' on a "remote" URL.
 ;;
+;; The functions `brFOOL' and `brQUXL', that were defined with
+;; `:local', act on a "local copy" of the URL, in the sense of:
 ;;
+;;   (find-psne-intro "1. Local copies of files from the internet")
+;;
+;; You can try them either by typing `M-x brFOOL' and `M-x brQUXL' on
+;; the URLs below or by running the sexps with `M-e'. Their action is
+;; to show on the right window the argument that was passed to
+;; `find-FOO' and `find-QUX':
+;;
+;;   (brFOOL "http://some/url")
+;;   (brQUXL "http://some/url")
+;; 
+;; that are that URL converted to a local file name in the first case,
+;; and that URL converted to a "file:///" URL corresponding that local
+;; file name in the second case. More precisely, what happens is:
+;;
+;;   (brFOOL "http://some/url")
+;;   --> (find-FOO (ee-url-to-fname "http://some/url"))
+;;   --> (find-FOO (ee-expand      "$S/http/some/url"))
+;;
+;;   (brQUXL "http://some/url")
+;;   --> (find-QUX (ee-url-to-local-url          "http://some/url"))
+;;   --> (find-QUX (concat "file://" (ee-expand "$S/http/some/url")))
+;;
+;; The functions `brFOOD' and `brQUXD' are intended to be called
+;; interactively from dired mode. If you call them on a dired buffer
+;; showing "/tmp/" and with the point on the line that shows a file
+;; called "a-filename" their actions would be the same as the sexps
+;; below:
+;;
+;;   (brFOOL "/tmp/a-filename")
+;;    --> (find-FOO "/tmp/a-filename")
+;;
+;;   (brQUXL "/tmp/a-filename")
+;;   --> (find-QUX (ee-fname-to-url  "/tmp/a-filename"))
+;;   --> (find-QUX (concat "file://" "/tmp/a-filename"))
+;;
+
+
 ;; This file, i.e.: (find-eev "eev-brxxx.el")
 ;; supersedes:      (find-eev "eev-browse-url.el")
 ;; but eev-browse-url.el still has some nice comments that I would
@@ -180,7 +223,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;; | (_| (_) | (_| |  __/_____| |_) | |  | |_| | |  | |
 ;;;  \___\___/ \__,_|\___|     |_.__/|_|   \__,_|_|  |_|
 ;;;                                                     
-;; (find-tail-call-links "brurl" "f")
+;; Skel (broken): (find-tail-call-links "brurl" "f")
 
 ;; «code-brurl» (to ".code-brurl")
 ;; Test: (find-code-brurl  'find-foo :remote 'brfoo :local 'brfool :dired 'brfood)
@@ -254,12 +297,11 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;; | (_| (_) | (_| |  __/_____| |_) | |  |  _| | |  __/
 ;;;  \___\___/ \__,_|\___|     |_.__/|_|  |_| |_|_|\___|
 ;;;                                                     
-;; (find-tail-call-links "brfile" "f")
-
 ;; «code-brfile» (to ".code-brfile")
-;; code-brfile: top-level functions
+;; `code-brfile': top-level functions.
 ;;
-;; Test: (find-code-brfile 'find-bar :local 'brbarl :dired 'brbard)
+;; Skel (broken): (find-tail-call-links "brfile" "f")
+;; Test: (find-code-brfile 'find-BAR :local 'brBARL :dired 'brBARD)
 ;;
 (defun      code-brfile (f &rest rest)
   "Define a family of brxxx functions from a function that operates on files"
@@ -273,7 +315,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 ")  (ee-code-brfile-rest f rest)))
 
 ;; «ee-code-brfile-rest» (to ".ee-code-brfile-rest")
-;; Support for extra arguments
+;; `code-brfile': support for extra arguments.
 
 (defun ee-code-brfile-rest (f rest)
   (cond ((null rest) "")

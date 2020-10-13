@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct06
+;; Version:    2020oct13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -58,11 +58,10 @@
 ;; «.ee-copy-rest»			(to "ee-copy-rest")
 ;;
 ;; «.find-find-links-links»		(to "find-find-links-links")
-;; «.ee-ffll-functions»			(to "ee-ffll-functions")
 ;; «.find-find-links-links-new»		(to "find-find-links-links-new")
+;; «.ee-ffll-functions»			(to "ee-ffll-functions")
 ;;
 ;; «.find-intro-links»			(to "find-intro-links")
-;; «.find-pdflikedef-links»		(to "find-pdflikedef-links")
 ;; «.find-eev-header-links»		(to "find-eev-header-links")
 ;;
 ;; «.find-debpkg-links»			(to "find-debpkg-links")
@@ -82,6 +81,7 @@
 ;; «.find-extra-file-links»		(to "find-extra-file-links")
 ;; «.find-emacs-tangents-links»		(to "find-emacs-tangents-links")
 ;; «.find-eeit-links»			(to "find-eeit-links")
+;; «.find-texlive-links»		(to "find-texlive-links")
 
 
 (require 'eev-env)
@@ -214,8 +214,9 @@ See: (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")"
 ;;;                                                     
 ;;
 ;; «find-find-links-links» (to ".find-find-links-links")
-;; See:  (find-templates-intro "horrible" "kludge")
 ;; Test: (find-find-links-links "u" "find-links" "k stem args")
+;; THIS IS OBSOLETE - DON'T USE THIS!
+;; Use `find-find-links-links-new' instead.
 
 (defun ee-prepend-commas (str)
   (save-match-data
@@ -224,6 +225,8 @@ See: (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")"
   (format "(setq %s (or %s \"{%s}\"))" str str str))
 (defun ee-if-nil-setqs (vars sep)
   (mapconcat 'ee-if-nil-setq (save-match-data (ee-split vars)) sep))
+
+(defalias 'find-find-links-links-old 'find-find-links-links)
 
 (defun find-find-links-links (&optional k stem args &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for foo."
@@ -275,6 +278,40 @@ This is an internal function used by `find-{stem}-links'.\"
 
 
 
+
+;;;   __ _           _       _ _       _       /\ ____                           
+;;;  / _(_)_ __   __| |     | (_)_ __ | | ____|/\|___ \      _ __   _____      __
+;;; | |_| | '_ \ / _` |_____| | | '_ \| |/ / __|   __) |____| '_ \ / _ \ \ /\ / /
+;;; |  _| | | | | (_| |_____| | | | | |   <\__ \  / __/_____| | | |  __/\ V  V / 
+;;; |_| |_|_| |_|\__,_|     |_|_|_| |_|_|\_\___/ |_____|    |_| |_|\___| \_/\_/  
+;;;                                                                              
+;; «find-find-links-links-new»  (to ".find-find-links-links-new")
+;; Test: (find-find-links-links-new)
+;; Many of the templated functions of eev were written using this.
+;; They all have a line saying ";; Skel:" that generates their "skeleton".
+;; See: (find-eevgrep "grep --color -nH --null -e Skel: *.el")
+;;
+(defun find-find-links-links-new (&optional stem args vars &rest pos-spec-list)
+"Visit a temporary buffer containing a skeleton of a find-*-links function."
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (setq args (or args "{args}"))
+  (setq vars (or vars "{vars}"))
+  (apply 'find-elinks-elisp
+   `((find-find-links-links-new ,stem ,args ,vars ,@pos-spec-list)
+     (find-find-links-links-new "mytask" "foo bar" "" ,@pos-spec-list)
+     (find-find-links-links-new "mytask" "foo bar" "plic bletch" ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-find-links-links-new)
+     ""
+     ,(ee-template0 ";; <find-{stem}-links>")
+     ,(concat ";; Skel: " (ee-S `(find-find-links-links-new ,stem ,args ,vars)))
+     ";;"
+     ,(ee-ffll-defun stem args vars)
+     )
+   pos-spec-list))
+
+
 ;;;                   __  __ _ _ _            
 ;;;   ___  ___       / _|/ _| | | |     __/\__
 ;;;  / _ \/ _ \_____| |_| |_| | | |_____\    /
@@ -284,15 +321,6 @@ This is an internal function used by `find-{stem}-links'.\"
 ;; «ee-ffll-functions»  (to ".ee-ffll-functions")
 ;; Low-level functions used by find-find-links-links-new.
 ;;
-;; The original `find-find-links-links' whas a horrible kludge.
-;; See: (find-templates-intro "horrible" "kludge")
-;; This is an attempt to rewrite it.
-;; It was inspired by discussions with Marc Simpson.
-;; Version (of the ee-ffll-functions and find-find-links-links-new):
-;; 2020jan07.
-;; Status: `find-find-links-links-new' doesn't exist yet, but the
-;; tests below work.
-
 ;; Tests:
 ;; (ee-ffll-optional "")
 ;; (ee-ffll-optional "foo bar")
@@ -378,29 +406,6 @@ This is an internal function used by `find-{stem}-links'.\"
      (ee-ffll-defun-without-lets stem args)))
 
 
-;; «find-find-links-links-new»  (to ".find-find-links-links-new")
-;; Test: (find-find-links-links-new)
-;;
-(defun find-find-links-links-new (&optional stem args vars &rest pos-spec-list)
-"Visit a temporary buffer containing a skeleton of a find-*-links function."
-  (interactive)
-  (setq stem (or stem "{stem}"))
-  (setq args (or args "{args}"))
-  (setq vars (or vars "{vars}"))
-  (apply 'find-elinks-elisp
-   `((find-find-links-links-new ,stem ,args ,vars ,@pos-spec-list)
-     (find-find-links-links-new "mytask" "foo bar" "" ,@pos-spec-list)
-     (find-find-links-links-new "mytask" "foo bar" "plic bletch" ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-find-links-links-new)
-     ""
-     ,(ee-template0 ";; <find-{stem}-links>")
-     ,(concat ";; Skel: " (ee-S `(find-find-links-links-new ,stem ,args ,vars)))
-     ";;"
-     ,(ee-ffll-defun stem args vars)
-     )
-   pos-spec-list))
-
 
 
 
@@ -462,82 +467,6 @@ Hello
 ;; (find-intro-links)
 ;; (find-intro-links "emacs")
 
-
-
-
-
-;;;            _  __ _ _ _            _       __ 
-;;;  _ __   __| |/ _| (_) | _____  __| | ___ / _|
-;;; | '_ \ / _` | |_| | | |/ / _ \/ _` |/ _ \ |_ 
-;;; | |_) | (_| |  _| | |   <  __/ (_| |  __/  _|
-;;; | .__/ \__,_|_| |_|_|_|\_\___|\__,_|\___|_|  
-;;; |_|                                          
-;;
-;; «find-pdflikedef-links» (to ".find-pdflikedef-links")
-;; Obsolete! Was used in: (find-eev "eev-pdflike-old.el")
-;;   e.g. (find-eev "eev-pdflike-old.el" "defalias 'find-xdvipage")
-;; (find-find-links-links "pdflikedef" "stem firstargs")
-;;
-(defun find-pdflikedef-links (&optional stem firstargs &rest rest)
-  "Visit a temporary buffer containing hyperlinks for pdflikedef."
-  (interactive)
-  (setq stem (or stem "{stem}"))
-  (setq firstargs (or firstargs "{firstargs}"))
-  (apply 'find-elinks-elisp `(
-    ;; Convention: the first sexp always regenerates the buffer.
-    (find-pdflikedef-links ,stem ,firstargs ,@rest)
-    (find-efunction 'find-pdflikedef-links)
-    (emacs-lisp-mode)
-    ;; Body:
-    ""
-    ,(ee-template0 "\
-;; (find-efunction 'code-{stem})
-
-;; find-{stem}page
-;; find-{stem}-page
-;; code-{stem}
-;;
-\(defalias 'find-{stem}page
-          'find-{stem}-page)
-\(defun     find-{stem}-page (fname &optional page &rest rest)
-  (find-bgprocess (ee-find-{stem}-page fname page)))
-\(defvar ee-find-{stem}-page-options '())
-\(defun  ee-find-{stem}-page (fname &optional page)
-  `(\"{stem}\"
-    ,@ee-find-{stem}-page-options
-    ,@(if page `(,(format \"--page=%d\" page)))
-    ,fname))
-
-\(defun      code-{stem} ({firstargs} &rest rest)
-  (eval (ee-read      (apply 'ee-code-{stem} {firstargs} rest))))
-\(defun find-code-{stem} ({firstargs} &rest rest)
-  (find-estring-elisp (apply 'ee-code-{stem} {firstargs} rest)))
-\(defun   ee-code-{stem} ({firstargs} &rest rest)
-  (concat (ee-template0 \"\\
-\\(defun find-{<}c{>}page (&optional page &rest rest)
-  (find-{stem}-page {<}(ee-pp0 fname){>} page))
-{<}(ee-code-pdftext-rest rest){>}
-\")  (ee-code-pdftext-rest rest)))
-
-\(code-brfile 'find-xpdf-page :local 'brxpdfl :dired 'brxpdfl)
-
-
-;; Tests:
-;; (find-epp (ee-find-{stem}-page \"/tmp/foo.pdf\"))
-;; (find-epp (ee-find-{stem}-page \"/tmp/foo.pdf\" 2))
-;;           (find-{stem}-page    \"/tmp/foo.pdf\")
-;;           (find-{stem}-page    \"/tmp/foo.pdf\" 2)
-;;
-;;      (find-code-{stem} \"foo\"   \"/tmp/foo.pdf\")
-;;           (code-{stem} \"foo\"   \"/tmp/foo.pdf\")
-;;                 (find-foopage)
-;;                 (find-foopage 2)
-;;      (code-pdftotext \"foo\"   \"/tmp/foo.pdf\")
-")
-    ) rest))
-
-;; (find-pdflikedef-links "djvu" "c fname")
-;; (find-efunctionpp 'find-pdflikedef-links)
 
 
 
@@ -1147,10 +1076,11 @@ cd {dir}
 "See: (find-psne-intro)"
   (interactive)
   (setq url (or url "{url}"))
-  (setq wget-options (or wget-options ""))
+  (setq wget-options (or wget-options "-nc"))
   (apply 'find-elinks
    `((find-psne-links ,url ,wget-options ,@pos-spec-list)
      (find-psne-links ,url "-c" ,@pos-spec-list)
+     (find-psne-links ,url "" ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-psne-links)
      ""
@@ -1458,7 +1388,7 @@ Warning: the last one is in Portuguese..."
  (eepitch-shell2)
 mkdir -p $S/http/angg.twu.net/eev-videos/
 cd       $S/http/angg.twu.net/eev-videos/
-wget  -c 'http://angg.twu.net/eev-videos/{anggstem}.mp4'
+wget -nc 'http://angg.twu.net/eev-videos/{anggstem}.mp4'
 echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 
 # Test:
@@ -1943,6 +1873,75 @@ dofile \\\"%s\\\"
      pos-spec-list)))
 
 
+
+
+;;;  _____   __  ___     _           
+;;; |_   _|__\ \/ / |   (_)_   _____ 
+;;;   | |/ _ \\  /| |   | \ \ / / _ \
+;;;   | |  __//  \| |___| |\ V /  __/
+;;;   |_|\___/_/\_\_____|_| \_/ \___|
+;;;                                  
+;; «find-texlive-links»  (to ".find-texlive-links")
+
+(defun find-texlive-links (&optional date &rest pos-spec-list)
+"Visit a temporary buffer containing an e-script for installing texlive from upstream."
+  (interactive)
+  (setq date (or date "{date}"))
+  (apply 'find-elinks
+   `((find-texlive-links ,date ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-texlive-links "20190809")
+     (find-efunction 'find-texlive-links)
+     ""
+     ,(ee-template0 "\
+# https://www.tug.org/texlive/
+# https://www.tug.org/texlive/acquire-netinstall.html
+# https://www.tug.org/texlive/quickinstall.html
+# http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+#   (find-fline \"$S/http/mirror.ctan.org/systems/texlive/tlnet/\")
+#   (find-fline \"$S/http/mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz\")
+# https://www.tug.org/texlive/doc/install-tl.html
+# (find-fline \"~/usrc/\" \"install-tl-\")
+# (find-fline \"~/.texlive2018/\")
+# (find-fline \"~/.texlive2019/\")
+# (find-fline \"/usr/local/texlive/2018/\")
+# (find-fline \"/usr/local/texlive/2019/\")
+# (find-fline \"/usr/local/texlive/2019/\" \"install-tl.log\")
+# (find-fline \"/usr/local/texlive/2019/release-texlive.txt\")
+
+ (eepitch-shell2)
+ (eepitch-kill)
+ (eepitch-shell2)
+# rm -rfv ~/.texlive2018/
+# sudo rm -rfv /usr/local/texlive/2018/
+
+mkdir -p $S/http/mirror.ctan.org/systems/texlive/tlnet/
+cd       $S/http/mirror.ctan.org/systems/texlive/tlnet/
+rm -fv   $S/http/mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+wget      http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+echo      http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz >> ~/.psne.log
+# (find-fline \"$S/http/mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz\")
+# ^ Check the date here and adjust the {<}date{>} parameter of the template
+
+rm -Rfv ~/usrc/install-tl-{date}/
+mkdir   ~/usrc/
+tar  -C ~/usrc/ -xvzf \
+  $S/http/mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+cd      ~/usrc/install-tl-{date}/
+# sudo ./install-tl
+sudo ./install-tl -select-repository
+
+# (code-c-d \"tlinstall\" \"~/usrc/install-tl-{date}/\")
+# (find-tlinstallfile \"\")
+# (find-tlinstallfile \"install-tl.log\")
+# (find-tlinstallfile \"install-tl\")
+# https://www.tug.org/texlive/doc/install-tl.html
+
+")
+     )
+   pos-spec-list))
+
+;; Test: (find-texlive-links)
 
 
 
