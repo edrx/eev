@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jul22
+;; Version:    2020oct11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -76,6 +76,7 @@
 ;; «.find-eface-links»		(to "find-eface-links")
 ;; «.find-color-links»		(to "find-color-links")
 ;; «.find-epackage-links»	(to "find-epackage-links")
+;; «.ee-package-dir»		(to "ee-package-dir")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -893,39 +894,36 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;; | |_) | (_| |  _| | |   <  __/_____| |_) | (_| | (_| |  __/
 ;;; | .__/ \__,_|_| |_|_|_|\_\___|     | .__/ \__,_|\__, |\___|
 ;;; |_|                                |_|          |___/      
-
-;; «find-pdflike-page-links» (to ".find-pdflike-page-links")
-;; (find-efunction 'count-lines)
 ;;
-(defun ee-count-formfeeds (start end)
-  (save-excursion
-    (save-restriction
-      (narrow-to-region start end)
-      (goto-char (point-min))
-      (save-match-data
-	(let ((done 0))
-	  (while (re-search-forward "[\f]" nil t 1)
-	    (setq done (+ 1 done)))
-	  done)))))
-
-(defun ee-current-page ()
-  (+ 1 (ee-count-formfeeds (point-min) (point))))
-
-(defun ee-last-kill ()
-  (if (stringp (car kill-ring))
-    (ee-no-properties (car kill-ring))))
-
-(defun ee-region ()
-  (if (region-active-p)
-      (buffer-substring-no-properties (point) (mark))))
-
-(defun ee-region-or-last-kill ()
-  (or (ee-region) (ee-last-kill)))
-
-;; Skel: (find-find-links-links-old "\\M-p" "pdflike-page" "page bufname offset")
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-p" 'find-pdflike-page-links)
+;; «find-pdflike-page-links» (to ".find-pdflike-page-links")
+;; The function `find-pdflike-page-links' is called from
+;; `find-pdf-links' (`M-h M-p') when you call it in a buffer that is
+;; not in dired mode. See:
+;;   (to "find-pdf-links")
+;;   (find-pdf-like-intro "10. Generating a pair with the page number")
+;;   (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
+;;
+;; Skel: (find-find-links-links-new "pdflike-page" "page bufname offset" "")
+;;
+(defun find-pdflike-page-links (&optional page bufname offset &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks to a pdf-like document.
+See: (find-pdf-like-intro)
+     (find-pdf-like-intro \"refining hyperlinks to pages\")"
+  (interactive)
+  (setq page    (or page (ee-current-page)))
+  (setq bufname (or bufname (buffer-name)))
+  (setq offset  (or offset ee-page-offset))
+  (apply
+   'find-elinks
+   `((find-pdflike-page-links ,page ,bufname ,offset ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-pdf-like-intro "10. Generating a pair with the page number")
+     (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
+     ;; (find-efunction 'find-pdflike-page-links)
+     ""
+     ,@(ee-pdflike-page-links page bufname offset)
+     )
+   pos-spec-list))
 
 (defun ee-pdflike-page-links (&optional page bufname offset)
   (setq page    (or page (ee-current-page)))
@@ -953,33 +951,37 @@ when this is true remove the prefix D from FNAME, and put the sexp
       ,(ee-HS bufname)
       )))
 
-(defun find-pdflike-page-links (&optional page bufname offset &rest rest)
-"Visit a temporary buffer containing hyperlinks to a pdf-like document.
-See: (find-pdf-like-intro)
-     (find-pdf-like-intro \"refining hyperlinks to pages\")"
-  (interactive)
-  (setq page    (or page (ee-current-page)))
-  (setq bufname (or bufname (buffer-name)))
-  (setq offset  (or offset ee-page-offset))
-  (apply 'find-elinks `(
-    (find-pdflike-page-links ,page ,bufname ,offset ,@rest)
-    ;; (find-efunction 'find-pdflike-page-links)
-    ;; (find-eev-quick-intro "10.4. Generating short hyperlinks to PDFs")
-    ;; (find-eev-quick-intro "11.1. `find-pdf-links'")
-    (find-pdf-like-intro "10. Generating a pair with the page number")
-    (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
-    ""
-    ,@(ee-pdflike-page-links page bufname offset)
-    ) rest))
+;; These are internal functions used by `find-pdflike-page-links' and
+;; `ee-pdflike-page-links'.
 
-;; (find-pdflike-page-links)
-;; (find-angg ".emacs.papers" "kopkadaly")
-;; (code-pdftotext "kopkadaly4" "~/books/__comp/kopka_daly__a_guide_to_latex_4th_ed.pdf" 12)
-;; (find-code-pdftotext "kopkadaly4" "~/books/__comp/kopka_daly__a_guide_to_latex_4th_ed.pdf" 12)
-;; (ee-page-parameters "kopkadaly4" 12)
-;; (find-kopkadaly4page (+ 12 287) "13.1   The picture environment")
-;; (find-kopkadaly4text            "13.1   The picture environment")
-;; (find-kopkadaly4text)
+;; Based on: (find-efunction 'count-lines)
+;;
+(defun ee-count-formfeeds (start end)
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (save-match-data
+	(let ((done 0))
+	  (while (re-search-forward "[\f]" nil t 1)
+	    (setq done (+ 1 done)))
+	  done)))))
+
+(defun ee-current-page ()
+  (+ 1 (ee-count-formfeeds (point-min) (point))))
+
+(defun ee-last-kill ()
+  (if (stringp (car kill-ring))
+    (ee-no-properties (car kill-ring))))
+
+(defun ee-region ()
+  (if (region-active-p)
+      (buffer-substring-no-properties (point) (mark))))
+
+(defun ee-region-or-last-kill ()
+  (or (ee-region) (ee-last-kill)))
+
+
 
 
 
@@ -1117,59 +1119,124 @@ This needs a temporary directory; see: (find-prepared-intro)"
 ;;;                              |_|                         |___/              
 ;;
 ;; «find-epackage-links»  (to ".find-epackage-links")
-;; Skel:  (find-find-links-links-new "epackage" "pkgname" "")
-;; Tests: (find-epackage-links "0x0")
-;;        (find-estring (ee-find-epackage-links0 "0x0"))
+;; Skel: (find-find-links-links-new "epackage" "pkg c d" "")
+;; Test: (find-epackage-links 'lua-mode)
+;;       (find-epackage-links 'tetris)
+;;       (find-epackage-links 'foo)
 ;;
-(defun find-epackage-links (&optional pkgname &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for an Emacs package."
-  (interactive)
-  (setq pkgname (or pkgname "{pkgname}"))
+(defun find-epackage-links (&optional pkg c d &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for an Emacs package.
+PKG must be a symbol; C and D are arguments for `code-c-d'.
+If D is t then try to use `ee-package-dir' to get the directory."
+  (interactive (list (symbol-at-point)))
+  (setq pkg (or pkg "{pkg}"))
+  (setq c (or c (replace-regexp-in-string "[-]" "" (symbol-name pkg))))
+  (setq d (cond ((eq d t) (ee-package-dir pkg))
+		((eq d nil) "{d}")
+		(t d)))
   (apply
    'find-elinks
-   `((find-epackage-links ,pkgname ,@pos-spec-list)
+   `((find-epackage-links ,(ee-add-quote pkg) ,c ,d ,@pos-spec-list)
+     (find-epackage-links ,(ee-add-quote pkg) ,c t ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-epackage-links)
      (find-elpafile "")
      ""
-     ,(ee-find-epackage-links0 pkgname)
+     ,(ee-find-epackage-links0 pkg c d)
      )
    pos-spec-list))
 
-(defun ee-find-epackage-links0 (pkgname)
+(defun ee-find-epackage-links0 (pkg c d)
   "This is an internal function used by `find-epackage-links'."
-  (let* ((spkgname (format "\n  %s " pkgname))
-	 (pattern (format "%s%s-*" ee-elpadir pkgname))
-	 (fnames (ee-file-expand-wildcards-slash pattern))
-	 (sexps (mapcar (lambda (s) (list 'find-elpafile s)) fnames))
-	 (sexps (reverse sexps))
-	 (lines (mapconcat 'ee-HS sexps "\n"))
+  (let* ((spkg (format "\n  %s " pkg))
+	 (findelpafiles0 (ee-package-findelpafiles pkg))
+	 (findelpafiles1 (reverse findelpafiles0))
+	 (findelpafiles (mapconcat 'ee-HS findelpafiles1 "\n"))
 	 )
     (ee-template0 "\
-# (find-epackages {(ee-S spkgname)})
-# (find-epackage-links '{pkgname})
-# (find-epackage '{pkgname})
-{lines}
+# (find-epackages {(ee-S spkg)})
+# (find-epackage-links '{pkg})
+# (find-epackage '{pkg})
+{findelpafiles}
 
-# http://elpa.gnu.org/packages/{pkgname}.html
-# http://melpa.org/#/{pkgname}
+# (ee-package-dir '{pkg})
+# (find-epp (ee-package-desc '{pkg}))
+
+# (code-c-d \"{c}\" \"{d}\")
+# (find-{c}file \"\")
+
+# http://elpa.gnu.org/packages/{pkg}.html
+# http://melpa.org/#/{pkg}
 ")))
 
 
-(defun ee-file-name-nondirectory-slash (fname)
-  "Like `file-name-nondirectory', but appends a / to FNAME if it is a directory.
-This is an internal function used by `ee-find-epackage-links'."
-  (concat (file-name-nondirectory fname)
-	  (if (file-directory-p fname) "/" "")))
+
+;; Tests: (find-fline ee-elpadir)
+;;        (find-fline "~/.emacs.d/elpa/" "lua-mode-")
+;;        (ee-file-expand-wildcards-slash "~/.emacs.d/elpa/lua-mode-*")
+;;        (ee-package-findelpafiles "lua-mode")
+;;
+(defun ee-package-findelpafiles (pkgname)
+  "Convert a PKGNAME to a list of `(find-elpafile ...)' sexps."
+  (let* ((pattern (format "%s%s-*" ee-elpadir pkgname))
+	 (fnames (ee-file-expand-wildcards-slash pattern)))
+    (mapcar (lambda (s) (list 'find-elpafile s)) fnames)))
 
 (defun ee-file-expand-wildcards-slash (pattern)
-  "Like `file-expand-wildcards' but with `ee-file-name-nondirectory-slash' & sort.
-This is an internal function used by `ee-find-epackage-links'."
+"Like `file-expand-wildcards' but with `ee-file-name-nondirectory-slash' & sort."
   (let* ((fnames0 (file-expand-wildcards pattern))
 	 (fnames1 (mapcar 'ee-file-name-nondirectory-slash fnames0))
 	 (fnames2 (sort fnames1 'string<)))
     fnames2))
 
+(defun ee-file-name-nondirectory-slash (fname)
+"Like `file-name-nondirectory', but appends a / to FNAME if it is a directory."
+  (concat (file-name-nondirectory fname)
+	  (if (file-directory-p fname) "/" "")))
+
+
+
+
+;; «ee-package-dir»  (to ".ee-package-dir")
+;; This function converts a package name (a symbol) into the directory
+;; in which that package was installed (or nil), using functions from
+;; "package.el".
+;;
+;; Tests: (require 'package)
+;;        (package-initialize)
+;;        (ee-package-dir 'lua-mode)
+;;        (ee-package-dir 'tetris)
+;;        (ee-package-dir 'foo)
+;;        (ee-package-desc 'lua-mode)
+;;        (ee-package-desc 'tetris)
+;;        (ee-package-desc 'foo)
+;;
+;; WARNING: the function `ee-package-dir' and its dependency
+;; `ee-package-desc' use several functions from "package.el", and I
+;; don't understand package.el well enough!
+;;
+;; See: (find-efile "emacs-lisp/package.el" "(cl-defstruct (package-desc")
+;;      (find-efunction 'describe-package-1)
+;;      (find-efunction 'describe-package-1 "(let* ((desc ")
+;;
+(defun ee-package-dir (pkg)
+"Convert the name of the package PKG to the directory where it was installed."
+  (let* ((desc (ee-package-desc pkg))
+	 (dir (and desc (package-desc-dir desc))))
+    (if (stringp dir)
+	(replace-regexp-in-string
+	 "\\([^/]\\)$" "\\1/"
+	 (ee-shorten-file-name dir)))))
+
+(defun ee-package-desc (pkg)
+"An internal function used by `ee-package-dir'.
+Convert PKG - a symbol - to a package-desc structure (or to nil)."
+  (or (if (package-desc-p pkg) pkg)
+      (cadr (assq pkg package-alist))
+      (let ((built-in (assq pkg package--builtins)))
+	(if built-in
+	    (package--from-builtin built-in)
+	  (cadr (assq pkg package-archive-contents))))))
 
 
 
@@ -1186,10 +1253,8 @@ This is an internal function used by `ee-find-epackage-links'."
 ;;; |_| |_|_| |_|\__,_|      \___\___/ \__,_|\___| \/       |_|_|_| |_|_|\_\___/
 ;;;                                                                             
 ;; «find-code-pdf-links»  (to ".find-code-pdf-links")
-;; Tests:
-;; (find-fline          "/usr/local/texlive/2018/texmf-dist/doc/latex/base/")
-;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf")
-;; (find-code-pdf-links "/usr/local/texlive/2018/texmf-dist/doc/latex/base/source2e.pdf" "foo")
+;; See: (to "find-pdf-links")
+;;      (find-pdf-like-intro "9. Generating three pairs" "find-code-pdf-links")
 
 ;; See: (find-efunction 'ee-if-prefixp)
 (defun ee-shorten-file-name (fname)
@@ -1231,7 +1296,30 @@ This is an internal function used by `ee-find-epackage-links'."
        )
      pos-spec-list)))
 
+
+
 ;; «find-pdf-links»  (to ".find-pdf-links")
+;; This function - usually bound to `M-h M-p' - behaves in one way
+;; when invoked from dired buffers and in a totally different way when
+;; invoked from other buffers. In a dired buffer it supposes that the
+;; current line contains the name of a PDF, and it generates a buffer
+;; whose main part is a pair `code-pdf-page'/`code-pdf-text' that lets
+;; you define short hyperlinks to that PDF. See:
+;;
+;;   (find-pdf-like-intro "7. Shorter hyperlinks to PDF files")
+;;   (find-pdf-like-intro "9. Generating three pairs" "`M-h M-p' in Dired mode")
+;;
+;; When the current buffer is not in dired mode this function supposes
+;; that the buffer contains the "text" of a PDF, as explained here:
+;;
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files" "find-pdf-text")
+;;
+;; and it tries to generate short hyperlinks to the current page of
+;; it, making lots of guesses, and often guessing everything wrong.
+;; See:
+;;
+;;   (find-pdf-like-intro "10. Generating a pair with the page number")
+;;   (find-pdf-like-intro "11. How `M-h M-p' guesses everything")
 ;;
 (defun find-pdf-links ()
 "Run either `find-code-pdf-links' or `find-pdflike-page-links'."

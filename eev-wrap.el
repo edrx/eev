@@ -181,6 +181,7 @@ have to run an \"undo\"."
 ;;; |_|  |_|     |_.__(_)  \___||___/\___|_|  |_| .__/ \__| |_.__/|_|_|\_\
 ;;;                                             |_|                       
 ;;
+;; See: (find-eev-quick-intro "8.4. Creating e-script blocks")
 ;; (define-key eev-mode-map "\M-B" 'eewrap-escript-block)
 
 (defun  eewrap-escript-block () (interactive)
@@ -309,6 +310,7 @@ have to run an \"undo\"."
 ;;; | |  | |_____|  __/ _  | |_) | (_| |  _| | |   <  __/
 ;;; |_|  |_|     |_|   (_) | .__/ \__,_|_| |_|_|_|\_\___|
 ;;;                        |_|                           
+;;
 ;; See: (find-pdf-like-intro)
 ;; (define-key eev-mode-map "\M-P" 'eewrap-pdflike)
 
@@ -332,8 +334,10 @@ have to run an \"undo\"."
 ;;; | |  | |_____| |_| |_  | |_) | (_| |  _| | |   <  __/_____| | | | | |   < 
 ;;; |_|  |_|      \__\_(_) | .__/ \__,_|_| |_|_|_|\_\___|     |_|_|_| |_|_|\_\
 ;;;                        |_|                                                
+;;
 ;; See: (find-pdf-like-intro)
 ;; (define-key eev-mode-map "\M-Q" 'eewrap-pdflike-link)
+;; OBSOLETE.
 
 (defun  eewrap-pdflike-link () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-pdflike-link))

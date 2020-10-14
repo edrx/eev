@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct04
+;; Version:    2020oct13
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -91,6 +91,7 @@
 ;; «.find-emacs-intro»		(to "find-emacs-intro")
 ;; «.find-org-intro»		(to "find-org-intro")
 ;; «.find-escripts-intro»	(to "find-escripts-intro")
+;; «.find-git-intro»		(to "find-git-intro")
 
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 
@@ -307,7 +308,7 @@ this video (from 2016!):
 
   http://angg.twu.net/eev-videos/video-eev-quick-0.mp4
 
-Open the page at
+To run it, open the page at
 
   http://angg.twu.net/eev-intros/find-eev-quick-intro.html
 
@@ -2149,9 +2150,9 @@ These are the current ways to download and install eev:
      links like these ones,
 
        http://elpa.gnu.org/packages/eev.html
-       http://elpa.gnu.org/packages/eev-20191003.tar
+       http://elpa.gnu.org/packages/eev-20201013.tar
        http://angg.twu.net/eev-current/
-       http://angg.twu.net/eev-current/eev-20191003.tar
+       http://angg.twu.net/eev-current/eev-20201013.tar
 
      and then running `M-x package-install-file';
 
@@ -2446,6 +2447,7 @@ Main intros:  (find-eev-quick-intro)
 Index to the source files: (find-eev \"eev-load.el\")
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-5 M-0 M-j'.
 
 
 Here is a list of all the available sandbox-y tutorials that
@@ -2460,31 +2462,31 @@ recommended reading order. These are the basic ones:
    5. (find-pdf-like-intro)
    6. (find-eepitch-intro)
    7. (find-audiovideo-intro)
-   8. (find-rcirc-intro)
-   9. (find-elisp-intro)
-  10. (find-eev-install-intro)
+   8. (find-psne-intro)
+   9. (find-rcirc-intro)
+  10. (find-elisp-intro)
+  11. (find-eev-install-intro)
 
 This is a very basic tutorial intended mainly for M$ Windows
 users:
 
-  11. (find-windows-beginner-intro)
+  12. (find-windows-beginner-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  12. (find-escripts-intro)
-  13. (find-links-conv-intro)
+  13. (find-escripts-intro)
+  14. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  14. (find-eval-intro)
-  15. (find-links-intro)
-  16. (find-brxxx-intro)
-  17. (find-wrap-intro)
-  18. (find-eejump-intro)
-  19. (find-anchors-intro)
-  20. (find-code-c-d-intro)
-  21. (find-psne-intro)
+  15. (find-eval-intro)
+  16. (find-links-intro)
+  17. (find-brxxx-intro)
+  18. (find-wrap-intro)
+  19. (find-eejump-intro)
+  20. (find-anchors-intro)
+  21. (find-code-c-d-intro)
 
 These are etcs:
 
@@ -2492,21 +2494,22 @@ These are etcs:
   23. (find-templates-intro)
   24. (find-org-intro)
   25. (find-videos-intro)
+  26. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  26. (find-prepared-intro)
-  27. (find-bounded-intro)
-  28. (find-channels-intro)
+  27. (find-prepared-intro)
+  28. (find-bounded-intro)
+  29. (find-channels-intro)
 
 This one is used in a video:
 
-  29. (find-three-main-keys-intro)
+  30. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  30. (find-emacs-intro)
-  31. (find-defun-intro)
+  31. (find-emacs-intro)
+  32. (find-defun-intro)
 
 Item 25 is an index of old video tutorials, with scripts for
 downloading local copies of them and links to important positions
@@ -3486,6 +3489,8 @@ are numbers or strings. Try:
 
 7. Pos-spec-lists
 =================
+[Moved to:] (find-refining-intro \"1. Pos-spec-lists\")
+
 The optional arguments that refine a hyperlink form what we call
 a \"pos-spec-list\". For example, the pos-spec-list here has two
 elements,
@@ -3667,128 +3672,6 @@ Try:
    4)
   ((lambda (x) (* 10 x))
    4)
-
-
-
-10.1. Byte-compiled functions
------------------------------
-Most functions in Emacs are byte-compiled - which means that
-their function cells contain a \"byte-code\" instead of a lambda
-expression. These byte-codes are very hard for humans to read.
-See:
-
-  (find-elnode \"What Is a Function\" \"byte-code function\")
-  (find-elnode \"Byte-Code Type\")
-  (find-elnode \"Byte Compilation\")
-  (find-elnode \"Disassembly\")
-
-Here is an example:
-
-  (find-efunctiondescr 'find-file)
-  (find-efunction      'find-file)
-  (symbol-function     'find-file)
-  (find-efunctionpp    'find-file)
-  (find-efunctiond     'find-file)
-
-The `find-efunctionpp' link above takes the content of the
-function cell of `find-file' and \"pretty-prints\" it, i.e.,
-indents it in a nice way, but the result in this case is
-unreadable... and the `find-efunctiond' link shows a decompiled
-version of that byte-code, which is only slightly better. Both
-the `find-efunctionpp' and the `find-efunctiond' links show
-internal representations that are very different from the source
-code. Compare that with a case in which the function is not
-byte-compiled:
-
-  (find-efunctiondescr 'find-fline)
-  (find-efunction      'find-fline)
-  (symbol-function     'find-fline)
-  (find-efunctionpp    'find-fline)
-
-The `(find-efunctionpp 'find-fline)' shows a lambda expression
-that is very similar to the defun that defined `find-fline'.
-
-
-
-
-10.2. How `find-efunction' works
---------------------------------
-Eev defines hyperlink functions called `find-efunction',
-`find-evariable' and `find-eface' that are wrappers around the
-standard functions `find-function', `find-variable' and
-`find-face-definition'; the eev variants support pos-spec-lists.
-Try:
-
-  (find-efunction 'find-fline)
-  (find-function  'find-fline)
-  (find-evariable 'ee-hyperlink-prefix)
-  (find-variable  'ee-hyperlink-prefix)
-  (find-eface           'eepitch-star-face)
-  (find-face-definition 'eepitch-star-face)
-
-The Emacs functions are defined here:
-
-  (find-efile \"emacs-lisp/find-func.el\")
-
-Their inner workings are quite complex. They use `symbol-file',
-that works on the variable `load-history'. Here are some links to
-documentation and tests:
-
-  (find-efunctiondescr 'symbol-file)
-  (find-elnode \"Where Defined\")
-  (symbol-file 'find-fline          'defun)
-  (symbol-file 'ee-hyperlink-prefix 'defvar)
-  (symbol-file 'eepitch-star-face   'defface)
-  (find-epp (assoc (locate-library \"eepitch\") load-history))
-
-The functions in \"find-func.el\" use `symbol-file' to find the
-file where a given symbol was defined, and then search a defun,
-defvar of defface in it that _may be_ the definition that we are
-looking for. The eev variants use the functions
-`find-function-noselect', `find-variable-noselect' and
-`find-definition-noselect' from \"find-func.el\", that return a
-pair (BUFFER . POS). Try:
-
-  (find-efunctiondescr 'find-function-noselect)
-  (find-efunctiondescr 'find-variable-noselect)
-  (find-efunctiondescr 'find-definition-noselect)
-
-  (find-ebufferandpos (find-function-noselect 'find-fline)
-   )
-  (find-ebufferandpos (find-variable-noselect 'ee-hyperlink-prefix)
-   )
-  (find-ebufferandpos (find-definition-noselect 'eepitch-star-face 'defface)
-   )
-
-These `find-*-select' functions work quite well but are not 100%
-reliable - for example, if an elisp file has several definitions
-for the same function, variable, or face, the `find-*-select's
-don't know which ones were executed, neither which one was
-executed last, overriding the other ones... and it may return the
-position of a defun, defvar, or defface that is not the
-\"active\" one.
-
-
-
-
-10.3. Why eev avoids byte-compilation
--------------------------------------
-All the source files of eev have a \"no-byte-compile: t\" in
-them. See:
-
-  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
-  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
-
-This is non-standard, but it is a deliberate design choice.
-
-(TODO: explain the three main reasons: it is easier to teach
-emacs to beginners if they see lots of lambda expressions and few
-byte-codes; `code-c-d' and friends define functions dynamically
-and `find-efunction' don't work on them; in a distribution with
-only the \".elc\"s of eev users wouldn't have access to the
-documentation and examples in the comments of the source files.)
-
-
 
 
 
@@ -4314,13 +4197,13 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro is being rewritten!
-Ideally it should _complement_ the material in:
-  (find-eev-quick-intro \"3. Elisp hyperlinks\")
-
-
-
-
+Note: this intro is obsolete!
+I need to move some parts of it to other intros and then delete it.
+  See: (find-here-links-intro)
+       (find-refining-intro)
+       (find-templates-intro)
+       (find-links-conv-intro \"3. Classification\")
+       (find-links-conv-intro \"3. Classification\" \"regenerate\")
 
 
 
@@ -5112,7 +4995,35 @@ function does not exist. To add support for `FooBar-mode' to `M-x
 eeit', just define a function with the right name. See the source
 for examples:
 
-  (find-eev \"eev-testblocks.el\")
+  (find-eev \"eev-testblocks.el\" \"examples\")
+
+
+
+
+3.1. `find-eeit-links'
+----------------------
+If you run this,
+
+  (find-eeit-links 'lua-mode)
+
+you will get a buffer with:
+
+  a) links to inspect the current definition of
+     `ee-insert-test-lua-mode',
+
+  b) links that let you compare that with the `ee-insert-test-'s
+     for other major modes,
+
+  c) a barebones `(defun ...)' that lets you redefine
+     `ee-insert-test-lua-mode'.
+
+If you run `find-eeit-links' interactively with `M-x' then it
+will run as:
+
+  (find-eeit-links <current-major-mode>)
+
+and you can use that to inspect the `ee-insert-test-' support for
+the current major mode, or to implement it yourself.
 
 
 
@@ -6499,6 +6410,15 @@ short `find-pdf'-pair. To see what it produces, try:
   (find-code-pdf-links \"~/Coetzee99.pdf\")
   (find-code-pdf-links \"~/Coetzee99.pdf\" \"livesofanimals\")
 
+The second link above produces a temporary buffer containing this:
+
+  ;; (find-pdf-page \"~/Coetzee99.pdf\")
+  ;; (find-pdf-text \"~/Coetzee99.pdf\")
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\")
+  ;; (find-livesofanimalspage)
+  ;; (find-livesofanimalstext)
+
 `find-code-pdf-links' is somewhat similar to `find-latex-links',
 in this aspect:
 
@@ -6646,6 +6566,11 @@ and combines it with the idea of \"local copies\" from:
   (find-psne-intro \"the second way\")
   (find-psne-intro \"1. Local copies of files from the internet\")
   (find-psne-intro \"5. `browse-url' and friends\")
+
+At this moment the best explanation of these ideas in here:
+  (find-eev \"eev-brxxx.el\" \";;; Commentary:\")
+in the source code. I need to rewrite this intro!
+
 
 
 
@@ -8520,6 +8445,9 @@ It is meant as both a tutorial and a sandbox.
 
 
 This intro is being rewritten!
+The prerequisites for understand this are:
+  (find-elisp-intro)
+  (find-links-conv-intro \"3. Classification\")
 
 
 
@@ -8559,8 +8487,7 @@ To learn how to write your own templated functions you need to:
 
   2) learn how to use `find-elinks' - same thing,
 
-  3) learn how to use `find-find-links-links', that is a horrible
-     kludge that works well enough so I never cleaned it up.
+  3) learn how to use `find-find-links-links-new'.
 
 
 
@@ -8690,6 +8617,9 @@ Try:
 
 5. `find-find-links-links'
 ==========================
+(Note: `find-find-links-links' is obsolete, and is superseded by
+`find-find-links-links-new')
+
 ALL my `find-*-links' started as quick hacks.
 SOME of them were useful enough to deserve being cleaned up.
 A FEW of them ended up in:
@@ -9627,6 +9557,12 @@ More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+
+
+This intro is being rewritten.
+Prerequisites:
+  (find-psne-intro)
+  (find-audiovideo-intro)
 
 
 
@@ -11194,6 +11130,225 @@ This can also be used to generate links to info nodes.
 
 
 
+;;;   ____ _ _   
+;;;  / ___(_) |_ 
+;;; | |  _| | __|
+;;; | |_| | | |_ 
+;;;  \____|_|\__|
+;;;              
+;; «find-git-intro»  (to ".find-git-intro")
+;; Skel: (find-intro-links "git")
+
+(defun find-git-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-git-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-git-intro)
+Source code:  (find-efunction 'find-git-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+At this moment this is a call for help -
+not an intro.
+
+
+
+
+0. Introduction
+===============
+Git is extremely popular, and I've heard that the two packages
+that attract most new users to Emacs are Org and Magit:
+
+  https://github.com/magit/magit
+  https://melpa.org/#/magit
+  (find-epackage 'magit)
+
+At this moment eev offers only a trivial hack to help people
+download git repositories. If you put the point on the github url
+above and type `M-h g' or `M-x find-git-links' you will get the
+same effect as running the sexp below:
+
+  (find-git-links \"https://github.com/magit/magit\" \"magit\")
+
+You will get a temporary buffer with an e-script for downloading
+(\"cloning\") that git repository and inspecting it in a handful
+of ways.
+
+I found git VERY hard to learn. To test most concepts you need a
+repository with tags and branches and a second repository that
+\"pulls\" from it, and no books or tutorials that I know of come
+with a sequence of commands that set that up in a way that makes
+the tests easy to reproduce. To make things worse, when I was
+trying to set up a git repository for eev on github for the first
+time I did some things wrong on the github side of the repository
+that I did not know how to undo... after spending some days
+trying to fix that I gave up, deleted that repository, created a
+new one, and decided that I would always do LOTS of local tests
+before messing up my public repository again.
+
+This intro is about doing these local tests - but it is in a VERY
+early draft.
+
+
+
+
+1. Preparation
+==============
+Download the second URL below with `M-x brep',
+
+  http://peepcode.com/products/git-internals-pdf
+  https://github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf
+
+and run this eepitch block,
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rfv /tmp/git-test/
+  mkdir   /tmp/git-test/
+  cd      /tmp/git-test/
+  #    http://angg.twu.net/bin/git-defs.html
+  wget http://angg.twu.net/bin/git-defs
+  cp -v $S/https/github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf .
+
+and this prog1:
+
+  (prog1
+    (code-pdf-page \"gitinternals\" \"/tmp/git-test/peepcode-git.pdf\")
+    (code-pdf-text \"gitinternals\" \"/tmp/git-test/peepcode-git.pdf\")
+    (code-c-d \"gitdoc\" \"/usr/share/doc/git-doc/\")
+    )
+
+
+
+
+2. A first repository
+=====================
+The manpage of git-revisions
+
+  (find-man \"7 git-revisions\")
+  (find-man \"7 git-revisions\" \"Here is an illustration\")
+  (find-gitdocfile \"revisions.txt\" \"illustration, by Jon Loeliger\")
+
+has this example, in which the commits have this structure:
+
+  G   H   I   J
+   \\ /     \\ /
+    D   E   F
+     \\  |  / \\
+      \\ | /   |
+       \\|/    |
+        B     C
+         \\   /
+          \\ /
+           A
+
+Here is an e-script that creates it:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rfv /tmp/git-test/repo1/
+  mkdir   /tmp/git-test/repo1/
+  cd      /tmp/git-test/repo1/
+  .       /tmp/git-test/git-defs
+  # (find-fline \"/tmp/git-test/git-defs\")
+
+  git init
+  Modify file1; Modify file2; git add file1 file2
+                Commit A; git branch brAC
+  Modify file1; Commit B; git branch brBDG
+  git checkout brAC
+  Modify file1; Commit C
+  git checkout brBDG
+  Modify file1; Commit D
+  git checkout HEAD^ -b brE
+  Modify file1; Commit E
+  git checkout HEAD^
+  git merge -s ours brAC -m F
+  git branch brFI
+  git checkout brBDG
+  Modify file1; Commit G
+  git checkout HEAD^ -b brH
+  Modify file1; Commit H
+  git checkout brFI
+  Modify file1; Commit I
+  git checkout HEAD^ -b brJ
+  Modify file1; Commit J
+  Diagram
+
+  # (find-gitk \"/tmp/git-test/repo1/\")
+
+Actually it creates the structure below - where, for example, the
+node \"G,brBDG\" is a commit with message \"G\" and a branch
+called \"brBDG\" pointing to it; I call that branch \"brBDG\"
+because when it was created it pointed to the commit with message
+\"B\", then it moved to the commit \"D\", then to \"G\".
+
+                 I,brFI  J,brJ
+                    |   /
+  G,brBDG   H,brH   |  /
+         \\ /        | /
+          D  E,brE  F
+           \\   |   / \\
+            \\  |  /   |
+             \\ | /    |
+               B    C,brAC
+                \\    /
+                 \\  /
+                  A
+
+NEXT STEPS: explain how to use git merge both from the command
+line and from magit; explain HEAD, master, and tags. Point to man
+pages in man and text format and to sections in Scott Chacon's
+book. I NEED LOTS OF HELP HERE.
+
+  (find-man \"git-merge\")
+  (find-gitinternalspage)
+  (find-gitinternalstext)
+
+
+
+
+
+3. A second repository
+======================
+HELP PLEEEASEEEE
+
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rfv /tmp/git-test/repo2/
+  mkdir   /tmp/git-test/repo2/
+  cd      /tmp/git-test/repo2/
+  .       /tmp/git-test/git-defs
+  # (find-fline \"/tmp/git-test/git-defs\")
+
+  git clone /tmp/git-test/repo1/ .
+  ls -lAF
+
+  # (find-gitk  \"/tmp/git-test/repo2/\")
+  # (find-fline \"/tmp/git-test/repo2/\")
+  # (find-fline \"/tmp/git-test/repo2/.git/\")
+  # (find-fline \"/tmp/git-test/repo2/.git/config\")
+
+  # (find-man \"1 git-remote\")
+  # (find-progitpage (+ 24  36) \"Adding Remote Repositories\")
+  # (find-progittext (+ 24  36) \"Adding Remote Repositories\")
+
+" pos-spec-list)))
+
+;; (find-git-intro)
+
+
+
+
+
 
 ;;; __        ___        _                _                       
 ;;; \ \      / / |      | |__   ___  __ _(_)_ __  _ __   ___ _ __ 
@@ -11356,9 +11511,10 @@ of the screen as a \"minibuffer\" - see:
   (find-enode \"M-x\" \"Running Commands by Name\")
 
 To install eev,
-  1. run `M-x list-packages',
-  2. select \"eev\" at the list of packages,
-  3. click on \"install\".
+  1. run `M-x package-initialize',
+  2. run `M-x list-packages',
+  3. select \"eev\" at the list of packages,
+  4. click on \"install\".
 
 To load eev and enter its tutorial, run
   `M-x eev-beginner'.
@@ -12270,6 +12426,183 @@ backquotes a lot. See:
   (find-eev \"eev-elinks.el\" \"find-efunction-links\")
 
 They are the hardest ones to read in the eev source.
+
+
+
+
+11. Byte-compiled functions
+===========================
+Most functions in Emacs are byte-compiled - which means that
+their function cells contain a \"byte-code\" instead of a lambda
+expression. These byte-codes are very hard for humans to read.
+See:
+
+  (find-elnode \"What Is a Function\" \"byte-code function\")
+  (find-elnode \"Byte-Code Type\")
+  (find-elnode \"Byte Compilation\")
+  (find-elnode \"Disassembly\")
+
+Here is an example:
+
+  (find-efunctiondescr 'find-file)
+  (find-efunction      'find-file)
+  (symbol-function     'find-file)
+  (find-efunctionpp    'find-file)
+  (find-efunctiond     'find-file)
+
+The `find-efunctionpp' link above takes the content of the
+function cell of `find-file' and \"pretty-prints\" it, i.e.,
+indents it in a nice way, but the result in this case is
+unreadable... and the `find-efunctiond' link shows a decompiled
+version of that byte-code, which is only slightly better. Both
+the `find-efunctionpp' and the `find-efunctiond' links show
+internal representations that are very different from the source
+code. Compare that with a case in which the function is not
+byte-compiled:
+
+  (find-efunctiondescr 'find-fline)
+  (find-efunction      'find-fline)
+  (symbol-function     'find-fline)
+  (find-efunctionpp    'find-fline)
+
+The `(find-efunctionpp 'find-fline)' shows a lambda expression
+that is very similar to the defun that defined `find-fline'.
+
+
+
+
+
+11.1. Why eev avoids byte-compilation
+-------------------------------------
+All the source files of eev have a \"no-byte-compile: t\" in
+them. See:
+
+  (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
+  (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
+  (find-enode \"Specifying File Variables\")
+
+This `no-byte-compile: t' is non-standard, but it is a deliberate
+design choice. I tried to make eev as beginner-friendly as
+possible, and beginners find byte-compiled functions confusing,
+so I avoided them as much as possible. Remember that several
+functions in eev define other functions - for example:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"mass-produced\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+and if you try to understand what a hyperlink function like one
+below does by typing `M-h M-f' on it,
+
+  (find-efile \"subr.el\")
+
+then the `find-efunction' link in the `M-h M-f' buffer will not
+work - but the `find-efunctionpp' link will. Try:
+
+  (find-efunction   'find-efile)
+  (find-efunctionpp 'find-efile)
+
+
+
+
+
+11.2. How `find-efunction' works
+--------------------------------
+Eev defines hyperlink functions called `find-efunction',
+`find-evariable' and `find-eface' that are wrappers around the
+standard Emacs functions `find-function', `find-variable' and
+`find-face-definition'; the eev variants support pos-spec-lists.
+Try:
+
+  (find-efunction 'find-fline)
+  (find-function  'find-fline)
+  (find-evariable 'ee-hyperlink-prefix)
+  (find-variable  'ee-hyperlink-prefix)
+  (find-eface           'eepitch-star-face)
+  (find-face-definition 'eepitch-star-face)
+
+The Emacs functions are defined here:
+
+  (find-efile \"emacs-lisp/find-func.el\")
+
+and their inner workings are quite complex. To begin with, hey
+use `symbol-file', that works on the variable `load-history'.
+Here are some links to documentation and tests:
+
+  (find-efunctiondescr 'symbol-file)
+  (find-elnode \"Where Defined\")
+  (symbol-file 'find-fline          'defun)
+  (symbol-file 'find-efile          'defun)
+  (symbol-file 'ee-hyperlink-prefix 'defvar)
+  (symbol-file 'eepitch-star-face   'defface)
+  (find-eloadhistory \"eepitch\")
+  (find-eloadhistory \"eepitch\" \"eepitch-star-face\")
+
+The functions in \"find-func.el\" use `symbol-file' to find the
+file where a given symbol was defined, and then search for a
+defun, defvar of defface in it that _looks like_ the definition
+that we are looking for.
+
+Emacs knows that `find-efile' was defined in \"eev-code.el\",
+because of:
+
+  (symbol-file 'find-efile          'defun)
+  (find-eloadhistory \"eev-code\" \"find-efile\")
+
+but if we run
+
+  (find-function 'find-efile)
+
+this will fail, because Emacs will look for something like
+\"(defun find-efile \" in \"eev-code.el\", and it will not find
+it; it doesn't know that `find-efile' was defined by this
+`code-c-d':
+
+  (find-eev \"eev-code.el\" \"code-c-d-s\")
+  (find-eev \"eev-code.el\" \"code-c-d-s\" \"\\\"e\\\"\")
+
+Let's be even more precise. \"find-func.el\" defines these
+low-level functions,
+
+  (find-efunctiondescr 'find-function-noselect)
+  (find-efunctiondescr 'find-variable-noselect)
+  (find-efunctiondescr 'find-definition-noselect)
+
+that return structures of the form (BUFFER . POS), and eev
+defines a function
+
+  (find-efunctiondescr 'find-ebufferandpos)
+  (find-efunction      'find-ebufferandpos)
+
+that jumps to a (BUFFER . POS); `find-efunction' and friends are
+implemented using `find-ebufferandpos'. Try: 
+
+  (find-ebufferandpos
+   (find-function-noselect 'find-fline)
+   )
+  (find-ebufferandpos
+   (find-variable-noselect 'ee-hyperlink-prefix)
+   )
+  (find-ebufferandpos
+   (find-definition-noselect 'eepitch-star-face 'defface)
+   )
+
+These `find-*-noselect' functions work quite well but are not
+100% reliable - for example, if an elisp file has several
+definitions for the same function, variable, or face, the
+`find-*-noselect's don't know which ones were executed, neither
+which one was executed last, overriding the other ones... and it
+may return the position of a defun, defvar, or defface that is
+not the \"active\" one. In eev redefinitions like these ones
+
+  (code-pdf-page \"foomanual\" \"/usr/src/foo-1.2.3/manual.pdf\")
+  (code-pdf-page \"foomanual\" \"/usr/src/foo-1.2.4/manual.pdf\")
+
+are quite common, and
+
+  (find-efunctionpp 'find-foomanualpage)
+
+will give you information about the current definition.
 
 
 

@@ -1,3 +1,64 @@
+2020-10-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-git-intro): new function.
+
+	* eev-tlinks.el (find-texlive-links): new function.
+	(find-pdflikedef-links): deleted.
+	(find-find-links-links): marked (informally) as obsolete.
+	(find-find-links-links-old): new alias.
+	(find-psne-links): use "wget -nc" by default.
+
+	* eev-brxxx.el: rewrote the comments in the beginning of the file.
+
+2020-10-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-pdflike-page-links): rewrote using
+	`find-find-links-links-new'.
+
+2020-10-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-tuareg-mode): new function.
+	(ee-insert-test-idris-mode): deleted.
+
+	* eev-elinks.el (ee-package-dir): new function.
+	(ee-package-desc): new function.
+	(ee-package-findelpafiles): new function.
+	(ee-find-epackage-links0): total rewrite.
+	(find-epackage-links): total rewrite.
+
+2020-10-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eeit-links): new function.
+
+	* eev-intro.el (find-eepitch-intro): new section: "3.1.
+	`find-eeit-links'".
+
+2020-10-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): added instructions
+	to run `M-x package-initialize'.
+	(find-templates-intro): added more references to
+	`find-find-links-links-new'.
+	(find-links-intro): marked as obsolete.
+	(find-eval-intro): moved the section on byte-compiled functions to
+	`(find-elisp-intro)'.
+	(find-elisp-intro): new sections: "11. Byte-compiled functions",
+	"11.1. Why eev avoids byte-compilation", and "11.2. How
+	`find-efunction' works". They were taken from `(find-eval-intro)'
+	and slightly rewritten.
+
+	* eev-tlinks.el (find-emacs-tangents-links): new function.
+	(find-intro-links): rewrote using `find-find-links-links-new'.
+
+	* eejump.el (eejump-50): new function - now `M-5 M-0 M-j' opens
+	`(find-eev-intro)'.
+
+2020-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): added pointers to a new
+	video to the installation instructions and deleted the pointers to
+	very old videos.
+
 2020-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-psne-intro): added two new sections, one on
