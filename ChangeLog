@@ -1,3 +1,19 @@
+2020-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el: Rewrote most of the file to use the cleaner
+	`code-*backend*' functions instead of the older
+	`code-xxxpdf*-family' functions, that were much harder to
+	understand. Also rewrote lots of comments.
+
+	* eev-pdflike.el (ee-fname-page-to-url): new function.
+	(ee-find-googlechrome-page): new function.
+
+2020-10-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (code-pdfbackend, find-code-pdfbackend)
+	(ee-code-pdfbackend, code-pdftextbackend)
+	(find-code-pdftextbackend, ee-code-pdftextbackend): new functions.
+
 2020-10-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-git-intro): new function.
