@@ -73,6 +73,10 @@
 ;; «.find-fossil-links»			(to "find-fossil-links")
 ;; «.find-apt-get-source-links»		(to "find-apt-get-source-links")
 ;; «.find-eev-video-links»		(to "find-eev-video-links")
+;; «.find-psnevideo-links»		(to "find-psnevideo-links")
+;; «.code-psnevideo»			(to "code-psnevideo")
+;; «.code-eevvideo»			(to "code-eevvideo")
+;; «.find-eevvideo-links»		(to "find-eevvideo-links")
 ;;
 ;; «.find-latex-links»			(to "find-latex-links")
 ;; «.find-lua-links»			(to "find-lua-links")
@@ -1420,6 +1424,168 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 ;; The ones with "pt" are in Portuguese, the other ones are in English.
 
 ;; (find-eepitchvideo "0:18" "Demonstration (first time, very quickly)")
+
+
+
+
+
+;;;                             _     _            
+;;;  _ __  ___ _ __   _____   _(_) __| | ___  ___  
+;;; | '_ \/ __| '_ \ / _ \ \ / / |/ _` |/ _ \/ _ \ 
+;;; | |_) \__ \ | | |  __/\ V /| | (_| |  __/ (_) |
+;;; | .__/|___/_| |_|\___| \_/ |_|\__,_|\___|\___/ 
+;;; |_|                                            
+;;
+;; «find-psnevideo-links»  (to ".find-psnevideo-links")
+;; Skel: (find-find-links-links-new "psnevideo" "c url youtubeid time" "url")
+;; Test: (find-psnevideo-links "c333" "http://angg.twu.net/2020.1-C3/C3_aula_3_video_3.mp4")
+;;
+(defun find-psnevideo-links (&optional c url youtubeid time &rest pos-spec-list)
+"Visit a temporary buffer containing an e-script for downloading and playing URL."
+  (interactive)
+  (setq c (or c "{c}"))
+  (setq url (or url "{url}"))
+  (setq youtubeid (or youtubeid "{youtubeid}"))
+  (setq time (or time "{time}"))
+  (apply
+   'find-elinks
+   `((find-psnevideo-links ,c ,url ,youtubeid ,time ,@pos-spec-list)
+     ,(ee-psnevideo-links c url youtubeid time)
+     )
+   pos-spec-list))
+
+(defun ee-psnevideo-links (c url youtubeid time)
+  (let* ((fname (ee-shorten-file-name (ee-url-to-fname url)))
+         (dir (file-name-directory fname))
+	 (youtubeurl (format "http://www.youtube.com/watch?v=%s" youtubeid))
+	 (youtubetime (or (ee-time-to-youtube-time time) ""))
+	 )
+    (concat
+     (ee-template0 "\
+# (find-video \"{fname}\" \"{time}\")
+# (find-video \"{fname}\")
+
+# (code-video \"{c}video\" \"{fname}\")
+# (find-{c}video \"{time}\")
+
+# {url}
+# (find-fline \"{dir}\")
+
+# (kill-new \"{youtubeurl}{youtubetime}\")
+# {youtubeurl}{youtubetime}
+
+") (ee-psnevideo-download-if-needed url))))
+
+(defun ee-psnevideo-download-if-needed (url)
+  (let* ((fname (ee-shorten-file-name (ee-url-to-fname url)))
+         (dir (file-name-directory fname)))
+    (if (file-exists-p (ee-expand fname))
+	"# Local file found. No need to download it again.\n"
+      (ee-psnevideo-download url))))
+
+(defun ee-psnevideo-download (url)
+  (concat "\
+#  Local file not found! 
+#  You need to run this: \n
+" (ee-psnevideo-download0 url)))
+
+(defun ee-psnevideo-download0 (url)
+  (let* ((fname (ee-shorten-file-name (ee-url-to-fname url)))
+         (dir (file-name-directory fname)))
+    (ee-template0 "\
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+mkdir -p {dir}
+cd       {dir}
+wget -nc '{url}'
+echo     '{url}' >> ~/.psne.log
+
+# (find-fline \"{dir}\")
+")))
+
+
+
+;;;                _                                       _     _            
+;;;   ___ ___   __| | ___       _ __  ___ _ __   _____   _(_) __| | ___  ___  
+;;;  / __/ _ \ / _` |/ _ \_____| '_ \/ __| '_ \ / _ \ \ / / |/ _` |/ _ \/ _ \ 
+;;; | (_| (_) | (_| |  __/_____| |_) \__ \ | | |  __/\ V /| | (_| |  __/ (_) |
+;;;  \___\___/ \__,_|\___|     | .__/|___/_| |_|\___| \_/ |_|\__,_|\___|\___/ 
+;;;                            |_|                                            
+;;
+;; «code-psnevideo»  (to ".code-psnevideo")
+;; See: (find-audiovideo-intro "7. `code-psnevideo'")
+
+(defun      code-psnevideo (c url &optional youtubeid)
+  (eval (ee-read (ee-code-psnevideo c url youtubeid))))
+(defun find-code-psnevideo (&optional c url youtubeid &rest rest)
+  (setq c (or c "{c}"))
+  (setq url (or url "{url}"))
+  (setq youtubeid (or youtubeid "{youtubeid}"))
+  (find-estring-elisp (apply 'ee-code-psnevideo c url youtubeid rest)))
+(defun   ee-code-psnevideo (c url youtubeid)
+  (ee-template0 "\
+;; (find-code-psnevideo \"{c}\" \"{url}\" \"{youtubeid}\")
+;;      (code-psnevideo \"{c}\" \"{url}\" \"{youtubeid}\")
+;;                 (find-{c}video \"0:00\")
+
+(defun find-{c}video (&optional time &rest rest)
+  (find-psnevideo-links \"{c}\" \"{url}\" \"{youtubeid}\" time))
+"))
+
+
+;;;                _                                   _     _            
+;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
+;;;  / __/ _ \ / _` |/ _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
+;;; | (_| (_) | (_| |  __/_____|  __/  __/\ V /  \ V /| | (_| |  __/ (_) |
+;;;  \___\___/ \__,_|\___|      \___|\___| \_/    \_/ |_|\__,_|\___|\___/ 
+;;;                                                                       
+;; «find-eevvideo-links»  (to ".find-eevvideo-links")
+;; Test: (find-eevvideo-links "eevnav" "M-x-list-packages-eev-nav" "0:00")
+;; Skel: (find-find-links-links-new "eevvideo" "c stem youtubeid time" "url")
+;;
+(defun find-eevvideo-links (&optional c stem youtubeid time &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eevvideo."
+  (interactive)
+  (setq c (or c "{c}"))
+  (setq stem (or stem "{stem}"))
+  (setq youtubeid (or youtubeid "{youtubeid}"))
+  (setq time (or time "{time}"))
+  (let* ((url (format "http://angg.twu.net/eev-videos/%s.mp4" stem)))
+    (apply
+     'find-elinks
+     `((find-eevvideo-links ,c ,stem ,youtubeid ,time ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       ;; (find-efunction 'find-eevvideo-links)
+       ,(ee-psnevideo-links c url youtubeid time)
+       )
+     pos-spec-list)))
+
+;; «code-eevvideo»  (to ".code-eevvideo")
+;; See: (find-audiovideo-intro "7.1. `code-eevvideo'")
+;; Test: (code-eevvideo "eevnav" "M-x-list-packages-eev-nav")
+;;       (find-eevnavvideo "0:00")
+;;
+(defun      code-eevvideo (c stem &optional youtubeid)
+  (eval (ee-read (ee-code-eevvideo c stem youtubeid))))
+(defun find-code-eevvideo (&optional c stem youtubeid &rest rest)
+  (setq c (or c "{c}"))
+  (setq stem (or stem "{stem}"))
+  (setq youtubeid (or youtubeid "{youtubeid}"))
+  (find-estring-elisp (apply 'ee-code-eevvideo c stem youtubeid rest)))
+(defun   ee-code-eevvideo (c stem youtubeid)
+  (ee-template0 "\
+;; (find-code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
+;;      (code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
+;;                 (find-{c}video \"0:00\")
+
+(defun find-{c}video (&optional time &rest rest)
+  (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))
+"))
+
+
+
+
 
 
 

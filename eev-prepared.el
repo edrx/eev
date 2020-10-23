@@ -128,7 +128,8 @@ PRE and POST must be strings. See `ee-se-to-string' and
 		   altfile fmode))
 
 
-
+;; See: (find-prepared-intro "1. Prepared shells")
+;;
 (defun eev (s &optional e altfile)
   "Save the region in `ee-file', or in ALTFILE if it is non-nil.
 If S is a string write then write the string instead. See `ee-write'.

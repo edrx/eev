@@ -1,3 +1,19 @@
+2020-10-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eevvideo-links, code-eevvideo)
+	(find-code-eevvideo, ee-code-eevvideo): new functions.
+
+	* eev-intro.el (find-audiovideo-intro): added two new sections:
+	"7. `code-psnevideo'" and "7.1. `code-eevvideo'".
+
+2020-10-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-psnevideo-links, ee-psnevideo-links)
+	(ee-psnevideo-download-if-needed, ee-psnevideo-download)
+	(ee-psnevideo-download0): new functions.
+
+	* eev-audiovideo.el (ee-time-to-youtube-time): new function.
+
 2020-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el: Rewrote most of the file to use the cleaner

@@ -7607,8 +7607,8 @@ as soon as the download is finished.
 
 
 
-7. Downloading a local copy
-===========================
+6.1. Downloading a local copy
+-----------------------------
 Place the point at hash in the URL below,
 
   http://www.youtube.com/watch?v=abcdefghijk
@@ -7675,8 +7675,8 @@ of the video from Youtube.
 
 
 
-8. Guessing the title and extension
-===================================
+6.2. Guessing the title and extension
+-------------------------------------
 Let's simulate what would happen after the eepitch script above -
 Execute this:
 
@@ -7712,8 +7712,8 @@ components are the \"dir\", the \"title\", and the \"hash\".
 
 
 
-9. The first lines regenerate the buffer
-========================================
+6.3. The first lines regenerate the buffer
+------------------------------------------
 The arguments to `find-youtubedl-links' are:
 
   (find-youtubedl-links DIR TITLE HASH EXT- STEM)
@@ -7750,8 +7750,8 @@ TITLE and EXT- are made nil.
 
 
 
-10. Selecting a directory
-=========================
+6.4. Selecting a directory
+--------------------------
 The second block of lines in the `find-youtubedl-links' buffer
 are used to let we switch the directory quickly. If we just
 execute `M-x find-youtubedl-links' with the point on our example
@@ -7786,6 +7786,87 @@ To change the dir strings \"~/videos/\", \"~/videos/tech/\", \"/tmp/videos/\",
 \"/tmp/\", that appear in the second block of `find-youtubedl-links'
 buffers, change the variables `ee-youtubedl-dir', `ee-youtubedl-dir2',
 `ee-youtubedl-dir3', `ee-youtubedl-dir4.'
+
+
+
+
+
+7. `code-psnevideo'
+===================
+If we execute these two sexps
+
+  (code-psnevideo
+   \"punchandjudy\"
+   \"http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\"
+   \"K6LmZ0A1s9U\")
+
+  (find-punchandjudyvideo \"1:27\")
+
+the `find-punchandjudyvideo' link will work in a way that is
+quite different from the one in the demo in section 4.3. It will
+open a temporary buffer in which the first line is a sexp - that
+calls `find-psnevideo-links' - that regenerates that buffer, and
+the second line is a low-level sexp like this, but in a single
+line,
+
+  (find-video
+   \"$S/http/angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\"
+   \"1:27\")
+
+that will play the local copy of the video starting from 1:27;
+this means to to use this sexp to play the video
+
+  (find-punchandjudyvideo \"1:27\")
+
+you have to first execute it with `M-e', then type the <down> key
+to go the second line, then type `M-e' again.
+
+The last part of that buffer will either be just a message saying
+
+  # Local file found. No need to download it again.
+
+or this message here,
+
+  #  Local file not found! 
+  #  You need to run this: 
+
+followed by an eepitch block that you can you use to download the
+MP4 file, like the one here:
+
+  (find-psne-intro \"1. Local copies of files from the internet\")
+
+The middle of that buffer will have other things, like a link
+like this
+
+  http://www.youtube.com/watch?v=K6LmZ0A1s9U#t=1m27s
+
+to the video on youtube, and a call to `code-video' that will
+redefine `find-punchandjudyvideo' to make it play the video
+directly instead of creating a temporary buffer containing a link
+to play it.
+
+
+
+7.1. `code-eevvideo'
+--------------------
+`code-eevvideo' is a variant of `code-psnevideo' that lets us use
+shorter sexps. If we call this,
+
+  (code-eevvideo \"eevnav\" \"M-x-list-packages-eev-nav\")
+
+it will add \"http://angg.twu.net/eev-videos/\" and \".mp4\" to
+the string \"M-x-list-packages-eev-nav\" and then call
+`code-psnevideo'. As the third argument was omitted it will be
+set to \"{youtubeid}\". I am using `code-eevvideo' as an
+experiment: when I need to send a short screencast to someone who
+uses eev I record the video, upload it to
+http://angg.twu.net/eev-videos/ - not to youtube - and send to
+the person a pair of sexps like these:
+
+  (code-eevvideo \"eevnav\" \"M-x-list-packages-eev-nav\")
+  (find-eevnavvideo \"0:00\")
+
+
 
 " pos-spec-list)))
 

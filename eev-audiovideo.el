@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jan03
+;; Version:    2020oct17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -473,6 +473,28 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 ;; Garbage?
+
+
+;; Tests: (ee-time-to-youtube-time "2")  
+;;        (ee-time-to-youtube-time "23") 
+;;        (ee-time-to-youtube-time "1:23")
+;;        (ee-time-to-youtube-time "1:23:43")
+;;
+(defun ee-time-to-youtube-time (str)
+  "Convert strings like \"1:23\" to strings like \"#t=1m23s\".
+Supports the input formats \"ss\", \"mm:ss\", and \"hh:mm:ss\".
+If the input does not match any of these formats, return nil."
+  (save-match-data
+    (cond ((string-match "^\\([0-9]+\\)$" str)
+	   (format "#t=%ss" (match-string 1 str)))
+          ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\)$" str)
+	   (format "#t=%sm%ss" (match-string 1 str) (match-string 2 str)))
+          ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)$" str)
+	   (format "#t=%sh%sm%ss" (match-string 1 str) (match-string 2 str)
+		   (match-string 2 str))))))
+	  
+
+
 
 ;;;                                
 ;;;  _ __ ___  _ __ ___  _ ___ ___ 
