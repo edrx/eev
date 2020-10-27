@@ -53,6 +53,7 @@
 ;; «.find-estring»		(to "find-estring")
 ;; «.find-sh»			(to "find-sh")
 ;; «.find-man»			(to "find-man")
+;; «.find-man-bug»		(to "find-man-bug")
 ;; «.find-w3m»			(to "find-w3m")
 ;; «.find-Package»		(to "find-Package")
 ;; «.find-epp»			(to "find-epp")
@@ -640,6 +641,14 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 (defvar ee-find-man-flag          nil "See `find-man'.")
 (defvar ee-find-man-pos-spec-list nil "See `find-man'.")
 
+;; See: (to "find-man-bug")
+(defun find-man (manpage &rest pos-spec-list)
+  "Hyperlink to a manpage."
+  (interactive (list (ee-manpagename-ask)))
+  (setq ee-find-man-flag t
+	ee-find-man-pos-spec-list pos-spec-list)
+    (man manpage))
+
 ;; See: (find-elnode "Advising Functions")
 ;;      (find-elnode "Porting old advice")
 ;;      (find-efunctiondescr 'defadvice)
@@ -651,12 +660,28 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
     (apply 'ee-goto-position ee-find-man-pos-spec-list)
     (setq ee-find-man-flag nil)))
 
-(defun find-man (manpage &rest pos-spec-list)
-  "Hyperlink to a manpage."
-  (interactive (list (ee-manpagename-ask)))
-  (setq ee-find-man-flag t
-	ee-find-man-pos-spec-list pos-spec-list)
-    (man manpage))
+;; «find-man-bug»  (to ".find-man-bug")
+;; Note: find-man has an open bug that I did not have time to fix yet...
+;; an example:
+;;
+;;   (find-man "1 git-commit")
+;;   (find-man "1 git-commit" "-m <msg>, --message=<msg>")
+;;
+;; The second find-man link should run the
+;;
+;;   (ee-goto-position "-m <msg>, --message=<msg>")
+;;
+;; AFTER the man page gets completely rendered, but the mechanism that
+;; delays its execution until the rendering it done it currently broken,
+;; and the ee-goto-position runs too soon. A workaround for that is to
+;; run the
+;;
+;;   (find-man "1 git-commit")
+;; 
+;; to render the manpage, then bury its buffer with M-K, then run this:
+;; 
+;;   (find-man "1 git-commit" "-m <msg>, --message=<msg>")
+
 
 ;; Missing: find-woman.
 ;; (find-node "(woman)Top")

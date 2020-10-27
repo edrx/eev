@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct16
+;; Version:    2020oct27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -308,6 +308,8 @@ newline are spurious - and replaces them by \"(ff)\"."
   ;; (find-code-{pdfbackend} \\\"{<}c{>}\\\" \\\"{<}fname{>}\\\")
   ;;      (code-{pdfbackend} \\\"{<}c{>}\\\" \\\"{<}fname{>}\\\")
   ;;
+  ;; See: (find-pdf-like-intro \\\"7. Shorter hyperlinks to PDF files\\\")
+  ;;
   (setq ee-pdflike-last 'find-{<}c{>}page)
   (defun find-{<}c{>}page (&optional page &rest rest)
     (setq ee-pdflike-last 'find-{<}c{>}page)
@@ -358,6 +360,8 @@ newline are spurious - and replaces them by \"(ff)\"."
   (ee-template0 \"\\
   ;; (find-code-{pdftextbackend} \\\"{<}c{>}\\\" \\\"{<}fname{>}\\\")
   ;;      (code-{pdftextbackend} \\\"{<}c{>}\\\" \\\"{<}fname{>}\\\")
+  ;;
+  ;; See: (find-pdf-like-intro \\\"7. Shorter hyperlinks to PDF files\\\")
   ;;
   (setq ee-page-c      {<}(ee-pp0 c){>})
   (setq ee-page-fname  {<}(ee-pp0 fname){>})

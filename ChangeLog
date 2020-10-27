@@ -1,3 +1,15 @@
+2020-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (ee-find-mpv-video): use "--start=1:23"
+	instead of "--start 1:23".
+
+	* eev-pdflike.el (ee-code-pdfbackend, ee-code-pdftextbackend): add
+	the missing backslashes.
+
+2020-10-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-man): document an open bug.
+
 2020-10-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-eevvideo-links, code-eevvideo)
