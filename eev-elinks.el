@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct11
+;; Version:    2020oct30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1022,23 +1022,20 @@ See the comments in the source code."
 ;;; |  _| | | | | (_| |_____|  __/  _| (_| | (_|  __/_____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|      \___|_|  \__,_|\___\___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                           
-;; See: (find-links-intro)
-;;      (find-templates-intro)
-
 ;; «find-eface-links» (to ".find-eface-links")
-;; Skel: (find-find-links-links-old "\\M-s" "eface" "face-symbol")
-;; A test: (find-eface-links 'bold)
-
+;; Skel: (find-find-links-links-new "eface" "face-symbol" "")
+;; Test: (find-eface-links 'eepitch-star-face)
 ;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
-
-(defun find-eface-links (face-symbol &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks about FACE-SYMBOL."
+;;   (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
+;;
+(defun find-eface-links (&optional face-symbol &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about FACE-SYMBOL.
+When called interactively generate hyperlinks about the face at point."
   (interactive (list (or (face-at-point) 'default)))
-  ;; (setq face-symbol (or face-symbol "{face-symbol}"))
-  ;; (setq face-symbol (or face-symbol (face-at-point)))
-  (apply 'find-elinks
-   `((find-eface-links ',face-symbol ,@pos-spec-list)
+  (setq face-symbol (or face-symbol "{face-symbol}"))
+  (apply
+   'find-elinks
+   `((find-eface-links ,face-symbol ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-eface-links)
      ""
@@ -1056,9 +1053,6 @@ See the comments in the source code."
      )
    pos-spec-list))
 
-;; Test: (find-eface-links 'eepitch-star-face)
-;; (find-eevfile "eev.el" "\\M-h\\M-s")
-
 
 
 
@@ -1069,21 +1063,19 @@ See the comments in the source code."
 ;;; |_| |_|_| |_|\__,_|     \___|\___\___/|_|\___/|_|      |_|_|_| |_|_|\_\___/
 ;;;                                                                              
 ;; «find-color-links» (to ".find-color-links")
-;; Skel: (find-find-links-links-old "c" "color" "initialcolor")
-;; Tests:
-;;   (find-ecolor-links)
-;;   (find-ecolor-links "sienna")
+;; Skel: (find-find-links-links-new "color" "initialcolor" "")
+;; Tests: (find-ecolor-links)
+;;        (find-ecolor-links "sienna")
 ;;
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-hc" 'find-ecolor-links)
-
-(defun find-ecolor-links (&optional initialcolor &rest pos-spec-list)
+(defun find-color-links (&optional initialcolor &rest pos-spec-list)
   "Visit a temporary buffer containing hyperlinks for the color INITIALCOLOR."
   (interactive)
   (setq initialcolor (or initialcolor "#123456"))
-  (apply 'find-elinks
-   `((find-ecolor-links ,initialcolor ,@pos-spec-list)
+  (apply
+   'find-elinks
+   `((find-color-links ,initialcolor ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-color-links)
      ""
      (find-ecolor-links (ee-color-choose-tk ,(or initialcolor "gray")))
      (find-ecolor-links ,(or initialcolor "gray"))
@@ -1093,7 +1085,6 @@ See the comments in the source code."
      ,`(ee-color-values ,initialcolor)
      (kill-new ,initialcolor)
      (kill-new ,(ee-color-values initialcolor))
-     (find-efunction 'find-ecolor-links)
      )
    pos-spec-list))
 
@@ -1102,6 +1093,14 @@ See the comments in the source code."
   (apply 'format "#%02x%02x%02x"
 	 (mapcar (lambda (c) (lsh c -8)) (color-values color))))
 
+;; `ee-color-choose-tk' is a VERY OLD hack that needs eetcl... see:
+;; http://angg.twu.net/eev-current/eev-langs.el.html
+;; http://angg.twu.net/eev-current/eev-langs.el
+;;   (find-sh0     "echo $EEVTMPDIR")
+;;   (find-fline        "$EEVTMPDIR")
+;;   (find-sh0 "mkdir -p $EEVTMPDIR")
+;;   (require 'eev-langs)
+;;
 (defun ee-color-choose-tk (&optional initialcolor)
   "Call Tcl/Tk to choose a color similar to INITIALCOLOR.
 This needs a temporary directory; see: (find-prepared-intro)"

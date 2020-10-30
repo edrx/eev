@@ -11181,30 +11181,6 @@ This can also be used to generate links to info nodes.
 
 (...)
 
-
-
-5.7. Refining hyperlinks
-------------------------
-(...)
-
-5.8. Pointing to anchors
-------------------------
-(...)
-
-5.9. Using a TODO file
-----------------------
-(...)
-
-5.10. Using several e-script files
-----------------------------------
-(...)
-
-5.11. Eepitch blocks in multi-line comments
--------------------------------------------
-(...)
-
-
-
 " pos-spec-list)))
 
 ;; (find-escripts-intro)
@@ -11281,7 +11257,7 @@ early draft.
 ==============
 Download the second URL below with `M-x brep',
 
-  http://peepcode.com/products/git-internals-pdf
+  https://github.com/pluralsight/git-internals-pdf/
   https://github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf
 
 and run this eepitch block,

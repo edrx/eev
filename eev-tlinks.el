@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct13
+;; Version:    2020oct30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -905,20 +905,76 @@ emacs    -fg bisque -bg black                  eev-readme.el
 ;;;  |___/                                                
 ;;
 ;; «find-youtubedl-links»  (to ".find-youtubedl-links")
+;; Skel: (find-find-links-links-new "youtubedl" "dir title hash ext- stem" "")
+;; Test: (find-youtubedl-links nil nil "K6LmZ0A1s9U")
+;; See:  (find-audiovideo-intro "6. Youtube-dl")
+;;
+(defun find-youtubedl-links (&optional dir title hash ext- stem &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for youtube-dl."
+  (interactive)
+  (setq dir   (or dir   ee-youtubedl-dir "{dir}"))
+  (setq hash  (or hash  (ee-youtubedl-hash-around-point)    "{hash}"))
+  (setq title (or title (ee-youtubedl-guess-title dir hash) "{title}"))
+  (setq ext-  (or ext-  (ee-youtubedl-guess-ext- dir hash)  "{ext-}"))
+  (setq stem  (or stem "{stem}"))
+  (apply
+   'find-elinks
+   `((find-youtubedl-links ,dir ,title ,hash ,ext- ,stem ,@pos-spec-list)
+    (find-youtubedl-links ,dir nil ,hash nil ,stem)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-youtubedl-links)
+     ""
+     ,@(ee-youtubedl-dir-links nil hash stem)
+     (setq ee-youtubedl-dirs ',ee-youtubedl-dirs)
+     (setq ee-youtubedl-dir   ,ee-youtubedl-dir)
+     ""
+     ,(ee-template0 "\
+ (eepitch-shell2)
+ (eepitch-kill)
+ (eepitch-shell2)
+# http://www.youtube.com/watch?v={hash}
+# http://www.youtube.com/watch?v={hash}#t=0m00s
+# http://www.youtube.com/watch?v={hash}#t=0h00m00s
+cd {dir}
+{ee-youtubedl-command} -f 18 --restrict-filenames 'http://www.youtube.com/watch?v={hash}'
+
+# Or:
+{ee-youtubedl-command}       'http://www.youtube.com/watch?v={hash}'
+{ee-youtubedl-command} -F    'http://www.youtube.com/watch?v={hash}'
+{ee-youtubedl-command} -f 18 'http://www.youtube.com/watch?v={hash}'
+{ee-youtubedl-command} -f 18 --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
+{ee-youtubedl-command}       --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
+
+# (find-es \"video\" \"youtube-dl\")
+# (find-fline \"{dir}\" \"{hash}\")
+# (find-fline \"{dir}\" \"{title}-{hash}\")
+# (find-fline \"{dir}\" \"{title}-{hash}{ext-}\")
+# (find-video \"{dir}{title}-{hash}{ext-}\")
+# (code-video \"{stem}video\" \"{dir}{title}-{hash}{ext-}\")
+# (find-{stem}video)
+# (find-{stem}video \"0:00\")
+
+# Error messages (for the player):
+# (find-ebuffer \"*Messages*\")
+")
+     )
+   pos-spec-list))
+
+
+
+
+;; `find-youtubedl-links' uses LOTS of internal functions and
+;; variables. They are defined below.
 
 ;; Code for splitting filenames of downloaded videos into components.
+;; Test: (ee-youtubedl-split "~/tmp/videos/foo_bar-abF7go7RLTc.flv")
+;;       --> ("~/tmp/videos/" "foo_bar" "abF7go7RLTc" ".flv" ".flv")
 ;;
 (defvar ee-youtubedl-ext-re
-  "\\(\\.[A-Za-z0-9]\\{2,5\\}\\)\\{0,2\\}$")
-
-(setq ee-youtubedl-ext-re
   "\\(\\.[A-Za-z0-9]\\{2,5\\}\\)\\(\\.part\\)?$")
 
 (defun ee-youtubedl-split (fname)
-"Split FNAME into (dir title hash ext).
-Example:
-\(ee-youtubedl-split \"~/tmp/videos/foo_bar-abF7go7RLTc.flv\")
-   --> (\"~/tmp/videos/\" \"foo_bar\" \"abF7go7RLTc\" \".flv\")"
+  "Split FNAME into (dir title hash ext ext-)."
   (string-match ee-youtubedl-ext-re fname)
   (let (dir title hash ext- ext dth dt)
     (setq ext-  (match-string 1 fname))
@@ -952,97 +1008,45 @@ Example:
 (defun ee-youtubedl-guess-title (dir hash) (ee-youtubedl-guess dir hash 1))
 (defun ee-youtubedl-guess-ext-  (dir hash) (ee-youtubedl-guess dir hash 3))
 
-;; The function `find-youtubedl-links' itself.
-;; It will try to guess "dir", "title", "hash", and "ext" if they are nil.
-;; Its ancestor: (find-angg ".emacs.templates" "find-youtubedl-links")
-;;
-(defvar ee-youtubedl-dir     "~/videos/")
-(defvar ee-youtubedl-dir2    "~/videos/tech/")
-(defvar ee-youtubedl-dir3    "/tmp/videos/")
-(defvar ee-youtubedl-dir4    "/tmp/")
-(defvar ee-youtubedl-command "youtube-dl -t")
-
 (defun ee-youtubedl-hash-around-point ()
   (let ((hash (ee-stuff-around-point "-0-9A-Za-z_")))
     (if (>= (length hash) 11)
 	(substring hash -11))))
 
-;; Test: (find-youtubedl-links nil nil "K6LmZ0A1s9U")
+;; The option `-t' has been deprecated! =(
+;; When we run youtube-dl with `-t' it says:
+;;   WARNING: --title is deprecated. Use -o "%(title)s-%(id)s.%(ext)s" instead.
+;; See: (find-man "1 youtube-dl")
+;;      (find-man "1 youtube-dl" "\nOUTPUT TEMPLATE")
 ;;
-(defun find-youtubedl-links (&optional dir title hash ext- stem &rest rest)
-  "Visit a temporary buffer containing hyperlinks for youtube-dl."
-  (interactive)
-  (setq dir   (or dir   ee-youtubedl-dir "{dir}"))
-  (setq hash  (or hash  (ee-youtubedl-hash-around-point)    "{hash}"))
-  (setq title (or title (ee-youtubedl-guess-title dir hash) "{title}"))
-  (setq ext-   (or ext-   (ee-youtubedl-guess-ext-   dir hash) "{ext-}"))
-  (setq stem  (or stem "{stem}"))
-  (apply 'find-elinks `(
-    ;; Convention: the first sexp always regenerates the buffer.
-    (find-youtubedl-links ,dir ,title ,hash ,ext- ,stem)
-    (find-youtubedl-links ,dir nil ,hash nil ,stem)
-    ""
-    (find-youtubedl-links ,ee-youtubedl-dir  nil ,hash nil ,stem)
-    (find-youtubedl-links ,ee-youtubedl-dir2 nil ,hash nil ,stem)
-    (find-youtubedl-links ,ee-youtubedl-dir3 nil ,hash nil ,stem)
-    (find-youtubedl-links ,ee-youtubedl-dir4 nil ,hash nil ,stem)
-    (find-efunction 'find-youtubedl-links)
-    ;;
-    ;; (find-youtubedl-links ee-youtubedl-dir ,title ,hash ,ext- ,stem)
-    ;; (setq ee-youtubedl-dir ,ee-youtubedl-dir)
-    ""
-    (find-ydbgrep ,(format "grep --color -nH -e %s db.lua" hash))
-    ;;
-    ;; Body:
-    ""
-    ,(ee-template0 "\
- (eepitch-shell2)
- (eepitch-kill)
- (eepitch-shell2)
-# http://www.youtube.com/watch?v={hash}
-# http://www.youtube.com/watch?v={hash}#t=0m00s
-# http://www.youtube.com/watch?v={hash}#t=0h00m00s
-cd {dir}
-{ee-youtubedl-command} -f 18 --restrict-filenames 'http://www.youtube.com/watch?v={hash}'
+(defvar ee-youtubedl-command "youtube-dl -t")
 
-# Or:
-{ee-youtubedl-command}       'http://www.youtube.com/watch?v={hash}'
-{ee-youtubedl-command} -F    'http://www.youtube.com/watch?v={hash}'
-{ee-youtubedl-command} -f 18 'http://www.youtube.com/watch?v={hash}'
-{ee-youtubedl-command} -f 18 --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
-{ee-youtubedl-command}       --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
+;; The directories into which we usually download videos.
+;; Tests: (find-elinks (ee-youtubedl-dir-links))
+;;        (find-elinks (ee-youtubedl-dir-links '("DIR1" "DIR2")))
+;;        (let ((ee-youtubedl-dirs '("DIR1" "DIR2"))) (find-youtubedl-links))
+;;
+(defvar ee-youtubedl-dir "~/videos/")
 
-# (find-es \"video\" \"youtube-dl\")
-# (find-fline \"{dir}\" \"{hash}\")
-# (find-fline \"{dir}\" \"{title}-{hash}\")
-# (find-fline \"{dir}\" \"{title}-{hash}{ext-}\")
-# (find-video \"{dir}{title}-{hash}{ext-}\")
-# (find-video \"{dir}{title}-{hash}{ext-}.part\")
-# (code-video \"{stem}video\" \"{dir}{title}-{hash}{ext-}\")
-# (code-video \"{stem}video\" \"{dir}{title}-{hash}{ext-}.part\")
-# (find-{stem}video)
-# (find-{stem}video \"0:00\")
+(defvar ee-youtubedl-dirs
+  '("~/videos/" "~/videos/tech/" "/tmp/videos/" "/tmp/"))
 
-# Error messages (for the player):
-# (find-ebuffer \"*Messages*\")
-")
-    ) rest))
+(defun ee-youtubedl-dir-links (&optional dirs hash stem)
+  (setq dirs (or dirs ee-youtubedl-dirs))
+  (setq hash (or hash "{hash}"))
+  (setq stem (or stem "{stem}"))
+  (mapcar (lambda (dir) `(find-youtubedl-links ,dir nil ,hash nil ,stem))
+	  dirs))
 
-
-;; Bonus (2013sep10): play a local copy of a video from its URL.
-;; I need to document this!
+;; This is a hack (written in 2013sep10) that plays a local copy of a
+;; video from its URL. To easiest way to use it is to put the point on
+;; a youtube URL and type `M-x bryl'.
 ;;
 (defun ee-youtubedl-guess** (dirs hash)
   (apply 'append (mapcar (lambda (d) (ee-youtubedl-guess* d hash)) dirs)))
 
-(defun ee-youtubedl-dirs ()
-  (list ee-youtubedl-dir
-	ee-youtubedl-dir2
-	ee-youtubedl-dir3
-	ee-youtubedl-dir4))
-
 (defun ee-youtubedl-hash-to-fname (hash)
-  (and hash (car (ee-youtubedl-guess** (ee-youtubedl-dirs) hash))))
+  (and hash (car (ee-youtubedl-guess** ee-youtubedl-dirs hash))))
 
 (defun ee-youtubedl-url-to-hash (url)
   (if (and url (string-match "[&?]v=\\([^&?#]+\\)" url))

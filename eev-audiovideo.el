@@ -476,8 +476,8 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;; Garbage?
 
 
-;; Tests: (ee-time-to-youtube-time "2")  
-;;        (ee-time-to-youtube-time "23") 
+;; Tests: (ee-time-to-youtube-time "2")
+;;        (ee-time-to-youtube-time "23")
 ;;        (ee-time-to-youtube-time "1:23")
 ;;        (ee-time-to-youtube-time "1:23:43")
 ;;

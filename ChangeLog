@@ -1,3 +1,16 @@
+2020-10-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-youtubedl-links): rewrote using
+	`find-find-links-links-new'. Deleted the sexps with `find-video'
+	and `code-video' that would point to a partially downloaded video.
+	(ee-youtubedl-dirs): new variable.
+	(ee-youtubedl-dir-links): new function.
+	(ee-youtubedl-dir2, ee-youtubedl-dir3, ee-youtubedl-dir4):
+	deleted.
+
+	* eev-elinks.el (find-eface-links, find-color-links): rewrote
+	using `find-find-links-links-new'.
+
 2020-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (ee-find-mpv-video): use "--start=1:23"
