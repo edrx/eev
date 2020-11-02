@@ -1795,7 +1795,8 @@ This section was moved to:
 Source code:  (find-efunction 'find-emacs-keys-intro)
 More intros:  (find-eev-quick-intro)
               (find-eev-intro)
-              (find-eval-intro)
+              (find-here-links-intro)
+              (find-refining-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
@@ -2440,10 +2441,9 @@ See:
 Source code:  (find-eev \"eev-intro.el\" \"find-eev-intro\")
 Main intros:  (find-eev-quick-intro)
               (find-emacs-keys-intro)
-              (find-eval-intro)
               (find-eepitch-intro)
-              (find-wrap-intro)
-              (find-eev-intro)
+              (find-here-links-intro)
+              (find-refining-intro)
 Index to the source files: (find-eev \"eev-load.el\")
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
@@ -2814,14 +2814,14 @@ and the \"1\" is a reference to this:
 Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
 
    _______________           _____________________           ________________ 
-  |               |	    |          |          |	    |                |
-  |               |	    |          |  elinks  |	    |                |
-  |               | 	    |          |  buffer  |	    |                |
+  |               |         |          |          |         |                |
+  |               |         |          |  elinks  |         |                |
+  |               |         |          |  buffer  |         |                |
   |    target     | M-h M-3 |  target  |__________| M-h M-1 |     target     |
   |    buffer     | ------> |  buffer  |          | ------> |     buffer     |
-  |               |	    |          |  notes   |	    |                |
-  |               |	    |          |  buffer  |	    |                |
-  |_______________|	    |__________|__________|	    |________________|
+  |               |         |          |  notes   |         |                |
+  |               |         |          |  buffer  |         |                |
+  |_______________|         |__________|__________|         |________________|
 
 
 
@@ -2904,7 +2904,9 @@ The next steps are to learn how:
 \(Re)generate: (find-refining-intro)
 Source code:  (find-efunction 'find-refining-intro)
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
+              (find-eev-intro)
+              (find-emacs-keys-intro)
+              (find-here-links-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
@@ -6101,7 +6103,9 @@ Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
 \(Re)generate: (find-pdf-like-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-pdf-like-intro\")
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
+              (find-eev-intro)
+              (find-here-links-intro)
+              (find-refining-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.

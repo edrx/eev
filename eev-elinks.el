@@ -1,6 +1,6 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct30
+;; Version:    2020nov01
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -805,16 +805,71 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;;                          |___/         |_|                             
 ;;
 ;; «find-grep-links» (to ".find-grep-links")
-;; Skel: (find-find-links-links-old "\\M-g" "grep" "")
-;; Tests:
-;;   (ee-find-grep-commands)
-;;   (ee-find-grep-functions "~/eev-current/")
-;;   (ee-find-grep-links '(find-agrep find-bgrep) '("grep a *" "grep b *"))
-;;   (find-grep-links)
+;; Skel: (find-find-links-links-new "grep" "" "")
 ;;
+;; The functions `find-grep-links' and `ee-find-grep-links' are
+;; similar to `find-file-links', described here,
+;;
+;;   (find-eev-quick-intro "10.1. Generating short hyperlinks to files")
+;;
+;; in the sense that they generate short hyperlinks to the default
+;; directory and to its parent directories, but 1) they generate
+;; `find-xxxgrep' links instead of `find-xxxfile' links, and 2) they
+;; combine them with most recent elements in `grep-history'.
+;;
+;; Here's a micro-tutorial. Run `M-x grep', and complete the grep
+;; command with a string to search for and a list of files, like this,
+;;
+;;   grep --color -nH --null -e
+;;   -->
+;;   grep --color -nH --null -e Punch *.el
+;;
+;; and hit RET. You should get a buffer named "*grep*" with the
+;; results. If you type `M-h M-h' there the function `find-here-links'
+;; will run `ee-find-grep-links' to generate hyperlinks to the result
+;; of running that grep command, and one of those hyperlinks will be:
+;;
+;;   (find-eevgrep "grep --color -nH --null -e Punch *.el")
+;;
+(defun find-grep-links (&rest pos-spec-list)
+"Visit a temporary buffer containing `find-xxxgrep' sexps."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-grep-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-grep-links)
+     ""
+     ,@(ee-find-grep-links)
+     )
+   pos-spec-list))
 
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-g" 'find-grep-links)
+(defun ee-find-grep-links ()
+  "An internal function used by `find-grep-links'."
+  (ee-find-grep-links0
+   (ee-find-grep-functions default-directory)
+   (ee-find-grep-commands)))
+
+;; Low-level functions used by `ee-find-grep-links'.
+;; Tests:
+;;   (find-elinks (ee-find-grep-links))
+;;   (ee-find-grep-links)
+;;   (ee-find-grep-links0 '(find-Agrep find-Bgrep) '("grep AA *" "grep BB *"))
+;;     (ee-find-grep-functions ee-emacs-lisp-directory)
+;;     (ee-find-grep-functions ee-eev-source-directory)
+;;     (ee-find-grep-commands)
+;;
+(defun ee-find-grep-links0 (find-xxxgreps grep-commands)
+  "An internal function used by `find-grep-links'."
+  (let (result)
+    (dolist (head find-xxxgreps)
+      (dolist (command grep-commands)
+	(setq result (cons `(,head ,command) result))))
+    (nreverse result)))
+
+(defun ee-find-grep-commands ()
+  "An internal function used by `find-grep-links'."
+  (cons "grep -nH -e _ *" (ee-first-n-elements 4 grep-history)))
 
 (defun ee-first-n-elements (n list)
   "Example: (ee-first-n-elements 2 '(a b c d e f))   ==> (a b)"
@@ -826,34 +881,6 @@ when this is true remove the prefix D from FNAME, and put the sexp
   "An internal function used by `find-grep-links'."
   (ee-code-c-d-filter-2 dir '(ee-intern "find-%sgrep" c)))
 
-(defun ee-find-grep-commands ()
-  "An internal function used by `find-grep-links'."
-  (cons "grep -nH -e _ *" (ee-first-n-elements 4 grep-history)))
-
-(defun ee-find-grep-links0 (find-xxxgreps grep-commands)
-  "An internal function used by `find-grep-links'."
-  (let (result)
-    (dolist (head find-xxxgreps)
-      (dolist (command grep-commands)
-	(setq result (cons `(,head ,command) result))))
-    (nreverse result)))
-
-(defun ee-find-grep-links ()
-  (ee-find-grep-links0
-   (ee-find-grep-functions default-directory)
-   (ee-find-grep-commands)))
-
-(defun find-grep-links (&rest pos-spec-list)
-"Visit a temporary buffer containing `find-xxxgrep' sexps."
-  (interactive)
-  (apply 'find-elinks
-   `((find-grep-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-grep-links)
-     ""
-     ,@(ee-find-grep-links)
-     )
-   pos-spec-list))
 
 
 

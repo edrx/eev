@@ -1,3 +1,8 @@
+2020-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-grep-links): rewrote using
+	`find-find-links-links-new' and added documentation.
+
 2020-10-30  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-youtubedl-links): rewrote using
