@@ -1,6 +1,6 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019apr01
+;; Version:    2020nov26
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -197,6 +197,8 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
   (ee-template0 "\
    ;; {(ee-S `(find-code-c-d ,c ,d ,@rest))} 
    ;; {(ee-S `(ee-code-c-d-base ,c ,d))} 
+   ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+   ;;
    (setq ee-{c}dir \"{d}\")
    (setq ee-{c}tagsfile \"{d}TAGS\")
    (defun ee-{c}file (str)

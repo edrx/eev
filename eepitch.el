@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.
 
-;; Copyright (C) 2012,2015,2018,2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018,2019,2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep28
+;; Version:    2020nov29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -44,6 +44,7 @@
 ;; «.set-glyphs»		(to "set-glyphs")
 ;; «.set-keys»			(to "set-keys")
 ;;
+;; «.eepitch-vterm»		(to "eepitch-vterm")
 ;; «.eepitch-langs»		(to "eepitch-langs")
 
 ;;; Commentary:
@@ -271,6 +272,7 @@ Note that `eepitch-buffer-create' sets this variable!")
 (defvar eepitch-window-show    '(eepitch-window-show))  ; cheap indirection
 (defvar eepitch-kill           '(eepitch-kill-buffer))  ; cheap indirection
 (defvar eepitch-kill-windows   'nil)	                ; cheap indirection
+(defvar eepitch-line           'nil)	                ; cheap indirection
 (defun eepitch-buffer-exists () (get-buffer        eepitch-buffer-name))
 (defun eepitch-window-exists () (get-buffer-window eepitch-buffer-name))
 (defun eepitch-target-buffer () (get-buffer        eepitch-buffer-name))
@@ -357,6 +359,7 @@ which does all the hard work."
       '(eepitch-window-show))   ; default two-window setting
   (setq eepitch-kill		; set the behavior of `eepitch-kill'
       '(eepitch-kill-buffer))   ; to just kill the target buffer
+  (setq eepitch-line nil)	; use the default `eepitch-line'
   (eepitch-prepare)
   (list 'Target: eepitch-buffer-name))	; feedback (for <f8> and `M-e')
 
@@ -381,11 +384,15 @@ which does all the hard work."
 
 (defun eepitch-line (line)
   "Send LINE to the target window and run the key binding for RET there.
+If the value in the variable `eepitch-line' is non-nil then call
+the function in that variable instead of running the default code.
 This is a low-level function used by `eepitch-this-line'."
-  (eepitch-eval-at-target-window
-   '(progn (goto-char (point-max))	               ; at the end of buffer
-	   (insert line)                               ; "type" the line
-	   (call-interactively (key-binding "\r")))))  ; then do a RET
+  (if eepitch-line
+      (funcall eepitch-line line)
+    (eepitch-eval-at-target-window	                 ; Default behavior:
+     '(progn (goto-char (point-max))	                 ; at the end of buffer
+	     (insert line)                               ; "type" the line
+	     (call-interactively (key-binding "\r")))))) ; then do a RET
 
 (defun eepitch-this-line ()
 "Pitch this line to the target buffer, or eval it as lisp if it starts with `'.
@@ -764,6 +771,33 @@ This is useful for for running processes that use pagers like
 
 
 
+;;;   ___  _   _                 _                          
+;;;  / _ \| |_| |__   ___ _ __  | |_ ___ _ __ _ __ ___  ___ 
+;;; | | | | __| '_ \ / _ \ '__| | __/ _ \ '__| '_ ` _ \/ __|
+;;; | |_| | |_| | | |  __/ |    | ||  __/ |  | | | | | \__ \
+;;;  \___/ \__|_| |_|\___|_|     \__\___|_|  |_| |_| |_|___/
+;;;                                                         
+;; «eepitch-vterm»  (to ".eepitch-vterm")
+;; 2020nov29: new code. Experimental.
+
+(defun eepitch-vterm ()
+  "(This function is a prototype that only works in a controlled setting!)"
+  (interactive)
+  ;; (eepitch '(vterm))
+  (eepitch '(if (get-buffer "*vterm*")
+		(set-buffer "*vterm*")
+	      (vterm "*vterm*")))
+  (setq eepitch-line 'eepitch-line-vterm))
+
+;; Thanks to Gabriele Bozzola for helping me with this.
+(defun eepitch-line-vterm (line)
+  "Send LINE to the vterm buffer and run the key binding for RET there."
+  (eepitch-eval-at-target-window
+    '(progn (vterm-send-string line)	; "type" the line
+	    (vterm-send-return))))  ; then do a RET
+
+
+
 
 ;;;  _                                                  
 ;;; | |    __ _ _ __   __ _ _   _  __ _  __ _  ___  ___ 
@@ -793,8 +827,9 @@ This is useful for for running processes that use pagers like
 (defun eepitch-lua52  () (interactive) (eepitch-comint "lua52"  "lua5.2"))
 (defun eepitch-lua53  () (interactive) (eepitch-comint "lua53"  "lua5.3"))
 (defun eepitch-julia  () (interactive) (eepitch-comint "julia"  "julia"))
-(defun eepitch-python  () (interactive) (eepitch-comint "python"  "python"))
+(defun eepitch-python2 () (interactive) (eepitch-comint "python2" "python2"))
 (defun eepitch-python3 () (interactive) (eepitch-comint "python3" "python3"))
+(defun eepitch-python  () (interactive) (eepitch-comint "python3" "python3"))
 (defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb"))
 (defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb --simple-prompt"))
 (defun eepitch-perl () (interactive) (eepitch-comint "perl" "perl -d -e 42"))
@@ -886,6 +921,8 @@ This is useful for for running processes that use pagers like
 
 ;; Pulseaudio (this is to interact with its daemon)
 (defun eepitch-pacmd () (interactive) (eepitch-comint "pacmd" "pacmd"))
+
+
 
 
 

@@ -3145,7 +3145,7 @@ To rebind `M-h M-h' to its original function, run this:
 
 or restart Emacs.
 
-The big figure below shows all the keys sequences:
+The big figure below shows all the key sequences:
 
    _______________________________________
   |                 |                     |

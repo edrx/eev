@@ -382,6 +382,7 @@ This is an internal function used by `find-efunction-links' and
 ;; Moved to eev-mode.el:
 ;; (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)
 
+;; Test: (ee-format-kbd-macro [down])
 (defun ee-format-kbd-macro (key)
   "Example: (ee-format-kbd-macro [down])  --> \"<down>  ;; next-line\""
   (replace-regexp-in-string "[ \t][ \t]+" "  " (format-kbd-macro key t)))

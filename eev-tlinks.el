@@ -928,6 +928,8 @@ emacs    -fg bisque -bg black                  eev-readme.el
      (setq ee-youtubedl-dirs ',ee-youtubedl-dirs)
      (setq ee-youtubedl-dir   ,ee-youtubedl-dir)
      ""
+     (find-audiovideo-intro "6. Youtube-dl")
+     ""
      ,(ee-template0 "\
  (eepitch-shell2)
  (eepitch-kill)

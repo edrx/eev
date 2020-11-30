@@ -64,11 +64,12 @@ and: (find-eval-intro \"`M-k'\")"
 ;;;           |___/                |_|    
 ;;;
 ;; «eev-mode-map-set» (to ".eev-mode-map-set")
+;; Test: (find-eminorkeymapdescr 'eev-mode)
 
 (defvar eev-mode-map nil)
 
 (defun eev-mode-map-set ()
-  "Add the standard keybindings for eev to `eev-mode-keymap'."
+  "Add the standard keybindings for eev to `eev-mode-map'."
   ;;
   ;; Keys for following hyperlinks and for going back.
   ;; See: (find-eev-quick-intro "2. Evaluating Lisp" "When you type `M-e'")

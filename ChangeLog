@@ -1,3 +1,23 @@
+2020-11-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-line): new variable.
+	(eepitch-line): when the value in the variable `eepitch-line' is
+	non-nil then run `(funcall eepitch-line line)' instead of the
+	default behavior.
+	(eepitch): setq eepitch-line to nil.
+	(eepitch-vterm): new function.
+	(eepitch-line-vterm): new function.
+
+2020-11-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-code-c-d-base): added a link to
+	`find-eev-quick-intro'.
+
+2020-11-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-python2): new function.
+	(eepitch-python): make it use python3.
+
 2020-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (find-grep-links): rewrote using
