@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct27
+;; Version:    2020dec03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -657,6 +657,25 @@ newline are spurious - and replaces them by \"(ff)\"."
   (pdf-tools-install)
   (find-fline fname)
   (if page (pdf-view-goto-page (or page 1))))
+
+
+
+;; I use this function to redisplay the generated PDFs after
+;; recompiling their LaTeX source. TODO: document this.
+;; My notes are here: (find-es "emacs" "ee-pdftools-revert-all")
+;;
+(defun ee-pdftools-revert-all ()
+"Run `revert-buffer' in all windows in which pdf-tools is showing PDFs.
+This makes pdf-tools show the new version of these PDFs without
+changing the page, the image size, the hscroll, and the vscroll
+in each window."
+  (interactive)
+  (dolist (window (window-list-1))
+    (with-selected-window window
+      (if (eq major-mode 'pdf-view-mode)
+	  (revert-buffer)))))
+
+
 
 
 

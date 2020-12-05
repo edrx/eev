@@ -1,3 +1,12 @@
+2020-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-pdftools-revert-all): new function.
+
+2020-11-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-eval.el (ee-eval-last-sexp-7): new function.
+	(ee-eval-last-sexp): added support for `ee-eval-last-sexp-7'.
+
 2020-11-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-line): new variable.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019aug05
+;; Version:    2020nov30
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -125,6 +125,10 @@ This is an internal function used by `ee-eval-last-sexp'."
 	(debug-on-error t))
     (eval sexp)))
 
+(defun ee-eval-last-sexp-7 ()
+  "This is equivalent to M-e <down>."
+  (ee-eval-last-sexp) (next-line))
+
 (defun ee-eval-last-sexp-8 ()
   "Evaluate the sexp before point and pretty-print its result in other buffer."
   (find-epp (ee-eval (read (ee-last-sexp)))))
@@ -152,6 +156,7 @@ If ARG is:
     3:  same, but also switch to the new window
     4:  evaluate the sexp in debug mode
     5:  run the sexp with `debug-on-error' turned on
+    7:  this is equivalent to `M-e <down>'
     8:  eval then pretty-print the result in another buffer
     9:  a hack for testing `call-interactively'
 other: set EE-ARG to ARG and eval (ee-last-sexp)."
@@ -162,6 +167,7 @@ other: set EE-ARG to ARG and eval (ee-last-sexp)."
 	((eq arg 3) (ee-eval-last-sexp-3))
 	((eq arg 4) (ee-eval-last-sexp-4))
 	((eq arg 5) (ee-eval-last-sexp-5))
+	((eq arg 7) (ee-eval-last-sexp-7))
 	((eq arg 8) (ee-eval-last-sexp-8))
 	((eq arg 9) (ee-eval-last-sexp-9))
 	(t (prin1 (let ((ee-arg arg))
