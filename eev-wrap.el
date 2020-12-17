@@ -1,6 +1,6 @@
 ;;; eev-wrap.el --- wrap the current line into a hyperlink
 
-;; Copyright (C) 2013,2016,2017,2019 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2016,2017,2019,2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep28
+;; Version:    2020dec06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
@@ -92,6 +92,12 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
   (if (or (numberp obj) (stringp obj) (eq obj nil) (eq obj t) (keywordp obj))
       obj
     (list 'quote obj)))
+
+(defalias 'ee-pp0 'ee-S)
+
+(defun ee-ppp0 (list) (concat "(" (mapconcat 'ee-pp0 list "\n ") ")\n"))
+
+
 
 
 ;; «ee-template0» (to ".ee-template0")
@@ -538,9 +544,6 @@ cd     {dir}"))
 
 ;; (defalias    'ee-H 'ee-hyperlink-prefix)
 ;; (defalias    'ee-S 'ee-pp0)
-
-(defalias 'ee-pp0 'ee-S)		; compatibility
-
 
 (provide 'eev-wrap)
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020nov01
+;; Version:    2020dec16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -77,6 +77,7 @@
 ;; «.find-color-links»		(to "find-color-links")
 ;; «.find-epackage-links»	(to "find-epackage-links")
 ;; «.ee-package-dir»		(to "ee-package-dir")
+;; «.find-esetkey-links»	(to "find-esetkey-links")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -274,6 +275,7 @@ This is an internal function used by `find-efunction-links' and
     (symbol-file ',f 'defun)
     (find-fline (symbol-file ',f 'defun))
     (find-epp (assoc (symbol-file ',f 'defun) load-history))
+    (find-eppp (mapcar 'car load-history))
     (find-estring (mapconcat 'identity (mapcar 'car load-history) "\n"))
     (find-estring (documentation ',f))
     (find-estring (documentation ',f t))
@@ -1268,6 +1270,75 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
 
 
 
+
+;;;   __ _           _                      _   _              
+;;;  / _(_)_ __   __| |       ___  ___  ___| |_| | _____ _   _ 
+;;; | |_| | '_ \ / _` |_____ / _ \/ __|/ _ \ __| |/ / _ \ | | |
+;;; |  _| | | | | (_| |_____|  __/\__ \  __/ |_|   <  __/ |_| |
+;;; |_| |_|_| |_|\__,_|      \___||___/\___|\__|_|\_\___|\__, |
+;;;                                                      |___/ 
+;;
+;; «find-esetkey-links»  (to ".find-esetkey-links")
+;; Skel: (find-find-links-links-new "esetkey" "key command" "longkey")
+;; Test: (find-esetkey-links (kbd "M-o") 'other-window)
+;;
+(defun find-esetkey-links (&optional key command &rest pos-spec-list)
+  "Visit a temporary buffer containing sexps for setting a key."
+  (interactive
+   (let* ((menu-prompting nil)
+          (key (read-key-sequence "Set key: " nil t))
+	  (longkey (format-kbd-macro key))
+	  (command (ee-read-command)))
+     (list key command)))
+  (setq key (or key (kbd "M-o")))
+  (setq command (or command 'other-window))
+  (let* ((longkey (format-kbd-macro key)))
+    (apply
+     'find-elinks-elisp
+     `((find-esetkey-links (kbd ,longkey) ',command ,@pos-spec-list)
+       (find-esetkey-links (kbd "M-o") 'other-window ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-ekeydescr (kbd ,longkey))
+       (find-efunctiondescr ',command)
+       (find-efunction 'find-esetkey-links)
+       ""
+       (find-enode "Rebinding" "M-x global-set-key")
+       (find-elnode "Changing Key Bindings" "Function: define-key")
+       (find-efunctiondescr 'global-set-key)
+       (find-efunctiondescr 'global-unset-key)
+       (find-efunctiondescr 'local-set-key)
+       (find-efunctiondescr 'local-unset-key)
+       (find-efunctiondescr 'define-key)
+       (find-efunctiondescr 'kbd)
+       (find-enode "Misc Help" "describe-bindings")
+       (eek "C-h b  ;; describe-bindings")
+       ""
+       ,(ee-template0 "\
+(global-set-key   (kbd \"{longkey}\") '{command})
+(global-unset-key (kbd \"{longkey}\"))
+
+(local-set-key    (kbd \"{longkey}\") '{command})
+(local-unset-key  (kbd \"{longkey}\"))
+
+;; (find-ekeymapdescr eev-mode-map)
+(define-key eev-mode-map (kbd \"{longkey}\") '{command})
+(define-key eev-mode-map (kbd \"{longkey}\") nil)
+")
+       )
+     pos-spec-list)))
+
+(defun ee-read-command ()
+  "An internal function used by `find-esetkey-links'."
+  (let* ((cmd-at-pt (ee-command-at-point))
+	 (prompt (if cmd-at-pt
+		     (format "Command (default %s): " cmd-at-pt)
+		   "Command: ")))
+    (read-command prompt cmd-at-pt)))
+
+(defun ee-command-at-point ()
+  "An internal function used by `find-esetkey-links'."
+  (let ((symbol (symbol-at-point)))
+    (if (commandp symbol) symbol)))
 
 
 

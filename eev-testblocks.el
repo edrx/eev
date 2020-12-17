@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct10
+;; Version:    2020dec16
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -112,6 +112,18 @@ dofile \"%s\"
 
 --]]
 " (buffer-name))))
+
+(defun ee-insert-test-org-mode ()
+  (interactive)
+  (insert "
+#+begin_comment
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+#+end_comment
+
+"))
 
 (defun ee-insert-test-python-mode ()
   (interactive)

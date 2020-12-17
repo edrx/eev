@@ -804,6 +804,13 @@ explicitly. Try this: (progn (message \"foo\") \"bar\")"
   (let ((ee-buffer-name (or ee-buffer-name "*pp*")))
     (apply 'find-estring-elisp (pp-to-string object) pos-spec-list)))
 
+(defun find-eppp (object &rest pos-spec-list)
+  "Visit a temporary buffer containing a pretty-printed version of OBJECT.
+This is a variant of `find-epp' that is more suitable for objects
+that `find-epp' would print in a single line."
+  (let ((ee-buffer-name (or ee-buffer-name "*pp*")))
+    (apply 'find-estring-elisp (ee-ppp0 object) pos-spec-list)))
+
 (defun find-efunctionpp (symbol &rest pos-spec-list)
 "Visit a temporary buffer containing the pretty-printed Lisp code for SYMBOL."
   (interactive (find-function-read))

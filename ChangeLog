@@ -1,3 +1,20 @@
+2020-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-esetkey-links): new function.
+	(ee-read-command): new function.
+	(ee-command-at-point): new function.
+
+	* eev-testblocks.el (ee-insert-test-org-mode): new function.
+
+2020-12-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el (ee-ppp0): new function.
+
+	* eev-blinks.el (find-eppp): new function.
+
+	* eev-elinks.el (ee-find-efunction-links): added a line with
+	`(find-eppp (mapcar 'car load-history))'.
+
 2020-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el (ee-pdftools-revert-all): new function.
