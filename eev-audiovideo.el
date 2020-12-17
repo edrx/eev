@@ -1,6 +1,6 @@
 ;;; eev-audiovideo.el -- elisp hyperlinks to audio and video files.
 
-;; Copyright (C) 2013-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct27
+;; Version:    2020dec17
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -87,13 +87,17 @@
 
 
 
-;; «.ee-time-from-bol»	(to "ee-time-from-bol")
-;; «.eev-avadj-mode»	(to "eev-avadj-mode")
-;; «.find-mplayer»	(to "find-mplayer")
-;; «.find-termplayer»	(to "find-termplayer")
-;; «.find-mpv-video»	(to "find-mpv-video")
-;; «.find-mpv-audio»	(to "find-mpv-audio")
-;; «.aliases»		(to "aliases")
+;; «.ee-time-from-bol»		(to "ee-time-from-bol")
+;; «.ee-time-to-seconds»	(to "ee-time-to-seconds")
+;;   «.mm:ss»			(to "mm:ss")
+;;   «.youtube-time»		(to "youtube-time")
+;; «.ee-time-shift»		(to "ee-time-shift")
+;; «.eev-avadj-mode»		(to "eev-avadj-mode")
+;; «.find-mplayer»		(to "find-mplayer")
+;; «.find-termplayer»		(to "find-termplayer")
+;; «.find-mpv-video»		(to "find-mpv-video")
+;; «.find-mpv-audio»		(to "find-mpv-audio")
+;; «.aliases»			(to "aliases")
 
 
 
@@ -121,6 +125,8 @@
 ;;;                                                                         
 ;; «ee-time-from-bol»  (to ".ee-time-from-bol")
 
+;; Old version:
+;; (defvar ee-time-regexp "[0-9]?[0-9]:[0-9][0-9]\\(:[0-9][0-9]\\)?")
 (defvar ee-time-regexp
 	"\\(?:\\([0-9]?[0-9]\\):\\)?\\([0-9]?[0-9]\\):\\([0-9][0-9]\\)")
 
@@ -147,18 +153,31 @@
 
 
 
-
-;;;  _   _                          _     _  __ _   
-;;; | |_(_)_ __ ___   ___       ___| |__ (_)/ _| |_ 
-;;; | __| | '_ ` _ \ / _ \_____/ __| '_ \| | |_| __|
-;;; | |_| | | | | | |  __/_____\__ \ | | | |  _| |_ 
-;;;  \__|_|_| |_| |_|\___|     |___/_| |_|_|_|  \__|
-;;;                                                 
+;;;  _   _                      _                                           _     
+;;; | |_(_)_ __ ___   ___      | |_ ___        ___  ___  ___ ___  _ __   __| |___ 
+;;; | __| | '_ ` _ \ / _ \_____| __/ _ \ _____/ __|/ _ \/ __/ _ \| '_ \ / _` / __|
+;;; | |_| | | | | | |  __/_____| || (_) |_____\__ \  __/ (_| (_) | | | | (_| \__ \
+;;;  \__|_|_| |_| |_|\___|      \__\___/      |___/\___|\___\___/|_| |_|\__,_|___/
+;;;                                                                               
+;; «ee-time-to-seconds»  (to ".ee-time-to-seconds")
 ;; Tests:
-;; (ee-time-to-seconds "1:00:00")
 ;; (ee-seconds-to-time   5)
 ;; (ee-seconds-to-time 300)
 ;; (ee-time+ -20 "0:05")
+
+;; Old notes:
+;; (find-elnode "Time Parsing")
+;; (find-elnode "Time Parsing" "Function: format-seconds")
+;; (seconds-to-time 4000)
+;; (date-to-time "2:30")
+;; (float-time '(0 4000 0))
+;; (format-seconds     "%h:%m:%s" 4000)
+;; (format-seconds "%h:%02m:%02s" 4000)
+;; (ee-seconds-to-time  260)
+;; (ee-seconds-to-time 4000)
+;; (ee-time-to-seconds    "4:20")
+;; (ee-time-to-seconds "1:00:00")
+;; (string-to-number "")
 
 (defun ee-time-to-seconds (time)
   (save-match-data
@@ -171,6 +190,75 @@
   (if (> 3600 seconds)
       (format-seconds "%m:%02s" seconds)
     (format-seconds "%h:%02m:%02s" seconds)))
+
+
+
+
+;;;                                
+;;;  _ __ ___  _ __ ___  _ ___ ___ 
+;;; | '_ ` _ \| '_ ` _ \(_) __/ __|
+;;; | | | | | | | | | | |_\__ \__ \
+;;; |_| |_| |_|_| |_| |_(_)___/___/
+;;;                                
+;; «mm:ss»  (to ".mm:ss")
+;; Convert between a number of seconds (a number)
+;; and a "minutes:seconds" thing (a string).
+;; TODO: convert all calls to `ee-secs-to-mm:ss' to `ee-seconds-to-time' and
+;;               all calls to `ee-mm:ss-to-secs' to `ee-time-to-seconds',
+;;           and declare this obsolete.
+;;
+(defun ee-secs-to-mm:ss (n)
+  "Force N - a number of seconds or an \"mm:ss\" string - to the mm:ss format"
+  (if (stringp n) n
+    (let* ((s (mod n 60))
+	   (m (/ (- n s) 60)))
+      (format "%d:%02d" m s))))
+
+(defun ee-mm:ss-to-secs (mm:ss)
+  "Force MM:SS - a string or a number of seconds - to a number of seconds"
+  (if (numberp mm:ss) mm:ss
+    (let* ((ms (mapcar 'string-to-number (split-string mm:ss ":"))))
+      (+ (* 60 (car ms)) (cadr ms)))))
+
+
+
+
+;; «youtube-time»  (to ".youtube-time")
+;; Tests: (ee-time-to-youtube-time "2")
+;;        (ee-time-to-youtube-time "23")
+;;        (ee-time-to-youtube-time "1:23")
+;;        (ee-time-to-youtube-time "1:23:43")
+;;
+(defun ee-time-to-youtube-time (str)
+  "Convert strings like \"1:23\" to strings like \"#t=1m23s\".
+Supports the input formats \"ss\", \"mm:ss\", and \"hh:mm:ss\".
+If the input does not match any of these formats, return nil."
+  (save-match-data
+    (cond ((string-match "^\\([0-9]+\\)$" str)
+	   (format "#t=%ss" (match-string 1 str)))
+          ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\)$" str)
+	   (format "#t=%sm%ss" (match-string 1 str) (match-string 2 str)))
+          ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)$" str)
+	   (format "#t=%sh%sm%ss" (match-string 1 str) (match-string 2 str)
+		   (match-string 2 str))))))
+	  
+
+
+
+
+
+
+
+;;;  _   _                          _     _  __ _   
+;;; | |_(_)_ __ ___   ___       ___| |__ (_)/ _| |_ 
+;;; | __| | '_ ` _ \ / _ \_____/ __| '_ \| | |_| __|
+;;; | |_| | | | | | |  __/_____\__ \ | | | |  _| |_ 
+;;;  \__|_|_| |_| |_|\___|     |___/_| |_|_|_|  \__|
+;;;                                                 
+;; «ee-time-shift»  (to ".ee-time-shift")
+;; See: (find-audiovideo-intro "2. `eev-avadj-mode'")
+;; Tests: (ee-time+ 40 "4:20")
+;;        (ee-time+ -1000 "4:20")
 
 (defun ee-time+ (seconds time)
   (save-match-data
@@ -191,6 +279,7 @@
 
 
 
+
 ;;;  _           _                     _ _         __      _     _            
 ;;; | | __ _ ___| |_    __ _ _   _  __| (_) ___   / /_   _(_) __| | ___  ___  
 ;;; | |/ _` / __| __|  / _` | | | |/ _` | |/ _ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
@@ -198,6 +287,7 @@
 ;;; |_|\__,_|___/\__|  \__,_|\__,_|\__,_|_|\___/_/    \_/ |_|\__,_|\___|\___/ 
 ;;;                                                                           
 ;; See: (find-audiovideo-intro "4.4. The default audio/video file")
+;; (find-audiovideo-intro "2. `eev-avadj-mode'" "play the default")
 
 (defvar ee-audiovideo-last nil
   "See: (find-audiovideo-intro \"The current audio or video\")")
@@ -216,6 +306,7 @@ With a prefix of 0 just display what would be done. See:
 	(t (let   ((sexp  (ee-audiovideo-sexp (ee-time-from-bol))))
 	     (eval sexp)
 	     (message "%S" sexp)))))
+
 
 
 
@@ -245,6 +336,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;; (eev-avadj-mode 0)
 ;; (eev-avadj-mode 1)
 ;; 1:15 foo
+
 
 
 
@@ -353,8 +445,6 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;;           |_|                                      
 ;;
 ;; «find-mpv-video»  (to ".find-mpv-video")
-;; Experimental! To use it run:
-;; (defun find-video (&rest rest) (apply 'find-mpv-video rest))
 ;;
 (defun    find-mpv-video (fname &optional pos &rest rest)
   "Open FNAME with mpv, with a GUI (in fullscreen mode, for video files)."
@@ -457,90 +547,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 
-;;;                _                            _ _       
-;;;   ___ ___   __| | ___        __ _ _   _  __| (_) ___  
-;;;  / __/ _ \ / _` |/ _ \_____ / _` | | | |/ _` | |/ _ \ 
-;;; | (_| (_) | (_| |  __/_____| (_| | |_| | (_| | | (_) |
-;;;  \___\___/ \__,_|\___|      \__,_|\__,_|\__,_|_|\___/ 
-
-
-
-
-
-
 (provide 'eev-audiovideo)
-
-
-
-
-;; Garbage?
-
-
-;; Tests: (ee-time-to-youtube-time "2")
-;;        (ee-time-to-youtube-time "23")
-;;        (ee-time-to-youtube-time "1:23")
-;;        (ee-time-to-youtube-time "1:23:43")
-;;
-(defun ee-time-to-youtube-time (str)
-  "Convert strings like \"1:23\" to strings like \"#t=1m23s\".
-Supports the input formats \"ss\", \"mm:ss\", and \"hh:mm:ss\".
-If the input does not match any of these formats, return nil."
-  (save-match-data
-    (cond ((string-match "^\\([0-9]+\\)$" str)
-	   (format "#t=%ss" (match-string 1 str)))
-          ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\)$" str)
-	   (format "#t=%sm%ss" (match-string 1 str) (match-string 2 str)))
-          ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)$" str)
-	   (format "#t=%sh%sm%ss" (match-string 1 str) (match-string 2 str)
-		   (match-string 2 str))))))
-	  
-
-
-
-;;;                                
-;;;  _ __ ___  _ __ ___  _ ___ ___ 
-;;; | '_ ` _ \| '_ ` _ \(_) __/ __|
-;;; | | | | | | | | | | |_\__ \__ \
-;;; |_| |_| |_|_| |_| |_(_)___/___/
-;;;                                
-
-;; Convert between a number of seconds (a number)
-;; and a "minutes:seconds" thing (a string).
-;; OBSOLETE.
-;; TODO: convert all calls to `ee-secs-to-mm:ss' to `ee-seconds-to-time' and
-;;               all calls to `ee-mm:ss-to-secs' to `ee-time-to-seconds'.
-;;
-(defun ee-secs-to-mm:ss (n)
-  "Force N - a number of seconds or an \"mm:ss\" string - to the mm:ss format"
-  (if (stringp n) n
-    (let* ((s (mod n 60))
-	   (m (/ (- n s) 60)))
-      (format "%d:%02d" m s))))
-(defun ee-mm:ss-to-secs (mm:ss)
-  "Force MM:SS - a string or a number of seconds - to a number of seconds"
-  (if (numberp mm:ss) mm:ss
-    (let* ((ms (mapcar 'string-to-number (split-string mm:ss ":"))))
-      (+ (* 60 (car ms)) (cadr ms)))))
-
-
-;; Old notes on time regexps:
-;; (find-elnode "Time Parsing")
-;; (seconds-to-time 4000)
-;; (float-time '(0 4000 0))
-;; (format-seconds "%h:%m:%s" 4000)
-;; (format-seconds "%h:%02m:%02s" 4000)
-;; (ee-seconds-to-time 260)
-;; (ee-seconds-to-time 4000)
-;; (ee-time-to-seconds "4:20")
-;; (date-to-time "2:30")
-;; (string-to-number "")
-;; (ee-time+ 40 "4:20")
-;; (ee-time+ -1000 "4:20")
-;;
-;; (defvar ee-time-regexp "[0-9]?[0-9]:[0-9][0-9]\\(:[0-9][0-9]\\)?")
-
-
-
 
 
 ;; Local Variables:

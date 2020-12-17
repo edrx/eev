@@ -92,7 +92,7 @@
 ;; «.find-org-intro»		(to "find-org-intro")
 ;; «.find-escripts-intro»	(to "find-escripts-intro")
 ;; «.find-git-intro»		(to "find-git-intro")
-
+;; «.find-little-languages-intro»	(to "find-little-languages-intro")
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 
 ;; Videos:
@@ -12673,6 +12673,43 @@ will give you information about the current definition.
 
 
 
+
+
+;; «find-little-languages-intro»  (to ".find-little-languages-intro")
+;; Skel: (find-intro-links "little-languages")
+
+(defun find-little-languages-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-little-languages-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-little-languages-intro)
+Source code:  (find-efunction 'find-little-languages-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+http://angg.twu.net/emacsconf2020.html
+http://angg.twu.net/emacsconf2020.html#forth
+
+  (find-eev \"eev-blinks.el\" \"ee-goto-position\")
+  (find-eev \"eev-blinks.el\" \"ee-goto-rest\")
+  (find-multiwindow-intro)
+  (find-eev-quick-intro \"7.4. Commands with very short names\")
+
+control structures in eepitch
+
+M-7 M-e
+
+
+
+Hello
+=====
+" pos-spec-list)))
+
+;; (find-little-languages-intro)
 
 
 

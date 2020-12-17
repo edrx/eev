@@ -1,3 +1,9 @@
+2020-12-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* README.org: new file.
+
+	* eev-intro.el (find-little-languages-intro): new function.
+
 2020-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (find-esetkey-links): new function.
