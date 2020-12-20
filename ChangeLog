@@ -1,6 +1,16 @@
+2020-12-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-code-c-d-:w3m): new function.
+	(ee-code-c-d-:tags): new function.
+	(ee-code-c-d-base): moved the `defun find-{c}w3m', the `defun
+	find-{c}tags', and their support functions to `ee-code-c-d-:w3m'
+	and `ee-code-c-d-:tags'.
+
 2020-12-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* README.org: new file.
+
+	* README-old.md: renamed "README.md" to "README-old.md".
 
 	* eev-intro.el (find-little-languages-intro): new function.
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020nov26
+;; Version:    2020dec20
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -167,6 +167,7 @@ and is used by `ee-find-xxxfile-sexps' and `find-file-links'.")
 ;; See: (find-eev-quick-intro "9.1. `code-c-d'")
 ;; Try: (find-code-c-d "lua51" "~/usrc/lua-5.1.4/")
 ;;      (find-code-c-d "lua51" "~/usrc/lua-5.1.4/" :anchor)
+;;      (find-code-c-d "lua51" "~/usrc/lua-5.1.4/" :tags :w3m)
 
 ;; code-c-d: top-level functions
 ;;
@@ -200,26 +201,17 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
    ;;
    (setq ee-{c}dir \"{d}\")
-   (setq ee-{c}tagsfile \"{d}TAGS\")
    (defun ee-{c}file (str)
      (concat (ee-expand ee-{c}dir) str))
-   (defun ee-use-{c}-tags ()
-     (setq tags-file-name ee-{c}tagsfile))
    (defun find-{c}file (str &rest pos-spec-list)
      (interactive (list \"\"))
-     (ee-use-{c}-tags)
      (apply 'find-fline (ee-{c}file str) pos-spec-list))
-   (defun find-{c}tag (str &rest pos-spec-list)
-     (ee-use-{c}-tags)
-     (apply 'ee-find-tag str pos-spec-list))
    (defun find-{c}sh (command &rest pos-spec-list)
      (apply 'find-sh-at-dir ee-{c}dir command pos-spec-list))
    (defun find-{c}sh0 (command)
      (funcall 'ee-find-xxxsh0 ee-{c}dir command))
    (defun find-{c}sh00 (command)
      (funcall 'ee-find-xxxsh00 ee-{c}dir command))
-   (defun find-{c}w3m (furl &rest pos-spec-list)
-     (apply 'find-w3m (ee-{c}file furl) pos-spec-list))
    (defun find-{c}grep (grep-command-args &rest pos-spec-list)
      (apply 'ee-find-grep ee-{c}dir grep-command-args pos-spec-list))
    "))
@@ -256,6 +248,28 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
    (defun find-{c} (str &rest pos-spec-list)
      (apply 'find-anchor (ee-{c}file str) pos-spec-list))
+   ") (ee-code-c-d-rest c d rest)))
+
+(defun ee-code-c-d-:tags (c d &rest rest)
+ (concat (ee-template0 "
+   ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
+   (setq ee-{c}tagsfile \"{d}TAGS\")
+   (defun ee-use-{c}-tags ()
+     (setq tags-file-name ee-{c}tagsfile))
+   (defun find-{c}tag (str &rest pos-spec-list)
+     (ee-use-{c}-tags)
+     (apply 'ee-find-tag str pos-spec-list))
+   (defun find-{c}file (str &rest pos-spec-list)
+     (interactive (list \"\"))
+     (ee-use-{c}-tags)
+     (apply 'find-fline (ee-{c}file str) pos-spec-list))
+   ") (ee-code-c-d-rest c d rest)))
+
+(defun ee-code-c-d-:w3m (c d &rest rest)
+ (concat (ee-template0 "
+   ;; {(ee-S `(ee-code-c-d-:gz ,c ,d ,@rest))}
+   (defun find-{c}w3m (furl &rest pos-spec-list)
+     (apply 'find-w3m (ee-{c}file furl) pos-spec-list))
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:wget (c d url &rest rest)

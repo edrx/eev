@@ -34,6 +34,11 @@ The best introductions to eev are:
   but at [[http://www.youtube.com/watch?v=hOAqBc42Gg8#t=21m02s][21:02]] it shows how I use M-j to teach Emacs and eev to total
   beginners, and at [[https://www.youtube.com/watch?v=hOAqBc42Gg8#t=18m47s][18:47]] it explains the design decisions behind M-j.
 
+- "[[http://www.youtube.com/watch?v=kxBjiUo88_U][How to install eev with M-x list-packages and how to navigate its
+  tutorials]]". This is a video tutorial accessible to total beginners -
+  with an approach that is the exact opposite of "[[http://angg.twu.net/LATEX/2019emacsconf.pdf#page=10][users should not be
+  forced to see Lisp]]".
+
 - its [[http://angg.twu.net/eev-intros/find-eev-intro.html][sandboxed tutorials]],
 
 - its homepage: [[http://angg.twu.net/#eev]] .
@@ -50,10 +55,6 @@ The best introductions to eev are:
 # (ecop 10 "prehistory-9" "users should not be forced to see Lisp")
 # (eco     "prehistory-9" "users should not be forced to see Lisp")
 
-I've been using eev quite successfully to teach Emacs to total
-beginners - with an approach that is the exact opposite of "[[http://angg.twu.net/LATEX/2019emacsconf.pdf#page=10][users
-should not be forced to see Lisp]]".
-
 * Trying it
 
 The recommended way to try eev it to install it with M-x list-packages
@@ -62,8 +63,7 @@ turn eev-mode on, and open the [[http://angg.twu.net/eev-intros/find-eev-quick-i
 friendly as possible both to:
 
 - beginners, who at first know only the most obvious keybindings, like
-  the arrow keys, and no Lisp at all -- there is even a [[https://www.youtube.com/watch?v=kxBjiUo88_U][video]] for
-  them! -- and:
+  the arrow keys, and no Lisp at all, and:
 
 - experts, who want a very [[http://angg.twu.net/eev-intros/find-eev-intro.html#1][non-invasive]] package, with a mode that they
   can turn on and off easily (hint: M-x eev-mode), and that they can
