@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020jan09
+;; Version:    2020dec21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -292,6 +292,10 @@
 ;; Other cases
 (defun ee-file-bufferp     () buffer-file-name)
 
+(defun ee-find-dired-links ()
+  `((find-extra-file-links ,(ee-dired-to-fname 'no-error))
+    ""
+    ,@(ee-find-file-links)))
 
 (defun ee-find-efaces-links    () `((find-efaces)))
 (defun ee-find-ecolors-links   () `((find-ecolors)))
@@ -311,6 +315,7 @@
 	((ee-man-bufferp)       (cons "" (ee-find-man-links)))       ; ?
 	((ee-grep-bufferp)      (cons "" (ee-find-grep-links)))	     ; M-h M-g
 	((ee-w3m-bufferp)       (cons "" (ee-find-w3m-links)))	     ; M-h M-w
+	;; ((ee-dired-bufferp)  (cons "" (ee-find-dired-links)))     ; ?
 	((ee-dired-bufferp)     (cons "" (ee-find-file-links)))	     ; M-h f
 	((ee-wdired-bufferp)    (cons "" (ee-find-file-links)))	     ; M-h f
 	((ee-custom-bufferp)    (cons "" (ee-find-custom-links)))    ; ?

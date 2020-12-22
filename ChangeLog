@@ -1,3 +1,21 @@
+2020-12-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-find-dired-links): new function.
+	(ee-find-here-links): added a line that runs
+	`(ee-find-dired-links)' when `(ee-dired-bufferp)' is true - but
+	that line is currently commented out.
+
+	* eev-intro.el (find-eev-intro): added a new section: "4. The
+	prefix `find-'".
+
+2020-12-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-audiovideo-intro): rewrote the section 4.1
+	completely. It is now titled "4.1. `find-extra-file-links'".
+
+	* eev-tlinks.el (find-extra-file-links): fixed the link to
+	`(find-audiovideo-intro)'.
+
 2020-12-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-code.el (ee-code-c-d-:w3m): new function.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct13
+;; Version:    2020dec22
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2587,8 +2587,65 @@ For the full lists of keybindings, see:
   (find-eev \"eev-mode.el\" \"eev-mode\")
   (find-efunctiondescr        'eev-mode)
   (find-eminormodekeymapdescr 'eev-mode)
+  (find-ekeymapdescr           eev-mode-map)
   (find-efunctiondescr        'eev-avadj-mode)
   (find-eminormodekeymapdescr 'eev-avadj-mode)
+  (find-ekeymapdescr           eev-avadj-mode-map)
+
+
+
+
+4. The prefix `find-'
+=====================
+Some people feel that the functions defined by eev should not use
+the prefix `find-', that they should use `eefind-' instead...
+
+The code below can be used to list all the `find-*' functions
+defined by eev - including the `find-*' functions defined by
+calls to `code-c-d', `code-pdf-page', and friends:
+
+  (require 'dash)
+  ;; See: https://github.com/magnars/dash.el#functions
+
+  ;; Tests:
+  ;; (find-epp        (assoc (symbol-file 'find-pdf-page 'defun) load-history))
+  ;; (setq a-lh-entry (assoc (symbol-file 'find-pdf-page 'defun) load-history))
+  ;; (find-epp                    a-lh-entry)
+  ;; (find-epp (ee-lh-entry-finds a-lh-entry))
+  ;;
+  (defun ee-lh-entry-finds (lh-entry)
+    \"Filter a load-history entry to keep only the `(defun . find-*)'s\"
+    (let* ((a (--filter (consp it) lh-entry))
+           (b (--filter (eq (car it) 'defun) a))
+           (c (--filter (string-match \"^find-\" (symbol-name (cdr it))) b)))
+      (cons (car lh-entry) c)))
+
+  (defun ee-lh-eev-finds ()
+    \"Filter the load-history - returns a stripped version with only
+  the eev files and the `(defun . find-*)'s in them.\"
+    (let* ((lh-eevs (--filter (string-match \"eev\" (car it)) load-history)))
+      (-map 'ee-lh-entry-finds lh-eevs)))
+
+  (defun ee-lh-eev-find-functions ()
+    \"Return a list of all `find-*' functions defined by eev.\"
+    (let* ((a (ee-lh-eev-finds))
+           (b (-map 'cdr a))
+	   (c (apply 'append b)))
+        (-map 'cdr c)))
+
+  ;; Tests:
+  ;; (find-epp (ee-lh-eev-finds))
+  ;; (find-eppp (ee-lh-eev-find-functions))
+
+It should be possible to use that list of functions to produce an
+experimental variant of eev in which all these `find-*' functions
+become `eefind-*' functions, and in which there a function that
+creates `find-*' aliases for all these `eefind-*' functions. I
+will try to implement that a prototype for that in the first
+months of 2021, but I am afraid that I won't use it much myself -
+I think that this is ugly. If you you like to discuss, test, or
+implement parts of this, please get in touch!
+
 " rest)))
 
 ;; (find-eev-intro)
@@ -7372,35 +7429,57 @@ Every call to a function with a name like `find-*audio' or
 
 
 
-4.1. `find-code-audiovideo-links'
----------------------------------
-The easist way to produce `code-audio' or `code-video' hyperlinks
-uses `M-h M-a', that calls `find-code-audiovideo-links' and is
-very similar to:
+4.1. `find-extra-file-links'
+----------------------------
+The easiest way to produce `code-audio' and `code-video'
+hyperlinks is with `M-h M-e', that runs `find-extra-file-links'.
+This an experimental feature whose behavior may change soon, but
+here is how it works now.
+
+If you run
+
+  (find-extra-file-links \"/tmp/foo.mp4\")
+
+you will get a temporary buffer whose first line is
+
+  ;; (find-extra-file-links \"/tmp/foo.mp4\" \"{c}\")
+
+and that contains several blocks like this one:
+
+  ;; Links to a video file:
+  ;; (find-video \"/tmp/foo.mp4\")
+  (code-video \"{c}video\" \"/tmp/foo.mp4\")
+  ;; (find-{c}video)
+  ;; (find-{c}video \"0:00\")
+
+If you change the \"{c}\" in the first line to \"FOO\" and
+execute it you will get a buffer generated from the same
+template, but with all the \"{c}\"s replaced by \"FOO\"s. In that
+buffer the block above will become this:
+
+  ;; Links to a video file:
+  ;; (find-video \"/tmp/foo.mp4\")
+  (code-video \"FOOvideo\" \"/tmp/foo.mp4\")
+  ;; (find-FOOvideo)
+  ;; (find-FOOvideo \"0:00\")
+
+The typical way of using `find-extra-file-links' is from dired,
+by placing the cursor on the line of a file that you want to
+create links to, and then typing `M-h M-e'. `M-h M-e' is similar
+to the \"dired half\" of `M-h M-p' - see:
 
   (find-pdf-like-intro \"9. Generating three pairs\")
   (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
 
-A test:
+but `M-h M-e' produces many more links.
 
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-  mkdir ~/eev-videos/
-  cd    ~/eev-videos/
-  wget -nc http://angg.twu.net/eev-videos/three-keys-2.mp4
-
-  # (find-code-audiovideo-links \"~/eev-videos/three-keys-2.mp4\" \"eevtk2\")
-  # (find-fline \"~/eev-videos/\")
-  # (find-fline \"~/eev-videos/\" \"three-keys-2.mp4\")
-  #   ^ Type `M-h M-a' on the line with the .mp4
-
-\[Todo: explain M-p in eev-avadj-mode]
 
 
 
 4.2. `eewrap-audiovideo'
 ------------------------
+And older, and clumsier, way of creating 
+
 If you type `M-V' (`eewrap-audiovideo') on a line containing a
 shorthand word and a file name of an audio or video file, for
 example, here,

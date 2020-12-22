@@ -1894,8 +1894,8 @@ os.exit()
        ;; ""
        ,(ee-template0 "\
 ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
 ;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
-;;      (find-audiovideo-intro \"2.1. `find-extra-file-links'\")
 
 ;; Links to this file and directory:
 ;; (find-fline {(ee-S fname)})
