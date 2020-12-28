@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec22
+;; Version:    2020dec27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1436,7 +1436,7 @@ hyperlinks are all equivalent:
   (find-fline  \"~/eev2/eev-blinks.el\" \"«find-wottb»\")
 
 You can use this - or the shorter hyperlinks to anchors in
-section 9.3 - to point to anchors or to e-script blocks in your
+section 9.2 - to point to anchors or to e-script blocks in your
 files.
 
 
@@ -1545,7 +1545,7 @@ and that code
      run   (find-efile \"files.el.gz\")
      if the file \"files.el\" is not found,
 
-  3) makes (find-eev     \"eev-blinks.el\" \"find-wottb\")
+  3) makes (find-eev     \"eev-blinks.el\"  \"find-wottb\")
      run:  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
      or actually: (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
 
@@ -1841,6 +1841,7 @@ Some other keys that create buffers with elisp hyperlinks:
   M-h M-f   - (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
   M-h M-p   - (find-pdf-like-intro \"9. Generating three pairs\")
               (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
+  M-h M-e   - (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
     See also: (find-links-intro \"5. The first line regenerates the buffer\")
 
 
@@ -5843,131 +5844,123 @@ then you'll be attributing just a \"temporary\" meaning to
 \(Re)generate: (find-anchors-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-anchors-intro\")
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
+              (find-here-links-intro)
+              (find-refining-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro needs to be rewritten!
-Ideally it should _complement_ the material in:
+Notes: this is an advanced tutorial!
+And it is very incomplete at the moment!
+
+
+
+
+1. Introduction
+===============
+These sections of the main tutorial explain what anchors are, and
+explain two simple ways of creating index/section anchor pairs:
+
   (find-eev-quick-intro \"8. Anchors\")
+  (find-eev-quick-intro \"8.1. Introduction: `to'\")
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\" \"`M-A'\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\" \"`M-B'\")
 
+and these other sections explain briefly how hyperlinks to
+anchors in other files work,
 
+  (find-eev-quick-intro \"8.5. Hyperlinks to anchors in other files\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \":anchor)\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \"makes (find-eev\")
 
-Introduction: `ee-anchor-format' and `to'
-=========================================
-A hyperlink like
-
-  (to \"foo\")
-
-jumps to the first occurrence of the string \"«foo»\" in the
-current buffer. The way to convert from \"foo\" to \"«foo»\" is
-controlled by the variable `ee-anchor-format', and the sexp
-`(to \"foo\")' is roughly equivalent the third sexp below:
-
-                            ee-anchor-format
-                    (format ee-anchor-format \"foo\")
-  (ee-goto-position (format ee-anchor-format \"foo\"))
-
-We will call strings in `«»'s _anchors_, and we will say
-that `(to \"foo\")' jumps \"to the anchor `foo'\".
-
-Anchors can be used to create sections and indexes, as we shall
-see soon - but due to some old design decisions that I was never
-able to find good alternatives for, this tutorial needs to start
-with a BIG WARNING.
-
-
-
-WARNING: some glyphs need raw-text-unix
-=======================================
-The best way to make anchors stand out is to use colored glyphs
-for them - just like we made `^O's appear as red star glyphs for
-eepitch, as described here:
-
-  (find-eepitch-intro \"\\nRed stars\\n\")
-
-For historical reasons, the glyphs for `«' and `»' defined in
-
-  (find-eev \"eev-anchors.el\")
-
-use the characters 171 and 187; as far as I know, these
-characters are only \"safe\" - in the sense that Emacs will not
-try to convert them to anything else - in unibyte buffers. The
-best way to make sure that anchors with `«»'s will work in a
-certain file is to put a \"Local variables:\" section at the end
-of it, as has been done in this buffer - and use that to set both
-the file coding to raw-text-unix and the value of
-`ee-anchor-format' to \"«%s»\".
-
-Note that if you change a \"Local variables:\" section by hand
-you will probably have to either reload the file or run `M-x
-normal-mode' to make the new settings take effect.
-
-
-
-Indexes
-=======
-In a situation like this,
-
-  «one»   (to \"two\")
-  «two»   (to \"one\")
-
-we have two anchors, and typing `M-e' at the line with the anchor
-\"one\" takes us to the line with the anchor \"two\", and typing
-`M-e' at the line with the anchor \"two\" takes us to the line
-with the anchor \"one\". In a situation like this we say that the
-anchors \"one\" and \"two\" _point to one another_.
-
-In a case like this,
-
-  «.three»   (to \"three\")
-   «three»  (to \".three\")
-
-where the names of two anchors pointing to one another differ by
-an initial dot, we will say that the anchor \".three\" is the
-\"index anchor\", and the anchor \"three\" is the \"section
-anchor\"; and one way to create an index for a file is to group
-all the index anchors together. For an example, see:
-
-  (find-eev \"eev-intro.el\" \".find-eev-intro\")
+but they stop right before explaining how to use them in a
+practical way, i.e., with few keystrokes. This intro is about
+this.
 
 
 
 
-Creating index/section anchor pairs
-===================================
-Use `M-A' (`eewrap-anchor'). Note that this has been briefly
-mentioned here:
 
-  (find-wrap-intro \"All wrapping functions\")
+2. Shrinking
+============
+We saw in
 
-It will convert a line with a syntax like
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \"makes (find-eev\")
 
-  comment-prefix <anchor-name>
+that these two hyperlinks are equivalent:
 
-into:
+  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
+  (find-eev     \"eev-blinks.el\"  \"find-wottb\")
 
-  comment-prefix «.anchor-name»	(to \"anchor-name\")
-  comment-prefix «anchor-name» (to \".anchor-name\")
+The first one searches for a string in \"eev-blinks.el\" in the
+normal way; the second one treats the \"find-wottb\" as a tag,
+wraps it in `«»'s, and then searches for the anchor
+\"«find-wottb»\" in the file \"eev-blinks.el\".
 
-where comment-prefix is any string and anchor-name is a string
-without `<>'s. Note that the `<>'s, which are easy to type, are
-converted into `«»'s, which are harder.
+We will refer to the operation that converts the hyperlink
+
+  (find-eevfile \"eev-blinks.el\")
+
+to
+
+  (find-eev \"eev-blinks.el\")
+
+as _shrinking_ the hyperlink. Eev has a key sequence that does
+that, and for simplicity its behavor is just this: it looks at
+first element of the sexp at eol (the \"head\" of the sexp), and
+if it is a symbol that ends with \"file\" then rewrite the sexp
+replacing the head symbol by it minus its suffix \"file\". That
+key sequence is `M-h M--' (`ee-shrink-hyperlink-at-eol'), and its
+source code is here:
+
+  (find-eev \"eev-edit.el\" \"ee-shrink-hyperlink-at-eol\")
+
+Try it on the two lines below:
+
+  (find-eevfile  \"eev-edit.el\"  \"ee-shrink-hyperlink-at-eol\")
+  (find-eev      \"eev-edit.el\"  \"ee-shrink-hyperlink-at-eol\")
 
 
 
-find-anchor
-===========
-\(find-eev \"eev-anchors.el\")
-\(find-eev \"eev-anchors.el\" \"find-anchor\")
 
-
-code-c-d and :anchor
+3. The preceding tag
 ====================
-\(find-eev \"eev-code.el\" \"ee-code-c-d-:anchor\")
+The key sequence `M-h M-w' copies the current line to the kill
+ring, highlights it for a fraction of a second, and shows the
+message
+
+  \"Copied the current line to the kill ring - use C-y to paste\"
+
+in the echo area. Here are links to its source code and to a
+section of a tutorial that mentions it:
+
+  (find-eev \"eev-edit.el\" \"ee-copy-this-line-to-kill-ring\")
+  (find-refining-intro \"3. Three buffers\" \"M-h M-w\")
+
+When we run `M-h M-w' with a numeric argument - for example, as
+`M-1 M-h M-w' - it highlights and copies to the kill ring the
+\"preceding tag\" instead of the current line; the \"preceding
+tag\" is the string between `«»'s in the anchor closest to the
+point if we search backwards. As an exercise, type `M-1 M-h M-w'
+at some point below, and then use `M-h M-y' (`ee-yank-pos-spec')
+to add it to the hyperlink with `find-anchors-intro' below the
+anchors.
+
+  «first-anchor»
+  «second-anchor»
+  «third-anchor»
+
+  (find-anchors-intro)
+
+
+
+[TO DO: write the other sections!]
+
+
 " rest)))
 
 ;; (find-anchors-intro)
@@ -7635,9 +7628,9 @@ default audio/video file at that timestamp.
 
 
 
-5. Passing options to mplayer
-=============================
-By default mplayer is called with just a few command-line options,
+5. Passing options to mpv
+=========================
+By default mpv is called with just a few command-line options,
 besides the ones that tell it at what position to start playing -
 typically just these for videos,
 
@@ -7646,12 +7639,21 @@ typically just these for videos,
 to make it run in full-screen mode with an on-screen display
 showing the current position, and no options for audio.
 
-If you want to change this you should redefine these functions:
+If you want to change this you should set the variable
+`ee-mpv-video-options'. See:
 
-  (ee-mplayer-video-options)
-  (ee-mplayer-audio-options)
+  (find-efunction 'find-mpv-video)
+  (find-evariable   'ee-mpv-video-options)
 
-
+Here is an example of changing `'ee-mpv-video-options' temporarily:
+
+  (defun find-mpv-rot90-video (fname &optional pos &rest rest)
+    \"Like `find-mpv-video', but with the extra option '--video-rotate=90'.\"
+    (interactive \"sFile name: \")
+    (let ((ee-mpv-video-options
+          (cons \"--video-rotate=90\" ee-mpv-video-options)))
+      (find-mpv-video fname pos)))
+
   
 
 

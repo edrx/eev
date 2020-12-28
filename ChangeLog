@@ -1,3 +1,7 @@
+2020-12-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-anchors-intro): rewrote completely.
+
 2020-12-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hlinks.el (ee-find-dired-links): new function.

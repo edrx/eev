@@ -1,6 +1,6 @@
 ;;; eev-edit.el -- tools for editing (mainly refining) elisp hyperlinks.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep27
+;; Version:    2020dec28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -60,6 +60,8 @@
 ;;
 ;; «ee-duplicate-this-line» (to ".ee-duplicate-this-line")
 ;; (define-key eev-mode-map "\M-h\M-2" 'ee-duplicate-this-line)
+;; See: (find-refining-intro "2. Refining hyperlinks")
+;;      (find-refining-intro "2. Refining hyperlinks" "M-h M-2")
 
 (defun ee-duplicate-this-line ()
   "Duplicate the current line (without any changes to the kill ring)."
@@ -77,6 +79,9 @@
 ;;
 ;; «ee-yank-pos-spec» (to ".ee-yank-pos-spec")
 ;; (define-key eev-mode-map "\M-h\M-y" 'ee-yank-pos-spec)
+;; See: (find-refining-intro "2. Refining hyperlinks")
+;;      (find-refining-intro "2. Refining hyperlinks" "M-h M-y")
+;;      (find-refining-intro "yanks" "the text at the end of the sexp")
 
 (defun ee-yank-pos-spec ()
   "Append the top of the kill ring to a hyperlink sexp, as a Lisp string.
@@ -121,6 +126,8 @@ and you copy that hyperlink to a more permanent place."
 ;;
 ;; «ee-copy-this-line-to-kill-ring» (to ".ee-copy-this-line-to-kill-ring")
 ;; (define-key eev-mode-map "\M-h\M-w" 'ee-copy-this-line-to-kill-ring)
+;; See: (find-refining-intro "3. Three buffers")
+;;      (find-refining-intro "3. Three buffers" "M-h M-w")
 
 (defun ee-copy-this-line-to-kill-ring (&optional arg)
   "Copy the current line to the kill ring and highlight (\"flash\") it.
@@ -136,7 +143,10 @@ With a prefix argument run `ee-copy-preceding-tag-to-kill-ring' instead."
       (message msg))))
 
 
+
 ;; Experimental, 2019aug29
+;; See: (find-anchors-intro "3. The preceding tag")
+;;
 ;; (defun ee-tag-re () (ee-tolatin1 "«\\([!-~]+\\)»"))
 (defvar ee-tag-re-utf-8 "«\\([!-~]+\\)»")
 (defun  ee-tag-re () ee-tag-re-utf-8)
@@ -168,6 +178,7 @@ A \"tag\" is the string between \"«»\"s in an anchor."
 ;;;                              
 ;; «ee-shrink-hyperlink-at-eol» (to ".ee-shrink-hyperlink-at-eol")
 ;; (define-key eev-mode-map "\M-h\M--" 'ee-shrink-hyperlink-at-eol)
+;; See: (find-anchors-intro "2. Shrinking")
 
 (defun ee-shrink-sexp (sexp)
   "If the car of SEXP of the form `find-xxxfile', reduce it to `find-xxx'."
@@ -201,6 +212,7 @@ A \"tag\" is the string between \"«»\"s in an anchor."
 ;; «ee-flip-psne-ness» (to ".ee-flip-psne-ness")
 ;; (define-key eev-mode-map "\M-s" 'ee-flip-psne-ness)
 ;; See: (find-psne-intro "6. `ee-flip-psne-ness'")
+;;      (find-psne-intro "6. `ee-flip-psne-ness'" "M-s")
 
 (defun ee-flip-psne-ness ()
   (interactive)
@@ -221,6 +233,8 @@ A \"tag\" is the string between \"«»\"s in an anchor."
 ;;;                                                        
 ;; «eewrap-vldi-list-line» (to ".eewrap-vldi-list-line")
 ;; (define-key eev-mode-map "\M-I" 'eewrap-vldi-list-line)
+;;
+;; This is an undocumented hack! (?)
 ;;
 ;; In a Debian system, for each installed package named xxxx there is
 ;; an associated file, at /var/lib/dpkg/info/xxxx.list - let's call

@@ -454,7 +454,6 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 (defun ee-find-mpv-video (fname &optional pos &rest rest)
   `("mpv"
     ,fname
-    ;; ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
     ,@(if pos (list (format "--start=%s" (ee-secs-to-mm:ss pos))))
     ,@ee-mpv-video-options
     ))

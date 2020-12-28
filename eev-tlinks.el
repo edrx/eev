@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct30
+;; Version:    2020dec27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1876,6 +1876,7 @@ os.exit()
 
 ;; «find-extra-file-links»  (to ".find-extra-file-links")
 ;; Skel: (find-find-links-links-new "extra-file" "fname c" "dir")
+;; Docs: (find-audiovideo-intro "4.1. `find-extra-file-links'")
 ;;
 (defun find-extra-file-links (&optional fname c &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for extra-file."
