@@ -1,4 +1,16 @@
+2020-12-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (Man-translate-references): add autoload.
+	(Man-notify-when-ready): removed the defadvice.
+	(ee-find-man-buffer): new variable.
+	(ee-find-man-goto-pos-spec): new function.
+	(Man-bgproc-sentinel): new advice-add.
+	(find-man): rewrote completely.
+
 2020-12-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-code-c-d-:gz): commented out the
+	`(ee-use-{c}-tags)'.
 
 	* eev-intro.el (find-anchors-intro): rewrote completely.
 

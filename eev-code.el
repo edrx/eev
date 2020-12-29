@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec20
+;; Version:    2020dec28
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -239,7 +239,7 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ;; {(ee-S `(ee-code-c-d-:gz ,c ,d ,@rest))}
    (defun find-{c}file (str &rest pos-spec-list)
      (interactive (list \"\"))
-     (ee-use-{c}-tags)
+     ;; (ee-use-{c}-tags)
      (apply 'find-fline-gz (ee-{c}file str) pos-spec-list))
    ") (ee-code-c-d-rest c d rest)))
 

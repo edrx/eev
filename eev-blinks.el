@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct02
+;; Version:    2020dec29
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -83,7 +83,8 @@
 ;;
 (autoload 'find-function-read "find-func")
 (autoload 'pp-to-string "pp")
-(autoload 'Man-fontify-manpage "man" nil t)
+(autoload 'Man-translate-references "man")
+(autoload 'Man-fontify-manpage      "man" nil t)
 (autoload 'word-at-point "thingatpt")
 (autoload 'list-iso-charset-chars     "mule-diag")
 (autoload 'list-non-iso-charset-chars "mule-diag")
@@ -118,6 +119,7 @@ An example: (eek \"C-x 4 C-h\")"
 ;; «ee-goto-position»  (to ".ee-goto-position")
 ;; Support for pos-spec-lists in hyperlinks.
 ;; See: (find-eval-intro "6. Refining hyperlinks")
+;;      (find-refining-intro "1. Pos-spec-lists")
 
 (defun ee-goto-position (&optional pos-spec &rest rest)
   "Process the \"absolute pos-spec-lists\" arguments in hyperlink functions.
@@ -637,29 +639,63 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;; Hyperlinks to manpages.
 ;; Tests:
 ;;   (find-man "1 cat")
+;;   (find-man "bash(1)")
+;;   (find-man "bash(1)" "multi-character")
 
 (defvar ee-find-man-flag          nil "See `find-man'.")
+(defvar ee-find-man-buffer        nil "See `find-man'.")
 (defvar ee-find-man-pos-spec-list nil "See `find-man'.")
 
-;; See: (to "find-man-bug")
 (defun find-man (manpage &rest pos-spec-list)
   "Hyperlink to a manpage."
   (interactive (list (ee-manpagename-ask)))
-  (setq ee-find-man-flag t
-	ee-find-man-pos-spec-list pos-spec-list)
-    (man manpage))
+  (setq manpage (Man-translate-references manpage))
+  ;;
+  ;; Set the variables used by `ee-find-man-goto-pos-spec'.
+  (setq ee-find-man-flag t)
+  (setq ee-find-man-buffer (concat "*Man " manpage "*"))
+  (setq ee-find-man-pos-spec-list pos-spec-list)
+  ;;
+  ;; See: (find-evardescr 'Man-notify-method "pushy" "current window")
+  (let ((Man-notify-method 'pushy))
+    ;;
+    ;; This call to `man' will run `ee-find-man-goto-pos-spec' after
+    ;; the manpage is rendered - because of the `advice-add' below.
+    ;; This is a dirty trick!... see:
+    ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2020-12/msg01100.html
+    ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2020-12/msg01102.html
+    (man manpage)))
 
-;; See: (find-elnode "Advising Functions")
-;;      (find-elnode "Porting old advice")
-;;      (find-efunctiondescr 'defadvice)
-(defadvice Man-notify-when-ready (around find-man (man-buffer) activate)
-  "After rendering a manpage jump to `ee-find-man-pos-spec-list'."
-  (if (not ee-find-man-flag)
-      ad-do-it
-    (switch-to-buffer man-buffer)
-    (apply 'ee-goto-position ee-find-man-pos-spec-list)
-    (setq ee-find-man-flag nil)))
+(defun ee-find-man-goto-pos-spec (&rest rest)
+  "An internal function used by `find-man'."
+  (when ee-find-man-flag
+    (setq ee-find-man-flag nil)
+    (with-current-buffer ee-find-man-buffer
+      (apply 'ee-goto-position ee-find-man-pos-spec-list))))
+    
+(advice-add 'Man-bgproc-sentinel :after 'ee-find-man-goto-pos-spec)
 
+
+;; 2020dec29: all this block was commented out.
+;;
+;; (defun find-man (manpage &rest pos-spec-list)
+;;   "Hyperlink to a manpage."
+;;   (interactive (list (ee-manpagename-ask)))
+;;   (setq ee-find-man-flag t
+;; 	ee-find-man-pos-spec-list pos-spec-list)
+;;     (man manpage))
+;;
+;; ;; See: (find-elnode "Advising Functions")
+;; ;;      (find-elnode "Porting old advice")
+;; ;;      (find-efunctiondescr 'defadvice)
+;; (defadvice Man-notify-when-ready (around find-man (man-buffer) activate)
+;;   "After rendering a manpage jump to `ee-find-man-pos-spec-list'."
+;;   (if (not ee-find-man-flag)
+;;       ad-do-it
+;;     (switch-to-buffer man-buffer)
+;;     (apply 'ee-goto-position ee-find-man-pos-spec-list)
+;;     (setq ee-find-man-flag nil)))
+;;
 ;; «find-man-bug»  (to ".find-man-bug")
 ;; Note: find-man has an open bug that I did not have time to fix yet...
 ;; an example:
@@ -681,7 +717,6 @@ This is like `find-sh' but sets the buffer's default-directory to DIR."
 ;; to render the manpage, then bury its buffer with M-K, then run this:
 ;; 
 ;;   (find-man "1 git-commit" "-m <msg>, --message=<msg>")
-
 
 ;; Missing: find-woman.
 ;; (find-node "(woman)Top")
