@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec21
+;; Version:    2020dec31
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -66,8 +66,6 @@
 ;; files. Which ones? Give examples!
 ;;
 ;;   (find-eapropos "ee-find-.*-links")
-
-
 
 ;; The main workhorse function in this file is `ee-find-here-links',
 ;; that _currently_ uses a big `cond' to run these test functions in a
@@ -272,7 +270,10 @@
       (find-efacedescr ',f))))
 
 (defvar ee-epackage-re "^\\([^ \t\n]+\\) is a[ -~]+ package")
-(defun  ee-epackage-bufferp () (ee-buffer-help ee-epackage-re 1))
+(defvar ee-epackage-re-27 "^Package \\([^ \t\n]+\\) is") ; for Emacs 27
+(defun  ee-epackage-bufferp ()
+  (or (ee-buffer-help ee-epackage-re 1)
+      (ee-buffer-help ee-epackage-re-27 1)))
 (defun  ee-find-epackage-links ()
   (let ((p (ee-epackage-bufferp)))
     (list (ee-find-epackage-links0 p "{c}" "{d}"))))

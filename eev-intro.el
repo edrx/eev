@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec27
+;; Version:    2020dec31
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -11345,7 +11345,14 @@ Download the second URL below with `M-x brep',
   https://github.com/pluralsight/git-internals-pdf/
   https://github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf
 
-and run this eepitch block,
+and do the same for the fourth URL below here:
+
+  https://git-scm.com/book/en/v2
+  https://github.com/progit/progit2
+  https://github.com/progit/progit2/releases
+  https://github.com/progit/progit2/releases/download/2.1.277/progit.pdf
+
+Then run this eepitch block,
 
  (eepitch-shell)
  (eepitch-kill)
@@ -11356,14 +11363,26 @@ and run this eepitch block,
   #    http://angg.twu.net/bin/git-defs.html
   wget http://angg.twu.net/bin/git-defs
   cp -v $S/https/github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf .
+  cp -v $S/https/github.com/progit/progit2/releases/download/2.1.277/progit.pdf .
 
 and this prog1:
 
   (prog1
     (code-pdf-page \"gitinternals\" \"/tmp/git-test/peepcode-git.pdf\")
     (code-pdf-text \"gitinternals\" \"/tmp/git-test/peepcode-git.pdf\")
+    (code-pdf-page \"progit\" \"/tmp/git-test/progit.pdf\")
+    (code-pdf-text \"progit\" \"/tmp/git-test/progit.pdf\")
     (code-c-d \"gitdoc\" \"/usr/share/doc/git-doc/\")
     )
+
+If can test if everything works by running the six sexps below:
+
+  (find-fline \"/tmp/git-test/git-defs\")
+  (find-gitinternalspage)
+  (find-gitinternalstext)
+  (find-progitpage)
+  (find-progittext)
+  (find-gitdocfile \"\")
 
 
 

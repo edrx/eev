@@ -101,9 +101,10 @@
 ;; «eek» (to ".eek")
 ;; See: (find-eev-quick-intro "3. Elisp hyperlinks" "eek")
 
-(defun eek (str) (interactive "sKeys: ")
+(defun eek (str)
   "Execute STR as a keyboard macro. See `edmacro-mode' for the exact format.\n
 An example: (eek \"C-x 4 C-h\")"
+  (interactive "sKeys: ")
   (execute-kbd-macro (read-kbd-macro str)))
 
 

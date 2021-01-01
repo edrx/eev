@@ -1,3 +1,8 @@
+2020-12-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-epackage-re-27): new variable.
+	(ee-epackage-bufferp): use `ee-epackage-re-27'.
+
 2020-12-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (Man-translate-references): add autoload.
