@@ -9729,6 +9729,37 @@ This intro is being rewritten.
 Prerequisites:
   (find-psne-intro)
   (find-audiovideo-intro)
+  (find-audiovideo-intro \"7. `code-psnevideo'\")
+  (find-audiovideo-intro \"7.1. `code-eevvideo'\")
+
+
+
+At this moment I have these two videos about eev that I consider
+really good,
+
+  http://angg.twu.net/emacsconf2019.html
+  http://angg.twu.net/emacsconf2020.html
+
+and these three that I think that are decent:
+
+  http://angg.twu.net/2020-list-packages-eev-nav.html (very basic)
+  http://angg.twu.net/2020-find-here-links.html       (intermediate)
+  http://angg.twu.net/2020-some-template-based.html   (advanced)
+
+Their pages at http://angg.twu.net/ have links to:
+
+  1. The .mp4 file of each video (small and very good quality),
+
+  2. The youtube page of the video (worse quality: the videos
+     there are blurry at some points),
+
+  3. How to download the .mp4 and play it with eev, including
+     an \"index\" of each video made with sexps.
+
+
+TO DO: REWRITE THIS INTRO!
+Everything below this point is very old.
+
 
 
 
@@ -9744,55 +9775,6 @@ The videos are uploaded to Youtube to make them very easy to
 find, but Youtube reduces the resolution of the original videos
 and makes them blurry and almost unreadable - so the best way to
 watch them is to fetch local copies of the high-res .mp4 files.
-
-
-
-2. Downloading local copies
-===========================
-Here are direct links to both the low-res versions at Youtube
-and to the corresponding high-res \".mp4\"s:
-
-  Eepitch: a way to control shell-like programs from Emacs
-    http://www.youtube.com/watch?v=Lj_zKC5BR64
-    http://angg.twu.net/eev-videos/video4-eepitch.mp4
-
-  An introduction to eev2 (2012nov11)
-    http://www.youtube.com/watch?v=doeyn5MOaB8
-    http://angg.twu.net/eev-videos/video2.mp4 
-
-\(The video about eepitch is shorter and far better than the
-other one - please start by it.)
-
-The ideas behind \"local copies\" are here:
-
-  (find-psne-intro)
-
-These sexps generate the download scripts in temporary buffers:
-
-  (find-eev-video-links \"eepitchvideo\" \"video4-eepitch\" \"Lj_zKC5BR64\")
-  (find-eev-video-links \"eevvideo\"     \"video2\"         \"doeyn5MOaB8\")
-
-
-
-
-3. Hyperlinks to the local copies of the videos
-===============================================
-Notice that the download scripts above contain these sexps:
-
-\(code-video \"eepitchvideo\" \"$S/http/angg.twu.net/eev-videos/video4-eepitch.mp4\")
-\(code-video \"eevvideo\"     \"$S/http/angg.twu.net/eev-videos/video2.mp4\")
-
-After you execute them hyperlinks like these should work:
-
-  (find-eepitchvideo)
-  (find-eevvideo)
-
-Note that they use mplayer to display the videos, and if you
-don't have mplayer - or if you haven't downloaded the \".mp4\"s -
-then you will get error messages in the \"*Messages*\" buffer.
-You can inspect them with `C-x b *Messages*' or with:
-
-  (find-ebuffer \"*Messages*\")
 
 
 
