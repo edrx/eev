@@ -1,12 +1,12 @@
 ;;; eev.el --- Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2019,2020 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 
 ;; Author: Eduardo Ochs <eduardoochs@gmail.com>
-;; Package-Requires: ((emacs "24.1"))
+;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: lisp e-scripts
 ;; URL: http://angg.twu.net/#eev
-;; Version: 20201030
+;; Version: 20210102
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 
-;;
+;; See eev-beginner.el for how to load eev.
 
 ;;; Code:
 

@@ -1,5 +1,19 @@
 2021-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev.el: bumped the version. Changed the "Package-Requires" to
+	Emacs 24.4 because of the new `advice-add' used by `find-man'.
+
+	* eev-pkg.el: same.
+
+	* eev-intro.el (find-audiovideo-intro): new section: "7.2.
+	`find-eevvideo-links'".
+
+	* eev-elinks.el (ee-find-efunction-links): added a line like this:
+	`(find-epp (assoc FILENAME load-history))'.
+
+	* eev-tlinks.el (ee-code-psnevideo): added an `interactive'.
+	(ee-code-eevvideo): added an `interactive'.
+
 	* eev-intro.el (find-videos-intro): rewrote the beginning.
 
 2021-01-01  Eduardo Ochs  <eduardoochs@gmail.com>

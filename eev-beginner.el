@@ -1,6 +1,6 @@
 ;;; eev-beginner.el -- load eev, turn eev-mode on, open a tutorial.
 
-;; Copyright (C) 2019 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019jun23
+;; Version:    2021jan02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-beginner.el>
@@ -29,41 +29,45 @@
 
 ;;; Commentary:
 
-;; This file serves two purposes.
+;; This file serves two purposes:
 ;;
-;; 1) Most beginners start playing with Emacs+eev by following the
-;;    instructions here,
+;; 1) If you install eev as an emacs package via `M-x list-packages'
+;;    then no eev modules will be loaded UNTIL you run `M-x
+;;    eev-beginner', which loads everything, starts eev-mode, and
+;;    opens the main tutorial. Note that `eev-beginner' is the ONLY
+;;    autoloaded function in eev!
+;;
+;; 2) Some people start playing with Emacs+eev by copying and pasting
+;;    a certain script to a terminal and executing it, following the
+;;    instructions here:
 ;;
 ;;      (find-eev-quick-intro "1. Installing eev")
 ;;
-;;    i.e., by copying and pasting a certain script to a terminal.
-;;    That script creates an executable file called "~/eev" whose
-;;    contents are something like this:
+;;    That script creates an executable file called "~/eev" whose contents
+;;    are something like this:
 ;;
 ;;      #!/bin/sh
 ;;      cd ~/eev2/ && emacs -l eev-beginner.el --eval="(find-eev-quick-intro)" $*
 ;;
 ;;    Running "~/eev" on a shell starts Emacs and makes it load this
-;;    file and load the main tutorial - i.e., (find-eev-quick-intro).
-;;
-;; 2) If you install eev as an emacs package via `M-x list-packages'
-;;    then no eev modules will be loaded UNTIL you run `M-x
-;;    eev-beginner', which loads everything, starts eev-mode, and
-;;    opens the main tutorial.
-;;
+;;    file - that loads all the other modules of eev - and then makes
+;;    Emacs evaluate the sexp `(find-eev-quick-intro)', that opens the
+;;    main tutorial.
+
 ;; When, or if, you are no longer a beginner, you may want to load eev
 ;; by just adding a "(require 'eev-load)" to your ".emacs". This loads
 ;; all the main modules but does not turn on eev-mode on by default,
 ;; and does not open the tutorial. See:
 ;;
 ;;    (find-eev-intro "1. `eev-mode'")
+;;    (find-eev-install-intro "2. The expert setup")
 ;;    (find-eev "eev-load.el")
 
-
 ;; NOTE: older versions of eev loaded "eev-readme.el" instead of
-;; "eev-beginner.el". See:
+;; "eev-beginner.el". Compare:
 ;;
 ;;   (find-eev "eev-readme.el")
+;;   (find-eev "eev-load.el")
 
 
 
@@ -71,17 +75,19 @@
 ;; 2019mar29: Uncommented - it seems that emacs25 needs this.
 (add-to-list 'load-path default-directory)
 
-
-
 ;; Load all the main modules of eev.
 ;; Do not load some advanced modules that require extra setup.
 ;; See the comments here: (find-eev "eev-load.el")
 (require 'eev-load)
+
+;; Turn eev-mode on.
+;; See: (find-eev-intro "1. `eev-mode'")
 (eev-mode 1)
+
+;; Open the main tutorial.
 (find-eev-quick-intro)
 
-
-;; This is the only autoload of eev at this moment.
+;; `eev-beginner' is the only autoload of eev at this moment.
 ;; See: (find-elnode "Autoload" "magic autoload comment")
 ;;      (find-eev "eev-load.el" "autoloads")
 

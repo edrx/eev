@@ -1,6 +1,6 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'
 
-;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec16
+;; Version:    2021jan02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -275,6 +275,7 @@ This is an internal function used by `find-efunction-links' and
     (symbol-file ',f 'defun)
     (find-fline (symbol-file ',f 'defun))
     (find-epp (assoc (symbol-file ',f 'defun) load-history))
+    (find-epp (assoc ,(symbol-file f 'defun) load-history))
     (find-eppp (mapcar 'car load-history))
     (find-estring (mapconcat 'identity (mapcar 'car load-history) "\n"))
     (find-estring (documentation ',f))

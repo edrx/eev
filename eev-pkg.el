@@ -1,5 +1,5 @@
-(define-package "eev" "20201030" "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)"
-  '((emacs "24.1"))
+(define-package "eev" "20210102" "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)"
+  '((emacs "24.4"))
   :keywords
   '("lisp" "e-scripts")
   :authors
