@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec31
+;; Version:    2021jan02
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -7948,7 +7948,7 @@ uses eev I record the video, upload it to
 http://angg.twu.net/eev-videos/ - not to youtube - and send to
 the person a pair of sexps like these:
 
-  (code-eevvideo \"eevnav\" \"M-x-list-packages-eev-nav\")
+  (code-eevvideo \"eevnav\" \"M-x-list-packages-eev-nav\" \"kxBjiUo88_U\")
   (find-eevnavvideo \"0:00\")
 
 
@@ -9729,35 +9729,73 @@ This intro is being rewritten.
 Prerequisites:
   (find-psne-intro)
   (find-audiovideo-intro)
+  (find-audiovideo-intro \"4. Short hyperlinks to audio and video files\")
   (find-audiovideo-intro \"7. `code-psnevideo'\")
   (find-audiovideo-intro \"7.1. `code-eevvideo'\")
 
 
 
-At this moment I have these two videos about eev that I consider
-really good,
-
-  http://angg.twu.net/emacsconf2019.html
-  http://angg.twu.net/emacsconf2020.html
-
-and these three that I think that are decent:
-
-  http://angg.twu.net/2020-list-packages-eev-nav.html (very basic)
-  http://angg.twu.net/2020-find-here-links.html       (intermediate)
-  http://angg.twu.net/2020-some-template-based.html   (advanced)
-
-Their pages at http://angg.twu.net/ have links to:
-
-  1. The .mp4 file of each video (small and very good quality),
-
-  2. The youtube page of the video (worse quality: the videos
-     there are blurry at some points),
-
-  3. How to download the .mp4 and play it with eev, including
-     an \"index\" of each video made with sexps.
 
 
-TO DO: REWRITE THIS INTRO!
+At this moment I have these five videos about eev (not counting
+the ones that I consider obsolete):
+
+  \"How to record executable notes with eev - and how to play them back\":
+    http://angg.twu.net/emacsconf2019.html
+    http://angg.twu.net/emacsconf2019.html#code-video
+    http://angg.twu.net/eev-videos/emacsconf2019.mp4
+    http://www.youtube.com/watch?v=86yiRG8YJD0
+
+  \"On why most of the best features in eev look like 5-minute hacks\":
+    http://angg.twu.net/emacsconf2020.html
+    http://angg.twu.net/emacsconf2020.html#code-video
+    http://angg.twu.net/eev-videos/emacsconf2020.mp4
+    http://www.youtube.com/watch?v=hOAqBc42Gg8
+
+  \"How to install eev with M-x list-packages and how to navigate its tutorials\":
+    http://angg.twu.net/2020-list-packages-eev-nav.html
+    http://angg.twu.net/2020-list-packages-eev-nav.html#code-video
+    http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
+    http://www.youtube.com/watch?v=kxBjiUo88_U
+
+  \"Some template-based functions of eev that are not five-minute hacks\":
+    http://angg.twu.net/2020-some-template-based.html
+    http://angg.twu.net/2020-some-template-based.html#code-video
+    http://angg.twu.net/eev-videos/2020_some_template-based_functions.mp4
+    http://www.youtube.com/watch?v=91-9YfRPsuk
+
+  \"How to create hyperlinks to \"here\" with `find-here-links'\":
+    http://angg.twu.net/2020-find-here-links.html
+    http://angg.twu.net/2020-find-here-links.html#code-video
+    http://angg.twu.net/eev-videos/2020-find-here-links.mp4
+    http://www.youtube.com/watch?v=8jtiBlaDor4
+
+The ones that I prepared for the two EmacsConfs are very
+well-rehearsed, the other ones are not.
+
+The best way to watch them is by downloading local copies of
+their .mp4s and then using the short hyperlinks of
+
+  (find-audiovideo-intro \"4. Short hyperlinks to audio and video files\")
+
+to jump to positions in them. You can do this with these sexps:
+
+  (find-eevvideo-links \"eev2019\" \"emacsconf2019\" \"86yiRG8YJD0\")
+  (find-eevvideo-links \"eev2020\" \"emacsconf2020\" \"hOAqBc42Gg8\")
+  (find-eevvideo-links \"eevnav\" \"2020-list-packages-eev-nav\" \"kxBjiUo88_U\")
+  (find-eevvideo-links \"2020sometbf\" \"2020-some-template-based\" \"91-9YfRPsuk\")
+  (find-eevvideo-links \"2020findherelinks\" \"2020-find-here-links\" \"8jtiBlaDor4\")
+
+The links with #code-video, like
+
+  http://angg.twu.net/emacsconf2019.html#code-video
+
+point to indexes of the videos made with sexp hyperlinks.
+
+
+
+TO DO: 1) make a video about `find-eevvideo-links' and friends,
+2) rewrite most of this intro!
 Everything below this point is very old.
 
 

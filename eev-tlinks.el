@@ -1465,20 +1465,29 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
          (dir (file-name-directory fname))
 	 (youtubeurl (format "http://www.youtube.com/watch?v=%s" youtubeid))
 	 (youtubetime (or (ee-time-to-youtube-time time) ""))
+	 (argtime (if (ee-time-to-youtube-time time)
+		      (format " \"%s\"" time)
+		    ""))
 	 )
     (concat
      (ee-template0 "\
-# (find-video \"{fname}\" \"{time}\")
-# (find-video \"{fname}\")
+# (find-video \"{fname}\"{argtime})
 
+# (find-audiovideo-intro \"7. `code-psnevideo'\" \"second line\")
+# (find-audiovideo-intro \"7. `code-psnevideo'\" \"redefine\")
 # (code-video \"{c}video\" \"{fname}\")
-# (find-{c}video \"{time}\")
+# (find-{c}video{argtime})
 
-# {url}
+# URL, local file, and a link to the directory of the local file:
+#               {url}
+#              {fname}
 # (find-fline \"{dir}\")
 
+# Youtube:
 # (kill-new \"{youtubeurl}{youtubetime}\")
-# {youtubeurl}{youtubetime}
+#            {youtubeurl}{youtubetime}
+
+# (find-audiovideo-intro \"7. `code-psnevideo'\" \"last part\")
 
 ") (ee-psnevideo-download-if-needed url))))
 
@@ -1583,7 +1592,9 @@ echo     '{url}' >> ~/.psne.log
   (ee-template0 "\
 ;; (find-code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
 ;;      (code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
-;;                 (find-{c}video \"0:00\")
+;;                (find-{c}video \"0:00\")
+;;
+;; See: (find-audiovideo-intro \"7.1. `code-eevvideo'\")
 
 (defun find-{c}video (&optional time &rest rest)
   (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))

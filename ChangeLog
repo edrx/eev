@@ -1,3 +1,11 @@
+2021-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-videos-intro): rewrote the beginning.
+
+2021-01-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-psnevideo-links): cosmetic changes.
+
 2020-12-31  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hlinks.el (ee-epackage-re-27): new variable.
