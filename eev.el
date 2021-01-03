@@ -23,11 +23,20 @@
 
 ;;; Commentary:
 
-;; See eev-beginner.el for how to load eev.
+;; I used to call eev a "tool for automating almost everything" and
+;; "my project to save the world with Free Software". In more concrete
+;; terms, eev is a library for Emacs that lets us create "executable
+;; logs" of what we do in a format that is reasonably easy to read and
+;; to modify, and that lets us "play back" those logs step by step in
+;; any order.
+;;
+;; See the file README.org - or <http://angg.twu.net/#eev>, or
+;; <https://github.com/edrx/eev#introduction> - for more information
+;; and lots of links.
+;;
+;; See eev-beginner.el for how to load and start eev.
 
 ;;; Code:
-
-
 
 (provide 'eev)
 ;;; eev.el ends here
