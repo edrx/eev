@@ -1,3 +1,17 @@
+2021-01-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eepitch-intro): new section: "3.2. Test
+	blocks as documentation".
+
+2021-01-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-audiovideo-intro): rewrote the section "4.
+	Short hyperlinks to audio and video files".
+
+2021-01-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-scheme-mode): new function.
+
 2021-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: bumped the version. Changed the "Package-Requires" to

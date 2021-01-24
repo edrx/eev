@@ -149,6 +149,18 @@ load \"%s\"
 =end
 " (buffer-name))))
 
+(defun ee-insert-test-scheme-mode ()
+  (interactive)
+  (insert (format "
+#!
+ (eepitch-guile)
+ (eepitch-kill)
+ (eepitch-guile)
+(load \"%s\")
+
+!#
+" (buffer-name))))
+
 (defun ee-insert-test-sh-mode ()
   (interactive)
   (insert (format "

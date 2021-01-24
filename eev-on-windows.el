@@ -113,6 +113,13 @@
 
 
 
+;; TODO: Rewrite some of this using:
+;; (find-efunctiondescr 'parse-colon-path)
+;; (find-efunction      'parse-colon-path)
+;; (find-elnode "System Environment" "Variable: path-separator")
+;; (find-elnode "System Environment" "Function: parse-colon-path path")
+
+
 
 
 (provide 'eev-on-windows)

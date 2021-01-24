@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021jan02
+;; Version:    2021jan23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -5088,6 +5088,87 @@ the current major mode, or to implement it yourself.
 
 
 
+3.2. Test blocks as documentation
+---------------------------------
+I found that test blocks are a really good way to document my
+programs. Most people think that they look very alien at first,
+but they understand them immediately when they see a demo - so
+here are some demos. You need to have lua5.1 in your path to run
+them; they use eepitch-lua51, that calls lua5.1. So try this
+first:
+
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+  print(\"Hello!\")
+  for k,v in pairs(os) do print(k, v) end
+  os.exit()
+
+If it works then try the demo below. Note that eepitch treats the
+lines with two red stars as comments; the sexps in \"\"-lines
+are hyperlinks, and the ones in \"\"-lines are not.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rv /tmp/dednat6/
+  mkdir  /tmp/dednat6/
+  cd     /tmp/dednat6/
+  wget http://angg.twu.net/dednat6-minimal.zip
+  unzip dednat6-minimal.zip
+
+ (code-c-d \"dn6lua\" \"/tmp/dednat6/dednat6/\" :anchor)
+ (setenv \"LUA_INIT\" \"@/tmp/dednat6/dednat6/edrxlib.lua\")
+ (find-dn6lua \"edrxlib.lua\")
+ (find-dn6lua \"treetex.lua\" \"TreeNode-tests\" 3)
+ (find-dn6lua \"rect.lua\" \"dedtorect-tests\" 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -=-=-=-=-
@@ -7401,23 +7482,45 @@ For more realistic examples, see:
 
 
 
+
 4. Short hyperlinks to audio and video files
 ============================================
 This sexp
 
-  (code-video \"eevtk2video\" \"~/eev-videos/three-keys-2.mp4\")
+  (code-video \"eev2020video\" \"~/eev-videos/emacsconf2020.mp4\")
 
-defines a function `find-eevtk2video'. Note that the function
-definition in
+defines a function `find-eev2020video'. The function `code-video'
+is similar to the functions `code-c-d' and `code-pdf-page', that
+we saw in:
 
-  (find-code-video \"eevtk2video\" \"~/eev-videos/three-keys-2.mp4\")
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
 
-has this line:
+After running the `(code-video ...)' above, this sexp
 
-  (setq ee-audiovideo-last 'find-eevtk2video)
+  (find-eev2020video \"8:20\" \"defines several functions\")
 
-Every call to a function with a name like `find-*audio' or
-`find-*video' sets the variable `ee-audiovideo-last'.
+becomes a shorthand for:
+
+  (find-video \"~/eev-videos/emacsconf2020.mp4\" \"8:20\")
+
+Note that the string \"defines several functions\" is treated as a
+comment, and is ignored - as in `find-pdf-page'.
+
+If we run the second sexp below instead of the first one,
+
+       (code-video \"eev2020video\" \"~/eev-videos/emacsconf2020.mp4\")
+  (find-code-video \"eev2020video\" \"~/eev-videos/emacsconf2020.mp4\")
+
+we get a temporary buffer with the code that the
+sexp `(code-video ...)' would execute. Try it - and note that the
+definition of `find-eev2020video' in the temporary buffer
+contains a line like this:
+
+  (setq ee-audiovideo-last 'find-eev2020video)
+
+This line will be explained in the section 4.4.
+
 
 
 
@@ -8535,6 +8638,10 @@ The eev support for rcirc consists mainly of three high-level
 functions that connect to Freenode (the IRC server where most
 discussion of free software projects happen), called
 `find-freenode', `find-freenode-2a' and `find-freenode-3a'.
+
+For a good explanation of what IRC is, see:
+
+  http://www.irchelp.org/faq/new2irc.html
 
 
 
@@ -9872,6 +9979,11 @@ deliberately ignoring the ones that I consider obsolete!):
     http://angg.twu.net/2020-find-here-links.html#code-video
     http://angg.twu.net/eev-videos/2020-find-here-links.mp4
     http://www.youtube.com/watch?v=8jtiBlaDor4
+
+  \"Short videos about workflows - and how to upload them\":
+    http://angg.twu.net/2021-ssr.html
+    http://angg.twu.net/eev-videos/2020-short-find-ssr-links-2.mp4
+    http://www.youtube.com/watch?v=_0_NLXTVhBk
 
 The ones that I prepared for the two EmacsConfs are very
 well-rehearsed, the other ones are not.
@@ -12592,6 +12704,16 @@ receive any number of arguments. See:
 
   (find-eval-intro \"10.1. Byte-compiled functions\")
   (find-elnode \"Defining Functions\" \"defun bar (a &optional b &rest c)\")
+
+Try:
+
+  (defun bar (a b &optional c d &rest e) (list a b c d e))
+        (bar 1 2 3 4 5 6)
+        (bar 1 2 3 4 5)
+        (bar 1 2 3 4)
+        (bar 1 2 3)
+        (bar 1 2)
+        (bar 1)
 
 
 

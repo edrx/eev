@@ -1080,15 +1080,18 @@ cd {dir}
 ;;; |_|                   
 ;;
 ;; «find-psne-links» (to ".find-psne-links")
-;; (find-find-links-links "<none>" "psne" "url wget-options")
-;; A test: (find-psne-links "http://foo/bar")
+;; Skel: (find-find-links-links-new "psne" "url wget-options" "")
+;; Test: (find-psne-links "http://foo/bar")
+;;  See: (find-psne-intro "3. The new way: `M-x brep'")
+;;       (find-psne-intro "3. The new way: `M-x brep'" "find-psne-links")
 
 (defun find-psne-links (&optional url wget-options &rest pos-spec-list)
 "See: (find-psne-intro)"
   (interactive)
   (setq url (or url "{url}"))
   (setq wget-options (or wget-options "-nc"))
-  (apply 'find-elinks
+  (apply
+   'find-elinks
    `((find-psne-links ,url ,wget-options ,@pos-spec-list)
      (find-psne-links ,url "-c" ,@pos-spec-list)
      (find-psne-links ,url "" ,@pos-spec-list)

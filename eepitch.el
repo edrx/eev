@@ -794,7 +794,7 @@ This is useful for for running processes that use pagers like
   "Send LINE to the vterm buffer and run the key binding for RET there."
   (eepitch-eval-at-target-window
     '(progn (vterm-send-string line)	; "type" the line
-	    (vterm-send-return))))  ; then do a RET
+	    (vterm-send-return))))      ; then do a RET
 
 
 
