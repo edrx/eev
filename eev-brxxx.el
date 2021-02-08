@@ -1,6 +1,6 @@
 ;;; eev-brxxx.el -- define families of browse-url-like functions.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020oct12
+;; Version:    2021feb08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -223,10 +223,9 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;; | (_| (_) | (_| |  __/_____| |_) | |  | |_| | |  | |
 ;;;  \___\___/ \__,_|\___|     |_.__/|_|   \__,_|_|  |_|
 ;;;                                                     
-;; Skel (broken): (find-tail-call-links "brurl" "f")
-
 ;; «code-brurl» (to ".code-brurl")
-;; Test: (find-code-brurl  'find-foo :remote 'brfoo :local 'brfool :dired 'brfood)
+;; See: (find-brxxx-intro "6. `code-brfile'")
+;; Test: (find-code-brurl 'find-foo :remote 'brfoo :local 'brfool :dired 'brfood)
 ;;
 (defun      code-brurl (f &rest rest)
   "Define a family of brxxx functions from a function that operates on URLs"
@@ -237,10 +236,12 @@ This should be made smarter - file:// urls should be returned unchanged."
 "Generate code for a family of functions from a function that operates on URLs"
   (concat (ee-template0 "\
 ;; {(ee-S `(find-code-brurl ',f ,@(mapcar 'ee-add-quote rest)))}
+;; See: (find-brxxx-intro \"5. `code-brurl'\")
 ")  (ee-code-brurl-rest f rest)))
 
 ;; «ee-code-brurl-rest» (to ".ee-code-brurl-rest")
-;; Support for extra arguments
+;; Support for extra arguments. Similar to:
+;; (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'")
 
 (defun ee-code-brurl-rest (f rest)
   (cond ((null rest) "")
@@ -254,7 +255,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 \(defun {brxxx} (url &rest ignore)
   \"Apply `{f}' on URL.\"
   (interactive (browse-url-interactive-arg \"URL: \"))
-  (setq browse-url-browser-function '{brxxx})
+  ;; (setq browse-url-browser-function '{brxxx})
   (message \"(%S %S) -> %S\" '{f} url
 	                   ({f} url)))
 ")  (ee-code-brurl-rest f rest)))
@@ -264,7 +265,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 \(defun {brxxxl} (url &rest ignore)
   \"Apply `{f}' on the local url associated to URL.\"
   (interactive (browse-url-interactive-arg \"URL: \"))
-  (setq browse-url-browser-function '{brxxxl})
+  ;; (setq browse-url-browser-function '{brxxxl})
   (setq url (ee-url-to-local-url url))
   (message \"(%S %S) -> %S\" '{f} url
 	                   ({f} url)))
@@ -299,9 +300,8 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;;                                                     
 ;; «code-brfile» (to ".code-brfile")
 ;; `code-brfile': top-level functions.
-;;
-;; Skel (broken): (find-tail-call-links "brfile" "f")
 ;; Test: (find-code-brfile 'find-BAR :local 'brBARL :dired 'brBARD)
+;; See: (find-brxxx-intro "6. `code-brfile'")
 ;;
 (defun      code-brfile (f &rest rest)
   "Define a family of brxxx functions from a function that operates on files"
@@ -312,10 +312,14 @@ This should be made smarter - file:// urls should be returned unchanged."
 "Generate code for a family of functions from a function that operates on files"
   (concat (ee-template0 "\
 ;; {(ee-S `(find-code-brfile ',f ,@(mapcar 'ee-add-quote rest)))}
+;; See: (find-brxxx-intro \"6. `code-brfile'\")
 ")  (ee-code-brfile-rest f rest)))
 
 ;; «ee-code-brfile-rest» (to ".ee-code-brfile-rest")
 ;; `code-brfile': support for extra arguments.
+;;
+;; Similar to:
+;; (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'")
 
 (defun ee-code-brfile-rest (f rest)
   (cond ((null rest) "")
@@ -329,7 +333,7 @@ This should be made smarter - file:// urls should be returned unchanged."
 \(defun {brxxxl} (url &rest ignore)
   \"Apply `{f}' on the local file name associated to URL.\"
   (interactive (browse-url-interactive-arg \"URL: \"))
-  (setq browse-url-browser-function '{brxxxl})
+  ;; (setq browse-url-browser-function '{brxxxl})
   (let ((fname (ee-url-to-fname url)))
     (message \"(%S %S) -> %S\" '{f} fname
                              ({f} fname))))
@@ -357,25 +361,35 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;; «code-brxxxs» (to ".code-brxxxs")
 ;; See: (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
 ;;      (find-eev-quick-intro "3.1. Non-elisp hyperlinks" "brg")
-;;      (find-eev "eev-pdflike.el" "code-brxxxs")
+;;      (find-eev "eev-pdflike.el"    "code-brxxxs")
+;;      (find-eev "eev-audiovideo.el" "code-brxxxs")
 ;;      (find-eev "eev-blinks.el" "find-w3m")
 ;;      (find-efile "net/browse-url.el")
 
 (defun find-googlechrome (url) (find-bgprocess `("google-chrome" ,url)))
 (defun find-firefox      (url) (find-bgprocess `("firefox"       ,url)))
 
-(code-brurl 'find-psne-links       :remote 'brep)
+;; (find-code-brurl 'find-psne-links   :remote 'brep)
+        (code-brurl 'find-psne-links   :remote 'brep)
 
+;; (find-code-brurl 'find-firefox      :remote 'brm  :local 'brml  :dired 'brmd)
+        (code-brurl 'find-firefox      :remote 'brm  :local 'brml  :dired 'brmd)
+;; (find-code-brurl 'find-firefox      :remote 'brff :local 'brffl :dired 'brffd)
+        (code-brurl 'find-firefox      :remote 'brff :local 'brffl :dired 'brffd)
+;; (find-code-brurl 'find-googlechrome :remote 'brg  :local 'brgl  :dired 'brgd)
+        (code-brurl 'find-googlechrome :remote 'brg  :local 'brgl  :dired 'brgd)
+;; (find-code-brurl 'find-w3m          :remote 'brw  :local 'brwl  :dired 'brwd)
+        (code-brurl 'find-w3m          :remote 'brw  :local 'brwl  :dired 'brwd)
+
+;; (find-code-brurl 'find-wget         :remote 'brwget)
+        (code-brurl 'find-wget         :remote 'brwget)
+
+;; (find-code-brfile 'find-fline                     :local 'brfl)
+        (code-brfile 'find-fline                     :local 'brfl)
+
+;; Obsolete:
 ;; (code-brurl 'browse-url-firefox :remote 'brm  :local 'brml  :dired 'brmd)
 ;; (code-brurl 'browse-url-firefox :remote 'brff :local 'brffl :dired 'brffd)
-(code-brurl 'find-firefox          :remote 'brm  :local 'brml  :dired 'brmd)
-(code-brurl 'find-firefox          :remote 'brff :local 'brffl :dired 'brffd)
-(code-brurl 'find-googlechrome     :remote 'brg  :local 'brgl  :dired 'brgd)
-(code-brurl 'find-w3m              :remote 'brw  :local 'brwl  :dired 'brwd)
-
-(code-brurl 'find-wget             :remote 'brwget)
-
-(code-brfile 'find-fline                         :local 'brfl)
 
 
 

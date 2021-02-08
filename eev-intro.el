@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021jan23
+;; Version:    2021feb08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -301,7 +301,7 @@ explained in this video:
   http://www.youtube.com/watch?v=kxBjiUo88_U
   http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
 
-To activate eev-mode and open this tutorial, run `M-x beginner'.
+To activate eev-mode and open this tutorial, run `M-x eev-beginner'.
 
 An alternative way, that only works on *NIX-based systems, is shown in
 this video (from 2016!):
@@ -2463,38 +2463,38 @@ recommended reading order. These are the basic ones:
    5. (find-pdf-like-intro)
    6. (find-eepitch-intro)
    7. (find-audiovideo-intro)
-   8. (find-psne-intro)
-   9. (find-rcirc-intro)
-  10. (find-elisp-intro)
-  11. (find-eev-install-intro)
+   8. (find-videos-intro)
+   9. (find-psne-intro)
+  10. (find-rcirc-intro)
+  11. (find-elisp-intro)
+  12. (find-eev-install-intro)
 
 This is a very basic tutorial intended mainly for M$ Windows
 users:
 
-  12. (find-windows-beginner-intro)
+  13. (find-windows-beginner-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  13. (find-escripts-intro)
-  14. (find-links-conv-intro)
+  14. (find-escripts-intro)
+  15. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  15. (find-eval-intro)
-  16. (find-links-intro)
-  17. (find-brxxx-intro)
-  18. (find-wrap-intro)
-  19. (find-eejump-intro)
-  20. (find-anchors-intro)
-  21. (find-code-c-d-intro)
+  16. (find-eval-intro)
+  17. (find-links-intro)
+  18. (find-brxxx-intro)
+  19. (find-wrap-intro)
+  20. (find-eejump-intro)
+  21. (find-anchors-intro)
+  22. (find-code-c-d-intro)
 
 These are etcs:
 
-  22. (find-multiwindow-intro)
-  23. (find-templates-intro)
-  24. (find-org-intro)
-  25. (find-videos-intro)
+  23. (find-multiwindow-intro)
+  24. (find-templates-intro)
+  25. (find-org-intro)
   26. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
@@ -3231,65 +3231,87 @@ The big figure below shows all the key sequences:
 We saw in
 
   (find-eev-quick-intro \"8. Anchors\")
+  (find-eev-quick-intro \"8.1. Introduction: `to'\")
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
 
 how to create anchors and how to point to anchors in the same
 file with `to', and we saw briefly in
 
   (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \"to anchors\")
 
 that the extra argument `:anchor' in
 
   (code-c-d \"eev\" ee-eev-source-directory :anchor)
 
-let us abbreviate the links below, that point to anchors,
+let us abbreviate the link below, that points to an anchor,
 
-  (find-eevfile            \"eev-blinks.el\" \"«find-wottb»\")
-  (find-anchor (ee-eevfile \"eev-blinks.el\") \"find-wottb\")
+  (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
 
-as just:
-
-  (find-eev \"eev-blinks.el\" \"find-wottb\")
-
-If you are in a file that has anchors there are two key sequences
-that you can use to create a link to that anchors in it very
-quickly. Remember that `M-h M-w' is a variant of `M-w' that
-copies the current line to the kill ring; as a bonus, `M-h M-w'
-highlights the current line for a brief while, and displays this
-message in the echo area:
-
-  Copied the current line to the kill ring - use C-y to paste
-
-If you run `M-h M-w' with the prefix argument 1, i.e., with `M-1
-M-h M-w', it copies the previous anchor instead of the current
-line. Try it now - `M-1 M-h M-w' will flash the \"find-wottb\"
-above and will say:
-
-  Copied \"find-wottb\" to the kill ring
-
-If you try `M-1 M-h M-w' at the target of this sexp, on in the
-lines after the target,
+to just this:
 
   (find-eev \"eev-blinks.el\" \"find-wottb\")
 
-the anchor \"find-wottb\" will be copied to the kill ring... if
-you then type `M-h M-h' or `M-h M-3', go to the line with
+Let's now see how to put this all together. WARNING: this is an
+advanced topic!
 
-  (find-eevfile \"eev-blinks.el\")
+If you are in a file that has anchors you can use the key
+sequence `M-1 M-h M-w' to copy the \"preceding tag\" to the kill
+ring, and you can you use an `M-h M--' after the `M-h M-y' in the
+hyperlinks buffer to shrink the first sexp below to the second
+one:
 
-in it and type `M-h M-y' it will become this,
+  (find-eevfind \"eev-blinks.el\" \"find-wottb\")
+  (find-eev \"eev-blinks.el\" \"find-wottb\")
 
-  (find-eevfile \"eev-blinks.el\" \"find-wottb\")
+The preceding tag and shrinking are explained here, with
+exercises:
 
-that is ALMOST a link to the anchor \"find-wottb\" in the file
-\"eev-blinks.el\" - we need to delete the \"file\" in
-`find-eevfile' to make it become a link to an anchor. It turns
-out that eev has a key that does exactly that: `M-h M--'. See:
+  (find-anchors-intro \"2. Shrinking\")
+  (find-anchors-intro \"2. Shrinking\" \"`M-h M--'\")
+  (find-anchors-intro \"3. The preceding tag\")
+  (find-anchors-intro \"3. The preceding tag\" \"`M-1 M-h M-w'\")
 
-  (eek \"M-h M-k  M-h M--  ;; ee-shrink-hyperlink-at-eol\")
-  (find-eev \"eev-edit.el\" \"ee-shrink-hyperlink-at-eol\")
+Here is a diagram of key sequences:
 
-I use this so much that I got used to typing this sequence of
-keys VERY quickly:
+        _____________________________________________
+       |                      |                      |
+       |                      |                      |
+       |    target buffer     |       elinks         |
+       |    with anchors      |       buffer         |
+       |                  ::::::>                    |
+       |     M-1 M-h M-w,     |       M-h M-2,       |
+       |         M-h M-3  or  |    || M-h M-y,       |
+       |         M-h M-h      |    || M-h M--,       |
+       |                      |    || M-h M-w  or    |
+       |                      |    ||     M-w        |
+       |                      |    ||                |
+       |                      |----||----------------|
+       |                      |    ||                |
+       |                      |    \\/  notes         |
+       |                      |        buffer        |
+       |                      |                      |
+       |                      |           C-y        |
+       |                      |                      |
+       |                      |                      |
+       |______________________|______________________|
+
+If you are intending to learn this, here is a suggestion: do it
+in two steps! Start by learning how to create hyperlinks to
+anchors in the directory that has the source files of eev, i.e.,
+
+  (find-eevfile \"\")
+
+and only then do things like
+
+  (code-c-d \"mnwa\" \"~/MYNOTESWITHANCHORS/\" :anchor) 
+
+but with better names, of course, and learn how to create links
+to the anchors in the files in that directory.
+
+NOTE: I use this so much that I got used to typing this sequence
+of keys VERY quickly,
 
   M-1 M-h M-w
       M-h M-h
@@ -3299,10 +3321,19 @@ keys VERY quickly:
       M-h M--
       M-h M-w
 
-I don't touch-type, and for me it became natural do hold the meta
-key down with my left thumb while I type `M-1hwhh' and
-`M-h2hyh-hw'... I would be nice to have a way to do this same
-series of actions using keys that are good for touch typists.
+but I don't touch-type, and for me it became natural to hold the
+meta key down with my left thumb while I type `M-1hwhh' and
+`M-h2hyh-hw' _by moving my hands over the keyboard a lot_...
+
+It would be nice to have a way to do this same series of actions
+using keys that are good for touch typists. One possibilty is to
+use transient-mode:
+
+  https://magit.vc/manual/transient/
+  https://lists.gnu.org/archive/html/emacs-devel/2021-01/msg01120.html
+
+I can try to implement this myself _if I have touch-typists to
+discuss it with_ - so if you're interested, get in touch!
 
 
 
@@ -7312,7 +7343,7 @@ The shell function that I could call as
 
   psne      $S/http/www.gnu.org/software/emacs/emacs-paper.html
 
-and it would run the fours steps in
+and it would run the four steps in
 
   mkdir -p http://www.gnu.org/software/emacs/
   cd       http://www.gnu.org/software/emacs/
@@ -9947,43 +9978,48 @@ Prerequisites:
 
 1. Some videos
 ==============
-At this moment I have these five videos about eev (I am
+At this moment I have these seven videos about eev (I am
 deliberately ignoring the ones that I consider obsolete!):
 
-  \"How to record executable notes with eev - and how to play them back\":
-    http://angg.twu.net/emacsconf2019.html
-    http://angg.twu.net/emacsconf2019.html#code-video
-    http://angg.twu.net/eev-videos/emacsconf2019.mp4
-    http://www.youtube.com/watch?v=86yiRG8YJD0
+  1. \"How to record executable notes with eev - and how to play them back\":
+     http://angg.twu.net/emacsconf2019.html
+     http://angg.twu.net/emacsconf2019.html#code-video
+     http://angg.twu.net/eev-videos/emacsconf2019.mp4
+     http://www.youtube.com/watch?v=86yiRG8YJD0
 
-  \"On why most of the best features in eev look like 5-minute hacks\":
-    http://angg.twu.net/emacsconf2020.html
-    http://angg.twu.net/emacsconf2020.html#code-video
-    http://angg.twu.net/eev-videos/emacsconf2020.mp4
-    http://www.youtube.com/watch?v=hOAqBc42Gg8
+  2. \"On why most of the best features in eev look like 5-minute hacks\":
+     http://angg.twu.net/emacsconf2020.html
+     http://angg.twu.net/emacsconf2020.html#code-video
+     http://angg.twu.net/eev-videos/emacsconf2020.mp4
+     http://www.youtube.com/watch?v=hOAqBc42Gg8
 
-  \"How to install eev with M-x list-packages and how to navigate its tutorials\":
-    http://angg.twu.net/2020-list-packages-eev-nav.html
-    http://angg.twu.net/2020-list-packages-eev-nav.html#code-video
-    http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
-    http://www.youtube.com/watch?v=kxBjiUo88_U
+  3. \"How to install eev with M-x list-packages and how to navigate its tutorials\":
+     http://angg.twu.net/2020-list-packages-eev-nav.html
+     http://angg.twu.net/2020-list-packages-eev-nav.html#code-video
+     http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
+     http://www.youtube.com/watch?v=kxBjiUo88_U
 
-  \"Some template-based functions of eev that are not five-minute hacks\":
-    http://angg.twu.net/2020-some-template-based.html
-    http://angg.twu.net/2020-some-template-based.html#code-video
-    http://angg.twu.net/eev-videos/2020_some_template-based_functions.mp4
-    http://www.youtube.com/watch?v=91-9YfRPsuk
+  4. \"Some template-based functions of eev that are not five-minute hacks\":
+     http://angg.twu.net/2020-some-template-based.html
+     http://angg.twu.net/2020-some-template-based.html#code-video
+     http://angg.twu.net/eev-videos/2020_some_template-based_functions.mp4
+     http://www.youtube.com/watch?v=91-9YfRPsuk
 
-  \"How to create hyperlinks to \"here\" with `find-here-links'\":
-    http://angg.twu.net/2020-find-here-links.html
-    http://angg.twu.net/2020-find-here-links.html#code-video
-    http://angg.twu.net/eev-videos/2020-find-here-links.mp4
-    http://www.youtube.com/watch?v=8jtiBlaDor4
+  5. \"How to create hyperlinks to \"here\" with `find-here-links'\":
+     http://angg.twu.net/2020-find-here-links.html
+     http://angg.twu.net/2020-find-here-links.html#code-video
+     http://angg.twu.net/eev-videos/2020-find-here-links.mp4
+     http://www.youtube.com/watch?v=8jtiBlaDor4
 
-  \"Short videos about workflows - and how to upload them\":
-    http://angg.twu.net/2021-ssr.html
-    http://angg.twu.net/eev-videos/2020-short-find-ssr-links-2.mp4
-    http://www.youtube.com/watch?v=_0_NLXTVhBk
+  6. \"Short videos about workflows - and how to upload them\":
+     http://angg.twu.net/2021-ssr.html
+     http://angg.twu.net/eev-videos/2020-short-find-ssr-links-2.mp4
+     http://www.youtube.com/watch?v=_0_NLXTVhBk
+
+  7. \"Using test blocks in eev\":
+     http://angg.twu.net/2021-test-blocks.html
+     http://angg.twu.net/eev-videos/2020-test-blocks-1.mp4
+     http://www.youtube.com/watch?v=fpsF_M55W4o
 
 The ones that I prepared for the two EmacsConfs are very
 well-rehearsed, the other ones are not.
@@ -10009,11 +10045,13 @@ to jump to positions in them.
 Another way to download these videos, and to get links that play
 them from the beginning, is by using these sexps:
 
-  (find-eevvideo-links \"eev2019\" \"emacsconf2019\" \"86yiRG8YJD0\")
-  (find-eevvideo-links \"eev2020\" \"emacsconf2020\" \"hOAqBc42Gg8\")
-  (find-eevvideo-links \"eevnav\" \"2020-list-packages-eev-nav\" \"kxBjiUo88_U\")
-  (find-eevvideo-links \"2020sometbf\" \"2020-some-template-based\" \"91-9YfRPsuk\")
-  (find-eevvideo-links \"2020findherelinks\" \"2020-find-here-links\" \"8jtiBlaDor4\")
+  1. (find-eevvideo-links \"eev2019\" \"emacsconf2019\" \"86yiRG8YJD0\")
+  2. (find-eevvideo-links \"eev2020\" \"emacsconf2020\" \"hOAqBc42Gg8\")
+  3. (find-eevvideo-links \"eevnav\" \"2020-list-packages-eev-nav\" \"kxBjiUo88_U\")
+  4. (find-eevvideo-links \"2020sometbf\" \"2020-some-template-based\" \"91-9YfRPsuk\")
+  5. (find-eevvideo-links \"2020findherelinks\" \"2020-find-here-links\" \"8jtiBlaDor4\")
+  6. (find-eevvideo-links \"2020ssr\" \"2020-short-find-ssr-links-2\" \"_0_NLXTVhBk\")
+  7. (find-eevvideo-links \"testbls\" \"2020-test-blocks-1\" \"fpsF_M55W4o\")
 
 The function `find-eevvideo-links' is explained here:
 

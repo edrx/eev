@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec03
+;; Version:    2021feb08
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -857,6 +857,32 @@ If the argument PAGE is non-nil append a \"#page=nnn\" to the result."
 
 
 
+;;;                _            _                               
+;;;   ___ ___   __| | ___      | |__  _ ____  ____  ____  _____ 
+;;;  / __/ _ \ / _` |/ _ \_____| '_ \| '__\ \/ /\ \/ /\ \/ / __|
+;;; | (_| (_) | (_| |  __/_____| |_) | |   >  <  >  <  >  <\__ \
+;;;  \___\___/ \__,_|\___|     |_.__/|_|  /_/\_\/_/\_\/_/\_\___/
+;;;                                                             
+;; «code-brxxxs» (to ".code-brxxxs")
+;; See: (find-brxxx-intro "6. `code-brfile'")
+;;
+;; (find-code-brfile 'find-pdf-page    :local 'brpdfl      :dired 'brpdfd)
+        (code-brfile 'find-pdf-page    :local 'brpdfl      :dired 'brpdfd)
+;; (find-code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
+        (code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
+
+;; (find-code-brfile 'find-djvu-page   :local 'brdjvul     :dired 'brdjvud)
+        (code-brfile 'find-djvu-page   :local 'brdjvul     :dired 'brdjvud)
+;; (find-code-brfile 'find-djvu-text   :local 'brdjvutextl :dired 'brdjvutextd)
+        (code-brfile 'find-djvu-text   :local 'brdjvutextl :dired 'brdjvutextd)
+;; (find-code-brfile 'find-evince-page :local 'brevincel   :dired 'brevinced)
+        (code-brfile 'find-evince-page :local 'brevincel   :dired 'brevinced)
+;; (find-code-brfile 'find-xdvi-page   :local 'brxdvil     :dired 'brxdvid)
+        (code-brfile 'find-xdvi-page   :local 'brxdvil     :dired 'brxdvid)
+;; (find-code-brfile 'find-xpdf-page   :local 'brxpdfl     :dired 'brxpdfd)
+        (code-brfile 'find-xpdf-page   :local 'brxpdfl     :dired 'brxpdfd)
+
+
 
 ;;;     _    _ _                     
 ;;;    / \  | (_) __ _ ___  ___  ___ 
@@ -871,45 +897,35 @@ If the argument PAGE is non-nil append a \"#page=nnn\" to the result."
 ;;
 ;;   (find-eevfile "eev-pdflike.el" "4. A CONVENTION ON HYPHENS")
 
+;; (find-code-pdfbackendalias "djvu"       "djview-page")
         (code-pdfbackendalias "djvu"       "djview-page")
+;; (find-code-pdfbackendalias "djvu-text"  "djvutxt-text")
         (code-pdfbackendalias "djvu-text"  "djvutxt-text")
+;; (find-code-pdfbackendalias "djvupage"   "djview-page")
         (code-pdfbackendalias "djvupage"   "djview-page")
+;; (find-code-pdfbackendalias "dvi"        "xdvi-page")
         (code-pdfbackendalias "dvi"        "xdvi-page")
+;; (find-code-pdfbackendalias "evince"     "evince-page")
         (code-pdfbackendalias "evince"     "evince-page")
+;; (find-code-pdfbackendalias "evincepage" "evince-page")
         (code-pdfbackendalias "evincepage" "evince-page")
+;; (find-code-pdfbackendalias "pdf"        "xpdf-page")
         (code-pdfbackendalias "pdf"        "xpdf-page")
+;; (find-code-pdfbackendalias "pspage"     "gv-page")
         (code-pdfbackendalias "pspage"     "gv-page")
+;; (find-code-pdfbackendalias "xdvi"       "xdvi-page")
         (code-pdfbackendalias "xdvi"       "xdvi-page")
+;; (find-code-pdfbackendalias "xdvipage"   "xdvi-page")
         (code-pdfbackendalias "xdvipage"   "xdvi-page")
+;; (find-code-pdfbackendalias "xpdf"       "xpdf-page")
         (code-pdfbackendalias "xpdf"       "xpdf-page")
+;; (find-code-pdfbackendalias "xpdfpage"   "xpdf-page")
         (code-pdfbackendalias "xpdfpage"   "xpdf-page")
 
-;; (find-code-pdfbackendalias "djvu"       "djview-page")
-;; (find-code-pdfbackendalias "djvu-text"  "djvutxt-text")
-;; (find-code-pdfbackendalias "djvupage"   "djview-page")
-;; (find-code-pdfbackendalias "dvi"        "xdvi-page")
-;; (find-code-pdfbackendalias "evince"     "evince-page")
-;; (find-code-pdfbackendalias "evincepage" "evince-page")
-;; (find-code-pdfbackendalias "pdf"        "xpdf-page")
-;; (find-code-pdfbackendalias "pspage"     "gv-page")
-;; (find-code-pdfbackendalias "xdvi"       "xdvi-page")
-;; (find-code-pdfbackendalias "xdvipage"   "xdvi-page")
-;; (find-code-pdfbackendalias "xpdf"       "xpdf-page")
-;; (find-code-pdfbackendalias "xpdfpage"   "xpdf-page")
 
 
 
-;; «code-brxxxs» (to ".code-brxxxs")
-;; See: (find-brxxx-intro "6. `code-brfile'")
-;;
-(code-brfile 'find-pdf-page    :local 'brpdfl      :dired 'brpdfd)
-(code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
 
-(code-brfile 'find-djvu-page   :local 'brdjvul     :dired 'brdjvud)
-(code-brfile 'find-djvu-text   :local 'brdjvutextl :dired 'brdjvutextd)
-(code-brfile 'find-evince-page :local 'brevincel   :dired 'brevinced)
-(code-brfile 'find-xdvi-page   :local 'brxdvil     :dired 'brxdvid)
-(code-brfile 'find-xpdf-page   :local 'brxpdfl     :dired 'brxpdfd)
 
 
 

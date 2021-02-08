@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019mar29
+;; Version:    2021feb03
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-template0.el>
@@ -89,9 +89,16 @@
 ;;   (find-eev-quick-intro "9.3. Hyperlinks to PDF files")
 
 
+(defvar ee-template00-re "{\\([^{}]+\\)}"
+  "To make `ee-template0' use other delimiters instead of `{}'s
+set this variable temporarily in a `let'.")
 
 
 
+;; Tests:
+;; (ee-template00 "a{(+ 2 3)}b")
+;; (let ((hi "Here: ") (a 22) (b 33)) (ee-template00 "{hi}{a}+{b}={(+ a b)}"))
+;; 
 (defun ee-template00 (str)
 "Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
 Examples:\n
@@ -101,10 +108,13 @@ Examples:\n
     (ee-template00 \"{hi} {a} + {b} = {(+ a b)}\"))  
     -->  \"22 + 33 = 55\""
   (replace-regexp-in-string
-   "{\\([^{}]+\\)}"
+   ee-template00-re
    (lambda (_code_) (format "%s" (eval (read (substring _code_ 1 -1)))))
    str 'fixedcase 'literal))
 
+;; Test:
+;; (ee-template0 "{<} a{(+ 2 3)} {>}")
+;;
 (defun ee-template0 (str)
 "Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
 Substrings of the form `{<}' and `{>}' in STR are replaced by `{'

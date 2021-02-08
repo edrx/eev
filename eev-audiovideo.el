@@ -1,6 +1,6 @@
 ;;; eev-audiovideo.el -- elisp hyperlinks to audio and video files.
 
-;; Copyright (C) 2013-2020 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec17
+;; Version:    2020dec21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -97,6 +97,7 @@
 ;; «.find-termplayer»		(to "find-termplayer")
 ;; «.find-mpv-video»		(to "find-mpv-video")
 ;; «.find-mpv-audio»		(to "find-mpv-audio")
+;; «.code-brxxxs»		(to "code-brxxxs")
 ;; «.aliases»			(to "aliases")
 
 
@@ -520,6 +521,21 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 
+;;;                _            _                               
+;;;   ___ ___   __| | ___      | |__  _ ____  ____  ____  _____ 
+;;;  / __/ _ \ / _` |/ _ \_____| '_ \| '__\ \/ /\ \/ /\ \/ / __|
+;;; | (_| (_) | (_| |  __/_____| |_) | |   >  <  >  <  >  <\__ \
+;;;  \___\___/ \__,_|\___|     |_.__/|_|  /_/\_\/_/\_\/_/\_\___/
+;;;                                                             
+;; «code-brxxxs»  (to ".code-brxxxs")
+;; See: (find-brxxx-intro "6. `code-brfile'")
+
+;; (find-code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
+        (code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
+;; (find-code-brfile 'find-video :local 'brvideol :dired 'brvideod)
+        (code-brfile 'find-video :local 'brvideol :dired 'brvideod)
+
+
 
 ;;;        _ _                     
 ;;;   __ _| (_) __ _ ___  ___  ___ 
@@ -537,10 +553,6 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 (defalias      'code-audio      'code-mpv-audio)
 (defalias 'find-code-audio 'find-code-mpv-audio)
 
-;; (find-code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
-        (code-brfile 'find-audio :local 'braudiol :dired 'braudiod)
-;; (find-code-brfile 'find-video :local 'brvideol :dired 'brvideod)
-        (code-brfile 'find-video :local 'brvideol :dired 'brvideod)
 
 
 

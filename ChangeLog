@@ -1,3 +1,28 @@
+2021-02-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-brxxx.el (ee-code-brurl-:remote, ee-code-brurl-:local)
+	(ee-code-brfile-:local): commented out the `(setq
+	browse-url-browser-function ...)'s in the generated code - they
+	are not needed in eev anymore and people who use `browse-url' find
+	them annoying.
+	(ee-code-brurl, ee-code-brfile): added help links to the generated
+	code.
+
+	* eev-intro.el (find-eev-intro): promoted `(find-videos-intro)' to
+	the list of basic intros.
+	(find-eev-quick-intro): fixed a typo in the section "1. Installing
+	eev": the "eev-" in `M-x eev-beginner' was missing.
+
+2021-02-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-template0.el (ee-template00-re): new variable.
+	(ee-template00): use `ee-template00-re'.
+
+2021-01-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-refining-intro): rewrote the section "5.
+	Pointing to anchors".
+
 2021-01-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eepitch-intro): new section: "3.2. Test
