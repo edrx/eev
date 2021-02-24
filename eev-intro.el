@@ -2171,6 +2171,7 @@ These are the current ways to download and install eev:
 
        (add-to-list 'load-path \"~/path-to-the-eev-source/\")
        (require 'eev-load)
+       (autoload 'eev-beginner \"eev-beginner\")
        (eev-mode 1)               ; optional
 
   5. by downloading the git repo from
@@ -2181,6 +2182,7 @@ These are the current ways to download and install eev:
 
        (add-to-list 'load-path \"~/path-to-the-eev-source/\")
        (require 'eev-load)
+       (autoload 'eev-beginner \"eev-beginner\")
        (eev-mode 1)               ; optional
 
 

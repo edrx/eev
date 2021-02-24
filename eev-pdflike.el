@@ -598,6 +598,16 @@ newline are spurious - and replaces them by \"(ff)\"."
 (defun ee-find-pdftotext-text (fname &rest rest)
   `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
+;; (find-man "1 pdftotext")
+;; (find-man "1 pdftotext" "-enc encoding-name")
+;;
+;; The option "-enc Latin1" above make pdftotext convert its output to
+;; Latin1. If you prefer UTF-8, override the previous definition with
+;; the one below, that it is commented out with a "'":
+
+' (defun ee-find-pdftotext-text (fname &rest rest)
+   `(,ee-pdftotext-program "-layout" ,(ee-expand fname) "-"))
+
 ;; (find-code-pdftextbackend "pdftotext-text")
         (code-pdftextbackend "pdftotext-text")
 

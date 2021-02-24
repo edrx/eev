@@ -381,6 +381,11 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;; (find-code-brurl 'find-w3m          :remote 'brw  :local 'brwl  :dired 'brwd)
         (code-brurl 'find-w3m          :remote 'brw  :local 'brwl  :dired 'brwd)
 
+;; (find-code-brurl 'find-eww      :remote 'breww :local 'brewwl :dired 'brewwd)
+        (code-brurl 'find-eww      :remote 'breww :local 'brewwl :dired 'brewwd)
+;; (find-code-brurl 'find-eww      :remote 'brew  :local 'brewl  :dired 'brewd)
+        (code-brurl 'find-eww      :remote 'brew  :local 'brewl  :dired 'brewd)
+
 ;; (find-code-brurl 'find-wget         :remote 'brwget)
         (code-brurl 'find-wget         :remote 'brwget)
 

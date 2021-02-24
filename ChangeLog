@@ -1,4 +1,11 @@
+2021-02-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-pdftotext-text): added a comment
+	explaining how to use UTF-8 instead of Latin-1.
+
 2021-02-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eww): new function.
 
 	* eev-brxxx.el (ee-code-brurl-:remote, ee-code-brurl-:local)
 	(ee-code-brfile-:local): commented out the `(setq
@@ -7,11 +14,14 @@
 	them annoying.
 	(ee-code-brurl, ee-code-brfile): added help links to the generated
 	code.
+	(brew, brewl, brewd, breww, brewwl, brewwd): new functions.
 
 	* eev-intro.el (find-eev-intro): promoted `(find-videos-intro)' to
 	the list of basic intros.
 	(find-eev-quick-intro): fixed a typo in the section "1. Installing
 	eev": the "eev-" in `M-x eev-beginner' was missing.
+	(find-eev-install-intro): added the line `(autoload 'eev-beginner
+	"eev-beginner")' to some installation instructions.
 
 2021-02-03  Eduardo Ochs  <eduardoochs@gmail.com>
 

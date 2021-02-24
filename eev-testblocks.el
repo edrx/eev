@@ -54,7 +54,7 @@
 ;;;                                                                  
 ;; «ee-insert-test»  (to ".ee-insert-test")
 ;; See: (find-eepitch-intro "3. Test blocks")
-;; Insert a "test block" in a Lua/Python/Ruby/shell/Tcl script.
+;; Insert a "test block" in a Lua/Python/Ruby/shell/Tcl/etc script.
 
 
 (defalias 'eeit 'ee-insert-test)

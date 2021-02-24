@@ -55,6 +55,7 @@
 ;; «.find-man»			(to "find-man")
 ;; «.find-man-bug»		(to "find-man-bug")
 ;; «.find-w3m»			(to "find-w3m")
+;; «.find-eww»			(to "find-eww")
 ;; «.find-Package»		(to "find-Package")
 ;; «.find-epp»			(to "find-epp")
 ;; «.find-eloadhistory»		(to "find-eloadhistory")
@@ -760,6 +761,24 @@ it doesn't convert relative filenames into urls. See
 	 (append w3m-content-type-alist '(("text/html" "" nil nil)))))
     (w3m (replace-regexp-in-string "^/" "file:///" (ee-expand url))))
   (ee-goto-rest pos-spec-list))
+
+
+
+;; «find-eww»  (to ".find-eww")
+;; Tests: (find-eww "http://angg.twu.net/")
+;;        (find-eww "/tmp/")
+;;
+(defun find-eww (url &rest pos-spec-list)
+  "Hyperlink to a page in HTML. Use eww as the browser.
+URL can be either a real URL or a file name.
+The POS-SPEC-LIST is ignored. =("
+  (eww (replace-regexp-in-string "^/" "file:///" (ee-expand url))))
+
+;; (code-c-d "eww" (ee-elfile "net/") "eww" :gz)
+;; ;; (find-ewwfile "")
+;; ;; (find-ewwfile "eww.el")
+;; ;; (find-ewwnode "")
+;; 
 
 
 

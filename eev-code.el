@@ -235,7 +235,7 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:gz (c d &rest rest)
- (concat (ee-template0 "
+  (concat (ee-template0 "
    ;; {(ee-S `(ee-code-c-d-:gz ,c ,d ,@rest))}
    (defun find-{c}file (str &rest pos-spec-list)
      (interactive (list \"\"))
@@ -244,14 +244,14 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:anchor (c d &rest rest)
- (concat (ee-template0 "
+  (concat (ee-template0 "
    ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
    (defun find-{c} (str &rest pos-spec-list)
      (apply 'find-anchor (ee-{c}file str) pos-spec-list))
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:tags (c d &rest rest)
- (concat (ee-template0 "
+  (concat (ee-template0 "
    ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
    (setq ee-{c}tagsfile \"{d}TAGS\")
    (defun ee-use-{c}-tags ()
@@ -266,14 +266,14 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:w3m (c d &rest rest)
- (concat (ee-template0 "
+  (concat (ee-template0 "
    ;; {(ee-S `(ee-code-c-d-:gz ,c ,d ,@rest))}
    (defun find-{c}w3m (furl &rest pos-spec-list)
      (apply 'find-w3m (ee-{c}file furl) pos-spec-list))
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:wget (c d url &rest rest)
- (concat (ee-template0 "
+  (concat (ee-template0 "
    ;; {(ee-S `(ee-code-c-d-:wget ,c ,d ,url ,@rest))}
    (defun ee-{c}url (semiurl) (concat \"{url}\" semiurl))
    (defun find-{c}wget (semiurl &rest pos-spec-list)
