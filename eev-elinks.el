@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021jan02
+;; Version:    2021feb26
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -850,9 +850,11 @@ when this is true remove the prefix D from FNAME, and put the sexp
 
 (defun ee-find-grep-links ()
   "An internal function used by `find-grep-links'."
-  (ee-find-grep-links0
-   (ee-find-grep-functions default-directory)
-   (ee-find-grep-commands)))
+  (append
+   (ee-find-grep-links0
+    (ee-find-grep-functions default-directory)
+    (ee-find-grep-commands))
+   (ee-find-grep-links1)))
 
 ;; Low-level functions used by `ee-find-grep-links'.
 ;; Tests:
@@ -862,6 +864,7 @@ when this is true remove the prefix D from FNAME, and put the sexp
 ;;     (ee-find-grep-functions ee-emacs-lisp-directory)
 ;;     (ee-find-grep-functions ee-eev-source-directory)
 ;;     (ee-find-grep-commands)
+;;   (find-elinks (ee-find-grep-links1))
 ;;
 (defun ee-find-grep-links0 (find-xxxgreps grep-commands)
   "An internal function used by `find-grep-links'."
@@ -884,6 +887,15 @@ when this is true remove the prefix D from FNAME, and put the sexp
 (defun ee-find-grep-functions (dir)
   "An internal function used by `find-grep-links'."
   (ee-code-c-d-filter-2 dir '(ee-intern "find-%sgrep" c)))
+
+(defun ee-find-grep-links1 ()
+  "An internal function used by `find-grep-links'."
+  (let ((dir (ee-shorten-file-name default-directory)))
+    (list (ee-template0 "
+(let ((default-directory {(ee-S dir)}))
+  (grep {(ee-S (car grep-history))})
+  )
+"))))
 
 
 
