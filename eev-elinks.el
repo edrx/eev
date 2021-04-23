@@ -888,6 +888,9 @@ when this is true remove the prefix D from FNAME, and put the sexp
   "An internal function used by `find-grep-links'."
   (ee-code-c-d-filter-2 dir '(ee-intern "find-%sgrep" c)))
 
+;; See:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-02/msg00778.html
+;;
 (defun ee-find-grep-links1 ()
   "An internal function used by `find-grep-links'."
   (let ((dir (ee-shorten-file-name default-directory)))

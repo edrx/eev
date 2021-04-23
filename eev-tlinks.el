@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021jan02
+;; Version:    2021feb27
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -235,7 +235,8 @@ See: (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")"
 
 (defun find-find-links-links (&optional k stem args &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for foo."
-  (interactive)
+  ;; (interactive)
+  ;; ^ Commented out because this is obsolete!
   (setq k    (or k    "{k}"))
   (setq stem (or stem "{stem}"))
   (setq args (or args "{args}"))

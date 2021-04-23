@@ -1,6 +1,6 @@
 ;;; eev-testblocks.el - create "test blocks" using multiline comments.
 
-;; Copyright (C) 2019,2020 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec16
+;; Version:    2021apr19
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -132,7 +132,7 @@ dofile \"%s\"
  (eepitch-python)
  (eepitch-kill)
  (eepitch-python)
-execfile(\"%s\", globals())
+exec(open(\"%s\").read(), globals())
 
 \"\"\"
 " (buffer-name))))

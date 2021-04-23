@@ -1,3 +1,28 @@
+2021-04-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-videos-intro): rewrote the sections "2. Short
+	links to eev video tutorials" and "3. Some `find-eevvideo-links'".
+	(find-eev-quick-intro): added some "[Video links:]" blocks.
+
+2021-04-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (find-eev2019video, find-eev2020video)
+	(find-eevnavvideo, find-eevtemplvideo, find-eevfherelvideo)
+	(find-eevtestblocksvideo): new functions.
+
+2021-04-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-videos-intro): renamed some .mp4 files.
+
+2021-04-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-python-mode): use `exec'
+	instead of `execfile', as `execfile' doesn't exist in Python 3.
+
+2021-02-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-find-links-links): make it not interactive.
+
 2021-02-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (ee-find-grep-links1): new function.

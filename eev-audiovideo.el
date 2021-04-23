@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2020dec21
+;; Version:    2021apr22
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -99,6 +99,7 @@
 ;; «.find-mpv-audio»		(to "find-mpv-audio")
 ;; «.code-brxxxs»		(to "code-brxxxs")
 ;; «.aliases»			(to "aliases")
+;; «.video-tutorials»		(to "video-tutorials")
 
 
 
@@ -552,6 +553,78 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 (defalias      'find-audio      'find-mpv-audio)
 (defalias      'code-audio      'code-mpv-audio)
 (defalias 'find-code-audio 'find-code-mpv-audio)
+
+
+
+
+;;; __     ___     _              _         _             _       _     
+;;; \ \   / (_) __| | ___  ___   | |_ _   _| |_ ___  _ __(_) __ _| |___ 
+;;;  \ \ / /| |/ _` |/ _ \/ _ \  | __| | | | __/ _ \| '__| |/ _` | / __|
+;;;   \ V / | | (_| |  __/ (_) | | |_| |_| | || (_) | |  | | (_| | \__ \
+;;;    \_/  |_|\__,_|\___|\___/   \__|\__,_|\__\___/|_|  |_|\__,_|_|___/
+;;;                                                                     
+;; «video-tutorials»  (to ".video-tutorials")
+;; See: (find-videos-intro "2. Short links to eev video tutorials")
+
+;; Skel: (find-eevshortvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0")
+(defun find-eev2019video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/emacsconf2019.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (find-eevvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0"))
+
+;; Skel: (find-eevshortvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8")
+(defun find-eev2020video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/emacsconf2020.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (find-eevvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8"))
+
+;; Skel: (find-eevshortvideo-links "eevnav"  "2020-list-packages-eev-nav" "kxBjiUo88_U")
+(defun find-eevnavvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/2020-list-packages-eev-nav.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (find-eevvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U"))
+
+;; Skel: (find-eevshortvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk")
+(defun find-eevtemplvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/2020-some-template-based.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (find-eevvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk"))
+
+;; Skel: (find-eevshortvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4")
+(defun find-eevfherelvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/2020-find-here-links.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (find-eevvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4"))
+
+;; Skel: (find-eevshortvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o")
+(defun find-eevtestblocksvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/2021-test-blocks.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (find-eevvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o"))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021feb08
+;; Version:    2021apr23
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -531,6 +531,17 @@ creates this buffer, and switches to it:
   |____________________________________________________________________|
 
 
+[Video links:]
+  (find-eev2020video \"29:39\" \"2. A tale of two `describe-key's\")
+  (find-eev2020video \"31:31\"   \"the problem with the standard `describe-key'\")
+  (find-eev2020video \"35:07\"   \"My variant: `find-ekey-links'\")
+  (find-eev2020video \"37:00\"   \"how `find-ekey-links' generates its links\")
+  (find-eev2020video \"37:14\"   \"hacker-friendly in the way that I wanted\")
+
+
+
+
+
 
 4.1. `find-here-links'
 ----------------------
@@ -837,6 +848,11 @@ For more details see:
   (find-eepitch-intro)
   (find-wrap-intro \"2. <M-T>: produce an eepitch block\")
 
+[Video links:]
+  (find-eevnavvideo \"10:36\" \"if I type <f8> six times here\")
+  (find-eevnavvideo \"10:50\" \"a shell running inside Emacs\")
+
+
 
 
 
@@ -975,8 +991,18 @@ literal ^O in a buffer by typing `C-q C-o'.
 
 
 
+
 7. Quick access to one-liners
 =============================
+[Video links:]
+  (find-eevnavvideo \"6:28\"  \"M-j: you can forget practically everything...\")
+  (find-eevnavvideo \"6:41\"  \"if you type just M-j\")
+  (find-eevnavvideo \"6:48\"  \"has a header that is beginner-friendly\")
+  (find-eevnavvideo \"8:48\"  \"most of the entries have hyperlinks to the manual\")
+  (find-eevnavvideo \"9:48\"  \"M-j with numeric prefixes\")
+  (find-eevnavvideo \"9:59\"  \"M-2 M-j runs (find-emacs-keys-intro)\")
+  (find-eevnavvideo \"10:06\" \"M-5 M-j runs (find-eev-quick-intro)\")
+
 
 7.1. `eejump'
 -------------
@@ -1146,6 +1172,11 @@ next section. Try it now:
   (eek \"<down> M-J\")
   e (find-fline \"/tmp/foo.tex\")
 
+[Video links:]
+  (find-eev2020video \"26:49\" \"1.5.3. `M-J' (meta-uppercase-J)\")
+  (find-eev2020video \"26:58\"   \"transforms the current line\")
+  (find-eev2020video \"27:37\"   \"into a defun\")
+
 
 
 
@@ -1174,6 +1205,10 @@ For more on `M-x', and on why the defuns above need the
   (find-node \"(emacs)M-x\")
   (find-node \"(emacs)Commands\")
   (find-node \"(elisp)Defining Commands\")
+
+[Video links:]
+  (find-eev2020video \"19:03\" \"commands with very short names\")
+
 
 
 
@@ -1277,6 +1312,13 @@ the other ones are similar.
 
 8. Anchors
 ==========
+[Video links:]
+  (find-eevfherelvideo \"14:18\" \"4.1. Creating anchors\")
+  (find-eevfherelvideo \"15:22\"  \"an index at the beginning of the file\")
+  (find-eevfherelvideo \"15:47\"  \"the tutorial also explains ... `M-A'\")
+  (find-eevfherelvideo \"16:07\"  \"`M-A' duplicates the line and...\")
+  (find-eevfherelvideo \"16:19\"  \"`M-B' creates an e-script block\")
+
 
 8.1. Introduction: `to'
 -----------------------
@@ -1439,6 +1481,9 @@ You can use this - or the shorter hyperlinks to anchors in
 section 9.2 - to point to anchors or to e-script blocks in your
 files.
 
+[Video links:]
+  (find-eevfherelvideo \"17:02\" \"4.2. The option :anchor for `code-c-d'\")
+
 
 
 
@@ -1447,6 +1492,13 @@ files.
 9. Shorter hyperlinks
 =====================
 See also: (find-code-c-d-intro)
+
+[Video links:]
+  (find-eev2020video  \"8:20\" \"`code-c-d' defines several new functions\")
+  (find-eev2020video \"14:43\" \"1.4. How code-c-d is implemented\")
+  (find-eev2020video \"17:20\"   \"find-code-c-d shows the code...\")
+
+
 
 9.1. `code-c-d'
 ---------------
@@ -9988,40 +10040,46 @@ deliberately ignoring the ones that I consider obsolete!):
      http://angg.twu.net/emacsconf2019.html#code-video
      http://angg.twu.net/eev-videos/emacsconf2019.mp4
      http://www.youtube.com/watch?v=86yiRG8YJD0
+     (find-eev2019video)
 
   2. \"On why most of the best features in eev look like 5-minute hacks\":
      http://angg.twu.net/emacsconf2020.html
      http://angg.twu.net/emacsconf2020.html#code-video
      http://angg.twu.net/eev-videos/emacsconf2020.mp4
      http://www.youtube.com/watch?v=hOAqBc42Gg8
+     (find-eev2020video)
 
   3. \"How to install eev with M-x list-packages and how to navigate its tutorials\":
      http://angg.twu.net/2020-list-packages-eev-nav.html
      http://angg.twu.net/2020-list-packages-eev-nav.html#code-video
-     http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
+     http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4
      http://www.youtube.com/watch?v=kxBjiUo88_U
+     (find-eevnavvideo)
 
   4. \"Some template-based functions of eev that are not five-minute hacks\":
      http://angg.twu.net/2020-some-template-based.html
      http://angg.twu.net/2020-some-template-based.html#code-video
-     http://angg.twu.net/eev-videos/2020_some_template-based_functions.mp4
+     http://angg.twu.net/eev-videos/2020-some-template-based.mp4
      http://www.youtube.com/watch?v=91-9YfRPsuk
+     (find-eevtemplvideo)
 
   5. \"How to create hyperlinks to \"here\" with `find-here-links'\":
      http://angg.twu.net/2020-find-here-links.html
      http://angg.twu.net/2020-find-here-links.html#code-video
      http://angg.twu.net/eev-videos/2020-find-here-links.mp4
      http://www.youtube.com/watch?v=8jtiBlaDor4
+     (find-eevfherelvideo)
 
-  6. \"Short videos about workflows - and how to upload them\":
-     http://angg.twu.net/2021-ssr.html
-     http://angg.twu.net/eev-videos/2020-short-find-ssr-links-2.mp4
-     http://www.youtube.com/watch?v=_0_NLXTVhBk
-
-  7. \"Using test blocks in eev\":
+  6. \"Using test blocks in eev\":
      http://angg.twu.net/2021-test-blocks.html
-     http://angg.twu.net/eev-videos/2020-test-blocks-1.mp4
+     http://angg.twu.net/eev-videos/2021-test-blocks.mp4
      http://www.youtube.com/watch?v=fpsF_M55W4o
+     (find-eevtestblocksvideo)
+
+  7. \"Short videos about workflows - and how to upload them\":
+     http://angg.twu.net/2021-ssr.html
+     http://angg.twu.net/eev-videos/2021-ssr.mp4
+     http://www.youtube.com/watch?v=_0_NLXTVhBk
 
 The ones that I prepared for the two EmacsConfs are very
 well-rehearsed, the other ones are not.
@@ -10042,18 +10100,97 @@ to jump to positions in them.
 
 
 
-2. Some `find-eevvideo-links'
+2. Short links to eev video tutorials
+=====================================
+The \"short links to eev video tutorials\" are made to be trivial
+to use from the _htmlized_ versions of the intros; they are not
+so trivial from Emacs. If you open the htmlized version of this
+section in a browser - its URL is:
+
+  http://angg.twu.net/eev-intros/find-videos-intro.html#2
+  
+you will notice that links like
+
+  (find-eev2020video \"6:25\" \"`find-video'\")
+   \\---------------/  \\--/
+    function name:    time:
+    points to here    points to
+    (this section)    YouTube
+
+have two hyperlinks: the function name, \"find-eev2020video\",
+points to this section of this intro, and the timestamp,
+\"6:25\", points to YouTube; in this example, the \"6:25\" points
+to my presentation about eev in the EmacsConf2020, and it plays
+that video starting from 6:25.
+
+At this moment only these `find-eev*video' function are htmlized
+in this way:
+
+  1. \"How to record executable notes with eev - and how to play them back\"
+     http://angg.twu.net/emacsconf2019.html
+     (find-eev2019video \"0:00\")
+     
+  2. \"On why most of the best features in eev look like 5-minute hacks\"
+     http://angg.twu.net/emacsconf2020.html
+     (find-eev2020video \"0:00\")
+
+  3. \"How to install eev with M-x list-packages and how to navigate its tutorials\"
+     http://angg.twu.net/2020-list-packages-eev-nav.html
+     (find-eevnavvideo \"0:00\")
+
+  4. \"Some template-based functions of eev that are not five-minute hacks\"
+     http://angg.twu.net/2020-some-template-based.html
+     (find-eevtemplvideo \"0:00\")
+
+  5. \"How to create hyperlinks to \"here\" with `find-here-links'\"
+     http://angg.twu.net/2020-find-here-links.html
+     (find-eevfherelvideo \"0:00\")
+
+  6. \"Using test blocks in eev\":
+     http://angg.twu.net/2021-test-blocks.html
+     (find-eevtestblocksvideo \"0:00\")
+
+If you follow these `find-eev*video' sexp hyperlinks in Emacs you
+will _usually_ get a temporary buffer with links to that video...
+see the next section.
+
+
+
+
+3. Some `find-eevvideo-links'
 =============================
-Another way to download these videos, and to get links that play
-them from the beginning, is by using these sexps:
+When you run a sexp like this
+
+  (find-eev2020video \"0:00\")
+
+in Emacs it by default runs this,
+
+  (find-eevvideo-links \"eev2020\" \"emacsconf2020\" \"hOAqBc42Gg8\" \"0:00\")
+
+that creates a temporary buffer containing commands for doing
+several things - like downloading a local copy of that video,
+playing the local copy, and overriding the definition of
+`find-eev2020video' with another one, that plays the local copy
+straight away without creating a temporary buffer.
+
+That temporary buffer is a bit hard to understand, and I need to
+make a video explaining how to use each part of it (TODO!
+Urgent)...
+
+The \"short links to eev video tutorials\" listed above call
+these `find-eevvideo-links' sexps:
 
   1. (find-eevvideo-links \"eev2019\" \"emacsconf2019\" \"86yiRG8YJD0\")
   2. (find-eevvideo-links \"eev2020\" \"emacsconf2020\" \"hOAqBc42Gg8\")
-  3. (find-eevvideo-links \"eevnav\" \"2020-list-packages-eev-nav\" \"kxBjiUo88_U\")
-  4. (find-eevvideo-links \"2020sometbf\" \"2020-some-template-based\" \"91-9YfRPsuk\")
-  5. (find-eevvideo-links \"2020findherelinks\" \"2020-find-here-links\" \"8jtiBlaDor4\")
-  6. (find-eevvideo-links \"2020ssr\" \"2020-short-find-ssr-links-2\" \"_0_NLXTVhBk\")
-  7. (find-eevvideo-links \"testbls\" \"2020-test-blocks-1\" \"fpsF_M55W4o\")
+  3. (find-eevvideo-links \"eevnav\"  \"2020-list-packages-eev-nav\" \"kxBjiUo88_U\")
+  4. (find-eevvideo-links \"eevtempl\" \"2020-some-template-based\" \"91-9YfRPsuk\")
+  5. (find-eevvideo-links \"eevfherel\" \"2020-find-here-links\" \"8jtiBlaDor4\")
+  6. (find-eevvideo-links \"eevtestblocks\" \"2021-test-blocks\" \"fpsF_M55W4o\")
+  7. (find-eevvideo-links \"2021ssr\" \"2021-ssr\" \"_0_NLXTVhBk\")
+
+They are htmlized in a nice way - see:
+
+  http://angg.twu.net/eev-intros/find-videos-intro.html#3
 
 The function `find-eevvideo-links' is explained here:
 
@@ -10061,18 +10198,15 @@ The function `find-eevvideo-links' is explained here:
 
 
 
-TO DO (urgent): make a video about `find-eevvideo-links' and friends,
-TO DO (not urgent): rewrite most of this intro!
+
+
 
 Everything below this point is VERY old!!!
 
 
 
 
-
-
-
-3. What we have now
+4. What we have now
 ===================
 I am producing a series of videos about eev - but at this moment
 only two very broad introductions are ready 8-(. I have plans for
