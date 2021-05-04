@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021apr23
+;; Version:    2021may04
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -301,45 +301,44 @@ explained in this video:
   http://www.youtube.com/watch?v=kxBjiUo88_U
   http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
 
-To activate eev-mode and open this tutorial, run `M-x eev-beginner'.
+The three links in the \"Video links:\" block below
 
-An alternative way, that only works on *NIX-based systems, is shown in
-this video (from 2016!):
+  [Video links:]
+    (find-eevnavvideo \"0:31\" \"0.1. M-x package-initialize\")
+    (find-eevnavvideo \"0:39\" \"0.2. M-x list-packages\")
+    (find-eevnavvideo \"2:30\" \"0.3. M-x eev-beginner\")
 
-  http://angg.twu.net/eev-videos/video-eev-quick-0.mp4
+point to positions in that video; to learn how to use links like
+those, visit this URL:
 
-To run it, open the page at
+  http://angg.twu.net/eev-intros/find-videos-intro.html#2
 
-  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+Installing eev does NOT activate eev-mode. To activate eev-mode
+and open this tutorial, run `M-x eev-beginner'.
 
-in a browser, and open a terminal running a shell. Mark the multi-line
-\"{ ... }\" block below, copy it to the clipboard with ctrl-C, and paste
-it into the shell to run its commands.
+For other ways to install eev see this other tutorial, especially
+its section 5.1:
 
-{
-  rm -Rv ~/eev
-  rm -Rv ~/eev2/
-  mkdir  ~/eev2/
-  cd     ~/eev2/
-  rm -fv eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
-  tar -xvzf eev2.tgz
-  {
-    echo '#!/bin/sh'
-    echo 'cd ~/eev2/ && emacs -l eev-beginner.el --eval=\"(find-eev-quick-intro)\" $*'
-  } > ~/eev
-  chmod 755 ~/eev
-}
+  http://angg.twu.net/eev-intros/find-eev-install-intro.html#5.1
+  http://angg.twu.net/eev-intros/find-eev-install-intro.html
+  (find-eev-install-intro \"5.1. Using the tarball\")
+  (find-eev-install-intro)
 
-You now have a shell script that you can invoke with
+TIP FOR BEGINNERS: if you are a real beginner with, say, less
+than 10 minutes of experience using Emacs, then you will probably
+be in a stage in which you often get stuck in the middle of
+something that you don't know how to leave - for example, you may
+be in the middle of a \"complex command\", and Emacs may be
+waiting for the keys that would complete the command. The easiest
+way to handle that is to leave Emacs and then start it again, and
+after starting it again you will need to type `M-x eev-beginner'
+to activate eev again. For an explanation of this in video, see:
 
-  ~/eev
-
-that starts Emacs, loads eev, and opens a copy of this tutorial.
-
-Every time that Emacs gets stuck into something that you don't know
-how to leave, or how to undo, you should kill the Emacs window and
-start it again by typing \"~/eev\" again in the shell prompt.
+  [Video links:]
+    (find-eevnavvideo \"3:46\" \"0.4. for the beginners: quitting and restarting\")
+    (find-eevnavvideo \"4:06\"   \"the part of the sequence of keys\")
+    (find-eevnavvideo \"4:21\"   \"go to the file menu, click quit\")
+    (find-eevnavvideo \"4:46\"   \"enter emacs again, type M-x eev-beginner\")
 
 Eventually you will learn how to get out of everything and how to undo
 almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
@@ -347,9 +346,6 @@ This tutorial is intended to make you learn the most essential things
 in the first ten minutes - including how to navigate in Emacs's
 manuals.
 
-For more on ways to install eev see:
-
-  (find-eev-install-intro)
 
 
 
@@ -2210,11 +2206,12 @@ These are the current ways to download and install eev:
 
      and then running `M-x package-install-file';
 
-  3. by using the script in section 1, that downloads a .tgz from
+  3. by using the script in section 5.1 below, that downloads a
+     .tgz from
 
        http://angg.twu.net/eev-current/eev2.tgz ,
 
-     unpacks it in the directory ~/eev/ and creates a script
+     unpacks it in the directory ~/eev2/ and creates a script
      called \"~/eev\" that starts Emacs loading eev and opening
      the main tutorial,
 
@@ -2240,7 +2237,70 @@ These are the current ways to download and install eev:
 
 
 
-5.1. Using the git repository
+5.1. Using the tarball
+----------------------
+This way of installing eev is recommended for people who can't or
+who don't want to use Emacs's `M-x list-packages' (from
+`package.el') and who are on a *NIX-based system.
+
+To install eev using this method, you should copy and paste the
+block of shell commands below into a terminal,
+
+{
+  rm -Rv ~/eev
+  rm -Rv ~/eev2/
+  mkdir  ~/eev2/
+  cd     ~/eev2/
+  rm -fv eev2.tgz
+  wget http://angg.twu.net/eev-current/eev2.tgz
+  tar -xvzf eev2.tgz
+  {
+    echo '#!/bin/sh'
+    echo 'cd ~/eev2/ && emacs -l eev-beginner.el --eval=\"(find-eev-quick-intro)\" $*'
+  } > ~/eev
+  chmod 755 ~/eev
+}
+
+and then execute the commands in it. This is explained in this
+somewhat outdated video (from 2016!):
+
+  http://angg.twu.net/eev-videos/video-eev-quick-0.mp4
+
+In short: you will have to open this URL in a browser,
+
+  http://angg.twu.net/eev-intros/find-eev-install-intro.html#5.1
+
+in a browser, and open a terminal running a shell; then mark the
+multi-line \"{ ... }\" block above, copy it to the clipboard with
+ctrl-C, and paste it into the shell to run its commands.
+
+You will now have a shell script that you can invoke with
+
+  ~/eev
+
+that starts Emacs, loads eev, and opens the main tutorial - i.e.,
+runs `M-x eev-beginner'. Note that if you install eev using this
+method then all the files related to eev will be in the directory
+~/eev2/, except for the script in ~/eev; if you start Emacs in
+the default way then it will not know that it has to look for
+stuff in ~/eev2/, and commands like `M-x eev-beginner' or sexps
+like
+
+  (require 'eev-load)
+  (load \"eev-beginner\")
+
+will not work.
+
+Every time that Emacs gets stuck into something that you don't know
+how to leave, or how to undo, you should kill the Emacs window and
+start it again by typing \"~/eev\" again in the shell prompt.
+
+
+
+
+
+
+5.2. Using the git repository
 -----------------------------
 The git repository for eev is at:
 
@@ -2272,7 +2332,7 @@ incompatible with our convention of creating a script called
 
 
 
-5.2. Installation quirks
+5.3. Installation quirks
 ------------------------
 There were a couple of situations around may/2019 which I was
 helping friends who had installed eev on Windows with `M-x
@@ -2284,7 +2344,7 @@ work... I still need to understand this. See:
 
 If you have installed both an eev from ELPA and an eev from the
 .tgz or from the git repo then one of them will be found first in
-the load-path. Check with one.
+the load-path. Check which one!
 
 
 
