@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2019sep29
+;; Version:    20190929
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")

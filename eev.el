@@ -34,7 +34,8 @@
 ;; <https://github.com/edrx/eev#introduction> - for more information
 ;; and lots of links.
 ;;
-;; See eev-beginner.el for how to load and start eev.
+;; See eev-beginner.el for how to load and start eev:
+;; <http://angg.twu.net/eev-current/eev-beginner.el.html>
 
 ;;; Code:
 

@@ -1,7 +1,15 @@
+2021-05-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-beginner.el: rewrote the comments.
+
+	* eev-intro.el (find-pdf-like-intro): rewrote the section 12 and
+	renamed it to "12. Other ways to generate `code-pdf'-pairs".
+
 2021-05-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-brxxx-intro, find-eev-quick-intro)
-	(find-pdf-like-intro): 
+	(find-pdf-like-intro, find-eev-quick-intro): added several "[Video
+	links:]" blocks.
 
 	* eev-audiovideo.el (find-eev2019video, find-eev2020video)
 	(find-eevnavvideo, find-eevtemplvideo, find-eevfherelvideo)
