@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021may04
+;; Version:    2021may06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -847,6 +847,9 @@ For more details see:
 [Video links:]
   (find-eevnavvideo \"10:36\" \"if I type <f8> six times here\")
   (find-eevnavvideo \"10:50\" \"a shell running inside Emacs\")
+  (find-eev2019video \"15:11\" \"Demo: the eepitch block (in red star lines)\")
+  (find-eev2019video \"15:48\" \"Demo: eepitch on non-red star lines\")
+  (find-eev2019video \"15:56\" \"Demo: eepitch in action\")
 
 
 
@@ -1493,6 +1496,7 @@ See also: (find-code-c-d-intro)
   (find-eev2020video  \"8:20\" \"`code-c-d' defines several new functions\")
   (find-eev2020video \"14:43\" \"1.4. How code-c-d is implemented\")
   (find-eev2020video \"17:20\"   \"find-code-c-d shows the code...\")
+  (find-eev2019video \"17:07\" \"Demo: `code-c-d'\")
 
 
 
@@ -1628,8 +1632,13 @@ executing the eepitch block below with <f8>s,
 then these sexps will be hyperlinks to a page of a PDF, and to
 some string in it...
 
-  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
-  (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
+  (find-pdf-page \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+  (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
+
+[Video links:]
+  (find-eev2020video \"4:52\" \"`find-pdf-page' calls an external program\")
+  (find-eev2020video \"5:26\" \"`find-pdf-text' converts the PDF to text and\")
+
 
 
 
@@ -2670,7 +2679,7 @@ things that happen are:
   3) The environment variables \"S\" and \"EEVDIR\" are set.
 
   4) An innocuous wrapper is installed around an internal
-     function used by `man'. See:
+     function used by `man' (with `advice-add'). See:
 
        (find-eev \"eev-blinks.el\" \"find-man\")
 
@@ -6536,6 +6545,11 @@ position of a PDF,
 
 will be called a `find-pdf'-pair.
 
+[Video links:]
+  (find-eev2020video \"4:52\" \"`find-pdf-page' calls an external program\")
+  (find-eev2020video \"5:26\" \"`find-pdf-text' converts the PDF to text and\")
+
+
 
 
 
@@ -6647,6 +6661,13 @@ behave roughly as abbreviations for:
 
   (find-pdf-page \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
   (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
+
+[Video links:]
+  (find-eev2020video \"10:22\" \"1.3. Shorter hyperlinks to PDFs and videos\")
+  (find-eev2020video \"10:45\"   \"`code-pdf-page' creates short hyperlink functions\")
+  (find-eev2020video \"11:38\"   \"let's try...\")
+  (find-eev2020video \"11:55\"   \"`find-fongspivatext'\")
+
 
 
 
@@ -6804,9 +6825,22 @@ that page of the book!
 
 
 
-12. Another way to generate `code-pdf'-pairs
-============================================
-\[Explain M-P. Example:]
+
+12. Other ways to generate `code-pdf'-pairs
+===========================================
+The easiest way is with `M-h M-e'. See:
+
+  (find-audiovideo-intro \"4.1. `find-extra-file-links'\" \"M-h M-e\")
+
+There is also `M-P', that is a \"wrapping function\" that
+transforms the current line, like `M-B' - see:
+
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\" \"M-B\")
+
+`M-P' parses the current line as a short string and a file name,
+and then deletes the current line and inserts in its place a
+block of five lines containing a `code-pdf'-pair and some
+comments. Try:
 
   (eek \"<down> M-P  ;; eewrap-pdflike\")
   livesofanimals ~/Coetzee99.pdf
@@ -6850,6 +6884,17 @@ and combines it with the idea of \"local copies\" from:
 At this moment the best explanation of these ideas in here:
   (find-eev \"eev-brxxx.el\" \";;; Commentary:\")
 in the source code. I need to rewrite this intro!
+
+[Video links:]
+  (find-eevtemplvideo  \"9:17\" \"3. The function that defines brep\")
+  (find-eevtemplvideo  \"9:38\"  \"`code-brurl' is a variant of `code-c-d'\")
+  (find-eevtemplvideo \"10:07\"  \"find-code-url shows the code instead of executing it\")
+  (find-eevtemplvideo \"11:26\"  \"this is explained in the main tutorial\")
+  (find-eevtemplvideo \"12:12\"  \"accept extra arguments\")
+  (find-eevtemplvideo \"12:34\"  \"if we run just this\")
+  (find-eevtemplvideo \"12:40\"  \"one of the reasons for using text: comments\")
+  (find-eevtemplvideo \"13:03\"  \"if we run just this with extra arguments\")
+  (find-eevtemplvideo \"14:10\"  \"code-brurl executes this code here\")
 
 
 
@@ -7539,6 +7584,9 @@ default - and its error messages appear here:
 
   (find-ebuffer \"*Messages*\")
 
+[Video links:]
+  (find-eev2020video \"6:25\" \"`find-video'\")
+
 
 
 
@@ -7666,6 +7714,9 @@ contains a line like this:
 
 This line will be explained in the section 4.4.
 
+[Video links:]
+  (find-eev2020video \"12:54\" \"This block is a kind of an index for that video\")
+  (find-eev2020video \"13:30\" \"we can index video tutorials\")
 
 
 
@@ -7713,6 +7764,16 @@ to the \"dired half\" of `M-h M-p' - see:
   (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
 
 but `M-h M-e' produces many more links.
+
+[Video links:]
+  (find-eevtemplvideo \"28:12\" \"6. `find-here-links' and `find-extra-file-links'\")
+  (find-eevtemplvideo \"30:18\"  \"`M-h M-e' runs `find-extra-file-links'\")
+  (find-eevtemplvideo \"30:42\"  \"here is an example in Lisp\")
+  (find-eevtemplvideo \"31:06\"  \"and I can change this {c}\")
+  (find-eevtemplvideo \"31:22\"  \"Let me show a more realistic example\")
+  (find-eevtemplvideo \"31:28\"  \"let's go to the directory with the video file\")
+  (find-eevtemplvideo \"31:45\"  \"this file is a video file\")
+
 
 
 

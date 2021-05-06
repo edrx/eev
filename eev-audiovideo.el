@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021apr22
+;; Version:    2021may05
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -574,7 +574,8 @@ See: http://angg.twu.net/emacsconf2019.html
 and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
-  (find-eevvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0"))
+  (interactive)
+  (find-eevvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0" time))
 
 ;; Skel: (find-eevshortvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8")
 (defun find-eev2020video (&optional time &rest rest)
@@ -584,7 +585,8 @@ See: http://angg.twu.net/emacsconf2020.html
 and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
-  (find-eevvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8"))
+  (interactive)
+  (find-eevvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8" time))
 
 ;; Skel: (find-eevshortvideo-links "eevnav"  "2020-list-packages-eev-nav" "kxBjiUo88_U")
 (defun find-eevnavvideo (&optional time &rest rest)
@@ -594,7 +596,8 @@ See: http://angg.twu.net/2020-list-packages-eev-nav.html
 and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
-  (find-eevvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U"))
+  (interactive)
+  (find-eevvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U" time))
 
 ;; Skel: (find-eevshortvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk")
 (defun find-eevtemplvideo (&optional time &rest rest)
@@ -604,7 +607,8 @@ See: http://angg.twu.net/2020-some-template-based.html
 and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
-  (find-eevvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk"))
+  (interactive)
+  (find-eevvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk" time))
 
 ;; Skel: (find-eevshortvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4")
 (defun find-eevfherelvideo (&optional time &rest rest)
@@ -614,7 +618,7 @@ See: http://angg.twu.net/2020-find-here-links.html
 and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
-  (find-eevvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4"))
+  (find-eevvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4" time))
 
 ;; Skel: (find-eevshortvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o")
 (defun find-eevtestblocksvideo (&optional time &rest rest)
@@ -624,7 +628,8 @@ See: http://angg.twu.net/2021-test-blocks.html
 and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
-  (find-eevvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o"))
+  (interactive)
+  (find-eevvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o" time))
 
 
 

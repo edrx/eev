@@ -1,3 +1,20 @@
+2021-05-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-brxxx-intro, find-eev-quick-intro)
+	(find-pdf-like-intro): 
+
+	* eev-audiovideo.el (find-eev2019video, find-eev2020video)
+	(find-eevnavvideo, find-eevtemplvideo, find-eevfherelvideo)
+	(find-eevtestblocksvideo): make them interactive.
+
+2021-05-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-install-intro): new section: "5.1. Using
+	the tarball". The old section "5.1. Using the git repository" is
+	now 5.2, and the old section "5.2. Installation quirks" is now
+	5.3.
+	(find-eev-quick-intro): rewrote the section "1. Installing eev".
+
 2021-04-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-videos-intro): rewrote the sections "2. Short

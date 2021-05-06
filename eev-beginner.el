@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021jan02
+;; Version:    2021may06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-beginner.el>
@@ -29,19 +29,27 @@
 
 ;;; Commentary:
 
-;; This file serves two purposes:
+;; This file loads all modules of eev, turns eev-mode on, and opens
+;; the main tutorial - i.e., runs `(find-eev-quick-intro)'. It is used
+;; by the two most common ways of installing eev:
 ;;
 ;; 1) If you install eev as an emacs package via `M-x list-packages'
 ;;    then no eev modules will be loaded UNTIL you run `M-x
 ;;    eev-beginner', which loads everything, starts eev-mode, and
 ;;    opens the main tutorial. Note that `eev-beginner' is the ONLY
-;;    autoloaded function in eev!
-;;
-;; 2) Some people start playing with Emacs+eev by copying and pasting
-;;    a certain script to a terminal and executing it, following the
-;;    instructions here:
+;;    autoloaded function in eev! See:
 ;;
 ;;      (find-eev-quick-intro "1. Installing eev")
+;;      (find-eev-intro "1. `eev-mode'")
+;;      (find-eev-intro "1. `eev-mode'" "If you load eev")
+;;
+;; 2) Some people start playing with Emacs+eev by copying and pasting
+;;    a certain script to a shell in a terminal and executing it,
+;;    following the instructions here:
+;;
+;;      (find-eev-quick-intro "1. Installing eev")
+;;      (find-eev-quick-intro "1. Installing eev" "tarball")
+;;      (find-eev-install-intro "5.1. Using the tarball")
 ;;
 ;;    That script creates an executable file called "~/eev" whose contents
 ;;    are something like this:
@@ -53,15 +61,36 @@
 ;;    file - that loads all the other modules of eev - and then makes
 ;;    Emacs evaluate the sexp `(find-eev-quick-intro)', that opens the
 ;;    main tutorial.
-
-;; When, or if, you are no longer a beginner, you may want to load eev
-;; by just adding a "(require 'eev-load)" to your ".emacs". This loads
-;; all the main modules but does not turn on eev-mode on by default,
-;; and does not open the tutorial. See:
 ;;
-;;    (find-eev-intro "1. `eev-mode'")
-;;    (find-eev-install-intro "2. The expert setup")
-;;    (find-eev "eev-load.el")
+;; The idea is that even after installing eev:
+;;
+;; 1) it should be trivial to try eev in "beginner mode",
+;;
+;; 2) it should be trivial to start an Emacs without anything from
+;;    eev, or with at most with one "autoload" from eev - see:
+;;
+;;      (find-enode "Lisp Libraries" "autoloaded")
+;;
+;; Some people are very finicky about packages that make global
+;; changes when loaded. Loading all modules of eev causes the (almost
+;; insignificant?) global changes described here,
+;;
+;;   (find-eev-intro "1. " "the only" "things that happen")
+;;
+;; that aren't reverted by deactivating eev-mode with `M-x eev-mode',
+;; and eev defines some functions with the prefix `find-', as
+;; explained here:
+;;
+;;   (find-eev-intro "4. The prefix `find-'")
+;;
+;; I've tried to make eev friendly to several kinds of people,
+;; including total beginners and very finicky old-timers, and this
+;; file - "eev-beginner.el" - seems to provide a good solution.
+;;
+;; The instructions for making Emacs load eev at startup are here:
+;;
+;;   (find-eev-install-intro "2. The expert setup")
+
 
 ;; NOTE: older versions of eev loaded "eev-readme.el" instead of
 ;; "eev-beginner.el". Compare:
