@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210511
+;; Version:    20210512
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -850,7 +850,7 @@ For more details see:
   (find-eev2019video \"15:11\" \"Demo: the eepitch block (in red star lines)\")
   (find-eev2019video \"15:48\" \"Demo: eepitch on non-red star lines\")
   (find-eev2019video \"15:56\" \"Demo: eepitch in action\")
-  (find-testblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
 
 
 
@@ -10213,7 +10213,7 @@ Prerequisites:
 
 1. Some videos
 ==============
-At this moment I have these seven videos about eev (I am
+At this moment I have these eight videos about eev (I am
 deliberately ignoring the ones that I consider obsolete!):
 
   1. \"How to record executable notes with eev - and how to play them back\":
@@ -10255,12 +10255,19 @@ deliberately ignoring the ones that I consider obsolete!):
      http://angg.twu.net/2021-test-blocks.html
      http://angg.twu.net/eev-videos/2021-test-blocks.mp4
      http://www.youtube.com/watch?v=fpsF_M55W4o
-     (find-eevtestblocksvideo)
+     (find-eevtestblsvideo)
 
   7. \"Short videos about workflows - and how to upload them\":
      http://angg.twu.net/2021-ssr.html
      http://angg.twu.net/eev-videos/2021-ssr.mp4
      http://www.youtube.com/watch?v=_0_NLXTVhBk
+
+  8. \"How to use the `[Video links:]' blocks in the `intro's of eev\"
+     http://angg.twu.net/2021-video-links.html
+     http://angg.twu.net/eev-videos/2021-video-links.mp4
+     http://www.youtube.com/watch?v=xQqWufQgzVY
+     (find-eevvlinksvideo \"0:00\")
+
 
 The ones that I prepared for the two EmacsConfs are very
 well-rehearsed, the other ones are not.
@@ -10330,6 +10337,10 @@ in this way:
   6. \"Using test blocks in eev\":
      http://angg.twu.net/2021-test-blocks.html
      (find-eevtestblocksvideo \"0:00\")
+
+  7. \"How to use the `[Video links:]' blocks in the `intro's of eev\"
+     http://angg.twu.net/2021-video-links.html
+     (find-eevvlinksvideo \"0:00\")
 
 If you follow these `find-eev*video' sexp hyperlinks in Emacs you
 will _usually_ get a temporary buffer with links to that video...

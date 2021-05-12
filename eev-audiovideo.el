@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210505
+;; Version:    20210512
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -570,6 +570,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;; See: (find-videos-intro "2. Short links to eev video tutorials")
 
 ;; Skel: (find-eevshortvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0")
+;; Test: (find-eev2019video "0:00")
 (defun find-eev2019video (&optional time &rest rest)
   "Play one of the video tutorials of eev starting at TIME.
 See: http://angg.twu.net/emacsconf2019.html
@@ -581,6 +582,7 @@ and: (find-videos-intro \"2. Short links to eev video tutorials\")
   (find-eevvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0" time))
 
 ;; Skel: (find-eevshortvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8")
+;; Test: (find-eev2020video "0:00")
 (defun find-eev2020video (&optional time &rest rest)
   "Play one of the video tutorials of eev starting at TIME.
 See: http://angg.twu.net/emacsconf2020.html
@@ -592,6 +594,7 @@ and: (find-videos-intro \"2. Short links to eev video tutorials\")
   (find-eevvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8" time))
 
 ;; Skel: (find-eevshortvideo-links "eevnav"  "2020-list-packages-eev-nav" "kxBjiUo88_U")
+;; Test: (find-eevnavvideo "0:00")
 (defun find-eevnavvideo (&optional time &rest rest)
   "Play one of the video tutorials of eev starting at TIME.
 See: http://angg.twu.net/2020-list-packages-eev-nav.html
@@ -603,6 +606,7 @@ and: (find-videos-intro \"2. Short links to eev video tutorials\")
   (find-eevvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U" time))
 
 ;; Skel: (find-eevshortvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk")
+;; Test: (find-eevtemplvideo "0:00")
 (defun find-eevtemplvideo (&optional time &rest rest)
   "Play one of the video tutorials of eev starting at TIME.
 See: http://angg.twu.net/2020-some-template-based.html
@@ -614,6 +618,7 @@ and: (find-videos-intro \"2. Short links to eev video tutorials\")
   (find-eevvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk" time))
 
 ;; Skel: (find-eevshortvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4")
+;; Test: (find-eevfherelvideo "0:00")
 (defun find-eevfherelvideo (&optional time &rest rest)
   "Play one of the video tutorials of eev starting at TIME.
 See: http://angg.twu.net/2020-find-here-links.html
@@ -623,8 +628,9 @@ and: (find-videos-intro \"2. Short links to eev video tutorials\")
      for more info on these video tutorials."
   (find-eevvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4" time))
 
-;; Skel: (find-eevshortvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o")
-(defun find-eevtestblocksvideo (&optional time &rest rest)
+;; Skel: (find-eevshortvideo-links "eevtestbls" "2021-test-blocks" "fpsF_M55W4o")
+;; Test: (find-eevtestblsvideo "0:00")
+(defun find-eevtestblsvideo (&optional time &rest rest)
   "Play one of the video tutorials of eev starting at TIME.
 See: http://angg.twu.net/2021-test-blocks.html
      for more info on this particular video,
@@ -632,9 +638,19 @@ and: (find-videos-intro \"2. Short links to eev video tutorials\")
  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
      for more info on these video tutorials."
   (interactive)
-  (find-eevvideo-links "eevtestblocks" "2021-test-blocks" "fpsF_M55W4o" time))
+  (find-eevvideo-links "eevtestbls" "2021-test-blocks" "fpsF_M55W4o" time))
 
-
+;; Skel: (find-eevshortvideo-links "eevvlinks" "2021-video-links")
+;; Test: (find-eevvlinksvideo "0:00")
+(defun find-eevvlinksvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: http://angg.twu.net/2021-video-links.html
+     for more info on this particular video,
+and: (find-videos-intro \"2. Short links to eev video tutorials\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials."
+  (interactive)
+  (find-eevvideo-links "eevvlinks" "2021-video-links" "xQqWufQgzVY" time))
 
 
 

@@ -1,5 +1,8 @@
 2021-05-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-audiovideo.el (find-eevvlinksvideo): new function.
+	(find-eevtestblocksvideo): renamed to `find-eevtestblsvideo'.
+
 	* eev-intro.el (find-refining-intro, find-here-links-intro): added
 	several "[Video links:]" blocks.
 
