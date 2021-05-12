@@ -226,8 +226,11 @@
 
 
 ;; «youtube-time»  (to ".youtube-time")
-;; Tests: (ee-time-to-youtube-time "2")
+;; Tests: (ee-time-to-youtube-time "")
+;;        (ee-time-to-youtube-time "!")
+;;        (ee-time-to-youtube-time "2")
 ;;        (ee-time-to-youtube-time "23")
+;;        (ee-time-to-youtube-time "123")
 ;;        (ee-time-to-youtube-time "1:23")
 ;;        (ee-time-to-youtube-time "1:23:43")
 ;;

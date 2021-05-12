@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210506
+;; Version:    20210511
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -680,7 +680,7 @@ Try these links (some of them need the Emacs manuals installed):
 This part of the eev tutorials has links to almost all the keys that
 I've learned by heart after using Emacs for 20 years:
 
-  (find-emacs-intro \"Basic keys (Emacs)\")
+  (find-emacs-keys-intro \"2. Key sequences\")
 
 They are not very many, because I use this a lot,
 
@@ -850,6 +850,7 @@ For more details see:
   (find-eev2019video \"15:11\" \"Demo: the eepitch block (in red star lines)\")
   (find-eev2019video \"15:48\" \"Demo: eepitch on non-red star lines\")
   (find-eev2019video \"15:56\" \"Demo: eepitch in action\")
+  (find-testblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
 
 
 
@@ -3005,6 +3006,13 @@ Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
   |_______________|         |__________|__________|         |________________|
 
 
+[Video links:]
+  (find-eevfherelvideo \"4:40\" \"2.1. The 3-window setting - and going back from it\")
+  (find-eevfherelvideo \"6:47\"  \"`M-h M-3': three windows; `M-h M-1' goes back\")
+  (find-eevfherelvideo \"7:29\"  \"the original configuration can be anything\")
+
+
+
 
 
 6. Copying the hyperlink
@@ -3033,6 +3041,10 @@ When you become a slightly more advanced user the easiest way is
 the one with the key sequences described here:
 
   (find-eev-quick-intro \"5.2. Cutting and pasting\")
+
+[Video links:]
+  (find-eevfherelvideo \"8:56\" \"2.2. Copying one link\")
+
 
 
 
@@ -3160,6 +3172,15 @@ discuss them here. See:
 If you want to add support for more complex pos-spec-lists, just
 replace `ee-goto-rest' with your own extended version.
 
+  [Video links:]
+    (find-eev2019video \"1:08\" \"a string to search for\")
+    (find-eev2020video \"2:25\" \"variants that were better behaved\")
+    (find-eev2020video \"2:36\" \"in the same window\")
+    (find-eev2020video \"2:53\" \"pos-spec-lists\")
+
+
+
+
 
 
 
@@ -3210,6 +3231,10 @@ based on `C-y' (`yank'),
 
 but `M-h M-y' \"yanks\" the text at the end of the sexp, in
 quotes, as an new argument.
+
+  [Video links:]
+    (find-eevfherelvideo \"10:30\" \"2.3. Duplicating and refining\")
+    (find-eevfherelvideo \"10:53\"  \"as a string at the end of the sexp\")
 
 
 
@@ -3269,6 +3294,12 @@ of these buffers:
 Note: `M-h M-w' (`ee-copy-this-line-to-kill-ring') is a key
 sequence intended for beginners. I prefer to use something like
 `C-a shift-<down> M-w'.
+
+  [Video links:]
+    (find-eevfherelvideo \"12:35\" \"3. Using a single window\")
+    (find-eevfherelvideo \"13:19\"  \"go back usually by using\")
+
+
 
 
 
@@ -3344,6 +3375,12 @@ The big figure below shows all the key sequences:
   |                 |       `C-y'         |
   |                 |                     |
   |_________________|_____________________|
+
+
+[Video links:]
+  (find-eevfherelvideo  \"8:56\" \"2.2. Copying one link\")
+  (find-eevfherelvideo \"10:10\"  \"when people know a few more keys... C-w and M-w\")
+  (find-eevfherelvideo \"10:21\"  \"that correspond to Cut, Copy, and Paste\")
 
 
 
@@ -3448,15 +3485,38 @@ but I don't touch-type, and for me it became natural to hold the
 meta key down with my left thumb while I type `M-1hwhh' and
 `M-h2hyh-hw' _by moving my hands over the keyboard a lot_...
 
-It would be nice to have a way to do this same series of actions
-using keys that are good for touch typists. One possibilty is to
-use transient-mode:
+It would be nice to have a way to do this same series of actions using
+keys that are good for touch typists. One possibilty is to use a
+hydra; see the experimental code here:
 
-  https://magit.vc/manual/transient/
-  https://lists.gnu.org/archive/html/emacs-devel/2021-01/msg01120.html
+  (find-eev \"eev-hydras.el\")
 
-I can try to implement this myself _if I have touch-typists to
-discuss it with_ - so if you're interested, get in touch!
+If you are interested in discussing how to make this more usable,
+please get in touch!
+
+
+[Video links:]
+  (find-eevfherelvideo \"14:18\" \"4.1. Creating anchors\")
+  (find-eevfherelvideo \"15:22\"  \"an index at the beginning of the file\")
+  (find-eevfherelvideo \"15:47\"  \"the tutorial also explains ... `M-A'\")
+  (find-eevfherelvideo \"16:07\"  \"`M-A' duplicates the line and...\")
+  (find-eevfherelvideo \"16:19\"  \"use `M-B' to create something like this block here\")
+  (find-eevfherelvideo \"17:02\" \"4.2. The option :anchor for `code-c-d'\")
+  (find-eevfherelvideo \"17:21\"  \"here I have one of the source files\")
+  (find-eevfherelvideo \"17:30\"  \"here we have an index\")
+  (find-eevfherelvideo \"17:47\"  \"this sexp is equivalent to\")
+  (find-eevfherelvideo \"18:12\"  \"not all functions created by code-c-d behave in that way\")
+  (find-eevfherelvideo \"18:36\"  \"let me give the short explanation\")
+  (find-eevfherelvideo \"18:57\"  \"is a button that defines new functions\")
+  (find-eevfherelvideo \"19:04\"  \"and this sexp here shows the code\")
+  (find-eevfherelvideo \"19:24\"  \"this defun that defines find-eev\")
+  (find-eevfherelvideo \"20:04\" \"4.3. Shrinking hyperlinks\")
+  (find-eevfherelvideo \"20:25\"  \"it has a demo here\")
+  (find-eevfherelvideo \"21:07\" \"4.4. The preceding tag\")
+  (find-eevfherelvideo \"21:35\"  \"a variant of `M-h M-w'\")
+  (find-eevfherelvideo \"22:06\"  \"it also explains in the echo area what it does\")
+  (find-eevfherelvideo \"22:43\"  \"in this example the refined hyperlink is not useful\")
+  (find-eevfherelvideo \"22:48\"  \"but here is a demo that makes more sense\")
 
 
 

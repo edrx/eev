@@ -1,6 +1,6 @@
 ;;; eev-template0.el -- implement functions that eval `{}'s in a string.
 
-;; Copyright (C) 2019 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210203
+;; Version:    20210509
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-template0.el>
@@ -100,23 +100,24 @@ set this variable temporarily in a `let'.")
 ;; (let ((hi "Here: ") (a 22) (b 33)) (ee-template00 "{hi}{a}+{b}={(+ a b)}"))
 ;; 
 (defun ee-template00 (str)
-"Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
+  "Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
 Examples:\n
   (ee-template00 \"a{(+ 2 3)}b\")
     -->  \"a5b\"\n
   (let ((hi \"Here:\") (a 22) (b 33))
     (ee-template00 \"{hi} {a} + {b} = {(+ a b)}\"))  
     -->  \"22 + 33 = 55\""
-  (replace-regexp-in-string
-   ee-template00-re
-   (lambda (_code_) (format "%s" (eval (read (substring _code_ 1 -1)))))
-   str 'fixedcase 'literal))
+  (save-match-data
+    (replace-regexp-in-string
+     ee-template00-re
+     (lambda (_code_) (format "%s" (eval (read (substring _code_ 1 -1)))))
+     str 'fixedcase 'literal)))
 
 ;; Test:
 ;; (ee-template0 "{<} a{(+ 2 3)} {>}")
 ;;
 (defun ee-template0 (str)
-"Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
+  "Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
 Substrings of the form `{<}' and `{>}' in STR are replaced by `{'
 and `}' respectively; apart from that, this is the same as
 `ee-template00'.

@@ -1,3 +1,20 @@
+2021-05-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-refining-intro, find-here-links-intro): added
+	several "[Video links:]" blocks.
+
+	* eev-hydras.el: new file.
+
+2021-05-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-psnevideo-download-if-needed): renamed to
+	`ee-psne-if-needed'.
+	(ee-psnevideo-download): renamed to `ee-psne-download'.
+	(ee-psnevideo-download0): renamed to `ee-psne-download0'.
+	(ee-psnevideo-links): rewritten.
+
+	* eev-template0.el (ee-template00): added a `save-match-data'.
+
 2021-05-06  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-beginner.el: rewrote the comments.
