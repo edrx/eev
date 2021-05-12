@@ -10346,6 +10346,13 @@ If you follow these `find-eev*video' sexp hyperlinks in Emacs you
 will _usually_ get a temporary buffer with links to that video...
 see the next section.
 
+...or for an explanation in video, see:
+
+  http://angg.twu.net/2021-video-links.html
+  (find-eevvlinksvideo \"0:00\")
+  http://www.youtube.com/watch?v=xQqWufQgzVY
+
+
 
 
 
