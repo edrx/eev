@@ -2,7 +2,7 @@
 ;; The basic hyperlinks are the ones that do not depend on templates,
 ;; and that are not created by `code-c-d' and friends.
 
-;; Copyright (C) 1999-2020 Free Software Foundation, Inc.
+;; Copyright (C) 1999-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20201229
+;; Version:    20210516
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -44,6 +44,7 @@
 ;; «.eek»			(to "eek")
 ;; «.ee-goto-position»		(to "ee-goto-position")
 ;; «.ee-goto-rest»		(to "ee-goto-rest")
+;;   «.curved-single-quotes»	(to "curved-single-quotes")
 ;; «.find-fline»		(to "find-fline")
 ;; «.find-wottb»		(to "find-wottb")
 ;; «.find-efaces»		(to "find-efaces")
@@ -120,8 +121,8 @@ An example: (eek \"C-x 4 C-h\")"
 ;;;
 ;; «ee-goto-position»  (to ".ee-goto-position")
 ;; Support for pos-spec-lists in hyperlinks.
-;; See: (find-eval-intro "6. Refining hyperlinks")
-;;      (find-refining-intro "1. Pos-spec-lists")
+;; See: (find-refining-intro "1. Pos-spec-lists")
+;;      (find-refining-intro "2. Refining hyperlinks")
 
 (defun ee-goto-position (&optional pos-spec &rest rest)
   "Process the \"absolute pos-spec-lists\" arguments in hyperlink functions.
@@ -156,7 +157,7 @@ they skip the first \"absolute\" pos-spec."
     (if rest (ee-goto-rest rest))))
 
 ;; «ee-goto-rest»  (to ".ee-goto-rest")
-;; See: (find-eval-intro "7. Pos-spec-lists")
+;; See: (find-refining-intro "1. Pos-spec-lists")
 ;;
 (defun ee-goto-rest (list)
   "Process \"relative pos-spec-lists\".
@@ -181,6 +182,24 @@ the standard definition."
 	 (eval (car list))
 	 (ee-goto-rest (cdr list)))
 	(t (error "Not a valid pos-spec item: %S" (car list)))))
+
+
+;; «curved-single-quotes»  (to ".curved-single-quotes")
+;; In some situations Emacs converts "`foo'"s to "‘foo’"s, or
+;; vice-versa, in info pages and docstrings; see:
+;;
+;;   (find-elnode "Keys in Documentation" "User Option: text-quoting-style")
+;;   (find-elnode "Text Quoting Style"    "User Option: text-quoting-style")
+;;   (find-elnode "Text Quoting Style" "curved single quotes")
+;;   (find-elnode "Text Quoting Style" "grave accent and apostrophe")
+;;   (find-efunction      'eejump "find-eejumps")
+;;   (find-efunctiondescr 'eejump "find-eejumps")
+;;
+;; Eev doesn't have a way to convert strings in pos-spec-lists between
+;; these styles yet; at this moment `ee-goto-position' and
+;; `ee-goto-rest' do the simplest thing possible - they search for
+;; their string arguments literally with `search-forward'.
+
 
 
 
@@ -995,7 +1014,7 @@ Example: (ee-insert '(?a ?z) 10 \"Foo!\")"
   (while rest
     (let ((o (car rest)))
       (cond ((stringp o) (insert o))
-	    ((numberp o) (if (char-valid-p o) (insert o)))
+	    ((numberp o) (if (characterp o) (insert o)))
 	    ((consp o) (mapc 'ee-insert (apply 'number-sequence o)))
 	    (t (error "Not string/int/pair: %S" o))))
     (setq rest (cdr rest))))

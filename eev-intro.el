@@ -2810,6 +2810,11 @@ what you do, in a format that is reasonably readable and that is
 easy to \"play back\" later, step by step and in any order. We
 call these executable logs, or executable notes, \"e-scripts\".
 
+[Video links:]
+  (find-eev2019video \"5:41\" \"e-scripts\")
+  (find-eev2019video \"12:54\" \"A demo\")
+
+
 
 
 
@@ -2921,6 +2926,12 @@ back\" from that buffer with `M-k' of `M-K':
   (find-eval-intro \"5. Going back\")
 
 
+[Video links:]
+  (find-eev2020video \"2:25\" \"variants that were better behaved\")
+  (find-eev2020video \"2:36\" \"in the same window as before\")
+
+
+
 
 
 3. `find-here-links'
@@ -2976,6 +2987,7 @@ and puts the cursor at the elinks buffer.
 
 
 
+
 5. `find-here-links-1'
 ======================
 After creating the three windows described above we will usually
@@ -3007,6 +3019,7 @@ Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
 
 
 [Video links:]
+  (find-eevfherelvideo \"4:40\" \"2. The beginner's way\")
   (find-eevfherelvideo \"4:40\" \"2.1. The 3-window setting - and going back from it\")
   (find-eevfherelvideo \"6:47\"  \"`M-h M-3': three windows; `M-h M-1' goes back\")
   (find-eevfherelvideo \"7:29\"  \"the original configuration can be anything\")
@@ -6633,7 +6646,7 @@ the page whose page number is 3 is the page whose page label is
   (find-livesofanimalspage 3)
 
 are equivalent, but the first one is more human-friendly: the 113
-is a page label, and the -110 is adjustment (we call it the
+is a page label, and the -110 is an adjustment (we call it the
 \"offset\") to convert the 113 that humans prefer to see into
 the 3 that xpdf needs to receive.
 
@@ -9796,10 +9809,16 @@ and then:
 
 Here is the demo. Run it with <F8>s:
 
-
  (find-3EE '(eepitch-shell) '(eepitch-shell2))
+ (find-3ee '(eepitch-shell) '(eepitch-shell2))
+ (eepitch-shell)
+# Optional clean-up:
+ls -lAF $EEVTMPDIR/eeg.A.*
+rm -fv  $EEVTMPDIR/eeg.A.*
+
  (eepitch-shell2)
-$EEVDIR/eegchannel A python
+# Start a python interpreter \"listening on channel A\":
+$EEVDIR/eegchannel A python3
 
  (eepitch-shell)
 # Check that eeg.A.pid exists and is very recent:

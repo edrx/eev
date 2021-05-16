@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210509
+;; Version:    20210516
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -298,6 +298,16 @@ This is an internal function used by `find-{stem}-links'.\"
 ;; Many of the templated functions of eev were written using this.
 ;; They all have a line saying ";; Skel:" that generates their "skeleton".
 ;; See: (find-eevgrep "grep --color -nH --null -e Skel: *.el")
+;;      (find-eevtemplvideo "0:18" "1. `find-find-links-links-new'")
+;;      (find-eevtemplvideo "1:15"   "if I execute (find-emacs-tangents-links)")
+;;      (find-eevtemplvideo "1:29"   "generated again with these values")
+;;      (find-eevtemplvideo "1:50"   "the implementation is very simple")
+;;      (find-eevtemplvideo "2:00"   "in five minutes because")
+;;      (find-eevtemplvideo "2:15"   ";; Skel:")
+;;      (find-eevtemplvideo "2:32"   "optional arguments, then this field")
+;;      (find-eevtemplvideo "2:40"   "temporary variables set by a let*")
+;;      (find-eevtemplvideo "3:25"   "to write `find-emacs-tangents-links'")
+;;      (find-eevtemplvideo "3:40"   "backslashes in the right places")
 ;;
 (defun find-find-links-links-new (&optional stem args vars &rest pos-spec-list)
 "Visit a temporary buffer containing a skeleton of a find-*-links function."
@@ -912,6 +922,25 @@ emacs    -fg bisque -bg black                  eev-readme.el
 ;; Skel: (find-find-links-links-new "youtubedl" "dir title hash ext- stem" "")
 ;; Test: (find-youtubedl-links nil nil "K6LmZ0A1s9U")
 ;; See:  (find-audiovideo-intro "6. Youtube-dl")
+;;       (find-eevtemplvideo "19:23" "5. `find-youtubedl-links'")
+;;       (find-eevtemplvideo "19:43"   "if we twist the notion of user enough")
+;;       (find-eevtemplvideo "20:02"   "user-friendly to me")
+;;       (find-eevtemplvideo "20:05"   "The documentation is in this tutorial:")
+;;       (find-eevtemplvideo "21:36"   "its code is here")
+;;       (find-eevtemplvideo "21:55"   "Let me show a demo")
+;;       (find-eevtemplvideo "22:15"   "I never type these rm -Rv/mkdir/cd by hand")
+;;       (find-eevtemplvideo "22:48"   "let me show how to download ... the hash is here")
+;;       (find-eevtemplvideo "23:25"   "they regenerate this buffer in slightly different ways")
+;;       (find-eevtemplvideo "24:03"   "a video with this hash. If I visit the directory")
+;;       (find-eevtemplvideo "24:32"   "my magic functions have to")
+;;       (find-eevtemplvideo "24:50"   "if I run this sexp here with nil")
+;;       (find-eevtemplvideo "25:00"   "it tries to guess the title")
+;;       (find-eevtemplvideo "25:28"   "and if I change this {stem} here I get short links")
+;;       (find-eevtemplvideo "26:14"   "has very long lines, but if I type super-w")
+;;       (find-eevtemplvideo "26:28"   "I get a buffer that shows the code for")
+;;       (find-eevtemplvideo "26:50"   "if I execute this I play the video")
+;;       (find-eevtemplvideo "27:15"   "a copy of that points to the right position")
+;;       (find-eevtemplvideo "27:53"   "summary: this is how I download videos from youtube")
 ;;
 (defun find-youtubedl-links (&optional dir title hash ext- stem &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for youtube-dl."
