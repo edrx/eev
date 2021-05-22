@@ -1297,6 +1297,8 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
 ;; «find-esetkey-links»  (to ".find-esetkey-links")
 ;; Skel: (find-find-links-links-new "esetkey" "key command" "longkey")
 ;; Test: (find-esetkey-links (kbd "M-o") 'other-window)
+;;  See: (find-eevtemplvideo "14:20" "4. `find-esetkey-links'")
+;;       (find-eevtemplvideo "14:45"   "if we just run M-x find-esetkey-links")
 ;;
 (defun find-esetkey-links (&optional key command &rest pos-spec-list)
   "Visit a temporary buffer containing sexps for setting a key."

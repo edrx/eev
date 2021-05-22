@@ -7623,8 +7623,7 @@ the URL to the end of a log file. So \"p-sn-e\".
 Source code:  (find-eev \"eev-intro.el\" \"find-audiovideo-intro\")
 More intros:  (find-eev-quick-intro)
               (find-eev-intro)
-              (find-eval-intro)
-              (find-eepitch-intro)
+              (find-videos-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
