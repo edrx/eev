@@ -1,3 +1,21 @@
+2021-05-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (find-pdf-page): make it an alias to
+	`find-xpdf-page'. Also, the comments in "eev-pdflike.el" now say
+	that the recommened a way to change the default viewer is with a
+	`defalias'; before this change the recommended way was with a
+	`code-pdfbackend', that was much harder to understand.
+
+	* eev-rcirc.el (ee-libera-server, ee-libera-ichannels)
+	(ee-libera-achannels): new variables.
+	(find-libera, find-libera-2a, find-libera-3a, eepitch-libera): new
+	functions.
+
+	* eev-intro.el (find-rcirc-intro): use LiberaChat insted of
+	Freenode.
+
+	* eev-tla.el: new file.
+
 2021-05-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-insert): use `characterp' instead of

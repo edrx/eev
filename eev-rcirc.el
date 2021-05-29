@@ -1,6 +1,6 @@
 ;;; eev-rcirc.el -- rcirc-related elisp hyperlinks.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190511
+;; Version:    20210528
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -33,6 +33,7 @@
 ;; «.find-rcirc-buffer-2a»	(to "find-rcirc-buffer-2a")
 ;; «.find-rcirc-buffer-3a»	(to "find-rcirc-buffer-3a")
 ;; «.find-freenode»		(to "find-freenode")
+;; «.find-libera»		(to "find-libera")
 ;; «.find-freenode-links»	(to "find-freenode-links")
 
 ;;; Commentary:
@@ -340,6 +341,76 @@ This is like `find-rcirc-buffer-3a' but uses
 ;;      (find-efunction 'eepitch-to-buffer)
 (defun eepitch-freenode (channel)
   (interactive) (eepitch '(find-freenode channel)))
+
+
+
+
+;;;  _     _ _                     ____ _           _   
+;;; | |   (_) |__   ___ _ __ __ _ / ___| |__   __ _| |_ 
+;;; | |   | | '_ \ / _ \ '__/ _` | |   | '_ \ / _` | __|
+;;; | |___| | |_) |  __/ | | (_| | |___| | | | (_| | |_ 
+;;; |_____|_|_.__/ \___|_|  \__,_|\____|_| |_|\__,_|\__|
+;;;                                                     
+;; «find-libera»  (to ".find-libera")
+;; In may/2021 many important Free Software channels migrated from
+;; Freenode to LiberaChat. These functions are similar to the ones
+;; that start with `find-freenode', but they use LiberaChat instead.
+
+(defvar ee-libera-server "irc.libera.chat")
+
+(defvar ee-libera-ichannels "#eev #rcirc"
+  "The list of initial channels to connect to at libera.")
+
+(defvar ee-libera-achannels nil
+  "The list of channels that `find-libera' always reconnects to.
+When this is nil act as if this was a copy of `ee-libera-ichannels'.")
+
+(defun find-libera (&optional channel &rest pos-spec-list)
+  "Connect to libera and switch to the buffer for channel CHANNEL.
+This is like `find-rcirc-buffer', but uses the variables
+`ee-libera-ichannels' and `ee-libera-achannels'."
+  (apply 'find-rcirc-buffer
+	  ee-libera-server
+	  ee-libera-ichannels
+	  ee-libera-achannels channel pos-spec-list))
+
+(defun find-libera-2a (channel)
+  "Connect to libera and create this window setup:
+   _________ ________
+  |         |        |
+  | current |  irc   |
+  | buffer  | buffer |
+  |_________|________|
+
+This is like `find-rcirc-buffer-2a' but uses
+`ee-libera-ichannels' and `ee-libera-achannels'."
+  (find-2a nil '(find-libera channel)))
+
+(defun find-libera-3a (channel)
+  "Connect to libera and create this window setup:
+   _________ _________
+  |         |         |
+  |         |   irc   |
+  |         |  server |
+  | current |_________|
+  | buffer  |         |
+  |         |   irc   |
+  |         | channel |
+  |_________|_________|
+
+This is like `find-rcirc-buffer-3a' but uses
+`ee-libera-ichannels' and `ee-libera-achannels'."
+  (find-3a nil '(find-libera) '(find-libera channel)))
+
+
+;; See: (find-efunction 'eepitch)
+;;      (find-efunction 'eepitch-to-buffer)
+(defun eepitch-libera (channel)
+  (interactive) (eepitch '(find-libera channel)))
+
+
+
+
 
 
 

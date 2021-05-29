@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210522
+;; Version:    20210524
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tla.el>
@@ -148,6 +148,7 @@
 (defun ee-tla-canonicalize (o)
   (if (stringp o) (ee-shorten-file-name (ee-expand o)) o))
 
+;; Here the argument tla has to be a symbol.
 (defun ee-tla-set (tla fname)
   (setq fname (ee-tla-canonicalize fname))
   (puthash fname tla ee-tla-table)
@@ -173,6 +174,7 @@
 			collect (format "%S -> %S\n" k (ee-tla-get k)))))
     (apply 'concat (sort lines 'string<))))
 
+;; Tests:
 ;; (code-tla "ats" "~/LATEX/2020ats.tex")
 ;; (code-tla "pyt" "~/LATEX/2020pythontex.tex")
 ;; (code-tla "dnv" "~/LATEX/2020dednat6-video.tex")
@@ -198,7 +200,11 @@
 ;; «code-tla»  (to ".code-tla")
 ;;  Skel: (find-code-xxx-links "tla" "tla fname" "")
 ;; Tests: (find-code-tla "qux" "~/LATEX/2019J-ops-algebra.tex")
+;;        (find-code-tla 'qux  "~/LATEX/2019J-ops-algebra.tex")
 ;;        (find-code-tla "qux" "~/LATEX/2019J-ops-algebra.txt")
+;;        (find-code-tla 'qux  "~/LATEX/2019J-ops-algebra.txt")
+;; Note that here the first argument can be either a string or a
+;; symbol - try the tests above!
 
 (defun      code-tla (tla fname)
   (eval (ee-read      (ee-code-tla tla fname))))
@@ -354,6 +360,16 @@ See: (find-eevfile \"eev-tla.el\" \";; Commentary:\")"
 (defun eejump-33 ()
   (eek "C-a")
   (insert (ee-tla-link (ee-tla-tla) 99 (ee-tla-tag))))
+
+
+
+;; Let's make `tla' point to this file,
+(code-tla 'tla (ee-eevfile "eev-tla.el"))
+;; so that people will start with a non-empty
+;; `ee-tla-table'. Try:
+;;   (find-estring (ee-tla-table-to-string) "tla ->")
+;;   (find-estring (ee-tla-table-to-string) "-> tla")
+
 
 
 

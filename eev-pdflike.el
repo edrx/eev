@@ -172,6 +172,7 @@
 ;;   «.code-xxxpdf-alias»		(to "code-xxxpdf-alias")
 ;;
 ;; «.find-pdf-page»			(to "find-pdf-page")
+;;   «.change-default-viewer»		(to "change-default-viewer")
 ;; «.find-pdf-page-windows»		(to "find-pdf-page-windows")
 ;; «.find-pdf-text»			(to "find-pdf-text")
 ;;
@@ -514,22 +515,81 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;;;                         |_|                   |_|          |___/      
 ;;
 ;; «find-pdf-page» (to ".find-pdf-page")
-;; (find-code-pdfbackendalias "pdf-page" "xpdf-page")
-        (code-pdfbackendalias "pdf-page" "xpdf-page")
+;; (find-code-pdfbackend "pdf-page")
+        (code-pdfbackend "pdf-page")
 
-;; You can change the backend that `find-pdf-page' uses by running
-;; something like this:
+;; Make all functions in the `find-pdf-page' family use
+;; `find-xpdf-page' by default, in way that makes this default easy to
+;; change. This defalias will OVERRIDE the `find-pdf-page' defined by
+;; the `code-pdfbackend' above.
 ;;
-;; ;; (find-code-pdfbackendalias "pdf-page" "googlechrome-page")
-;;         (code-pdfbackendalias "pdf-page" "googlechrome-page")
+(defalias 'find-pdf-page 'find-xpdf-page)
 
+;; A VERY TECHNICAL DETAIL: apparently it would be cleaner to do
+;; something like this,
+;;
+;;   (defalias 'ee-find-pdf-page 'ee-find-xpdf-page)
+;;
+;; instead of:
+;;
+;;   (defalias 'find-pdf-page 'find-xpdf-page)
+;;
+;; but if we changed the `ee-find-pdf-page' instead of `find-pdf-page'
+;; then it would be much more difficult to change the default to
+;; `find-pdftools-page', and then later change it back to, say,
+;; `find-xpdf-page'...
+
+
+
+;;;  ____        __             _ _           _                        
+;;; |  _ \  ___ / _| __ _ _   _| | |_  __   _(_) _____      _____ _ __ 
+;;; | | | |/ _ \ |_ / _` | | | | | __| \ \ / / |/ _ \ \ /\ / / _ \ '__|
+;;; | |_| |  __/  _| (_| | |_| | | |_   \ V /| |  __/\ V  V /  __/ |   
+;;; |____/ \___|_|  \__,_|\__,_|_|\__|   \_/ |_|\___| \_/\_/ \___|_|   
+;;;                                                                    
+;; «change-default-viewer»  (to ".change-default-viewer")
+;; To make `find-pdf-page' use another default viewer
+;; you just have to use a `defalias', like this:
+;;
+;;   (defalias 'find-pdf-page 'find-xpdf-page)
+;;   (defalias 'find-pdf-page 'find-evince-page)
+;;   (defalias 'find-pdf-page 'find-pdftools-page)
+;;   (defalias 'find-pdf-page 'find-texworkspdf-page)
+;;   (defalias 'find-pdf-page 'find-googlechrome-page)
+;;
+;; You can inspect the current definition of `find-pdf-page' by
+;; looking at its "function cell". Function cells are explained here:
+;;
+;;   (find-elisp-intro "6. Defining functions")
+;;   (find-elisp-intro "11. Byte-compiled functions")
+;;
+;; When a function is defined with `defalias' its function cell
+;; contains a symbol - the "name" of the function that it points to.
+;; Try:
+;;
+;;   (find-efunctionpp                  'find-pdf-page)
+;;                     (symbol-function 'find-pdf-page)
+;;   (find-efunctionpp (symbol-function 'find-pdf-page))
+;;   (find-efunctionpp                  'find-xpdf-page)
+;;   (find-efunctionpp                  'find-evince-page)
+;;   (find-efunctionpp                  'find-pdftools-page)
+;;   (find-efunctionpp                  'find-texworkspdf-page)
+;;   (find-efunctionpp                  'find-googlechrome-page)
+
+
+;;;  ____        __             _ _                  __        ___  
+;;; |  _ \  ___ / _| __ _ _   _| | |_    ___  _ __   \ \      / / | 
+;;; | | | |/ _ \ |_ / _` | | | | | __|  / _ \| '_ \   \ \ /\ / / __)
+;;; | |_| |  __/  _| (_| | |_| | | |_  | (_) | | | |   \ V  V /\__ \
+;;; |____/ \___|_|  \__,_|\__,_|_|\__|  \___/|_| |_|    \_/\_/ (   /
+;;;                                                             |_| 
 ;; «find-pdf-page-windows»  (to ".find-pdf-page-windows")
 ;; (find-elnode "System Environment" "windows-nt")
 ;; (find-evardescr 'system-type)
+;; (to "find-texworkspdf-page")
 ;;
 (if (eq system-type 'windows-nt)
-    ;; (find-code-pdfbackendalias "pdf-page" "texworkspdf-page")
-            (code-pdfbackendalias "pdf-page" "texworkspdf-page")
+    (defalias 'find-pdf-page 'find-texworkspdf-page)
   )
 
 
@@ -545,8 +605,6 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; «find-pdf-text» (to ".find-pdf-text")
 ;; (find-code-pdfbackendalias "pdf-text" "pdftotext-text")
         (code-pdfbackendalias "pdf-text" "pdftotext-text")
-
-;; «aliases-windows»  (to ".aliases-windows")
 
 
 

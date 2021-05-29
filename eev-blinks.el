@@ -1021,6 +1021,7 @@ Example: (ee-insert '(?a ?z) 10 \"Foo!\")"
 
 ;; Tests: (find-einsert '((32 1000) 10 (8000 12000)))
 ;;        (find-einsert '("Greek:\n" (913 969) 10 "Bold:\n" (120276 120327)))
+;;        (find-einsert (list (char-from-name "MUSICAL SYMBOL C CLEF")))
 (defun find-einsert (what &rest rest)
 "Show characters, strings, and ranges of characters in a temporary buffer.
 Example of use: (find-einsert '((32 1000) 10 (8000 12000)))"
