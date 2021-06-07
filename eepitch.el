@@ -249,6 +249,8 @@ This function is used by `eepitch-this-line'."
 ;;
 ;; «eepitch»  (to ".eepitch")
 ;; See: (find-eepitch-intro "2.3. `(eepitch)'")
+;; See this for a way to use red bullets insted of red stars:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01080.html
 
 (defvar eepitch-regexp "^\\(.*\\)"
 "The regexp used by `eepitch-this-line' to determine what is a red-star line.

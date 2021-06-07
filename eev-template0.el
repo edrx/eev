@@ -76,7 +76,13 @@
 ;; binding - it is common to have `{VAR}'s in the string referring to
 ;; names of arguments of a `defun's, or to names of variables defined
 ;; in an enclosing `let' block, or to names of global variables.
-
+;;
+;; Here are some messages in help-gnu-emacs about dynamic binding
+;; being deprecated:
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00054.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00085.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00095.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00096.html
 
 
 
@@ -87,6 +93,7 @@
 ;;   (find-eev-quick-intro "8.4. Creating e-script blocks" "`M-B'")
 ;;   (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'")
 ;;   (find-eev-quick-intro "9.3. Hyperlinks to PDF files")
+
 
 
 (defvar ee-template00-re "{\\([^{}]+\\)}"

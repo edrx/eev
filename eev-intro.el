@@ -4053,7 +4053,7 @@ Javascript code, and \"following the link\" then means executing
 that code. Web browsers try to make it impossible to have
 hyperlinks or webpages that will send out your private
 information, or that will put your system in a unusable state.
-Security is web browsers is achieved by restricting what the
+Security in web browsers is achieved by restricting what the
 scripts in a page can do.
 
 Sexp hyperlinks, in contrast, can do essentially anything - and,
@@ -5148,8 +5148,8 @@ can be *roughly* described as:
   b) If the target buffer does not exist, create it - by
      running `(shell)'.
 
-  c) If the target buffer is not being display then display it -
-     by creating a two-window setting with the target buffer at
+  c) If the target buffer is not being displayed then display it
+     - by creating a two-window setting with the target buffer at
      the right.
 
 This is a simplification, though... the sexp
@@ -8710,12 +8710,20 @@ print(open(\"/tmp/o\").read())
 
 
 
+
 6. Non-trivial examples
 =======================
 See:
 
-  (find-prepared-intro \"An `ee' for Python\")
-  (find-rcirc-intro \"The server buffer and the channel buffers\")
+  (find-eev-quick-intro \"6.2. Other targets\")
+  (find-eev-quick-intro \"6.2. Other targets\" \"(find-3EE\")
+  (find-rcirc-intro \"1. The example that I use in workshops\")
+  (find-prepared-intro \"3. An `ee' for Python\")
+  (find-prepared-intro \"4. `eepy'\")
+
+The examples with `find-3EE' were created using `M-#', as
+explained in the next section.
+
 
 
 
@@ -8726,9 +8734,16 @@ of red star lines - `(eepitch-target1)', `(eepitch-target2)',
 `(find-3EE ...)', `(find-3ee ...)', etc. We don't want to have to
 type all those by hand, so there is a hack similar to `M-T' that
 generates all those kinds from just \"target1\" and \"target2\"
-to let us just copy around the sexps we need. It is bound to
-`meta-shift-3', which Emacs sees as `M-#'. Compare the result of
-typing `M-T' here,
+to let us just copy around the sexps we need.
+
+This key binding for this hack is `meta-shift-3' - that Emacs
+sees as `M-#' - but it is disabled by default. To enable it, do
+this:
+
+  ;; See: (find-eevfile \"eev-mode.el\" \"eewrap-two-eepitches\")
+  (define-key eev-mode-map \"\\M-#\" 'eewrap-two-eepitches)
+
+Now compare the result of typing `M-T' here,
 
 python
 
@@ -8743,8 +8758,11 @@ which yield this:
  (eepitch-shell)
  (eepitch-python)
 
-Note that we use to `find-3EE' to restart targets instead of
-`eepitch-kill' (this is non-trivial - think about it =/)...
+Remember that The line with `find-3EE' restart the two targets,
+and the line with `find-3ee' just recreates the window setting
+with the two targets but without restarting them; so the line
+with `find-3EE' sort of works as two `eepitch-kill's.
+
 
 
 
@@ -9052,7 +9070,7 @@ your .emacs:
 
 
 5. `find-libera-links'
-========================
+======================
 You can generate lines like the ones above by running
 `find-libera-links'. For example:
 
@@ -9466,7 +9484,7 @@ advanced (i.e., hackish) feature explained here:
  (eepitch-python)
 import os
 def ee():
-  execfile(os.getenv(\"HOME\")+\"/.eev/ee.py\", globals())
+  exec(open(os.getenv(\"HOME\")+\"/.eev/ee.py\").read(), globals())
 
  (eepitch-shell)
 cat > ~/.eev/ee.py <<'%%%'
@@ -9481,7 +9499,7 @@ cat > ~/.eev/ee.py <<'%%%'
 def foo (x):
     return x*x
 
-print foo(5)
+print(foo(5))
 %%%
 
  (eepitch-python)
@@ -9505,7 +9523,7 @@ A call to
 writes \"print(1+2)\" (with an added trailing newline, but that's
 a technical detail) into the \"alternative file\"
 \"~/.eev/ee.py\" - the default would be \"~/.eev/ee.sh\". We can
-that to simplify our demo a bit:
+use that to simplify our demo a bit:
 
  (eek \"C-x 1\")
  (eepitch-python)
@@ -9513,11 +9531,11 @@ that to simplify our demo a bit:
  (eepitch-python)
 import os
 def ee():
-  execfile(os.getenv(\"HOME\")+\"/.eev/ee.py\", globals())
+  exec(open(os.getenv(\"HOME\")+\"/.eev/ee.py\").read(), globals())
 
  (eev \"print(1+2)\" nil \"~/.eev/ee.py\")
 ee()
- (eev \"def foo (x):\\n    return x*x\\n\\nprint foo(5)\" nil \"~/.eev/ee.py\")
+ (eev \"def foo (x):\\n    return x*x\\n\\nprint(foo(5))\" nil \"~/.eev/ee.py\")
 ee()
 print(foo(6))
 
@@ -9532,11 +9550,11 @@ print(foo(6))
  (eepitch-python)
 import os
 def ee():
-  execfile(os.getenv(\"HOME\")+\"/.eev/ee.py\", globals())
+  exec(open(os.getenv(\"HOME\")+\"/.eev/ee.py\").read(), globals())
 
  (eepy \"print(1+2)\")
 ee()
- (eepy \"def foo (x):\\n    return x*x\\n\\nprint foo(5)\")
+ (eepy \"def foo (x):\\n    return x*x\\n\\nprint(foo(5))\")
 ee()
 print(foo(6))
 
@@ -13197,7 +13215,10 @@ See:
 
 Try:
 
-  (setq y 2)
+                      (setq y 2)
+                            y
+  (let  ((y 1))             y)
+  (let  ( y   )             y)
   (let  ((y 1) (z y)) (list y z))
   (let* ((y 1) (z y)) (list y z))
 

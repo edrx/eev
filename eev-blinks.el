@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210516
+;; Version:    20210607
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -52,6 +52,7 @@
 ;; «.find-ebuffer»		(to "find-ebuffer")
 ;; «.find-eoutput»		(to "find-eoutput")
 ;; «.find-estring»		(to "find-estring")
+;; «.find-ehashtable»		(to "find-ehashtable")
 ;; «.find-sh»			(to "find-sh")
 ;; «.find-man»			(to "find-man")
 ;; «.find-man-bug»		(to "find-man-bug")
@@ -586,6 +587,37 @@ The \"Local variables:\" section in the buffer is processed."
 		 (hack-local-variables))
 	 pos-spec-list))
 
+
+
+;;;  _               _       _        _     _           
+;;; | |__   __ _ ___| |__   | |_ __ _| |__ | | ___  ___ 
+;;; | '_ \ / _` / __| '_ \  | __/ _` | '_ \| |/ _ \/ __|
+;;; | | | | (_| \__ \ | | | | || (_| | |_) | |  __/\__ \
+;;; |_| |_|\__,_|___/_| |_|  \__\__,_|_.__/|_|\___||___/
+;;;                                                     
+;; «find-ehashtable»  (to ".find-ehashtable")
+
+(defun ee-hashtable-to-string (f hashtable)
+  "Apply F to each key-value pair of HASHTABLE, and return a big string.
+The function F should be a function that expects three arguments
+- the key, the value, and the hashtable - and returns either a
+line terminated by a newline or an empty string. The lines
+returned by F are collected in a list, then sorted, and then the
+duplicates are removed; the result after that is concatenated
+into a big string, and returned. The key-value pairs for which F
+returned an empty string disappear in the concatenation.
+
+If F is nil then use a default function.
+
+I often refer to strings that may have, and usually do have,
+newlines, as \"big strings\". This is a bit childish, I know..."
+  (setq f (or f (lambda (k v h) (format "%S -> %S\n" k v))))
+  (let ((lines (cl-loop for k being the hash-keys of hashtable
+	 	        collect (funcall f k (gethash k hashtable) hashtable))))
+    (apply 'concat (seq-uniq (sort lines 'string<)))))
+
+(defun find-ehashtable (hashtable &rest pos-spec-list)
+  (apply 'find-estring (ee-hashtable-to-string nil hashtable) pos-spec-list))
 
 
 
