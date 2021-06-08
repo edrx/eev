@@ -632,7 +632,8 @@ they need be called as \"xpdf foo.pdf :42\" instead of as
 \"xpdf foo.pdf 42\". In the future this function will try
 to guess correctly if the \":\" is needed or not, but this
 version just returns the value of the variable
-`ee-find-xpdf-colon'.")
+`ee-find-xpdf-colon'."
+  ee-find-xpdf-colon)
 
 (defvar ee-find-xpdf-page-options '("-fullscreen"))
 (defun  ee-find-xpdf-page (fname &optional page &rest rest)
