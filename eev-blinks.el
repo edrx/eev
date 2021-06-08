@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210607
+;; Version:    20210608
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -53,6 +53,7 @@
 ;; «.find-eoutput»		(to "find-eoutput")
 ;; «.find-estring»		(to "find-estring")
 ;; «.find-ehashtable»		(to "find-ehashtable")
+;; «.find-estruct»		(to "find-estruct")
 ;; «.find-sh»			(to "find-sh")
 ;; «.find-man»			(to "find-man")
 ;; «.find-man-bug»		(to "find-man-bug")
@@ -618,6 +619,103 @@ newlines, as \"big strings\". This is a bit childish, I know..."
 
 (defun find-ehashtable (hashtable &rest pos-spec-list)
   (apply 'find-estring (ee-hashtable-to-string nil hashtable) pos-spec-list))
+
+
+
+
+;;;   __ _           _                 _                   _   
+;;;  / _(_)_ __   __| |       ___  ___| |_ _ __ _   _  ___| |_ 
+;;; | |_| | '_ \ / _` |_____ / _ \/ __| __| '__| | | |/ __| __|
+;;; |  _| | | | | (_| |_____|  __/\__ \ |_| |  | |_| | (__| |_ 
+;;; |_| |_|_| |_|\__,_|      \___||___/\__|_|   \__,_|\___|\__|
+;;;                                                            
+;; «find-estruct»  (to ".find-estruct")
+;; Hyperlinks that display human-readable versions of structures
+;; created with cl-defstruct. To understand how this works, try this:
+;;
+;;         (cl-defstruct mytriple a b c)
+;;                 (make-mytriple :a 22 :c "44")
+;;   (find-estruct (make-mytriple :a 22 :c "44"))
+;;
+;; The second sexp returns this:
+;;
+;;   #s(mytriple 22 nil "44")
+;;
+;; that is difficult to read because it doesn't show the field names.
+;; The `find-estruct' sexp above converts that to a multi-line
+;; representation that shows the slot numbers and the field names.
+;;
+;; See: (find-clnode "Structures")
+;;      (find-clnode "Structures" "cl-defstruct")
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00177.html
+;;
+;; (find-epp (macroexpand ' (cl-defstruct mypoint x y) ))
+;;
+;; (cl-defstruct mypoint x y)
+;; (cl-defstruct (mypoint-colored (:include point)) color)
+;;
+;; (setq myp (make-mypoint         :x 3 :y 4))
+;; (setq myp (make-mypoint-colored :x 3 :y 4))
+;; (setq myp (make-mypoint-colored :x 3 :y 4 :color "green"))
+;; 
+;;                       (ee-struct-class       myp)
+;;                       (ee-struct-slot-names  myp)
+;;                       (ee-struct-slot-names+ myp)
+;;                       (ee-struct-index-table myp)
+;;      (find-ehashtable (ee-struct-index-table myp))
+;;       (gethash 'x     (ee-struct-index-table myp))
+;;       (gethash 'y     (ee-struct-index-table myp))
+;;       (gethash 'color (ee-struct-index-table myp))
+;;                                              myp
+;;                       (ee-struct-to-string   myp)
+;;
+;;                                (find-estruct myp)
+;;               (find-estruct (ee-struct-class myp))
+;;
+;; WARNING: this is a quick hack.
+;; THANKS: to pjb from #emacs.
+
+(defun ee-struct-class (stro)
+  (get (type-of stro) 'cl--class))
+
+(defun ee-struct-slot-names (stro)
+  (cl-mapcar 'cl--slot-descriptor-name
+	     (cl--struct-class-slots (ee-struct-class stro))))
+
+(defun ee-struct-slot-names+ (stro)
+  (cons '<type-name-field> (ee-struct-slot-names stro)))
+
+(defun ee-struct-index-table (stro)
+  (cl--struct-class-index-table (ee-struct-class stro)))
+
+(defun ee-struct-to-string (stro)
+  "Convert the structure object STRO to a multi-line string.
+Here is an example. In
+
+  (cl-defstruct mytriple a b c)
+  (make-mytriple :a 22 :c \"44\")
+    --> #s(mytriple 22 nil \"44\")
+
+the representation `#s(mytriple 22 nil \"44\")' is difficult to
+read because is does't have the field names. This function
+converts that a series of lines of the form \"slotnumber
+fieldname value\", like this:
+
+  (ee-struct-to-string (make-mytriple :a 22 :c \"44\"))
+    --> 0 <type-name-field> mytriple
+        1 a 22
+        2 b nil
+        3 c \"44\"
+"
+  (let* ((ns (number-sequence 0 (length stro)))
+	 (fieldnames (ee-struct-slot-names+ stro))
+	 (lines (cl-mapcar
+		 (lambda (n name o) (format "%d %S %S\n" n name o))
+		 ns fieldnames stro)))
+    (apply 'concat lines)))
+
+(defun find-estruct (stro &rest pos-spec-list)
+  (apply 'find-estring (ee-struct-to-string stro) pos-spec-list))
 
 
 

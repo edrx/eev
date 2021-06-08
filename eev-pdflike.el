@@ -1,6 +1,6 @@
 ;;; eev-pdflike.el -- hyperlinks to documents made of pages.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210208
+;; Version:    20210608
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -624,12 +624,22 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;;   https://en.wikipedia.org/wiki/Xpdf
 ;;   https://askubuntu.com/questions/1245518/how-to-install-xpdf-on-ubuntu-20-04
 
+(defvar ee-find-xpdf-colon "")
+(defun  ee-find-xpdf-colon ()
+  "Return \":\" or \"\" according to the version of xpdf.
+Some versions of xpdf need a \":\" before the page number -
+they need be called as \"xpdf foo.pdf :42\" instead of as
+\"xpdf foo.pdf 42\". In the future this function will try
+to guess correctly if the \":\" is needed or not, but this
+version just returns the value of the variable
+`ee-find-xpdf-colon'.")
+
 (defvar ee-find-xpdf-page-options '("-fullscreen"))
 (defun  ee-find-xpdf-page (fname &optional page &rest rest)
   `("xpdf"
     ,@ee-find-xpdf-page-options
     ,fname
-    ,@(if page `(,(format "%d" page)))
+    ,@(if page `(,(format "%s%d" (ee-find-xpdf-colon) page)))
     ))
 
 ;; (find-code-pdfbackend "xpdf-page")

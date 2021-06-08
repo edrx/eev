@@ -82,7 +82,7 @@
 ;; terminology and the names of the variables and functions. I am
 ;; currently using these terms:
 ;;
-;;   a "keys" mean "a pair of easy-to-type characters" (that have an
+;;   a "keys" means "a pair of easy-to-type characters" (that have an
 ;;     unicode character associated to them,
 ;;
 ;;   a "pos" means this unicode character,
@@ -338,7 +338,7 @@ instead of inserting."
   × xx \\times
   ¬ nt \\neg
 
-  face: ee-composes-face-green
+  face: eev-glyph-face-green
   « <<
   » >>
 
