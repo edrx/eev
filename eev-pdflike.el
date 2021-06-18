@@ -183,6 +183,7 @@
 ;; «.find-xdvi-page»			(to "find-xdvi-page")
 ;; «.find-djview-page»			(to "find-djview-page")
 ;; «.find-evince-page»			(to "find-evince-page")
+;; «.find-mupdfpage»			(to "find-mupdfpage")
 ;; «.find-gv-page»			(to "find-gv-page")
 ;; «.find-djvutxt-text»			(to "find-djvutxt-text")
 ;; «.find-googlechrome-page»		(to "find-googlechrome-page")
@@ -850,6 +851,34 @@ may want to put here code that cleans up that page information.")
 
 ;; (find-code-pdfbackend "evince-page")
         (code-pdfbackend "evince-page")
+
+
+
+
+;;;                            _  __ 
+;;;  _ __ ___  _   _ _ __   __| |/ _|
+;;; | '_ ` _ \| | | | '_ \ / _` | |_ 
+;;; | | | | | | |_| | |_) | (_| |  _|
+;;; |_| |_| |_|\__,_| .__/ \__,_|_|  
+;;;                 |_|              
+;;
+;; «find-mupdfpage»  (to ".find-mupdfpage")
+;; By Erich Ruff. See:
+;; https://lists.gnu.org/archive/html/eev/2021-06/msg00008.html
+
+(defun     find-mupdf-page (fname &optional page &rest rest)
+  (find-bgprocess (ee-find-mupdf-page fname page)))
+(defvar ee-find-mupdf-page-options '())
+(defun  ee-find-mupdf-page (fname &optional page &rest rest)
+  `("mupdf"
+    ,@ee-find-mupdf-page-options
+    ,fname
+    ,@(if page `(,(format "%s" page)))
+    ))
+
+;; (find-code-pdfbackend "mupdf-page")
+        (code-pdfbackend "mupdf-page")
+
 
 
 

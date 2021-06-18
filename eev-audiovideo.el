@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210512
+;; Version:    20210618
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -499,7 +499,8 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
   `(,@ee-mpv-term-options
     "mpv"
     ,fname
-    ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
+    ;; ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
+    ,@(if pos (list (format "--start=%s" (ee-secs-to-mm:ss pos))))
     ,@ee-mpv-audio-options
     ))
 (defun    find-mpv-audio (fname &optional pos &rest rest)

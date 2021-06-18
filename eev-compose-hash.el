@@ -83,7 +83,7 @@
 ;; currently using these terms:
 ;;
 ;;   a "keys" means "a pair of easy-to-type characters" (that have an
-;;     unicode character associated to them,
+;;     unicode character associated to them),
 ;;
 ;;   a "pos" means this unicode character,
 ;;

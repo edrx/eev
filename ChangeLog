@@ -1,4 +1,18 @@
+2021-06-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tla.el (find-pdf-txt, find-pdf-txt-links)
+	(ee-fnamepdf-to-fnametxt, find-pdf-text-insert): new functions.
+
+	* eev-audiovideo.el (ee-find-mpv-audio): use "--start=mm:ss"
+	instead of "--start mm:ss" (thanks to Erich Ruff for the bug fix!)
+
 2021-06-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-xpdf-colon): new variable.
+	(ee-find-xpdf-colon): new function.
+	(ee-find-xpdf-page): use `ee-find-xpdf-colon'.
+	(find-mupdf-page, ee-find-mupdf-page): new functions.
+	(ee-find-mupdf-page-options): new variable.
 
 	* eev-blinks.el (ee-struct-class, ee-struct-slot-names)
 	(ee-struct-slot-names+, ee-struct-index-table)

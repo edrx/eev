@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210524
+;; Version:    20210618
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tla.el>
@@ -136,6 +136,9 @@
 ;; «.code-tla»			(to "code-tla")
 ;; «.find-tla-def-links»	(to "find-tla-def-links")
 ;; «.find-tla-links»		(to "find-tla-links")
+;;
+;; «.find-pdf-txt»		(to "find-pdf-txt")
+;; «.find-pdf-txt-links»	(to "find-pdf-txt-links")
 
 
 
@@ -370,6 +373,101 @@ See: (find-eevfile \"eev-tla.el\" \";; Commentary:\")"
 ;;   (find-estring (ee-tla-table-to-string) "tla ->")
 ;;   (find-estring (ee-tla-table-to-string) "-> tla")
 
+
+
+
+;;;   __ _           _                 _  __       _        _   
+;;;  / _(_)_ __   __| |      _ __   __| |/ _|     | |___  _| |_ 
+;;; | |_| | '_ \ / _` |_____| '_ \ / _` | |_ _____| __\ \/ / __|
+;;; |  _| | | | | (_| |_____| |_) | (_| |  _|_____| |_ >  <| |_ 
+;;; |_| |_|_| |_|\__,_|     | .__/ \__,_|_|        \__/_/\_\\__|
+;;;                         |_|                                 
+;;
+;; «find-pdf-txt»  (to ".find-pdf-txt")
+;; This is a variant of `find-pdf-text' that implements a part of what
+;; Erich Ruff suggested here:
+;;   https://lists.gnu.org/archive/html/eev/2021-06/msg00013.html
+;;
+;; These two sexps are similar, but the second uses a saved ".txt":
+;;   (find-pdf-text "~/Coetzee99.pdf" 3 "LECTURE I")
+;;   (find-pdf-txt  "~/Coetzee99.pdf" 3 "LECTURE I")
+;;
+;; This is a VERY EARLY prototype.
+;; I haven't yet tried to integrate this with `code-tla' or with:
+;;
+;;   (find-pdf-like-intro "7. Shorter hyperlinks to PDF files")
+;;   (find-pdf-like-intro "8. `find-pdf'-pairs")
+;;   (code-pdf-page "livesofanimals" "~/Coetzee99.pdf")
+;;   (code-pdf-text "livesofanimals" "~/Coetzee99.pdf" -110)
+;;
+;; TODO: a `code-pdf-txt' that works like `code-pdf-text' but uses
+;; `find-pdf-txt' instead of `find-pdf-text'.
+
+
+;; Test: (find-pdf-text   "~/Coetzee99.pdf")
+;;       (find-pdf-text   "~/Coetzee99.pdf" 1)
+;;       (find-pdf-text   "~/Coetzee99.pdf" 3)
+;;       (find-pdf-text   "~/Coetzee99.pdf" 3 "LECTURE I")
+;;       (find-sh0 "rm -fv ~/Coetzee99.txt ~/Coetzee99.txt~")
+;;       (find-pdf-txt    "~/Coetzee99.pdf")
+;;       (find-pdf-txt    "~/Coetzee99.pdf" 3)
+;;       (find-pdf-txt    "~/Coetzee99.pdf" 3 "LECTURE I")
+;;  See: (find-efunctionpp          'find-pdf-text)
+;;       (find-efunctionpp          'find-pdftotext-text)
+;;       (find-eev "eev-pdflike.el" "find-pdftotext-text")
+;;       (find-eev "eev-pdflike.el" "find-sh-page")
+;;       (find-eev "eev-pdflike.el" "ee-goto-position-page")
+;;
+(defun find-pdf-txt (fnamepdf &rest pos-spec-list)
+"Open the .txt associated to FNAMEPDF or run `find-pdf-txt-links' to create it."
+  (let ((fnametxt (ee-fnamepdf-to-fnametxt fnamepdf)))
+    (if (file-exists-p fnametxt)
+	(progn (find-fline fnametxt)
+	       (apply 'ee-goto-position-page pos-spec-list))
+      (find-pdf-txt-links fnamepdf))))
+
+;; «find-pdf-txt-links»  (to ".find-pdf-txt-links")
+;; Test: (find-sh0    "rm -fv ~/Coetzee99.txt ~/Coetzee99.txt~")
+;;       (find-pdf-txt-links "~/Coetzee99.pdf")
+;; Skel: (find-find-links-links-new "pdf-txt" "fnamepdf" "fnametxt")
+;;
+(defun find-pdf-txt-links (&optional fnamepdf &rest pos-spec-list)
+"`find-pdf-txt' runs this when the .txt file for FNAMEPDF does not exist."
+  (interactive)
+  (setq fnamepdf (or fnamepdf "{fnamepdf}"))
+  (let* ((fnametxt (or (ee-fnamepdf-to-fnametxt fnamepdf) "{fnametxt}")))
+    (apply
+     'find-elinks
+     `((find-pdf-txt-links ,fnamepdf ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-pdf-txt-links)
+       ""
+       (find-pdf-text-insert 3 ,fnamepdf)
+       (ee-copy-rest 1 '(find-fline ,fnametxt))
+       )
+     pos-spec-list)))
+
+;; Tests: (ee-fnamepdf-to-fnametxt "~/Coetzee99.pdf")
+;;        (ee-fnamepdf-to-fnametxt "~/Coetzee99.FOO")
+;;
+(defun ee-fnamepdf-to-fnametxt (fnamepdf)
+  (if (string-match ".pdf$" fnamepdf)
+      (replace-regexp-in-string ".pdf$" ".txt" fnamepdf)))
+
+;; Tests: (ee-find-pdftotext-text "~/Coetzee99.pdf")
+;;        (find-estring "(find-pdf-text-insert 2 \"~/Coetzee99.pdf\")")
+;;   See: (find-efunctionpp          'find-pdf-text)
+;;        (find-efunctionpp          'find-pdftotext-text)
+;;        (find-eev "eev-pdflike.el" "find-pdftotext-text")
+;;        (find-efunction         'ee-find-pdftotext-text)
+;;        (find-eev "eev-plinks.el"  "find-callprocess")
+;;
+(defun find-pdf-text-insert (nlines fnamepdf)
+  "Move down NLINES and insert FNAMEPDF converted to text."
+  (save-excursion
+    (let ((next-line-add-newlines t))
+      (dotimes (i nlines) (next-line 1)))
+    (insert (find-callprocess00 (ee-find-pdftotext-text fnamepdf)))))
 
 
 

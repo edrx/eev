@@ -30,9 +30,12 @@ The best introductions to eev are:
   video starting at [[http://www.youtube.com/watch?v=86yiRG8YJD0#t=13m10s][13:10]]; the demo of eepitch starts at [[http://www.youtube.com/watch?v=86yiRG8YJD0#t=15m11s][15:11]],
 
 - "[[http://angg.twu.net/emacsconf2020.html][On why most of the best features in eev look like 5-minute hacks]]":
-  my talk at the EmacsConf 2020. It is mostly about design decisions,
-  but at [[http://www.youtube.com/watch?v=hOAqBc42Gg8#t=21m02s][21:02]] it shows how I use M-j to teach Emacs and eev to total
-  beginners, and at [[https://www.youtube.com/watch?v=hOAqBc42Gg8#t=18m47s][18:47]] it explains the design decisions behind M-j.
+  my talk at the EmacsConf 2020. It is mostly about design decisions;
+  for example, starting at [[http://www.youtube.com/watch?v=hOAqBc42Gg8#t=30m40s][30:40]] it explains why eev implements a
+  variant of [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Key-Help.html][M-x describe-key]] that it much more hacker-friendly than
+  the standard one. At [[http://www.youtube.com/watch?v=hOAqBc42Gg8#t=21m02s][21:02]] it shows how I use M-j to teach Emacs and
+  eev to total beginners, and at [[https://www.youtube.com/watch?v=hOAqBc42Gg8#t=18m47s][18:47]] it explains the design
+  decisions behind M-j.
 
 - "[[http://www.youtube.com/watch?v=kxBjiUo88_U][How to install eev with M-x list-packages and how to navigate its
   tutorials]]". This is a video tutorial accessible to total beginners -
@@ -43,14 +46,22 @@ The best introductions to eev are:
 
 - its homepage: [[http://angg.twu.net/#eev]] .
 
+The "[Video links:]" blocks in the sandboxed tutorials are explained
+[[http://angg.twu.net/eev-intros/find-videos-intro.html#2][here]]; that link also has a list of the videos. See also [[https://lists.gnu.org/archive/html/emacs-devel/2021-05/msg00527.html][this
+announcement]] on emacs-devel.
+
 # (find-eev-quick-intro "3. Elisp hyperlinks")
 # (find-eev-quick-intro "6. Controlling shell-like programs")
 # (find-eev2019video "13:10" "Demo: patching xpdf")
 # (find-eev2019video "15:11" "Demo: the eepitch block (in red star lines)")
 # (find-eev2020video "18:47" "M-j - design decisions")
 # (find-eev2020video "21:02" "M-j itself")
+# (find-eev2020video "30:40" "their targets are not visible")
 # (ecop 8 "prehistory-7" "several megabytes")
 # (eco    "prehistory-7" "several megabytes")
+
+# http://angg.twu.net/eev-intros/find-videos-intro.html#2
+# (find-videos-intro "2. Short links to eev video tutorials")
 
 # (ecop 10 "prehistory-9" "users should not be forced to see Lisp")
 # (eco     "prehistory-9" "users should not be forced to see Lisp")
