@@ -1,3 +1,9 @@
+2021-07-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newbrowser-links): new function.
+	(find-git-links): added "-" to the list of characters that are
+	deleted to form the "{c}" argument to `code-c-d'.
+
 2021-06-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tla.el (find-pdf-txt, find-pdf-txt-links)

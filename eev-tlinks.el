@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210516
+;; Version:    20210709
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -89,6 +89,7 @@
 ;; «.find-emacs-tangents-links»		(to "find-emacs-tangents-links")
 ;; «.find-eeit-links»			(to "find-eeit-links")
 ;; «.find-texlive-links»		(to "find-texlive-links")
+;; «.find-newbrowser-links»		(to "find-newbrowser-links")
 
 
 (require 'eev-env)
@@ -1184,12 +1185,12 @@ echo     '{url}' >> ~/.psne.log
 (setq ee-git-dir "~/usrc/") ;; Used by find-git-links
 
 (defun find-git-links (&optional url c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for foo."
+"Visit a temporary buffer containing a script for downloading a git repo."
   (interactive)
   (let (gitstem dir)
     (setq url (or url (ee-git-url-at-point) "{url}"))
     (setq gitstem (or gitstem (ee-git-url-stem url)))
-    (setq c (or c (replace-regexp-in-string "\\." "" gitstem)))
+    (setq c (or c (replace-regexp-in-string "[-.]" "" gitstem)))
     (setq dir (format "%s%s/" ee-git-dir gitstem))
     (apply 'find-elinks
      `((find-git-links ,url ,c)
@@ -2234,6 +2235,73 @@ sudo ./install-tl -select-repository
    pos-spec-list))
 
 ;; Test: (find-texlive-links)
+
+
+
+
+;;;                      _                                     
+;;;  _ __   _____      _| |__  _ __ _____      _____  ___ _ __ 
+;;; | '_ \ / _ \ \ /\ / / '_ \| '__/ _ \ \ /\ / / __|/ _ \ '__|
+;;; | | | |  __/\ V  V /| |_) | | | (_) \ V  V /\__ \  __/ |   
+;;; |_| |_|\___| \_/\_/ |_.__/|_|  \___/ \_/\_/ |___/\___|_|   
+;;;                                                            
+;; «find-newbrowser-links»  (to ".find-newbrowser-links")
+;; Skel: (find-find-links-links-new "newbrowser" "browser binary b" "")
+;; Test: (find-newbrowser-links "googlechrome" "google-chrome" "g")
+;;
+(defun find-newbrowser-links (&optional browser binary b &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for newbrowser."
+  (interactive)
+  (setq browser (or browser "{browser}"))
+  (setq binary (or binary "{binary}"))
+  (setq b (or b "{b}"))
+  (apply
+   'find-elinks-elisp
+   `((find-newbrowser-links ,browser ,binary ,b ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-newbrowser-links)
+     ""
+     ,(ee-template0 "\
+;; This block defines `find-{browser}', `br{b}', `br{b}l', and `br{b}d'.
+;; See: (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+;;      (find-brxxx-intro \"3. The `d' variants\")
+;;      (find-brxxx-intro \"5. `code-brurl'\")
+;;      (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
+;;
+(defun find-{browser} (url) (find-bgprocess `(\"{binary}\" ,url)))
+;;
+;; (find-code-brurl 'find-{browser}  :remote 'br{b}  :local 'br{b}l  :dired 'br{b}d)
+        (code-brurl 'find-{browser}  :remote 'br{b}  :local 'br{b}l  :dired 'br{b}d)
+
+
+
+;; This block defines `find-{browser}-page'.
+;; See: (find-eev \"eev-pdflike.el\" \"find-googlechrome-page\")
+;;
+(defun ee-find-{browser}-page (fname &optional page)
+  `(\"{binary}\" ,(ee-fname-page-to-url fname page)))
+;;
+;; (find-code-pdfbackend \"{browser}-page\")
+        (code-pdfbackend \"{browser}-page\")
+
+
+
+;; Run the `defalias' below if you want to make
+;; `find-pdf-page' use `find-{browser}-page'.
+;; See: (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
+;;
+(defalias 'find-pdf-page 'find-{browser}-page)
+
+
+
+;; Tests:
+;; (find-{browser} \"http://angg.twu.net/#eev\")
+;; (find-{browser}-page \"~/Coetzee99.pdf\")
+;; (find-{browser}-page \"~/Coetzee99.pdf\" 3)
+;; (find-pdf-page \"~/Coetzee99.pdf\" 3)
+")
+     )
+   pos-spec-list))
 
 
 

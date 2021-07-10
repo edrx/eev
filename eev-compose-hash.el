@@ -44,7 +44,23 @@
 ;;
 ;;   Greek letters: (find-einsert '((900 1000)))
 ;;   Some mathematical characters: (find-einsert '((8592 9000)))
-;;
+;;   Some mathematical alphabets:
+
+' (find-einsert '("Bold: "                   (119808 119859) "\n"
+                  "Italic: "                 (119860 119911) "\n"
+                  "Bold italic: "            (119912 119963) "\n"
+                  "Script: "                 (119964 120015) "\n"
+                  "Bold script: "            (120016 120067) "\n"
+                  "Fraktur: "                (120068 120119) "\n"
+                  "Double-struck: "          (120120 120171) "\n"
+                  "Bold Fraktur: "           (120172 120223) "\n"
+                  "Sans-serif: "             (120224 120275) "\n"
+                  "Sans-serif bold: "        (120276 120327) "\n"
+                  "Sans-serif italic: "      (120328 120379) "\n"
+                  "Sans-serif bold italic: " (120380 120431) "\n"
+                  "Monospace: "              (120432 120483) "\n"
+                  "\n" (120484 120831)))
+
 ;; See:
 ;;
 ;;   (find-equailfile "latin-ltx.el")
@@ -275,13 +291,15 @@ instead of inserting."
   (set-face-foreground face fg)
   (set-face-background face bg))
 
-(ee-composes-set-face 'ee-composes-face-Greek   "orange"        "gray20")
-(ee-composes-set-face 'ee-composes-face-greek   "coral"         "gray20")
-(ee-composes-set-face 'ee-composes-face-logical "SteelBlue1"    "gray20")
-(ee-composes-set-face 'ee-composes-face-math    "RoyalBlue2"    "gray20")
-(ee-composes-set-face 'ee-composes-face-linear  "PaleVioletRed" "gray20")
-(ee-composes-set-face 'ee-composes-face-graphic "red"           "gray20")
-(ee-composes-set-face 'ee-composes-face-font    "gold"          "DarkOrange4")
+(ee-composes-set-face 'ee-composes-face-Greek    "orange"        "gray20")
+(ee-composes-set-face 'ee-composes-face-greek    "coral"         "gray20")
+(ee-composes-set-face 'ee-composes-face-logical  "SteelBlue1"    "gray20")
+(ee-composes-set-face 'ee-composes-face-math     "RoyalBlue2"    "gray20")
+(ee-composes-set-face 'ee-composes-face-linear   "PaleVioletRed" "gray20")
+(ee-composes-set-face 'ee-composes-face-script   "PaleVioletRed" "gray20")
+(ee-composes-set-face 'ee-composes-face-graphic  "red"           "gray20")
+(ee-composes-set-face 'ee-composes-face-category "red"           "gray20")
+(ee-composes-set-face 'ee-composes-face-font     "gold"          "DarkOrange4")
 (ee-composes-set-face 'ee-composes-face-yellow-on-red "yellow"  "red")
 
 
@@ -427,6 +445,7 @@ instead of inserting."
   ∪ cu \\cup
   ∫ In \\int
   ∼ ~1 \\sim
+  ∼ 1~ \\sim
   ≃ -~ \\simeq
   ≅ =~ \\cong
   ≈ ~~ \\approx
@@ -477,6 +496,65 @@ instead of inserting."
   𝐫 rm \\mathrm
   𝐬 sf \\mathsf
   𝐭 tx \\text
+
+  face: ee-composes-face-script
+  𝓐 sA \\mathcal{A}
+  𝓑 sB \\mathcal{B}
+  𝓒 sC \\mathcal{C}
+  𝓓 sD \\mathcal{D}
+  𝓔 sE \\mathcal{E}
+  𝓕 sF \\mathcal{F}
+  𝓖 sG \\mathcal{G}
+  𝓗 sH \\mathcal{H}
+  𝓘 sI \\mathcal{I}
+  𝓙 sJ \\mathcal{J}
+  𝓚 sK \\mathcal{K}
+  𝓛 sL \\mathcal{L}
+  𝓜 sM \\mathcal{M}
+  𝓝 sN \\mathcal{N}
+  𝓞 sO \\mathcal{O}
+  𝓟 sP \\mathcal{P}
+  𝓠 sQ \\mathcal{Q}
+  𝓡 sR \\mathcal{R}
+  𝓢 sS \\mathcal{S}
+  𝓣 sT \\mathcal{T}
+  𝓤 sU \\mathcal{U}
+  𝓥 sV \\mathcal{V}
+  𝓦 sW \\mathcal{W}
+  𝓧 sX \\mathcal{X}
+  𝓨 sY \\mathcal{Y}
+  𝓩 sZ \\mathcal{Z}
+
+  ;; Categories
+  face: ee-composes-face-category
+  𝐀 cA \\catA
+  𝐁 cB \\catB
+  𝐂 cC \\catC
+  𝐃 cD \\catD
+  𝐄 cE \\catE
+  𝐅 cF \\catF
+  𝐆 cG \\catG
+  𝐇 cH \\catH
+  𝐈 cI \\catI
+  𝐉 cJ \\catJ
+  𝐊 cK \\catK
+  𝐋 cL \\catL
+  𝐌 cM \\catM
+  𝐍 cN \\catN
+  𝐎 cO \\catO
+  𝐏 cP \\catP
+  𝐐 cQ \\catQ
+  𝐑 cR \\catR
+  𝐒 cS \\catS
+  𝐓 cT \\catT
+  𝐔 cU \\catU
+  𝐕 cV \\catV
+  𝐖 cW \\catW
+  𝐗 cX \\catX
+  𝐘 cY \\catY
+  𝐙 cZ \\catZ
+
+
 ")
 
 
@@ -487,6 +565,7 @@ instead of inserting."
 ;;   (ee-composes-do ee-composes-bigstr-otheriso)
 ;;   (ee-composes-do ee-composes-bigstr-math)
 ;; (find-estring (ee-composes-to-string))
+;; (find-estring (ee-composes-to-catcodes))
 ;; (define-key eev-mode-map (kbd "M-,") 'ee-compose-pair)
 
 
