@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190624
+;; Version:    2021aug06
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -88,8 +88,8 @@
 ;;   (find-sh0  "seq 9 12")
 ;;   (find-sh   "seq 9 12")
 ;;
-;; The `find-sh00' shows a newline-terminated string in the each area;
-;; the `find-sh0' shows that string with the newline deleted; and the
+;; `find-sh00' shows a newline-terminated string in the eecho area;
+;; `find-sh0' shows that string with the last newline deleted; and
 ;; `find-sh' shows it in a temporary buffer instead of in the acho
 ;; area.
 
@@ -175,11 +175,14 @@
 ;;
 ;; «find-callprocess» (to ".find-callprocess")
 ;;
+(defvar ee-find-callprocess00-exit-status nil)
+
 (defun find-callprocess00-ne (program-and-args)
   (let ((argv (ee-split program-and-args)))
     (with-output-to-string
       (with-current-buffer standard-output
-	(apply 'call-process (car argv) nil t nil (cdr argv))))))
+	(setq ee-find-callprocess00-exit-status
+	      (apply 'call-process (car argv) nil t nil (cdr argv)))))))
 
 (defun find-callprocess00 (program-and-args)
   (find-callprocess00-ne (ee-split-and-expand program-and-args)))
@@ -287,7 +290,13 @@ TODO: detect the encoding!!!"
 
 
 
-
+;;;   __ _           _                         _   
+;;;  / _(_)_ __   __| |    __      ____ _  ___| |_ 
+;;; | |_| | '_ \ / _` |____\ \ /\ / / _` |/ _ \ __|
+;;; |  _| | | | | (_| |_____\ V  V / (_| |  __/ |_ 
+;;; |_| |_|_| |_|\__,_|      \_/\_/ \__, |\___|\__|
+;;;                                 |___/          
+;;
 ;; «find-wget» (to ".find-wget")
 ;;
 (defun find-wget00 (url)
@@ -299,6 +308,44 @@ TODO: detect the encoding!!!"
   (apply 'find-eoutput-reuse (format "*wget: %s*" url)
 	 `(insert (find-wget00 ,url))
 	 rest))
+
+(defun find-wget (url &rest pos-spec-list)
+  "Download URL with \"wget -q -O - URL\" and display the output.
+If a buffer named \"*wget: URL*\" already exists then this
+function visits it instead of running wget again.
+If wget can't download URL then this function runs `error'."
+  (let* ((eurl (ee-expand url))
+	 (wgetprogandargs (list "wget" "-q" "-O" "-" eurl))
+	 (wgetbufname (format "*wget: %s*" eurl)))
+    (if (get-buffer wgetbufname)
+	(apply 'find-ebuffer wgetbufname pos-spec-list)
+      ;;
+      ;; If the buffer wgetbufname doesn't exist, then:
+      (let* ((wgetoutput (find-callprocess00-ne wgetprogandargs))
+	     (wgetstatus ee-find-callprocess00-exit-status))
+	;;
+	(if (not (equal wgetstatus 0))
+	    ;; See: (find-node "(wget)Exit Status")
+	    (error "wget can't download: %s" eurl))
+	;;
+	(find-ebuffer wgetbufname)	; create buffer
+	(insert wgetoutput)
+	(goto-char (point-min))
+	(apply 'ee-goto-position pos-spec-list)))))
+
+;; Tests:
+;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el")
+;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wgeta "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wget  "http://angg.twu.net/eev-current/DOESNOTEXIST")
+;;
+(defun find-wgeta (url &rest pos-spec-list)
+  "Like `find-wget', but uses `ee-goto-anchor'."
+  (find-wget url)
+  (apply 'ee-goto-anchor pos-spec-list))
+
+
+
 
 
 

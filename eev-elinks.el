@@ -1205,8 +1205,11 @@ If D is t then try to use `ee-package-dir' to get the directory."
 {findelpafiles}
 
 # (ee-package-dir '{pkg})
-# (find-epp (ee-package-desc '{pkg}))
+# (find-epp     (ee-package-desc '{pkg}))
+# (find-estruct (ee-package-desc '{pkg}))
 
+# (find-epackage-links '{pkg} \"{c}\" t)
+# (find-epackage       '{pkg})
 # (code-c-d \"{c}\" \"{d}\")
 # (find-{c}file \"\")
 

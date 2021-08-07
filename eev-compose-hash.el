@@ -361,10 +361,10 @@ instead of inserting."
   » >>
 
   face: ee-composes-face-math
-  ² 22 ^2
-  ³ 33 ^3
-  ¹ -1 ^{-1}
-  ¹ 11  
+  ² 22 \\superscriptTwo
+  ³ 33 \\superscriptThree
+  ¹ -1 \\superscriptOne
+  ¹ 11 \\superscriptOne
 ")
 
 
@@ -386,6 +386,7 @@ instead of inserting."
   γ gg \\gamma
   δ dd \\delta
   ε ee \\epsilon
+  ε ee \\varepsilon
   ζ ze \\zeta
   η et \\eta
   θ th \\theta
@@ -399,11 +400,11 @@ instead of inserting."
   ρ ro \\rho
   σ si \\sigma
   τ ta \\tau
-  φ ph \\phi
+  φ ph \\varphi
   χ ch \\chi
   ψ ps \\psi
   ω om \\omega
-  ϕ vp \\origphi
+  ϕ vp \\phi
 
   face: ee-composes-face-math
   • bu \\bullet
@@ -566,6 +567,7 @@ instead of inserting."
 ;;   (ee-composes-do ee-composes-bigstr-math)
 ;; (find-estring (ee-composes-to-string))
 ;; (find-estring (ee-composes-to-catcodes))
+;; (find-estring (ee-composes-to-declareunicodes))
 ;; (define-key eev-mode-map (kbd "M-,") 'ee-compose-pair)
 
 
