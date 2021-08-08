@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021aug06
+;; Version:    20210807
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -302,13 +302,6 @@ TODO: detect the encoding!!!"
 (defun find-wget00 (url)
   (find-callprocess00 `("wget" "-q" "-O" "-" ,url)))
 
-(defun find-wget (url &rest rest)
-  "Download URL with \"wget -q -O - URL\" and display the output."
-  (setq url (ee-expand url))
-  (apply 'find-eoutput-reuse (format "*wget: %s*" url)
-	 `(insert (find-wget00 ,url))
-	 rest))
-
 (defun find-wget (url &rest pos-spec-list)
   "Download URL with \"wget -q -O - URL\" and display the output.
 If a buffer named \"*wget: URL*\" already exists then this
@@ -333,18 +326,30 @@ If wget can't download URL then this function runs `error'."
 	(goto-char (point-min))
 	(apply 'ee-goto-position pos-spec-list)))))
 
-;; Tests:
-;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el")
-;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
-;; (find-wgeta "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
-;; (find-wget  "http://angg.twu.net/eev-current/DOESNOTEXIST")
-;;
+(defun find-wget-elisp (url &rest pos-spec-list)
+  "Like `find-wget', but puts the output buffer in emacs-lisp-mode."
+  (find-wget url)
+  (emacs-lisp-mode)
+  (apply 'ee-goto-position pos-spec-list))
+
 (defun find-wgeta (url &rest pos-spec-list)
   "Like `find-wget', but uses `ee-goto-anchor'."
   (find-wget url)
   (apply 'ee-goto-anchor pos-spec-list))
 
+(defun find-wgeta-elisp (url &rest pos-spec-list)
+  "Like `find-wgeta', but puts the output buffer in emacs-lisp-mode."
+  (find-wget url)
+  (emacs-lisp-mode)
+  (apply 'ee-goto-anchor pos-spec-list))
 
+;; Tests:
+;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el")
+;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wgeta "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wget  "http://angg.twu.net/eev-current/DOESNOTEXIST")
+;; (find-wget-elisp  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wgeta-elisp "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
 
 
 
