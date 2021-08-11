@@ -1,3 +1,10 @@
+2021-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-0x0-url): new variable.
+	(ee-0x0-upload-region, find-0x0-links): new functions.
+
+	* eev-env.el: added a "(require 'eepitch)".
+
 2021-08-08  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (find-vtermprocess): new function.

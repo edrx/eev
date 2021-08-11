@@ -1,6 +1,6 @@
 ;;; eev-env.el -- set some environment variables.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190302
+;; Version:    20210810
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-env.el>
@@ -34,12 +34,11 @@
 
 ;;; Commentary:
 
-;; Used by: (find-eev "eev-prepared.el")
-;;
-;; Related but obsolete files:
-;;   <http://angg.twu.net/eev-current/README.html>
-;;   <http://angg.twu.net/eev-current/eev-langs.el.html>
-;;   <http://angg.twu.net/eev-current/eev-rctool.html>
+;; This file defines the environment variable $S
+;; and a few other things.
+
+;; For: (find-eev "eepitch.el" "ee-expand")
+(require 'eepitch)
 
 
 
@@ -53,19 +52,25 @@
 ;;; Set some environment variables (for ee-expand, getenv,
 ;;; shell buffers, xterms started from Emacs, etc).
 
-;; (find-eevrcfile ".bashrc")
-;; (find-eevrcfile ".zshrc")
-
-;; Note: `ee-setenv' and its calls for "S" and "EEVDIR" were moved to:
-;;   (find-eev "eev.el" "ee-setenv")
-;;
 (defun ee-setenv (envvar value)
   "In case the environment variable ENVVAR was not set set it to VALUE."
   (if (null (getenv envvar))
       (setenv envvar (ee-expand value))))
 
-(ee-setenv "S" "~/snarf")       ; for `find-psne-links'
 
+
+;; The variable $S is used by:
+;; (find-psne-intro "4. The environment variable $S")
+;;
+(ee-setenv "S" "~/snarf")
+
+
+;; Used by some deprecated features... compare with:
+;;   (find-eev "eev-code.el" "code-c-d-s")
+;;   (find-eev "eev-code.el" "code-c-d-s" "ee-eev-source-directory")
+;; These deprecated features are (very badly) explained here:
+;;   (find-eev-intro "that require extra setup:")
+;;
 (ee-setenv "EEVDIR"
            (let ((fname (locate-library "eev")))
              (if fname (directory-file-name (file-name-directory fname))
@@ -80,7 +85,7 @@
 ;;; |  __/  __/_____\ V  V /| | |_| | | |_____|  __/ | | \ V / 
 ;;;  \___|\___|      \_/\_/ |_|\__|_| |_|      \___|_| |_|\_/  
 ;;;                                                            
-;; `ee-with-env' run a sexp in a modified environment.
+;; `ee-with-env' runs a sexp in a modified environment.
 ;; Tests:
 ;;
 ;; (ee-with-env '(("FOO" "~/foo") ("FOOL" "oo")) '(find-sh0 "set | grep -a FOO"))
