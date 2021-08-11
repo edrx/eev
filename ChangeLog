@@ -1,3 +1,13 @@
+2021-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-prepared.el (octal-to-num): renamed to `ee-octal-to-num'.
+
+	* eepitch.el (at-eepitch-target): deleted. It was a copy of
+	`eepitch-eval-at-target-window', but with a bad name.
+	(del-echo): renamed to `eepitch-del-echo'.
+
+	* eev-on-windows.el (add-to-PATH): renamed to `ee-add-to-PATH'.
+
 2021-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-0x0-url): new variable.

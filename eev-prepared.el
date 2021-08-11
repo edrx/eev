@@ -1,6 +1,6 @@
 ;;; eev-prepared.el -- eev modules that use temporary dirs and prepared shells.
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190302
+;; Version:    2021aug11
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-prepared.el>
@@ -29,10 +29,19 @@
 ;;                                                (find-eev-intro)
 
 ;;; Commentary:
-;; See: (find-eev "eev-env.el")
-;;      (find-prepared-intro)
 
-
+;; This used to be my main way of sending chunks of code to external
+;; programs, but then `eepitch' appeared and I started to use eepitch
+;; for almost everything. This is still useful in some niche cases but
+;; I don't even know if there are other people besides me who still
+;; use this code. I still use it to 1) send commands like `cd' to
+;; terminals running outside emacs, 2) send chunks of shell commands
+;; to external machines, 3) save blocks of LaTeX code that are loaded
+;; by some .tex files for tests, 4) send chunks of code to Tcl/Tk or
+;; SmallTalk.
+;;
+;; See: (find-prepared-intro)
+;;      (find-eev "eev-env.el")
 
 
 
@@ -95,11 +104,11 @@ interpreting \"(S E)\"-pairs as this function."
   (cond ((numberp s) (buffer-substring-no-properties s e))
         ((stringp s) s)))
 
-(defun octal-to-num (str)
+(defun ee-octal-to-num (str)
   "Convert STR - a sequence of octal digits - to a number."
   (let ((lastv (- (string-to-char (substring str -1)) ?0))
 	(rest (substring str 0 -1)))
-    (if (string= "" rest) lastv (+ lastv (* 8 (octal-to-num rest))))))
+    (if (string= "" rest) lastv (+ lastv (* 8 (ee-octal-to-num rest))))))
 
 (defun ee-write-string (str &optional altfile fmode)
   "Write STR to ALTFILE, or to ee-file if ALTFILE is nil.
@@ -108,7 +117,7 @@ octal digits; if it is not nil then do the equivalent of a
 \"chmod FMODE file\"."
   (let ((fname (substitute-in-file-name (or altfile ee-file))))
     (write-region str nil fname)	; a standard kludge
-    (if fmode (set-file-modes fname (octal-to-num fmode)))))
+    (if fmode (set-file-modes fname (ee-octal-to-num fmode)))))
 
 (defun ee-write (s e pre post &optional altfile fmode)
   "Write PRE+(ee-se-to-string S E)+POST to ALTFILE, or to `ee-file'.

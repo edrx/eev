@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.
 
-;; Copyright (C) 2012,2015,2018,2019,2020 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018,2019,2020,2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210808
+;; Version:    20210811
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -693,30 +693,27 @@ to make it work similarly in unibyte and multibyte buffers."
 ;;; | (_| (_) | | | | | | | | | | ||_____|  __/ (__| | | | (_) |
 ;;;  \___\___/|_| |_| |_|_|_| |_|\__|     \___|\___|_| |_|\___/ 
 ;;;                                                             
-;; What is this: I am trying to find an elegant way to deal with
-;; programs that echo their input (like zsh)... This is still a bit
-;; experimental!
+;; Some programs, like zsh, echo their input when they are run in
+;; eepitch buffers. Sometimes setting the variable
+;; `comint-process-echoes' fixes this, but now always. The most
+;; reliable (modern) way to run them is to use vterm, but this
+;; requires compiling emacs with support for modules and installing
+;; the vterm package.
 ;; See: (find-variable 'comint-process-echoes)
 ;; To do: send an e-mail to Olin Shivers about echoing and stty.
 
-(defun at-eepitch-target (code)
-  (eepitch-prepare)
-  (save-selected-window
-    (select-window (eepitch-target-window))
-    (eval code)))
-
-(defun del-echo (flag)
+(defun eepitch-del-echo (flag)
 "A hack to help determining whether a program echoes its commands or not.
 An example of use:\n
  (eepitch-zsh)
  (eepitch-kill)
  (eepitch-zsh)
 cd /tmp/
- (del-echo t)
+ (eepitch-del-echo t)
 cd /tmp/
- (del-echo nil)
+ (eepitch-del-echo nil)
 cd /tmp/\n"
-  (at-eepitch-target `(setq comint-process-echoes ,flag))
+  (eepitch-eval-at-target-window `(setq comint-process-echoes ,flag))
   (message "At %s: %S" eepitch-buffer-name
 	   `(setq comint-process-echoes ,flag)))
 

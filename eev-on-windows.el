@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190627
+;; Version:    20210811
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -30,13 +30,13 @@
 
 ;;; Commentary:
 ;;
-;; Experimental, undocumented, and messy. This is being used in a
-;; course on LaTeX and Emacs in which the students are trying to run
-;; everything on Windows and I am trying to help them even though I
-;; know next to nothing about Windows.
+;; Experimental, undocumented, and messy. This was used in a course on
+;; LaTeX and Emacs in which the students were trying to run everything
+;; on Windows and I was trying to help them even though I know next to
+;; nothing about Windows.
 
 ;; «.eev-tar»		(to "eev-tar")
-;; «.add-to-PATH»	(to "add-to-PATH")
+;; «.ee-add-to-PATH»	(to "ee-add-to-PATH")
 
 ;; (find-eev "eev-plinks.el" "find-urlretrieve")
 ;; (find-es "emacs" "package-untar")
@@ -49,8 +49,11 @@
 
 
 ;; «eev-tar»  (to ".eev-tar")
-;; Use this - with `M-e' in each line - to download a very recent
-;; version of eev using only Lisp.
+
+;; This was a way to to download a very recent version of eev using
+;; only Lisp. I used it a bit with the students, but then eev became a
+;; part of ELPA and this became obsolete... and now I don't even
+;; remember how reliable this code was.
 ;;
 ;;   (setq  eev-tar-dir   "~/eev-tar/")
 ;;   (setq  eev-tar-fname "~/eev-tar/eev2.tar")
@@ -80,7 +83,7 @@
 
 
 
-;; «add-to-PATH»  (to ".add-to-PATH")
+;; «ee-add-to-PATH»  (to ".ee-add-to-PATH")
 
 ;; (setq mylist '(22 33 44))
 ;; (add-to-list 'mylist 44)
@@ -108,7 +111,7 @@
 	 (newlist (cons dir (delete dir list))))
     (ee-dospath-unsplit newlist)))
 
-(defun add-to-PATH (dir)
+(defun ee-add-to-PATH (dir)
   (setenv "PATH" (ee-dospath-add (getenv "PATH") dir)))
 
 
