@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20201130
+;; Version:    20210813
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -40,24 +40,33 @@
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "When you type `M-e'")
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "numeric prefixes")
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "`M-0 M-e'")
+;;   (find-eval-intro "`M-E' (meta-shift-e)")
+;;
 ;; Note that `M-2 M-e' and `M-3 M-e' only make sense when the sexp is
 ;; a hyperlink.
 
+;; Index:
+;; «.tools»			(to "tools")
+;; «.arg-variants»		(to "arg-variants")
+;; «.ee-eval-last-sexp»		(to "ee-eval-last-sexp")
+;; «.two-old-definitions»	(to "two-old-definitions")
 
 (require 'eev-flash)		; (find-eev "eev-flash.el")
 (require 'eev-multiwindow)	; (find-eev "eev-multiwindow.el")
 
 
 
-;;;                  _                                            _ 
-;;;   _____   ____ _| |      ___  _____  ___ __         ___  ___ | |
-;;;  / _ \ \ / / _` | |_____/ __|/ _ \ \/ / '_ \ _____ / _ \/ _ \| |
-;;; |  __/\ V / (_| | |_____\__ \  __/>  <| |_) |_____|  __/ (_) | |
-;;;  \___| \_/ \__,_|_|     |___/\___/_/\_\ .__/       \___|\___/|_|
-;;;                                       |_|                       
-;;;
-;;; Evaluating sexps (alternatives to eval-last-sexp)
-;;;
+
+
+
+;;;  _____           _     
+;;; |_   _|__   ___ | |___ 
+;;;   | |/ _ \ / _ \| / __|
+;;;   | | (_) | (_) | \__ \
+;;;   |_|\___/ \___/|_|___/
+;;;                        
+;; «tools»  (to ".tools")
+;; Move backward and forward by sexps, get sexp, eval in special ways.
 
 ;; See (find-efunction 'eval-last-sexp-1)
 (defun ee-backward-sexp ()
@@ -89,11 +98,36 @@ This is an internal function used by `ee-eval-last-sexp'."
 (defmacro ee-no-debug (&rest body)
   `(let ((debug-on-error nil)) ,@body))
 
-;; `ee-eval' is also defined elsewhere:
+;; `ee-eval' is also defined in this other file:
 ;;   (find-eevfile "eepitch.el" "defun ee-eval")
 ;;   (defun ee-eval (sexp) (let ((debug-on-error nil)) (eval sexp)))
+;;
+(defun ee-eval (sexp)
+  "Eval SEXP with `debug-on-error' turned off."
+  (ee-no-debug (eval sexp)))
 
-(defun ee-eval (sexp) (ee-no-debug (eval sexp)))
+(defun ee-eval-lexical (sexp)
+  "Like `ee-eval', but uses lexical binding."
+  (ee-no-debug (eval sexp 'lexical)))
+
+
+
+
+;;;                                    _             _       
+;;;   __ _ _ __ __ _  __   ____ _ _ __(_) __ _ _ __ | |_ ___ 
+;;;  / _` | '__/ _` | \ \ / / _` | '__| |/ _` | '_ \| __/ __|
+;;; | (_| | | | (_| |  \ V / (_| | |  | | (_| | | | | |_\__ \
+;;;  \__,_|_|  \__, |   \_/ \__,_|_|  |_|\__,_|_| |_|\__|___/
+;;;            |___/                                         
+;;
+;; «arg-variants»  (to ".arg-variants")
+;; The variants that are executed when we run `M-0 M-e', `M-1 M-e',
+;; etc instead of just `M-e'. To implement a variant for, for example,
+;; `M-4 M-2 M-e' you just need to define `ee-eval-last-sexp-42'.
+
+(defun ee-eval-last-sexp-default (&optional arg)
+  "Evaluate the sexp before point and show the result in the echo area."
+  (prin1 (ee-eval (read (ee-last-sexp)))))
 
 (defun ee-eval-last-sexp-0 ()
   "Highlight the sexp before point."
@@ -133,47 +167,123 @@ This is an internal function used by `ee-eval-last-sexp'."
   "Evaluate the sexp before point and pretty-print its result in other buffer."
   (find-epp (ee-eval (read (ee-last-sexp)))))
 
-(defun ee-eval-last-sexp-9 ()
-  "A hack for testing `call-interactively'"
-  (let ((interactive-clause (read (ee-last-sexp))))
-    (let ((debug-on-error nil))
-      (call-interactively
-       `(lambda (&rest args) ,interactive-clause
-	  (message "%S" args))))))
+(defun ee-eval-last-sexp-11 ()
+  "Like `ee-eval-last-sexp-default', but uses lexical binding."
+  (prin1 (ee-eval-lexical (read (ee-last-sexp)))))
+
+;; ;; The old definition for `ee-eval-last-sexp-default',
+;; ;; that contained an undocumented hack:
+;; ;;
+;; (defun ee-eval-last-sexp-default (&optional arg)
+;;   "Evaluate the sexp before point and show the result in the echo area."
+;;   (prin1 (let ((ee-arg arg)) (ee-eval (read (ee-last-sexp))))))
+;;
+;; ;; This was hard to explain and to use...
+;; ;;
+;; (defun ee-eval-last-sexp-9 ()
+;;   "A hack for testing `call-interactively'."
+;;   (let ((interactive-clause (read (ee-last-sexp))))
+;;     (let ((debug-on-error nil))
+;;       (call-interactively
+;;        `(lambda (&rest args) ,interactive-clause
+;; 	  (message "%S" args))))))
 
 
-(defun ee-eval-last-sexp (&optional arg)
-  "By default, evaluate sexp before point, and print value in minibuffer.
-This is eev's variant of `eval-last-sexp', and it can behave in
+
+
+;;;  __  __            
+;;; |  \/  |       ___ 
+;;; | |\/| |_____ / _ \
+;;; | |  | |_____|  __/
+;;; |_|  |_|      \___|
+;;;                    
+;; «ee-eval-last-sexp»  (to ".ee-eval-last-sexp")
+;; See: (find-emacs-keys-intro "1. Basic keys (eev)")
+;;      (find-emacs-keys-intro "1. Basic keys (eev)" "M-e")
+
+(defun ee-eval-sexp-eol (&optional arg)
+"Go to the end of line, then run `ee-eval-last-sexp'.
+By default, evaluate sexp before eol, and print value in minibuffer.
+This is eev's variant of `C-e C-x C-e', and it can behave in
 several different ways depending on the prefix argument ARG.
 See: (find-eev-quick-intro \"`M-0 M-e'\")
 
 If ARG is:
-  nil:  evaluate the sexp with `debug-on-error' turned off
+  nil:  evaluate the sexp (with `debug-on-error' turned off)
     0:  highlight the sexp temporarily
     1:  show the sexp as a string
-    2:  show the target of the sexp in another window
-    3:  same, but also switch to the new window
+    2:  eval and show the target of the sexp in another window
+    3:  same as 2, but also switch to the new window
     4:  evaluate the sexp in debug mode
     5:  run the sexp with `debug-on-error' turned on
-    7:  this is equivalent to `M-e <down>'
+    7:  evaluate then move down
     8:  eval then pretty-print the result in another buffer
-    9:  a hack for testing `call-interactively'
-other: set EE-ARG to ARG and eval (ee-last-sexp)."
-  (interactive "P")
-  (cond ((eq arg 0) (ee-eval-last-sexp-0))
-	((eq arg 1) (ee-eval-last-sexp-1))
-	((eq arg 2) (ee-eval-last-sexp-2))
-	((eq arg 3) (ee-eval-last-sexp-3))
-	((eq arg 4) (ee-eval-last-sexp-4))
-	((eq arg 5) (ee-eval-last-sexp-5))
-	((eq arg 7) (ee-eval-last-sexp-7))
-	((eq arg 8) (ee-eval-last-sexp-8))
-	((eq arg 9) (ee-eval-last-sexp-9))
-	(t (prin1 (let ((ee-arg arg))
-		    (ee-eval (read (ee-last-sexp))))))))
+   11:  like nil, but using lexical binding.
 
-;; (defun ee-eval-last-sexp (&optional arg)
+The listing above shows the default behaviors. To add a special
+behavior for, say, ARG=42, define a function
+`ee-eval-last-sexp-42'."
+  (interactive "P")
+  (end-of-line)
+  (ee-eval-last-sexp arg))
+
+
+;; See: (find-eval-intro "`M-E' (meta-shift-e)")
+;;
+(defun ee-eval-last-sexp (&optional arg)
+  "By default, evaluate sexp before point, and show the result.
+This is eev's variant of `eval-last-sexp', and it can behave in
+several different ways depending on the prefix argument ARG.
+
+See `ee-eval-sexp-eol'."
+  (interactive "P")
+  (if (null arg)
+      (ee-eval-last-sexp-default)
+    (if (fboundp (intern (format "ee-eval-last-sexp-%d" arg)))
+	(funcall (intern (format "ee-eval-last-sexp-%d" arg)))
+      (ee-eval-last-sexp-default arg))))
+      
+
+
+;; «two-old-definitions»  (to ".two-old-definitions")
+;; Two old definitions for `ee-eval-last-sexp'.
+;; I'm keeping them here in comments because they are nice to discuss
+;; in workshops (when we have time to discuss basic elisp).
+;;
+;;
+;; (defun ee-eval-last-sexp-OLD (&optional arg)
+;;   "By default, evaluate sexp before point, and print value in minibuffer.
+;; This is eev's variant of `eval-last-sexp', and it can behave in
+;; several different ways depending on the prefix argument ARG.
+;; See: (find-eev-quick-intro \"`M-0 M-e'\")
+;; 
+;; If ARG is:
+;;   nil:  evaluate the sexp with `debug-on-error' turned off
+;;     0:  highlight the sexp temporarily
+;;     1:  show the sexp as a string
+;;     2:  show the target of the sexp in another window
+;;     3:  same, but also switch to the new window
+;;     4:  evaluate the sexp in debug mode
+;;     5:  run the sexp with `debug-on-error' turned on
+;;     7:  this is equivalent to `M-e <down>'
+;;     8:  eval then pretty-print the result in another buffer
+;;     9:  a hack for testing `call-interactively'
+;; other: set EE-ARG to ARG and eval (ee-last-sexp)."
+;;   (interactive "P")
+;;   (cond ((eq arg 0) (ee-eval-last-sexp-0))
+;;         ((eq arg 1) (ee-eval-last-sexp-1))
+;;         ((eq arg 2) (ee-eval-last-sexp-2))
+;;         ((eq arg 3) (ee-eval-last-sexp-3))
+;;         ((eq arg 4) (ee-eval-last-sexp-4))
+;;         ((eq arg 5) (ee-eval-last-sexp-5))
+;;         ((eq arg 7) (ee-eval-last-sexp-7))
+;;         ((eq arg 8) (ee-eval-last-sexp-8))
+;;         ((eq arg 9) (ee-eval-last-sexp-9))
+;;         (t (prin1 (let ((ee-arg arg))
+;;                     (ee-eval (read (ee-last-sexp))))))))
+;; 
+;; 
+;; (defun ee-eval-last-sexp-VERY-OLD (&optional arg)
 ;;   "By default, evaluate sexp before point, and print value in minibuffer.
 ;; This is eev's variant of `eval-last-sexp', and it can behave in
 ;; several different ways depending on the prefix argument ARG.
@@ -207,30 +317,6 @@ other: set EE-ARG to ARG and eval (ee-last-sexp)."
 ;;                             (message "%S" args))))))
 ;;         (t (prin1 (let ((ee-arg arg))
 ;;                     (ee-eval (read (ee-last-sexp))))))))
-
-(defun ee-eval-sexp-eol (&optional arg)
-"Go to the end of line, then run `ee-eval-last-sexp'.
-By default, evaluate sexp before eol, and print value in minibuffer.
-This is eev's variant of `C-e C-x C-e', and it can behave in
-several different ways depending on the prefix argument ARG.
-See: (find-eev-quick-intro \"`M-0 M-e'\")
-
-If ARG is:
-  nil:  evaluate the sexp with `debug-on-error' turned off
-    0:  highlight the sexp temporarily
-    1:  show the sexp as a string
-    2:  show the target of the sexp in another window
-    3:  same, but also switch to the new window
-    4:  evaluate the sexp in debug mode
-    5:  run the sexp with `debug-on-error' turned on
-    8:  eval then pretty-print the result in another buffer
-    9:  a hack for testing `call-interactively'
-other: set EE-ARG to ARG and eval (ee-last-sexp)."
-  (interactive "P")
-  (end-of-line)
-  (ee-eval-last-sexp arg))
-
-
 
 (provide 'eev-eval)
 

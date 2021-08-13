@@ -1,4 +1,14 @@
+2021-08-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-lexical-intro): new function.
+
+	* eev-eval.el (ee-eval-lexical): new function.
+	(ee-eval-last-sexp-11): new function.
+
 2021-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-eval.el (ee-eval-last-sexp): rewrote completely.
+	(ee-eval-last-sexp-9): commented out.
 
 	* eev-prepared.el (octal-to-num): renamed to `ee-octal-to-num'.
 

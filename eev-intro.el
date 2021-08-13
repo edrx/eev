@@ -56,49 +56,50 @@
 
 
 ;; Quick index:
-;; «.find-intro-dual»		(to "find-intro-dual")
-;; «.find-eintro»		(to "find-eintro")
+;; «.find-intro-dual»			(to "find-intro-dual")
+;; «.find-eintro»			(to "find-eintro")
 ;;
-;; «.find-eev-quick-intro»	(to "find-eev-quick-intro")
-;; «.find-emacs-keys-intro»	(to "find-emacs-keys-intro")
-;; «.find-eev-install-intro»	(to "find-eev-install-intro")
-;; «.find-eev-intro»		(to "find-eev-intro")
-;; «.find-here-links-intro»	(to "find-here-links-intro")
-;; «.find-refining-intro»	(to "find-refining-intro")
+;; «.find-eev-quick-intro»		(to "find-eev-quick-intro")
+;; «.find-emacs-keys-intro»		(to "find-emacs-keys-intro")
+;; «.find-eev-install-intro»		(to "find-eev-install-intro")
+;; «.find-eev-intro»			(to "find-eev-intro")
+;; «.find-here-links-intro»		(to "find-here-links-intro")
+;; «.find-refining-intro»		(to "find-refining-intro")
 ;;
-;; «.find-eval-intro»		(to "find-eval-intro")
-;; «.find-links-conv-intro»	(to "find-links-conv-intro")
-;; «.find-links-intro»		(to "find-links-intro")
-;; «.find-eepitch-intro»	(to "find-eepitch-intro")
-;; «.find-wrap-intro»		(to "find-wrap-intro")
-;; «.find-eejump-intro»		(to "find-eejump-intro")
-;; «.find-anchors-intro»	(to "find-anchors-intro")
-;; «.find-code-c-d-intro»	(to "find-code-c-d-intro")
-;; «.find-pdf-like-intro»	(to "find-pdf-like-intro")
-;; «.find-brxxx-intro»		(to "find-brxxx-intro")
-;; «.find-psne-intro»		(to "find-psne-intro")
+;; «.find-eval-intro»			(to "find-eval-intro")
+;; «.find-links-conv-intro»		(to "find-links-conv-intro")
+;; «.find-links-intro»			(to "find-links-intro")
+;; «.find-eepitch-intro»		(to "find-eepitch-intro")
+;; «.find-wrap-intro»			(to "find-wrap-intro")
+;; «.find-eejump-intro»			(to "find-eejump-intro")
+;; «.find-anchors-intro»		(to "find-anchors-intro")
+;; «.find-code-c-d-intro»		(to "find-code-c-d-intro")
+;; «.find-pdf-like-intro»		(to "find-pdf-like-intro")
+;; «.find-brxxx-intro»			(to "find-brxxx-intro")
+;; «.find-psne-intro»			(to "find-psne-intro")
 ;;
-;; «.find-audiovideo-intro»	(to "find-audiovideo-intro")
-;; «.find-multiwindow-intro»	(to "find-multiwindow-intro")
-;; «.find-rcirc-intro»		(to "find-rcirc-intro")
-;; «.find-templates-intro»	(to "find-templates-intro")
-;; «.find-prepared-intro»	(to "find-prepared-intro")
-;; «.find-bounded-intro»	(to "find-bounded-intro")
-;; «.find-channels-intro»	(to "find-channels-intro")
-;; «.find-videos-intro»		(to "find-videos-intro")
+;; «.find-audiovideo-intro»		(to "find-audiovideo-intro")
+;; «.find-multiwindow-intro»		(to "find-multiwindow-intro")
+;; «.find-rcirc-intro»			(to "find-rcirc-intro")
+;; «.find-templates-intro»		(to "find-templates-intro")
+;; «.find-prepared-intro»		(to "find-prepared-intro")
+;; «.find-bounded-intro»		(to "find-bounded-intro")
+;; «.find-channels-intro»		(to "find-channels-intro")
+;; «.find-videos-intro»			(to "find-videos-intro")
 
-;; «.find-defun-intro»		(to "find-defun-intro")
-;; «.find-emacs-intro»		(to "find-emacs-intro")
-;; «.find-org-intro»		(to "find-org-intro")
-;; «.find-escripts-intro»	(to "find-escripts-intro")
-;; «.find-git-intro»		(to "find-git-intro")
+;; «.find-defun-intro»			(to "find-defun-intro")
+;; «.find-emacs-intro»			(to "find-emacs-intro")
+;; «.find-org-intro»			(to "find-org-intro")
+;; «.find-escripts-intro»		(to "find-escripts-intro")
+;; «.find-git-intro»			(to "find-git-intro")
 ;; «.find-little-languages-intro»	(to "find-little-languages-intro")
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
 ;;
-;; «.find-elisp-intro»		(to "find-elisp-intro")
+;; «.find-elisp-intro»			(to "find-elisp-intro")
+;; «.find-lexical-intro»		(to "find-lexical-intro")
 
 
 ;; See: (find-anchors-intro)
@@ -2591,50 +2592,51 @@ recommended reading order. These are the basic ones:
    9. (find-psne-intro)
   10. (find-rcirc-intro)
   11. (find-elisp-intro)
-  12. (find-eev-install-intro)
+  12. (find-lexical-intro)
+  13. (find-eev-install-intro)
 
 This is a very basic tutorial intended mainly for M$ Windows
 users:
 
-  13. (find-windows-beginner-intro)
+  14. (find-windows-beginner-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  14. (find-escripts-intro)
-  15. (find-links-conv-intro)
+  15. (find-escripts-intro)
+  16. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  16. (find-eval-intro)
-  17. (find-links-intro)
-  18. (find-brxxx-intro)
-  19. (find-wrap-intro)
-  20. (find-eejump-intro)
-  21. (find-anchors-intro)
-  22. (find-code-c-d-intro)
+  17. (find-eval-intro)
+  18. (find-links-intro)
+  19. (find-brxxx-intro)
+  20. (find-wrap-intro)
+  21. (find-eejump-intro)
+  22. (find-anchors-intro)
+  23. (find-code-c-d-intro)
 
 These are etcs:
 
-  23. (find-multiwindow-intro)
-  24. (find-templates-intro)
-  25. (find-org-intro)
-  26. (find-git-intro)
+  24. (find-multiwindow-intro)
+  25. (find-templates-intro)
+  26. (find-org-intro)
+  27. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  27. (find-prepared-intro)
-  28. (find-bounded-intro)
-  29. (find-channels-intro)
+  28. (find-prepared-intro)
+  29. (find-bounded-intro)
+  30. (find-channels-intro)
 
 This one is used in a video:
 
-  30. (find-three-main-keys-intro)
+  31. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  31. (find-emacs-intro)
-  32. (find-defun-intro)
+  32. (find-emacs-intro)
+  33. (find-defun-intro)
 
 Item 25 is an index of old video tutorials, with scripts for
 downloading local copies of them and links to important positions
@@ -13460,6 +13462,103 @@ will give you information about the current definition.
 " pos-spec-list)))
 
 ;; (find-elisp-intro)
+
+
+
+
+
+;;;  _           _           _ 
+;;; | | _____  _(_) ___ __ _| |
+;;; | |/ _ \ \/ / |/ __/ _` | |
+;;; | |  __/>  <| | (_| (_| | |
+;;; |_|\___/_/\_\_|\___\__,_|_|
+;;;                            
+;; «find-lexical-intro»  (to ".find-lexical-intro")
+;; Skel: (find-intro-links "lexical")
+
+(defun find-lexical-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-lexical-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-lexical-intro)
+Source code:  (find-efunction 'find-lexical-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+This will become a _tutorial_ on lexical binding in the future,
+and it will be a complement to this elisp tutorial:
+  (find-elisp-intro)
+but at this moment I know far less about lexical binding that I
+should, and this is just an embarassingly small collection of
+links, tests, and examples...
+
+See:
+  (find-eevfile \"eev-template0.el\" \"intrinsically INCOMPATIBLE with lexical\")
+
+
+
+0. `ee-eval-lexical'
+====================
+See: (find-eev \"eev-eval.el\" \"ee-eval-last-sexp\")
+     (find-eev \"eev-eval.el\" \"ee-eval-last-sexp\" \"11:\")
+     (find-eev \"eev-eval.el\" \"tools\")
+     (find-eev \"eev-eval.el\" \"tools\" \"ee-eval-lexical\")
+     (find-efunctiondescr 'eval)
+
+Try to evaluate this sexp with `M-e' and with `M-1 M-1 M-e':
+
+  (let ((x 42))
+    (defun foo () (* x x))
+    (symbol-function 'foo))
+
+
+
+
+1. Creating closures
+====================
+Long form:
+
+  (eval '(let ((x 42)) (defun foo () (* x x))) 'lexical)
+  (eval '(let ((x 42)) (defun foo () (* x x))) nil)
+  (symbol-function 'foo)
+
+Short form:
+
+  (let ((x 42))
+    (defun foo () (* x x))
+    (symbol-function 'foo))
+
+Even shorter:
+
+  (let ((x 42))
+    (function (lambda foo () (* x x))))
+
+
+
+
+2. `letxgetx'
+=============
+See: (find-elnode \"Dynamic Binding\" \"defun getx\")
+     (find-elnode \"Lexical Binding\" \"defun getx\")
+     (find-elnode \"Void Variables\")
+
+  (makunbound   'x)
+  (defun getx () x)
+                                             (getx)
+                                (let ((x 1)) (getx))
+             (defun letxgetx () (let ((x 1)) (getx)))
+                   (letxgetx)
+  (symbol-function 'letxgetx)
+  
+
+
+" pos-spec-list)))
+
+;; (find-lexical-intro)
+
 
 
 
