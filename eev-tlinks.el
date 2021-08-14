@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210709
+;; Version:    20210813
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -47,10 +47,7 @@
 
 ;; NOTE (written in 2019mar05): some of the functions here are very
 ;; old and ugly and I haven't used them in ages. They will be deleted
-;; in the next few months.
-
-;; (find-efunctiondescr 'ee-upload-links)
-;; (find-eev "eev-wrap.el" "eewrap-eewrap")
+;; in the next few (or many) months.
 
 
 
@@ -2364,6 +2361,7 @@ This function is used by `ee-0x0-upload-region'."
      (find-efunction 'find-0x0-links)
      ""
      ,(ee-template0 "\
+{url}
 (find-wget \"{url}\")
 (find-wget-elisp \"{url}\")
 ")

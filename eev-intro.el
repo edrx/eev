@@ -13607,67 +13607,114 @@ modes to compare the results.
 
 
 
-
-(The rest of this tutorial will be rewritten)
-
+(The rest of this tutorial is just a first draft)
 
 
 
-0. `ee-eval-lexical'
+
+1. `lambda' and `function'
+==========================
+See: (find-elnode \"Anonymous Functions\" \"Macro: lambda\")
+     (find-elnode \"Anonymous Functions\" \"Special Form: function\")
+     (find-elnode \"Anonymous Functions\" \"Special Form: function\" \"converted\")
+
+  (let ((x 42))
+    (lambda () x)
+    )
+
+  (let ((x 42))
+    (function 
+      (lambda () x)
+      )
+    )
+
+
+
+2. How closures work
 ====================
-
-
-See: (find-eev \"eev-eval.el\" \"ee-eval-last-sexp\")
-     (find-eev \"eev-eval.el\" \"ee-eval-last-sexp\" \"11:\")
-     (find-eev \"eev-eval.el\" \"tools\")
-     (find-eev \"eev-eval.el\" \"tools\" \"ee-eval-lexical\")
-     (find-efunctiondescr 'eval)
-
-Try to evaluate this sexp with `M-e' and with `M-1 M-1 M-e':
-
-  (let ((x 42))
-    (defun foo () (* x x))
-    (symbol-function 'foo))
-
-
-
-
-1. Creating closures
-====================
-Long form:
-
-  (eval '(let ((x 42)) (defun foo () (* x x))) 'lexical)
-  (eval '(let ((x 42)) (defun foo () (* x x))) nil)
-  (symbol-function 'foo)
-
-Short form:
-
-  (let ((x 42))
-    (defun foo () (* x x))
-    (symbol-function 'foo))
-
-Even shorter:
-
-  (let ((x 42))
-    (function (lambda foo () (* x x))))
-
-
-
-
-2. `letxgetx'
-=============
 See: (find-elnode \"Dynamic Binding\" \"defun getx\")
      (find-elnode \"Lexical Binding\" \"defun getx\")
      (find-elnode \"Void Variables\")
 
-  (makunbound   'x)
-  (defun getx () x)
-                                             (getx)
-                                (let ((x 1)) (getx))
-             (defun letxgetx () (let ((x 1)) (getx)))
-                   (letxgetx)
-  (symbol-function 'letxgetx)
-  
+  (let ((x 20))
+    (defun getx () x)
+    )
+
+  (makunbound 'x)
+  (setq x 99)
+  (getx)
+  (let ((x 42)) (getx))
+ 
+
+
+
+3. `get/set'
+============
+;; These fsets work as defuns.
+;; See: (find-elnode \"Function Cells\")
+
+(fset 'foo (lambda () 20))
+(fset 'foo (lambda () 42))
+(foo)
+
+;; This is the only sexp in this block that needs
+;; to be run in lexical binding mode.
+;;
+(defun get/set0 ()
+  \"Return a list with a `getter' closure and a `setter' closure.
+The getter and the setter share the same lexical environment -
+which means that they operate on the same `x'.
+Different calls to this function generate getters and setters
+with independent lexical environments - which means that they
+operate on independent `x's.
+This defun need to be executed in lexical binding mode.\"
+  (let* ((x nil))
+    (list (lambda () x)
+          (lambda (newvalue) (setq x newvalue)))))
+
+(defun get/set (getter setter)
+  \"Define a SETTER and a GETTER that operate on the same variable.
+SETTER and GETTER are symbols: names of functions. The variable
+lives in a lexical environment that is shared by both the GETTER
+and the SETTER. Each call to this function generates a different
+lexical environment.\"
+  (let ((gs (get/set0)))
+    (fset getter (nth 0 gs))
+    (fset setter (nth 1 gs))))
+
+;; Check that geta/seta and getb/setb operate on different
+;; variables:
+;;
+(get/set 'geta 'seta)
+(get/set 'getb 'setb)
+(symbol-function 'geta)
+(symbol-function 'getb)
+(symbol-function 'seta)
+(symbol-function 'setb)
+(seta 20)
+(setb 42)
+(geta)
+(getb)
+
+
+;; Check that geta/seta use the same lexical environment
+;; and that getb/setb use a second lexical environment.
+;; See: (find-elnode \"Closures\")
+
+          (symbol-function 'seta)
+     (cdr (symbol-function 'seta))
+(car (cdr (symbol-function 'seta)))
+
+(eq
+  (cadr (symbol-function 'geta))
+  (cadr (symbol-function 'seta))
+  )
+
+(eq
+  (cadr (symbol-function 'getb))
+  (cadr (symbol-function 'setb))
+  )
+
 
 
 " pos-spec-list)))
