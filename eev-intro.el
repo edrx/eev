@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210813
+;; Version:    20210816
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -13195,7 +13195,8 @@ looks at first sight. See, for example:
 Some functions in eev expect code that is meant to be `eval'-ed
 later. For example:
 
-  (find-multiwindow-intro \"(find-wset\" \"13o_2o_o\")
+  (find-multiwindow-intro \"2. `find-wset'\")
+  (find-multiwindow-intro \"2. `find-wset'\" \"(find-wset\" \"13o_2o_o\")
   (find-wset \"13o_2o_o\" '(find-ebuffer \"B\") '(find-ebuffer \"C\"))
 
 The functions in the `code-c-d' family produce code that is first
@@ -13483,7 +13484,7 @@ will give you information about the current definition.
 Source code:  (find-efunction 'find-lexical-intro)
 More intros:  (find-eev-quick-intro)
               (find-eev-intro)
-              (find-eepitch-intro)
+              (find-elisp-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
@@ -13716,6 +13717,72 @@ lexical environment.\"
   )
 
 
+
+4. Alpha-conversion
+===================
+;; In lexical binding mode alpha-conversion works:
+;; https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B1-conversion
+;; Try:
+
+(setq b 3)
+(defun getb () b)
+
+(list
+  (let ((a 2)) (list a (getb)))
+  (let ((b 2)) (list b (getb)))
+  )
+
+;; In lexical binding mode the 4-line `list' sexp returns a list
+;; of two identical lists. These two `let' sexps are equivalent:
+;;
+;;   (let ((a 2)) (list a (getb)))
+;;   (let ((b 2)) (list b (getb)))
+;;
+;; and the choice of `a' or `b' for the name of the variable
+;; doesn't matter. In dynamic binding mode the `b' of the
+;; `(let ((b ...)) ...)' is seen by the (getb), and it shadows
+;; the global `b'.
+
+
+
+
+5. A thread
+===========
+It title was: \"Lexical vs. dynamic: small examples?\".
+Here is a link to the thread itself and links to the posts that I
+considered best or more important:
+
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/threads.html#00283
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00283.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00294.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00314.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00342.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00344.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00345.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00352.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00355.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00350.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00341.html
+
+And here are (elisp hyper)links with descriptions:
+
+(defun ee-dynlex-url (nnnnn)
+  (format \"https://lists.gnu.org/archive/html/help-gnu-emacs/%s/msg%s.html\"
+    \"2021-08\" nnnnn))
+
+(defun find-dynlexpost (nnnnn &rest ignored)
+  (find-eww (ee-dynlex-url nnnnn)))
+
+(find-dynlexpost \"00283\" \"Edrx\"   \"initial post\")
+(find-dynlexpost \"00294\" \"Edrx\"   \"primary source\")
+(find-dynlexpost \"00314\" \"Drew\"   \"for the dynamic extent of the function call\")
+(find-dynlexpost \"00342\" \"Drew\"   \"binds special vars dynamically and\")
+(find-dynlexpost \"00344\" \"Stefan\" \"same as in code analysis\")
+(find-dynlexpost \"00345\" \"Drew\"   \"by pretty much all of the wizards of Lisp\")
+(find-dynlexpost \"00352\" \"Drew\"   \"dynamically binds a lambda to a name\")
+(find-dynlexpost \"00355\" \"Drew\"   \"dyna-show.el\")
+(find-dynlexpost \"00355\" \"Stefan\" \"lexical-let and dlet\")
+(find-dynlexpost \"00341\" \"Drew\"   \"scope and extent are different things\")
 
 " pos-spec-list)))
 

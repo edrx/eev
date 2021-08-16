@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210811
+;; Version:    20210816
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -787,6 +787,7 @@ vterm, asking it to create a buffer with that name and to run a
 vterm on it. If PROGRAM is given then ask vterm to run PROGRAM
 there instead of the default shell.\n
 This function is a prototype and will probably change."
+  (require 'vterm)
   (let ((buffername (if name (format "*vterm: %s*" name) "*vterm*"))
 	(vterm-shell (or program vterm-shell)))
     (if (get-buffer buffername)

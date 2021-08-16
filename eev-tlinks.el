@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210813
+;; Version:    20210816
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1094,11 +1094,19 @@ cd {dir}
 
 (autoload 'browse-url-url-at-point "browse-url")
 
-(defun bryl (url)
-  "Play a local copy of a video downloaded from youtube."
-  (interactive (list (browse-url-url-at-point)))
-  (let ((fname (and url (ee-youtubedl-url-to-fname url))))
-    (if fname (find-video fname))))
+;; TODO:
+;; Redefine this using: (find-eevfile "eev-brxxx.el")
+;; and add error handling. Tests:
+;;   (setq ee-my-url "http://www.youtube.com/watch?v=tby5aMrMu6Q")
+;;   (ee-youtubedl-url-to-hash ee-my-url)
+;;   (ee-youtubedl-url-to-fname ee-my-url)
+;;   (find-evardescr 'ee-youtubedl-dirs)
+;;
+;; (defun bryl (url)
+;;   "Play a local copy of a video downloaded from youtube."
+;;   (interactive (list (browse-url-url-at-point)))
+;;   (let ((fname (and url (ee-youtubedl-url-to-fname url))))
+;;     (if fname (find-video fname))))
 
 
 
@@ -2182,7 +2190,7 @@ dofile \\\"%s\\\"
   (apply 'find-elinks
    `((find-texlive-links ,date ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
-     (find-texlive-links "20190809")
+     (find-texlive-links "20210816")
      (find-efunction 'find-texlive-links)
      ""
      ,(ee-template0 "\
@@ -2196,6 +2204,7 @@ dofile \\\"%s\\\"
 # (find-fline \"~/usrc/\" \"install-tl-\")
 # (find-fline \"~/.texlive2018/\")
 # (find-fline \"~/.texlive2019/\")
+# (find-fline \"~/.texlive2021/\")
 # (find-fline \"/usr/local/texlive/2018/\")
 # (find-fline \"/usr/local/texlive/2019/\")
 # (find-fline \"/usr/local/texlive/2019/\" \"install-tl.log\")
@@ -2204,8 +2213,8 @@ dofile \\\"%s\\\"
  (eepitch-shell2)
  (eepitch-kill)
  (eepitch-shell2)
-# rm -rfv ~/.texlive2018/
-# sudo rm -rfv /usr/local/texlive/2018/
+# rm -rfv ~/.texlive2021/
+# sudo rm -rfv /usr/local/texlive/2021/
 
 mkdir -p $S/http/mirror.ctan.org/systems/texlive/tlnet/
 cd       $S/http/mirror.ctan.org/systems/texlive/tlnet/
