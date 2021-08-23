@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210816
+;; Version:    20210822
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -93,6 +93,7 @@
 
 (require 'eev-env)
 (require 'eev-wrap)    ; For: (find-eev "eev-wrap.el" "ee-template0") 
+(require 'cl-lib)      ; For `cl-remove-if'
 
 
 
@@ -1035,9 +1036,20 @@ cd {dir}
   "Return all the files in DIR containing the string HASH."
   (file-expand-wildcards (format "%s*%s*" dir hash)))
 
+(defun ee-youtubedl-subtitle-p (fname)
+  "Return true if FNAME looks like a subtitle file."
+  (string-match "\\.\\(srt\\|vtt\\)$" fname))
+
+(defun ee-youtubedl-not-subtitles (fnames)
+  "Return the elements of FNAMES that don't look like subtitle files."
+     (cl-remove-if 'ee-youtubedl-subtitle-p fnames))
+
 (defun ee-youtubedl-guess (dir hash n)
-  "Return a component of the first file in DIR containing the string HASH."
-  (let ((fname (car (ee-youtubedl-guess* dir hash))))
+  "Return a component of the first file in DIR containing the string HASH.
+Files that look like subtitle files are ignored."
+  (let* ((fnames0 (ee-youtubedl-guess* dir hash))
+	 (fnames1 (ee-youtubedl-not-subtitles fnames0))
+	 (fname (car fnames1)))
     (if fname (nth n (ee-youtubedl-split fname)))))
 
 (defun ee-youtubedl-guess-title (dir hash) (ee-youtubedl-guess dir hash 1))

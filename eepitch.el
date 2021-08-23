@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210816
+;; Version:    20210821
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -850,6 +850,7 @@ This function is a prototype and will probably change."
 (defun eepitch-lua51  () (interactive) (eepitch-comint "lua51"  "lua5.1"))
 (defun eepitch-lua52  () (interactive) (eepitch-comint "lua52"  "lua5.2"))
 (defun eepitch-lua53  () (interactive) (eepitch-comint "lua53"  "lua5.3"))
+(defun eepitch-lua54  () (interactive) (eepitch-comint "lua54"  "lua5.4"))
 (defun eepitch-julia  () (interactive) (eepitch-comint "julia"  "julia"))
 (defun eepitch-python2 () (interactive) (eepitch-comint "python2" "python2"))
 (defun eepitch-python3 () (interactive) (eepitch-comint "python3" "python3"))

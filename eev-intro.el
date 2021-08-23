@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210816
+;; Version:    20210817
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -13748,9 +13748,12 @@ lexical environment.\"
 
 5. A thread
 ===========
-It title was: \"Lexical vs. dynamic: small examples?\".
-Here is a link to the thread itself and links to the posts that I
-considered best or more important:
+In aug/2021 I sent an e-mail to the help-gnu-emacs mailing list
+asking for help to write this tutorial; its title was \"Lexical
+vs. dynamic: small examples?\". Few people sent small examples,
+but some of the messages in the thread were fantastically good.
+Here is a link to the thread itself, to two of my posts in it,
+and to the messages that I considered \"fantastically good\"...
 
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/threads.html#00283
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00283.html
@@ -13764,7 +13767,7 @@ considered best or more important:
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00350.html
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-08/msg00341.html
 
-And here are (elisp hyper)links with descriptions:
+And here are (elisp hyper)links to them with descriptions:
 
 (defun ee-dynlex-url (nnnnn)
   (format \"https://lists.gnu.org/archive/html/help-gnu-emacs/%s/msg%s.html\"

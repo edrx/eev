@@ -41,6 +41,8 @@
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "numeric prefixes")
 ;;   (find-eev-quick-intro "2. Evaluating Lisp" "`M-0 M-e'")
 ;;   (find-eval-intro "`M-E' (meta-shift-e)")
+;;   (find-lexical-intro "0. How to use this")
+;;   (find-lexical-intro "0. How to use this" "`M-e' _sort of_ emulates")
 ;;
 ;; Note that `M-2 M-e' and `M-3 M-e' only make sense when the sexp is
 ;; a hyperlink.
