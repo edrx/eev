@@ -179,6 +179,14 @@ The default ACTION is (ee-composes-do-default)."
   (if face  (setq ee-composes-current-face (read face)))
   )
 
+(defun ee-composes-do-remove-face ()
+  "Experimental."
+  (if pos   (puthash keys pos  ee-composes-keys-to-pos))
+  (if pos   (eepitch-set-glyph0 (aref pos 0) (aref pos 0) 'default))
+  (if latex (puthash pos latex ee-composes-pos-to-latex))
+  (if face  (setq ee-composes-current-face (read face)))
+  )
+
 (defun ee-composes-do-test ()
   "An alternative action for `ee-composes-do', for tests."
   (insert (format "\n;; %S %S %S / %S" pos keys latex face)))
@@ -422,14 +430,15 @@ instead of inserting."
   ↗ NE \\nearrow
   ↘ SE \\searrow
   ↙ SW \\swarrow
-  ↣ ep \\epito
   ↣ >t \\twoheadrightarrow
+  ↣ ep \\epito
   ↤ mo \\mapsfrom
   ↦ mt \\mapsto
   ⇀ hu \\rightharpoonup
   ⇐ <= \\Leftarrow
   ⇒ => \\funto
   ⇔ LR \\Leftrightarrow
+  ⇝ s> \\squigglyarrow
   ∀ fa \\forall
   ∂ Pa \\partial
   ∃ ex \\exists
@@ -445,8 +454,8 @@ instead of inserting."
   ∩ ca \\cap
   ∪ cu \\cup
   ∫ In \\int
-  ∼ ~1 \\sim
   ∼ 1~ \\sim
+  ∼ ~1 \\sim
   ≃ -~ \\simeq
   ≅ =~ \\cong
   ≈ ~~ \\approx
@@ -569,6 +578,10 @@ instead of inserting."
 ;; (find-estring (ee-composes-to-catcodes))
 ;; (find-estring (ee-composes-to-declareunicodes))
 ;; (define-key eev-mode-map (kbd "M-,") 'ee-compose-pair)
+;;
+;; 2021aug31:
+;;   (ee-composes-do ee-composes-bigstr-math '(ee-composes-do-remove-face))
+;;   (ee-composes-do ee-composes-bigstr-math)
 
 
 

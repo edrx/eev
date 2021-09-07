@@ -12882,6 +12882,11 @@ This intro is a very quick introduction to Emacs Lisp. Its intent
 is not to teach people how to _write_ Elisp code, only to teach
 them how to _read_ Elisp code.
 
+Different people prefer different kinds of tutorials.
+Many people love the eintr, but I don't: (find-node \"(eintr)Top\")
+This tutorial here is what I would have liked to have had access to
+when I started learning Emacs Lisp.
+
 TODO: integrate this with these older intros:
   (find-eval-intro)
   (find-defun-intro)
@@ -13457,6 +13462,13 @@ are quite common, and
   (find-efunctionpp 'find-foomanualpage)
 
 will give you information about the current definition.
+
+
+
+
+12. Some advanced topics
+========================
+See: (find-lexical-intro)
 
 
 

@@ -592,6 +592,9 @@ This is an internal function used by `find-debpkg-links'."
   (if (string-match "^\\(lib\\)?." pkgname)
       (match-string 0 pkgname)))
 
+;; Tests: (find-debpkg-links "bash")
+;;        (find-debpkg-links "libicu")
+;;
 (defun find-debpkg-links (&optional pkgname &rest rest)
   "Visit a temporary buffer containing hyperlinks related to a Debian package.
 Try this: (find-debpkg-links \"bash\")"
@@ -610,9 +613,13 @@ Try this: (find-debpkg-links \"bash\")"
       ,(ee-template0 "\
 {ee-H}(find-sh \"apt-file search {pkgname}\")
 {ee-H}(find-sh \"apt-cache dump | grep-dctrl -P {pkgname}\")
-{ee-H}(find-sh \"apt-cache search {pkgname} | sort\")
 {ee-H}(find-sh \"apt-cache showpkg {pkgname}\")
+{ee-H}(find-sh \"apt-cache search {pkgname} | sort\")
+{ee-H}(find-sh \"apt-cache search '{pkgname}*' | sort\")
+{ee-H}(find-sh \"apt search '{pkgname}*'\")
+{ee-H}(find-sh \"apt search '{pkgname}*' 2> /dev/null\")
 {ee-H}(find-sh \"grep-aptavail -P {pkgname}\")
+{ee-H}(find-sh \"dpkg-query -W '{pkgname}*'\")
 
 http://packages.debian.org/{pkgname}
 http://packages.debian.org/sid/{pkgname}

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210419
+;; Version:    20210907
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -87,6 +87,18 @@
 :load %s
 
 -}
+" (buffer-name))))
+
+(defun ee-insert-test-js-mode ()
+  (interactive)
+  (insert (format "
+/*
+ (eepitch-nodejs)
+ (eepitch-kill)
+ (eepitch-nodejs)
+require(\"./%s\")
+
+*/
 " (buffer-name))))
 
 (defun ee-insert-test-julia-mode ()

@@ -1,15 +1,20 @@
-# (find-eev "README.org")
-# (defun c () (interactive) (eek "C-c C-e h h"))
-# (defun v () (interactive) (brg "~/eev-current/README.html"))
-# (defun e () (interactive) (find-eev "README.org"))
-# (defun m () (interactive) (find-eev "README.md"))
+# This file:
+#   https://github.com/edrx/eev/
+#       http://angg.twu.net/eev-current/README.org.html
+#       http://angg.twu.net/eev-current/README.org
+#               (find-angg "eev-current/README.org")
+#               (find-angg "eev-current/")
+# Author: Eduardo Ochs <eduardoochs@gmail.com>
+# 
+# Some eev-isms:
+# (defun c  () (interactive) (eek "C-c C-e h h"))
+# (defun o  () (interactive) (find-angg "eev-current/README.org"))
+# (defun v  () (interactive) (brg     "~/eev-current/README.html"))
 # (defun cv () (interactive) (c) (v))
-# (find-angg "edrxrepl/README.org")
-# (find-orgsrcfile "README")
-# (find-es "org" "git")
-
+# (find-eev "README.org")
+# 
 # (find-orgnode "Table of Contents")
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil num:ni
 
 * Introduction
 
