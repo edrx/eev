@@ -1,3 +1,26 @@
+2021-09-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-regexp, eepitch-comment-regexp): make red
+	bullets play the same role as the red stars.
+
+	* eev-tlinks.el (find-eepitch-bullet-links): new function.
+
+2021-09-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-epackage-links): fixed a small bug.
+
+2021-09-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-scheme-mode): use Chez Scheme
+	instead of Guile. The version for Guile was commented out.
+
+	* eepitch.el (eepitch-scheme): new function.
+
+2021-09-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-tcl-mode): use
+	"THIS_IS_A_TEST_BLOCK" instead of "COMMENTED_OUT".
+
 2021-09-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-testblocks.el (ee-insert-test-js-mode): new function.

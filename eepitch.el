@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210821
+;; Version:    20210913
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -250,14 +250,14 @@ This function is used by `eepitch-this-line'."
 ;; «eepitch»  (to ".eepitch")
 ;; See: (find-eepitch-intro "2.3. `(eepitch)'")
 ;; See this for a way to use red bullets insted of red stars:
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01080.html
+;;      (find-eepitch-bullet-links)
 
-(defvar eepitch-regexp "^\\(.*\\)"
+(defvar eepitch-regexp "^[•]\\(.*\\)"
 "The regexp used by `eepitch-this-line' to determine what is a red-star line.
 Red star lines are evaluated as lisp, normal lines are pitched to
 the target buffer.")
 
-(defvar eepitch-comment-regexp "^\\(.*\\)"
+(defvar eepitch-comment-regexp "^[•][•]\\(.*\\)"
 "The regexp used by `eepitch-this-line' to test if a line is a comment.
 Comment lines are neither evaluated nor sent to the target buffer.
 The test that ignores comment lines is applied before the test that decides
@@ -871,6 +871,7 @@ This function is a prototype and will probably change."
 (defun eepitch-gcl    () (interactive) (eepitch-comint "gcl"  "gcl"))
 (defun eepitch-guile  () (interactive) (eepitch-comint "guile" "guile"))
 (defun eepitch-racket () (interactive) (eepitch-comint "racket" "racket"))
+(defun eepitch-scheme () (interactive) (eepitch-comint "scheme" "scheme"))
 (defun eepitch-mitscheme () (interactive)
   (eepitch-comint "mit-scheme" "mit-scheme"))
 (defun eepitch-tinyscheme () (interactive)

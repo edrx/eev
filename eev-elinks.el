@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210226
+;; Version:    20210910
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1174,7 +1174,7 @@ This needs a temporary directory; see: (find-prepared-intro)"
 PKG must be a symbol; C and D are arguments for `code-c-d'.
 If D is t then try to use `ee-package-dir' to get the directory."
   (interactive (list (symbol-at-point)))
-  (setq pkg (or pkg "{pkg}"))
+  (setq pkg (or pkg '{pkg}))
   (setq c (or c (replace-regexp-in-string "[-]" "" (symbol-name pkg))))
   (setq d (cond ((eq d t) (ee-package-dir pkg))
 		((eq d nil) "{d}")

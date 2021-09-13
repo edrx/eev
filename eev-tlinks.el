@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210822
+;; Version:    20210913
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -89,6 +89,7 @@
 ;; «.find-newbrowser-links»		(to "find-newbrowser-links")
 ;; «.ee-0x0-upload-region»		(to "ee-0x0-upload-region")
 ;; «.find-0x0-links»			(to "find-0x0-links")
+;; «.find-eepitch-bullet-links»		(to "find-eepitch-bullet-links")
 
 
 (require 'eev-env)
@@ -2396,6 +2397,64 @@ This function is used by `ee-0x0-upload-region'."
      )
    pos-spec-list))
 
+
+
+
+;; «find-eepitch-bullet-links»  (to ".find-eepitch-bullet-links")
+;; Skel: (find-find-links-links-new "eepitch-bullet" "" "")
+;; Test: (find-eepitch-bullet-links)
+;;
+(defun find-eepitch-bullet-links (&rest pos-spec-list)
+"Show code that makes eepitch use red bullets instead of red stars."
+  (interactive)
+  (apply
+   'find-elinks-elisp
+   `((find-eepitch-bullet-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eepitch-bullet-links)
+     ;; ""
+     ,(ee-template0 "\
+;; The code below was based on:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01080.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01079.html
+
+
+
+;; Run this to make the bullets use the default face:
+\(eepitch-set-glyph0 ?• nil)
+;;
+;; Run this to make the bullets appear in the same face as the red stars:
+\(eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
+;;
+;; You'll need to force a redisplay to see the change.
+;; One way to do that is with `C-l' (`recenter-top-bottom').
+
+
+
+;; This is the standard definition of `eewrap-eepitch'. See:
+;; (find-eev \"eepitch.el\" \"eewrap-eepitch\" \"defun eewrap-eepitch\")
+;; (find-eev-quick-intro \"6.4. Red stars\")
+;;
+\(defun eewrap-eepitch () (interactive)
+  (let* ((fmt   \" (eepitch-%s)\\n (eepitch-kill)\\n (eepitch-%s)\")
+	 (li    (ee-this-line-extract))
+	 (newli (format fmt li li)))
+    (insert newli))
+  (ee-next-line 1))
+
+;; This is an alternative definition of `eewrap-eepitch' that uses
+;; bullets instead of red stars. Run the defun below to override the
+;; standard definition.
+;;
+\(defun eewrap-eepitch () (interactive)
+  (let* ((fmt   \"• (eepitch-%s)\\n• (eepitch-kill)\\n• (eepitch-%s)\")
+         (li    (ee-this-line-extract))
+         (newli (format fmt li li)))
+    (insert newli))
+  (ee-next-line 1))
+")
+     )
+   pos-spec-list))
 
 
 

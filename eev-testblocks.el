@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210907
+;; Version:    20210909
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -161,17 +161,31 @@ load \"%s\"
 =end
 " (buffer-name))))
 
+;; For Chez Scheme.
 (defun ee-insert-test-scheme-mode ()
   (interactive)
   (insert (format "
-#!
- (eepitch-guile)
+#|
+ (eepitch-scheme)
  (eepitch-kill)
- (eepitch-guile)
+ (eepitch-scheme)
 (load \"%s\")
 
-!#
+|#
 " (buffer-name))))
+
+;; ;; For Guile.
+;; (defun ee-insert-test-scheme-mode ()
+;;   (interactive)
+;;   (insert (format "
+;; #|
+;;  (eepitch-guile)
+;;  (eepitch-kill)
+;;  (eepitch-guile)
+;; (load \"%s\")
+;; 
+;; |#
+;; " (buffer-name))))
 
 (defun ee-insert-test-sh-mode ()
   (interactive)
@@ -188,7 +202,7 @@ load \"%s\"
 (defun ee-insert-test-tcl-mode ()
   (interactive)
   (insert (format "
-set COMMENTED_OUT {
+set THIS_IS_A_TEST_BLOCK {
  (eepitch-tclsh)
  (eepitch-kill)
  (eepitch-tclsh)
