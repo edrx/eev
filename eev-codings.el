@@ -1,4 +1,4 @@
-;;; eev-codings.el -- tricks to support both the UTF8 coding system and unibyte
+;;; eev-codings.el -- tricks to support both the UTF8 coding system and unibyte  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2018-2019 Free Software Foundation, Inc.
 ;;

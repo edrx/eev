@@ -1,5 +1,7 @@
-;;; eev2-all.el -- load all the modules of the rewrite of eev (-> 0.96).
-;;; This can also be used as an index to the (new) source files.
+;;; eev2-all.el -- load all the modules of eev (OBSOLETE!).  -*- lexical-binding: nil; -*-
+;; In 2019 this file was made obsolete and was replaced by
+;; "eev-load.el". See:
+;;   (find-eev "eev-load.el")
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;
@@ -37,8 +39,8 @@
 ;; "eev2-all.el" (this one!) was used to load the common ones and the
 ;; new ones...
 ;;
-;; Now (2019) this file is about to be deprecated, and to be replaced
-;; by "eev-load.el". See:
+;; In 2019 this file was made obsolete and was replaced by
+;; "eev-load.el". See:
 ;;   (find-eev "eev-load.el")
 
 

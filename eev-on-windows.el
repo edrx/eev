@@ -1,4 +1,4 @@
-;; eev-on-windows.el - some support for M$ Windows.
+;; eev-on-windows.el - some support for M$ Windows.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2019 Free Software Foundation, Inc.
 ;;

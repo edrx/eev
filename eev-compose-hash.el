@@ -1,4 +1,4 @@
-;;; eev-compose-hash.el --- `M-,' as a compose key (version with hash tables)
+;;; eev-compose-hash.el --- `M-,' as a compose key (version with hash tables)  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2021 Free Software Foundation, Inc.
 ;;

@@ -1,4 +1,4 @@
-;;; eev-audiovideo.el -- elisp hyperlinks to audio and video files.
+;;; eev-audiovideo.el -- elisp hyperlinks to audio and video files.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2013-2021 Free Software Foundation, Inc.
 ;;

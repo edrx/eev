@@ -1,4 +1,4 @@
-;; eev-readme.el -- load all modules of eev and activate eev-mode.
+;; eev-readme.el -- load all modules of eev and activate eev-mode.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

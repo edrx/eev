@@ -1,4 +1,4 @@
-;;; eev-load.el -- load all the main modules of eev.
+;;; eev-load.el -- load all the main modules of eev.  -*- lexical-binding: nil; -*-
 ;;; This can also be used as an index to the main source files.
 
 ;; Copyright (C) 2019-2020 Free Software Foundation, Inc.

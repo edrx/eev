@@ -1,4 +1,4 @@
-;;; eev-hlinks.el --- `find-here-links' and variants.
+;;; eev-hlinks.el --- `find-here-links' and variants.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2020 Free Software Foundation, Inc.
 ;;

@@ -1,4 +1,4 @@
-;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'
+;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;

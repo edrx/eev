@@ -1,4 +1,4 @@
-;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.
+;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;

@@ -1,4 +1,4 @@
-;;; eev-edit.el -- tools for editing (mainly refining) elisp hyperlinks.
+;;; eev-edit.el -- tools for editing (mainly refining) elisp hyperlinks.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;

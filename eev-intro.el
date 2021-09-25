@@ -1,4 +1,4 @@
-;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)
+;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2013-2021 Free Software Foundation, Inc.
 ;;

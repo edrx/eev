@@ -1,4 +1,4 @@
-;;; eev-hydras.el --- eev functions that use hydra.el.
+;;; eev-hydras.el --- eev functions that use hydra.el.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2021 Free Software Foundation, Inc.
 ;;

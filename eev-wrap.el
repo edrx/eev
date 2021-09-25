@@ -1,4 +1,4 @@
-;;; eev-wrap.el --- wrap the current line into a hyperlink
+;;; eev-wrap.el --- wrap the current line into a hyperlink  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2013,2016,2017,2019,2020 Free Software Foundation, Inc.
 ;;

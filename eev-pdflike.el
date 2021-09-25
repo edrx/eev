@@ -1,4 +1,4 @@
-;;; eev-pdflike.el -- hyperlinks to documents made of pages.
+;;; eev-pdflike.el -- hyperlinks to documents made of pages.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;

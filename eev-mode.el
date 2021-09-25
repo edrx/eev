@@ -1,4 +1,4 @@
-;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.
+;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
 ;;

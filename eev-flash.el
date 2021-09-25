@@ -1,4 +1,4 @@
-;;; eev-flash.el -- functions to highlight a range of text temporarily.
+;;; eev-flash.el -- functions to highlight a range of text temporarily.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

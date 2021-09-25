@@ -1,4 +1,4 @@
-;;; eejump.el -- jump quickly to predefined places.
+;;; eejump.el -- jump quickly to predefined places.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

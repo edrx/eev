@@ -1,4 +1,4 @@
-;;; eev-brxxx.el -- define families of browse-url-like functions.
+;;; eev-brxxx.el -- define families of browse-url-like functions.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;

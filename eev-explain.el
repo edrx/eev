@@ -1,4 +1,4 @@
-;;; eev-explain.el -- explain an eev sexp.
+;;; eev-explain.el -- explain an eev sexp.  -*- lexical-binding: nil; -*-
 ;; Explain some difficult sexps, like eejump-nnn and code-xxx.
 ;; This is an experimental feature - I am using it in tutorials and
 ;; videos.

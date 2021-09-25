@@ -1,4 +1,4 @@
-;;; eev-anchors.el -- hyperlinks to anchors.
+;;; eev-anchors.el -- hyperlinks to anchors.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

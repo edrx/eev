@@ -1,4 +1,4 @@
-;;; eev-prepared.el -- eev modules that use temporary dirs and prepared shells.
+;;; eev-prepared.el -- eev modules that use temporary dirs and prepared shells.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;

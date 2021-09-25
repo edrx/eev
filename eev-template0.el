@@ -1,4 +1,4 @@
-;;; eev-template0.el -- implement functions that eval `{}'s in a string.
+;;; eev-template0.el -- implement functions that eval `{}'s in a string.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 ;;

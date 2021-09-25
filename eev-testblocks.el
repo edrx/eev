@@ -1,4 +1,4 @@
-;;; eev-testblocks.el - create "test blocks" using multiline comments.
+;;; eev-testblocks.el - create "test blocks" using multiline comments.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 ;;

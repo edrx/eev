@@ -1,4 +1,4 @@
-;;; eev-tla.el --- eev links based on TLAs, i.e., three-letter acronyms.
+;;; eev-tla.el --- eev links based on TLAs, i.e., three-letter acronyms.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2021 Free Software Foundation, Inc.
 ;;

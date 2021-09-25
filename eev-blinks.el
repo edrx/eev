@@ -1,4 +1,4 @@
-;;; eev-blinks.el -- support for basic hyperlinks in Emacs.
+;;; eev-blinks.el -- support for basic hyperlinks in Emacs.  -*- lexical-binding: nil; -*-
 ;; The basic hyperlinks are the ones that do not depend on templates,
 ;; and that are not created by `code-c-d' and friends.
 

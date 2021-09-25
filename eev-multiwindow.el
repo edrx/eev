@@ -1,4 +1,4 @@
-;; eev-multiwindow.el - functions to create multi-window setups
+;; eev-multiwindow.el - functions to create multi-window setups  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

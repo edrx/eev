@@ -1,4 +1,4 @@
-;;; eev-bounded.el -- functions like `eev-bounded', `eelatex-bounded', etc.
+;;; eev-bounded.el -- functions like `eev-bounded', `eelatex-bounded', etc.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012 Free Software Foundation, Inc.
 ;;

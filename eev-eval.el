@@ -1,4 +1,4 @@
-;;; eev-eval.el -- variants of eval-last-sexp.
+;;; eev-eval.el -- variants of eval-last-sexp.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

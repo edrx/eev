@@ -1,4 +1,4 @@
-;; eepitch.el - record interactions with shells as readable notes, redo tasks.
+;; eepitch.el - record interactions with shells as readable notes, redo tasks.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012,2015,2018,2019,2020,2021 Free Software Foundation, Inc.
 ;;

@@ -1,4 +1,4 @@
-;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.
+;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
 ;;

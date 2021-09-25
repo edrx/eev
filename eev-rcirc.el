@@ -1,4 +1,4 @@
-;;; eev-rcirc.el -- rcirc-related elisp hyperlinks.
+;;; eev-rcirc.el -- rcirc-related elisp hyperlinks.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
