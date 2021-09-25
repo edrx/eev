@@ -1,9 +1,17 @@
+2021-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (code-xxxpdf-family, find-code-xxxpdf-family)
+	(ee-code-xxxpdf-family, code-xxxpdftext-family)
+	(find-code-xxxpdftext-family, ee-code-xxxpdftext-family)
+	(code-xxxpdf-alias, find-code-xxxpdf-alias)
+	(ee-code-xxxpdf-alias): commented out - will be deleted soon.
+
 2021-09-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el (ee-find-firefox-page): new function. It is an
-	internal functionused by `find-firefox-page', that is defined by
+	internal function used by `find-firefox-page', that is defined by
 	`(code-pdfbackend "firefox-page")'. Also, now on Window$ systems
-	`find-pdf-page' now uses `find-firefox-page' by default.
+	`find-pdf-page' uses `find-firefox-page' by default.
 
 2021-09-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
