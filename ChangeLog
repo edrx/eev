@@ -1,3 +1,35 @@
+2021-09-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-firefox-page): new function. It is an
+	internal functionused by `find-firefox-page', that is defined by
+	`(code-pdfbackend "firefox-page")'. Also, now on Window$ systems
+	`find-pdf-page' now uses `find-firefox-page' by default.
+
+2021-09-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-psne-intro): updated the URL to the PDF of
+	J.M. Coetzee's "The Lives of Animals".
+
+	* eev-audiovideo.el (ee-time-to-youtube-time): added an optional
+	argument `c'.
+
+2021-09-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): give links for
+	installing Emacs27 instead of Emacs26.
+
+2021-09-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-c-mode): new function.
+
+2021-09-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-lisp-mode): new function.
+
+2021-09-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eepitch-bullet-links): added more text.
+
 2021-09-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-regexp, eepitch-comment-regexp): make red

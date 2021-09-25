@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210909
+;; Version:    20210917
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -77,6 +77,21 @@
 ;; «examples»  (to ".examples")
 ;; See: (find-eepitch-intro "3.1. `find-eeit-links'")
 
+(defun ee-insert-test-c-mode ()
+  (interactive)
+  (let* ((fnamec (buffer-name))
+	 (fname  (replace-regexp-in-string ".c$" "" fnamec)))
+    (insert (ee-template0 "\
+/*
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+gcc -o {fname} {fnamec}
+./{fname}
+
+*/
+"))))
+
 (defun ee-insert-test-haskell-mode ()
   (interactive)
   (insert (format "
@@ -111,6 +126,18 @@ require(\"./%s\")
 include(\"%s\")
 
 =#
+" (buffer-name))))
+
+(defun ee-insert-test-lisp-mode ()
+  (interactive)
+  (insert (format "
+#|
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+(load \"%s\")
+
+|#
 " (buffer-name))))
 
 (defun ee-insert-test-lua-mode ()

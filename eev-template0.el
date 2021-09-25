@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210509
+;; Version:    20210925
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-template0.el>
@@ -83,11 +83,14 @@
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00085.html
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00095.html
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00096.html
-
-
-
-;; Some links to places where the documentation mentions uses of
-;; `ee-template0':
+;;
+;; Here is a tutorial on lexical-versus-dynamic binding:
+;;
+;;   (find-lexical-intro)
+;;
+;; And here are some links to places where the documentation of eev
+;; mentions uses of `ee-template0':
+;;
 ;;   (find-eevgrep "grep --color -nH -e ee-template0 *.el")
 ;;   (find-eev-quick-intro "7.5. `find-latex-links'")
 ;;   (find-eev-quick-intro "8.4. Creating e-script blocks" "`M-B'")

@@ -989,6 +989,13 @@ character 15 corresponds to control-O, whose default
 representation on screen would be \"^O\". You can enter a
 literal ^O in a buffer by typing `C-q C-o'.
 
+It is possible to make other characters play the role of the red
+star, but to make that work you need to know a bit of Lisp. See:
+
+  (find-eepitch-bullet-links)
+  (find-eev \"eev-tlinks.el\" \"find-eepitch-bullet-links\")
+
+
 
 
 
@@ -1629,7 +1636,7 @@ executing the eepitch block below with <f8>s,
  (eepitch-kill)
  (eepitch-shell)
   cd
-  wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  wget -nc https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 then these sexps will be hyperlinks to a page of a PDF, and to
 some string in it...
@@ -6509,7 +6516,7 @@ examples. If you run this e-script
  (eepitch-kill)
  (eepitch-shell)
   cd
-  wget -nc https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  wget -nc https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 you will download a local copy of J.M. Coetzee's \"The Lives of
 Animals\" into your home directory. To check that the PDF has been
@@ -6522,12 +6529,12 @@ downloaded, use:
 Eev also implements another way, called \"psne\", to download
 local copies of files from the internet.\"Psne-ing\" a URL like
 
-  https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+  https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 downloads it to a local file with a name like:
 
-       $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-  ~/snarf/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+       $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  ~/snarf/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 that is _much_ longer that just \"~/Coetzee99.pdf\"; this has the
 advantage of preserving more information about the URL from which
@@ -7104,8 +7111,8 @@ If we download a local copy of a PDF, like we did here,
 
   (find-pdf-like-intro \"2. Preparation\")
 
-      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+      https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 then it makes sense to have a `brxxx'-function, called `brpdfl',
 that we can run on the \"https://\" URL above, and that will open
@@ -7368,8 +7375,8 @@ file from the internet... here we will discuss the second way, in
 which the conversion from URL to a local file name works like
 this:
 
-      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+      https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 
 
@@ -7533,8 +7540,8 @@ The details on how to create these \"brxxx functions\" are here:
 ======================
 Converting a \"non-psne URL\" to a \"psne URL\" by hand, like this,
 
-      https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-  -> $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+      https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  -> $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 
 is error-prone and boring.
 
@@ -7551,8 +7558,8 @@ because most people prefer to use the key `M-s' for their other
 things. Then try it by putting the cursor here and typing `M-s' four
 times. Watch the four psne-nesses below flip.
 
-   https://tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
-  $S/https/tannerlectures.utah.edu/_documents/a-to-z/c/Coetzee99.pdf
+   https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
    http://www.gnu.org/software/emacs/emacs-paper.html
   $S/http/www.gnu.org/software/emacs/emacs-paper.html
 
@@ -12253,24 +12260,23 @@ that after discovering that many Windows programmers don't know how to
 use terminals I spent more than one week trying to figure out how to
 proceed.
 
-Version of these instructions: 2020feb20.
+Version of these instructions: 2021sep20.
 
 
 
 
 1. Download and install Emacs
 =============================
-Download one of the .zips below:
-http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/
-http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/README
-http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/emacs-26.3-i686.zip     (32 bits)
-http://gnu.c3sl.ufpr.br/ftp/emacs/windows/emacs-26/emacs-26.3-x86_64.zip   (64 bits)
+Read the README below and then install Emacs using either the
+link to the .exe or the link to the .zip:
 
-then unpack the .zip and create a desktop icon or shortcut to
+https://ftp.gnu.org/gnu/emacs/windows/emacs-27/
+https://ftp.gnu.org/gnu/emacs/windows/emacs-27/README-windows-binaries
+https://ftp.gnu.org/gnu/emacs/windows/emacs-27/emacs-27.2-x86_64-installer.exe
+https://ftp.gnu.org/gnu/emacs/windows/emacs-27/emacs-27.2-x86_64.zip
+
+You may need to create a desktop icon or shortcut to
 <emacsdir>/bin/runemacs.exe.
-
-The official instructions are here (but you don't need them):
-https://www.gnu.org/software/emacs/download.html#windows
 
 Note: don't use Emacs25 on Windows - it can't access the package repository!  The details are here:
 https://emacs.stackexchange.com/questions/233/how-to-proceed-on-package-el-signature-check-failure/52823#52823

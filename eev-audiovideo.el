@@ -233,20 +233,24 @@
 ;;        (ee-time-to-youtube-time "123")
 ;;        (ee-time-to-youtube-time "1:23")
 ;;        (ee-time-to-youtube-time "1:23:43")
+;;        (ee-time-to-youtube-time "1:23:43" "&")
+;;        (ee-time-to-youtube-time "" "&")
 ;;
-(defun ee-time-to-youtube-time (str)
+(defun ee-time-to-youtube-time (str &optional c)
   "Convert strings like \"1:23\" to strings like \"#t=1m23s\".
 Supports the input formats \"ss\", \"mm:ss\", and \"hh:mm:ss\".
-If the input does not match any of these formats, return nil."
+If the input does not match any of these formats, return nil.
+When C is non nil then use it as the prefix character. The
+default is \"#\", but in some situations we need \"&\" instead."
+  (setq c (or c "#"))
   (save-match-data
     (cond ((string-match "^\\([0-9]+\\)$" str)
-	   (format "#t=%ss" (match-string 1 str)))
+	   (format "%st=%ss" c (match-string 1 str)))
           ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\)$" str)
-	   (format "#t=%sm%ss" (match-string 1 str) (match-string 2 str)))
+	   (format "%st=%sm%ss" c (match-string 1 str) (match-string 2 str)))
           ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)$" str)
-	   (format "#t=%sh%sm%ss" (match-string 1 str) (match-string 2 str)
+	   (format "%st=%sh%sm%ss" c (match-string 1 str) (match-string 2 str)
 		   (match-string 2 str))))))
-	  
 
 
 

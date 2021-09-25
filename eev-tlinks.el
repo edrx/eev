@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210913
+;; Version:    20210915
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -2415,8 +2415,13 @@ This function is used by `ee-0x0-upload-region'."
      ;; ""
      ,(ee-template0 "\
 ;; The code below was based on:
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01080.html
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01079.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01080.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01079.html
+;; Note that the default regexes for eepitch accept both the red
+;; stars and the bullets - chars 15 and 8226 respectively...
+;; See: (find-eev \"eepitch.el\" \"eepitch\" \"eepitch-regexp\")
+;;      (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+;; And try: (insert \"\\n;; \" 15 8226)
 
 
 
@@ -2446,6 +2451,22 @@ This function is used by `ee-0x0-upload-region'."
 ;; bullets instead of red stars. Run the defun below to override the
 ;; standard definition.
 ;;
+\(defun eewrap-eepitch () (interactive)
+  (let* ((fmt   \"• (eepitch-%s)\\n• (eepitch-kill)\\n• (eepitch-%s)\")
+         (li    (ee-this-line-extract))
+         (newli (format fmt li li)))
+    (insert newli))
+  (ee-next-line 1))
+
+
+
+;; To make eepitch blocks use the red bullets by default,
+;; add this block to your ~/.emacs.  Note that this will make
+;; bullets appear in red in other places too, like in info manuals -
+;; for example here: (find-enode \"Using Region\")
+;; See: (find-eepitch-bullet-links)
+;;
+\(eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
 \(defun eewrap-eepitch () (interactive)
   (let* ((fmt   \"• (eepitch-%s)\\n• (eepitch-kill)\\n• (eepitch-%s)\")
          (li    (ee-this-line-extract))

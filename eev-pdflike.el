@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210618
+;; Version:    20210925
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -186,6 +186,7 @@
 ;; «.find-mupdfpage»			(to "find-mupdfpage")
 ;; «.find-gv-page»			(to "find-gv-page")
 ;; «.find-djvutxt-text»			(to "find-djvutxt-text")
+;; «.find-firefox-page»			(to "find-firefox-page")
 ;; «.find-googlechrome-page»		(to "find-googlechrome-page")
 ;;
 ;; «.aliases»				(to "aliases")
@@ -401,106 +402,106 @@ newline are spurious - and replaces them by \"(ff)\"."
 
 
 
-;;;   ___  _               _      _       
-;;;  / _ \| |__  ___  ___ | | ___| |_ ___ 
-;;; | | | | '_ \/ __|/ _ \| |/ _ \ __/ _ \
-;;; | |_| | |_) \__ \ (_) | |  __/ ||  __/
-;;;  \___/|_.__/|___/\___/|_|\___|\__\___|
-;;;                                       
-;; «code-xxxpdf-family» (to ".code-xxxpdf-family")
-;; See: (find-eevfile "eev-pdflike.el" "1. DEFINING VIEWERS")
-;; Test: (find-code-xxxpdf-family "XPDFPAGE")
-;;
-(defun      code-xxxpdf-family (xxxpdf)
-  (eval (ee-read      (ee-code-xxxpdf-family xxxpdf))))
-(defun find-code-xxxpdf-family (xxxpdf)
-  (find-estring-elisp (ee-code-xxxpdf-family xxxpdf)))
-(defun   ee-code-xxxpdf-family (xxxpdf)
-  (ee-template0 "\
-;; (find-code-xxxpdf-family {(ee-pp0 xxxpdf)})
-;;      (code-xxxpdf-family {(ee-pp0 xxxpdf)})
-;;
-;; To understand the code that a call to
-;;        (code-{xxxpdf} \"C\" \"FNAME\")
-;; would execute, run:
-;;   (find-code-{xxxpdf} \"C\" \"FNAME\")
-
-\(defun      find-{xxxpdf} (fname &optional page &rest rest)
-  (find-bgprocess (ee-find-{xxxpdf} fname page)))
-
-\(defun      code-{xxxpdf} (c fname &rest rest)
-  (eval (ee-read      (apply 'ee-code-{xxxpdf} c fname rest))))
-\(defun find-code-{xxxpdf} (c fname &rest rest)
-  (find-estring-elisp (apply 'ee-code-{xxxpdf} c fname rest)))
-\(defun   ee-code-{xxxpdf} (c fname &rest rest)
-  (ee-template0 \"\\
-\(setq ee-pdflike-last 'find-{<}c{>}page)
-\(defun find-{<}c{>}page (&optional page &rest rest)
-  (setq ee-pdflike-last 'find-{<}c{>}page)
-  (find-{xxxpdf} {<}(ee-pp0 fname){>} page))
-\"))
-"))
-
-;; «code-xxxpdftext-family» (to ".code-xxxpdftext-family")
-;; See: (find-eevfile "eev-pdflike.el" "1. DEFINING VIEWERS")
-;; Test: (find-code-xxxpdftext-family "PDFTOTEXT")
-;;
-(defun      code-xxxpdftext-family (xxxpdf)
-  (eval (ee-read      (ee-code-xxxpdftext-family xxxpdf))))
-(defun find-code-xxxpdftext-family (xxxpdf)
-  (find-estring-elisp (ee-code-xxxpdftext-family xxxpdf)))
-(defun   ee-code-xxxpdftext-family (xxxpdf)
-  (ee-template0 "\
-;; (find-code-xxxpdftext-family {(ee-pp0 xxxpdf)})
-;;      (code-xxxpdftext-family {(ee-pp0 xxxpdf)})
-;;
-;; To understand the code that a call to
-;;        (code-{xxxpdf} \"C\" \"FNAME\")
-;; would execute, run:
-;;   (find-code-{xxxpdf} \"C\" \"FNAME\")
-
-\(defun      find-{xxxpdf} (fname &optional page &rest rest)
-  (apply 'find-sh-page (ee-find-{xxxpdf} fname) page rest))
-
-\(defun      code-{xxxpdf} (c fname &rest rest)
-  (eval (ee-read      (apply 'ee-code-{xxxpdf} c fname rest))))
-\(defun find-code-{xxxpdf} (c fname &rest rest)
-  (find-estring-elisp (apply 'ee-code-{xxxpdf} c fname rest)))
-\(defun   ee-code-{xxxpdf} (c fname &optional offset)
-  (setq offset (or offset 0))
-  (ee-template0 \"\\
-\(setq ee-page-c      {<}(ee-pp0 c){>})
-\(setq ee-page-fname  {<}(ee-pp0 fname){>})
-\(setq ee-page-offset {<}(ee-pp0 offset){>})
-\(defun find-{<}c{>}text (&optional page &rest rest)
-  (setq ee-page-c      {<}(ee-pp0 c){>})
-  (setq ee-page-fname  {<}(ee-pp0 fname){>})
-  (setq ee-page-offset {<}(ee-pp0 offset){>})
-  (apply 'find-{xxxpdf} {<}(ee-pp0 fname){>} page rest))
-\"))
-"))
-
-;; «code-xxxpdf-alias» (to ".code-xxxpdf-alias")
-;; See: (find-eevfile "eev-pdflike.el" "2. ALIASES")
-;; Test: (find-code-xxxpdf-alias "PDF-PAGE" "XPDF-PAGE")
-;;
-(defun      code-xxxpdf-alias (xxxpdfnew xxxpdfold)
-  (eval (ee-read      (ee-code-xxxpdf-alias xxxpdfnew xxxpdfold))))
-(defun find-code-xxxpdf-alias (xxxpdfnew xxxpdfold)
-  (find-estring-elisp (ee-code-xxxpdf-alias xxxpdfnew xxxpdfold)))
-(defun   ee-code-xxxpdf-alias (xxxpdfnew xxxpdfold)
-  (ee-template0 "\
-;; (find-code-xxxpdf-alias \"{xxxpdfnew}\" \"{xxxpdfold}\")
-;; (find-code-xxxpdf-alias \"xxxpdfnew\" \"xxxpdfold\")
-;; (find-code-xxxpdf-alias \"pdf-page\" \"xpdf-page\")
-;; (find-code-xxxpdf-alias \"pdfpage\" \"xpdf-page\")
-;;
-\(defalias   'ee-find-{xxxpdfnew}   'ee-find-{xxxpdfold})
-\(defalias      'find-{xxxpdfnew}      'find-{xxxpdfold})
-\(defalias   'ee-code-{xxxpdfnew}   'ee-code-{xxxpdfold})
-\(defalias      'code-{xxxpdfnew}      'code-{xxxpdfold})
-\(defalias 'find-code-{xxxpdfnew} 'find-code-{xxxpdfold})
-"))
+;; ;;;   ___  _               _      _       
+;; ;;;  / _ \| |__  ___  ___ | | ___| |_ ___ 
+;; ;;; | | | | '_ \/ __|/ _ \| |/ _ \ __/ _ \
+;; ;;; | |_| | |_) \__ \ (_) | |  __/ ||  __/
+;; ;;;  \___/|_.__/|___/\___/|_|\___|\__\___|
+;; ;;;                                       
+;; ;; «code-xxxpdf-family» (to ".code-xxxpdf-family")
+;; ;; See: (find-eevfile "eev-pdflike.el" "1. DEFINING VIEWERS")
+;; ;; Test: (find-code-xxxpdf-family "XPDFPAGE")
+;; 
+;; (defun      code-xxxpdf-family (xxxpdf)
+;;   (eval (ee-read      (ee-code-xxxpdf-family xxxpdf))))
+;; (defun find-code-xxxpdf-family (xxxpdf)
+;;   (find-estring-elisp (ee-code-xxxpdf-family xxxpdf)))
+;; (defun   ee-code-xxxpdf-family (xxxpdf)
+;;   (ee-template0 "\
+;; ;; (find-code-xxxpdf-family {(ee-pp0 xxxpdf)})
+;; ;;      (code-xxxpdf-family {(ee-pp0 xxxpdf)})
+;; ;;
+;; ;; To understand the code that a call to
+;; ;;        (code-{xxxpdf} \"C\" \"FNAME\")
+;; ;; would execute, run:
+;; ;;   (find-code-{xxxpdf} \"C\" \"FNAME\")
+;; 
+;; \(defun      find-{xxxpdf} (fname &optional page &rest rest)
+;;   (find-bgprocess (ee-find-{xxxpdf} fname page)))
+;; 
+;; \(defun      code-{xxxpdf} (c fname &rest rest)
+;;   (eval (ee-read      (apply 'ee-code-{xxxpdf} c fname rest))))
+;; \(defun find-code-{xxxpdf} (c fname &rest rest)
+;;   (find-estring-elisp (apply 'ee-code-{xxxpdf} c fname rest)))
+;; \(defun   ee-code-{xxxpdf} (c fname &rest rest)
+;;   (ee-template0 \"\\
+;; \(setq ee-pdflike-last 'find-{<}c{>}page)
+;; \(defun find-{<}c{>}page (&optional page &rest rest)
+;;   (setq ee-pdflike-last 'find-{<}c{>}page)
+;;   (find-{xxxpdf} {<}(ee-pp0 fname){>} page))
+;; \"))
+;; "))
+;; 
+;; ;; «code-xxxpdftext-family» (to ".code-xxxpdftext-family")
+;; ;; See: (find-eevfile "eev-pdflike.el" "1. DEFINING VIEWERS")
+;; ;; Test: (find-code-xxxpdftext-family "PDFTOTEXT")
+;; ;;
+;; (defun      code-xxxpdftext-family (xxxpdf)
+;;   (eval (ee-read      (ee-code-xxxpdftext-family xxxpdf))))
+;; (defun find-code-xxxpdftext-family (xxxpdf)
+;;   (find-estring-elisp (ee-code-xxxpdftext-family xxxpdf)))
+;; (defun   ee-code-xxxpdftext-family (xxxpdf)
+;;   (ee-template0 "\
+;; ;; (find-code-xxxpdftext-family {(ee-pp0 xxxpdf)})
+;; ;;      (code-xxxpdftext-family {(ee-pp0 xxxpdf)})
+;; ;;
+;; ;; To understand the code that a call to
+;; ;;        (code-{xxxpdf} \"C\" \"FNAME\")
+;; ;; would execute, run:
+;; ;;   (find-code-{xxxpdf} \"C\" \"FNAME\")
+;; 
+;; \(defun      find-{xxxpdf} (fname &optional page &rest rest)
+;;   (apply 'find-sh-page (ee-find-{xxxpdf} fname) page rest))
+;; 
+;; \(defun      code-{xxxpdf} (c fname &rest rest)
+;;   (eval (ee-read      (apply 'ee-code-{xxxpdf} c fname rest))))
+;; \(defun find-code-{xxxpdf} (c fname &rest rest)
+;;   (find-estring-elisp (apply 'ee-code-{xxxpdf} c fname rest)))
+;; \(defun   ee-code-{xxxpdf} (c fname &optional offset)
+;;   (setq offset (or offset 0))
+;;   (ee-template0 \"\\
+;; \(setq ee-page-c      {<}(ee-pp0 c){>})
+;; \(setq ee-page-fname  {<}(ee-pp0 fname){>})
+;; \(setq ee-page-offset {<}(ee-pp0 offset){>})
+;; \(defun find-{<}c{>}text (&optional page &rest rest)
+;;   (setq ee-page-c      {<}(ee-pp0 c){>})
+;;   (setq ee-page-fname  {<}(ee-pp0 fname){>})
+;;   (setq ee-page-offset {<}(ee-pp0 offset){>})
+;;   (apply 'find-{xxxpdf} {<}(ee-pp0 fname){>} page rest))
+;; \"))
+;; "))
+;; 
+;; ;; «code-xxxpdf-alias» (to ".code-xxxpdf-alias")
+;; ;; See: (find-eevfile "eev-pdflike.el" "2. ALIASES")
+;; ;; Test: (find-code-xxxpdf-alias "PDF-PAGE" "XPDF-PAGE")
+;; ;;
+;; (defun      code-xxxpdf-alias (xxxpdfnew xxxpdfold)
+;;   (eval (ee-read      (ee-code-xxxpdf-alias xxxpdfnew xxxpdfold))))
+;; (defun find-code-xxxpdf-alias (xxxpdfnew xxxpdfold)
+;;   (find-estring-elisp (ee-code-xxxpdf-alias xxxpdfnew xxxpdfold)))
+;; (defun   ee-code-xxxpdf-alias (xxxpdfnew xxxpdfold)
+;;   (ee-template0 "\
+;; ;; (find-code-xxxpdf-alias \"{xxxpdfnew}\" \"{xxxpdfold}\")
+;; ;; (find-code-xxxpdf-alias \"xxxpdfnew\" \"xxxpdfold\")
+;; ;; (find-code-xxxpdf-alias \"pdf-page\" \"xpdf-page\")
+;; ;; (find-code-xxxpdf-alias \"pdfpage\" \"xpdf-page\")
+;; ;;
+;; \(defalias   'ee-find-{xxxpdfnew}   'ee-find-{xxxpdfold})
+;; \(defalias      'find-{xxxpdfnew}      'find-{xxxpdfold})
+;; \(defalias   'ee-code-{xxxpdfnew}   'ee-code-{xxxpdfold})
+;; \(defalias      'code-{xxxpdfnew}      'code-{xxxpdfold})
+;; \(defalias 'find-code-{xxxpdfnew} 'find-code-{xxxpdfold})
+;; "))
 
 
 
@@ -519,26 +520,12 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; (find-code-pdfbackend "pdf-page")
         (code-pdfbackend "pdf-page")
 
-;; Make all functions in the `find-pdf-page' family use
-;; `find-xpdf-page' by default, in way that makes this default easy to
-;; change. This defalias will OVERRIDE the `find-pdf-page' defined by
-;; the `code-pdfbackend' above.
+;; The defalias below makes all functions in the `find-pdf-page'
+;; family use `find-xpdf-page' by default. Running this defalias will
+;; OVERRIDE the `find-pdf-page' defined by the `code-pdfbackend'
+;; above.
 ;;
 (defalias 'find-pdf-page 'find-xpdf-page)
-
-;; A VERY TECHNICAL DETAIL: apparently it would be cleaner to do
-;; something like this,
-;;
-;;   (defalias 'ee-find-pdf-page 'ee-find-xpdf-page)
-;;
-;; instead of:
-;;
-;;   (defalias 'find-pdf-page 'find-xpdf-page)
-;;
-;; but if we changed the `ee-find-pdf-page' instead of `find-pdf-page'
-;; then it would be much more difficult to change the default to
-;; `find-pdftools-page', and then later change it back to, say,
-;; `find-xpdf-page'...
 
 
 
@@ -576,6 +563,19 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;;   (find-efunctionpp                  'find-pdftools-page)
 ;;   (find-efunctionpp                  'find-texworkspdf-page)
 ;;   (find-efunctionpp                  'find-googlechrome-page)
+;;
+;; A VERY TECHNICAL DETAIL: apparently it would be cleaner to do
+;; something like this,
+;;
+;;   (defalias 'ee-find-pdf-page 'ee-find-xpdf-page)
+;;
+;; instead of:
+;;
+;;   (defalias 'find-pdf-page 'find-xpdf-page)
+;;
+;; but this wouldn't work for some atypical backends, like
+;; `find-pdftools-page'... (TODO: explain this!)
+
 
 
 ;;;  ____        __             _ _                  __        ___  
@@ -587,10 +587,11 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; «find-pdf-page-windows»  (to ".find-pdf-page-windows")
 ;; (find-elnode "System Environment" "windows-nt")
 ;; (find-evardescr 'system-type)
-;; (to "find-texworkspdf-page")
+;; (to "change-default-viewer")
+;; (to "find-firefox-page")
 ;;
 (if (eq system-type 'windows-nt)
-    (defalias 'find-pdf-page 'find-texworkspdf-page)
+    (defalias 'find-pdf-page 'find-firefox-page)
   )
 
 
@@ -930,18 +931,19 @@ may want to put here code that cleans up that page information.")
 
 
 
-;;;   ____ _                              
-;;;  / ___| |__  _ __ ___  _ __ ___   ___ 
-;;; | |   | '_ \| '__/ _ \| '_ ` _ \ / _ \
-;;; | |___| | | | | | (_) | | | | | |  __/
-;;;  \____|_| |_|_|  \___/|_| |_| |_|\___|
-;;;                                       
+
+;;;  ____                                      
+;;; | __ ) _ __ _____      _____  ___ _ __ ___ 
+;;; |  _ \| '__/ _ \ \ /\ / / __|/ _ \ '__/ __|
+;;; | |_) | | | (_) \ V  V /\__ \  __/ |  \__ \
+;;; |____/|_|  \___/ \_/\_/ |___/\___|_|  |___/
+;;;                                            
+;; «find-firefox-page»  (to ".find-firefox-page")
 ;; «find-googlechrome-page»  (to ".find-googlechrome-page")
+;;
 ;; Some browsers can open a PDF file "/tmp/foo.pdf" at page 42 if we
 ;; add a "#page=42" to its URL - i.e., if we ask them to open the URL
-;; "file:///tmp/foo.pdf#page=42". I added this code in 2020oct16 and
-;; only tested it on Google Chrome but it should work on several other
-;; browsers too, with the obvious trivial changes.
+;; "file:///tmp/foo.pdf#page=42"...
 
 ;; See: (find-efunction 'ee-fname-to-url)
 ;; Tests: (ee-fname-page-to-url "~/Coetzee99.pdf")
@@ -954,11 +956,19 @@ If the argument PAGE is non-nil append a \"#page=nnn\" to the result."
 	  (expand-file-name (ee-expand fname))
 	  (if page (format "#page=%s" page) "")))
 
+(defun ee-find-firefox-page (fname &optional page)
+  `("firefox" ,(ee-fname-page-to-url fname page)))
+
 (defun ee-find-googlechrome-page (fname &optional page)
   `("google-chrome" ,(ee-fname-page-to-url fname page)))
 
-;; Tests: (find-googlechrome-page "~/Coetzee99.pdf")
+;; Tests: (find-firefox-page      "~/Coetzee99.pdf")
+;;        (find-firefox-page      "~/Coetzee99.pdf" 3)
+;;        (find-googlechrome-page "~/Coetzee99.pdf")
 ;;        (find-googlechrome-page "~/Coetzee99.pdf" 3)
+;;
+;; (find-code-pdfbackend "firefox-page")
+        (code-pdfbackend "firefox-page")
 ;;
 ;; (find-code-pdfbackend "googlechrome-page")
         (code-pdfbackend "googlechrome-page")
