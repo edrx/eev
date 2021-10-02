@@ -1,4 +1,38 @@
+2021-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-angg-es-links): new function.
+
+2021-10-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-face-at-point): new function.
+	(ee-face-of-glyph): new function.
+	(find-eface-links): use `ee-face-at-point'.
+
+	* eev-blinks.el (ee-find-efaces-hack): new function.
+	(find-efaces): use `ee-find-efaces-hack'.
+	(find-efacedescr): use `ee-face-at-point'.
+
+2021-09-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-escripts-intro): new section: "6. Tutorials".
+
 2021-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eejump.el, eepitch.el, eev-anchors.el, eev-audiovideo.el,
+	eev-beginner.el, eev-blinks.el, eev-bounded.el, eev-brxxx.el,
+	eev-channels.el, eev-code.el, eev-codings.el, eev-compose-hash.el,
+	eev-edit.el, eev-elinks.el, eev-env.el, eev-eval.el,
+	eev-explain.el, eev-flash.el, eev-hlinks.el, eev-hydras.el,
+	eev-intro.el, eev-load.el, eev-mode.el, eev-multiwindow.el,
+	eev-on-windows.el, eev-pdflike.el, eev-plinks.el, eev-prepared.el,
+	eev-rcirc.el, eev-readme.el, eev-template0.el, eev-testblocks.el,
+	eev-tla.el, eev-tlinks.el, eev-wrap.el: added a "-*-
+	lexical-binding: nil; -*-" to the end of the first line of each of
+	these files.
+
+	* eev-intro.el (find-eev-install-intro): in "7.2. Dynamic binding"
+	explain that I decided to make all the elisp files in eev use
+	dynamic binding for simplicity.
 
 	* eev-pdflike.el (code-xxxpdf-family, find-code-xxxpdf-family)
 	(ee-code-xxxpdf-family, code-xxxpdftext-family)

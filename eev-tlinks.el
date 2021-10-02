@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210915
+;; Version:    20211002
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -90,6 +90,7 @@
 ;; «.ee-0x0-upload-region»		(to "ee-0x0-upload-region")
 ;; «.find-0x0-links»			(to "find-0x0-links")
 ;; «.find-eepitch-bullet-links»		(to "find-eepitch-bullet-links")
+;; «.find-angg-es-links»		(to "find-angg-es-links")
 
 
 (require 'eev-env)
@@ -2473,6 +2474,76 @@ This function is used by `ee-0x0-upload-region'."
          (newli (format fmt li li)))
     (insert newli))
   (ee-next-line 1))
+")
+     )
+   pos-spec-list))
+
+
+
+;; «find-angg-es-links»  (to ".find-angg-es-links")
+;; Skel: (find-find-links-links-new "angg-es" "" "")
+;; Test: (find-angg-es-links)
+;;
+(defun find-angg-es-links (&rest pos-spec-list)
+"Show an e-script for configuring `find-angg' and `find-es'."
+  (interactive)
+  (apply
+   'find-elinks-elisp
+   `((find-angg-es-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-angg-es-links)
+     (find-eev-quick-intro "9. Shorter hyperlinks")
+     (find-eev-quick-intro "9.1. `code-c-d'")
+     (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" "to anchors")
+     ""
+     ,(ee-template0 "\
+
+
+;; The `progn' below is how I (edrx) define `find-angg' and
+;; `find-es' in my machine to point to local files. Note that the
+;; sexps
+;;
+;;   (find-angg \"foo\" \"anchor\")
+;;   (find-es   \"foo\" \"anchor\")
+;;
+;; search for anchor \"anchor\" in the files \"~/foo\" and
+;; \"~/e/foo.e\" respectively... in 1996, when I wrote `find-es',
+;; I had several functions like it, that appended arbitrary
+;; prefixes _and suffixes_ to their first arguments. I stopped
+;; using all of them except `find-es' - that is a kind of
+;; living fossil.
+;;
+(progn
+
+  (code-c-d \"angg\" \"~/\" :anchor :grep)
+  (code-c-d \"es\"   \"$ES/\")
+  (defun find-es (stem &rest rest)
+    (apply 'find-anchor (ee-esfile (concat stem \".e\")) rest))
+
+)
+
+
+
+;; The `progn' below defines versions of `find-angg' and
+;; `find-es' that use `find-wget' to access the
+;; public copies of my files at angg.twu.net:
+;;
+(progn
+
+  (defun find-angg (fname &rest rest)
+    (apply 'find-wgeta (format \"http://angg.twu.net/%s\" fname) rest))
+  (defun find-es (fname &rest rest)
+    (apply 'find-wgeta (format \"http://angg.twu.net/e/%s.e\" fname) rest))
+
+)
+
+
+
+;; Tests:
+;; (find-angg \"e/bullseye.e\")
+;; (find-angg \"e/bullseye.e\" \"2021aug16\")
+;; (find-es     \"bullseye\")
+;; (find-es     \"bullseye\"   \"2021aug16\")
 ")
      )
    pos-spec-list))

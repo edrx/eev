@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210608
+;; Version:    20211002
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -334,8 +334,8 @@ then go to the position specified by POS-SPEC-LIST.\n
 	 (format "*Customize Group: %s*" (custom-unlispify-tag-name group))
 	 pos-spec-list))
 
-;; Tests: (find-epackages nil "\n  bdo ")
-;;        (find-epackages t   "\n  bdo ")
+;; Tests: (find-epackages nil "\n  0x0 ")
+;;        (find-epackages t   "\n  0x0 ")
 ;;
 (defun find-epackages (&optional no-fetch &rest pos-spec-list)
   "Hyperlink to the output of `list-packages'."
@@ -343,7 +343,7 @@ then go to the position specified by POS-SPEC-LIST.\n
   (apply 'find-wottb-call '(list-packages no-fetch)
 	 "*Packages*" pos-spec-list))
 
-;; Test: (find-epackage 'bdo)
+;; Test: (find-epackage '0x0)
 ;; Note: `M-x find-epackage' currently doesn't work well.
 ;;  See: (find-elnode "Interactive Codes" "S" "An interned symbol")
 ;;       (find-elnode "Index" "* read-no-blanks-input:")
@@ -371,9 +371,19 @@ then go to the position specified by POS-SPEC-LIST.\n
 ;; Inspect faces, colors and characters.
 ;; Most of these use `find-wottb-call'.
 ;; Tests:
-;;   (find-ecolors             " white")
-;;   (find-efaces              "default")
-;;   (find-efacedescr 'default "Foreground:")
+;;   (find-ecolors     " white")
+;;   (find-efaces       'eepitch-star-face   "abcd")
+;;   (find-efaces     "\neepitch-star-face " "abcd")
+;;   (find-efacedescr   'default "Foreground:")
+;;
+;; Key bindings:
+;;   (find-eev "eev-mode.el" "eev-mode-map-set")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-c" "find-echardescr")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-s" "find-eface-links")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-t" "find-etpat")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-h"   "t" "find-etpat0")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-h"   "c" "find-ecolor-links")
+;;     (find-enode "International Chars" "C-u C-x =" "describe-char")
 
 (defun find-echardescr (&optional pos &rest pos-spec-list)
   "Hyperlink to the result of running `describe-char' at POS."
@@ -386,16 +396,31 @@ then go to the position specified by POS-SPEC-LIST.\n
   (interactive)
   (apply 'find-wottb-call '(list-colors-display) "*Colors*" pos-spec-list))
 
+;; See:
+;;   (find-eev "eev-elinks.el" "find-eface-links")
+;;   (find-eev "eev-elinks.el" "find-eface-links" "find-efacedescr")
+;;
 (defun find-efacedescr (&optional face &rest pos-spec-list)
-  "Hyperlink to the result of running `describe-face' on FACE."
-  ;; (interactive (list (read-face-name "Describe face")))
-  (interactive (list (face-at-point)))
+  "Hyperlink to the result of running `describe-face' on FACE.
+When called interactively use `ee-face-at-point' to select the
+FACE. See the documentation for `ee-face-at-point' for the
+details of how it works."
+  (interactive (list (ee-face-at-point current-prefix-arg)))
   (apply 'find-wottb-call '(describe-face face) "*Help*" pos-spec-list))
 
 (defun find-efaces (&rest pos-spec-list)
   "Hyperlink to the result of running `list-faces-display'."
   (interactive)
-  (apply 'find-wottb-call '(list-faces-display) "*Faces*" pos-spec-list))
+  (apply 'find-wottb-call '(list-faces-display)
+	 "*Faces*" (ee-find-efaces-hack pos-spec-list)))
+
+(defun ee-find-efaces-hack (pos-spec-list)
+  "An internal function used by `find-efaces'."
+  (let* ((face (car pos-spec-list))
+	 (rest (cdr pos-spec-list)))
+    (if (and face (symbolp face))	  ; if pos-spec-list starts with a symbol:
+	(cons (format "\n%s " face) rest) ; convert it to a string in the right way
+      pos-spec-list)))			  ; otherwise return pos-spec-list unchanged
 
 (defun find-etpat (&optional pos &rest pos-spec-list)
   "Hyperlink to the result of running `describe-text-properties' at point.

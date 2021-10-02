@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210925
+;; Version:    20210927
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2522,9 +2522,17 @@ Dependency on dynamic binding should be avoided - see:
 
 but the main function that eev uses for template strings is
 intrinsically incompatible with lexical binding. See the comments
-in its source file:
+in its source file,
 
   (find-eev \"eev-template0.el\")
+
+and this tutorial:
+
+  (find-lexical-intro)
+
+I decided to make all the elisp files in eev use dynamic binding
+for simplicity, even though this is frowned upon.
+
 
 
 
@@ -11944,6 +11952,173 @@ This can also be used to generate links to info nodes.
 
 (...)
 
+
+
+
+6. Tutorials
+============
+All the tutorials in eev follow these four principles:
+
+  1. All the examples in them are very easy to run,
+  2. The links to documentation are easy to follow,
+  3. All the \"sub-examples\" are easy to run,
+  4. The links to related documentation - including links to
+     primary sources - are easy to follow.
+
+I used to believe that all these four principles would be
+immediately obvious to everyone who had played a bit with the
+tutorials of eev, and I thought that people would realize that
+these are very good principles, that they should follow too...
+and so these people would start to apply these principles to
+their own e-scripts, and they would adapt them to other
+environments that are not Emacs-based, and these ideas would
+spread (sort of) naturally. Well, I was totally wrong - and I
+only discovered that in 2021, when I chatted with some relatively
+advanced eev users to whom those ideas were not obvious at all.
+So let me try to be explain these principles clearly - especially
+the principles 3 and 4 - and show how they can be applied to
+other contexts besides tutorials.
+
+The idea of \"making sub-examples very easy to run\" is
+especially easy to see in the elisp tutorials. In this
+introduction
+
+  (find-elisp-intro \"1. Introduction\")
+
+we have first this sexp,
+
+     (+ (* 2 3) (* 4 5))
+
+and then these ones:
+
+           2
+             3
+        (* 2 3)
+                   4
+                     5
+                (* 4 5)
+     (+ (* 2 3) (* 4 5))
+  (list (* 2 3) (* 4 5))
+
+In the first sexp people _could_ execute the subsexps (* 2 3)
+and (* 4 5) by typing `M-E' in the right places... remember:
+
+  (find-eval-intro \"2. The end of line and `M-e'\")
+  (find-eval-intro \"2. The end of line and `M-e'\" \"without moving\")
+
+...but it is much easier to see the sub-sexps, and to execute
+them, when they are in different lines. This example also serves
+to stress to beginners than number, like 4, are sexps too, and
+they can be evaluated - the result of evaluating 4 is 4.
+
+In a sequence of sub-sexps, like the one above, I usually try to
+arrange the sexps in a didactic order: to understand the result
+of (+ (* 2 3) (* 4 5)) we need to understand first the results
+of (* 2 3) and (* 4 5). Also, the best way to understand the new
+idea that appears in
+
+  (list (* 2 3) (* 4 5))
+
+is to compare it with this other sexp, that appears just before
+it and is conceptually simpler:
+
+     (+ (* 2 3) (* 4 5))
+
+I try to apply this principle - \"make sub-examples very easy to
+run\" - to tutorials for other languages, too. At this moment the
+only tutorial for another language that I have that is in a
+_reasonably_ organized form is this one,
+
+               http://angg.twu.net/e/lua-intro.e.html
+  (find-wgeta \"http://angg.twu.net/e/lua-intro.e\")
+  (find-wgeta \"http://angg.twu.net/e/lua-intro.e\" \"intro:for\")
+
+but parts of it were written in 2004, when these principles were
+not yet very clear to me. I am revising it, and I am also trying
+to convince some students to work together with me on tutorials
+for shell and Python, but they are not very enthusiastic (yet).
+
+The \"links to related documentation\" can also be arranged in a
+didactical order. For example, here,
+
+  (find-eev-quick-intro \"6.4. Red stars\")
+  (find-eev-quick-intro \"6.4. Red stars\" \"bullet\")
+  (find-eepitch-bullet-links)
+
+the first link points to a section of a tutorial that most people
+should have stumbled on; the second link points to technical a
+point in it that most people ignore on a first reading, and the
+third one points to something much more technical,
+containing (executable!) source code.
+
+(TO DO: mention test blocks)
+
+
+
+7. E-mails
+==========
+
+
+7. Sequences of links
+=====================
+(TO DO: explain the convention: from easiest to find to more
+technical. Show some examples of e-mails)
+
+
+
+8. IRC
+======
+(TO DO: explain this:)
+
+  (find-efunction 'ee-0x0-upload-region)
+  (find-efunction 'ee-0x0-upload-region \"aliased to `u0'\")
+
+
+9. Git
+======
+Example:
+
+  (progn
+
+    ;; Links to the git repository:
+    ;; https://github.com/edrx/emacs-lua
+    ;; https://github.com/edrx/emacs-lua/blob/main/tests.e
+    ;; https://raw.githubusercontent.com/edrx/emacs-lua/main/tests.e
+
+    (setq ee-emluagit-base
+	  \"https://raw.githubusercontent.com/edrx/emacs-lua/main/\")
+    (defun find-emluagitfile (fname &rest rest)
+      (apply 'find-wget (format \"%s%s\" ee-emluagit-base fname) rest))
+    (defun find-emluagit (fname &rest rest)
+      (apply 'find-wgeta (format \"%s%s\" ee-emluagit-base fname) rest))
+
+    ;; Tests:
+    ;; (find-emluagit \"tests.e\")
+    ;; (find-emluagit \"tests.e\" \"find-angg-and-find-es\")
+    ;; (find-emluagit \"tests.e\" \"find-angg-and-find-es\" \"Tests:\")
+    ;; (find-emluagitfile \"tests.e\" \"Warning:\")
+
+    ;; Links to a local copy of the git repository:
+    ;; (find-git-links \"https://github.com/edrx/emacs-lua\" \"emlua\")
+    ;; (setq ee-git-dir \"~/usrc/\")
+    ;;
+    ;; (find-code-c-d \"emlua\" \"~/usrc/emacs-lua/\" :anchor)
+    (code-c-d \"emlua\" \"~/usrc/emacs-lua/\" :anchor)
+    ;;
+    ;; Tests:
+    ;; (find-emlua \"\")
+    ;; (find-emlua \"tests.e\")
+    ;; (find-emlua \"tests.e\" \"find-angg-and-find-es\")
+    ;; (find-emlua \"tests.e\" \"find-angg-and-find-es\" \"Tests:\")
+    ;; (find-emluafile \"tests.e\" \"Warning:\")
+
+    ;; Compare:
+    ;; (find-emluagit \"tests.e\" \"find-angg-and-find-es\")
+    ;; (find-emlua    \"tests.e\" \"find-angg-and-find-es\")
+
+    )
+
+
 " pos-spec-list)))
 
 ;; (find-escripts-intro)
@@ -13686,7 +13861,7 @@ which means that they operate on the same `x'.
 Different calls to this function generate getters and setters
 with independent lexical environments - which means that they
 operate on independent `x's.
-This defun need to be executed in lexical binding mode.\"
+This defun needs to be executed in lexical binding mode.\"
   (let* ((x nil))
     (list (lambda () x)
           (lambda (newvalue) (setq x newvalue)))))

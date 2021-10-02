@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210910
+;; Version:    20211002
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -74,7 +74,7 @@
 ;; «.find-pdflike-page-links»	(to "find-pdflike-page-links")
 ;; «.ee-hyperlink-prefix»	(to "ee-hyperlink-prefix")
 ;; «.find-eface-links»		(to "find-eface-links")
-;; «.find-color-links»		(to "find-color-links")
+;; «.find-ecolor-links»		(to "find-ecolor-links")
 ;; «.find-epackage-links»	(to "find-epackage-links")
 ;; «.ee-package-dir»		(to "ee-package-dir")
 ;; «.find-esetkey-links»	(to "find-esetkey-links")
@@ -1071,22 +1071,26 @@ See the comments in the source code."
 ;; «find-eface-links» (to ".find-eface-links")
 ;; Skel: (find-find-links-links-new "eface" "face-symbol" "")
 ;; Test: (find-eface-links 'eepitch-star-face)
-;; Moved to eev-mode.el:
-;;   (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
+;; Key binding:
+;;   (find-eev "eev-mode.el" "eev-mode-map-set")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-s" "find-eface-links")
 ;;
 (defun find-eface-links (&optional face-symbol &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks about FACE-SYMBOL.
-When called interactively generate hyperlinks about the face at point."
-  (interactive (list (or (face-at-point) 'default)))
+When called interactively generate hyperlinks about the face at point.
+See the documentation for `ee-face-at-point' to understand what that
+means."
+  (interactive (list (ee-face-at-point current-prefix-arg)))
   (setq face-symbol (or face-symbol "{face-symbol}"))
   (apply
    'find-elinks
-   `((find-eface-links ,face-symbol ,@pos-spec-list)
+   `((find-eface-links ',face-symbol ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-eface-links)
      ""
      (find-efacedescr ',face-symbol)
-     (find-efaces ,(format "\n%S " face-symbol))
+     ;; (find-efaces ,(format "\n%S " face-symbol))
+     (find-efaces ',face-symbol)
      (find-eface ',face-symbol)
      (customize-face ',face-symbol)
      (set-face-foreground ',face-symbol ,(face-foreground face-symbol))
@@ -1099,6 +1103,35 @@ When called interactively generate hyperlinks about the face at point."
      )
    pos-spec-list))
 
+(defun ee-face-at-point (&optional arg)
+  "Return the face at point as a symbol; ARG determines what that means.
+When ARG is nil this returns (face-at-point); in a font-locked
+buffer this is typically something like `font-lock-comment-face'.
+When ARG is 1 and the character at point is a glyph this returns
+the face of that glyph - something like `eepitch-star-face'.
+When ARG is anything else this returns (symbol-at-point); so if
+the point is on the name of face this returns the face with that
+name.
+
+See the source code for `find-eface-links' and `find-efacedescr'
+to understand how this is used. ARG is usually
+`current-prefix-arg', so the default for it is to be nil."
+  (if (eq arg nil)
+      (or (face-at-point) 'default)
+    (if (eq arg 1)
+	(ee-face-of-glyph (char-after (point)))
+      (symbol-at-point))))
+  
+;; Tests: (ee-face-of-glyph ?)
+;;        (ee-face-of-glyph ?@)
+(defun ee-face-of-glyph (char)
+  "An internal function used by `ee-face-at-point'."
+  (let* ((display-table standard-display-table)
+         (disp-vector  (and display-table (aref display-table char)))
+         (disp-vector0 (and disp-vector   (aref disp-vector 0)))
+	 (face         (and disp-vector0  (glyph-face disp-vector0))))
+    face))
+
 
 
 
@@ -1108,20 +1141,26 @@ When called interactively generate hyperlinks about the face at point."
 ;;; |  _| | | | | (_| |____|  __/ (_| (_) | | (_) | | |____| | | | | |   <\__ \
 ;;; |_| |_|_| |_|\__,_|     \___|\___\___/|_|\___/|_|      |_|_|_| |_|_|\_\___/
 ;;;                                                                              
-;; «find-color-links» (to ".find-color-links")
+;; «find-ecolor-links» (to ".find-ecolor-links")
 ;; Skel: (find-find-links-links-new "color" "initialcolor" "")
 ;; Tests: (find-ecolor-links)
 ;;        (find-ecolor-links "sienna")
+;;        (find-ecolor-links "#123456")
+;;        (ee-color-values   "sienna")
+;;        (ee-color-values   "#123456")
+;;        (ee-color-choose-tk)
+;;        (ee-color-choose-tk "sienna")
+;;        (ee-color-choose-tk "#123456")
 ;;
-(defun find-color-links (&optional initialcolor &rest pos-spec-list)
+(defun find-ecolor-links (&optional initialcolor &rest pos-spec-list)
   "Visit a temporary buffer containing hyperlinks for the color INITIALCOLOR."
   (interactive)
   (setq initialcolor (or initialcolor "#123456"))
   (apply
    'find-elinks
-   `((find-color-links ,initialcolor ,@pos-spec-list)
+   `((find-ecolor-links ,initialcolor ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-color-links)
+     (find-efunction 'find-ecolor-links)
      ""
      (find-ecolor-links (ee-color-choose-tk ,(or initialcolor "gray")))
      (find-ecolor-links ,(or initialcolor "gray"))
@@ -1139,20 +1178,16 @@ When called interactively generate hyperlinks about the face at point."
   (apply 'format "#%02x%02x%02x"
 	 (mapcar (lambda (c) (lsh c -8)) (color-values color))))
 
-;; `ee-color-choose-tk' is a VERY OLD hack that needs eetcl... see:
-;; http://angg.twu.net/eev-current/eev-langs.el.html
-;; http://angg.twu.net/eev-current/eev-langs.el
-;;   (find-sh0     "echo $EEVTMPDIR")
-;;   (find-fline        "$EEVTMPDIR")
-;;   (find-sh0 "mkdir -p $EEVTMPDIR")
-;;   (require 'eev-langs)
-;;
 (defun ee-color-choose-tk (&optional initialcolor)
   "Call Tcl/Tk to choose a color similar to INITIALCOLOR.
-This needs a temporary directory; see: (find-prepared-intro)"
-  (eetcl (format "puts [tk_chooseColor -initialcolor %s]; exit"
-		 (or initialcolor "gray")))
-  (find-sh0 (format "wish %s" ee-file-tcl)))
+The original version of this function used the directory $EEVTMPDIR.
+This version uses the file /tmp/ee.tcl instead of $EEVTMPDIR/ee.tcl.
+Don't use this in multi-user machines."
+  (let ((ee-file-tcl "/tmp/ee.tcl")
+	(tclcode (format "puts [tk_chooseColor -initialcolor %s]; exit\n"
+			 (or initialcolor "gray"))))
+    (ee-write-string tclcode ee-file-tcl)
+    (find-sh0 (format "wish %s" ee-file-tcl))))
 
 
 
