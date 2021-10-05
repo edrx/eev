@@ -276,7 +276,7 @@
       (ee-buffer-help ee-epackage-re-27 1)))
 (defun  ee-find-epackage-links ()
   (let ((p (ee-epackage-bufferp)))
-    (list (ee-find-epackage-links0 p "{c}" "{d}"))))
+    (list (ee-find-epackage-links0 p nil "{d}"))))
 
 ;; By buffer name (when the mode is man)
 (defvar ee-man-re "^\\*Man \\(.*\\)\\*$")

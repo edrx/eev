@@ -12722,7 +12722,97 @@ As an exercise, try to give these commands to the Windows shell:
 
 
 
-6. Lua
+
+
+
+
+6. Eepitch on Windows
+=====================
+The main tutorial of eev explains the best way to use shells from
+Emacs in this section:
+
+  (find-eev-quick-intro \"6. Controlling shell-like programs\")
+
+The default shell on Windows is a very bad one - cmd.exe, that we
+saw in section 5.5 - and by default `eepitch-shell' uses cmd.exe.
+One alternative is to use Eshell:
+
+  (find-node \"(eshell)Top\")
+
+Most people who use Windows have very little experience with
+shells, and I am trying to use eev to create tutorials to save
+them...
+
+   This is a project that is still in a VERY early stage!!! 
+   I will describe its current state, and I will end this   
+   section with a \"please test this and get in touch!\".     
+
+I am preparing a one-session workshop for Windows users that
+should happen in the middle of oct/2021. Most of my material
+about it is in Portuguese, but In 2021oct03 I sent these two
+e-mails to the help-gnu-emacs mailing list, in which I explained
+it in English and asked for help:
+
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00045.html
+
+Many features in eev require a program called wget, and I need to
+prepare instructions for installing wget that can be executed by
+people who have never used a terminal or a shell in their lives.
+I _have the impression_ that it will be better to use PowerShell
+for that. The Wikipedia page about PowerShell is here:
+
+  https://en.wikipedia.org/wiki/PowerShell
+
+It seems that every recent version of Windows comes with
+PowerShell, and it seems that one of the ways of running
+PowerShell is to open a terminal and run the command \"pwsh\" in
+it... [please, people, can you test this and tell me if it works?]
+
+In 2021oct04 I added support for PowerShell to eev, but I was
+only able to test it on Linux, using a version of PowerShell that
+runs on Linux...
+
+
+
+6.1. `eepitch-pwsh': a test
+---------------------------
+Please, people, can you test the eepitch block below with <f8>s
+and tell me if you get something similar to what I got in this
+screenshot?
+
+Link to the screenshot:
+
+  http://angg.twu.net/2021.1-projeto/eepitch-pwsh.png
+
+Here is the eepitch block:
+
+ (eepitch-pwsh)
+ (eepitch-kill)
+ (eepitch-pwsh)
+mkdir -p ~/bin/
+cd       ~/bin/
+rm -fv   ~/bin/wget.exe
+wget http://angg.twu.net/2021.1-projeto/wget.exe
+ls -l wget.exe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7. Lua
 ======
 Lua is a programming language that many people - like me - find
 much better and much simpler than Python.  The examples of

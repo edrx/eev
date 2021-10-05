@@ -1210,7 +1210,7 @@ PKG must be a symbol; C and D are arguments for `code-c-d'.
 If D is t then try to use `ee-package-dir' to get the directory."
   (interactive (list (symbol-at-point)))
   (setq pkg (or pkg '{pkg}))
-  (setq c (or c (replace-regexp-in-string "[-]" "" (symbol-name pkg))))
+  (setq c (or c (ee-find-epackage-pkg-to-c pkg)))
   (setq d (cond ((eq d t) (ee-package-dir pkg))
 		((eq d nil) "{d}")
 		(t d)))
@@ -1228,6 +1228,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
 
 (defun ee-find-epackage-links0 (pkg c d)
   "This is an internal function used by `find-epackage-links'."
+  (setq c (or c (ee-find-epackage-pkg-to-c pkg)))
   (let* ((spkg (format "\n  %s " pkg))
 	 (findelpafiles0 (ee-package-findelpafiles pkg))
 	 (findelpafiles1 (reverse findelpafiles0))
@@ -1251,6 +1252,10 @@ If D is t then try to use `ee-package-dir' to get the directory."
 # http://elpa.gnu.org/packages/{pkg}.html
 # http://melpa.org/#/{pkg}
 ")))
+
+(defun ee-find-epackage-pkg-to-c (pkg)
+  "Convert PKG (a symbol) to a \"c\" for a `code-c-d'."
+  (replace-regexp-in-string "[-]" "" (symbol-name pkg)))
 
 
 

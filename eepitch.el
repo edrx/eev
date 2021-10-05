@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210913
+;; Version:    20211005
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -44,7 +44,10 @@
 ;; «.set-glyphs»		(to "set-glyphs")
 ;; «.set-keys»			(to "set-keys")
 ;;
-;; «.eepitch-vterm»		(to "eepitch-vterm")
+;; «.other-terms»		(to "other-terms")
+;;   «.eepitch-ansiterm»	(to "eepitch-ansiterm")
+;;   «.eepitch-vterm»		(to "eepitch-vterm")
+;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
 
 ;;; Commentary:
@@ -770,56 +773,115 @@ This is useful for for running processes that use pagers like
 
 
 
+
 ;;;   ___  _   _                 _                          
 ;;;  / _ \| |_| |__   ___ _ __  | |_ ___ _ __ _ __ ___  ___ 
 ;;; | | | | __| '_ \ / _ \ '__| | __/ _ \ '__| '_ ` _ \/ __|
 ;;; | |_| | |_| | | |  __/ |    | ||  __/ |  | | | | | \__ \
 ;;;  \___/ \__|_| |_|\___|_|     \__\___|_|  |_| |_| |_|___/
 ;;;                                                         
-;; «eepitch-vterm»  (to ".eepitch-vterm")
+;; «other-terms»  (to ".other-terms")
+;; All these functions use the same convention on their arguments:
+;;
+;;   1. the argument PROGRAM comes first, and when it is omitted it
+;;      means that we should run the default shell;
+;;
+;;   2. the argument NAME0 comes second;
+;;
+;;   3. when the argument NAME0 is present the term buffer receives a
+;;      name like "*vterm: NAME0*";
+;;
+;;   4. when PROGRAM is present but NAME is omitted the term buffer
+;;      receives a name like "*vterm: PROGRAM*";
+;;
+;;   5. when both arguments are omitted the term buffer receives a
+;;      name like "*vterm*" or "*ansi-term*".
+;;
+;; Note that these conventions are different from the ones that
+;; `find-comintprocess' uses.
 
-(defun find-vtermprocess (&optional name program)
-  "This is like `find-comintprocess', but uses vterm.
-If NAME is given then the buffer name is \"*vterm: NAME*\"; if
-not, then it is just \"*vterm*\". If a buffer with that name
-already exists, then just visit it; if it doesn't exist then run
-vterm, asking it to create a buffer with that name and to run a
-vterm on it. If PROGRAM is given then ask vterm to run PROGRAM
-there instead of the default shell.\n
-This function is a prototype and will probably change."
+;; Tests:
+;;   (find-ansitermprocess nil "DASH")
+;;   (find-ansitermprocess "/bin/dash" "DASH")
+;;   (find-ansitermprocess "/bin/dash")
+;;   (find-ansitermprocess)
+;;
+(defun find-ansitermprocess (&optional program name0)
+  "See: (find-eev \"eepitch.el\" \"other-terms\")"
+  (let* ((name1 (or name0 program))
+	 (name2 (if name1 (format "ansi-term: %s" name1) "ansi-term"))
+	 (buffername (format "*%s*" name2)))
+    (if (get-buffer   buffername)
+	(find-ebuffer buffername)
+      (ansi-term (or program shell-file-name) name2))))
+
+;; Tests:
+;;   (find-vtermprocess nil "DASH")
+;;   (find-vtermprocess "/bin/dash" "DASH")
+;;   (find-vtermprocess "/bin/dash")
+;;   (find-vtermprocess)
+;;
+(defun find-vtermprocess (&optional program name0)
+  "See: (find-eev \"eepitch.el\" \"other-terms\")"
   (require 'vterm)
-  (let ((buffername (if name (format "*vterm: %s*" name) "*vterm*"))
-	(vterm-shell (or program vterm-shell)))
-    (if (get-buffer buffername)
+  (let* ((name1 (or name0 program))
+	 (name2 (if name1 (format "vterm: %s" name1) "vterm"))
+	 (buffername (format "*%s*" name2))
+	 (vterm-shell (or program vterm-shell)))
+    (if (get-buffer   buffername)
 	(find-ebuffer buffername)
       (vterm buffername))))
 
-(defun eepitch-vterm (&optional name program)
-  "This is like `eepitch-comint', but using vterm instead of comint."
-  (interactive)
-  (prog1 (eepitch `(find-vtermprocess ,name ,program))
-    (setq eepitch-line 'eepitch-line-vterm)))
 
-;; Thanks to Gabriele Bozzola for helping me with this.
+;; `eepitch-ansiterm' and `eepitch-vterm' use these variants of the
+;; original `eepitch-line'.
+;;
+(defun eepitch-line-ansiterm (line)
+  "Send LINE to the ansi-term buffer and run the key binding for RET there."
+  (eepitch-eval-at-target-window
+    '(progn (term-send-raw-string line)	   ; "type" the line
+	    (term-send-raw-string "\r")))) ; then do a RET
+
 (defun eepitch-line-vterm (line)
   "Send LINE to the vterm buffer and run the key binding for RET there."
   (eepitch-eval-at-target-window
     '(progn (vterm-send-string line)	; "type" the line
 	    (vterm-send-return))))      ; then do a RET
 
-;; Tests:
-;; (find-vterm-name-program)
-;; (find-vterm-name-program "shell 2")
-;; (find-vterm-name-program "julia" "julia")
-;; (find-vterm-name-program "julia 2" "julia")
-;; (eepitch-vterm)
-;; (eepitch-vterm "shell 2")
-;; (eepitch-vterm "julia" "julia")
-;; (eepitch-vterm "julia 2" "julia")
-;; (eepitch-vterm "top" "top")
-;; (defun eepitch-julia  () (interactive) (eepitch-vterm "julia"   "julia"))
-;; (defun eepitch-julia2 () (interactive) (eepitch-vterm "julia 2" "julia"))
 
+;; «eepitch-ansiterm»  (to ".eepitch-ansiterm")
+;; Tests:
+;;   (eepitch-ansiterm nil "DASH")
+;;   (eepitch-ansiterm "/bin/dash" "DASH")
+;;   (eepitch-ansiterm "/bin/dash")
+;;   (eepitch-ansiterm)
+;;   (eepitch-line "echo $(tput setaf 1)Hello$(tput setaf 0)")
+;;
+(defun eepitch-ansiterm (&optional program name0)
+  "This is like `eepitch-comint', but using ansi-term instead of comint.
+It uses `eepitch-line-ansiterm' instead of `eepitch-line'.
+The arguments are explained here:
+  (find-eev \"eepitch.el\" \"other-terms\")"
+  (interactive)
+  (prog1 (eepitch `(find-vtermprocess ,program ,name0))
+    (setq eepitch-line 'eepitch-line-vterm)))
+
+;; «eepitch-vterm»  (to ".eepitch-vterm")
+;; Tests:
+;;   (eepitch-vterm nil "DASH")
+;;   (eepitch-vterm "/bin/dash" "DASH")
+;;   (eepitch-vterm "/bin/dash")
+;;   (eepitch-vterm)
+;;   (eepitch-line "echo $(tput setaf 1)Hello$(tput setaf 0)")
+;;
+(defun eepitch-vterm (&optional program name0)
+  "This is like `eepitch-comint', but using vterm instead of comint.
+It uses `eepitch-line-vterm' instead of `eepitch-line'.
+The arguments are explained here:
+  (find-eev \"eepitch.el\" \"other-terms\")"
+  (interactive)
+  (prog1 (eepitch `(find-vtermprocess ,program ,name0))
+    (setq eepitch-line 'eepitch-line-vterm)))
 
 
 
@@ -845,6 +907,8 @@ This function is a prototype and will probably change."
 (defun eepitch-tcsh () (interactive) (eepitch-comint "tcsh" "tcsh"))
 (defun eepitch-zsh  () (interactive) (eepitch-comint-de "zsh" "zsh"))
 (defun eepitch-scsh () (interactive) (eepitch-comint "scsh" "scsh"))
+(defun eepitch-pwsh  () (interactive) (eepitch-ansiterm "pwsh" "pwsh"))
+(defun eepitch-pwsh2 () (interactive) (eepitch-ansiterm "pwsh" "pwsh 2"))
 
 ;; Main interpreted languages:
 (defun eepitch-lua51  () (interactive) (eepitch-comint "lua51"  "lua5.1"))

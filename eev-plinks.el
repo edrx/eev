@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210807
+;; Version:    20211004
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -256,37 +256,40 @@
 ;;;  \__,_|_|  |_|     |_|  \___|\__|_|  |_|\___| \_/ \___|
 ;;;                                                        
 ;; «find-urlretrieve»  (to ".find-urlretrieve")
-;; See: (find-node "(url)Retrieving URLs" "url-retrieve-synchronously")
-;; Tests: http://angg.twu.net/e/emacs.e.html#find-urlretrieve
-;;                    (find-es "emacs"      "find-urlretrieve")
+;; See: http://angg.twu.net/elisp/url-retrieve-test.el
+;;              (find-angg "elisp/url-retrieve-test.el")
+;; Tests:
+;;   (find-urlretrieve00 "http://foo/bar")
+;;   (find-urlretrieve00 "http://angg.twu.net/")
+;;   (find-urlretrieve00 "http://angg.twu.net/doesnotexist")
+;;   (find-estring (ee-urlretrieve0 "http://angg.twu.net/"))
+;;   (find-estring (ee-urlretrieve0 "http://angg.twu.net/doesnotexist"))
 ;;
-(defun find-urlretrieve00 (url &rest pos-spec-list)
-  "Download URL with `url-retrieve-synchronously'. Show the full response."
-  (apply 'find-ebuffer (url-retrieve-synchronously url) pos-spec-list))
+(defvar ee-urlretrieve-headers ""
+  "The HTTP headers returned by the last call to `find-urlretrieve'.")
 
-(defun ee-urlretrieve-3 (url)
-  "Download URL with `url-retrieve-synchronously'. Return status, headers, body."
-  (find-urlretrieve00 url 1 "\n\n")
-  (let* ((header (buffer-substring 1 (- (point) 1)))
-	 (body   (buffer-substring (point) (point-max)))
-	 (status (replace-regexp-in-string "\n.*" "" header)))
-    (ee-kill-this-buffer)
-    (list status header body)))
+(defun find-urlretrieve00 (url)
+  "An internal function used by `find-urlretrieve'."
+  (find-ebuffer
+   (url-retrieve-synchronously url 'silent 'inhibit-cookies)
+   "\n\n"))
 
-(defun find-urlretrieve0 (url)
-  "Download URL with `url-retrieve-synchronously'. Return body as a raw string."
-  (let* ((shb (ee-urlretrieve-3 url))
-	 (status (nth 0 shb))
-	 (body   (nth 2 shb)))
-    (if (equal status "HTTP/1.1 200 OK")
-	body
-      (error "%s -> %s" url status))))
-
-(defun find-urlretrieve (url &rest pos-spec-list)
-  "Download URL with `url-retrieve-synchronously'.
-TODO: detect the encoding!!!"
-  (let ((ee-buffer-name url))
-    (apply 'find-estring (find-urlretrieve0 url) pos-spec-list)))
+(defun ee-urlretrieve0 (url)
+  "Use `url-retrieve-synchronously' to download URL.
+When `url-retrieve-synchronously' is used for http or http it
+returns a buffer containing the response headers, then a blank
+line, then the contents (the \"message body\"). This function
+saves the response headers in the variable
+`ee-urlretrieve-headers', returns the message body, and deletes
+the buffer.\n
+This function doesn't perform any error checking and is as
+simplistic as possible. Use it only to experiment with
+`url-retrieve-synchronously'."
+  (find-urlretrieve00 url)
+  (setq ee-urlretrieve-headers
+	(buffer-substring (point-min) (- (point) 2)))
+  (prog1 (buffer-substring (point) (point-max))
+    (kill-buffer (current-buffer))))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210925
+;; Version:    20211003
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -947,14 +947,21 @@ may want to put here code that cleans up that page information.")
 
 ;; See: (find-efunction 'ee-fname-to-url)
 ;; Tests: (ee-fname-page-to-url "~/Coetzee99.pdf")
-;;        (ee-fname-page-to-url "~/Coetzee99.pdf" 3)
+;;        (ee-fname-page-to-url "~/Coetzee99.pdf" 4)
+;;        (ee-fname-page-to-url   "$S/http/foo/bar/Coetzee99.pdf" 4)
+;;        (ee-fname-page-to-url "file:///home/edrx/Coetzee99.pdf" 4)
+;;        (ee-fname-page-to-url   "https://foo/bar/Coetzee99.pdf" 4)
+;;        (ee-fname-page-to-url    "http://foo/bar/Coetzee99.pdf" 4)
 ;;
 (defun ee-fname-page-to-url (fname &optional page)
-  "Convert a filename to a \"file://\" url (after running `ee-expand' on it).
-If the argument PAGE is non-nil append a \"#page=nnn\" to the result."
-  (format "file://%s%s"
-	  (expand-file-name (ee-expand fname))
-	  (if page (format "#page=%s" page) "")))
+  "Convert FNAME to a \"file://\" url (after running `ee-expand' on it).
+If FNAME is already a url then don't convert it.
+If PAGE is non-nil append a \"#page=nnn\" to the result."
+  (let ((baseurl (if (string-match "^\\(https?\\|file\\)://" fname)
+		     fname
+		   (format "file://%s" (ee-expand fname))))
+	(pagestr (if page (format "#page=%s" page) "")))
+    (concat baseurl pagestr)))
 
 (defun ee-find-firefox-page (fname &optional page)
   `("firefox" ,(ee-fname-page-to-url fname page)))

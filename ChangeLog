@@ -1,4 +1,37 @@
+2021-10-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (find-vtermprocess, eepitch-vterm): rewritten.
+	Beware: their arguments are different now!
+	(eepitch-ansiterm, eepitch-line-ansiterm)
+	(find-ansitermprocess, eepitch-pwsh)
+	(eepitch-pwsh2): new functions.
+
+2021-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-urlretrieve00): rewritten.
+	(ee-urlretrieve-3, find-urlretrieve0, find-urlretrieve): deleted.
+	(ee-urlretrieve-headers): new variable.
+	(find-urlretrieve00, ee-urlretrieve0): new functions.
+
+2021-10-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-fname-page-to-url): if the argument FNAME is
+	already a URL then don't try to convert it to a URL again.
+
 2021-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-epackage-pkg-to-c): new function.
+	(ee-find-epackage-links0): use `ee-find-epackage-pkg-to-c'.
+	(find-epackage-links): use `ee-find-epackage-pkg-to-c'.
+
+	* eev-hlinks.el (ee-find-epackage-links): small fixes.
+
+	* eev-elinks.el (find-color-links): renamed to
+	`find-ecolor-links'. There were some references to
+	`find-color-links' and some to `find-ecolor-links' in the code; I
+	think that the `find-color-links's were typos.
+	(ee-color-choose-tk): use the file /tmp/ee.tcl instead of
+	~/.eev/ee.tcl.
 
 	* eev-tlinks.el (find-angg-es-links): new function.
 
