@@ -291,6 +291,17 @@ simplistic as possible. Use it only to experiment with
   (prog1 (buffer-substring (point) (point-max))
     (kill-buffer (current-buffer))))
 
+(defun ee-very-primitive-wget0 (url fname)
+  "Try to download the contents of URL into FNAME.
+If that works return the number of bytes written.
+If that fails return nil or throw an error.
+This is a quick hack."
+  (let* ((contents (ee-urlretrieve0 url))
+	 (ok (string-match "^HTTP/1.1 200 OK" ee-urlretrieve-headers)))
+    (when ok
+      (write-region contents nil (ee-expand fname))
+      (string-bytes contents))))
+
 
 
 ;;;   __ _           _                         _   

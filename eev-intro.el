@@ -12445,6 +12445,13 @@ Version of these instructions: 2021sep20.
 Read the README below and then install Emacs using either the
 link to the .exe or the link to the .zip:
 
+http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/
+http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/README-windows-binaries
+http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2021-01-15-installer.exe
+http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2021-01-15.zip
+
+If you prefer Emacs27, use these links:
+
 https://ftp.gnu.org/gnu/emacs/windows/emacs-27/
 https://ftp.gnu.org/gnu/emacs/windows/emacs-27/README-windows-binaries
 https://ftp.gnu.org/gnu/emacs/windows/emacs-27/emacs-27.2-x86_64-installer.exe

@@ -863,8 +863,8 @@ It uses `eepitch-line-ansiterm' instead of `eepitch-line'.
 The arguments are explained here:
   (find-eev \"eepitch.el\" \"other-terms\")"
   (interactive)
-  (prog1 (eepitch `(find-vtermprocess ,program ,name0))
-    (setq eepitch-line 'eepitch-line-vterm)))
+  (prog1 (eepitch `(find-ansitermprocess ,program ,name0))
+    (setq eepitch-line 'eepitch-line-ansiterm)))
 
 ;; «eepitch-vterm»  (to ".eepitch-vterm")
 ;; Tests:

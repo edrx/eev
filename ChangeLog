@@ -1,10 +1,13 @@
 2021-10-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-plinks.el (ee-very-primitive-wget0): new function.
+
 	* eepitch.el (find-vtermprocess, eepitch-vterm): rewritten.
 	Beware: their arguments are different now!
 	(eepitch-ansiterm, eepitch-line-ansiterm)
 	(find-ansitermprocess, eepitch-pwsh)
 	(eepitch-pwsh2): new functions.
+	(eepitch-ansiterm): fixed some typos.
 
 2021-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
