@@ -1,3 +1,10 @@
+2021-10-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el: added a (code-c-d "eshell" ...).
+
+	* eev-plinks.el (ee-very-primitive-wget1, ee-eshell/fakewget): new
+	functions.
+
 2021-10-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (ee-very-primitive-wget0): new function.

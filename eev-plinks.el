@@ -1,6 +1,6 @@
 ;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211004
+;; Version:    20211006
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -301,6 +301,32 @@ This is a quick hack."
     (when ok
       (write-region contents nil (ee-expand fname))
       (string-bytes contents))))
+
+(defun ee-very-primitive-wget1 (url)
+  "This is like `ee-very-primitive-wget0', but always returns a string.
+If URL is, say, http://foo.bar/plic/blech.html then save its
+contents in a file bletch.html in the current directory.
+Return \"Downloaded nnn bytes\" in case of success and the HTTP
+headers in case of error. This is a quick hack."
+  (let* ((fname (replace-regexp-in-string ".*/" "" url))
+         (rslt (ee-very-primitive-wget0 url fname)))
+    (if rslt (format "Downloaded %d bytes" rslt)
+      (format "Error:\n%s\n" ee-urlretrieve-headers))))
+
+;; We can use `ee-very-primitive-wget1' to implement simplistic
+;; versions of wget in eshell - the definition below is an example.
+;; To make it work, run something like:
+;;   (defalias    'eshell/wget 'ee-eshell/fakewget)
+;; To delete it, do:
+;;   (fmakunbound 'eshell/wget)
+;; See:
+;;   (find-eshellnode "Built-ins")
+;;   (find-eshellgrep "grep --color -nH --null -e eshell/ *.el")
+;;
+(defun ee-eshell/fakewget (&rest args)
+  (let* ((lastarg (nth (- (length args) 1) args)))
+    (ee-very-primitive-wget1 lastarg)))
+
 
 
 
