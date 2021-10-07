@@ -1,4 +1,11 @@
+2021-10-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eek): new function.
+
 2021-10-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (ee-urlretrieve-header1, ee-urlretrieve-ok)
+	(ee-urlretrieve-assert-ok): new functions.
 
 	* eev-code.el: added a (code-c-d "eshell" ...).
 

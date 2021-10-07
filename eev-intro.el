@@ -1992,6 +1992,7 @@ C-x 1   -- delete-other-windows     (\"1 window\") (find-enode \"Change Window\"
 C-x 2   -- split-window-vertically (Above/Below) (find-enode \"Split Window\")
 C-x 3   -- split-window-horizontally       (L|R) (find-enode \"Split Window\")
 C-x 4 0 -- kill-buffer-and-window                (find-enode \"Change Window\")
+C-x +   -- balance-windows                       (find-enode \"Change Window\")
 
 
 

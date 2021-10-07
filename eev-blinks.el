@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211002
+;; Version:    20211007
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -110,6 +110,10 @@
 An example: (eek \"C-x 4 C-h\")"
   (interactive "sKeys: ")
   (execute-kbd-macro (read-kbd-macro str)))
+
+(defun find-eek (str &rest pos-spec-list)
+  (eek str)
+  (apply 'ee-goto-position pos-spec-list))
 
 
 

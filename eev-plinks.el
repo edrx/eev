@@ -268,6 +268,20 @@
 (defvar ee-urlretrieve-headers ""
   "The HTTP headers returned by the last call to `find-urlretrieve'.")
 
+(defun ee-urlretrieve-header1 ()
+  "Return the first line of `ee-urlretrieve-headers'."
+  (replace-regexp-in-string "\n[^z-a]*" "" ee-urlretrieve-headers))
+
+(defun ee-urlretrieve-ok ()
+  "Check if the first line of `ee-urlretrieve-headers' is \"HTTP/1.1 200 OK\"."
+  (equal "HTTP/1.1 200 OK" (ee-urlretrieve-header1)))
+
+(defun ee-urlretrieve-assert-ok ()
+  "Check if the first line of `ee-urlretrieve-headers' is \"HTTP/1.1 200 OK\".
+If it is something else, throw an error."
+  (if (not (ee-urlretrieve-ok))
+      (error "Error: %s" (ee-urlretrieve-header1))))
+
 (defun find-urlretrieve00 (url)
   "An internal function used by `find-urlretrieve'."
   (find-ebuffer
@@ -276,7 +290,7 @@
 
 (defun ee-urlretrieve0 (url)
   "Use `url-retrieve-synchronously' to download URL.
-When `url-retrieve-synchronously' is used for http or http it
+When `url-retrieve-synchronously' is used for http or https it
 returns a buffer containing the response headers, then a blank
 line, then the contents (the \"message body\"). This function
 saves the response headers in the variable
@@ -304,7 +318,7 @@ This is a quick hack."
 
 (defun ee-very-primitive-wget1 (url)
   "This is like `ee-very-primitive-wget0', but always returns a string.
-If URL is, say, http://foo.bar/plic/blech.html then save its
+If URL is, say, http://foo.bar/plic/bletch.html then save its
 contents in a file bletch.html in the current directory.
 Return \"Downloaded nnn bytes\" in case of success and the HTTP
 headers in case of error. This is a quick hack."
