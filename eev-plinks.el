@@ -288,6 +288,10 @@ If it is something else, throw an error."
    (url-retrieve-synchronously url 'silent 'inhibit-cookies)
    "\n\n"))
 
+;; 2021oct08: The functions below are broken - they corrupt non-ascii files.
+;; See: https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00174.html
+;; TODO: fix them.
+
 (defun ee-urlretrieve0 (url)
   "Use `url-retrieve-synchronously' to download URL.
 When `url-retrieve-synchronously' is used for http or https it
@@ -353,8 +357,10 @@ headers in case of error. This is a quick hack."
 ;;
 ;; «find-wget» (to ".find-wget")
 ;;
+(defvar ee-wget-program "wget")
+
 (defun find-wget00 (url)
-  (find-callprocess00 `("wget" "-q" "-O" "-" ,url)))
+  (find-callprocess00 `(,ee-wget-program "-q" "-O" "-" ,url)))
 
 (defun find-wget (url &rest pos-spec-list)
   "Download URL with \"wget -q -O - URL\" and display the output.

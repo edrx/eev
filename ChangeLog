@@ -1,3 +1,23 @@
+2021-10-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-on-windows.el (ee-download-with-eww, ee-use-eshell)
+	(ee-use-shell, ee-use-bullets, ee-use-red-stars)
+	(ee-use-gnu-linux, ee-use-windows): new functions.
+
+	* eev-audiovideo.el (ee-mpv-program): new variable.
+	(ee-find-mpv-video): use `ee-mpv-program'.
+
+	* eev-brxxx.el (ee-googlechrome-program): new variable.
+	(ee-firefox-program): new variable.
+	(find-googlechrome): use `ee-googlechrome-program'.
+	(find-firefox): use `ee-firefox-program'.
+
+	* eev-plinks.el (ee-wget-program): new variable.
+	(find-wget00): use `ee-wget-program'.
+
+	* eev-hlinks.el (ee-find-evardescr-links): added `find-evariable'.
+	(ee-find-efunctiondescr-links): added `find-efunction'.
+
 2021-10-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-eek): new function.

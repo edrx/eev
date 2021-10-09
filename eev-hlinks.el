@@ -1,6 +1,6 @@
 ;;; eev-hlinks.el --- `find-here-links' and variants.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2020 Free Software Foundation, Inc.
+;; Copyright (C) 2020-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20201231
+;; Version:    20211008
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -253,14 +253,16 @@
 (defun  ee-find-efunctiondescr-links ()
   (let ((f (ee-efunctiondescr-bufferp)))
     `((find-efunction-links ',f)
-      (find-efunctiondescr ',f))))
+      (find-efunctiondescr ',f)
+      (find-efunction ',f))))
 
 (defvar ee-evardescr-re "^\\([^ \t\n]+\\) is a variable")
 (defun  ee-evardescr-bufferp () (ee-buffer-help ee-evardescr-re 1))
 (defun  ee-find-evardescr-links ()
   (let ((v (ee-evardescr-bufferp)))
     `((find-evariable-links ',v)
-      (find-evardescr ',v))))
+      (find-evardescr ',v)
+      (find-evariable ',v))))
 
 (defvar ee-efacedescr-re "^Face: \\([^ \t\n]+\\)")
 (defun  ee-efacedescr-bufferp () (ee-buffer-help ee-efacedescr-re 1))

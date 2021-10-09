@@ -1,6 +1,6 @@
 ;; eev-on-windows.el - some support for M$ Windows.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2019 Free Software Foundation, Inc.
+;; Copyright (C) 2019,2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -30,30 +30,196 @@
 
 ;;; Commentary:
 ;;
-;; Experimental, undocumented, and messy. This was used in a course on
-;; LaTeX and Emacs in which the students were trying to run everything
-;; on Windows and I was trying to help them even though I know next to
-;; nothing about Windows.
+;; Experimental, undocumented, and messy. Every time that I give a
+;; workshop to Windows users this file changes a lot. The most recent
+;; changes in this file correspond to a workshop that I will give in
+;; mid-october 2021, and that I described in this thread:
+;;
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
+;;
+;; I can't test the settings for Windows myself - a friend of mine
+;; called Daniel Almeida is helping me to test this me before the
+;; workshop.
+;;
+;; This file is not loaded by default. See:
+;;   (find-eev "eev-load.el")
+;;
+;; At this moment what the Windows users need to do is:
+;;   (require 'eev-on-windows)
+;;   (mkdir "~/bin/" t)
+;;   (delete-file "~/bin/wget.exe")
+;;   (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
+;;   (ee-use-windows)
+;; and they need to run the test in:
+;;   (to "directories")
 
-;; «.eev-tar»		(to "eev-tar")
-;; «.ee-add-to-PATH»	(to "ee-add-to-PATH")
 
-;; (find-eev "eev-plinks.el" "find-urlretrieve")
-;; (find-es "emacs" "package-untar")
-;; (find-es "emacs" "load-path")
-;; (find-angg ".emacs.local.w32")
-;; (find-angg ".emacs.local.w32" "PATH")
+;; 2021:
+;; «.ee-download-with-eww»	(to "ee-download-with-eww")
+;; «.ee-use-eshell»		(to "ee-use-eshell")
+;; «.ee-use-bullets»		(to "ee-use-bullets")
+;; «.ee-use-gnu-linux»		(to "ee-use-gnu-linux")
+;; «.ee-use-windows»		(to "ee-use-windows")
+;; «.directories»		(to "directories")
+;;
+;; 2019:
+;; «.eev-tar»			(to "eev-tar")
+;; «.ee-add-to-PATH»		(to "ee-add-to-PATH")
+
+
+
+;;;  ____   ___ ____  _ 
+;;; |___ \ / _ \___ \/ |
+;;;   __) | | | |__) | |
+;;;  / __/| |_| / __/| |
+;;; |_____|\___/_____|_|
+;;;                     
+
+(require 'eww)
+(require 'eshell)
+(require 'em-alias)
+
+
+;; «ee-download-with-eww»  (to ".ee-download-with-eww")
+;; Test:
+;;   (mkdir "~/bin/" t)
+;;   (delete-file "~/bin/wget.exe")
+;;   (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
+;;
+(defun ee-download-with-eww (url dir)
+  (url-retrieve url #'eww-download-callback (list url dir)))
+
+
+;; «ee-use-eshell»  (to ".ee-use-eshell")
+;; TODO: define an `eepitch-eshell2'.
+;;
+(defun ee-use-eshell ()
+  (interactive)
+  (defun eepitch-shell  () (interactive) (eepitch-eshell))
+  (defun eepitch-shell2 () (interactive) (eepitch-eshell))
+  )
+
+(defun ee-use-shell ()
+  (interactive)
+  (defun eepitch-shell  () (interactive) (eepitch '(shell "*shell*")))
+  (defun eepitch-shell2 () (interactive) (eepitch '(shell "*shell 2*")))
+  )
+
+
+;; «ee-use-bullets»  (to ".ee-use-bullets")
+;; From: (find-eepitch-bullet-links 2 "red bullets by default")
+;;
+(defun ee-use-bullets ()
+  (interactive)
+  (eepitch-set-glyph0 ?\u2022 ?\u2022 'eepitch-star-face)
+  (defun eewrap-eepitch () (interactive)
+    (let* ((fmt   "\u2022 (eepitch-%s)\n\u2022 (eepitch-kill)\n\u2022 (eepitch-%s)")
+           (li    (ee-this-line-extract))
+           (newli (format fmt li li)))
+      (insert newli))
+    (ee-next-line 1))
+  )
+
+(defun ee-use-red-stars ()
+  (interactive)
+  (defun eewrap-eepitch () (interactive)
+    (let* ((fmt   " (eepitch-%s)\n (eepitch-kill)\n (eepitch-%s)")
+           (li    (ee-this-line-extract))
+           (newli (format fmt li li)))
+      (insert newli))
+    (ee-next-line 1))
+  )
+
+
+;; «ee-use-gnu-linux»  (to ".ee-use-gnu-linux")
+;; «ee-use-windows»  (to ".ee-use-windows")
+;;
+(defun ee-use-gnu-linux ()
+  (interactive)
+  (ee-use-shell)
+  (eshell/alias "wget" nil)
+  (setq ee-wget-program         "wget")
+  (setq ee-firefox-program      "firefox")
+  (setq ee-googlechrome-program "google-chrome")
+  (setq ee-mpv-program          "mpv")
+  )
+
+(defun ee-use-windows ()
+  (interactive)
+  (ee-use-shell)
+  (eshell/alias "wget" "~/bin/wget.exe $*")
+  (setq ee-wget-program         "~/bin/wget.exe")
+  (setq ee-firefox-program      "$FIREFOXDIR/firefox.exe")
+  (setq ee-googlechrome-program "$GOOGLECHROMEDIR/chrome.exe")
+  (setq ee-mpv-program          "$MPVDIR/mpv.exe")
+  (defalias 'find-pdf-page 'find-googlechrome-page)
+  )
+
+
+;; «directories»  (to ".directories")
+;; These directories are for Daniel Almeida's machine.
+;; Most people will have to configure this.
+;;
+(setenv "FIREFOXDIR"      "c:/Program Files/Mozilla Firefox")
+(setenv "GOOGLECHROMEDIR" "c:/Program Files/Google/Chrome/Application")
+(setenv "MPVDIR"          "c:/Users/danie/OneDrive/Documentos/mpv")
+
+;; Basic tests:
+;;   (find-fline         "~/bin/"            "wget.exe")
+;;   (find-fline         "$GOOGLECHROMEDIR/" "chrome.exe")
+;;   (find-fline         "$FIREFOXDIR/"      "firefox.exe")
+;;   (find-fline         "$MPVDIR/"          "mpv.exe")
+;;   (find-callprocess `("~/bin/wget.exe"              "--help"))
+;;   (find-callprocess `("$GOOGLECHROMEDIR/chrome.exe" "--help"))
+;;   (find-callprocess `("$FIREFOXDIR/firefox.exe"     "--help"))
+;;   (find-callprocess `("$MPVDIR/mpv.exe"             "--help"))
+;;   (find-callprocess `(,ee-wget-program              "--help"))
+;;   (find-callprocess `(,ee-googlechrome-program      "--help"))
+;;   (find-callprocess `(,ee-firefox-program           "--help"))
+;;   (find-callprocess `(,ee-mpv-program               "--help"))
+;;   (find-wget "http://angg.twu.net/eev-current/eev-on-windows.el")
+;;
+;; For the tests for using browsers as PDF viewers you will need to
+;; understand these sections of the tutorials, and will need to run
+;; some of the commands in them:
+;;   (find-psne-intro "1. Local copies of files from the internet")
+;;   (find-psne-intro "3. The new way: `M-x brep'")
+;;   (find-pdf-like-intro "2. Preparation")
+;;   (find-pdf-like-intro "2. Preparation" "Coetzee99")
+;;
+;; Then try:
+;;   (find-googlechrome-page "~/Coetzee99.pdf" 3)
+;;   (find-firefox-page      "~/Coetzee99.pdf" 3)
+;;   (find-pdf-page          "~/Coetzee99.pdf" 3)
+;;
+;; The video links are explained here:
+;;   (find-videos-intro "2. Short links to eev video tutorials")
+;;   http://angg.twu.net/2021-video-links.html
+;;
+;; Test for the video links:
+;;   (delete-file (ee-expand "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4"))
+;;   (brep "http://angg.twu.net/eev-videos/2021-test-blocks.mp4")
+;;   (find-eevvideo-links "testbls" "2021-test-blocks" "fpsF_M55W4o")
+;;   (find-video "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4")
+;;   (find-video "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4" "2:33")
 
 
 
 
 
+
+
+
+;;;  ____   ___  _  ___  
+;;; |___ \ / _ \/ |/ _ \ 
+;;;   __) | | | | | (_) |
+;;;  / __/| |_| | |\__, |
+;;; |_____|\___/|_|  /_/ 
+;;;                      
+;;
 ;; «eev-tar»  (to ".eev-tar")
-
-;; This was a way to to download a very recent version of eev using
-;; only Lisp. I used it a bit with the students, but then eev became a
-;; part of ELPA and this became obsolete... and now I don't even
-;; remember how reliable this code was.
+;; This is from 2019 and is now very obsolete -
+;; partially because eev is in ELPA.
 ;;
 ;;   (setq  eev-tar-dir   "~/eev-tar/")
 ;;   (setq  eev-tar-fname "~/eev-tar/eev2.tar")
@@ -68,7 +234,6 @@
 ;;   (eek "C-x o C-x 4 0")
 ;;   (find-2a nil '(find-fline eev-tar-dir nil '(eek "g")))
 ;;
-
 ;; Add something like this to your .emacs:
 ;;
 ;;   (add-to-list 'load-path "~/eev-tar/")
@@ -79,12 +244,27 @@
 ;;   (find-estring (mapconcat 'identity load-path "\n"))
 ;;   (locate-library "eejump")
 ;;   (find-estring (list-load-path-shadows t))
-
-
+;;
+;; See:
+;;   (find-eev "eev-plinks.el" "find-urlretrieve")
+;;   (find-es "emacs" "package-untar")
+;;   (find-es "emacs" "load-path")
+;;   (find-angg ".emacs.local.w32")
+;;   (find-angg ".emacs.local.w32" "PATH")
 
 
 ;; «ee-add-to-PATH»  (to ".ee-add-to-PATH")
-
+;; The last time that I used these commands to change the Windows PATH
+;; was in 2019. In this message Eli Zaretskii recommended not changing
+;; the PATH, and he was totally right:
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00052.html
+;;
+;; OLD TODO: Rewrite some of this using:
+;;   (find-efunctiondescr 'parse-colon-path)
+;;   (find-efunction      'parse-colon-path)
+;;   (find-elnode "System Environment" "Variable: path-separator")
+;;   (find-elnode "System Environment" "Function: parse-colon-path path")
+;;
 ;; (setq mylist '(22 33 44))
 ;; (add-to-list 'mylist 44)
 ;;
@@ -116,11 +296,6 @@
 
 
 
-;; TODO: Rewrite some of this using:
-;; (find-efunctiondescr 'parse-colon-path)
-;; (find-efunction      'parse-colon-path)
-;; (find-elnode "System Environment" "Variable: path-separator")
-;; (find-elnode "System Environment" "Function: parse-colon-path path")
 
 
 

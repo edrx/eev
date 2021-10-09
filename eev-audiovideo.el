@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210925
+;; Version:    20211008
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -455,13 +455,15 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;
 ;; «find-mpv-video»  (to ".find-mpv-video")
 ;;
+(defvar ee-mpv-program "mpv")
+
 (defun    find-mpv-video (fname &optional pos &rest rest)
   "Open FNAME with mpv, with a GUI (in fullscreen mode, for video files)."
   (interactive "sFile name: ")
   (find-bgprocess (ee-find-mpv-video fname pos)))
 (defvar     ee-mpv-video-options '("--fs" "--osd-level=2"))
 (defun ee-find-mpv-video (fname &optional pos &rest rest)
-  `("mpv"
+  `(,ee-mpv-program
     ,fname
     ,@(if pos (list (format "--start=%s" (ee-secs-to-mm:ss pos))))
     ,@ee-mpv-video-options

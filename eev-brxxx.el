@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210208
+;; Version:    20211008
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-brxxx.el>
@@ -366,8 +366,11 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;      (find-eev "eev-blinks.el" "find-w3m")
 ;;      (find-efile "net/browse-url.el")
 
-(defun find-googlechrome (url) (find-bgprocess `("google-chrome" ,url)))
-(defun find-firefox      (url) (find-bgprocess `("firefox"       ,url)))
+(defvar ee-googlechrome-program "google-chrome")
+(defvar ee-firefox-program      "firefox")
+
+(defun find-googlechrome (url) (find-bgprocess `(,ee-googlechrome-program ,url)))
+(defun find-firefox      (url) (find-bgprocess `(,ee-firefox-program      ,url)))
 
 ;; (find-code-brurl 'find-psne-links   :remote 'brep)
         (code-brurl 'find-psne-links   :remote 'brep)
