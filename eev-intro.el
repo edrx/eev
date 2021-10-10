@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210927
+;; Version:    20211009
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2216,11 +2216,12 @@ These are the current ways to download and install eev:
 
   2. as an Emacs package, by downloading a file named
      eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
-     links like these ones,
+     links like these ones - but you'll have to correct the date:
 
        http://elpa.gnu.org/packages/eev.html
        http://elpa.gnu.org/packages/eev-20201013.tar
        http://angg.twu.net/eev-current/
+       http://angg.twu.net/eev-current/eev2.tar
        http://angg.twu.net/eev-current/eev-20201013.tar
 
      and then running `M-x package-install-file';
@@ -2364,6 +2365,47 @@ work... I still need to understand this. See:
 If you have installed both an eev from ELPA and an eev from the
 .tgz or from the git repo then one of them will be found first in
 the load-path. Check which one!
+
+
+
+
+5.4. `package-install-file'
+---------------------------
+If installing the latest version of eev from ELPA with `M-x
+list-packages' doesn't work you can download the latest version
+of eev as a .tar file directly from its ELPA page - here:
+
+  http://elpa.gnu.org/packages/eev.html
+
+and then run `M-x package-install-file' and give it the name of
+the local copy of the .tar. See:
+
+  (find-enode \"Package Files\" \"M-x package-install-file\")
+
+
+
+
+5.5. `use-package'
+------------------
+Some people use non-default package managers for Emacs, like
+straight.el and use-package. I have very little experience with
+them, but it SEEMS that this is a good recipe for using eev with
+`use-package':
+
+;; From:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00031.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00034.html
+;; See: (find-eev-install-intro \"5.5. `use-package'\")
+;;
+(use-package eev
+  :straight (:host github :repo \"edrx/eev\")
+  :config (progn
+           ;; See: (find-eev \"eev-load.el\" \"autoloads\")
+           ;; http://angg.twu.net/eev-current/eev-load.el.html#autoloads
+           (require 'eev-load)
+           ;; (eev-mode 1)     ; optional
+           ;; (eev-beginner)   ; optional
+           ))
 
 
 
@@ -12056,14 +12098,34 @@ containing (executable!) source code.
 
 
 
-7. E-mails
-==========
-
-
 7. Sequences of links
 =====================
 (TO DO: explain the convention: from easiest to find to more
-technical. Show some examples of e-mails)
+technical. Explain the big example below.)
+
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-eev-quick-intro \"2. Evaluating Lisp\" \"M-0 M-e\")
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+       (eek \"M-h M-k  M-e\")
+       (eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\")
+  (find-eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\")
+  (find-eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\" \"(find-efunction ')\")
+             (find-efunction 'ee-eval-sexp-eol)
+             (find-efunction 'ee-eval-sexp-eol \"3:\")
+             (eek \"2*<up> M-3 M-e\")
+
+  (find-emacs-keys-intro \"6. Windows\")
+  (find-emacs-keys-intro \"6. Windows\" \"L|R\")
+
+  (find-eev-intro)
+  (find-eev-intro \"M-5 M-0 M-j\")
+  (find-eev-intro \"(find-multiwindow-intro)\")
+  (find-multiwindow-intro)
+
+  (find-wset \"13o_2o2o23oo33ooo\"  '(find-ebuffer \"B\"))
+  (find-wset \"13o_2o2o23oo33ooo+\" '(find-ebuffer \"B\"))
+  (find-2a nil '(find-efunction 'ee-eval-sexp-eol))
+  (find-2b nil '(find-efunction 'ee-eval-sexp-eol))
 
 
 

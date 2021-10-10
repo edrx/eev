@@ -1,3 +1,18 @@
+2021-10-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-find-firefox-page): use `ee-firefox-program'.
+	(ee-find-googlechrome-page): use `ee-googlechrome-program'.
+
+	* eev-intro.el (find-eev-install-intro): new section: "5.4.
+	`package-install-file'".
+	(find-eev-install-intro): new section: "5.5. `use-package'".
+
+	* eev-on-windows.el (ee-dospath-to-unix, ee-dospath-to-dos)
+	(ee-dospath-split, ee-dospath-unsplit, ee-dospath-add)
+	(ee-add-to-PATH): deleted.
+
+	* eev-testblocks.el (ee-insert-test-racket-mode): new function.
+
 2021-10-08  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-on-windows.el (ee-download-with-eww, ee-use-eshell)

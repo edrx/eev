@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210811
+;; Version:    20211009
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -37,9 +37,9 @@
 ;;
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
 ;;
-;; I can't test the settings for Windows myself - a friend of mine
-;; called Daniel Almeida is helping me to test this me before the
-;; workshop.
+;; I can't test the settings for Windows myself, but two friends of
+;; mine, Daniel Almeida and Daniel Bastos, are helping me to test this
+;; before the workshop.
 ;;
 ;; This file is not loaded by default. See:
 ;;   (find-eev "eev-load.el")
@@ -50,21 +50,48 @@
 ;;   (delete-file "~/bin/wget.exe")
 ;;   (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
 ;;   (ee-use-windows)
-;; and they need to run the test in:
+;; and they need to run the tests in:
 ;;   (to "directories")
+;;
+;; The function `(ee-use-windows)' is sort of reversible - with:
+;;   (ee-use-gnu-linux)
+;;   (ee-use-find-angg-es-local)
+
+
+;; Setting your ~/.emacs
+;; =====================
+;; If you are helping me to test this AND you know how to edit your
+;; ~/.emacs then this is what you should put there:
+;;
+;;   ;; See: (find-eevfile "eev-on-windows.el" ".emacs")
+;;   (require 'eev-load)
+;;   (require 'eev-on-windows)
+;;   (eev-mode 1)
+;;   (ee-use-windows)
+;;   (setenv "FIREFOXDIR"      "c:/Program Files/Mozilla Firefox")
+;;   (setenv "GOOGLECHROMEDIR" "c:/Program Files/Google/Chrome/Application")
+;;   (setenv "MPVDIR"          "c:/Users/danie/OneDrive/Documentos/mpv")
+;;   ;; Tests: (find-eev "eev-on-windows.el" "directories")
+;;
+;; Note that "(require 'eev-on-windows)" runs some setenvs. The
+;; setenvs above, that will override the ones in eev-on-windows.el
+;; with the paths that are correct in your machine, MUST come AFTER
+;; the "(require 'eev-on-windows)".
+
 
 
 ;; 2021:
-;; «.ee-download-with-eww»	(to "ee-download-with-eww")
-;; «.ee-use-eshell»		(to "ee-use-eshell")
-;; «.ee-use-bullets»		(to "ee-use-bullets")
-;; «.ee-use-gnu-linux»		(to "ee-use-gnu-linux")
-;; «.ee-use-windows»		(to "ee-use-windows")
-;; «.directories»		(to "directories")
+;; «.ee-download-with-eww»		(to "ee-download-with-eww")
+;; «.ee-use-eshell»			(to "ee-use-eshell")
+;; «.ee-use-bullets»			(to "ee-use-bullets")
+;; «.ee-use-find-angg-es-remote»	(to "ee-use-find-angg-es-remote")
+;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
+;; «.ee-use-windows»			(to "ee-use-windows")
+;; «.directories»			(to "directories")
 ;;
 ;; 2019:
-;; «.eev-tar»			(to "eev-tar")
-;; «.ee-add-to-PATH»		(to "ee-add-to-PATH")
+;; «.eev-tar»				(to "eev-tar")
+;; «.ee-add-to-PATH»			(to "ee-add-to-PATH")
 
 
 
@@ -131,6 +158,28 @@
   )
 
 
+;; «ee-use-find-angg-es-remote»  (to ".ee-use-find-angg-es-remote")
+;; See: (find-angg-es-links)
+;;
+(defun ee-use-find-angg-es-local ()
+  (interactive)
+  (code-c-d "angg" "~/" :anchor :grep)
+  (code-c-d "es"   "$ES/")
+  (defun find-es (stem &rest rest)
+    (apply 'find-anchor (ee-esfile (concat stem ".e")) rest))
+  )
+
+(defun ee-use-find-angg-es-remote ()
+  (interactive)
+  (defun find-angg (fname &rest rest)
+    (apply 'find-wgeta (format "http://angg.twu.net/%s" fname) rest))
+  (defun find-es (fname &rest rest)
+    (apply 'find-wgeta (format "http://angg.twu.net/e/%s.e" fname) rest))
+  )
+
+
+
+
 ;; «ee-use-gnu-linux»  (to ".ee-use-gnu-linux")
 ;; «ee-use-windows»  (to ".ee-use-windows")
 ;;
@@ -142,6 +191,7 @@
   (setq ee-firefox-program      "firefox")
   (setq ee-googlechrome-program "google-chrome")
   (setq ee-mpv-program          "mpv")
+  (ee-use-find-angg-es-local)
   )
 
 (defun ee-use-windows ()
@@ -153,7 +203,9 @@
   (setq ee-googlechrome-program "$GOOGLECHROMEDIR/chrome.exe")
   (setq ee-mpv-program          "$MPVDIR/mpv.exe")
   (defalias 'find-pdf-page 'find-googlechrome-page)
+  (ee-use-find-angg-es-remote)
   )
+
 
 
 ;; «directories»  (to ".directories")
@@ -220,7 +272,10 @@
 ;; «eev-tar»  (to ".eev-tar")
 ;; This is from 2019 and is now very obsolete -
 ;; partially because eev is in ELPA.
+;; New version:
+;;   (find-eev-install-intro "5.4. `package-install-file'")
 ;;
+;; Old notes:
 ;;   (setq  eev-tar-dir   "~/eev-tar/")
 ;;   (setq  eev-tar-fname "~/eev-tar/eev2.tar")
 ;;   (setq  eev-tar-url   "http://angg.twu.net/eev-current/eev2.tar")
@@ -253,46 +308,14 @@
 ;;   (find-angg ".emacs.local.w32" "PATH")
 
 
+
 ;; «ee-add-to-PATH»  (to ".ee-add-to-PATH")
-;; The last time that I used these commands to change the Windows PATH
-;; was in 2019. In this message Eli Zaretskii recommended not changing
-;; the PATH, and he was totally right:
-;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00052.html
-;;
-;; OLD TODO: Rewrite some of this using:
-;;   (find-efunctiondescr 'parse-colon-path)
-;;   (find-efunction      'parse-colon-path)
-;;   (find-elnode "System Environment" "Variable: path-separator")
-;;   (find-elnode "System Environment" "Function: parse-colon-path path")
-;;
-;; (setq mylist '(22 33 44))
-;; (add-to-list 'mylist 44)
-;;
-;; (ee-dospath-add "A;B;C" "B")
-;; (ee-dospath-add "A;B;C" "c:/B")
-;;
-;; (let* ((a 2) (a (* 10 a)) (a (+ 3 a))) a)
-;;
-;; (find-elnode "Index" "* delete:")
+;; Until 2021 these file contained some very primitive functions -
+;; that I wrote in 2019 - to add directories to the PATH. They were
+;; moved to:
+;;   (find-es "emacs" "ee-dospath-add")
 
-(defun ee-dospath-to-unix (str)
-  (replace-regexp-in-string "\\\\" "/" str))
-(defun ee-dospath-to-dos (str)
-  (replace-regexp-in-string "/" "\\\\" str))
-(defun ee-dospath-split (str)
-  (split-string str ";"))
-(defun ee-dospath-unsplit (list)
-  (mapconcat 'identity list ";"))
 
-(defun ee-dospath-add (path dir)
-  (setq dir  (ee-dospath-to-dos dir))
-  (setq path (ee-dospath-to-dos path))
-  (let* ((list (ee-dospath-split path))
-	 (newlist (cons dir (delete dir list))))
-    (ee-dospath-unsplit newlist)))
-
-(defun ee-add-to-PATH (dir)
-  (setenv "PATH" (ee-dospath-add (getenv "PATH") dir)))
 
 
 

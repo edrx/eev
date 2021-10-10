@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210917
+;; Version:    20211009
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -174,6 +174,18 @@ dofile \"%s\"
 exec(open(\"%s\").read(), globals())
 
 \"\"\"
+" (buffer-name))))
+
+(defun ee-insert-test-racket-mode ()
+  (interactive)
+  (insert (format "
+#|
+ (eepitch-racket)
+ (eepitch-kill)
+ (eepitch-racket)
+(load \"%s\")
+
+|#
 " (buffer-name))))
 
 (defun ee-insert-test-ruby-mode ()

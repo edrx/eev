@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211006
+;; Version:    20211009
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -290,6 +290,7 @@ If it is something else, throw an error."
 
 ;; 2021oct08: The functions below are broken - they corrupt non-ascii files.
 ;; See: https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00174.html
+;;      (find-eev "eev-on-windows.el" "ee-download-with-eww")
 ;; TODO: fix them.
 
 (defun ee-urlretrieve0 (url)

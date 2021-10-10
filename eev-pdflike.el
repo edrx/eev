@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211003
+;; Version:    20211009
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -964,10 +964,10 @@ If PAGE is non-nil append a \"#page=nnn\" to the result."
     (concat baseurl pagestr)))
 
 (defun ee-find-firefox-page (fname &optional page)
-  `("firefox" ,(ee-fname-page-to-url fname page)))
+  `(,ee-firefox-program ,(ee-fname-page-to-url fname page)))
 
 (defun ee-find-googlechrome-page (fname &optional page)
-  `("google-chrome" ,(ee-fname-page-to-url fname page)))
+  `(,ee-googlechrome-program ,(ee-fname-page-to-url fname page)))
 
 ;; Tests: (find-firefox-page      "~/Coetzee99.pdf")
 ;;        (find-firefox-page      "~/Coetzee99.pdf" 3)
