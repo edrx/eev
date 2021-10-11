@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211009
+;; Version:    20211011
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -115,6 +115,8 @@
 ;; «.find-wget»		(to "find-wget")
 ;; «.find-gitk»		(to "find-gitk")
 ;; «.find-tkdiff»	(to "find-tkdiff")
+;; «.find-firefox»	(to "find-firefox")
+;; «.find-googlechrome»	(to "find-googlechrome")
 
 
 
@@ -427,6 +429,14 @@ If wget can't download URL then this function runs `error'."
 (defun find-tkdiff (f1 f2)
   (find-bgprocess `("tkdiff" ,f1 ,f2)))
 
+
+;; «find-firefox»       (to ".find-firefox")
+;; «find-googlechrome»  (to ".find-googlechrome")
+;;
+(defvar ee-firefox-program      "firefox")
+(defvar ee-googlechrome-program "google-chrome")
+(defun find-firefox      (url) (find-bgprocess `(,ee-firefox-program      ,url)))
+(defun find-googlechrome (url) (find-bgprocess `(,ee-googlechrome-program ,url)))
 
 
 

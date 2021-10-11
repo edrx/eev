@@ -366,12 +366,6 @@ This should be made smarter - file:// urls should be returned unchanged."
 ;;      (find-eev "eev-blinks.el" "find-w3m")
 ;;      (find-efile "net/browse-url.el")
 
-(defvar ee-googlechrome-program "google-chrome")
-(defvar ee-firefox-program      "firefox")
-
-(defun find-googlechrome (url) (find-bgprocess `(,ee-googlechrome-program ,url)))
-(defun find-firefox      (url) (find-bgprocess `(,ee-firefox-program      ,url)))
-
 ;; (find-code-brurl 'find-psne-links   :remote 'brep)
         (code-brurl 'find-psne-links   :remote 'brep)
 

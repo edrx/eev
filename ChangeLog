@@ -1,3 +1,9 @@
+2021-10-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (ee-firefox-program, ee-googlechrome-program)
+	(find-firefox, find-googlechrome): moved from the file
+	eev-brxxx.el to eev-plinks.el.
+
 2021-10-09  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el (ee-find-firefox-page): use `ee-firefox-program'.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211009
+;; Version:    20211011
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -193,6 +193,7 @@
 ;; «.code-brxxxs»			(to "code-brxxxs")
 
 
+(require 'eev-plinks)			; (find-eev "eev-plinks.el")
 (require 'eev-brxxx)			; (find-eev "eev-brxxx.el")
 
 
@@ -946,6 +947,8 @@ may want to put here code that cleans up that page information.")
 ;; "file:///tmp/foo.pdf#page=42"...
 
 ;; See: (find-efunction 'ee-fname-to-url)
+;;      (find-eev "eev-plinks.el" "find-firefox")
+;;      (find-eev "eev-plinks.el" "find-googlechrome")
 ;; Tests: (ee-fname-page-to-url "~/Coetzee99.pdf")
 ;;        (ee-fname-page-to-url "~/Coetzee99.pdf" 4)
 ;;        (ee-fname-page-to-url   "$S/http/foo/bar/Coetzee99.pdf" 4)
