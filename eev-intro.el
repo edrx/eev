@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211009
+;; Version:    20211012
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -12098,14 +12098,56 @@ containing (executable!) source code.
 
 
 
+
 7. Sequences of links
 =====================
-(TO DO: explain the convention: from easiest to find to more
-technical. Explain the big example below.)
+A good part of my executable notes consists of sequences of links
+in which in practically all cases the new link \"refines\" the
+previous one in some sense; the notion of \"refining\" explained
+here is just one of these senses:
 
-  (find-eev-quick-intro \"2. Evaluating Lisp\")
-  (find-eev-quick-intro \"2. Evaluating Lisp\" \"M-0 M-e\")
-  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+  (find-refining-intro \"1. Pos-spec-lists\")
+
+Let me compare two styles: 1. textual, 2. executable notes.
+
+  1. The section 2 of the tutorial `find-eev-quick-intro'
+     mentions that `M-e' accepts several different numerical
+     prefixes, but it only explains one case: `M-0 M-e'. One way
+     to discover what the other numerical prefixes is to use `M-h
+     M-k', that is explained in the section 4.2 of
+     `find-eev-quick-intro', on `M-e', and then follow the link
+     in the temporary buffer that starts with `find-efunction'.
+     The key `M-e' is bound to `ee-eval-sexp-eol', and one of
+     lines in the docstring of `ee-eval-sexp-eol' says this:
+
+       3:  same as 2, but also switch to the new window
+
+     If we follow the source code we see that `M-3 M-e' executes
+     `ee-eval-last-sexp-3', that calls a function called
+     `find-wset', that is defined in eev-multiwindow.el. Some
+     functions in eev-multiwindow.el call functions like
+     `split-window-horizontally', that are mentioned in section 6
+     of `(find-emacs-keys-intro)'.
+
+     The comments at the top of eev-multiwindow.el say that the
+     functions in that file are explained in a tutorial called
+     `find-multiwindow-intro'. It turns out that the first
+     argument of `find-wset' is a string that is interpreted as
+     series of commands in a mini-language in which each
+     character means a certain operation on windows.
+
+Now let's see the second style: executable notes. I wrote the
+block below by following the idea described here:
+
+  (find-here-links-intro \"1. Alternating between \\\"task\\\" and \\\"notes\\\"\")
+
+Every time that I found something interesting I would save a link
+to it in my notes, and these are my notes with only very minor
+clean-ups.
+
+  2.   (find-eev-quick-intro \"2. Evaluating Lisp\")
+       (find-eev-quick-intro \"2. Evaluating Lisp\" \"M-0 M-e\")
+       (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
        (eek \"M-h M-k  M-e\")
        (eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\")
   (find-eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\")
@@ -12113,6 +12155,10 @@ technical. Explain the big example below.)
              (find-efunction 'ee-eval-sexp-eol)
              (find-efunction 'ee-eval-sexp-eol \"3:\")
              (eek \"2*<up> M-3 M-e\")
+             (find-efunction 'ee-eval-last-sexp)
+             (find-efunction 'ee-eval-last-sexp-3)
+             (find-efunction 'ee-eval-last-sexp-3 \"find-wset\")
+             (find-efunction 'find-wset)
 
   (find-emacs-keys-intro \"6. Windows\")
   (find-emacs-keys-intro \"6. Windows\" \"L|R\")
@@ -12126,6 +12172,34 @@ technical. Explain the big example below.)
   (find-wset \"13o_2o2o23oo33ooo+\" '(find-ebuffer \"B\"))
   (find-2a nil '(find-efunction 'ee-eval-sexp-eol))
   (find-2b nil '(find-efunction 'ee-eval-sexp-eol))
+
+The notes in the style 1 are a translation to English to the
+notes in the style 2. I wrote the notes in style 2 first.
+
+Some people _PANIC_ when they see notes written in the second
+style, and most of us are conditioned to believe that a) we have
+to try to write notes that are readable by everyone - even though
+that is impossible if we take the \"everyone\" literally, b)
+notes in the second style can't be shared in public. However:
+
+  a) It is good karma to make our notes publically available even
+     if very few people will be able to read them,
+
+  b) we are our main readers - and we need to try to make our
+     notes easily to read by ourselves,
+
+  c) _executability_ helps in _readability_,
+
+  d) people are experimenting with ways of writing executable
+     notes, and even the most popular styles of doing that -
+     Jupyter Notebooks, I guess? - are not yet really hugely
+     popular.
+
+One of my intents with eev is to encourage people to experiment
+with ways of writing executable notes. This involves learning the
+functions and techniques that already exist, and inventing new
+ones - and, hopefully, sharing them.
+
 
 
 

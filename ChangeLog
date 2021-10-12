@@ -1,5 +1,8 @@
 2021-10-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-escripts-intro): rewrote the section "7.
+	Sequences of links".
+
 	* eev-plinks.el (ee-firefox-program, ee-googlechrome-program)
 	(find-firefox, find-googlechrome): moved from the file
 	eev-brxxx.el to eev-plinks.el.
