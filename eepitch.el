@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211005
+;; Version:    20211016
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -40,6 +40,7 @@
 ;; «.find-comintprocess»	(to "find-comintprocess")
 ;;
 ;; «.eewrap-eepitch»		(to "eewrap-eepitch")
+;; «.ee-adjust-red-stars»	(to "ee-adjust-red-stars")
 ;; «.glyphs»			(to "glyphs")
 ;; «.set-glyphs»		(to "set-glyphs")
 ;; «.set-keys»			(to "set-keys")
@@ -577,29 +578,40 @@ See: (find-eepitch-intro)"
 ;;;   \_/\_/ |_|  \__,_| .__/ 
 ;;;                    |_|    
 ;;
-;; «eewrap-eepitch»  (to ".eewrap-eepitch")
+;; «eewrap-eepitch»       (to ".eewrap-eepitch")
+;; «ee-adjust-red-stars»  (to ".ee-adjust-red-stars")
 ;; See: (find-eev-quick-intro "6.3. Creating eepitch blocks: `M-T'")
 ;;      (find-eev-quick-intro "wrap")
 ;;      (find-wrap-intro)
+;;      (find-eev "eev-mode.el" "eev-mode-map-set" "M-T" "eewrap-eepitch")
+;;      (find-eepitch-bullet-links)
+
+(defun eewrap-eepitch () (interactive)
+  "Convert the current into an eepitch block (three lines long)."
+  (let* ((fmt   " (eepitch-%s)\n (eepitch-kill)\n (eepitch-%s)")
+	 (li    (ee-this-line-extract))
+	 (newli (format fmt li li)))
+    (insert (ee-adjust-red-stars newli)))
+  (ee-next-line 1))
+
+(defun ee-adjust-red-stars (str)
+  "Replace all the red stars in STR by another character if needed.
+By default this function returns STR unchanged. For a way to make
+it replace the red stars by bullets, see:
+  (find-eepitch-bullet-links)"
+  str)
+
+(defun ee-this-line-extract ()
+  "Delete the contents of the current line and return it as a string."
+  (delete-and-extract-region (ee-bol) (ee-eol)))
 
 (defun ee-no-properties (str)
   (setq str (copy-sequence str))
   (set-text-properties 0 (length str) nil str)
   str)
 
-;; (defun eepitch-delete-and-extract-line ()
-;;   (delete-and-extract-region (ee-bol) (ee-eol)))
 
-(defun ee-this-line-extract ()
-  "Delete the contents of the current line and return it as a string."
-  (delete-and-extract-region (ee-bol) (ee-eol)))
 
-(defun eewrap-eepitch () (interactive)
-  (let* ((fmt   " (eepitch-%s)\n (eepitch-kill)\n (eepitch-%s)")
-	 (li    (ee-this-line-extract))
-	 (newli (format fmt li li)))
-    (insert newli))
-  (ee-next-line 1))
 
 
 
@@ -612,9 +624,7 @@ See: (find-eepitch-intro)"
 ;;;
 ;; «glyphs»  (to ".glyphs")
 ;; See: (find-eev-quick-intro "6.4. Red stars")
-;; More glyphs:
-;;   (find-eev "eev-anchors.el")
-;;   (find-anchors-intro)
+;;      (find-eev "eev-anchors.el" "glyphs")
 ;; More on glyphs:
 ;;   http://angg.twu.net/glyphs.html
 ;; The `(<= 128 pos)' below is explained at:

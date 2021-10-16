@@ -1,3 +1,17 @@
+2021-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eepitch-bullet-links): redefine
+	`ee-adjust-red-stars' instead of `eewrap-eepitch'.
+	(find-psne-links): use `ee-adjust-red-stars'.
+
+	* eepitch.el (ee-adjust-red-stars): new function.
+	(eewrap-eepitch): use `ee-adjust-red-stars'.
+
+2021-10-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el: added links to the indexes of all videos in
+	the section video-tutorials.
+
 2021-10-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-escripts-intro): rewrote the section "7.

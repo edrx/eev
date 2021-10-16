@@ -1046,6 +1046,7 @@ The pattern is:
 
   (find-elnode \"Defining Functions\" \"(defun foo () 5)\")
   (find-eval-intro \"10. More on functions\")
+  (find-elisp-intro \"6. Defining functions\")
 
 As a special case, a plain `M-j' without a prefix argument runs a
 special function, `find-eejumps', that shows a help text followed
@@ -12113,8 +12114,8 @@ Let me compare two styles: 1. textual, 2. executable notes.
   1. The section 2 of the tutorial `find-eev-quick-intro'
      mentions that `M-e' accepts several different numerical
      prefixes, but it only explains one case: `M-0 M-e'. One way
-     to discover what the other numerical prefixes is to use `M-h
-     M-k', that is explained in the section 4.2 of
+     to discover what the other numerical prefixes do is to use
+     `M-h M-k', that is explained in the section 4.2 of
      `find-eev-quick-intro', on `M-e', and then follow the link
      in the temporary buffer that starts with `find-efunction'.
      The key `M-e' is bound to `ee-eval-sexp-eol', and one of

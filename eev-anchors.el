@@ -35,6 +35,11 @@
 ;; See the tutorial on anchors here:
 ;;   (find-eev-quick-intro "8. Anchors")
 
+;; «.glyphs»		(to "glyphs")
+;; «.ee-goto-anchor»	(to "ee-goto-anchor")
+;; «.find-anchor»	(to "find-anchor")
+;; «.to»		(to "to")
+
 
 
 
@@ -50,6 +55,9 @@
 ;;; | (_| | | |_| | |_) | | | \__ \
 ;;;  \__, |_|\__, | .__/|_| |_|___/
 ;;;  |___/   |___/|_|              
+;;
+;; «glyphs»  (to ".glyphs")
+;; See: (find-eev "eepitch.el" "glyphs")
 
 (defface eev-glyph-face-green
   '((((class color) (background dark))
@@ -97,6 +105,8 @@
 ;;; |  _| | | | | (_| |_____| (_| | | | | (__| | | | (_) | |   
 ;;; |_| |_|_| |_|\__,_|      \__,_|_| |_|\___|_| |_|\___/|_|   
 ;;;                                                            
+;; «ee-goto-anchor»  (to ".ee-goto-anchor")
+;; «find-anchor»     (to ".find-anchor")
 ;; See: (find-eev-quick-intro "8. Anchors")
 ;;      (find-eval-intro "Anchors and pages")
 
@@ -122,8 +132,8 @@ the local variables section of the file; see:
 a hint: one way of forcing reloading the local variables by hand
 is by running `\\[normal-mode]'. 
 
-The glyphs defined in (find-eev \"eev-glyphs.el\") can be used to
-make anchors using characters that stand out."
+The glyphs defined in (find-eev \"eev-anchors.el\" \"glyphs\")
+can be used to make anchors using characters that stand out."
   (if tag (goto-char
 	   (save-excursion
 	     (goto-char (point-min))
@@ -145,8 +155,9 @@ See `ee-goto-anchor'."
 ;;; | || (_) |
 ;;;  \__\___/ 
 ;;;           
-;; Warning: this function does not start with any of the
-;; reserved prefixes!!! =(
+;; «to»  (to ".to")
+;; See: (find-eev-quick-intro "8.1. Introduction: `to'")
+;;      (find-eev-intro "1. `eev-mode'" "prefixes" "to")
 ;;
 (defun to (tag &rest pos-spec-list)
   "Like `find-anchor', but does not switch to another buffer or file."

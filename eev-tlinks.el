@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211002
+;; Version:    20211016
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -77,6 +77,7 @@
 ;; «.code-eevvideo»			(to "code-eevvideo")
 ;; «.hardcoded-paths»			(to "hardcoded-paths")
 ;; «.find-eev-video-links»		(to "find-eev-video-links")
+;; «.find-eevshortvideo-links»		(to "find-eevshortvideo-links")
 ;;
 ;; «.find-latex-links»			(to "find-latex-links")
 ;; «.find-lua-links»			(to "find-lua-links")
@@ -89,6 +90,7 @@
 ;; «.find-newbrowser-links»		(to "find-newbrowser-links")
 ;; «.ee-0x0-upload-region»		(to "ee-0x0-upload-region")
 ;; «.find-0x0-links»			(to "find-0x0-links")
+;; «.find-red-star-links»		(to "find-red-star-links")
 ;; «.find-eepitch-bullet-links»		(to "find-eepitch-bullet-links")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
 
@@ -1159,7 +1161,7 @@ Files that look like subtitle files are ignored."
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-psne-links)
      ""
-     " (eepitch-shell2)"
+     ,(ee-adjust-red-stars " (eepitch-shell2)")
      ,(ee-find-psne-core url wget-options)
      )
    pos-spec-list))
@@ -1738,6 +1740,43 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 ;; The ones with "pt" are in Portuguese, the other ones are in English.
 
 ;; (find-eepitchvideo "0:18" "Demonstration (first time, very quickly)")
+
+
+
+;; «find-eevshortvideo-links»  (to ".find-eevshortvideo-links")
+;; Skel: (find-find-links-links-new "eevshortvideo" "c stem youtubeid" "")
+;; Used in: (find-eev "eev-audiovideo.el" "video-tutorials")
+;;
+(defun find-eevshortvideo-links (&optional c stem youtubeid &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eevshortvideo."
+  (interactive)
+  (setq c (or c "{c}"))
+  (setq stem (or stem "{stem}"))
+  (setq youtubeid (or youtubeid "{youtubeid}"))
+  (apply
+   'find-elinks-elisp
+   `((find-eevshortvideo-links ,c ,stem ,youtubeid ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eevshortvideo-links)
+     ""
+     ,(ee-template0 "\
+;; Skel: (find-eevshortvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\")
+;;  See: (find-videos-intro \"1. Some videos\" \"{stem}\")
+;; Index: http://angg.twu.net/.emacs.videos.html#{c}
+;;  Test: (find-{c}video \"0:00\")
+(defun find-{c}video (&optional time &rest rest)
+  \"Play one of the video tutorials of eev starting at TIME.
+See: (find-videos-intro \\\"1. Some videos\\\" \\\"{stem}\\\")
+     http://angg.twu.net/{stem}.html
+     for more info on this particular video,
+and: (find-videos-intro \\\"2. Short links to eev video tutorials\\\")
+ or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+     for more info on these video tutorials.\"
+  (interactive)
+  (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))
+")
+     )
+   pos-spec-list))
 
 
 
@@ -2401,10 +2440,12 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
+;; «find-red-star-links»        (to ".find-red-star-links")
 ;; «find-eepitch-bullet-links»  (to ".find-eepitch-bullet-links")
 ;; Skel: (find-find-links-links-new "eepitch-bullet" "" "")
 ;; Test: (find-eepitch-bullet-links)
 ;;
+(defalias 'find-red-star-links 'find-eepitch-bullet-links)
 (defun find-eepitch-bullet-links (&rest pos-spec-list)
 "Show code that makes eepitch use red bullets instead of red stars."
   (interactive)
@@ -2420,7 +2461,8 @@ This function is used by `ee-0x0-upload-region'."
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-05/msg01079.html
 ;; Note that the default regexes for eepitch accept both the red
 ;; stars and the bullets - chars 15 and 8226 respectively...
-;; See: (find-eev \"eepitch.el\" \"eepitch\" \"eepitch-regexp\")
+;; See: (find-eev \"eepitch.el\" \"glyphs\")
+;;      (find-eev \"eepitch.el\" \"eepitch\" \"eepitch-regexp\")
 ;;      (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
 ;; And try: (insert \"\\n;; \" 15 8226)
 
@@ -2436,28 +2478,17 @@ This function is used by `ee-0x0-upload-region'."
 ;; One way to do that is with `C-l' (`recenter-top-bottom').
 
 
-
-;; This is the standard definition of `eewrap-eepitch'. See:
-;; (find-eev \"eepitch.el\" \"eewrap-eepitch\" \"defun eewrap-eepitch\")
-;; (find-eev-quick-intro \"6.4. Red stars\")
+;; Most of the functions in eev that generate text with red stars
+;; use the function `ee-adjust-red-stars' to replace the red
+;; stars in the generated text by some non-default character if
+;; needed. Use the first defun below to use red stars, and use
+;; the second one to use bullets.
+;;  See: (find-eev \"eepitch.el\" \"ee-adjust-red-stars\")
+;;       (find-eval-intro \"3. What to execute, and in what order\")
+;; Test: (ee-adjust-red-stars \"foobar\")
 ;;
-\(defun eewrap-eepitch () (interactive)
-  (let* ((fmt   \" (eepitch-%s)\\n (eepitch-kill)\\n (eepitch-%s)\")
-	 (li    (ee-this-line-extract))
-	 (newli (format fmt li li)))
-    (insert newli))
-  (ee-next-line 1))
-
-;; This is an alternative definition of `eewrap-eepitch' that uses
-;; bullets instead of red stars. Run the defun below to override the
-;; standard definition.
-;;
-\(defun eewrap-eepitch () (interactive)
-  (let* ((fmt   \"• (eepitch-%s)\\n• (eepitch-kill)\\n• (eepitch-%s)\")
-         (li    (ee-this-line-extract))
-         (newli (format fmt li li)))
-    (insert newli))
-  (ee-next-line 1))
+\(defun ee-adjust-red-stars (str) str)
+\(defun ee-adjust-red-stars (str) (replace-regexp-in-string \"\" \"•\" str))
 
 
 
@@ -2468,12 +2499,7 @@ This function is used by `ee-0x0-upload-region'."
 ;; See: (find-eepitch-bullet-links)
 ;;
 \(eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
-\(defun eewrap-eepitch () (interactive)
-  (let* ((fmt   \"• (eepitch-%s)\\n• (eepitch-kill)\\n• (eepitch-%s)\")
-         (li    (ee-this-line-extract))
-         (newli (format fmt li li)))
-    (insert newli))
-  (ee-next-line 1))
+\(defun ee-adjust-red-stars (str) (replace-regexp-in-string \"\" \"•\" str))
 ")
      )
    pos-spec-list))
