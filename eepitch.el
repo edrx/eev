@@ -488,6 +488,7 @@ scratch."
 (defun eepitch-shell2  () (interactive) (eepitch '(shell "*shell 2*")))
 (defun eepitch-shell3  () (interactive) (eepitch '(shell "*shell 3*")))
 (defun eepitch-eshell  () (interactive) (eepitch '(eshell)))
+(defun eepitch-eshell2 () (interactive) (eepitch '(eshell 2)))
 
 
 
@@ -925,6 +926,7 @@ The arguments are explained here:
 (defun eepitch-lua52  () (interactive) (eepitch-comint "lua52"  "lua5.2"))
 (defun eepitch-lua53  () (interactive) (eepitch-comint "lua53"  "lua5.3"))
 (defun eepitch-lua54  () (interactive) (eepitch-comint "lua54"  "lua5.4"))
+(defun eepitch-luajit () (interactive) (eepitch-comint "luajit" "luajit"))
 (defun eepitch-julia  () (interactive) (eepitch-comint "julia"  "julia"))
 (defun eepitch-python2 () (interactive) (eepitch-comint "python2" "python2"))
 (defun eepitch-python3 () (interactive) (eepitch-comint "python3" "python3"))

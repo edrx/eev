@@ -1,11 +1,22 @@
 2021-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-audiovideo.el (find-eev2019video, find-eev2020video)
+	(find-eevnavvideo, find-eevtemplvideo, find-eevfherelvideo)
+	(find-eevtestblsvideo, find-eevvlinksvideo): small changes in the
+	comments and in the docstrings.
+
 	* eev-tlinks.el (find-eepitch-bullet-links): redefine
 	`ee-adjust-red-stars' instead of `eewrap-eepitch'.
 	(find-psne-links): use `ee-adjust-red-stars'.
+	(find-red-star-links): new name for the function
+	`find-eepitch-bullet-links'. The old name is now an alias.
+	(find-eevshortvideo-links): new function.
+	(ee-psne-if-needed): use `ee-adjust-red-stars'.
 
 	* eepitch.el (ee-adjust-red-stars): new function.
 	(eewrap-eepitch): use `ee-adjust-red-stars'.
+	(eepitch-eshell2): new function.
+	(eepitch-luajit): new function.
 
 2021-10-12  Eduardo Ochs  <eduardoochs@gmail.com>
 

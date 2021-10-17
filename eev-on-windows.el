@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211009
+;; Version:    20211016
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -50,7 +50,7 @@
 ;;   (delete-file "~/bin/wget.exe")
 ;;   (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
 ;;   (ee-use-windows)
-;; and they need to run the tests in:
+;; and they need to run the tests in this section of this file:
 ;;   (to "directories")
 ;;
 ;; The function `(ee-use-windows)' is sort of reversible - with:
@@ -118,12 +118,11 @@
 
 
 ;; «ee-use-eshell»  (to ".ee-use-eshell")
-;; TODO: define an `eepitch-eshell2'.
 ;;
 (defun ee-use-eshell ()
   (interactive)
   (defun eepitch-shell  () (interactive) (eepitch-eshell))
-  (defun eepitch-shell2 () (interactive) (eepitch-eshell))
+  (defun eepitch-shell2 () (interactive) (eepitch-eshell2))
   )
 
 (defun ee-use-shell ()
@@ -134,27 +133,17 @@
 
 
 ;; «ee-use-bullets»  (to ".ee-use-bullets")
-;; From: (find-eepitch-bullet-links 2 "red bullets by default")
+;; From: (find-red-star-links 2 "red bullets by default")
 ;;
 (defun ee-use-bullets ()
   (interactive)
   (eepitch-set-glyph0 ?\u2022 ?\u2022 'eepitch-star-face)
-  (defun eewrap-eepitch () (interactive)
-    (let* ((fmt   "\u2022 (eepitch-%s)\n\u2022 (eepitch-kill)\n\u2022 (eepitch-%s)")
-           (li    (ee-this-line-extract))
-           (newli (format fmt li li)))
-      (insert newli))
-    (ee-next-line 1))
+  (defun ee-adjust-red-stars (str) (replace-regexp-in-string "" "•" str))
   )
 
 (defun ee-use-red-stars ()
   (interactive)
-  (defun eewrap-eepitch () (interactive)
-    (let* ((fmt   " (eepitch-%s)\n (eepitch-kill)\n (eepitch-%s)")
-           (li    (ee-this-line-extract))
-           (newli (format fmt li li)))
-      (insert newli))
-    (ee-next-line 1))
+  (defun ee-adjust-red-stars (str) str)
   )
 
 
@@ -185,8 +174,10 @@
 ;;
 (defun ee-use-gnu-linux ()
   (interactive)
+  (ee-use-red-stars)
   (ee-use-shell)
-  (eshell/alias "wget" nil)
+  (delete-file eshell-aliases-file)
+  (eshell/alias "wget"          "wget $*")
   (setq ee-wget-program         "wget")
   (setq ee-firefox-program      "firefox")
   (setq ee-googlechrome-program "google-chrome")
@@ -196,8 +187,10 @@
 
 (defun ee-use-windows ()
   (interactive)
-  (ee-use-shell)
-  (eshell/alias "wget" "~/bin/wget.exe $*")
+  (ee-use-bullets)
+  (ee-use-eshell)
+  (delete-file eshell-aliases-file)	; workaround for a bug
+  (eshell/alias "wget"          "~/bin/wget.exe $*")
   (setq ee-wget-program         "~/bin/wget.exe")
   (setq ee-firefox-program      "$FIREFOXDIR/firefox.exe")
   (setq ee-googlechrome-program "$GOOGLECHROMEDIR/chrome.exe")
@@ -216,7 +209,8 @@
 (setenv "GOOGLECHROMEDIR" "c:/Program Files/Google/Chrome/Application")
 (setenv "MPVDIR"          "c:/Users/danie/OneDrive/Documentos/mpv")
 
-;; Basic tests:
+;; 1. Basic tests
+;; ==============
 ;;   (find-fline         "~/bin/"            "wget.exe")
 ;;   (find-fline         "$GOOGLECHROMEDIR/" "chrome.exe")
 ;;   (find-fline         "$FIREFOXDIR/"      "firefox.exe")
@@ -230,7 +224,11 @@
 ;;   (find-callprocess `(,ee-firefox-program           "--help"))
 ;;   (find-callprocess `(,ee-mpv-program               "--help"))
 ;;   (find-wget "http://angg.twu.net/eev-current/eev-on-windows.el")
+;;                       (find-angg "eev-current/eev-on-windows.el")
+;;                       (find-es "2021-oficina" "M-3-M-e")
 ;;
+;; 2. Tests for using the browser as a PDF viewer
+;; ==============================================
 ;; For the tests for using browsers as PDF viewers you will need to
 ;; understand these sections of the tutorials, and will need to run
 ;; some of the commands in them:
@@ -244,17 +242,42 @@
 ;;   (find-firefox-page      "~/Coetzee99.pdf" 3)
 ;;   (find-pdf-page          "~/Coetzee99.pdf" 3)
 ;;
+;; 2.1. Test the short links to PDFs
+;; ---------------------------------
+;; The short links to PDFs are explained here:
+;;   (find-pdf-like-intro "7. Shorter hyperlinks to PDF files")
+;; Test:
+;;   (code-pdf-page "livesofanimals" "~/Coetzee99.pdf")
+;;   (find-livesofanimalspage (+ -110 127) "wrong thoughts")
+;;
+;; Note that the links to PDFs converted to text, explained here,
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files")
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files" "pdftotext")
+;; don't work on Windows yet because I haven't prepared a way to
+;; install pdftotext on Windows.
+;;
+;;
+;; 3. Test the links to videos
+;; ===========================
 ;; The video links are explained here:
 ;;   (find-videos-intro "2. Short links to eev video tutorials")
 ;;   http://angg.twu.net/2021-video-links.html
 ;;
-;; Test for the video links:
+;; Basic tests for video links:
 ;;   (delete-file (ee-expand "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4"))
 ;;   (brep "http://angg.twu.net/eev-videos/2021-test-blocks.mp4")
-;;   (find-eevvideo-links "testbls" "2021-test-blocks" "fpsF_M55W4o")
+;;   (delete-file (ee-expand "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4"))
 ;;   (find-video "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4")
 ;;   (find-video "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4" "2:33")
-
+;;
+;; Test the way to download a video that beginners usually meet first:
+;;   (find-eevvideo-links "testbls" "2021-test-blocks" "fpsF_M55W4o")
+;;
+;; Test the short links to videos:
+;;   (code-video "testblsvideo" "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4")
+;;   (find-testblsvideo)
+;;   (find-testblsvideo "2:33")
+;;   (find-angg ".emacs.videos" "testbls")
 
 
 
@@ -272,43 +295,11 @@
 ;; «eev-tar»  (to ".eev-tar")
 ;; This is from 2019 and is now very obsolete -
 ;; partially because eev is in ELPA.
+;; Moved to:
+;;   (find-es "w32" "eev-tar-2019")
 ;; New version:
 ;;   (find-eev-install-intro "5.4. `package-install-file'")
 ;;
-;; Old notes:
-;;   (setq  eev-tar-dir   "~/eev-tar/")
-;;   (setq  eev-tar-fname "~/eev-tar/eev2.tar")
-;;   (setq  eev-tar-url   "http://angg.twu.net/eev-current/eev2.tar")
-;;   (mkdir eev-tar-dir   t)
-;;   (setq  eev-tar-contents nil)
-;;   (setq  eev-tar-contents (find-urlretrieve0 eev-tar-url))
-;;   (length (setq eev-tar-contents (find-urlretrieve0 eev-tar-url)))
-;;   (write-region eev-tar-contents nil eev-tar-fname)
-;;   
-;;   (find-2a nil '(find-fline eev-tar-fname 1 '(tar-untar-buffer)))
-;;   (eek "C-x o C-x 4 0")
-;;   (find-2a nil '(find-fline eev-tar-dir nil '(eek "g")))
-;;
-;; Add something like this to your .emacs:
-;;
-;;   (add-to-list 'load-path "~/eev-tar/")
-;;
-;; Use these sexps to check if everything is alright:
-;;
-;;   (find-epp load-path)
-;;   (find-estring (mapconcat 'identity load-path "\n"))
-;;   (locate-library "eejump")
-;;   (find-estring (list-load-path-shadows t))
-;;
-;; See:
-;;   (find-eev "eev-plinks.el" "find-urlretrieve")
-;;   (find-es "emacs" "package-untar")
-;;   (find-es "emacs" "load-path")
-;;   (find-angg ".emacs.local.w32")
-;;   (find-angg ".emacs.local.w32" "PATH")
-
-
-
 ;; «ee-add-to-PATH»  (to ".ee-add-to-PATH")
 ;; Until 2021 these file contained some very primitive functions -
 ;; that I wrote in 2019 - to add directories to the PATH. They were

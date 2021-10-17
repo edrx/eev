@@ -992,8 +992,8 @@ literal ^O in a buffer by typing `C-q C-o'.
 It is possible to make other characters play the role of the red
 star, but to make that work you need to know a bit of Lisp. See:
 
-  (find-eepitch-bullet-links)
-  (find-eev \"eev-tlinks.el\" \"find-eepitch-bullet-links\")
+  (find-red-star-links)
+  (find-eev \"eev-tlinks.el\" \"find-red-star-links\")
 
 
 
@@ -6537,8 +6537,6 @@ code-c-d to understand parts of this intro. See:
   (find-eev-quick-intro \"6.1. The main key: <F8>\")
   (find-eev-quick-intro \"9. Shorter hyperlinks\")
   (find-eev-quick-intro \"9.1. `code-c-d'\")
-  (find-eev-quick-intro \"9.3. Hyperlinks to PDF files\")
-  (find-eev-quick-intro \"9.5. Shorter hyperlinks to PDF files\")
 
 
 

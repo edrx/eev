@@ -1569,7 +1569,7 @@ netcat -l -p {tgtport}
 (defun ee-psne-if-needed (url)
   (if (file-exists-p (ee-expand (ee-url-to-fname url)))
       "# Local file found. No need to download it again.\n"
-    (ee-psne-download url)))
+    (ee-adjust-red-stars (ee-psne-download url))))
 
 (defun ee-psne-download (url)
   (concat "\
@@ -2442,18 +2442,18 @@ This function is used by `ee-0x0-upload-region'."
 
 ;; «find-red-star-links»        (to ".find-red-star-links")
 ;; «find-eepitch-bullet-links»  (to ".find-eepitch-bullet-links")
-;; Skel: (find-find-links-links-new "eepitch-bullet" "" "")
-;; Test: (find-eepitch-bullet-links)
+;; Skel: (find-find-links-links-new "red-star" "" "")
+;; Test: (find-red-star-links)
 ;;
-(defalias 'find-red-star-links 'find-eepitch-bullet-links)
-(defun find-eepitch-bullet-links (&rest pos-spec-list)
+(defalias 'find-eepitch-bullet-links 'find-red-star-links)
+(defun find-red-star-links (&rest pos-spec-list)
 "Show code that makes eepitch use red bullets instead of red stars."
   (interactive)
   (apply
    'find-elinks-elisp
-   `((find-eepitch-bullet-links ,@pos-spec-list)
+   `((find-red-star-links ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-eepitch-bullet-links)
+     (find-efunction 'find-red-star-links)
      ;; ""
      ,(ee-template0 "\
 ;; The code below was based on:
@@ -2496,7 +2496,7 @@ This function is used by `ee-0x0-upload-region'."
 ;; add this block to your ~/.emacs.  Note that this will make
 ;; bullets appear in red in other places too, like in info manuals -
 ;; for example here: (find-enode \"Using Region\")
-;; See: (find-eepitch-bullet-links)
+;; See: (find-red-star-links)
 ;;
 \(eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
 \(defun ee-adjust-red-stars (str) (replace-regexp-in-string \"\" \"•\" str))
