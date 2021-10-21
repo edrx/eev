@@ -1,3 +1,37 @@
+2021-10-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (find-freenode-links): deleted.
+	(find-libera-links): new function.
+
+	* eev-plinks.el (find-wget): use `ee-wget-program'.
+
+2021-10-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-ielm): new function.
+
+	* eev-testblocks.el (ee-insert-test-c-mode)
+	(ee-insert-test-haskell-mode, ee-insert-test-js-mode)
+	(ee-insert-test-julia-mode, ee-insert-test-lisp-mode)
+	(ee-insert-test-lua-mode, ee-insert-test-org-mode)
+	(ee-insert-test-python-mode, ee-insert-test-racket-mode)
+	(ee-insert-test-ruby-mode, ee-insert-test-scheme-mode)
+	(ee-insert-test-sh-mode, ee-insert-test-tcl-mode)
+	(ee-insert-test-tuareg-mode): use `ee-adjust-red-stars'.
+
+2021-10-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (code-eevvideo-local, find-code-eevvideo-local)
+	(ee-code-eevvideo-local): new functions.
+
+	* eev-rcirc.el (ee-rcirc-connect-or-join): new function.
+	(find-rcirc-buffer-2a): use `ee-rcirc-connect-or-join'.
+	(find-rcirc-buffer-3a): use `ee-rcirc-connect-or-join'.
+
+2021-10-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (ee-rcirc-connected): call `rcirc-buffer-process'
+	with a buffer instead of with a buffer name.
+
 2021-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (find-eev2019video, find-eev2020video)

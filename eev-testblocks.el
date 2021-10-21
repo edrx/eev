@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211009
+;; Version:    20211021
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -37,7 +37,7 @@
 ;;
 ;;   (find-eepitch-intro "3. Test blocks")
 ;;   (find-eepitch-intro "3.1. `find-eeit-links'")
-
+;;   http://angg.twu.net/emacsconf2021.html
 
 ;; «.ee-insert-test»	(to "ee-insert-test")
 ;; «.examples»		(to "examples")
@@ -81,7 +81,7 @@
   (interactive)
   (let* ((fnamec (buffer-name))
 	 (fname  (replace-regexp-in-string ".c$" "" fnamec)))
-    (insert (ee-template0 "\
+    (insert (ee-adjust-red-stars (ee-template0 "\
 /*
  (eepitch-shell)
  (eepitch-kill)
@@ -90,11 +90,11 @@ gcc -o {fname} {fnamec}
 ./{fname}
 
 */
-"))))
+")))))
 
 (defun ee-insert-test-haskell-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 {-
  (eepitch-ghci)
  (eepitch-kill)
@@ -102,11 +102,11 @@ gcc -o {fname} {fnamec}
 :load %s
 
 -}
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-js-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 /*
  (eepitch-nodejs)
  (eepitch-kill)
@@ -114,11 +114,11 @@ gcc -o {fname} {fnamec}
 require(\"./%s\")
 
 */
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-julia-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 #=
  (eepitch-julia)
  (eepitch-kill)
@@ -126,11 +126,11 @@ require(\"./%s\")
 include(\"%s\")
 
 =#
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-lisp-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 #|
  (eepitch-sbcl)
  (eepitch-kill)
@@ -138,11 +138,11 @@ include(\"%s\")
 (load \"%s\")
 
 |#
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-lua-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 --[[
  (eepitch-lua51)
  (eepitch-kill)
@@ -150,11 +150,11 @@ include(\"%s\")
 dofile \"%s\"
 
 --]]
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-org-mode ()
   (interactive)
-  (insert "
+  (insert (ee-adjust-red-stars "
 #+begin_comment
  (eepitch-shell)
  (eepitch-kill)
@@ -162,11 +162,11 @@ dofile \"%s\"
 
 #+end_comment
 
-"))
+")))
 
 (defun ee-insert-test-python-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 \"\"\"
  (eepitch-python)
  (eepitch-kill)
@@ -174,11 +174,11 @@ dofile \"%s\"
 exec(open(\"%s\").read(), globals())
 
 \"\"\"
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-racket-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 #|
  (eepitch-racket)
  (eepitch-kill)
@@ -186,11 +186,11 @@ exec(open(\"%s\").read(), globals())
 (load \"%s\")
 
 |#
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-ruby-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 =begin
  (eepitch-ruby)
  (eepitch-kill)
@@ -198,12 +198,12 @@ exec(open(\"%s\").read(), globals())
 load \"%s\"
 
 =end
-" (buffer-name))))
+" (buffer-name)))))
 
 ;; For Chez Scheme.
 (defun ee-insert-test-scheme-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 #|
  (eepitch-scheme)
  (eepitch-kill)
@@ -211,12 +211,12 @@ load \"%s\"
 (load \"%s\")
 
 |#
-" (buffer-name))))
+" (buffer-name)))))
 
 ;; ;; For Guile.
 ;; (defun ee-insert-test-scheme-mode ()
 ;;   (interactive)
-;;   (insert (format "
+;;   (insert (ee-adjust-red-stars (format "
 ;; #|
 ;;  (eepitch-guile)
 ;;  (eepitch-kill)
@@ -224,11 +224,11 @@ load \"%s\"
 ;; (load \"%s\")
 ;; 
 ;; |#
-;; " (buffer-name))))
+;; " (buffer-name)))))
 
 (defun ee-insert-test-sh-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 : <<'%%%%%%%%%%'
  (eepitch-sh)
  (eepitch-kill)
@@ -236,11 +236,11 @@ load \"%s\"
 . %s
 
 %%%%%%%%%%
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-tcl-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 set THIS_IS_A_TEST_BLOCK {
  (eepitch-tclsh)
  (eepitch-kill)
@@ -248,11 +248,11 @@ set THIS_IS_A_TEST_BLOCK {
 source %s
 
 }
-" (buffer-name))))
+" (buffer-name)))))
 
 (defun ee-insert-test-tuareg-mode ()
   (interactive)
-  (insert (format "
+  (insert (ee-adjust-red-stars (format "
 (*
  (eepitch-ocaml)
  (eepitch-kill)
@@ -260,7 +260,7 @@ source %s
 #use \"%s\";;
 
 *)
-" (buffer-name))))
+" (buffer-name)))))
 
 
 

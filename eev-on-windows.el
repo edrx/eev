@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211016
+;; Version:    20211021
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -44,24 +44,41 @@
 ;; This file is not loaded by default. See:
 ;;   (find-eev "eev-load.el")
 ;;
-;; At this moment what the Windows users need to do is:
-;;   (require 'eev-on-windows)
-;;   (mkdir "~/bin/" t)
-;;   (delete-file "~/bin/wget.exe")
-;;   (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
-;;   (ee-use-windows)
-;; and they need to run the tests in this section of this file:
-;;   (to "directories")
-;;
-;; The function `(ee-use-windows)' is sort of reversible - with:
-;;   (ee-use-gnu-linux)
-;;   (ee-use-find-angg-es-local)
 
-
-;; Setting your ~/.emacs
+;; 0.1. How to test this
 ;; =====================
+;; The HTMLized version of this file is here:
+;;   http://angg.twu.net/eev-current/eev-on-windows.el.html
+;;
+;; Here's how to load it in Emacs and run its tests.
+;;   1. update eev using "M-x list-packages eev",
+;;   2. restart emacs to be 100% sure that it will use the new eev,
+;;   3. run "M-x eev-beginner" to turn eev-mode on,
+;;   4. run `M-j' to remember how to use the main keys of eev,
+;;   5. run "M-x find-eevfile" to open the directory with the source
+;;      files of eev,
+;;   6. open the file eev-on-windows.el in that directory,
+;;   7. run the sexps below with `M-e' on each line:
+;;
+;;      (require 'eev-on-windows)
+;;      (mkdir "~/bin/" t)
+;;      (delete-file "~/bin/wget.exe")
+;;      (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
+;;      (delete-file "~/bin/pdftotext.exe")
+;;      (ee-download-with-eww "http://angg.twu.net/2021-oficina/pdftotext.exe" "~/bin/")
+;;      (ee-use-windows)
+;;      (to "directories")
+;;
+;; The sexp `(to ...)' will take you to the two last sections of this
+;; file, where there are instructions for configuring some directories
+;; and s series of tests.
+;;
+;;
+;; 0.2. Setting your ~/.emacs
+;; ==========================
 ;; If you are helping me to test this AND you know how to edit your
-;; ~/.emacs then this is what you should put there:
+;; ~/.emacs (hey Daniel Bastos!) then this is what you should put
+;; there:
 ;;
 ;;   ;; See: (find-eevfile "eev-on-windows.el" ".emacs")
 ;;   (require 'eev-load)
@@ -88,10 +105,7 @@
 ;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
 ;; «.ee-use-windows»			(to "ee-use-windows")
 ;; «.directories»			(to "directories")
-;;
-;; 2019:
-;; «.eev-tar»				(to "eev-tar")
-;; «.ee-add-to-PATH»			(to "ee-add-to-PATH")
+;; «.basic-tests»			(to "basic-tests")
 
 
 
@@ -179,6 +193,7 @@
   (delete-file eshell-aliases-file)
   (eshell/alias "wget"          "wget $*")
   (setq ee-wget-program         "wget")
+  (setq ee-pdftotext-program    "pdftotext")
   (setq ee-firefox-program      "firefox")
   (setq ee-googlechrome-program "google-chrome")
   (setq ee-mpv-program          "mpv")
@@ -192,6 +207,7 @@
   (delete-file eshell-aliases-file)	; workaround for a bug
   (eshell/alias "wget"          "~/bin/wget.exe $*")
   (setq ee-wget-program         "~/bin/wget.exe")
+  (setq ee-pdftotext-program    "~/bin/pdftotext.exe")
   (setq ee-firefox-program      "$FIREFOXDIR/firefox.exe")
   (setq ee-googlechrome-program "$GOOGLECHROMEDIR/chrome.exe")
   (setq ee-mpv-program          "$MPVDIR/mpv.exe")
@@ -205,27 +221,43 @@
 ;; These directories are for Daniel Almeida's machine.
 ;; Most people will have to configure this.
 ;;
+;; From the internets:
+;;
+;;  "If you can start a Mozilla application by using a shortcut or
+;;   launcher icon, then you can usually see where its installation
+;;   directory is located by context-clicking (right-clicking) the
+;;   icon and looking at the properties."
+;;
+;; Apparently you'll have to do this by hand for Firefox, Chrome, and
+;; Mpv - I couldn't find a way to automate this... =/
+;;
 (setenv "FIREFOXDIR"      "c:/Program Files/Mozilla Firefox")
 (setenv "GOOGLECHROMEDIR" "c:/Program Files/Google/Chrome/Application")
 (setenv "MPVDIR"          "c:/Users/danie/OneDrive/Documentos/mpv")
 
+;; «basic-tests»  (to ".basic-tests")
 ;; 1. Basic tests
 ;; ==============
 ;;   (find-fline         "~/bin/"            "wget.exe")
+;;   (find-fline         "~/bin/"            "pdftotext.exe")
 ;;   (find-fline         "$GOOGLECHROMEDIR/" "chrome.exe")
 ;;   (find-fline         "$FIREFOXDIR/"      "firefox.exe")
 ;;   (find-fline         "$MPVDIR/"          "mpv.exe")
 ;;   (find-callprocess `("~/bin/wget.exe"              "--help"))
+;;   (find-callprocess `("~/bin/pdftotext.exe"         "--help"))
 ;;   (find-callprocess `("$GOOGLECHROMEDIR/chrome.exe" "--help"))
 ;;   (find-callprocess `("$FIREFOXDIR/firefox.exe"     "--help"))
 ;;   (find-callprocess `("$MPVDIR/mpv.exe"             "--help"))
 ;;   (find-callprocess `(,ee-wget-program              "--help"))
+;;   (find-callprocess `(,ee-pdftotext-program         "--help"))
 ;;   (find-callprocess `(,ee-googlechrome-program      "--help"))
 ;;   (find-callprocess `(,ee-firefox-program           "--help"))
 ;;   (find-callprocess `(,ee-mpv-program               "--help"))
 ;;   (find-wget "http://angg.twu.net/eev-current/eev-on-windows.el")
 ;;                       (find-angg "eev-current/eev-on-windows.el")
 ;;                       (find-es "2021-oficina" "M-3-M-e")
+;;
+;;   KNOWN BUG: the "--help" option doesn't work on chrome in Windows.
 ;;
 ;; 2. Tests for using the browser as a PDF viewer
 ;; ==============================================
@@ -250,14 +282,19 @@
 ;;   (code-pdf-page "livesofanimals" "~/Coetzee99.pdf")
 ;;   (find-livesofanimalspage (+ -110 127) "wrong thoughts")
 ;;
-;; Note that the links to PDFs converted to text, explained here,
+;; 3. Test the links to PDFs converted to text
+;; ===========================================
+;; The links to PDFs converted to text are explained here:
 ;;   (find-pdf-like-intro "3. Hyperlinks to PDF files")
 ;;   (find-pdf-like-intro "3. Hyperlinks to PDF files" "pdftotext")
-;; don't work on Windows yet because I haven't prepared a way to
-;; install pdftotext on Windows.
+;; Tests:
+;;   (find-pdf-text                  "~/Coetzee99.pdf" 3)
+;;   (code-pdf-text "livesofanimals" "~/Coetzee99.pdf")
+;;   (find-livesofanimalstext (+ -110 127) "wrong thoughts")
+;; Try also this:
+;;   (find-extra-file-links "~/Coetzee99.pdf" "livesofanimals")
 ;;
-;;
-;; 3. Test the links to videos
+;; 4. Test the links to videos
 ;; ===========================
 ;; The video links are explained here:
 ;;   (find-videos-intro "2. Short links to eev video tutorials")
@@ -265,7 +302,7 @@
 ;;
 ;; Basic tests for video links:
 ;;   (delete-file (ee-expand "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4"))
-;;   (brep "http://angg.twu.net/eev-videos/2021-test-blocks.mp4")
+;;   (brep                    "http://angg.twu.net/eev-videos/2021-test-blocks.mp4")
 ;;   (delete-file (ee-expand "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4"))
 ;;   (find-video "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4")
 ;;   (find-video "$S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4" "2:33")
@@ -278,37 +315,6 @@
 ;;   (find-testblsvideo)
 ;;   (find-testblsvideo "2:33")
 ;;   (find-angg ".emacs.videos" "testbls")
-
-
-
-
-
-
-
-;;;  ____   ___  _  ___  
-;;; |___ \ / _ \/ |/ _ \ 
-;;;   __) | | | | | (_) |
-;;;  / __/| |_| | |\__, |
-;;; |_____|\___/|_|  /_/ 
-;;;                      
-;;
-;; «eev-tar»  (to ".eev-tar")
-;; This is from 2019 and is now very obsolete -
-;; partially because eev is in ELPA.
-;; Moved to:
-;;   (find-es "w32" "eev-tar-2019")
-;; New version:
-;;   (find-eev-install-intro "5.4. `package-install-file'")
-;;
-;; «ee-add-to-PATH»  (to ".ee-add-to-PATH")
-;; Until 2021 these file contained some very primitive functions -
-;; that I wrote in 2019 - to add directories to the PATH. They were
-;; moved to:
-;;   (find-es "emacs" "ee-dospath-add")
-
-
-
-
 
 
 

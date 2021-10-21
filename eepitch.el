@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211016
+;; Version:    20211019
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -942,7 +942,8 @@ The arguments are explained here:
 (defun eepitch-expect  () (interactive) (eepitch-comint "expect"  "expect"))
 
 ;; Lisps and Schemes:
-;; It would be better to run them in Slime.
+(defun eepitch-ielm   () (interactive) (eepitch '(ielm)))
+;; It would be better to run these ones in Slime, but how? (Help needed!)
 (defun eepitch-sbcl   () (interactive) (eepitch-comint "sbcl" "sbcl"))
 (defun eepitch-gcl    () (interactive) (eepitch-comint "gcl"  "gcl"))
 (defun eepitch-guile  () (interactive) (eepitch-comint "guile" "guile"))

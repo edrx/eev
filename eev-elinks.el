@@ -236,14 +236,13 @@ The buffer is put in Emacs Lisp mode."
 ;; `find-eev-quick-intro':
 ;; 
 ;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
-;;   (find-eev-quick-intro "(find-efunction-links 'find-file)")
+;;   (find-eev-quick-intro  "(find-efunction-links 'find-file)")
+;;   (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
+;;                           (find-efunction-links 'find-file)
+;;                                    (eek "M-h M-f find-file")
 ;;
-;; Try: (find-efunction-links 'find-file)
-;;               (eek "M-h M-f next-line")
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-f" 'find-efunction-links)
-
+;; Key binding: (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-f")
+;;
 (defun find-efunction-links (&optional f &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks related to the function F."
   (interactive (find-function-read))

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211011
+;; Version:    20211021
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -371,7 +371,7 @@ If a buffer named \"*wget: URL*\" already exists then this
 function visits it instead of running wget again.
 If wget can't download URL then this function runs `error'."
   (let* ((eurl (ee-expand url))
-	 (wgetprogandargs (list "wget" "-q" "-O" "-" eurl))
+	 (wgetprogandargs (list ee-wget-program "-q" "-O" "-" eurl))
 	 (wgetbufname (format "*wget: %s*" eurl)))
     (if (get-buffer wgetbufname)
 	(apply 'find-ebuffer wgetbufname pos-spec-list)

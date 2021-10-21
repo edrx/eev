@@ -486,6 +486,8 @@ instead of inserting."
   ⋃ CU \\bigcup
   ⋄ po \\lozenge
   ⋅ Do \\Box
+  ⋮ vd \\vdots
+  ⋯ c. \\cdots
   〈 <1 \\langle
   〉 1> \\rangle
   ▁ __ \\_

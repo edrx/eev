@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211016
+;; Version:    20211021
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -65,6 +65,7 @@
 ;; «.find-eev-install-links»		(to "find-eev-install-links")
 ;; «.find-eev-update-links»		(to "find-eev-update-links")
 ;; «.find-youtubedl-links»		(to "find-youtubedl-links")
+;; «.ee-youtubedl-command»		(to "ee-youtubedl-command")
 ;; «.find-psne-links»			(to "find-psne-links")
 ;; «.find-git-links»			(to "find-git-links")
 ;; «.find-fossil-links»			(to "find-fossil-links")
@@ -75,6 +76,7 @@
 ;; «.ee-psne-if-needed»			(to "ee-psne-if-needed")
 ;; «.code-psnevideo»			(to "code-psnevideo")
 ;; «.code-eevvideo»			(to "code-eevvideo")
+;; «.code-eevvideo-local»		(to "code-eevvideo-local")
 ;; «.hardcoded-paths»			(to "hardcoded-paths")
 ;; «.find-eev-video-links»		(to "find-eev-video-links")
 ;; «.find-eevshortvideo-links»		(to "find-eevshortvideo-links")
@@ -1071,13 +1073,30 @@ Files that look like subtitle files are ignored."
     (if (>= (length hash) 11)
 	(substring hash -11))))
 
-;; The option `-t' has been deprecated! =(
-;; When we run youtube-dl with `-t' it says:
-;;   WARNING: --title is deprecated. Use -o "%(title)s-%(id)s.%(ext)s" instead.
-;; See: (find-man "1 youtube-dl")
-;;      (find-man "1 youtube-dl" "\nOUTPUT TEMPLATE")
+;; «ee-youtubedl-command»  (to ".ee-youtubedl-command")
+;; The default value is `ee-youtubedl-command' is (still) this one:
 ;;
 (defvar ee-youtubedl-command "youtube-dl -t")
+;;
+;; but this is outdated in several ways:
+;;
+;;   1. when we use it we get this warning:
+;;      "WARNING: --title is deprecated. Use
+;;       -o "%(title)s-%(id)s.%(ext)s" instead."
+;;
+;;   2. youtube-dl is currently sort of dead. See:
+;;      https://old.reddit.com/r/DataHoarder/comments/p9riey/youtubedl_is_possibly_dead/
+;;      https://news.ycombinator.com/item?id=28289981 Youtube-dl is possibly dead
+;;
+;;   3. yt-dlp doesn't support the options `-t' and `--title':
+;;      https://github.com/yt-dlp/yt-dlp
+;;      https://github.com/yt-dlp/yt-dlp#Removed
+;;
+;; Suggestion (2021oct17): install yt-dlp and put this in your .emacs:
+;;
+;;   (setq ee-youtubedl-command "yt-dlp -o '%(title)s-%(id)s.%(ext)s'")
+
+
 
 ;; The directories into which we usually download videos.
 ;; Tests: (find-elinks (ee-youtubedl-dir-links))
@@ -1659,6 +1678,29 @@ echo     '{url}' >> ~/.psne.log
   (interactive)
   (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))
 "))
+
+;; «code-eevvideo-local»  (to ".code-eevvideo-local")
+;; Test: (code-eevvideo-local "vlinks" "2021-video-links" "xQqWufQgzVY")
+;;  (find-code-eevvideo-local "vlinks" "2021-video-links" "xQqWufQgzVY")
+;;
+(defun      code-eevvideo-local (c stem &optional youtubeid)
+  (eval (ee-read (ee-code-eevvideo-local c stem youtubeid))))
+(defun find-code-eevvideo-local (&optional c stem youtubeid &rest rest)
+  (setq c (or c "{c}"))
+  (setq stem (or stem "{stem}"))
+  (setq youtubeid (or youtubeid "{youtubeid}"))
+  (find-estring-elisp (apply 'ee-code-eevvideo-local c stem youtubeid rest)))
+(defun   ee-code-eevvideo-local (c stem youtubeid)
+  (ee-template0 "\
+;; (find-code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
+;;      (code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
+;;
+;;                    (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"{stem}\")
+;; (find-code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+        (code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+;;             (find-{c}video \"0:00\")
+"))
+
 
 
 ;; «hardcoded-paths»  (to ".hardcoded-paths")
