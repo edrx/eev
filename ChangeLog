@@ -2,6 +2,7 @@
 
 	* eev-rcirc.el (find-freenode-links): deleted.
 	(find-libera-links): new function.
+	(find-rcirc-buffer-2a, find-rcirc-buffer-3a): fixed the arglists.
 
 	* eev-plinks.el (find-wget): use `ee-wget-program'.
 

@@ -237,7 +237,9 @@ If CHANNEL is nil then switch to the server buffer."
 
 
 
+;; ;; «find-rcirc-buffer-2a» (to ".find-rcirc-buffer-2a")
 ;; 2021oct18: experimental.
+;;
 ;; rcirc.el was heavily changed between the commit 0034067 (dated
 ;; 2021sep03) and the commit 608b2ec (dated 2021sep04) - see:
 ;;
@@ -250,8 +252,8 @@ If CHANNEL is nil then switch to the server buffer."
 ;; don't work on the rcircs yet.
 
 (defun find-rcirc-buffer-2a
-  "This function is being rewritten. See the comments in the source code."
   (server ichannels &optional achannels channel &rest pos-spec-list)
+  "This function is being rewritten. See the comments in the source code."
   (ee-rcirc-connect-or-join server ichannels achannels channel)
   (find-2a
    nil
@@ -259,8 +261,8 @@ If CHANNEL is nil then switch to the server buffer."
 
 ;; 2021oct18: experimental.
 (defun find-rcirc-buffer-3a
-  "This function is being rewritten. See the comments in the source code."
   (server ichannels achannels channel &rest pos-spec-list)
+  "This function is being rewritten. See the comments in the source code."
   (ee-rcirc-connect-or-join server ichannels achannels channel)
   (find-3a
    nil
@@ -271,7 +273,6 @@ If CHANNEL is nil then switch to the server buffer."
 
 ;; 2021oct18: commented out.
 ;;
-;; ;; «find-rcirc-buffer-2a» (to ".find-rcirc-buffer-2a")
 ;; ;; Test: (find-rcirc-buffer-2a "irc.freenode.net" "#eev" nil "#libreboot")
 ;; (defun find-rcirc-buffer-2a
 ;;   (server ichannels &optional achannels channel &rest pos-spec-list)
