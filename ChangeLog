@@ -1,3 +1,15 @@
+2021-10-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-evariable-links): added links starting with
+	`keymapp', `find-ekeymapdescr', and `describe-keymap'; use
+	`(find-function-read 'defvar)' instead of `(find-function-read
+	'variable)'; other cosmetic changes.
+
+	* eev-tlinks.el (ee-0x0-upload-region): use `ee-0x0-upload'.
+	(ee-0x0-upload): new function. The comments explain how to
+	"configure" it on versions of 0x0 that don't have a function
+	`0x0-upload'.
+
 2021-10-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-rcirc.el (find-freenode-links): deleted.

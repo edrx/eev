@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211002
+;; Version:    20211022
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -292,21 +292,22 @@ This is an internal function used by `find-efunction-links' and
 ;;; |_| |_|_| |_|\__,_|      \___| \_/ \__,_|_|  |_|\__,_|_.__/|_|\___|
 ;;;                                                                    
 ;; «find-evariable-links» (to ".find-evariable-links")
-;; Skel: (find-find-links-links-old "\\M-v" "evariable" "var")
-;; A test: (find-evariable-links 'line-move-visual)
-;;                 (eek "M-h M-v  line-move-visual")
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links)
-
-;; Test: (find-evariable-links 'line-move-visual)
+;; Skel: (find-find-links-links-new "evariable" "var" "")
+;; Tests: (find-evariable-links 'isearch-mode-map)
+;;        (find-evariable-links 'line-move-visual)
+;;                (eek "M-h M-v  line-move-visual")
+;; Key binding: (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-v")
+;;        
 (defun find-evariable-links (var &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks about a variable."
-  (interactive (find-function-read 'variable))
-  (apply 'find-elinks
-   `((find-evariable-links ',var ,@pos-spec-list)
+  (interactive (find-function-read 'defvar))
+  (apply
+   'find-elinks
+   `((find-evariable-links ,var ,@pos-spec-list)
      (eek ,(format "M-h M-v  %s" var))
      ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-evariable-links)
+     ""
      ,var
      (describe-variable ',var)
      (find-evardescr ',var)
@@ -315,6 +316,10 @@ This is an internal function used by `find-efunction-links' and
      ""
      (find-enode "Variable Index" ,(format "* %S:" var))
      (find-elnode "Index" ,(format "* %S:" var))
+     ""
+     (keymapp ,var)
+     (find-ekeymapdescr ,var)
+     (describe-keymap ,var)
      )
    pos-spec-list))
 
