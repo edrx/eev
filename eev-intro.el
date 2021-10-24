@@ -3782,7 +3782,7 @@ use the \"back\" button.
 Eev-mode defines two keys for \"going back\": `M-k', that kills
 the current buffer, and `M-K', that just hides it (\"buries\" it
 in the bottom of the list of all buffers). Try following the link
-below by <M-e>, then deleting its buffer with `M-k' to go back:
+below with `M-e', then deleting its buffer with `M-k' to go back:
 
   (find-node \"(emacs)Shell\")
 

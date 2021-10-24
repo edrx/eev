@@ -1,3 +1,18 @@
+2021-10-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rcirc.el (find-libera-2a): use `find-rcirc-buffer-2a'.
+	(find-libera-3a): use `find-rcirc-buffer-3a'.
+	(find-freenode-2a): use `find-rcirc-buffer-2a'.
+	(find-freenode-3a): use `find-rcirc-buffer-3a'.
+
+2021-10-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-lua-mode): use
+	`current-prefix-arg' to determine the number of "="s in the
+	longcomment.
+
+	* eev-mode.el (eev-mode-help): rewritten.
+
 2021-10-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (find-evariable-links): added links starting with

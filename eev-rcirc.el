@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211021
+;; Version:    20211024
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
@@ -369,7 +369,10 @@ This is like `find-rcirc-buffer', but uses the variables
 
 This is like `find-rcirc-buffer-2a' but uses
 `ee-freenode-ichannels' and `ee-freenode-achannels'."
-  (find-2a nil '(find-freenode channel)))
+  (find-rcirc-buffer-2a ee-freenode-server
+			ee-freenode-ichannels
+			ee-freenode-achannels
+			channel))
 
 (defun find-freenode-3a (channel)
   "Connect to freenode and create this window setup:
@@ -385,9 +388,10 @@ This is like `find-rcirc-buffer-2a' but uses
 
 This is like `find-rcirc-buffer-3a' but uses
 `ee-freenode-ichannels' and `ee-freenode-achannels'."
-  (find-3a nil '(find-freenode) '(find-freenode channel)))
-
-
+  (find-rcirc-buffer-3a ee-freenode-server
+			ee-freenode-ichannels
+			ee-freenode-achannels
+			channel))
 
 ;; See: (find-efunction 'eepitch)
 ;;      (find-efunction 'eepitch-to-buffer)
@@ -436,7 +440,10 @@ This is like `find-rcirc-buffer', but uses the variables
 
 This is like `find-rcirc-buffer-2a' but uses
 `ee-libera-ichannels' and `ee-libera-achannels'."
-  (find-2a nil '(find-libera channel)))
+  (find-rcirc-buffer-2a ee-libera-server
+			ee-libera-ichannels
+			ee-libera-achannels
+			channel))
 
 (defun find-libera-3a (channel)
   "Connect to libera and create this window setup:
@@ -452,8 +459,10 @@ This is like `find-rcirc-buffer-2a' but uses
 
 This is like `find-rcirc-buffer-3a' but uses
 `ee-libera-ichannels' and `ee-libera-achannels'."
-  (find-3a nil '(find-libera) '(find-libera channel)))
-
+  (find-rcirc-buffer-3a ee-libera-server
+			ee-libera-ichannels
+			ee-libera-achannels
+			channel))
 
 ;; See: (find-efunction 'eepitch)
 ;;      (find-efunction 'eepitch-to-buffer)

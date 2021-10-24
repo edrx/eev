@@ -1,6 +1,6 @@
 ;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20201002
+;; Version:    20211023
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -204,72 +204,71 @@ and: (find-eval-intro \"`M-k'\")"
 ;; eev-mode-map keymap, and adds an "eev" to the mode line to remind
 ;; you this.
 ;;
-;; At one point, when the `find-*-intro' functions either did not
-;; exist or were almost irrelevant, I decided that I had to write a
-;; huge description of eev-mode... I regret that.
-;;
 ;; See:
-;;   (find-efunctiondescr 'eev-mode)
+;;   (find-efunctiondescr    'eev-mode)
 ;;   (find-eminorkeymapdescr 'eev-mode)
-;;   (find-ekeymapdescr eev-mode-map)
+;;   (find-ekeymapdescr       eev-mode-map)
+;;   (find-esubstitutecommandkeys eev-mode-help)
 ;;   (find-elnode "Keys in Documentation" "\\<MAPVAR>")
 
 (defvar eev-mode-lighter " eev")
 (defvar eev-mode-help "Toggle eev mode, i.e, activate or deactivate the `eev-mode-map' keymap.
 With a prefix argument ARG, turn eev-mode on if positive, else off.
-See: (find-emacs-keys-intro \"1. Basic keys (eev)\")
+Only the main keys of eev are listed below.  For better lists, see:
+
+  (find-emacs-keys-intro \"1. Basic keys (eev)\")
+  (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
+  (find-ekeymapdescr       eev-mode-map)
 \\<eev-mode-map>
 Commands to follow hyperlinks:
-  \\[ee-eval-sexp-eol] -- go to the end of line, then do \\[ee-eval-last-sexp]
-  \\[ee-eval-last-sexp] -- eval the sexp at the left of point
-    See: (find-eval-intro)
+       \\[ee-eval-sexp-eol] -- go to the end of line, then do \\[ee-eval-last-sexp]
+       \\[ee-eval-last-sexp] -- eval the sexp at the left of point
+           See: (find-eev-quick-intro \"2. Evaluating Lisp\")
 Commands to return from hyperlinks:
-  \\[ee-kill-this-buffer] -- kill this buffer
-  \\[bury-buffer] -- put this buffer at the end of the list of all buffers
-    See: (find-eval-intro \"\\nGoing back\\n\")
-Other very very important commands:
-      \\[eejump] -- jump to the list of eejump targets
-  M-5 \\[eejump] -- jump to the tutorial at (find-eev-quick-intro)
-    See: (find-eejump-intro)
-  \\[eepitch-this-line]     -- pitch this line to another Emacs buffer,
-           or execute it as lisp if it starts with `'
-    See: (find-eepitch-intro)
-Commands to convert the current line into hyperlinks:
-  \\[eewrap-find-fline]  -- wrap its contents in a `find-fline'
-  \\[eewrap-man]  -- wrap its contents in a `find-man'
-  \\[eewrap-sh]  -- wrap its contents in a `find-sh'
-  \\[eewrap-eepitch]  -- generate an \" (eepitch-{xxx,kill,xxx})\" block
-  \\[eewrap-anchor]  -- convert to two anchors pointing to one another
-  \\[eewrap-code-c-d]  -- wrap its contents in a `code-c-d' and a `find-_file'
-  \\[eewrap-debian]  -- wrap its contents in three Debian hyperlinks
-  \\[eewrap-eejump]  -- make a `(defun eejump-N ...)' from N and a hyperlink
-  \\[eewrap-rm/mkdir/cd]  -- make a rm/mkdir/cd triple
-  \\[eewrap-pdflike]  -- generate links to pdf-like documents
-  \\[eewrap-audiovideo]  -- generate audio/video hyperlinks
-    See: (find-wrap-intro)
+       \\[ee-kill-this-buffer] -- kill this buffer
+       \\[bury-buffer] -- put this buffer at the end of the list of all buffers
+           See: (find-eval-intro \"5. Going back\")
+Jump to predefined places:
+       \\[eejump] -- jump to the list of eejump targets / show basic help
+   M-5 \\[eejump] -- jump to the tutorial at (find-eev-quick-intro)
+   M-2 \\[eejump] -- jump to the tutorial at (find-emacs-keys-intro)
+   M-1 \\[eejump] -- open the file ~/TODO
+   See: (find-eev-quick-intro \"7.2. The list of eejump targets\")
+Control shell-like commands:
+      \\[eepitch-this-line] -- pitch this line to another Emacs buffer,
+              or execute it as lisp if it starts with `'
+       \\[eewrap-eepitch] -- generate an \" (eepitch-{xxx,kill,xxx})\" block
+  \\[eeit] -- create a test block
+  See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
+Commands to convert (\"wrap\") the current line into hyperlinks:
+       \\[eewrap-find-fline] -- wrap its contents in a `find-fline'
+       \\[eewrap-man] -- wrap its contents in a `find-man'
+       \\[eewrap-sh] -- wrap its contents in a `find-sh'
+       \\[eewrap-debian] -- wrap its contents in three Debian hyperlinks
+Commands to convert the current line into other things:
+       \\[eewrap-eejump] -- make a `(defun eejump-N ...)' from N and a hyperlink
+       \\[eewrap-escript-block] -- convert to an e-script block
+       \\[eewrap-anchor] -- convert to two anchors pointing to one another
+       \\[eewrap-rm/mkdir/cd] -- make a rm/mkdir/cd triple
+        See: (find-wrap-intro)
 Commands to generate pages with lists of hyperlinks:
-  \\[find-here-links]  -- \"hyperlinks to here\", which supersedes all these:
-  \\[find-efunction-links] -- hyperlinks to an Emacs function
-  \\[find-ekey-links] -- hyperlinks to a key sequence and to the function
-             associated to it
-  \\[find-evariable-links] -- hyperlinks to an Emacs variable
-  \\[find-eface-links] -- hyperlinks to a face (default: face at point)
-  \\[find-debpkg-links] -- hyperlinks about a Debian package
-  \\[find-ecolor-links]   -- hyperlinks to a color
-  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
-  (find-here-links-intro)
+      \\[find-efunction-links] -- hyperlinks to an Emacs function
+      \\[find-ekey-links] -- hyperlinks to a key sequence
+      \\[find-evariable-links] -- hyperlinks to an Emacs variable
+      \\[find-eface-links] -- hyperlinks to a face (default: face at point)
+      \\[find-debpkg-links] -- hyperlinks about a Debian package
+      \\[find-here-links] -- hyperlinks to here
+  M-3 \\[find-here-links] -- hyperlinks to here for beginners
+  See: (find-eev-quick-intro \"\\n4.2.\" \"find-ekey-links\")
+       (find-here-links-intro  \"4.\"   \"find-here-links-3\")
 Commands to edit hyperlinks:
-  \\[ee-duplicate-this-line] -- duplicate this line
-  \\[ee-yank-pos-spec] -- yank into pos-spec-list
-  \\[ee-shrink-hyperlink-at-eol] -- shrink `find-xxxfile' to `find-xxx'
-  \\[eewrap-vldi-list-line]     -- transform filename into hyperlink
-  See: (find-eval-intro \"Producing and refining hyperlinks\")
-Other commands:
-  \\[find-eev-mode-links] -- show this help about eev-mode, or some links
-  \\[describe-char] -- lots of info about the character at point
-  \\[find-etpat] -- text properties at point
-  \\[find-etpat0]   -- text properties at point (output in the echo area)")
-
+      \\[ee-duplicate-this-line] -- duplicate this line
+      \\[ee-yank-pos-spec] -- yank into pos-spec-list
+      \\[ee-copy-this-line-to-kill-ring] -- copy this line to the kill ring
+  M-1 \\[ee-copy-this-line-to-kill-ring] -- copy the last anchor to the kill ring
+      \\[ee-shrink-hyperlink-at-eol] -- shrink `find-xxxfile' to `find-xxx'
+  See: (find-refining-intro \"2. Refining hyperlinks\")
+")
 
 (defun eev-mode-define ()
   "Use this to redefine `eev-mode' with another lighter and another docstring."

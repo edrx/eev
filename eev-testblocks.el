@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211021
+;; Version:    20211023
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -142,15 +142,16 @@ include(\"%s\")
 
 (defun ee-insert-test-lua-mode ()
   (interactive)
-  (insert (ee-adjust-red-stars (format "
---[[
+  (let ((equals (make-string (or current-prefix-arg 0) ?=)))
+    (insert (ee-adjust-red-stars (format "
+--[%s[
  (eepitch-lua51)
  (eepitch-kill)
  (eepitch-lua51)
 dofile \"%s\"
 
---]]
-" (buffer-name)))))
+--]%s]
+" equals (buffer-name) equals)))))
 
 (defun ee-insert-test-org-mode ()
   (interactive)
