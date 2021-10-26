@@ -1,4 +1,12 @@
+2021-10-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-beginner.el: change the `(add-to-list 'load-path
+	default-directory)' to a better hack.
+
 2021-10-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-ruby, eepitch-irb): irb doesn't work in
+	comint buffers, so use `eepitch-ansiterm'.
 
 	* eev-rcirc.el (find-libera-2a): use `find-rcirc-buffer-2a'.
 	(find-libera-3a): use `find-rcirc-buffer-3a'.

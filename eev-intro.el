@@ -437,11 +437,6 @@ or the elisp source files, installed. The names for the packages which
 have those things vary from one GNU/Linux distro to another. On Debian
 something like
 
-  sudo apt-get install emacs24-el
-  sudo apt-get install emacs24-common-non-dfsg
-
-or
-
   sudo apt-get install emacs-el
   sudo apt-get install emacs-common-non-dfsg
 

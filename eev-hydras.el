@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210521
+;; Version:    20211025
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hydras.el>
@@ -38,8 +38,12 @@
 ;;   (find-refining-intro "5. Pointing to anchors")
 ;;   (find-refining-intro "5. Pointing to anchors" "but I don't touch-type")
 ;;
-;; It depends on the package "hydra".
-;; I need to record a short video about this.
+;; It depends on the package "hydra" (from ELPA).
+;; To learn how this works, load this file and run this tutorial - i.e.:
+;;
+;;   (require 'eev-hydras)
+;;   (find-eev-index-edit-intro)
+;;
 ;; This code will probably change a LOT in the next months.
 ;; Update: I recorded a video, it's here:
 ;;
@@ -128,7 +132,7 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-This is \"intro\" is a sandboxed tutorial for:
+This \"intro\" is a sandboxed tutorial for:
 
   (find-eev \"eev-hydras.el\")
   (find-refining-intro \"5. Pointing to anchors\")

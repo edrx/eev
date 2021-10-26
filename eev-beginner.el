@@ -27,11 +27,21 @@
 ;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                                                (find-eev-quick-intro)
 
+;; «.load-path-hack»	(to "load-path-hack")
+
+
 ;;; Commentary:
 
+;; 1. Eev for beginners
+;; ====================
 ;; This file loads all modules of eev, turns eev-mode on, and opens
-;; the main tutorial - i.e., runs `(find-eev-quick-intro)'. It is used
-;; by the two most common ways of installing eev:
+;; the main tutorial - this one:
+;;
+;;   (find-eev-quick-intro)
+;;
+;; This file is used by the two most common ways of installing eev
+;; "for beginners", described below. The ways of loading eev without
+;; opening the tutorial are described in the next section.
 ;;
 ;; 1) If you install eev as an emacs package via `M-x list-packages'
 ;;    then no eev modules will be loaded UNTIL you run `M-x
@@ -43,9 +53,14 @@
 ;;      (find-eev-intro "1. `eev-mode'")
 ;;      (find-eev-intro "1. `eev-mode'" "If you load eev")
 ;;
+;;    If you use one of the non-standard package managers for Emacs,
+;;    like use-package or straight.el, then read this:
+;;
+;;      (find-eev-install-intro "5.5. `use-package'")
+;;
 ;; 2) Some people start playing with Emacs+eev by copying and pasting
 ;;    a certain script to a shell in a terminal and executing it,
-;;    following the instructions here:
+;;    following the instructions in the third sexp below:
 ;;
 ;;      (find-eev-quick-intro "1. Installing eev")
 ;;      (find-eev-quick-intro "1. Installing eev" "tarball")
@@ -62,6 +77,24 @@
 ;;    Emacs evaluate the sexp `(find-eev-quick-intro)', that opens the
 ;;    main tutorial.
 ;;
+;;
+;; 2. Eev for non-beginners
+;; ========================
+;; This file:
+;;
+;;   a. loads all modules of eev,
+;;   b. turns eev-mode on, and
+;;   c. opens the main tutorial.
+;;
+;; If you want to do just (a), or not even (a) but you want to be
+;; able to run `M-x eev-beginner' and `M-x eev-mode', then read:
+;;
+;;   (find-eev "eev-load.el")
+;;   (find-eev-quick-intro "1. Installing eev")
+;;
+;;
+;; 3. Rationale
+;; ============
 ;; The idea is that even after installing eev:
 ;;
 ;; 1) it should be trivial to try eev in "beginner mode",
@@ -71,41 +104,65 @@
 ;;
 ;;      (find-enode "Lisp Libraries" "autoloaded")
 ;;
-;; Some people are very finicky about packages that make global
-;; changes when loaded. Loading all modules of eev causes the (almost
-;; insignificant?) global changes described here,
+;; My reason for caring about (2) is that some people are very finicky
+;; about packages that make global changes when loaded. Loading all
+;; modules of eev causes the (almost insignificant?) global changes
+;; described here,
 ;;
 ;;   (find-eev-intro "1. " "the only" "things that happen")
 ;;
 ;; that aren't reverted by deactivating eev-mode with `M-x eev-mode',
-;; and eev defines some functions with the prefix `find-', as
+;; _AND_ eev defines some functions with the prefix `find-', as
 ;; explained here:
 ;;
 ;;   (find-eev-intro "4. The prefix `find-'")
+;;   (find-eev-intro "4. The prefix `find-'" "list all")
 ;;
+;; Some people consider that these `find-' functions from eev sort of
+;; "invade the global namespace", and they want to be able to run
+;; Emacs without them, and load eev only when they want or need to.
 ;; I've tried to make eev friendly to several kinds of people,
-;; including total beginners and very finicky old-timers, and this
-;; file - "eev-beginner.el" - seems to provide a good solution.
-;;
-;; The instructions for making Emacs load eev at startup are here:
+;; including total beginners and these very finicky old-timers, and
+;; this file - "eev-beginner.el" - seems to provide a good solution.
+;; The finicky old-timers just need to use one of the "expert setups":
 ;;
 ;;   (find-eev-install-intro "2. The expert setup")
-
-
-;; NOTE: older versions of eev loaded "eev-readme.el" instead of
-;; "eev-beginner.el". Compare:
-;;
-;;   (find-eev "eev-readme.el")
 ;;   (find-eev "eev-load.el")
 
 
 
-;; 2019mar13: Commented this out.
-;; 2019mar29: Uncommented - it seems that emacs25 needs this.
-(add-to-list 'load-path default-directory)
 
-;; Load all the main modules of eev.
-;; Do not load some advanced modules that require extra setup.
+;; «load-path-hack»  (to ".load-path-hack")
+;;
+;; This is a hack to make eev easier to use by beginners that don't
+;; understand the load-path yet. If they run something that runs:
+;;
+;;   (load "/path/to/eev-beginner.el")
+;;
+;; this hack puts the "/path/to/" in the load-path, and if they try
+;; to load this file with
+;;
+;;   (eval-buffer)
+;;
+;; this hack puts the default-directory in the load-path.
+;;
+;; See: (find-elnode "How Programs Do Loading")
+;;      (find-enode "Variable Index" "* load-path:")
+;;      (find-elnode         "Index" "* load-path:")
+;;      (find-eppp                      load-path)
+;;      (find-efunctiondescr 'load)
+;;      (find-efunctiondescr 'load "load-in-progress")
+;;      (find-efunctiondescr 'load "load-file-name")
+;;      (find-evardescr            'load-file-name)
+;;
+(add-to-list 'load-path
+	     (if load-in-progress
+		 (file-name-directory load-file-name)
+	       default-directory))
+
+
+;; This require loads all the main modules of eev.
+;; It doesn't load some advanced modules that require extra setup.
 ;; See the comments here: (find-eev "eev-load.el")
 (require 'eev-load)
 

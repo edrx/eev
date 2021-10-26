@@ -1,7 +1,7 @@
 ;;; eev-load.el -- load all the main modules of eev.  -*- lexical-binding: nil; -*-
 ;;; This can also be used as an index to the main source files.
 
-;; Copyright (C) 2019-2020 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190929
+;; Version:    20211024
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -159,6 +159,11 @@
 ' (require 'eev-channels)	; (find-eev "eev-channels.el")
 ;; IMPORTANT: Since 2019mar05 they are no longer loaded by default!
 ;; Note the "'" at the beginning of each line!
+
+
+;; Make `M-x eev-beginner' work in the "expert setups" too.
+;; See: (find-efunctiondescr 'autoload "If FUNCTION is already defined")
+(autoload 'eev-beginner "eev-beginner") ; (find-eev "eev-beginner.el")
 
 
 

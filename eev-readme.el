@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190302
+;; Version:    20211025
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-readme.el>
@@ -32,15 +32,16 @@
 
 ;;; Commentary:
 
-;; See this for the current standard ways to install eev:
+;; Until march/2019 this file was used by a few of the (many) ways of
+;; loading eev; now it is totally obsolete, and it will be removed at
+;; some point. See these for the current standard ways to install eev:
 ;;   
+;;   (find-eev "eev-beginner.el")
+;;   (find-eev "eev-load.el")
 ;;   (find-eev-quick-intro "1. Installing eev")
 ;;   (find-eev-install-intro)
 ;;
 ;; The rest of this file is very old.
-;; This file has been superseded by:
-;;
-;;   (find-eev "eev-beginner.el")
 
 ;; Quick instructions:
 ;;

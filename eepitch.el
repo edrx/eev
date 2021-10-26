@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211019
+;; Version:    20211024
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -931,9 +931,9 @@ The arguments are explained here:
 (defun eepitch-python2 () (interactive) (eepitch-comint "python2" "python2"))
 (defun eepitch-python3 () (interactive) (eepitch-comint "python3" "python3"))
 (defun eepitch-python  () (interactive) (eepitch-comint "python3" "python3"))
-(defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb"))
-(defun eepitch-ruby   () (interactive) (eepitch-comint "ruby"   "irb --simple-prompt"))
 (defun eepitch-perl () (interactive) (eepitch-comint "perl" "perl -d -e 42"))
+(defun eepitch-ruby    () (interactive) (eepitch-ansiterm "irb" "irb"))
+(defun eepitch-irb     () (interactive) (eepitch-ansiterm "irb" "irb"))
 
 ;; Tcl:
 (defun eepitch-tcl     () (interactive) (eepitch-comint "tclsh"   "tclsh"))
