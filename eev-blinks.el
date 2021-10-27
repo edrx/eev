@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211007
+;; Version:    20211026
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -1250,9 +1250,11 @@ Hint: install the Debian package \"unicode-data\".")
 ;;      (find-emacs-keys-intro \"1. Basic keys (eev)\")
 ;;      (find-emacs-keys-intro \"2. Key sequences\")
 ;; For example,
-;;     M-1 M-j  runs:  (find-fline \"~/TODO\")
-;;     M-2 M-j  runs:  (find-emacs-keys-intro)
-;;     M-5 M-j  runs:  (find-eev-quick-intro)
+;;         M-5 M-j  runs:  (find-eev-quick-intro)
+;;         M-2 M-j  runs:  (find-emacs-keys-intro)
+;;         M-1 M-j  runs:  (find-fline \"~/TODO\")
+;;     M-2 M-1 M-j  shows the file ~/TODO in the right window
+;;     M-3 M-1 M-j  opens ~/TODO in the right window
 ;; Current eejump targets:\n\n")
 
 (defun ee-find-eejumps-body ()

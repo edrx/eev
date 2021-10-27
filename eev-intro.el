@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211012
+;; Version:    20211027
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -388,6 +388,14 @@ behavior. We are only interested in one of them now - `M-0 M-e'
 highlights the sexp for a fraction of a second instead of executing it.
 Try it above.
 
+In some rare occasions we might want to run something like `M-e'
+but without moving to the end of the line first. Eev-mode
+implements a key binding for that: `M-E' (meta-shift-e). As an
+exercise, try to use `M-0 M-E' at several positions below, to
+highlight the subsexps `(* 2 3)', `(* 4 5)', and `4'.
+
+  (+ (* 2 3) (* 4 5))
+
 
 
 
@@ -406,9 +414,12 @@ this new buffer is killed, and Emacs displays the buffer that was just
 below it, which is this tutorial... try it! Here are some nice elisp
 hyperlinks:
 
-  (find-fline \"/tmp/\")
+  (find-fline \"~/\")
   (find-efunctiondescr 'find-file)
+  (find-eval-intro \"5. Going back\")
+  (find-fline \"/tmp/\")
   (find-man \"date\")
+  (find-sh  \"date\")
   (find-sh  \"date; sleep 1; date\")
 
 Not all elisp hyperlinks \"go somewhere\"; some are like buttons that
@@ -426,11 +437,13 @@ be aware that they may show errors instead of opening a new buffer.
 The first two of them open a page - actually a section, whose short
 title is \"Lisp Eval\" - from the main Emacs manual. The third one
 opens the file with the source code (in Lisp) for the function
-`find-file'.
+`find-file'. The fourth one opens a directory that contains a part of
+the source code of Emacs.
 
   (find-node \"(emacs)Lisp Eval\")
   (find-enode       \"Lisp Eval\")
   (find-efunction 'find-file)
+  (find-efile \"\")
 
 If they don't work that means that you don't have the Emacs manuals,
 or the elisp source files, installed. The names for the packages which
@@ -13284,6 +13297,7 @@ More intros:  (find-eev-quick-intro)
               (find-eev-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-7 M-j'.
 
 
 
@@ -13325,7 +13339,7 @@ then it calls `+' with the results - i.e., it runs (+ 6 20). Try:
 
 In last sexp the function `list' receives two numbers, 6 and 20, but
 returns a list, (6 20), not a number - and this is an introduction to
-the idea that Elisp functions can receive all kinds of Elips objects
+the idea that Elisp functions can receive all kinds of Elisp objects
 and return all kinds of Elisp objects.
 
 Elisp objects include:
@@ -13459,8 +13473,11 @@ this:
         a
   (* 10 a)
 
-If you execute lines 1, 3, and 4 in it you get one behavior, and if
-you execute lines 2, 3, and 4 you get the other one.
+If you execute lines 1, 3, and 4 in it you get one behavior, and
+if you execute lines 2, 3, and 4 you get the other one. There are
+some exercises on \"choosing the right order\" here:
+
+  (find-eval-intro \"3. What to execute, and in what order\")
 
 Again: note that evaluating the symbol `a' returns the value of a \"as
 a variable\".

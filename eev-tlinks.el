@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211021
+;; Version:    20211027
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1185,10 +1185,14 @@ Files that look like subtitle files are ignored."
      )
    pos-spec-list))
 
+;; Test:
+;; (find-estring (ee-find-psne-core "http://www.lua.org/start.html"))
+;;
 (defun ee-find-psne-core (url &optional wget-options)
   "This is an internal function used by `find-psne-links'."
   (let* ((localurl (ee-url-to-fname0 url))
 	 (localdir (file-name-directory localurl))
+	 (fname0 (file-name-nondirectory localurl))
 	 (o (format "%3s" (or wget-options ""))))
     (ee-template0 "\
 mkdir -p {localdir}
@@ -1197,6 +1201,7 @@ wget {o} '{url}'
 echo     '{url}' >> ~/.psne.log
 
 # (find-fline \"{localdir}\")
+# (find-fline \"{localdir}\" \"{fname0}\")
 # (find-fline \"{localurl}\")
 ")))
 
@@ -1550,13 +1555,15 @@ netcat -l -p {tgtport}
   (setq youtubeid (or youtubeid "{youtubeid}"))
   (setq time      (or time      "{time}"))
   (let* ((fname       (ee-shorten-file-name (ee-url-to-fname url)))
+         (fname0      (file-name-nondirectory fname))
          (dir         (file-name-directory fname))
 	 (youtubeurl  (format "http://www.youtube.com/watch?v=%s" youtubeid))
 	 (youtubetime (or (ee-time-to-youtube-time time) "")))
     (ee-template0 "\
-# URL, local file, and a link to the directory of the local file:
+# URL, local file, and links to the directory of the local file:
 #               {url}
 #              {fname}
+# (find-fline \"{dir}\" \"{fname0}\")
 # (find-fline \"{dir}\")
 
 # Youtube:

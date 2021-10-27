@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211021
+;; Version:    20211027
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -27,6 +27,20 @@
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
+
+;; «.how-to-test-this»			(to "how-to-test-this")
+;; «.ee-download-with-eww»		(to "ee-download-with-eww")
+;; «.ee-use-eshell»			(to "ee-use-eshell")
+;; «.ee-use-bullets»			(to "ee-use-bullets")
+;; «.ee-use-find-angg-es-remote»	(to "ee-use-find-angg-es-remote")
+;; «.ee-use-find-angg-es-local»		(to "ee-use-find-angg-es-local")
+;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
+;; «.ee-use-windows»			(to "ee-use-windows")
+;; «.directories»			(to "directories")
+;; «.basic-tests»			(to "basic-tests")
+
+
+
 
 ;;; Commentary:
 ;;
@@ -43,12 +57,16 @@
 ;;
 ;; This file is not loaded by default. See:
 ;;   (find-eev "eev-load.el")
-;;
 
+
+;; «how-to-test-this»  (to ".how-to-test-this")
+;;
 ;; 0.1. How to test this
 ;; =====================
 ;; The HTMLized version of this file is here:
 ;;   http://angg.twu.net/eev-current/eev-on-windows.el.html
+;; The HTMLized version may be more recent than the one here:
+;;   (find-eev "eev-on-windows.el")
 ;;
 ;; Here's how to load it in Emacs and run its tests.
 ;;   1. update eev using "M-x list-packages eev",
@@ -58,7 +76,8 @@
 ;;   5. run "M-x find-eevfile" to open the directory with the source
 ;;      files of eev,
 ;;   6. open the file eev-on-windows.el in that directory,
-;;   7. run the sexps below with `M-e' on each line:
+;;   7. run the sexps below with `M-e' on each line - they are needed
+;;      to make sure that you have wget.exe and pdftotext.exe:
 ;;
 ;;      (require 'eev-on-windows)
 ;;      (mkdir "~/bin/" t)
@@ -66,6 +85,10 @@
 ;;      (ee-download-with-eww "http://angg.twu.net/2021-oficina/wget.exe" "~/bin/")
 ;;      (delete-file "~/bin/pdftotext.exe")
 ;;      (ee-download-with-eww "http://angg.twu.net/2021-oficina/pdftotext.exe" "~/bin/")
+;;
+;;   8. run these sexps with `M-e' on each line:
+;;
+;;      (require 'eev-on-windows)
 ;;      (ee-use-windows)
 ;;      (to "directories")
 ;;
@@ -77,13 +100,12 @@
 ;; 0.2. Setting your ~/.emacs
 ;; ==========================
 ;; If you are helping me to test this AND you know how to edit your
-;; ~/.emacs (hey Daniel Bastos!) then this is what you should put
-;; there:
+;; ~/.emacs (hey Daniel Bastos! Daniel Tavares and Julha, please
+;; ignore this!) then this is what you should put there:
 ;;
 ;;   ;; See: (find-eevfile "eev-on-windows.el" ".emacs")
-;;   (require 'eev-load)
+;;   (require 'eev-beginner)
 ;;   (require 'eev-on-windows)
-;;   (eev-mode 1)
 ;;   (ee-use-windows)
 ;;   (setenv "FIREFOXDIR"      "c:/Program Files/Mozilla Firefox")
 ;;   (setenv "GOOGLECHROMEDIR" "c:/Program Files/Google/Chrome/Application")
@@ -96,25 +118,6 @@
 ;; the "(require 'eev-on-windows)".
 
 
-
-;; 2021:
-;; «.ee-download-with-eww»		(to "ee-download-with-eww")
-;; «.ee-use-eshell»			(to "ee-use-eshell")
-;; «.ee-use-bullets»			(to "ee-use-bullets")
-;; «.ee-use-find-angg-es-remote»	(to "ee-use-find-angg-es-remote")
-;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
-;; «.ee-use-windows»			(to "ee-use-windows")
-;; «.directories»			(to "directories")
-;; «.basic-tests»			(to "basic-tests")
-
-
-
-;;;  ____   ___ ____  _ 
-;;; |___ \ / _ \___ \/ |
-;;;   __) | | | |__) | |
-;;;  / __/| |_| / __/| |
-;;; |_____|\___/_____|_|
-;;;                     
 
 (require 'eww)
 (require 'eshell)
@@ -162,6 +165,7 @@
 
 
 ;; «ee-use-find-angg-es-remote»  (to ".ee-use-find-angg-es-remote")
+;; «ee-use-find-angg-es-local»  (to ".ee-use-find-angg-es-local")
 ;; See: (find-angg-es-links)
 ;;
 (defun ee-use-find-angg-es-local ()
@@ -218,9 +222,6 @@
 
 
 ;; «directories»  (to ".directories")
-;; These directories are for Daniel Almeida's machine.
-;; Most people will have to configure this.
-;;
 ;; From the internets:
 ;;
 ;;  "If you can start a Mozilla application by using a shortcut or
@@ -231,9 +232,19 @@
 ;; Apparently you'll have to do this by hand for Firefox, Chrome, and
 ;; Mpv - I couldn't find a way to automate this... =/
 ;;
+;; Most people will have to configure this.
+;;
+;; These directories are for Daniel Almeida's machine.
 (setenv "FIREFOXDIR"      "c:/Program Files/Mozilla Firefox")
 (setenv "GOOGLECHROMEDIR" "c:/Program Files/Google/Chrome/Application")
 (setenv "MPVDIR"          "c:/Users/danie/OneDrive/Documentos/mpv")
+;;
+;; Julha needs to run this:
+;; (setenv "FIREFOXDIR"      "c:/Program Files/Mozilla Firefox")
+;; (setenv "MPVDIR"          "c:/Users/User/Desktop")
+;; (defalias 'find-pdf-page 'find-firefox-page)
+
+
 
 ;; «basic-tests»  (to ".basic-tests")
 ;; 1. Basic tests
@@ -259,6 +270,12 @@
 ;;
 ;;   KNOWN BUG: the "--help" option doesn't work on chrome in Windows.
 ;;
+;; 1.1. Test `M-x brff' and `M-x brg'
+;; ----------------------------------
+;; Check if the tests in this section of the main tutorial work:
+;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
+;;
+;;
 ;; 2. Tests for using the browser as a PDF viewer
 ;; ==============================================
 ;; For the tests for using browsers as PDF viewers you will need to
@@ -273,6 +290,11 @@
 ;;   (find-googlechrome-page "~/Coetzee99.pdf" 3)
 ;;   (find-firefox-page      "~/Coetzee99.pdf" 3)
 ;;   (find-pdf-page          "~/Coetzee99.pdf" 3)
+;;
+;; You can select the browser to use for PDFs with these sexps:
+;;   (defalias 'find-pdf-page 'find-googlechrome-page)
+;;   (defalias 'find-pdf-page 'find-firefox-page)
+;;
 ;;
 ;; 2.1. Test the short links to PDFs
 ;; ---------------------------------

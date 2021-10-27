@@ -1,6 +1,6 @@
 ;;; eejump.el -- jump quickly to predefined places.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20200220
+;; Version:    20211026
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
@@ -100,11 +100,14 @@ See: (find-eejump-intro \"\\neejump\\n\")"
 
 (defun eejump-*   () (find-efunction 'eejump-*))
 (defun eejump-1   () (find-fline "~/TODO"))
+(defun eejump-21  () (find-2a nil '(eejump 1)))
+(defun eejump-31  () (find-2b nil '(eejump 1)))
 (defun eejump-2   () (find-emacs-keys-intro))
 (defun eejump-3   () (find-windows-beginner-intro))
 (defun eejump-5   () (find-eev-quick-intro))
 (defun eejump-50  () (find-eev-intro))
 (defun eejump-6   () (find-escripts-intro))
+(defun eejump-7   () (find-elisp-intro))
 
 (defun eejump-10  () (set-frame-font "5x7"  t))
 (defun eejump-11  () (set-frame-font "6x13" t))

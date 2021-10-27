@@ -1,3 +1,16 @@
+2021-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-psnevideo-url-youtube): small changes.
+
+2021-10-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): small changes.
+
+	* eev-blinks.el (ee-find-eejumps-header): added M-21j and M-31j to
+	the list of importante examples.
+
+	* eejump.el (eejump-21, eejump-31, eejump-7): new functions.
+
 2021-10-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-beginner.el: change the `(add-to-list 'load-path
