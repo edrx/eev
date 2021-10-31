@@ -1,3 +1,17 @@
+2021-10-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-find-here-links): rewritten.
+	(find-here-links): cosmetic changes.
+	(find-here-links-test): commented out.
+	(ee-fhl-main-program, ee-fhl-sexp1, ee-fhl-sexp2): new variables.
+	(ee-fhl-run, ee-fhl-eval, ee-fhl-:eval, ee-fhl-:if, ee-fhl-:or):
+	new functions.
+
+	* eev-audiovideo.el (ee-vlc-program, ee-vlc-video-options): new
+	variables.
+	(find-vlc-video, ee-find-vlc-video, code-vlc-video)
+	(find-code-vlc-video, ee-code-vlc-video): new functions.
+
 2021-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-psnevideo-url-youtube): small changes.

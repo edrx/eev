@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211016
+;; Version:    20211031
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -100,6 +100,7 @@
 ;; «.find-termplayer»		(to "find-termplayer")
 ;; «.find-mpv-video»		(to "find-mpv-video")
 ;; «.find-mpv-audio»		(to "find-mpv-audio")
+;; «.find-vlc-video»		(to "find-vlc-video")
 ;; «.code-brxxxs»		(to "code-brxxxs")
 ;; «.aliases»			(to "aliases")
 ;; «.video-tutorials»		(to "video-tutorials")
@@ -506,7 +507,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 (defvar ee-mpv-audio-options '("--vid=no"))
 (defun ee-find-mpv-audio (fname &optional pos &rest rest)
   `(,@ee-mpv-term-options
-    "mpv"
+    ,ee-mpv-program
     ,fname
     ;; ,@(if pos `("--start" ,(ee-secs-to-mm:ss pos)))
     ,@(if pos (list (format "--start=%s" (ee-secs-to-mm:ss pos))))
@@ -532,6 +533,47 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
         \"Just setting the default audio\"
         (find-mpv-audio {(ee-S fname)} time)))
   "))
+
+
+
+;;;        _                _     _            
+;;; __   _| | ___    __   _(_) __| | ___  ___  
+;;; \ \ / / |/ __|___\ \ / / |/ _` |/ _ \/ _ \ 
+;;;  \ V /| | (_|_____\ V /| | (_| |  __/ (_) |
+;;;   \_/ |_|\___|     \_/ |_|\__,_|\___|\___/ 
+;;;                                            
+;; «find-vlc-video»  (to ".find-vlc-video")
+
+(defvar ee-vlc-program "vlc")
+(defvar ee-vlc-video-options '("--fullscreen" "--no-video-title-show"))
+
+(defun    find-vlc-video (fname &optional pos &rest rest)
+  "Open FNAME with vlc, with a GUI (in fullscreen mode, for video files)."
+  (interactive "sFile name: ")
+  (find-bgprocess (ee-find-vlc-video fname pos)))
+(defun ee-find-vlc-video (fname &optional pos &rest rest)
+  `(,ee-vlc-program
+    ,@ee-vlc-video-options
+    ,@(if pos (list "--start-time" (format "%s" (ee-time-to-seconds pos))))
+    ,fname
+    ))
+
+(defun      code-vlc-video (c fname)
+  (eval (ee-read      (ee-code-vlc-video c fname))))
+(defun find-code-vlc-video (c fname)
+  (find-estring-elisp (ee-code-vlc-video c fname)))
+(defun   ee-code-vlc-video (c fname)
+  (ee-template0 "\
+    ;; {(ee-S `(find-code-vlc-video ,c ,fname))} 
+    ;;
+    (defun find-{c} (&optional time &rest rest)
+      (interactive (list (ee-time-around-point)))
+      (setq ee-audiovideo-last 'find-{c})
+      (if (eq time t)
+        \"Just setting the default video\"
+        (find-vlc-video {(ee-S fname)} time)))
+  "))
+
 
 
 
