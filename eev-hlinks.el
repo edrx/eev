@@ -144,6 +144,7 @@
 ;; «ee-fhl-run»  (to ".ee-fhl-run")
 ;; Here we define the interpreter for the DSL that is used in
 ;; `ee-fhl-main-program'.
+;; TODO: implement (:subprogram-in VARNAME).
 
 (defvar ee-fhl-sexp1 nil
   "When `ee-fhl-run' finds an (ee-fhl-:if SEXP1 SEXP2)

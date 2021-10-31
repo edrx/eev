@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211027
+;; Version:    20211031
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -8855,110 +8855,6 @@ define a function with the right name - in this case,
 The source code is simple enough, so take a look:
 
   (find-eev \"eev-multiwindow.el\" \"find-wset-_\")
-  (find-eev \"eev-multiwindow.el\" \"find-wset-=\")
-  (find-eev \"eev-multiwindow.el\" \"find-wset-!\")
-
-Note that `find-wset-!' restarts an eepitch target, while
-`find-wset-=' will reuse an eepitch target if its buffer already
-exists. [Obs: \"=\" and \"!\" have been mostly superseded by
-\"e\" and \"E\"... to do: explain this]
-
-
-See: (find-prepared-intro)
-
-  [Example at find-prepared-intro]
-
-
-
-
-9. Executing key sequences at other windows
-===========================================
-It is possible to use multi-window settings, together with the
-trick that `<f8>' on a red star line executes it as Lisp and
-moves down, to create tutorials for Emacs modes. An example:
-
-  (...)
-
-
-
-10. A tutorial for Info mode
-============================
-Note: this is obsolete! It was superseded by:
-
-  (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
-
-Here's a mini-tutorial for Info mode, demonstrating how to
-navigate in Info using the usual movement keys, plus TAB,
-<backtab>, RET, l (last), u (up), n (next), p (prev), q (quit),
-C-h i, and the digits 1-9. Note that the display in Info mode is
-like this:
-
-   ____________________________________________
-  |Next: Nonincremental Search,  Up: Search    | <- next/prev/up
-  | (emacs)Top > Search > Incremental Search   | <- breadcrumbs
-  |                                            |
-  | 19.1 Incremental Search                    | <- section number /
-  |                                            |    node name (long)
-  |  (...)                                     |
-  |                                            |
-  |--:%%-  *info* (emacs) Incremental Search   |
-  |____________________________________________|
-
-Here:
-
- Define some hacks
- (defun ow (n) (other-window n))
- (defun eeoe (code) (ow 1) (prog1 (eval code) (ow -1)))
- (defun eeok (keystr) (eeoe `(eek ,keystr)))
-
- Prepare the windows
- (ee-kill-buffer \"*info*\")
- (find-wset \"1so_o\" '(find-enode \"Search\"))
-
- The arrows (and other movent keys) work as expected.
- Watch the cursor in the Info window...
- (eeok \"3*<down>\")
- (eeok \"10*<right>\")
-
- TAB and <backtab> move to the next and to the previous link.
- Note that they consider all the links in a page, not only
- the ones in menus - including the breadcrumb links at the top.
- (eeok \"TAB       ;; Info-next-reference\")
- (eeok \"TAB       ;; Info-next-reference\")
- (eeok \"TAB       ;; Info-next-reference\")
- (eeok \"TAB       ;; Info-next-reference\")
- (eeok \"TAB       ;; Info-next-reference\")
- (eeok \"<backtab> ;; Info-prev-reference\")
- (eeok \"<backtab> ;; Info-prev-reference\")
- (eeok \"<backtab> ;; Info-prev-reference\")
- (eeok \"<backtab> ;; Info-prev-reference\")
-
- RET follows a link, l (last) goes back.
- Watch the section number: 19 -> 32.3.6 -> 19.
- (eeok \"RET       ;; Info-follow-nearest-node\")
- (eeok \"l         ;; Info-history-back\")
-
- The digits 1-9 can be used to go straight to subsections.
- For example, a `4' would follow the 4th _menu_ link -
- ignoring the non-menu links.
- Watch the section number: 19 -> 19.1 -> 19.1.1.
- (eeok \"1         ;; Info-nth-menu-item\")
- (eeok \"1         ;; Info-nth-menu-item\")
-
- The keys `u', `n', `p' (up, next, and prev) move through the
- tree structure. Watch the section number:
- 19.1.1 -u-> 19.1 -u-> 19 -n-> 20 -n-> 21 -p-> 20 -p-> 19
- (eeok \"u         ;; Info-up\")
- (eeok \"u         ;; Info-up\")
- (eeok \"n         ;; Info-next\")
- (eeok \"n         ;; Info-next\")
- (eeok \"p         ;; Info-prev\")
- (eeok \"p         ;; Info-prev\")
-
- `q' leaves Info mode - more precisely, it buries the info buffer.
- `C-h i' goes back to the Info buffer (or restarts info). 
- (eeok \"q         ;; Info-exit\")
- (eeok \"C-h i     ;; info\")
 
 " pos-spec-list)))
 

@@ -1,6 +1,6 @@
 ;; eev-multiwindow.el - functions to create multi-window setups  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190201
+;; Version:    20211031
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-multiwindow.el>
@@ -133,14 +133,16 @@ that. This is mainly for `find-wset'."
 
 ;; Mnemonic: "e" and "E" are both for preparing eepitch windows,
 ;; and "E" is more aggressive than "e" (it yells at you).
-;; Same for "=" and "!".
-(defun find-wset-= () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-e () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
-(defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-E () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
+(defun find-3ee (b c) (find-wset "13o2eoeo" b c))
+(defun find-3EE (b c) (find-wset "13o2EoEo" b c))
 
-(defun find-3ee (b c) (find-wset "13o2=o=o" b c))
-(defun find-3EE (b c) (find-wset "13o2!o!o" b c))
+;; When I invented this I used "=" and "!" instead of "e" and "E" -
+;; but I think that "e" and "E" are better.
+(defun find-wset-= () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
+(defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
+
 
 
 
