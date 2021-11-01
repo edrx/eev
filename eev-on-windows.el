@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211027
+;; Version:    20211101
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -34,8 +34,9 @@
 ;; «.ee-use-bullets»			(to "ee-use-bullets")
 ;; «.ee-use-find-angg-es-remote»	(to "ee-use-find-angg-es-remote")
 ;; «.ee-use-find-angg-es-local»		(to "ee-use-find-angg-es-local")
-;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
 ;; «.ee-use-windows»			(to "ee-use-windows")
+;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
+;; «.ee-use-gnu-linux-but-simulate»	(to "ee-use-gnu-linux-but-simulate")
 ;; «.directories»			(to "directories")
 ;; «.basic-tests»			(to "basic-tests")
 
@@ -47,7 +48,7 @@
 ;; Experimental, undocumented, and messy. Every time that I give a
 ;; workshop to Windows users this file changes a lot. The most recent
 ;; changes in this file correspond to a workshop that I will give in
-;; mid-october 2021, and that I described in this thread:
+;; november 2021, and that I described in this thread:
 ;;
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
 ;;
@@ -187,23 +188,10 @@
 
 
 
-;; «ee-use-gnu-linux»  (to ".ee-use-gnu-linux")
 ;; «ee-use-windows»  (to ".ee-use-windows")
+;; «ee-use-gnu-linux»  (to ".ee-use-gnu-linux")
+;; «ee-use-gnu-linux-but-simulate»  (to ".ee-use-gnu-linux-but-simulate")
 ;;
-(defun ee-use-gnu-linux ()
-  (interactive)
-  (ee-use-red-stars)
-  (ee-use-shell)
-  (delete-file eshell-aliases-file)
-  (eshell/alias "wget"          "wget $*")
-  (setq ee-wget-program         "wget")
-  (setq ee-pdftotext-program    "pdftotext")
-  (setq ee-firefox-program      "firefox")
-  (setq ee-googlechrome-program "google-chrome")
-  (setq ee-mpv-program          "mpv")
-  (ee-use-find-angg-es-local)
-  )
-
 (defun ee-use-windows ()
   (interactive)
   (ee-use-bullets)
@@ -217,7 +205,39 @@
   (setq ee-mpv-program          "$MPVDIR/mpv.exe")
   (defalias 'find-pdf-page 'find-googlechrome-page)
   (ee-use-find-angg-es-remote)
+  (ee-use-find-youtube-video)
   )
+
+(defun ee-use-gnu-linux ()
+  (interactive)
+  (ee-use-red-stars)
+  (ee-use-shell)
+  (delete-file eshell-aliases-file)
+  (eshell/alias "wget"          "wget $*")
+  (setq ee-wget-program         "wget")
+  (setq ee-pdftotext-program    "pdftotext")
+  (setq ee-firefox-program      "firefox")
+  (setq ee-googlechrome-program "google-chrome")
+  (setq ee-mpv-program          "mpv")
+  (ee-use-find-angg-es-local)
+  (ee-use-find-eevvideo-links)
+  )
+
+(defun ee-use-gnu-linux-but-simulate ()
+  (interactive)
+  (ee-use-bullets)
+  (ee-use-eshell)
+  (delete-file eshell-aliases-file)
+  (eshell/alias "wget"          "wget $*")
+  (setq ee-wget-program         "wget")
+  (setq ee-pdftotext-program    "pdftotext")
+  (setq ee-firefox-program      "firefox")
+  (setq ee-googlechrome-program "google-chrome")
+  (setq ee-mpv-program          "mpv")
+  (ee-use-find-angg-es-remote)
+  (ee-use-find-youtube-video)
+  )
+
 
 
 

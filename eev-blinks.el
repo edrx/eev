@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211026
+;; Version:    20211101
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -1262,10 +1262,11 @@ Hint: install the Debian package \"unicode-data\".")
 
 (defun find-eejumps (&rest pos-spec-list) (interactive)
   "See: (find-eev-quick-intro \"find-eejumps\")"
-  (apply 'find-estring-elisp
-	 (concat (ee-find-eejumps-header)
-		 (ee-find-eejumps-body))
-	 pos-spec-list))
+  (let ((ee-buffer-name "*(find-eejumps)*"))
+    (apply 'find-estring-elisp
+	   (concat (ee-find-eejumps-header)
+		   (ee-find-eejumps-body))
+	   pos-spec-list)))
 
 
 

@@ -257,15 +257,16 @@ return the result of (eval ee-fhl-sexp2), slightly preprocessed."
 "Visit a temporary buffer containing hyperlinks pointing to \"here\".
 See: (find-here-links-intro)"
   (interactive)
-  (apply
-   'find-elinks
-   `(;; The first line of a find-here-links buffer DOES NOT
-     ;; regenerates the buffer - instead the first lines point to
-     ;; help pages.
-     ,@(ee-find-here-links0)
-     ,@(ee-find-here-links)
-     )
-   pos-spec-list))
+  (let ((ee-buffer-name "*(find-here-links)*"))
+    (apply
+     'find-elinks
+     `(;; The first line of a find-here-links buffer DOES NOT
+       ;; regenerates the buffer - instead the first lines point to
+       ;; help pages.
+       ,@(ee-find-here-links0)
+       ,@(ee-find-here-links)
+       )
+     pos-spec-list)))
 
 (defun ee-find-here-links0 ()
   "The header used by `find-here-links'."

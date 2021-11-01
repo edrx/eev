@@ -1,4 +1,16 @@
+2021-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (ee-find-youtube-video-program): new variable.
+	(ee-find-youtube-video, find-youtube-video): new functions.
+	(ee-use-find-youtube-video, ee-use-find-eevvideo-links): new
+	functions.
+
+	* eev-blinks.el (find-eejumps): use "*(find-eejumps)*" as the
+	buffer name.
+
 2021-10-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-mode.el (eev-mode-help): fixed a typo.
 
 	* eev-hlinks.el (ee-find-here-links): rewritten.
 	(find-here-links): cosmetic changes.
@@ -6,6 +18,7 @@
 	(ee-fhl-main-program, ee-fhl-sexp1, ee-fhl-sexp2): new variables.
 	(ee-fhl-run, ee-fhl-eval, ee-fhl-:eval, ee-fhl-:if, ee-fhl-:or):
 	new functions.
+	(find-here-links): use "*(find-here-links)*" as the buffer name.
 
 	* eev-intro.el (find-multiwindow-intro): deleted the sections 9
 	and 10 of the tutorial. Their names were "9. Executing key
@@ -25,7 +38,7 @@
 	* eev-intro.el (find-eev-quick-intro): small changes.
 
 	* eev-blinks.el (ee-find-eejumps-header): added M-21j and M-31j to
-	the list of importante examples.
+	the list of important examples.
 
 	* eejump.el (eejump-21, eejump-31, eejump-7): new functions.
 

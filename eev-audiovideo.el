@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211031
+;; Version:    20211101
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -101,6 +101,8 @@
 ;; «.find-mpv-video»		(to "find-mpv-video")
 ;; «.find-mpv-audio»		(to "find-mpv-audio")
 ;; «.find-vlc-video»		(to "find-vlc-video")
+;; «.find-youtube-video»	(to "find-youtube-video")
+;; «.ee-use-find-youtube-video»	(to "ee-use-find-youtube-video")
 ;; «.code-brxxxs»		(to "code-brxxxs")
 ;; «.aliases»			(to "aliases")
 ;; «.video-tutorials»		(to "video-tutorials")
@@ -573,6 +575,74 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
         \"Just setting the default video\"
         (find-vlc-video {(ee-S fname)} time)))
   "))
+
+
+
+
+;;;                    _         _                     _     _            
+;;;  _   _  ___  _   _| |_ _   _| |__   ___     __   _(_) __| | ___  ___  
+;;; | | | |/ _ \| | | | __| | | | '_ \ / _ \____\ \ / / |/ _` |/ _ \/ _ \ 
+;;; | |_| | (_) | |_| | |_| |_| | |_) |  __/_____\ V /| | (_| |  __/ (_) |
+;;;  \__, |\___/ \__,_|\__|\__,_|_.__/ \___|      \_/ |_|\__,_|\___|\___/ 
+;;;  |___/                                                                
+;;
+;; «find-youtube-video»  (to ".find-youtube-video")
+;; Play a video on youtube using a browser.
+;; Tests: (ee-find-youtube-video "xQqWufQgzVY")
+;;        (ee-find-youtube-video "xQqWufQgzVY" "1:23")
+;;        (ee-find-youtube-video "xQqWufQgzVY" "1:23" "Bla")
+;;           (find-youtube-video "xQqWufQgzVY" "1:23")
+;;
+(defvar ee-find-youtube-video-program 'find-googlechrome)
+
+(defun ee-find-youtube-video (youtubeid &optional time &rest rest)
+  (let* ((youtubeurl  (format "http://www.youtube.com/watch?v=%s" youtubeid))
+	 (youtubetime (ee-time-to-youtube-time (or time "")))
+	 (url (concat youtubeurl youtubetime)))
+    (list ee-find-youtube-video-program url)))
+
+(defun find-youtube-video (youtubeid &optional time &rest rest)
+  (eval (ee-find-youtube-video youtubeid time)))
+
+
+
+
+;; «ee-use-find-youtube-video»  (to ".ee-use-find-youtube-video")
+;; See: (find-eev-quick-intro "[Video links:]")
+;;      (find-eev "eev-audiovideo.el" "video-tutorials")
+;;      (find-eev "eev-audiovideo.el" "video-tutorials" "find-eevvideo-links")
+;;      (find-eev "eev-tlinks.el" "find-eevvideo-links")
+;; Tests: (ee-use-find-eevvideo-links)
+;;        (ee-use-find-youtube-video)
+;;        (find-eevtestblsvideo "2:33")
+;;
+(defun ee-use-find-youtube-video ()
+  "Make `find-eevvideo-links' play videos on youtube using a browser.
+This is a quick hack inspired by a workshop for Windows users. On
+Windows it is hard to configure the mechanism that downloads
+local copies of videos and plays the local copies with mpv, and
+this makes the default behavior of the links in [Video links:]
+blocks very inconvenient for beginners. This hack redefines the
+function `find-eevvideo-links', that is used by the links to
+videos that are used in [Video links:] blocks, to make those
+links use a browser to play the videos on youtube. To get back
+the default behavior, run `ee-use-find-eevvideo-links'."
+  (interactive)
+  (defun find-eevvideo-links (&optional c stem youtubeid time &rest pos-spec-list)
+    (find-youtube-video youtubeid time)))
+
+(defun ee-use-find-eevvideo-links ()
+  "Use the default definition for `find-eevvideo-links'.
+With the default definition the links in the [Video links:]
+blocks of the tutorials of eev will work as documented - they
+will try to download local copies of the videos. Compare with
+`ee-use-find-youtube-video'."
+  (interactive)
+  ;; This is a quick hack! It simply loads eev-tlinks.el again.
+  ;; See: (find-eev "eev-tlinks.el" "find-eevvideo-links")
+  (load "eev-tlinks.el"))
+
+
 
 
 

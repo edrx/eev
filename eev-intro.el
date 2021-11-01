@@ -1136,16 +1136,18 @@ The header is this:
   ;;      (find-emacs-keys-intro \"1. Basic keys (eev)\")
   ;;      (find-emacs-keys-intro \"2. Key sequences\")
   ;; For example,
-  ;;     M-1 M-j  runs:  (find-fline \"~/TODO\")
-  ;;     M-2 M-j  runs:  (find-emacs-keys-intro)
-  ;;     M-5 M-j  runs:  (find-eev-quick-intro)
+  ;;         M-5 M-j  runs:  (find-eev-quick-intro)
+  ;;         M-2 M-j  runs:  (find-emacs-keys-intro)
+  ;;         M-1 M-j  runs:  (find-fline \"~/TODO\")
+  ;;     M-2 M-1 M-j  shows the file ~/TODO in the right window
+  ;;     M-3 M-1 M-j  opens ~/TODO in the right window
   ;; Current eejump targets:
 
-Note that after the \"See:\" we have three elisp hyperlinks to
+Note that after the \"See:\" we have four elisp hyperlinks to
 sections of tutorials, and after the \"For example:\" we have
-three examples of how to run `M-j' with numeric prefixes; each
-one of these examples is followed by the elisp hyperlink whose
-action corresponds to running `M-j' with that prefix.
+five examples of how to run `M-j' with numeric prefixes; the
+first three of these examples are followed by the elisp hyperlink
+whose action corresponds to running `M-j' with that prefix.
 
 That header is very beginner-friendly, and if you are a beginner
 who only knows how to use `M-e' and `M-j' you can, and should,

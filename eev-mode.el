@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211023
+;; Version:    20211031
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
@@ -258,7 +258,7 @@ Commands to generate pages with lists of hyperlinks:
       \\[find-eface-links] -- hyperlinks to a face (default: face at point)
       \\[find-debpkg-links] -- hyperlinks about a Debian package
       \\[find-here-links] -- hyperlinks to here
-  M-3 \\[find-here-links] -- hyperlinks to here for beginners
+      \\[find-here-links-3] -- hyperlinks to here for beginners
   See: (find-eev-quick-intro \"\\n4.2.\" \"find-ekey-links\")
        (find-here-links-intro  \"4.\"   \"find-here-links-3\")
 Commands to edit hyperlinks:
