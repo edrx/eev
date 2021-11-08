@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211031
+;; Version:    20211107
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -86,6 +86,7 @@
 ;; «.find-bounded-intro»		(to "find-bounded-intro")
 ;; «.find-channels-intro»		(to "find-channels-intro")
 ;; «.find-videos-intro»			(to "find-videos-intro")
+;; «.find-video-links-intro»		(to "find-video-links-intro")
 
 ;; «.find-defun-intro»			(to "find-defun-intro")
 ;; «.find-emacs-intro»			(to "find-emacs-intro")
@@ -587,6 +588,8 @@ The best way to learn how to create very quickly these
 our notes is explained in a separate tutorial:
 
   (find-here-links-intro)
+  (find-here-links-intro \"3. `find-here-links'\")
+  (find-here-links-intro \"3. `find-here-links'\" \"beginners\")
 
 Cutting and pasting is explained briefly in section 5.2, below.
 A way to go quickly to \"~/TODO\" is explained in section 7.1.
@@ -2657,55 +2660,56 @@ recommended reading order. These are the basic ones:
    5. (find-pdf-like-intro)
    6. (find-eepitch-intro)
    7. (find-audiovideo-intro)
-   8. (find-videos-intro)
-   9. (find-psne-intro)
-  10. (find-rcirc-intro)
-  11. (find-elisp-intro)
-  12. (find-lexical-intro)
-  13. (find-eev-install-intro)
+   8. (find-video-links-intro)
+   9. (find-videos-intro)
+  10. (find-psne-intro)
+  11. (find-rcirc-intro)
+  12. (find-elisp-intro)
+  13. (find-lexical-intro)
+  14. (find-eev-install-intro)
 
 This is a very basic tutorial intended mainly for M$ Windows
 users:
 
-  14. (find-windows-beginner-intro)
+  15. (find-windows-beginner-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  15. (find-escripts-intro)
-  16. (find-links-conv-intro)
+  16. (find-escripts-intro)
+  17. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  17. (find-eval-intro)
-  18. (find-links-intro)
-  19. (find-brxxx-intro)
-  20. (find-wrap-intro)
-  21. (find-eejump-intro)
-  22. (find-anchors-intro)
-  23. (find-code-c-d-intro)
+  18. (find-eval-intro)
+  19. (find-links-intro)
+  20. (find-brxxx-intro)
+  21. (find-wrap-intro)
+  22. (find-eejump-intro)
+  23. (find-anchors-intro)
+  24. (find-code-c-d-intro)
 
 These are etcs:
 
-  24. (find-multiwindow-intro)
-  25. (find-templates-intro)
-  26. (find-org-intro)
-  27. (find-git-intro)
+  25. (find-multiwindow-intro)
+  26. (find-templates-intro)
+  27. (find-org-intro)
+  28. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  28. (find-prepared-intro)
-  29. (find-bounded-intro)
-  30. (find-channels-intro)
+  29. (find-prepared-intro)
+  30. (find-bounded-intro)
+  31. (find-channels-intro)
 
 This one is used in a video:
 
-  31. (find-three-main-keys-intro)
+  32. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  32. (find-emacs-intro)
-  33. (find-defun-intro)
+  33. (find-emacs-intro)
+  34. (find-defun-intro)
 
 Item 25 is an index of old video tutorials, with scripts for
 downloading local copies of them and links to important positions
@@ -7821,9 +7825,9 @@ For more realistic examples, see:
 ============================================
 This sexp
 
-  (code-video \"eev2020video\" \"~/eev-videos/emacsconf2020.mp4\")
+  (code-video \"ec2020video\" \"~/eev-videos/emacsconf2020.mp4\")
 
-defines a function `find-eev2020video'. The function `code-video'
+defines a function `find-ec2020video'. The function `code-video'
 is similar to the functions `code-c-d' and `code-pdf-page', that
 we saw in:
 
@@ -7832,7 +7836,7 @@ we saw in:
 
 After running the `(code-video ...)' above, this sexp
 
-  (find-eev2020video \"8:20\" \"defines several functions\")
+  (find-ec2020video \"8:20\" \"defines several functions\")
 
 becomes a shorthand for:
 
@@ -7843,15 +7847,15 @@ comment, and is ignored - as in `find-pdf-page'.
 
 If we run the second sexp below instead of the first one,
 
-       (code-video \"eev2020video\" \"~/eev-videos/emacsconf2020.mp4\")
-  (find-code-video \"eev2020video\" \"~/eev-videos/emacsconf2020.mp4\")
+       (code-video \"ec2020video\" \"~/eev-videos/emacsconf2020.mp4\")
+  (find-code-video \"ec2020video\" \"~/eev-videos/emacsconf2020.mp4\")
 
 we get a temporary buffer with the code that the
 sexp `(code-video ...)' would execute. Try it - and note that the
-definition of `find-eev2020video' in the temporary buffer
+definition of `find-ec2020video' in the temporary buffer
 contains a line like this:
 
-  (setq ee-audiovideo-last 'find-eev2020video)
+  (setq ee-audiovideo-last 'find-ec2020video)
 
 This line will be explained in the section 4.4.
 
@@ -10405,239 +10409,293 @@ The function `find-eevvideo-links' is explained here:
 
   (find-audiovideo-intro \"7.2. `find-eevvideo-links'\")
 
-
-
-
-
-
-Everything below this point is VERY old!!!
-
-
-
-
-4. What we have now
-===================
-I am producing a series of videos about eev - but at this moment
-only two very broad introductions are ready 8-(. I have plans for
-several short videos about specific usage patterns, but don't
-hold your breath yet... also, these are my first videos EVER - so
-please excuse any stutterings, hesitations and false starts...
-
-The videos are uploaded to Youtube to make them very easy to
-find, but Youtube reduces the resolution of the original videos
-and makes them blurry and almost unreadable - so the best way to
-watch them is to fetch local copies of the high-res .mp4 files.
-
-
-
-
-4. Hyperlinks to positions
-==========================
-The first argument to `find-eepitchvideo' and to other similar
-functions is a time offset; it is optional, and it defaults to
-\"0:00\". Any further arguments are ignored, and this allows us
-to use them as comments. So these two sexps are equivalent:
-
-  (find-eepitchvideo \"0:16\")
-  (find-eepitchvideo \"0:16\" \"the eepitch-to-shell-and-python example\")
-
-We could use a series of `find-eepitchvideo' sexps to create a
-\"table of contents\" for a video, similarly to what we do for
-written documents...
-
-
-
-5. Time offsets as hyperlinks to positions
-==========================================
-In some cases using sexps creates too much visual clutter, and we
-would like to be able to create an index or table of contents
-writing lines just like this,
-
-  0:16  the eepitch-to-shell-and-python example
-
-instead of using explicit elisp hyperlinks.
-
-There is a way to do this, but it is tricky. It involves
-activating a mode, called `eev-avadj-mode', in which `M-p' is
-bound to a command that locates the first thing looking like a
-time offset in the current line, and calls the video player to
-make it play the *current default video* starting from that time
-offset; a sexp like
-
-  (find-eepitchvideo t)
-
-just sets the current default video, but does not invoke the
-player. All this is explained here:
-
-  (find-audiovideo-intro \"The time-from-bol\")
-
-
-
-
-6. Eepitch video: table of contents
-===================================
-\(find-eev-video-links \"eepitchvideo\" \"video4-eepitch\" \"Lj_zKC5BR64\")
-\(eev-avadj-mode 1)
-\(find-eepitchvideo t)
-
-0:16 the eepitch-to-shell-and-python example, very quickly
-1:18 executing eepitch scripts with `f8's; f8 on red star lines and normal lines
-2:33 the eepitch-to-shell-and-python example - what each line does
-3:15 the first three lines use advanced features
-3:52 eepitch scripts are made to be executed interactively
-5:25 the eepitch-to-shell-and-python example again, more slowly
-
-5:58 what happens when the eepitch target is being shown
-7:13 the default is to use two windows
-7:33 what happens when the target does not exist
-8:25 how to send commands to a new shell
-8:54 how an eepitch block (like eepitch-shell/kill/shell) works
-
-9:38 an example with shell comments (which eev uses as hyperlinks)
-12:35 refining hyperlinks
-12:35 converting shell commands into hyperlinks (by wrapping - by hand)
-13:04 wrapping commands - bound to meta-uppercase-letters
-13:53 M-M wraps the current line into a hyperlink to a manpage
-14:12 demonstrating M-M, M-S and M-T with eek sexps
-14:40 M-T wraps the current linto an eepitch-xxx/kill/xxx triple
-15:47 introduction to the sandboxed tutorials and to M-j (eejump)
-16:17 the default numeric arguments for eejump
-16:35 M-5 M-j jumps to the index for the documentation for eev
-17:15 temp. eev buffers usually start with a sexp that regenerates the buffer
-18:23 where the eepitch-to-shell-and-python example is in the documentation
-
-18:58 Other examples
-19:07 pdf-like documents 
-20:43 a tutorial for Lua based on eepitch
-22:26 that's it - last comments, where to find more info, how to get in touch
-
-
-
-7. Eev video: table of contents
-===============================
-\(find-eev-video-links \"eevvideo\" \"video2\" \"doeyn5MOaB8\")
-\(eev-avadj-mode 1)
-\(find-eevvideo t)
-
- 0:00 introduction
- 2:45 unpack the tarball and invoke Emacs
- 5:07 and make the cursor stop blinking
-
- 5:11 Emacs as a Lisp environment
-11:48 Open the file \"VERSION\" (TAB completes)
-12:15 (eek \"C-x C-f VERSION\") is not very readable
-12:35 (find-file \".../VERSION\") is more readable
-12:43 to follow it we type M-e, and M-k to go back
-14:00 parts for humans and more or less for humans; passive sexps
-14:34 variations of M-e that split the screen
-15:09 left side is \"before\", right side is \"after\"
-
-16:00 help on a key sequence
-16:28 C-h k gives us help on a key sequence
-17:46 (eek \"C-h k  C-x C-f\") is an unreadble way to get help on a key
-17:55 (describe-function 'find-file) is even messier
-18:28 (find-efunctiondescr 'find-file) is cleaner - and why
-
-20:14 introduction the eev documentation in \"intro\"s
-22:30 (eek \"M-h M-k  C-x C-f\") generates a list of hyperlinks
-24:15 the first line regenerates the buffer
-24:40 the intros are temporary buffers
-25:07 we can play without destroying the documentation of eev
-25:40 we can copy the hyperlinks to intros to other places
-
-25:53 introduction to eejump
-26:44 a plain M-j goes to the index of eejumps
-28:00 M-5 M-j goes to the top level of the documentation in intros
-28:22 M-2 M-j goes to (find-emacs-intro)
-28:36 ...which has lots of links to the emacs manuals
-
-28:54 (find-eev-update-links)
-29:47 I could have done that with just instructions in English
-30:01 ...but it was more interesting to do that in an executable way.
-30:21 remember that the first line regenerates the buffer...
-31:07 we use that to select a directory for installation.
-31:40 an eepitch block
-31:53 emacs is made to handle anything that looks like text...
-32:38 running terminals inside Emacs
-32:52 the best of both worlds
-33:50 f8
-35:48 [oops - I forgot to unpack]
-
-
-
-
-8. In Portuguese
-================
-
-  (find-eev-video-links \"eevvideopt\" \"video2pt\"       \"yztYD9Y7Iz4\")
-  (code-video \"eevvideopt\" \"$S/http/angg.twu.net/eev-videos/video2pt.mp4\")
-  (eev-avadj-mode 1)
-  (find-eevvideopt t)
-
-;; (find-eepitchvideo)
-;; (find-eevvideo)
-;; (find-eevvideopt)
-
-
-
-
-9. Comparison with youtube
-==========================
-Note that Youtube has a trick that lets we use URLs that point to
-specific positions in videos. For example, this,
-
-  http://www.youtube.com/watch?v=Lj_zKC5BR64&t=0m16s
-
-makes the video about eepitch start at 0:16 instead of from the
-beginning. Also, each video at Youtube can have uploader comments
-and a discussion, and in the text of these comments things like
-\"12:34\" become links that make the current video skip to that
-position.
-
-  (find-audiovideo-intro)
-
-
-
-10. Video2pt: Uma introducao ao eev2 (2012nov15)
-================================================
-This is a version in Portuguese of the video above.
-It is slightly longer than the version in English because it's
-intended mostly for non-Emacsers, so some things are explained
-\(much) more slowly...
-
-At youtube: http://www.youtube.com/watch?v=yztYD9Y7Iz4
-            http://www.youtube.com/watch?v=yztYD9Y7Iz4&t=1h07m40s
-Hi-res mp4: http://angg.twu.net/eev-videos/video2pt.mp4
-            (128228339 bytes, 122MB. Duration: 1:09:42)
-
-# (find-eevvideopt)
-# (find-eevvideopt \"1:07:40\" \"eepitch pro shell e pro Python\")
-
-
-
-
-Long story short
-================
-You may want to copy the block of elisp below to your .emacs. You can
-use this sexp to help you:
-
-  (ee-copy-rest 0 '(find-fline \"~/.emacs\"))
-
-;; Hyperlinks to videos about eev.
-;; See: (find-videos-intro)
-;; (find-eev-video-links \"eepitchvideo\" \"video4-eepitch\" \"Lj_zKC5BR64\")
-;; (find-eev-video-links \"eevvideo\"     \"video2\"         \"doeyn5MOaB8\")
-;; (find-eev-video-links \"eevvideopt\"   \"video2pt\"       \"yztYD9Y7Iz4\")
-\(code-video \"eepitchvideo\" \"$S/http/angg.twu.net/eev-videos/video4-eepitch.mp4\")
-\(code-video \"eevvideo\"     \"$S/http/angg.twu.net/eev-videos/video2.mp4\")
-\(code-video \"eevvideopt\"   \"$S/http/angg.twu.net/eev-videos/video2pt.mp4\")
-;; (find-eepitchvideo)
-;; (find-eevvideo)
-;; (find-eevvideopt)
-;; (find-ebuffer \"*Messages*\")
 " pos-spec-list)))
 
 ;; (find-videos-intro)
+
+
+
+
+;; «find-video-links-intro»  (to ".find-video-links-intro")
+;; Skel: (find-intro-links "video-links")
+;; Test: (find-video-links-intro)
+
+(defun find-video-links-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-video-links-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-video-links-intro)
+Source code:  (find-efunction 'find-video-links-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+
+1. Introduction
+===============
+Many of the tutorials of eev have \"[Video links:]\" blocks.
+For example:
+
+  (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
+  (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\" \"[Video links:]\")
+  (find-eev-quick-intro \"6. Controlling shell-like programs\")
+  (find-eev-quick-intro \"6. Controlling shell-like programs\" \"[Video links:]\")
+
+They contain links like these,
+
+  (find-eevnavvideo \"10:36\" \"if I type <f8> six times here\")
+  (find-eev2019video \"15:11\" \"Demo: the eepitch block (in red star lines)\")
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
+
+that are \"short links to eev video tutorials\". These functions
+with names like `find-eev*video' are _sort of_ expanded to
+functions that specify explicitly which video on youtube to play,
+or where is the file with the local copy of that video. For the
+general idea of how this expansion is implemented, see:
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"{c}\")
+
+The strings \"eevnav\", \"eev2019\", and \"eevtestbls\" in the
+names of the functions correspond to the argument \"c\" of
+`code-c-d'.
+
+
+
+
+2. From the HTML
+================
+The \"intros\" of eev can be read both from Emacs and from a
+browser. For example, the HTMLized version of this intro is at:
+
+  http://angg.twu.net/eev-intros/find-video-links-intro.html
+
+In the HTMLized version each \"short link to a video tutorial\"
+has two hyperlinks, like this:
+
+  (find-eev2020video \"6:25\" \"`find-video'\")
+   \\---------------/  \\--/
+    function name:    time:
+    points to here    points to
+    (this section)    YouTube
+
+the function name, \"find-eev2020video\", points to a place -
+this section! - with help about how these links work, and the
+timestamp, \"6:25\", points to YouTube; in this example, the
+\"6:25\" points to my presentation about eev in the
+EmacsConf2020, and it plays that video starting from 6:25. More
+precisely, the \"6:25\" points to:
+
+  https://www.youtube.com/watch?v=hOAqBc42Gg8#t=6m25s
+                                  \\---------/   \\---/
+                                    \"hash\"      time
+
+We call the string \"hOAqBc42Gg8\" the \"hash\" of the video;
+calling it the \"youtube id\" of the video would be more precise,
+but longer. The \"6:25\" is converted to a \"#t=6m25s\", that
+makes youtube start playing the video from the right position.
+
+
+
+
+3. `find-youtube-video'
+=======================
+In some situations - see the section 7 - running
+
+  (find-eev2020video \"6:25\" \"`find-video'\")
+
+makes Emacs run this:
+
+  (find-youtube-video \"hOAqBc42Gg8\" \"6:25\")
+
+Note that running this sexp
+
+  (ee-find-youtube-video \"hOAqBc42Gg8\" \"6:25\")
+
+returns one of these sexps,
+
+  (find-googlechrome \"http://www.youtube.com/watch?v=hOAqBc42Gg8#t=6m25s\")
+  (find-firefox      \"http://www.youtube.com/watch?v=hOAqBc42Gg8#t=6m25s\")
+
+according to the variable `ee-find-youtube-video-program'; you
+can configure it to use one of the most common browsers with:
+
+  (setq ee-find-youtube-video-program 'find-googlechrome)
+  (setq ee-find-youtube-video-program 'find-firefox)
+
+
+
+
+4. Configuring the browser
+==========================
+The variables `ee-firefox-program' and `ee-googlechrome-program'
+determine the programs that `find-firefox' and
+`find-googlechrome' should try to execute. You can test if they
+are correct by trying:
+
+  (find-firefox      \"http://www.lua.org/start.html\")
+  (find-googlechrome \"http://www.lua.org/start.html\")
+
+Typically on GNU/Linux systems the right values are:
+
+  (setq ee-firefox-program      \"firefox\")
+  (setq ee-googlechrome-program \"google-chrome\")
+
+and on M$ Windows typically what works is something like:
+
+  (setenv \"FIREFOXDIR\"      \"c:/Program Files/Mozilla Firefox\")
+  (setenv \"GOOGLECHROMEDIR\" \"c:/Program Files/Google/Chrome/Application\")
+  (setq ee-firefox-program      \"$FIREFOXDIR/firefox.exe\")
+  (setq ee-googlechrome-program \"$GOOGLECHROMEDIR/chrome.exe\")
+
+but people usually have to adjust the paths by hand. One way to
+test if the paths are right is to open the directories in dired
+and see if the files \"firefox.exe\" and \"chrome.exe\" are there
+- i.e., run these sexps and see if they find the right files in
+the right directories:
+
+  (find-fline \"$FIREFOXDIR/\"      \"firefox.exe\")
+  (find-fline \"$GOOGLECHROMEDIR/\" \"chrome.exe\")
+
+If you've never heard of dired, then read this:
+
+  (find-enode \"Dired\")
+  
+
+
+
+5. Local copies
+===============
+In some situations - see section 7 - a sexp like
+
+  (find-eev2020video \"6:25\" \"`find-video'\")
+
+will try to play a local copy of the video file. In the case of
+`find-eev2020video' this means a local copy of this file,
+
+  http://angg.twu.net/eev-videos/emacsconf2020.mp4
+
+downloaded by `psne'-ing, as explained here:
+
+  (find-psne-intro)
+
+The local copy will be played with Mpv, with:
+
+  (find-mpv-video \"$S/http/angg.twu.net/eev-videos/emacsconf2020.mp4\" \"6:25\")
+
+
+
+
+6. Configuring Mpv
+==================
+After installing Mpv you may have to configure its path. On
+GNU/Linux this typically works,
+
+  (setq ee-mpv-program \"mpv\")
+
+and on M$ Windows you will need something like this, but you will
+have to adjust the path:
+
+  (setenv \"MPVDIR\" \"c:/Users/myusername/path/to/mpv\")
+  (setq ee-mpv-program \"$MPVDIR/mpv.exe\")
+
+You can test if the path is right with the two sexps below. Note
+that the first is for M$ Windows only, and that the second one
+will display the basic command-line options of mpv.
+
+  (find-fline \"$MPVDIR/\" \"mpv.exe\")
+  (find-callprocess `(,ee-mpv-program \"--help\"))
+
+
+
+
+7. `find-eev-video'
+===================
+All the standard functions for short links to video tutorials are
+implemented using a function called `find-eev-video'. For
+example, `find-eev2020video' is defined as:
+
+  ;; For the real definition, see:
+  ;; (find-eev \"eev-audiovideo.el\" \"video-tutorials\")
+  ;; (find-eev \"eev-audiovideo.el\" \"video-tutorials\" \"eev2020\")
+  ;;
+  (defun find-eev2020video (&optional time &rest rest)
+    \"[Long docstring omitted]\"
+    (interactive)
+    (find-eev-video \"emacsconf2020\" \"hOAqBc42Gg8\" time))
+
+Calling:
+
+  (find-eev2020video \"6:25\" \"`find-video'\")
+
+runs:
+
+  (find-eev-video \"emacsconf2020\" \"hOAqBc42Gg8\" \"6:25\")
+
+that runs one of these sexps, depending on the current settings:
+
+  (find-youtube-video \"hOAqBc42Gg8\" \"6:25\")
+  (find-eevlocal-video \"emacsconf2020\" \"hOAqBc42Gg8\" \"6:25\")
+  (find-eevlinks-video \"emacsconf2020\" \"hOAqBc42Gg8\" \"6:25\")
+
+The one with `find-eevlocal-video' plays the local copy of
+
+  http://angg.twu.net/eev-videos/emacsconf2020.mp4
+
+if it has already been downloaded, and if the local copy is not
+found it displays a temporary buffer with links and an e-script
+for downloading - i.e., psne-ing - the video from the URL above.
+The sexp with `find-eevlinks-video' works very similarly to the
+one with `find-eevlocal-video', but it always displays the
+temporary buffer with links and an e-script.
+
+You can select the behavior of `find-eev-video' - and thus the
+behavior of all short links to video tutorials, as they all call
+`find-eev-video' - by running one of the `setq's below:
+
+  (setq ee-find-eev-video-function 'find-eevyoutube-video)
+  (setq ee-find-eev-video-function 'find-eevlocal-video)
+  (setq ee-find-eev-video-function 'find-eevlinks-video)
+
+`find-eevyoutube-video' is like `find-eev-video', but it discards
+its first argument.
+
+The default is `find-eevlocal-video', but for Windows users
+starting with `find-eevyoutube-video' makes more sense.
+
+
+
+
+8. Windows
+==========
+This is my n-th different implementation of the innards of the
+short links to video tutorials. This one - from nov/2021 - was
+inspired by feedback of the Windows users that participated in
+this workshop:
+
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00045.html
+  http://angg.twu.net/2021-oficina.html (<- in Portuguese)
+
+My original implementation was the one described here:
+
+  http://angg.twu.net/2021-video-links.html
+
+I'm trying to making the short links to video tutorials work from
+Emacs _in a way that is convenient for both long-time users and
+total beginners_. This is quite a challenge - especially because
+since oct/2021 my notion of \"total beginners\" includes \"people
+who use Windows and who have never used terminals in their
+lives\".
+
+" pos-spec-list)))
+
+;; (find-video-links-intro)
+
 
 
 
@@ -13833,7 +13891,8 @@ should, and this is just an embarassingly small collection of
 links, tests, and examples...
 
 See:
-  (find-eevfile \"eev-template0.el\" \"intrinsically INCOMPATIBLE with lexical\")
+  (find-eevfile \"eev-template0.el\" \"INCOMPATIBLE WITH LEXICAL BINDING\")
+  (find-eev     \"eev-template0.el\" \"lexical-binding\")
 
 
 

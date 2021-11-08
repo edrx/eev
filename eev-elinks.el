@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211022
+;; Version:    20211104
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1073,7 +1073,7 @@ See the comments in the source code."
 ;;; |_| |_|_| |_|\__,_|      \___|_|  \__,_|\___\___|     |_|_|_| |_|_|\_\___/
 ;;;                                                                           
 ;; «find-eface-links» (to ".find-eface-links")
-;; Skel: (find-find-links-links-new "eface" "face-symbol" "")
+;; Skel: (find-find-links-links-new "eface" "face-symbol" "fg bg")
 ;; Test: (find-eface-links 'eepitch-star-face)
 ;; Key binding:
 ;;   (find-eev "eev-mode.el" "eev-mode-map-set")
@@ -1086,26 +1086,32 @@ See the documentation for `ee-face-at-point' to understand what that
 means."
   (interactive (list (ee-face-at-point current-prefix-arg)))
   (setq face-symbol (or face-symbol "{face-symbol}"))
-  (apply
-   'find-elinks
-   `((find-eface-links ',face-symbol ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-eface-links)
-     ""
-     (find-efacedescr ',face-symbol)
-     ;; (find-efaces ,(format "\n%S " face-symbol))
-     (find-efaces ',face-symbol)
-     (find-eface ',face-symbol)
-     (customize-face ',face-symbol)
-     (set-face-foreground ',face-symbol ,(face-foreground face-symbol))
-     (set-face-background ',face-symbol ,(face-background face-symbol))
-     (face-id ',face-symbol)
-     (find-epp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))
-     (find-ecolors)
-     (find-efaces)
-     (find-efaces ,(symbol-name face-symbol))
-     )
-   pos-spec-list))
+  (let* ((fg (face-foreground face-symbol))
+         (bg (face-background face-symbol)))
+    (apply
+     'find-elinks
+     `((find-eface-links ,face-symbol ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-eface-links)
+       ""
+       (find-efacedescr     ',face-symbol)
+       (find-efaces         ',face-symbol)
+       (find-eface          ',face-symbol)
+       (customize-face      ',face-symbol)
+       (set-face-foreground ',face-symbol ,fg)
+       (set-face-background ',face-symbol ,bg)
+       ""
+       (find-ecolor-links ,fg)
+       (find-ecolor-links ,bg)
+       (find-ecolors)
+       ""
+       (face-id ',face-symbol)
+       (find-epp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))
+       )
+     pos-spec-list)))
+
+
+
 
 (defun ee-face-at-point (&optional arg)
   "Return the face at point as a symbol; ARG determines what that means.

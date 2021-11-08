@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210925
+;; Version:    20211102
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-template0.el>
@@ -72,23 +72,7 @@
 ;;   (find-code-brfile 'find-bar                :local 'brbarl :dired 'brbard)
 ;;   (find-latex-links "FOO")
 ;;
-;; Note that `ee-template0' is intrinsically INCOMPATIBLE with lexical
-;; binding - it is common to have `{VAR}'s in the string referring to
-;; names of arguments of a `defun's, or to names of variables defined
-;; in an enclosing `let' block, or to names of global variables.
-;;
-;; Here are some messages in help-gnu-emacs about dynamic binding
-;; being deprecated:
-;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00054.html
-;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00085.html
-;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00095.html
-;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00096.html
-;;
-;; Here is a tutorial on lexical-versus-dynamic binding:
-;;
-;;   (find-lexical-intro)
-;;
-;; And here are some links to places where the documentation of eev
+;; Here are some links to places where the documentation of eev
 ;; mentions uses of `ee-template0':
 ;;
 ;;   (find-eevgrep "grep --color -nH -e ee-template0 *.el")
@@ -96,6 +80,11 @@
 ;;   (find-eev-quick-intro "8.4. Creating e-script blocks" "`M-B'")
 ;;   (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'")
 ;;   (find-eev-quick-intro "9.3. Hyperlinks to PDF files")
+;;
+;; Important: `ee-template0' is _INCOMPATIBLE WITH LEXICAL BINDING_.
+;; See the comments at the end of this file.
+;;
+;; «.lexical-binding»	(to "lexical-binding")
 
 
 
@@ -135,6 +124,57 @@ Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
              -->  \"{ 5 }\""
   (let ((< "{") (> "}"))
     (ee-template00 str)))
+
+
+
+
+
+
+;;;  _           _           _   _     _           _ _             
+;;; | | _____  _(_) ___ __ _| | | |__ (_)_ __   __| (_)_ __   __ _ 
+;;; | |/ _ \ \/ / |/ __/ _` | | | '_ \| | '_ \ / _` | | '_ \ / _` |
+;;; | |  __/>  <| | (_| (_| | | | |_) | | | | | (_| | | | | | (_| |
+;;; |_|\___/_/\_\_|\___\__,_|_| |_.__/|_|_| |_|\__,_|_|_| |_|\__, |
+;;;                                                          |___/ 
+;; «lexical-binding»  (to ".lexical-binding")
+;;
+;; Here is a demo of what fails in lexical binding.
+;; Note that the defun below is commented out with an initial "'".
+'
+(defun ee-dynlex-test (a b)
+  (let* ((aa (concat a a))
+         (bb (concat b b)))
+    (ee-template0 "<{a} {aa} {b} {bb}>")))
+;;
+;; Tests:
+;;
+;;   1) Run the defun above with `M-e'.
+;;      Then try this test:
+;;        (ee-dynlex-test "Aa" "Bb")
+;;      It will returns this:
+;;        "<Aa AaAa Bb BbBb>"
+;;
+;;   2) Run the defun above in lexical binding mode with `M-1 M-1 M-e'.
+;;      Then try this test:
+;;        (ee-dynlex-test "Aa" "Bb")
+;;      You will get this error:
+;;        "format: Symbol's value as variable is void: a"
+;;
+;; See:
+;;   (find-lexical-intro "0. How to use this")
+;;   (find-lexical-intro "0. How to use this" "`M-1 M-1 M-e'")
+;;   (find-lexical-intro "5. A thread")
+;;
+;; Here are some messages in help-gnu-emacs and in emacs-devel about
+;; dynamic binding being deprecated:
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00054.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00085.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00095.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00096.html
+;;   https://lists.gnu.org/archive/html/emacs-devel/2021-09/msg01854.html
+
+
+
 
 
 

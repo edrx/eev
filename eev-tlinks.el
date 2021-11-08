@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211027
+;; Version:    2021nov07
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -468,6 +468,7 @@ See: (find-eev \"eev-intro.el\")"
 
 ;; <find-{stem}-intro>
 ;; Skel: (find-intro-links \"{stem}\")
+;; Test: (find-{stem}-intro)
 
 \(defun find-{stem}-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name \"*(find-{stem}-intro)*\"))
@@ -1572,17 +1573,6 @@ netcat -l -p {tgtport}
     ))
 
 
-;; Tests: (ee-time-to-arg "")
-;;        (ee-time-to-arg "{time}")
-;;        (ee-time-to-arg "1:23")
-;;        (ee-time-to-arg nil)
-;;   See: (find-efunction 'ee-time-to-youtube-time)
-;;
-(defun ee-time-to-arg (time)
-  (if (ee-time-to-youtube-time time)
-      (format " \"%s\"" time)
-    ""))
-
 
 
 ;; «ee-psne-if-needed»  (to ".ee-psne-if-needed")
@@ -1593,9 +1583,12 @@ netcat -l -p {tgtport}
 ;; (find-estring (ee-psne-download0 "http://www.foo.org/bar.html"))
 ;;
 (defun ee-psne-if-needed (url)
-  (if (file-exists-p (ee-expand (ee-url-to-fname url)))
+  (if (ee-psne-downloaded-p url)
       "# Local file found. No need to download it again.\n"
     (ee-adjust-red-stars (ee-psne-download url))))
+
+(defun ee-psne-downloaded-p (url)
+  (file-exists-p (ee-expand (ee-url-to-fname url))))
 
 (defun ee-psne-download (url)
   (concat "\
@@ -1604,8 +1597,9 @@ netcat -l -p {tgtport}
 " (ee-psne-download0 url)))
 
 (defun ee-psne-download0 (url)
-  (let* ((fname (ee-shorten-file-name (ee-url-to-fname url)))
-         (dir (file-name-directory fname)))
+  (let* ((fname  (ee-shorten-file-name (ee-url-to-fname url)))
+         (fname0 (file-name-nondirectory fname))
+         (dir    (file-name-directory fname)))
     (ee-template0 "\
  (eepitch-shell)
  (eepitch-kill)
@@ -1616,7 +1610,21 @@ wget -nc '{url}'
 echo     '{url}' >> ~/.psne.log
 
 # (find-fline \"{dir}\")
+# (find-fline \"{dir}\" \"{fname0}\")
 # See: (find-psne-intro)
+")))
+
+;; Test: (find-estring (ee-psne-url-comment "http://www.foo.org/bar.html"))
+(defun ee-psne-url-comment (url)
+  (let* ((fname  (ee-shorten-file-name (ee-url-to-fname url)))
+         (fname0 (file-name-nondirectory fname))
+         (dir    (file-name-directory fname)))
+    (ee-template0 "\
+# URL, local file, and links to the directory of the local file:
+#               {url}
+#              {fname}
+# (find-fline \"{dir}\" \"{fname0}\")
+# (find-fline \"{dir}\")
 ")))
 
 
@@ -1654,59 +1662,67 @@ echo     '{url}' >> ~/.psne.log
 "))
 
 
-;;;                _                                   _     _            
-;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
-;;;  / __/ _ \ / _` |/ _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
-;;; | (_| (_) | (_| |  __/_____|  __/  __/\ V /  \ V /| | (_| |  __/ (_) |
-;;;  \___\___/ \__,_|\___|      \___|\___| \_/    \_/ |_|\__,_|\___|\___/ 
-;;;                                                                       
-;; «code-eevvideo»  (to ".code-eevvideo")
-;; See: (find-audiovideo-intro "7.1. `code-eevvideo'")
-;; Test: (find-code-eevvideo "eevnav" "M-x-list-packages-eev-nav")
-;;            (code-eevvideo "eevnav" "M-x-list-packages-eev-nav")
-;;                      (find-eevnavvideo "0:00")
-;;
-(defun      code-eevvideo (c stem &optional youtubeid)
-  (eval (ee-read (ee-code-eevvideo c stem youtubeid))))
-(defun find-code-eevvideo (&optional c stem youtubeid &rest rest)
-  (setq c (or c "{c}"))
-  (setq stem (or stem "{stem}"))
-  (setq youtubeid (or youtubeid "{youtubeid}"))
-  (find-estring-elisp (apply 'ee-code-eevvideo c stem youtubeid rest)))
-(defun   ee-code-eevvideo (c stem youtubeid)
-  (ee-template0 "\
-;; (find-code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
-;;      (code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
-;;                (find-{c}video \"0:00\")
-;;
-;; See: (find-audiovideo-intro \"7.1. `code-eevvideo'\")
 
-(defun find-{c}video (&optional time &rest rest)
-  (interactive)
-  (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))
-"))
 
-;; «code-eevvideo-local»  (to ".code-eevvideo-local")
-;; Test: (code-eevvideo-local "vlinks" "2021-video-links" "xQqWufQgzVY")
-;;  (find-code-eevvideo-local "vlinks" "2021-video-links" "xQqWufQgzVY")
-;;
-(defun      code-eevvideo-local (c stem &optional youtubeid)
-  (eval (ee-read (ee-code-eevvideo-local c stem youtubeid))))
-(defun find-code-eevvideo-local (&optional c stem youtubeid &rest rest)
-  (setq c (or c "{c}"))
-  (setq stem (or stem "{stem}"))
-  (setq youtubeid (or youtubeid "{youtubeid}"))
-  (find-estring-elisp (apply 'ee-code-eevvideo-local c stem youtubeid rest)))
-(defun   ee-code-eevvideo-local (c stem youtubeid)
-  (ee-template0 "\
-;; (find-code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
-;;      (code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
-;;
-;;                    (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"{stem}\")
-;; (find-code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
-        (code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
-;;             (find-{c}video \"0:00\")
-"))
+
+;; The functions below were totally rewritten, and their new definions
+;; are here:
+
+;; ;;;                _                                   _     _            
+;; ;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
+;; ;;;  / __/ _ \ / _` |/ _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
+;; ;;; | (_| (_) | (_| |  __/_____|  __/  __/\ V /  \ V /| | (_| |  __/ (_) |
+;; ;;;  \___\___/ \__,_|\___|      \___|\___| \_/    \_/ |_|\__,_|\___|\___/ 
+;; ;;;                                                                       
+;; ;; «code-eevvideo»  (to ".code-eevvideo")
+;; ;; TODO: rewrite this reusing parts of:
+;; ;;     (find-eev "eev-videolinks.el" "find-eevlocal-links")
+;; ;; See: (find-audiovideo-intro "7.1. `code-eevvideo'")
+;; ;; Test: (find-code-eevvideo "eevnav" "M-x-list-packages-eev-nav")
+;; ;;            (code-eevvideo "eevnav" "M-x-list-packages-eev-nav")
+;; ;;                      (find-eevnavvideo "0:00")
+;; ;;
+;; (defun      code-eevvideo (c stem &optional youtubeid)
+;;   (eval (ee-read (ee-code-eevvideo c stem youtubeid))))
+;; (defun find-code-eevvideo (&optional c stem youtubeid &rest rest)
+;;   (setq c (or c "{c}"))
+;;   (setq stem (or stem "{stem}"))
+;;   (setq youtubeid (or youtubeid "{youtubeid}"))
+;;   (find-estring-elisp (apply 'ee-code-eevvideo c stem youtubeid rest)))
+;; (defun   ee-code-eevvideo (c stem youtubeid)
+;;   (ee-template0 "\
+;; ;; (find-code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
+;; ;;      (code-eevvideo \"{c}\" \"{stem}\" \"{youtubeid}\")
+;; ;;                (find-{c}video \"0:00\")
+;; ;;
+;; ;; See: (find-audiovideo-intro \"7.1. `code-eevvideo'\")
+;; 
+;; (defun find-{c}video (&optional time &rest rest)
+;;   (interactive)
+;;   (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))
+;; "))
+;; 
+;; ;; «code-eevvideo-local»  (to ".code-eevvideo-local")
+;; ;; Test: (code-eevvideo-local "vlinks" "2021-video-links" "xQqWufQgzVY")
+;; ;;  (find-code-eevvideo-local "vlinks" "2021-video-links" "xQqWufQgzVY")
+;; ;;
+;; (defun      code-eevvideo-local (c stem &optional youtubeid)
+;;   (eval (ee-read (ee-code-eevvideo-local c stem youtubeid))))
+;; (defun find-code-eevvideo-local (&optional c stem youtubeid &rest rest)
+;;   (setq c (or c "{c}"))
+;;   (setq stem (or stem "{stem}"))
+;;   (setq youtubeid (or youtubeid "{youtubeid}"))
+;;   (find-estring-elisp (apply 'ee-code-eevvideo-local c stem youtubeid rest)))
+;; (defun   ee-code-eevvideo-local (c stem youtubeid)
+;;   (ee-template0 "\
+;; ;; (find-code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
+;; ;;      (code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
+;; ;;
+;; ;;                    (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"{stem}\")
+;; ;; (find-code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+;;         (code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+;; ;;             (find-{c}video \"0:00\")
+;; "))
 
 
 
@@ -1727,11 +1743,13 @@ echo     '{url}' >> ~/.psne.log
 ;;;  \___|\___| \_/       \_/ |_|\__,_|\___|\___/ 
 ;;;                                               
 ;; «find-eev-video-links» (to ".find-eev-video-links")
-;; Obsolete? See: (find-audiovideo-intro "7.2. `find-eevvideo-links'")
-
+;; Obsolete?
+;; See: (find-audiovideo-intro "7.2. `find-eevvideo-links'")
+;; and: (find-video-links-intro)
+;;
 ;; Skel: (find-find-links-links "{k}" "eev-video" "c anggstem youtubehash")
 ;;       (find-find-links-links-new "eev-video" "c anggstem youtubehash" "")
-
+;;
 (defun find-eev-video-links (&optional c anggstem youtubehash &rest pos-spec-list)
 "Visit a temporary buffer containing a script for downloading an eev video.
 See: (find-videos-intro)
@@ -1818,11 +1836,11 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 See: (find-videos-intro \\\"1. Some videos\\\" \\\"{stem}\\\")
      http://angg.twu.net/{stem}.html
      for more info on this particular video,
-and: (find-videos-intro \\\"2. Short links to eev video tutorials\\\")
- or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
+and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
      for more info on these video tutorials.\"
   (interactive)
-  (find-eevvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\" time))
+  (find-eev-video \"{stem}\" \"{youtubeid}\" time))
 ")
      )
    pos-spec-list))
@@ -2266,7 +2284,7 @@ wget -nc -O {yyyy}-{mm}-{dd}-emacs-news.org \\
 ;;
 (defun {eeitfunstr} ()
   (interactive)
-  (insert (format \"
+  (insert (ee-adjust-red-stars (format \"
 --[[
  (eepitch-lua51)
  (eepitch-kill)
@@ -2274,7 +2292,7 @@ wget -nc -O {yyyy}-{mm}-{dd}-emacs-news.org \\
 dofile \\\"%s\\\"
 
 --]]
-\" (buffer-name))))
+\" (buffer-name)))))
 
 ;; Test:
 ;; ({eeitfunstr})

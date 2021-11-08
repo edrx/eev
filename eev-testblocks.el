@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211023
+;; Version:    20211104
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -38,6 +38,7 @@
 ;;   (find-eepitch-intro "3. Test blocks")
 ;;   (find-eepitch-intro "3.1. `find-eeit-links'")
 ;;   http://angg.twu.net/emacsconf2021.html
+;;   http://angg.twu.net/LATEX/2021emacsconf.pdf
 
 ;; «.ee-insert-test»	(to "ee-insert-test")
 ;; «.examples»		(to "examples")
@@ -56,8 +57,8 @@
 ;; See: (find-eepitch-intro "3. Test blocks")
 ;; Insert a "test block" in a Lua/Python/Ruby/shell/Tcl/etc script.
 
-
-(defalias 'eeit 'ee-insert-test)
+(defalias 'eeit                 'ee-insert-test)
+(defalias 'ee-insert-test-block 'ee-insert-test)
 
 (defun ee-insert-test ()
   "Insert a \"test block\" - an eepitch block in a multiline comment."
@@ -242,13 +243,13 @@ load \"%s\"
 (defun ee-insert-test-tcl-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
-set THIS_IS_A_TEST_BLOCK {
+lindex {{} {This is a test block:
  (eepitch-tclsh)
  (eepitch-kill)
  (eepitch-tclsh)
-source %s
+  source %s
 
-}
+}} 0 ;# End of the test block
 " (buffer-name)))))
 
 (defun ee-insert-test-tuareg-mode ()

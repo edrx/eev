@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211024
+;; Version:    20211107
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -142,10 +142,12 @@
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
 (require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
 ;;
-;; Hyperlinks to audio, video, and IRC. Not well documented. See:
+;; Hyperlinks to audio, video, and IRC:
+;;   (find-video-links-intro)
 ;;   (find-audiovideo-intro)
 ;;   (find-rcirc-intro)
 (require 'eev-audiovideo)      ; (find-eev "eev-audiovideo.el")
+(require 'eev-videolinks)      ; (find-eev "eev-videolinks.el")
 (require 'eev-rcirc)           ; (find-eev "eev-rcirc.el")
 ;;
 ;; Advanced (and hard to use) features that may require creating a

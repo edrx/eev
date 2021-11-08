@@ -1,3 +1,73 @@
+2021-11-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-use-eevyoutube-video)
+	(ee-use-eevlocal-video): new functions.
+
+	* eev-audiovideo.el (ee-use-find-youtube-video)
+	(ee-use-find-eevvideo-links): deleted.
+
+	* eev-tlinks.el (code-eevvideo, find-code-eevvideo)
+	(ee-code-eevvideo, code-eevvideo-local)
+	(find-code-eevvideo-local, ee-code-eevvideo-local): deleted.
+
+	* eev-videolinks.el (find-code-eev{mod}video)
+	(code-eev{mod}video, ee-code-eev{mod}video): new functions.
+	(find-code-eevvideo, code-eevvideo): new functions.
+	(find-code-eevlocalvideo, code-eevlocalvideo): new functions.
+	(find-code-eevlinksvideo, code-eevlinksvideo): new functions.
+
+	* eev-intro.el (find-video-links-intro): new intro.
+	(find-videos-intro): deleted the old material.
+	(find-audiovideo-intro): small changes in section 4.
+
+	* eev-videolinks.el: new file.
+	(ee-find-eev-video-function): new variable.
+	(find-eev-video, find-eevyoutube-video, find-eevlocal-video)
+	(find-eevlinks-video): new functions.
+	(find-eevlocal-links, ee-eevlocal-body)
+	(ee-eevlocal-youtube-comment, ee-eevlocal-psne)
+	(ee-eevlocal-findmpvvideo): new functions.
+
+	* eev-videolinks.el (find-eev2019video, find-eev2020video)
+	(find-eevnavvideo, find-eevtemplvideo, find-eevfherelvideo)
+	(find-eevtestblsvideo, find-eevvlinksvideo): new functions. They
+	are new versions of the functions with the same names that were in
+	eev-audiovideo.el, but they use `find-eev-video'.
+
+	* eev-audiovideo.el (find-eev2019video, find-eev2020video)
+	(find-eevnavvideo, find-eevtemplvideo, find-eevfherelvideo)
+	(find-eevtestblsvideo, find-eevvlinksvideo): deleted.
+
+	* eev-tlinks.el (find-eevshortvideo-links): use `find-eev-video'.
+
+	* eev-audiovideo.el (ee-find-youtube-url): new function.
+	(ee-find-youtube-video): use `ee-find-youtube-url'.
+	(ee-time-to-arg): accept nil.
+
+	* eev-tlinks.el (ee-psne-downloaded-p): new function.
+	(ee-psne-if-needed): use `ee-psne-downloaded-p'.
+	(ee-psne-url-comment): new function.
+	(ee-time-to-arg): moved to the file eev-audiovideo.el.
+	(ee-psne-download0): use `file-name-nondirectory'.
+
+2021-11-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-block): new alias.
+
+	* eev-elinks.el (find-eface-links): small changes.
+
+2021-11-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eeit-links): use `ee-adjust-red-stars'.
+
+2021-11-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-tcl-mode): use "lindex {{}
+	{test block}} 0".
+
+	* eev-template0.el (ee-dynlex-test): new test function. It is
+	commented out on purpose, but the comments explain how to use it.
+
 2021-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (ee-find-youtube-video-program): new variable.

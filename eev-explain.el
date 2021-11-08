@@ -22,7 +22,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190806
+;; Version:    20211101
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-explain.el>
@@ -33,14 +33,19 @@
 
 ;;; Commentary:
 
-;; (load "eev-explain.el")
-
-;; This is very new. Everything is going to change.
+;; This file is not loaded by default - see:
+;;
+;;   (find-eev "eev-load.el")
+;;
+;; It contains some code for "explaining sexps" that I wrote in 2019
+;; but then abandoned.
 ;;
 ;; Terminology: a "bet" is a triple of the form (begin end text); the
 ;; global variable `ee-bets' holds a list of bets.
 ;;
 ;; The tests below show some of the things we do with ee-bets:
+;;
+;;   (load "eev-explain.el")
 ;;
 ;;   (defun eejump-100 () (set-frame-font "nil2"))
 ;;   (progn (eek "  <up> C-e")      (ee-bets-set))
@@ -58,6 +63,8 @@
 ;;
 ;; (ee-explain-eejump)
 ;; (eev-explain)
+;;
+;; Everything below this point is from 2019.
 
 
 
