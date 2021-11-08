@@ -1,7 +1,11 @@
+2021-11-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eevvideo-1stclass-links): new function.
+
 2021-11-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
-	* eev-videolinks.el (ee-use-eevyoutube-video)
-	(ee-use-eevlocal-video): new functions.
+	* eev-videolinks.el (ee-use-youtube-videos)
+	(ee-use-local-videos): new functions.
 
 	* eev-audiovideo.el (ee-use-find-youtube-video)
 	(ee-use-find-eevvideo-links): deleted.

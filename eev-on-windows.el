@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211101
+;; Version:    20211107
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -205,7 +205,8 @@
   (setq ee-mpv-program          "$MPVDIR/mpv.exe")
   (defalias 'find-pdf-page 'find-googlechrome-page)
   (ee-use-find-angg-es-remote)
-  (ee-use-find-youtube-video)
+  ;; (ee-use-find-youtube-video)
+  (ee-use-youtube-videos)
   )
 
 (defun ee-use-gnu-linux ()
@@ -220,7 +221,8 @@
   (setq ee-googlechrome-program "google-chrome")
   (setq ee-mpv-program          "mpv")
   (ee-use-find-angg-es-local)
-  (ee-use-find-eevvideo-links)
+  ;; (ee-use-find-eevvideo-links)
+  (ee-use-local-videos)
   )
 
 (defun ee-use-gnu-linux-but-simulate ()
@@ -235,7 +237,8 @@
   (setq ee-googlechrome-program "google-chrome")
   (setq ee-mpv-program          "mpv")
   (ee-use-find-angg-es-remote)
-  (ee-use-find-youtube-video)
+  ;; (ee-use-find-youtube-video)
+  (ee-use-youtube-videos)
   )
 
 

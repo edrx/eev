@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211027
+;; Version:    20211108
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -35,11 +35,10 @@
 ;; «.find-eev-video»		(to "find-eev-video")
 ;; «.find-eevlocal-links»	(to "find-eevlocal-links")
 ;; «.select»			(to "select")
-;;   «.ee-use-eevyoutube-video»	(to "ee-use-eevyoutube-video")
-;;   «.ee-use-eevlocal-video»	(to "ee-use-eevlocal-video")
-;; «.code-eevvideo»		(to "code-eevvideo")
+;;   «.ee-use-youtube-videos»	(to "ee-use-youtube-videos")
+;;   «.ee-use-local-videos»	(to "ee-use-local-videos")
 ;; «.first-class-videos»	(to "first-class-videos")
-;; «.video-tutorials»		(to "video-tutorials")
+;;  «.video-tutorials»		(to "video-tutorials")
 ;;   «.find-eev2019video»	(to "find-eev2019video")
 ;;   «.find-eev2020video»	(to "find-eev2020video")
 ;;   «.find-eevnavvideo»	(to "find-eevnavvideo")
@@ -47,6 +46,8 @@
 ;;   «.find-eevfherelvideo»	(to "find-eevfherelvideo")
 ;;   «.find-eevtestblsvideo»	(to "find-eevtestblsvideo")
 ;;   «.find-eevvlinksvideo»	(to "find-eevvlinksvideo")
+;; «.second-class-videos»	(to "second-class-videos")
+;;   «.code-eevvideo»		(to "code-eevvideo")
 
 ;;; Commentary:
 
@@ -201,11 +202,11 @@
 ;;;                             
 ;; «select»  (to ".select")
 ;; Tests: (ee-use-eevvideo-links)
-;;        (ee-use-eevyoutube-video)
+;;        (ee-use-youtube-videos)
 ;;        (find-eevtestblsvideo "2:33")
 ;;
-;; «ee-use-eevyoutube-video»  (to ".ee-use-eevyoutube-video")
-(defun ee-use-eevyoutube-video ()
+;; «ee-use-youtube-videos»  (to ".ee-use-youtube-videos")
+(defun ee-use-youtube-videos ()
   "Make `find-eev-video' play videos on youtube using a browser.
 This is a quick hack inspired by a workshop for Windows users. On
 Windows it is hard to configure the mechanism that downloads
@@ -219,8 +220,8 @@ the default behavior, run `ee-use-find-eevlocal-links'."
   (interactive)
   (setq ee-find-eev-video-function 'find-eevyoutube-video))
 
-;; «ee-use-eevlocal-video»  (to ".ee-use-eevlocal-video")
-(defun ee-use-eevlocal-video ()
+;; «ee-use-local-videos»  (to ".ee-use-local-videos")
+(defun ee-use-local-videos ()
   "Use the default behavior for `find-eev-video'.
 With the default definition the links in the [Video links:]
 blocks of the tutorials of eev will try to download local copies
@@ -228,96 +229,6 @@ of the videos and play them with mpv. Compare with
 `ee-use-find-eevyoutube-video'."
   (interactive)
   (setq ee-find-eev-video-function 'find-eevlocal-video))
-
-
-
-
-
-
-
-
-
-
-
-
-;;;                _                                   _     _            
-;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
-;;;  / __/ _ \ / _` |/ _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
-;;; | (_| (_) | (_| |  __/_____|  __/  __/\ V /  \ V /| | (_| |  __/ (_) |
-;;;  \___\___/ \__,_|\___|      \___|\___| \_/    \_/ |_|\__,_|\___|\___/ 
-;;;                                                                       
-;; «code-eevvideo»  (to ".code-eevvideo")
-;; I store lots of videos in:
-;;
-;;   http://angg.twu.net/eev-videos/
-;;
-;; besides the official video tutorials for eev. The functions to
-;; access the official video tutorials are defined in the next
-;; section, as real defuns with real docstrings, but for the videos
-;; that are not so important - my "second-class videos" - I prefer to
-;; use sexps like these to define the sexp hyperlinks to them:
-;;
-;;        (code-eevvideo      "2021daniel4" "2021-daniel-4")
-;;        (code-eevlinksvideo "2021daniel4" "2021-daniel-4")
-;;                       (find-2021daniel4video "0:00")
-;;
-;; To understand how they work, try:
-;;
-;;       (find-code-eevvideo      "2021daniel4" "2021-daniel-4")
-;;       (find-code-eevlinksvideo "2021daniel4" "2021-daniel-4")
-;;   (find-code-eev{mod}video "M" "2021daniel4" "2021-daniel-4" "HASH")
-;;
-;; They are implemented using the three functions with "{mod}"s in
-;; their names, defined below.
-
-;; Test: (find-code-eev{mod}video "M" "2021daniel4" "2021-daniel-4" "HASH")
-;;
-(defun find-code-eev{mod}video (&optional mod c stem hash &rest rest)
-  (find-estring-elisp (apply 'ee-code-eev{mod}video mod c stem hash rest)))
-(defun      code-eev{mod}video (mod c stem &optional hash)
-  (eval (ee-read (ee-code-eev{mod}video mod c stem hash))))
-(defun   ee-code-eev{mod}video (&optional mod c stem hash)
-  (setq mod  (or mod "{mod}"))
-  (setq c    (or c "{c}"))
-  (setq stem (or stem "{stem}"))
-  (setq hash (or hash "{hash}"))
-  (ee-template0 "\
-;; (find-code-eev{<}mod{>}video \"{mod}\" \"{c}\" \"{stem}\" \"{hash}\")
-;;      (code-eev{<}mod{>}video \"{mod}\" \"{c}\" \"{stem}\" \"{hash}\")
-;;                (find-{c}video \"0:00\")
-;;
-;; See: (find-video-links-intro \"7. `find-eev-video'\" \"`find-eevlocal-video'\")
-;;      (find-video-links-intro \"7. `find-eev-video'\" \"`find-eevlinks-video'\")
-;;
-(defun find-{c}video (time &rest comments)
-  (interactive)
-  (find-eev{mod}-video \"{stem}\" \"{hash}\" time))
-"))
-
-;; Tests:
-;; (find-code-eevvideo      "2021daniel4" "2021-daniel-4" "HASH")
-;; (find-code-eevlocalvideo "2021daniel4" "2021-daniel-4" "HASH")
-;; (find-code-eevlinksvideo "2021daniel4" "2021-daniel-4" "HASH")
-;;      (code-eevvideo      "2021daniel4" "2021-daniel-4" "HASH")
-;;      (code-eevlocalvideo "2021daniel4" "2021-daniel-4" "HASH")
-;;      (code-eevlinksvideo "2021daniel4" "2021-daniel-4" "HASH")
-;;                     (find-2021daniel4video "0:00")
-;;
-(defun find-code-eevvideo (&optional c stem hash &rest rest)
-  (find-estring-elisp (apply 'ee-code-eev{mod}video "local" c stem hash rest)))
-(defun      code-eevvideo (c stem &optional hash)
-  (eval (ee-read (ee-code-eev{mod}video "local" c stem hash))))
-
-(defun find-code-eevlocalvideo (&optional c stem hash &rest rest)
-  (find-estring-elisp (apply 'ee-code-eev{mod}video "local" c stem hash rest)))
-(defun      code-eevlocalvideo (c stem &optional hash)
-  (eval (ee-read (ee-code-eev{mod}video "local" c stem hash))))
-
-(defun find-code-eevlinksvideo (&optional c stem hash &rest rest)
-  (find-estring-elisp (apply 'ee-code-eev{mod}video "links" c stem hash rest)))
-(defun      code-eevlinksvideo (c stem &optional hash)
-  (eval (ee-read (ee-code-eev{mod}video "links" c stem hash))))
-
 
 
 
@@ -341,6 +252,14 @@ of the videos and play them with mpv. Compare with
 ;; If we defined them with `code-eevvideo' they wouldn't have
 ;; docstrings and `find-efunction' wouldn't be able to find their
 ;; definitions.
+
+;; (find-eevvideo-1stclass-links "eev2019")
+;; (find-eevvideo-1stclass-links "eev2020")
+;; (find-eevvideo-1stclass-links "eevnav")
+;; (find-eevvideo-1stclass-links "eevtempl")
+;; (find-eevvideo-1stclass-links "eevfherel")
+;; (find-eevvideo-1stclass-links "eevtestbls")
+;; (find-eevvideo-1stclass-links "eevvlinks")
 
 ;; «find-eev2019video»  (to ".find-eev2019video")
 ;; Skel: (find-eevshortvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0")
@@ -453,6 +372,92 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
      for more info on these video tutorials."
   (interactive)
   (find-eev-video "2021-video-links" "xQqWufQgzVY" time))
+
+
+
+
+
+;;;                _                                   _     _            
+;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
+;;;  / __/ _ \ / _` |/ _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
+;;; | (_| (_) | (_| |  __/_____|  __/  __/\ V /  \ V /| | (_| |  __/ (_) |
+;;;  \___\___/ \__,_|\___|      \___|\___| \_/    \_/ |_|\__,_|\___|\___/ 
+;;;                                                                       
+;; «second-class-videos»  (to ".second-class-videos")
+;; «code-eevvideo»  (to ".code-eevvideo")
+;; I store lots of videos in:
+;;
+;;   http://angg.twu.net/eev-videos/
+;;
+;; besides the official video tutorials for eev. The functions to
+;; access the official video tutorials are defined in the next
+;; section, as real defuns with real docstrings, but for the videos
+;; that are not so important - my "second-class videos" - I prefer to
+;; use sexps like these to define the sexp hyperlinks to them:
+;;
+;;        (code-eevvideo      "2021daniel4" "2021-daniel-4")
+;;        (code-eevlinksvideo "2021daniel4" "2021-daniel-4")
+;;                       (find-2021daniel4video "0:00")
+;;
+;; To understand how they work, try:
+;;
+;;       (find-code-eevvideo      "2021daniel4" "2021-daniel-4")
+;;       (find-code-eevlinksvideo "2021daniel4" "2021-daniel-4")
+;;   (find-code-eev{mod}video "M" "2021daniel4" "2021-daniel-4" "HASH")
+;;
+;; They are implemented using the three functions with "{mod}"s in
+;; their names, defined below.
+
+;; Test: (find-code-eev{mod}video "M" "2021daniel4" "2021-daniel-4" "HASH")
+;;
+(defun find-code-eev{mod}video (&optional mod c stem hash &rest rest)
+  (find-estring-elisp (apply 'ee-code-eev{mod}video mod c stem hash rest)))
+(defun      code-eev{mod}video (mod c stem &optional hash)
+  (eval (ee-read (ee-code-eev{mod}video mod c stem hash))))
+(defun   ee-code-eev{mod}video (&optional mod c stem hash)
+  (setq mod  (or mod "{mod}"))
+  (setq c    (or c "{c}"))
+  (setq stem (or stem "{stem}"))
+  (setq hash (or hash "{hash}"))
+  (ee-template0 "\
+;; (find-code-eev{<}mod{>}video \"{mod}\" \"{c}\" \"{stem}\" \"{hash}\")
+;;      (code-eev{<}mod{>}video \"{mod}\" \"{c}\" \"{stem}\" \"{hash}\")
+;;                (find-{c}video \"0:00\")
+;;
+;; See: (find-video-links-intro \"7. `find-eev-video'\" \"`find-eevlocal-video'\")
+;;      (find-video-links-intro \"7. `find-eev-video'\" \"`find-eevlinks-video'\")
+;;
+(defun find-{c}video (time &rest comments)
+  (interactive)
+  (find-eev{mod}-video \"{stem}\" \"{hash}\" time))
+"))
+
+;; Tests:
+;; (find-code-eevvideo      "2021daniel4" "2021-daniel-4" "HASH")
+;; (find-code-eevlocalvideo "2021daniel4" "2021-daniel-4" "HASH")
+;; (find-code-eevlinksvideo "2021daniel4" "2021-daniel-4" "HASH")
+;;      (code-eevvideo      "2021daniel4" "2021-daniel-4" "HASH")
+;;      (code-eevlocalvideo "2021daniel4" "2021-daniel-4" "HASH")
+;;      (code-eevlinksvideo "2021daniel4" "2021-daniel-4" "HASH")
+;;                     (find-2021daniel4video "0:00")
+;;
+(defun find-code-eevvideo (&optional c stem hash &rest rest)
+  (find-estring-elisp (apply 'ee-code-eev{mod}video "local" c stem hash rest)))
+(defun      code-eevvideo (c stem &optional hash)
+  (eval (ee-read (ee-code-eev{mod}video "local" c stem hash))))
+
+(defun find-code-eevlocalvideo (&optional c stem hash &rest rest)
+  (find-estring-elisp (apply 'ee-code-eev{mod}video "local" c stem hash rest)))
+(defun      code-eevlocalvideo (c stem &optional hash)
+  (eval (ee-read (ee-code-eev{mod}video "local" c stem hash))))
+
+(defun find-code-eevlinksvideo (&optional c stem hash &rest rest)
+  (find-estring-elisp (apply 'ee-code-eev{mod}video "links" c stem hash rest)))
+(defun      code-eevlinksvideo (c stem &optional hash)
+  (eval (ee-read (ee-code-eev{mod}video "links" c stem hash))))
+
+
+
 
 
 
