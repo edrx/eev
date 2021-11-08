@@ -102,7 +102,6 @@
 ;; «.find-mpv-audio»		(to "find-mpv-audio")
 ;; «.find-vlc-video»		(to "find-vlc-video")
 ;; «.find-youtube-video»	(to "find-youtube-video")
-;; «.ee-use-find-youtube-video»	(to "ee-use-find-youtube-video")
 ;; «.code-brxxxs»		(to "code-brxxxs")
 ;; «.aliases»			(to "aliases")
 ;; «.video-tutorials»		(to "video-tutorials")
@@ -623,46 +622,6 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 
 
 
-;; «ee-use-find-youtube-video»  (to ".ee-use-find-youtube-video")
-;; See: (find-eev-quick-intro "[Video links:]")
-;;      (find-eev "eev-audiovideo.el" "video-tutorials")
-;;      (find-eev "eev-audiovideo.el" "video-tutorials" "find-eevvideo-links")
-;;      (find-eev "eev-tlinks.el" "find-eevvideo-links")
-;; Tests: (ee-use-find-eevvideo-links)
-;;        (ee-use-find-youtube-video)
-;;        (find-eevtestblsvideo "2:33")
-;;
-(defun ee-use-find-youtube-video ()
-  "Make `find-eevvideo-links' play videos on youtube using a browser.
-This is a quick hack inspired by a workshop for Windows users. On
-Windows it is hard to configure the mechanism that downloads
-local copies of videos and plays the local copies with mpv, and
-this makes the default behavior of the links in [Video links:]
-blocks very inconvenient for beginners. This hack redefines the
-function `find-eevvideo-links', that is used by the links to
-videos that are used in [Video links:] blocks, to make those
-links use a browser to play the videos on youtube. To get back
-the default behavior, run `ee-use-find-eevvideo-links'."
-  (interactive)
-  (defun find-eevvideo-links (&optional c stem youtubeid time &rest pos-spec-list)
-    (find-youtube-video youtubeid time)))
-
-(defun ee-use-find-eevvideo-links ()
-  "Use the default definition for `find-eevvideo-links'.
-With the default definition the links in the [Video links:]
-blocks of the tutorials of eev will work as documented - they
-will try to download local copies of the videos. Compare with
-`ee-use-find-youtube-video'."
-  (interactive)
-  ;; This is a quick hack! It simply loads eev-tlinks.el again.
-  ;; See: (find-eev "eev-tlinks.el" "find-eevvideo-links")
-  (load "eev-tlinks.el"))
-
-
-
-
-
-
 ;;;                _            _                               
 ;;;   ___ ___   __| | ___      | |__  _ ____  ____  ____  _____ 
 ;;;  / __/ _ \ / _` |/ _ \_____| '_ \| '__\ \/ /\ \/ /\ \/ / __|
@@ -697,124 +656,8 @@ will try to download local copies of the videos. Compare with
 
 
 
-
-;; Moved to:
-;; (find-eev "eev-videolinks.el" "video-tutorials")
-
-;; ;;; __     ___     _              _         _             _       _     
-;; ;;; \ \   / (_) __| | ___  ___   | |_ _   _| |_ ___  _ __(_) __ _| |___ 
-;; ;;;  \ \ / /| |/ _` |/ _ \/ _ \  | __| | | | __/ _ \| '__| |/ _` | / __|
-;; ;;;   \ V / | | (_| |  __/ (_) | | |_| |_| | || (_) | |  | | (_| | \__ \
-;; ;;;    \_/  |_|\__,_|\___|\___/   \__|\__,_|\__\___/|_|  |_|\__,_|_|___/
-;; ;;;                                                                     
 ;; ;; «video-tutorials»  (to ".video-tutorials")
-;; ;; See: (find-videos-intro "2. Short links to eev video tutorials")
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0")
-;; ;;  See: (find-videos-intro "1. Some videos" "emacsconf2019")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eev2019
-;; ;;  Test: (find-eev2019video "0:00")
-;; (defun find-eev2019video (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"emacsconf2019\")
-;;      http://angg.twu.net/emacsconf2019.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0" time))
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8")
-;; ;;  See: (find-videos-intro "1. Some videos" "emacsconf2020")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eev2020
-;; ;;  Test: (find-eev2020video "0:00")
-;; (defun find-eev2020video (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"emacsconf2020\")
-;;      http://angg.twu.net/emacsconf2020.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eev2020" "emacsconf2020" "hOAqBc42Gg8" time))
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U")
-;; ;;  See: (find-videos-intro "1. Some videos" "2020-list-packages-eev-nav")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eevnav
-;; ;;  Test: (find-eevnavvideo "0:00")
-;; (defun find-eevnavvideo (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"2020-list-packages-eev-nav\")
-;;      http://angg.twu.net/2020-list-packages-eev-nav.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U" time))
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk")
-;; ;;  See: (find-videos-intro "1. Some videos" "2020-some-template-based")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eevtempl
-;; ;;  Test: (find-eevtemplvideo "0:00")
-;; (defun find-eevtemplvideo (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"2020-some-template-based\")
-;;      http://angg.twu.net/2020-some-template-based.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eevtempl" "2020-some-template-based" "91-9YfRPsuk" time))
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4")
-;; ;;  See: (find-videos-intro "1. Some videos" "2020-find-here-links")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eevfherel
-;; ;;  Test: (find-eevfherelvideo "0:00")
-;; (defun find-eevfherelvideo (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"2020-find-here-links\")
-;;      http://angg.twu.net/2020-find-here-links.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eevfherel" "2020-find-here-links" "8jtiBlaDor4" time))
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eevtestbls" "2021-test-blocks" "fpsF_M55W4o")
-;; ;;  See: (find-videos-intro "1. Some videos" "2021-test-blocks")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eevtestbls
-;; ;;  Test: (find-eevtestblsvideo "0:00")
-;; (defun find-eevtestblsvideo (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"2021-test-blocks\")
-;;      http://angg.twu.net/2021-test-blocks.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eevtestbls" "2021-test-blocks" "fpsF_M55W4o" time))
-;; 
-;; ;; Skel: (find-eevshortvideo-links "eevvlinks" "2021-video-links" "xQqWufQgzVY")
-;; ;;  See: (find-videos-intro "1. Some videos" "2021-video-links")
-;; ;; Index: http://angg.twu.net/.emacs.videos.html#eevvlinks
-;; ;;  Test: (find-eevvlinksvideo "0:00")
-;; (defun find-eevvlinksvideo (&optional time &rest rest)
-;;   "Play one of the video tutorials of eev starting at TIME.
-;; See: (find-videos-intro \"1. Some videos\" \"2021-video-links\")
-;;      http://angg.twu.net/2021-video-links.html
-;;      for more info on this particular video,
-;; and: (find-videos-intro \"2. Short links to eev video tutorials\")
-;;  or: http://angg.twu.net/eev-intros/find-videos-intro.html#2
-;;      for more info on these video tutorials."
-;;   (interactive)
-;;   (find-eevvideo-links "eevvlinks" "2021-video-links" "xQqWufQgzVY" time))
-
+;; Moved to: (find-eev "eev-videolinks.el" "video-tutorials")
 
 
 

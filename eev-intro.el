@@ -10416,6 +10416,13 @@ The function `find-eevvideo-links' is explained here:
 
 
 
+
+;;;        _     _                  _ _       _        
+;;; __   _(_) __| | ___  ___       | (_)_ __ | | _____ 
+;;; \ \ / / |/ _` |/ _ \/ _ \ _____| | | '_ \| |/ / __|
+;;;  \ V /| | (_| |  __/ (_) |_____| | | | | |   <\__ \
+;;;   \_/ |_|\__,_|\___|\___/      |_|_|_| |_|_|\_\___/
+;;;                                                    
 ;; «find-video-links-intro»  (to ".find-video-links-intro")
 ;; Skel: (find-intro-links "video-links")
 ;; Test: (find-video-links-intro)
