@@ -96,7 +96,7 @@
 	 (fname (ee-shorten-file-name (ee-url-to-fname url))))
     (if (ee-psne-downloaded-p url)
 	(find-mpv-video fname time)
-      (find-eevlocal-links stem hash time))))
+      (find-eevlocal-links mp4stem hash time))))
 
 (defun find-eevlinks-video (mp4stem hash &optional time &rest rest)
   (find-eevlocal-links mp4stem hash time))
@@ -253,13 +253,13 @@ of the videos and play them with mpv. Compare with
 ;; docstrings and `find-efunction' wouldn't be able to find their
 ;; definitions.
 
-;; (find-eevvideo-1stclass-links "eev2019")
-;; (find-eevvideo-1stclass-links "eev2020")
-;; (find-eevvideo-1stclass-links "eevnav")
-;; (find-eevvideo-1stclass-links "eevtempl")
-;; (find-eevvideo-1stclass-links "eevfherel")
-;; (find-eevvideo-1stclass-links "eevtestbls")
-;; (find-eevvideo-1stclass-links "eevvlinks")
+;; (find-1stclassvideo-links "eev2019")
+;; (find-1stclassvideo-links "eev2020")
+;; (find-1stclassvideo-links "eevnav")
+;; (find-1stclassvideo-links "eevtempl")
+;; (find-1stclassvideo-links "eevfherel")
+;; (find-1stclassvideo-links "eevtestbls")
+;; (find-1stclassvideo-links "eevvlinks")
 
 ;; «find-eev2019video»  (to ".find-eev2019video")
 ;; Skel: (find-eevshortvideo-links "eev2019" "emacsconf2019" "86yiRG8YJD0")

@@ -1,4 +1,17 @@
+2021-11-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-video-links-intro): added the sections 9, 10,
+	and 11.
+	(find-windows-beginner-intro): almost totally rewritten.
+
+	* eev-on-windows.el: almost totally rewritten.
+
 2021-11-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eevvideo-1stclass-links): renamed to
+	`find-1stclassvideo-links'.
+
+	* eev-videolinks.el (find-eevlocal-video): fixed a typo.
 
 	* eev-tlinks.el (find-eevvideo-1stclass-links): new function.
 

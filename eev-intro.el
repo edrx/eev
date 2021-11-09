@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211107
+;; Version:    20211109
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -10672,7 +10672,15 @@ behavior of all short links to video tutorials, as they all call
 its first argument.
 
 The default is `find-eevlocal-video', but for Windows users
-starting with `find-eevyoutube-video' makes more sense.
+starting with `find-eevyoutube-video' makes more sense. The
+user-friendly way to select one of these behaviors is with these
+sexps:
+
+  (ee-use-local-videos)
+  (ee-use-youtube-videos)
+
+You can also run them with `M-x ee-use-local-videos' and `M-x
+ee-use-youtube-videos'.
 
 
 
@@ -10688,7 +10696,8 @@ this workshop:
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00045.html
   http://angg.twu.net/2021-oficina.html (<- in Portuguese)
 
-My original implementation was the one described here:
+My original implementation - from may/2021 - was the one
+described here:
 
   http://angg.twu.net/2021-video-links.html
 
@@ -10697,7 +10706,89 @@ Emacs _in a way that is convenient for both long-time users and
 total beginners_. This is quite a challenge - especially because
 since oct/2021 my notion of \"total beginners\" includes \"people
 who use Windows and who have never used terminals in their
-lives\".
+lives\". If you are one of those \"total beginners\" my
+recommendation is: start by this tutorial - it will force you to
+learn how to configure paths and how to test if Emacs knows how
+to call a given external program - and then follow this one:
+
+  (find-windows-beginner-intro)
+
+
+
+
+9. First-class videos
+=====================
+I store videos of several kinds in:
+
+  http://angg.twu.net/eev-videos/
+
+The presentations and tutorials on eev are the \"first-class
+citizens\" of that directory - mainly in the sense that a lot of
+information about them is available and easy to find. Let's look
+at one example in details. Try:
+
+  (find-efunctiondescr 'find-eev2019video)
+  (find-efunction      'find-eev2019video)
+  (find-efunctionpp    'find-eev2019video)
+  (find-1stclassvideo-links \"eev2019\")
+
+All these sexps \"work\" - they point to meaningful places.
+
+
+
+10. Second-class videos
+=======================
+I will refer to the videos in
+
+  http://angg.twu.net/eev-videos/
+
+that are not \"first-class citizens\" as - ta-da! - \"second
+class citizens\". When I want to show something in one of those
+videos to a person who uses eev I send her sexps like these:
+
+  (code-eevvideo \"eevhydras\" \"2021-05-20_hydra_ei\")
+  (find-eevhydrasvideo \"0:00\")
+  (find-eevhydrasvideo \"0:50\")
+
+If you run the sexps above and then these ones,
+
+  (find-efunctiondescr 'find-eevhydrasvideo)
+  (find-efunction      'find-eevhydrasvideo)
+  (find-efunctionpp    'find-eevhydrasvideo)
+  (find-1stclassvideo-links \"eevhydras\")
+
+you will see `find-eevhydrasvideo' is \"not documented\", that
+Emacs \"Do(es)n't know where `find-eevhydrasvideo' is defined\",
+that the pretty-printed version of `find-eevhydrasvideo' doesn't
+have a docstring after its argument list, and that many of the
+links in the temporary buffer created by
+`find-1stclassvideo-links' don't work.
+
+For more information on `code-eevvideo' see the comments in its
+source code, here:
+
+  (find-eev \"eev-videolinks.el\" \"second-class-videos\")
+  (find-eev \"eev-videolinks.el\" \"code-eevvideo\")
+
+
+
+
+11. Hardcoded paths
+===================
+Practically all the functions defined above have `eev' in their
+names, and they all convert the \"{stem}\" of a video to a URL
+like this:
+
+  http://angg.twu.net/eev-videos/{stem}.mp4
+
+The conversion from \"{stem}\" to
+\"http://angg.twu.net/eev-videos/{stem}.mp4\" is hardcoded in
+these functions, and AT THIS MOMENT there isn't an easy way to
+implement other similar conversions - pointing to other
+repositories of videos - without changing a lot of code by hand.
+This is mainly because I don't know anyone else who is putting
+their videos on places from which they are easy to wget. If you
+know something like this, please get in touch!
 
 " pos-spec-list)))
 
@@ -12510,39 +12601,40 @@ from Emacs by typing `M-3 M-j'.
 
 0. Introduction
 ===============
-My favorite exposition of what eev is is this presentation, called
-\"How to record executable notes with eev - and how to play them back\":
+My favorite exposition of what eev is is this presentation,
+called \"How to record executable notes with eev - and how to
+play them back\":
 
   http://angg.twu.net/emacsconf2019.html
   http://angg.twu.net/LATEX/2019emacsconf.pdf (slides)
   http://www.youtube.com/watch?v=86yiRG8YJD0  (video)
 
 The video ends with a demo that shows a non-trivial example of
-\"executable notes\".  The most interesting part of that demo shows how
-to use eev to send commands to an external program - a unix shell,
-being run in interactive mode. Here's a link to that part (the t=938
-tells youtube to jump to 15:38):
+\"executable notes\". The most interesting part of that demo
+shows how to use eev to send commands to an external program - a
+unix shell, being run in interactive mode. Here's a link to that
+part of the video on youtube, plus two related links that are
+harder to explain:
 
-  http://www.youtube.com/watch?v=86yiRG8YJD0&t=938
+  http://www.youtube.com/watch?v=86yiRG8YJD0#t=15m11s
+  (find-eev2019video \"15:11\" \"Demo: the eepitch block\")
+  (find-angg \".emacs.videos\" \"eev2019\")
 
-These notes are an attempt - ongoing, and work in progress! - to help
-Windows users with installing Emacs, eev, and Lua, and with trying to
-use Emacs on Windows to send commands to external programs - currently
-first to the crappy shell that comes with Windows, and after that to
-Lua.  A future version of these instructions will also include how to
-install Python, how to run it interactively from Emacs, and how to
-send commands to it.
+I don't have easy access to Windows machines, so I have to rely
+on friends to test some things for me. I also don't have easy
+access to people who use Windows and who do have experience using
+terminals, so from time to time I give workshops for \"total
+beginners\" like the one described here,
 
-I don't have easy access to Windows machines, so I'm having to ask
-friends to try this for me.  Also, Linux/*NIXes are Windows are
-totally different planets - it's common for Windows people, even
-programmers, to have practically zero experience with terminals,
-a.k.a. with \"the Command Line\"...  in *NIXes this is so inconceivable
-that after discovering that many Windows programmers don't know how to
-use terminals I spent more than one week trying to figure out how to
-proceed.
+  (find-video-links-intro \"8. Windows\")
 
-Version of these instructions: 2021sep20.
+and I see that the people on those workshops get stuck on ideas
+that I thought that were obvious, and I change my approach, and I
+rewrite lots of things.
+
+This is my N-th attempt to rewrite this tutorial.
+
+Version of these instructions: 2021nov08.
 
 
 
@@ -12557,18 +12649,8 @@ http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/README-windows-binaries
 http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2021-01-15-installer.exe
 http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2021-01-15.zip
 
-If you prefer Emacs27, use these links:
-
-https://ftp.gnu.org/gnu/emacs/windows/emacs-27/
-https://ftp.gnu.org/gnu/emacs/windows/emacs-27/README-windows-binaries
-https://ftp.gnu.org/gnu/emacs/windows/emacs-27/emacs-27.2-x86_64-installer.exe
-https://ftp.gnu.org/gnu/emacs/windows/emacs-27/emacs-27.2-x86_64.zip
-
 You may need to create a desktop icon or shortcut to
 <emacsdir>/bin/runemacs.exe.
-
-Note: don't use Emacs25 on Windows - it can't access the package repository!  The details are here:
-https://emacs.stackexchange.com/questions/233/how-to-proceed-on-package-el-signature-check-failure/52823#52823
 
 
 
@@ -12835,98 +12917,163 @@ As an exercise, try to give these commands to the Windows shell:
 
 
 
-
-
-
-
-
-6. Eepitch on Windows
-=====================
-The main tutorial of eev explains the best way to use shells from
-Emacs in this section:
-
-  (find-eev-quick-intro \"6. Controlling shell-like programs\")
-
-The default shell on Windows is a very bad one - cmd.exe, that we
-saw in section 5.5 - and by default `eepitch-shell' uses cmd.exe.
-One alternative is to use Eshell:
+5.6. Eshell
+-----------
+The manual of Eshell - here,
 
   (find-node \"(eshell)Top\")
 
-Most people who use Windows have very little experience with
-shells, and I am trying to use eev to create tutorials to save
-them...
+describes it as: \"Eshell is a shell-like command interpreter
+implemented in Emacs Lisp\".
 
-   This is a project that is still in a VERY early stage!!! 
-   I will describe its current state, and I will end this   
-   section with a \"please test this and get in touch!\".     
+This feature of eev:
 
-I am preparing a one-session workshop for Windows users that
-should happen in the middle of oct/2021. Most of my material
-about it is in Portuguese, but In 2021oct03 I sent these two
-e-mails to the help-gnu-emacs mailing list, in which I explained
-it in English and asked for help:
+  (find-psne-intro \"1. Local copies of files from the internet\")
 
-  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
-  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00045.html
+needs to run wget on a unix-like shell, and it turns out that
+this can be achieved easily using Eshell. For a discussion of the
+tecnhical details, see:
 
-Many features in eev require a program called wget, and I need to
-prepare instructions for installing wget that can be executed by
-people who have never used a terminal or a shell in their lives.
-I _have the impression_ that it will be better to use PowerShell
-for that. The Wikipedia page about PowerShell is here:
-
-  https://en.wikipedia.org/wiki/PowerShell
-
-It seems that every recent version of Windows comes with
-PowerShell, and it seems that one of the ways of running
-PowerShell is to open a terminal and run the command \"pwsh\" in
-it... [please, people, can you test this and tell me if it works?]
-
-In 2021oct04 I added support for PowerShell to eev, but I was
-only able to test it on Linux, using a version of PowerShell that
-runs on Linux...
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00051.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00058.html
+  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00126.html
 
 
 
-6.1. `eepitch-pwsh': a test
----------------------------
-Please, people, can you test the eepitch block below with <f8>s
-and tell me if you get something similar to what I got in this
-screenshot?
 
-Link to the screenshot:
+6. Video links
+==============
+If you're on Windows please start by configuring your browser and
+the path to it, as described here:
 
-  http://angg.twu.net/2021.1-projeto/eepitch-pwsh.png
+  (find-video-links-intro)
+  (find-video-links-intro \"3. `find-youtube-video'\")
+  (find-video-links-intro \"4. Configuring the browser\")
 
-Here is the eepitch block:
+and by making `find-eev-video' use the browser to play the
+videos. For that you need to run this sexp,
 
- (eepitch-pwsh)
+  (ee-use-youtube-videos)
+
+as explained here:
+
+  (find-video-links-intro \"7. `find-eev-video'\")
+
+Also install the Mpv video player, configure its path, and check
+that Emacs can find it. This is explained here:
+
+  (find-video-links-intro \"6. Configuring Mpv\")
+
+The next sections of this tutorial will suppose that you know how
+to configure that path to external programs, and how to test
+them.
+
+IMPORTANT: save the sexps with `setenv' that you used to
+configure the paths to your notes. See:
+
+  (find-here-links-intro \"4. `find-here-links-3'\")
+  (find-here-links-intro \"4. `find-here-links-3'\" \"~/TODO\")
+
+
+
+
+7. eev-on-windows.el
+====================
+The file eev-on-windows.el contains several functions that will
+be used in the next sections. It is not loaded by default, so you
+need to do this:
+
+  (require 'eev-on-windows)
+
+If you are on Windows you will also need to download some
+\".exe\" files by running the sexps below. Each of the sexps that
+start with `ee-download-with-eww' may take several seconds to
+complete, and it's better to wait until it sends a message like
+\"Saved (filename.exe)\" to the echo area before executing other
+sexps with `M-e'.
+
+  (mkdir \"~/bin/\" t)
+  (delete-file \"~/bin/wget.exe\")
+  (delete-file \"~/bin/pdftotext.exe\")
+  (delete-file \"~/bin/lua52.exe\")
+  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/wget.exe\" \"~/bin/\")
+  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/pdftotext.exe\" \"~/bin/\")
+  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/lua52.exe\" \"~/bin/\")
+
+The sexps in the block above only need to be executed once - you
+don't need to execute them at each Emacs session. You can test if
+they worked by running the sexps below:
+
+  (find-fline \"~/bin/\" \"wget.exe\")
+  (find-fline \"~/bin/\" \"pdftotext.exe\")
+  (find-fline \"~/bin/\" \"lua52.exe\")
+  (find-callprocess `(\"~/bin/wget.exe\"      \"--help\"))
+  (find-callprocess `(\"~/bin/pdftotext.exe\" \"--help\"))
+  (find-callprocess `(\"~/bin/lua52.exe\"     \"--help\"))
+
+
+
+7.1. `ee-use-windows'
+---------------------
+
+  (find-eev \"eev-on-windows.el\")
+
+
+7.2. Testing wget.exe
+---------------------
+Try to run this eepitch block with <f8>s:
+
+ (eepitch-eshell)
  (eepitch-kill)
- (eepitch-pwsh)
-mkdir -p ~/bin/
-cd       ~/bin/
-rm -fv   ~/bin/wget.exe
-wget http://angg.twu.net/2021.1-projeto/wget.exe
-ls -l wget.exe
+ (eepitch-eshell)
+  rm --help
+  ls --help
+  rm -fv $S/http/www.gnu.org/software/emacs/emacs-paper.html
+  ls -l  $S/http/www.gnu.org/software/emacs/emacs-paper.html
+  #
+  mkdir -p $S/http/www.gnu.org/software/emacs/
+  cd       $S/http/www.gnu.org/software/emacs/
+  wget -nc 'http://www.gnu.org/software/emacs/emacs-paper.html'
+  echo     'http://www.gnu.org/software/emacs/emacs-paper.html' >> ~/.psne.log
+  #
+  ls -l  $S/http/www.gnu.org/software/emacs/emacs-paper.html
+  rm -fv $S/http/www.gnu.org/software/emacs/emacs-paper.html
+
+Now try to follow the instructions here to download the same URL
+with `M-x brep':
+
+  (find-psne-intro \"3. The new way: `M-x brep'\")
+
+Note that due to the 
+
+  (eepitch-shell2)
+
+  (find-eev \"eev-on-windows.el\" \"ee-use-eshell\")
 
 
 
+  (find-eev \"eev-plinks.el\" \"find-wget\")
+  (find-eev \"eev-plinks.el\" \"find-wget\" \"Tests:\")
+
+
+7.3. Testing psne-ing
+---------------------
+
+  (find-psne-intro)
+
+7.4. Testing `M-x brep'
+-----------------------
 
 
 
+7. Eepitch on Windows
+=====================
 
 
+  (find-eev \"eev-on-windows.el\" \"ee-use-eshell\")
 
 
-
-
-
-
-
-
-
-7. Lua
+8. Lua
 ======
 Lua is a programming language that many people - like me - find
 much better and much simpler than Python.  The examples of

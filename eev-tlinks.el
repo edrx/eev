@@ -95,7 +95,7 @@
 ;; «.find-red-star-links»		(to "find-red-star-links")
 ;; «.find-eepitch-bullet-links»		(to "find-eepitch-bullet-links")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
-;; «.find-eevvideo-1stclass-links»	(to "find-eevvideo-1stclass-links")
+;; «.find-1stclassvideo-links»	(to "find-1stclassvideo-links")
 
 
 (require 'eev-env)
@@ -2666,22 +2666,22 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
-;; «find-eevvideo-1stclass-links»  (to ".find-eevvideo-1stclass-links")
+;; «find-1stclassvideo-links»  (to ".find-1stclassvideo-links")
 ;; Skel: (find-find-links-links-new "eevvideo-1stclass" "c" "")
 ;;  See: (find-eev "eev-videolinks.el" "first-class-videos")
 ;;       (find-eev "eev-videolinks.el" "second-class-videos")
-;; Tests: (find-eevvideo-1stclass-links "eev2019")
-;;        (find-eevvideo-1stclass-links "eev2020")
+;; Tests: (find-1stclassvideo-links "eev2019")
+;;        (find-1stclassvideo-links "eev2020")
 ;;
-(defun find-eevvideo-1stclass-links (&optional c &rest pos-spec-list)
+(defun find-1stclassvideo-links (&optional c &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for a first-class video."
   (interactive)
   (setq c (or c "{c}"))
   (apply
    'find-elinks-elisp
-   `((find-eevvideo-1stclass-links ,c ,@pos-spec-list)
+   `((find-1stclassvideo-links ,c ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-eevvideo-1stclass-links)
+     (find-efunction 'find-1stclassvideo-links)
      ""
      ,(ee-template0 "\
 ;; Definition of the function:
