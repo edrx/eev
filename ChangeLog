@@ -1,4 +1,11 @@
+2021-11-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): several new
+	sections.
+
 2021-11-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): new variable.
 
 	* eev-intro.el (find-video-links-intro): added the sections 9, 10,
 	and 11.

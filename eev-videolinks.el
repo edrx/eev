@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211108
+;; Version:    20211109
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -46,6 +46,16 @@
 ;;   «.find-eevfherelvideo»	(to "find-eevfherelvideo")
 ;;   «.find-eevtestblsvideo»	(to "find-eevtestblsvideo")
 ;;   «.find-eevvlinksvideo»	(to "find-eevvlinksvideo")
+;; «.more-info»			(to "more-info")
+;;   «.eev2019»			(to "eev2019")
+;;   «.eev2020»			(to "eev2020")
+;;   «.eevnav»			(to "eevnav")
+;;   «.eevtempl»		(to "eevtempl")
+;;   «.fherel»			(to "fherel")
+;;   «.eevtestbls»		(to "eevtestbls")
+;;   «.eevvlinks»		(to "eevvlinks")
+;;   «.oficina2021a»		(to "oficina2021a")
+;;   «.oficina2021b»		(to "oficina2021b")
 ;; «.second-class-videos»	(to "second-class-videos")
 ;;   «.code-eevvideo»		(to "code-eevvideo")
 
@@ -161,7 +171,7 @@
     (ee-template0 "\
 # Youtube:
 # (kill-new \"{youtubeurl}\")
-#            {youtubeurl}\"
+#            {youtubeurl}
 # (find-youtube-video \"{hash}\"{timearg})
 ")))
 
@@ -376,6 +386,93 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
 
 
 
+;;;  __  __                  _        __       
+;;; |  \/  | ___  _ __ ___  (_)_ __  / _| ___  
+;;; | |\/| |/ _ \| '__/ _ \ | | '_ \| |_ / _ \ 
+;;; | |  | | (_) | | |  __/ | | | | |  _| (_) |
+;;; |_|  |_|\___/|_|  \___| |_|_| |_|_|  \___/ 
+;;;                                            
+;; «more-info»  (to ".more-info")
+;; More info on the first-class videos, in a format that is easy to
+;; access from Lisp. I am just starting to play with this, and the
+;; functions that transform the data in this variable into other
+;; formats don't exist yet. EVERYTHING HERE WILL PROBABLY CHANGE.
+
+(defvar ee-1stclassvideos-info
+  '(;;
+    ;; «eev2019»  (to ".eev2019")
+    ("eev2019"
+     :title "How to record executable notes with eev - and how to play them back"
+     :mp4  "http://angg.twu.net/eev-videos/emacsconf2019.mp4"
+     :yt   "http://www.youtube.com/watch?v=86yiRG8YJD0"
+     :page "http://angg.twu.net/emacsconf2019.html")
+    ;;
+    ;; «eev2020»  (to ".eev2020")
+    ("eev2020"
+     :title "On why most of the best features in eev look like 5-minute hacks"
+     :mp4  "http://angg.twu.net/eev-videos/emacsconf2020.mp4"
+     :yt   "http://www.youtube.com/watch?v=hOAqBc42Gg8"
+     :page "http://angg.twu.net/emacsconf2020.html")
+    ;;
+    ;; «eevnav»  (to ".eevnav")
+    ("eevnav"
+     :title "How to install eev with M-x list-packages and how to navigate its tutorials"
+     :mp4   "http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4"
+     :yt    "http://www.youtube.com/watch?v=kxBjiUo88_U"
+     :page  "http://angg.twu.net/2020-list-packages-eev-nav.html")
+    ;;
+    ;; «eevtempl»  (to ".eevtempl")
+    ("eevtempl"
+     :title "Some template-based functions of eev that are not five-minute hacks"
+     :mp4   "http://angg.twu.net/eev-videos/2020-some-template-based.mp4"
+     :yt    "http://www.youtube.com/watch?v=91-9YfRPsuk"
+     :page  "http://angg.twu.net/2020-some-template-based.html")
+    ;;
+    ;; «fherel»  (to ".fherel")
+    ("fherel"
+     :title "How to create hyperlinks to \"here\" with `find-here-links'"
+     :mp4   "http://angg.twu.net/eev-videos/2020-find-here-links.mp4"
+     :yt    "http://www.youtube.com/watch?v=8jtiBlaDor4"
+     :page  "http://angg.twu.net/2020-find-here-links.html")
+    ;;
+    ;; «eevtestbls»  (to ".eevtestbls")
+    ("eevtestbls"
+     :title "Using test blocks in eev"
+     :mp4   "http://angg.twu.net/eev-videos/2021-test-blocks.mp4"
+     :yt    "http://www.youtube.com/watch?v=fpsF_M55W4o"
+     :page  "http://angg.twu.net/2021-test-blocks.html")
+    ;;
+    ;; :title "Short videos about workflows - and how to upload them"
+    ;; :page  "http://angg.twu.net/2021-ssr.html"
+    ;; ^ bad & obsolete
+    ;;
+    ;; «eevvlinks»  (to ".eevvlinks")
+    ("eevvlinks"
+     :title "How to use the `[Video links:]' blocks in the `intro's of eev"
+     :mp4   "http://angg.twu.net/eev-videos/2021-video-links.mp4"
+     :yt    "http://www.youtube.com/watch?v=xQqWufQgzVY"
+     :page  "http://angg.twu.net/2021-video-links.html")
+    ;;
+    ;; «oficina2021a»  (to ".oficina2021a")
+    ("oficina2021a"
+     :title "Como instalar o eev no Emacs"
+     :mp4   "http://angg.twu.net/eev-videos/2021-oficina-1.mp4"
+     :yt    "http://www.youtube.com/watch?v=acFPMuZ5Jf4"
+     :page  "http://angg.twu.net/2021-oficina.html"
+     :lang  "portuguese")
+    ;;
+    ;; «oficina2021b»  (to ".oficina2021b")
+    (oficina2021b
+     :title "Exercícios de criar e guardar links (1)"
+     :mp4   "http://angg.twu.net/eev-videos/2021-oficina-2.mp4"
+     :yt    "https://www.youtube.com/watch?v=XbuDnkfizYs"
+     :page  "http://angg.twu.net/2021-oficina.html"
+     :lang  "portuguese")
+    ;;
+    ))
+
+
+
 
 ;;;                _                                   _     _            
 ;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
@@ -427,7 +524,7 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
 ;; See: (find-video-links-intro \"7. `find-eev-video'\" \"`find-eevlocal-video'\")
 ;;      (find-video-links-intro \"7. `find-eev-video'\" \"`find-eevlinks-video'\")
 ;;
-(defun find-{c}video (time &rest comments)
+(defun find-{c}video (&optional time &rest comments)
   (interactive)
   (find-eev{mod}-video \"{stem}\" \"{hash}\" time))
 "))

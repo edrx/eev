@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211107
+;; Version:    20211110
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -34,18 +34,24 @@
 ;; «.eshell»				(to "eshell")
 ;;   «.ee-use-eshell»			(to "ee-use-eshell")
 ;;   «.ee-use-shell»			(to "ee-use-shell")
+;; «.lua»				(to "lua")
+;;   «.ee-use-lua»			(to "ee-use-lua")
+;;   «.ee-use-lua-exe»			(to "ee-use-lua-exe")
 ;; «.wget»				(to "wget")
 ;;   «.ee-use-wget-exe»			(to "ee-use-wget-exe")
 ;;   «.ee-use-wget»			(to "ee-use-wget")
+;; «.ee-use-firefox»			(to "ee-use-firefox")
+;; «.ee-use-googlechrome»		(to "ee-use-googlechrome")
 ;; «.red-stars»				(to "red-stars")
 ;;   «.ee-use-bullets»			(to "ee-use-bullets")
 ;;   «.ee-use-red-stars»		(to "ee-use-red-stars")
 ;; «.find-angg-es»			(to "find-angg-es")
 ;;   «.ee-use-find-angg-es-remote»	(to "ee-use-find-angg-es-remote")
 ;;   «.ee-use-find-angg-es-local»	(to "ee-use-find-angg-es-local")
-;; «.ee-use-windows»			(to "ee-use-windows")
-;; «.ee-use-gnu-linux»			(to "ee-use-gnu-linux")
-;; «.ee-use-gnu-linux-but-simulate»	(to "ee-use-gnu-linux-but-simulate")
+;; «.high-level»			(to "high-level")
+;;   «.ee-use-windows»			(to "ee-use-windows")
+;;   «.ee-use-gnu-linux»		(to "ee-use-gnu-linux")
+;;   «.ee-use-gnu-linux-but-simulate»	(to "ee-use-gnu-linux-but-simulate")
 ;; «.directories»			(to "directories")
 ;; «.basic-tests»			(to "basic-tests")
 
@@ -64,7 +70,10 @@
 
 ;; «how-to-test-this»  (to ".how-to-test-this")
 ;;
-;; THIS BLOCK IS BEING REWRITTEN AND IS A MESS
+;; THIS BLOCK IS BEING REWRITTEN AND IS CURRENTLY A MESS.
+;; Most of the docs and tests were moved to:
+;;
+;;   (find-windows-beginner-intro)
 ;;
 ;; 0.1. How to test this
 ;; =====================
@@ -159,6 +168,7 @@
   )
 
 
+
 ;;;                     _   
 ;;; __      ____ _  ___| |_ 
 ;;; \ \ /\ / / _` |/ _ \ __|
@@ -171,8 +181,8 @@
 ;; wget that is on the $PATH, and on M$ Windows we use ~/bin/wget.exe.
 ;;
 ;;  BIG WARNING: 
-;; These function DELETE your eshell-aliases-file and create a new one
-;; with a single alias inside!!! See:
+;; These functions DELETE your eshell-aliases-file and create a new
+;; one with a single alias inside!!! See:
 ;;   (find-node "(eshell)Aliases" "eshell-aliases-file")
 
 ;; «ee-use-wget-exe»  (to ".ee-use-wget-exe")
@@ -188,6 +198,26 @@
   (delete-file eshell-aliases-file)
   (eshell/alias "wget"  "wget $*")
   (setq ee-wget-program "wget"))
+
+
+;;;  _____ _           __           
+;;; |  ___(_)_ __ ___ / _| _____  __
+;;; | |_  | | '__/ _ \ |_ / _ \ \/ /
+;;; |  _| | | | |  __/  _| (_) >  < 
+;;; |_|   |_|_|  \___|_|  \___/_/\_\
+;;;                                 
+;; «ee-use-firefox»  (to ".ee-use-firefox")
+(defun ee-use-firefox ()
+  (interactive)
+  (setq ee-find-youtube-video-program 'find-firefox)
+  (defalias 'find-pdf-page 'find-firefox-page))
+
+;; «ee-use-googlechrome»  (to ".ee-use-googlechrome")
+(defun ee-use-googlechrome ()
+  (interactive)
+  (setq ee-find-youtube-video-program 'find-googlechrome)
+  (defalias 'find-pdf-page 'find-googlechrome-page))
+
 
 
 
@@ -249,6 +279,42 @@
 
 
 
+;;;  _                
+;;; | |   _   _  __ _ 
+;;; | |  | | | |/ _` |
+;;; | |__| |_| | (_| |
+;;; |_____\__,_|\__,_|
+;;;                   
+;; «lua»  (to ".lua")
+
+;; «ee-use-lua»  (to ".ee-use-lua")
+(defun ee-use-lua ()
+  (interactive)
+  (defun eepitch-lua51 () (interactive) (eepitch-comint "lua51" "lua5.1"))
+  (defun eepitch-lua51 () (interactive) (eepitch-comint "lua52" "lua5.2"))
+  )
+
+;; «ee-use-lua-exe»  (to ".ee-use-lua-exe")
+(defun ee-use-lua-exe ()
+  (interactive)
+  (defun eepitch-lua51 () (interactive) (eepitch-comint "lua52.exe" "~/bin/lua52.exe -i"))
+  (defun eepitch-lua52 () (interactive) (eepitch-comint "lua52.exe" "~/bin/lua52.exe -i"))
+  )
+
+
+
+
+;;;  _   _ _       _           _                _ 
+;;; | | | (_) __ _| |__       | | _____   _____| |
+;;; | |_| | |/ _` | '_ \ _____| |/ _ \ \ / / _ \ |
+;;; |  _  | | (_| | | | |_____| |  __/\ V /  __/ |
+;;; |_| |_|_|\__, |_| |_|     |_|\___| \_/ \___|_|
+;;;          |___/                                
+;;
+;; «high-level»  (to ".high-level")
+;; High-level configuration functions that run many low-level configs.
+;; See: (find-windows-beginner-intro "7.1. `ee-use-windows'")
+;;
 ;; «ee-use-windows»  (to ".ee-use-windows")
 ;; «ee-use-gnu-linux»  (to ".ee-use-gnu-linux")
 ;; «ee-use-gnu-linux-but-simulate»  (to ".ee-use-gnu-linux-but-simulate")
@@ -258,38 +324,51 @@
   (ee-use-bullets)
   (ee-use-eshell)
   (ee-use-wget-exe)
+  (ee-use-lua-exe)
   (setq ee-pdftotext-program    "~/bin/pdftotext.exe")
   (setq ee-firefox-program      "$FIREFOXDIR/firefox.exe")
   (setq ee-googlechrome-program "$GOOGLECHROMEDIR/chrome.exe")
   (setq ee-mpv-program          "$MPVDIR/mpv.exe")
-  (defalias 'find-pdf-page 'find-googlechrome-page)
   (ee-use-find-angg-es-remote)
+  (ee-use-googlechrome)
   (ee-use-youtube-videos)
   )
 
+;; This sort of reverts what `ee-use-windows' does.
+;;
 (defun ee-use-gnu-linux ()
   (interactive)
   (ee-use-red-stars)
   (ee-use-shell)
-  (ee-use-exe)
+  (ee-use-wget)
+  (ee-use-lua)
   (setq ee-pdftotext-program    "pdftotext")
   (setq ee-firefox-program      "firefox")
   (setq ee-googlechrome-program "google-chrome")
   (setq ee-mpv-program          "mpv")
   (ee-use-find-angg-es-local)
+  (ee-use-googlechrome)
+  (defalias 'find-pdf-page 'find-xpdf-page)
   (ee-use-local-videos)
   )
 
+;; I use this to make the Emacs in my Debian box behave similarly to
+;; an Emacs on M$ Windows after running `ee-use-windows'. "Similarly"
+;; here means "similarly enough to let me test most of the settings
+;; of `ee-use-windows' and record demos".
+;;
 (defun ee-use-gnu-linux-but-simulate ()
   (interactive)
   (ee-use-bullets)
   (ee-use-eshell)
   (ee-use-wget)
+  (ee-use-lua)
   (setq ee-pdftotext-program    "pdftotext")
   (setq ee-firefox-program      "firefox")
   (setq ee-googlechrome-program "google-chrome")
   (setq ee-mpv-program          "mpv")
   (ee-use-find-angg-es-remote)
+  (ee-use-googlechrome)
   (ee-use-youtube-videos)
   )
 

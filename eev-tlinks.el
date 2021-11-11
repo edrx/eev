@@ -2043,6 +2043,10 @@ dofile \"{fname0}\"
 ;; Skel: (find-find-links-links-new "windows-eepitch-lua" "dir" "")
 ;; Test: (find-windows-eepitch-lua-links "/tmp/")
 ;;
+;; THIS IS OBSOLETE!
+;; The new way is this one:
+;;   (find-windows-beginner-intro "7.3. Lua")
+;;
 (defun find-windows-eepitch-lua-links (&optional dir &rest pos-spec-list)
 "Visit a temporary buffer that helps in setting up `eepitch-lua52's on M$ Windows."
   (interactive)

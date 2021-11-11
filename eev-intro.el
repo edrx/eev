@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211109
+;; Version:    20211110
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1975,7 +1975,7 @@ or by using the menu bar (the relevant options are under
 
 See: (find-enode \"Tool Bars\")
      (find-enode \"Menu Bar\")
-     (find-emacs-keys-intro \"3. Cutting & pasting\")
+     (find-eev-quick-intro \"5.2. Cutting and pasting\")
 
 
 
@@ -12943,8 +12943,8 @@ tecnhical details, see:
 
 6. Video links
 ==============
-If you're on Windows please start by configuring your browser and
-the path to it, as described here:
+If you're on Windows you need to start by configuring your
+browser and the path to it, as described here:
 
   (find-video-links-intro)
   (find-video-links-intro \"3. `find-youtube-video'\")
@@ -12996,9 +12996,11 @@ sexps with `M-e'.
   (delete-file \"~/bin/wget.exe\")
   (delete-file \"~/bin/pdftotext.exe\")
   (delete-file \"~/bin/lua52.exe\")
+  (delete-file \"~/bin/lua52.dll\")
   (ee-download-with-eww \"http://angg.twu.net/2021-oficina/wget.exe\" \"~/bin/\")
   (ee-download-with-eww \"http://angg.twu.net/2021-oficina/pdftotext.exe\" \"~/bin/\")
   (ee-download-with-eww \"http://angg.twu.net/2021-oficina/lua52.exe\" \"~/bin/\")
+  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/lua52.dll\" \"~/bin/\")
 
 The sexps in the block above only need to be executed once - you
 don't need to execute them at each Emacs session. You can test if
@@ -13015,8 +13017,18 @@ they worked by running the sexps below:
 
 7.1. `ee-use-windows'
 ---------------------
+If you are on Windows you should run this:
 
-  (find-eev \"eev-on-windows.el\")
+  (ee-use-windows)
+
+Its source code is here:
+
+  (find-eev \"eev-on-windows.el\" \"ee-use-windows\")
+
+Most of what it does is explained in the next sections.
+
+
+
 
 
 7.2. Testing wget.exe
@@ -13044,53 +13056,164 @@ with `M-x brep':
 
   (find-psne-intro \"3. The new way: `M-x brep'\")
 
-Note that due to the 
+`M-x brep' uses `eepitch-shell', that on Windows runs cmd.exe by
+default, but in the last section we ran `ee-use-windows', that
+redefines `eepitch-shell' to makes it use Eshell instead of
+cmd.exe - and it also makes the command \"wget\" in eshell run
+~/bin/wget.exe.
 
-  (eepitch-shell2)
-
-  (find-eev \"eev-on-windows.el\" \"ee-use-eshell\")
-
-
+Eev also uses wget in the function `find-wget' and its variants
+`find-wgeta', `find-wget-elisp', and `find-wgeta-elisp'. Try the
+tests here, and check that they work:
 
   (find-eev \"eev-plinks.el\" \"find-wget\")
   (find-eev \"eev-plinks.el\" \"find-wget\" \"Tests:\")
 
 
-7.3. Testing psne-ing
----------------------
 
-  (find-psne-intro)
 
-7.4. Testing `M-x brep'
+7.3. Lua
+--------
+`ee-use-windows' also redefine `eepitch-lua51' to make it run
+~/bin/lua52.exe, that you downloaded in section 7, and it runs
+`ee-use-youtube-videos', that you've run explicitly in section 6.
+Try this link to a video:
+
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
+
+it should play the video in a browser. The video shows what
+happens when we run an eepitch block that calls Lua and
+everything works correctly. Check that these two eepitch blocks
+work as expected:
+
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+  print(2+3)
+  os.exit()
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  ~/bin/lua52.exe -i
+  print(2+3)
+  os.exit()
+
+
+
+
+7.4. Downloading videos
 -----------------------
+The default behavior for a video link like this one
+
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
+
+is to download a local copy of the video if it hasn't been
+already downloaded, and then play the local copy with mpv. The
+downloading is not automatic - the user has to \"psne\" it. 
+
+  (find-eevvlinksvideo \"6:09\" \"if I execute this `find-eevtestblsvideo'\")
+  (find-eevvlinksvideo \"6:15\" \"the last line says `Local file NOT found'\")
+
+Now that you understand psne-ing, try the three standard
+behaviors for video links. First make sure that we don't have a
+local copy of the \"eevtestbls\" video, by running this:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -fv $S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4
+  ls -l  $S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4
+
+Then run these sexps:
+
+  (ee-use-local-videos)
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
+
+  (setq ee-find-eev-video-function 'find-eevlinks-video)
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
+
+  (ee-use-youtube-videos)
+  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
+
+The three behaviors are explained here:
+
+  (find-video-links-intro \"7. `find-eev-video'\")
+  (find-video-links-intro \"The default is `find-eevlocal-video', but\")
 
 
 
-7. Eepitch on Windows
-=====================
+7.5. Downloading PDFs
+---------------------
+Now try all the tests in the sections 1-5 and 7 of:
+
+  (find-pdf-like-intro)
+
+Section 6 does not apply on Windows - one of the things that
+`ee-use-windows' does is to make `find-pdf-page' use a browser to
+open PDFs. Check that everything in sections 1-5 and 7 work,
+including the links to pages of PDFs converted to text - the
+conversion to text will be done by ~/bin/pdftotext.exe, that you
+downloaded and tested in section 7.
 
 
-  (find-eev \"eev-on-windows.el\" \"ee-use-eshell\")
 
 
-8. Lua
-======
-Lua is a programming language that many people - like me - find
-much better and much simpler than Python.  The examples of
-\"controlling shell-like programs\" in the main tutorials of eev
-use Python because it comes installed by default in all modern
-*NIXes... see:
+7.6. Saving your settings
+-------------------------
+If all the tests above worked then you can save your settings.
+I will refer to the block below as the \"Windows setting block\":
 
-  (find-eev-quick-intro \"6.2. Other targets\")
-  (find-eepitch-intro \"1.1. Another target\")
+  ;; See: (find-windows-beginner-intro \"8. Summary\")
+  ;;      (find-video-links-intro \"4. Configuring the browser\")
+  ;;      (find-video-links-intro \"6. Configuring Mpv\")
+  (require 'beginner)
+  (require 'eev-on-windows)
+  (ee-use-windows)
+  (setenv \"FIREFOXDIR\"      \"c:/Program Files/Mozilla Firefox\")
+  (setenv \"GOOGLECHROMEDIR\" \"c:/Program Files/Google/Chrome/Application\")
+  (setenv \"MPVDIR\"          \"c:/Users/myusername/path/to/mpv\")
+  ;;
+  ;; Choose one:
+  (ee-use-googlechrome)
+  ;;(ee-use-firefox)
 
-but on Windows Lua is easier to install than Python, so let's
-start by it and leave Python to a second stage.
+Copy that block to your ~/TODO, but with the right paths in the
+`setenv's. I will refer to that modified copy as the \"Windows
+setting block in ~/TODO\".
 
-Try to follow the instructions here:
 
-  (find-windows-eepitch-lua-links nil)
 
+7.7. Testing your settings
+--------------------------
+The best way to test your \"Windows setting block in ~/TODO\" is
+by doing this. Start a second Emacs without closing this one, and
+on that second Emacs run:
+
+  1. `M-x eev-beginner',
+  2. `M-1 M-j' (to access your ~/TODO),
+  3. type `M-e' on each line of your \"Windows setting block in
+     ~/TODO\" _that is not commented with with a \";;\".
+
+Then... [TODO: complete this!]
+
+
+
+7.8. Saving your settings to your ~/.emacs
+------------------------------------------
+See:
+
+  (find-elnode \"Init File\" \".emacs\")
+
+A quick way to visit your ~/.emacs is with `M-5 M-5 M-j'. It runs
+this:
+
+  (find-fline \"~/.emacs\")
+
+
+
+8. Summary
+==========
 
 [Unfinished!!!]
 
