@@ -1023,7 +1023,7 @@ This is Debian-specific. See `find-Package'."
 ;; "pp0" -> "pretty-print a Lisp object in a very compact way".
 ;; Tests:
 ;;   (find-epp '(mapcar (lambda (a) (* a a)) '(2 3 4 5)))
-;;   (find-functionpp 'find-efunction)
+;;   (find-efunctionpp 'find-efunction)
 
 (defun find-epp0 (object)
   "Display a pretty-printed version of OBJECT in the echo area.
@@ -1044,6 +1044,8 @@ that `find-epp' would print in a single line."
   (let ((ee-buffer-name (or ee-buffer-name "*pp*")))
     (apply 'find-estring-elisp (ee-ppp0 object) pos-spec-list)))
 
+;; See: (find-elisp-intro "6. Defining functions")
+;;      (find-elisp-intro "6. Defining functions" "lambda")
 (defun find-efunctionpp (symbol &rest pos-spec-list)
 "Visit a temporary buffer containing the pretty-printed Lisp code for SYMBOL."
   (interactive (find-function-read))

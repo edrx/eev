@@ -12592,8 +12592,14 @@ If you're a W$ user you should start by reading it online, at:
 
   http://angg.twu.net/eev-intros/find-windows-beginner-intro.html
 
-After getting eev installed on your machine you can access it
-from Emacs by typing `M-3 M-j'.
+After getting eev installed on your machine you can access this
+tutorial from Emacs by typing `M-3 M-j'.
+
+The sections from 5.6 onwards were written in nov/2021 and they
+cover how to install some external programs to make almost all
+features of eev work on M$ Windows. Feedback on them would be
+greatly appreciated!
+
 
 
 
@@ -13110,7 +13116,8 @@ The default behavior for a video link like this one
 
 is to download a local copy of the video if it hasn't been
 already downloaded, and then play the local copy with mpv. The
-downloading is not automatic - the user has to \"psne\" it. 
+downloading is not automatic; the user has to \"psne\" it - see
+the section 7.2 and this video:
 
   (find-eevvlinksvideo \"6:09\" \"if I execute this `find-eevtestblsvideo'\")
   (find-eevvlinksvideo \"6:15\" \"the last line says `Local file NOT found'\")
@@ -13149,12 +13156,34 @@ Now try all the tests in the sections 1-5 and 7 of:
 
   (find-pdf-like-intro)
 
-Section 6 does not apply on Windows - one of the things that
-`ee-use-windows' does is to make `find-pdf-page' use a browser to
-open PDFs. Check that everything in sections 1-5 and 7 work,
-including the links to pages of PDFs converted to text - the
-conversion to text will be done by ~/bin/pdftotext.exe, that you
-downloaded and tested in section 7.
+This test in section 2 will not work,
+
+  (find-sh0 \"ls -l ~/Coetzee99.pdf\")
+
+because it requires a Unix-style `ls'. It works in Eshell,
+though. Try:
+
+ (eepitch-eshell)
+ (eepitch-kill)
+ (eepitch-eshell)
+  ls --help
+  ls -l ~/Coetzee99.pdf
+
+That's because eshell defines its `ls' in Lisp. See:
+
+  (find-eshellnode \"Built-ins\")
+
+Also, the tests in section 6 don't work on Windows - one of the
+things that `ee-use-windows' does is to make `find-pdf-page' use
+a browser to open PDFs, and section 6 uses a PDF viewer called
+\"xpdf\". Take a look:
+
+  (find-pdf-like-intro \"6. How the external programs are called\")
+
+So: check that everything in sections 1-5 and 7 work, except for
+the test that uses `ls'. The links to pages of PDFs converted to
+text should work - the conversion to text will be done by
+~/bin/pdftotext.exe, that you downloaded and tested in section 7.
 
 
 
