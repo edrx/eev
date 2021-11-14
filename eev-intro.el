@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211110
+;; Version:    20211114
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -93,8 +93,8 @@
 ;; «.find-org-intro»			(to "find-org-intro")
 ;; «.find-escripts-intro»		(to "find-escripts-intro")
 ;; «.find-git-intro»			(to "find-git-intro")
-;; «.find-little-languages-intro»	(to "find-little-languages-intro")
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
+;; «.find-eev-exercises-intro»		(to "find-eev-exercises-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -1809,6 +1809,9 @@ This section was moved to:
 
 10.5. Generating short hyperlinks to anchors
 --------------------------------------------
+See:
+  (find-refining-intro \"5. Pointing to anchors\")
+
 
 
 
@@ -2666,50 +2669,50 @@ recommended reading order. These are the basic ones:
   11. (find-rcirc-intro)
   12. (find-elisp-intro)
   13. (find-lexical-intro)
-  14. (find-eev-install-intro)
+  14. (find-multiwindow-intro)
+  15. (find-eev-install-intro)
 
-This is a very basic tutorial intended mainly for M$ Windows
-users:
+These are things that I am using in workshops:
 
-  15. (find-windows-beginner-intro)
+  16. (find-windows-beginner-intro)
+  17. (find-eev-exercises-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  16. (find-escripts-intro)
-  17. (find-links-conv-intro)
+  18. (find-escripts-intro)
+  19. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  18. (find-eval-intro)
-  19. (find-links-intro)
-  20. (find-brxxx-intro)
-  21. (find-wrap-intro)
-  22. (find-eejump-intro)
-  23. (find-anchors-intro)
-  24. (find-code-c-d-intro)
+  20. (find-eval-intro)
+  21. (find-links-intro)
+  22. (find-brxxx-intro)
+  23. (find-wrap-intro)
+  24. (find-eejump-intro)
+  25. (find-anchors-intro)
+  26. (find-code-c-d-intro)
 
 These are etcs:
 
-  25. (find-multiwindow-intro)
-  26. (find-templates-intro)
-  27. (find-org-intro)
-  28. (find-git-intro)
+  27. (find-templates-intro)
+  28. (find-org-intro)
+  29. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  29. (find-prepared-intro)
-  30. (find-bounded-intro)
-  31. (find-channels-intro)
+  30. (find-prepared-intro)
+  31. (find-bounded-intro)
+  32. (find-channels-intro)
 
 This one is used in a video:
 
-  32. (find-three-main-keys-intro)
+  33. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  33. (find-emacs-intro)
-  34. (find-defun-intro)
+  34. (find-emacs-intro)
+  35. (find-defun-intro)
 
 Item 25 is an index of old video tutorials, with scripts for
 downloading local copies of them and links to important positions
@@ -12587,13 +12590,21 @@ The quickest way to open or recreate this is with `M-3 M-j'.
 
 
 
-This is a tutorial on how to install Emacs and eev on M$ Windows.
-If you're a W$ user you should start by reading it online, at:
+This is a tutorial on how to install Emacs and eev on M$ Windows,
+and on the basic steps for learning Emacs and eev after
+installing them. If you're a W$ user you should start by reading
+this tutorial online in a browser, at
 
   http://angg.twu.net/eev-intros/find-windows-beginner-intro.html
 
-After getting eev installed on your machine you can access this
-tutorial from Emacs by typing `M-3 M-j'.
+while you run Emacs in another window (see section 1). After
+getting eev installed on your machine (see section 3) you will be
+able to access this tutorial from Emacs by typing `M-3 M-j'.
+
+The main tutorial on eev is this one,
+
+  (find-eev-quick-intro)
+  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
 
 The sections from 5.6 onwards were written in nov/2021 and they
 cover how to install some external programs to make almost all
@@ -12640,7 +12651,7 @@ rewrite lots of things.
 
 This is my N-th attempt to rewrite this tutorial.
 
-Version of these instructions: 2021nov08.
+Version of these instructions: 2021nov13.
 
 
 
@@ -12725,7 +12736,7 @@ of the screen as a \"minibuffer\" - see:
   (find-enode \"Basic Minibuffer\" \"it appears in the echo area\")
   (find-enode \"M-x\" \"Running Commands by Name\")
 
-To install eev,
+To install eev, do this:
   1. run `M-x package-initialize',
   2. run `M-x list-packages',
   3. select \"eev\" at the list of packages,
@@ -12736,6 +12747,14 @@ To load eev and enter its tutorial, run
 
 The tutorial looks like this:
   (find-eev-quick-intro)
+
+There's a video about these basic steps here:
+
+  \"How to install eev with M-x list-packages and how to navigate its tutorials\"
+  http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4
+             http://angg.twu.net/2020-list-packages-eev-nav.html
+             http://www.youtube.com/watch?v=kxBjiUo88_U
+
 
 
 
@@ -12796,7 +12815,7 @@ are \"active\".  The main key bindings of eev are listed here,
 
   (find-emacs-keys-intro \"1. Basic keys (eev)\")
 
-and if you want more details about whats is an \"active keymap\" you can
+and if you want more details about what is an \"active keymap\" you can
 read these sections of the manual:
 
   (find-enode \"Key Bindings\")
@@ -13252,6 +13271,108 @@ this:
 " pos-spec-list)))
 
 ;; (find-windows-beginner-intro)
+
+
+
+;;;  _____                   _               
+;;; | ____|_  _____ _ __ ___(_)___  ___  ___ 
+;;; |  _| \ \/ / _ \ '__/ __| / __|/ _ \/ __|
+;;; | |___ >  <  __/ | | (__| \__ \  __/\__ \
+;;; |_____/_/\_\___|_|  \___|_|___/\___||___/
+;;;                                          
+;; «find-eev-exercises-intro»  (to ".find-eev-exercises-intro")
+;; Skel: (find-intro-links "eev-exercises")
+;; Test: (find-eev-exercises-intro)
+
+(defun find-eev-exercises-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-eev-exercises-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-eev-exercises-intro)
+Source code:  (find-efunction 'find-eev-exercises-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+
+
+0. Introduction
+===============
+This is a set of exercises that I am using in this series of
+workshops:
+
+  http://angg.twu.net/2021-workshop.html
+  http://angg.twu.net/2021-oficina.html
+
+At this moment - 2021nov14 - they are in a very draftish stage
+and they haven't yet been tested by people who are learning eev.
+
+I will suppose that the people trying to do these exercises know
+the material in these sections of the two most basic tutorials,
+
+  (find-eev-quick-intro)
+  (find-eev-quick-intro \"1. Installing eev\")
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
+  (find-eev-quick-intro \"4.1. `find-here-links'\")
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+  (find-eev-quick-intro \"5. Links to Emacs documentation\")
+  (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+  (find-windows-beginner-intro)
+  (find-windows-beginner-intro \"1. Download and install Emacs\")
+  (find-windows-beginner-intro \"2. Key sequences and how to quit\")
+  (find-windows-beginner-intro \"3. Using M-x and installing eev\")
+  (find-windows-beginner-intro \"4. Understanding buffers and the mode line\")
+
+and that they have seen this video,
+
+  (find-eevnavvideo \"6:28\" \"M-j: you can forget practically everything...\")
+  (find-eevnavvideo \"6:41\" \"if you type just M-j\")
+  (find-eevnavvideo \"6:48\" \"has a header that is beginner-friendly\")
+
+_and_ that they have tried and understood the lines that I've
+added to `M-j' after making that video - these ones:
+
+      M-1 M-j  runs:  (find-fline \"~/TODO\")
+  M-2 M-1 M-j  shows the file ~/TODO in the right window
+  M-3 M-1 M-j  opens ~/TODO in the right window
+
+Most of the exercises in this \"intro\" will be about creating
+hyperlinks and saving them to your notes - i.e., to your ~/TODO.
+
+
+
+1. Saving interesting links
+===========================
+The documentation of eev says at several places that people
+should \"save all interesting links to their notes\". It is
+easier to learn this if we split it into:
+
+  a. save links to your notes
+  b. test these links
+  c. mark the links that you don't understand
+  d. undestand what each link does (with M-h M-f)
+  e. recognize which links are interesting
+
+  [TODO: translate and expand:]
+
+        1. copiar alguns links do M-j
+        2. copiar alguns links do M-2 M-j
+        3. copiar alguns (eek \"M-h M-k ...\")s
+        4. ir pro tutorial sobre o M-h M-3
+        5. copiar um dos links pro vídeo
+        6. ir pro código fonte
+        7. copiar o link pro código fonte
+
+
+" pos-spec-list)))
+
+;; (find-eev-exercises-intro)
 
 
 
@@ -14491,48 +14612,6 @@ And here are (elisp hyper)links to them with descriptions:
 " pos-spec-list)))
 
 ;; (find-lexical-intro)
-
-
-
-
-
-
-;; «find-little-languages-intro»  (to ".find-little-languages-intro")
-;; Skel: (find-intro-links "little-languages")
-
-(defun find-little-languages-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-little-languages-intro)*"))
-    (apply 'find-eintro "\
-\(Re)generate: (find-little-languages-intro)
-Source code:  (find-efunction 'find-little-languages-intro)
-More intros:  (find-eev-quick-intro)
-              (find-eev-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-It is meant as both a tutorial and a sandbox.
-
-
-
-http://angg.twu.net/emacsconf2020.html
-http://angg.twu.net/emacsconf2020.html#forth
-
-  (find-eev \"eev-blinks.el\" \"ee-goto-position\")
-  (find-eev \"eev-blinks.el\" \"ee-goto-rest\")
-  (find-multiwindow-intro)
-  (find-eev-quick-intro \"7.4. Commands with very short names\")
-
-control structures in eepitch
-
-M-7 M-e
-
-
-
-Hello
-=====
-" pos-spec-list)))
-
-;; (find-little-languages-intro)
-
 
 
 

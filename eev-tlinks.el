@@ -2701,6 +2701,7 @@ This function is used by `ee-0x0-upload-region'."
 ;; http://angg.twu.net/.emacs.videos.html#{c}
 
 ;; Places with more info about this video:
+;; (find-eev \"eev-videolinks.el\" \"{c}\")
 ;; (find-angg \".emacs.templates\" \"eev-videos-data\" \"{c}\")
 ;; http://angg.twu.net/.emacs.templates.html#eev-videos-data
 ;; (find-videos-intro \"1. Some videos\" \"{c}\")
