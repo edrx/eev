@@ -1,3 +1,35 @@
+2021-11-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-youtubedl-command): added another suggestion
+	to the comments.
+
+2021-11-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-use-red-stars, ee-use-red-bullets): new
+	functions.
+
+	* eepitch.el (ee-next-line): put the docstring before the
+	(interactive "p").
+
+2021-11-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-eev2021video): new function.
+	(ee-1stclassvideos-info): added "eev2021".
+
+2021-11-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-maxima-mode): new function.
+
+2021-11-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-block): make
+	`ee-insert-test-block' the function and `ee-insert-test' the
+	alias.
+
+2021-11-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-efunctionpp): rewritten.
+
 2021-11-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-little-languages-intro): deleted.

@@ -41,6 +41,7 @@
 ;;  «.video-tutorials»		(to "video-tutorials")
 ;;   «.find-eev2019video»	(to "find-eev2019video")
 ;;   «.find-eev2020video»	(to "find-eev2020video")
+;;   «.find-eev2021video»	(to "find-eev2021video")
 ;;   «.find-eevnavvideo»	(to "find-eevnavvideo")
 ;;   «.find-eevtemplvideo»	(to "find-eevtemplvideo")
 ;;   «.find-eevfherelvideo»	(to "find-eevfherelvideo")
@@ -49,6 +50,7 @@
 ;; «.more-info»			(to "more-info")
 ;;   «.eev2019»			(to "eev2019")
 ;;   «.eev2020»			(to "eev2020")
+;;   «.eev2021»			(to "eev2021")
 ;;   «.eevnav»			(to "eevnav")
 ;;   «.eevtempl»		(to "eevtempl")
 ;;   «.fherel»			(to "fherel")
@@ -303,6 +305,22 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
   (interactive)
   (find-eev-video "emacsconf2020" "hOAqBc42Gg8" time))
 
+;; «find-eev2021video»  (to ".find-eev2021video")
+;; Skel: (find-eevshortvideo-links "eev2021" "emacsconf2021" "{youtubeid}")
+;;  See: (find-videos-intro "1. Some videos" "emacsconf2021")
+;; Index: http://angg.twu.net/.emacs.videos.html#eev2021
+;;  Test: (find-eev2021video "0:00")
+(defun find-eev2021video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-videos-intro \"1. Some videos\" \"emacsconf2021\")
+     http://angg.twu.net/emacsconf2021.html
+     for more info on this particular video,
+and: (find-video-links-intro \"7. `find-eev-video'\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "emacsconf2021" "{youtubeid}" time))
+
 ;; «find-eevnavvideo»  (to ".find-eevnavvideo")
 ;; Skel: (find-eevshortvideo-links "eevnav" "2020-list-packages-eev-nav" "kxBjiUo88_U")
 ;;  See: (find-videos-intro "1. Some videos" "2020-list-packages-eev-nav")
@@ -413,6 +431,13 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
      :mp4  "http://angg.twu.net/eev-videos/emacsconf2020.mp4"
      :yt   "http://www.youtube.com/watch?v=hOAqBc42Gg8"
      :page "http://angg.twu.net/emacsconf2020.html")
+    ;;
+    ;; «eev2021»  (to ".eev2021")
+    ("eev2021"
+     :title "Test blocks"
+     :mp4  "http://angg.twu.net/eev-videos/emacsconf2021.mp4"
+     ;; :yt "(Not yet)"
+     :page "http://angg.twu.net/emacsconf2021.html")
     ;;
     ;; «eevnav»  (to ".eevnav")
     ("eevnav"

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211024
+;; Version:    20211124
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -235,9 +235,9 @@ Examples: (ee-eval-string \"(+ 1 2) (* 3 4) ;; this returns 12=3*4\")
   (prin1 (ee-eval-string str)))
 
 (defun ee-next-line (&optional arg try-vscroll)
-  (interactive "p")
 "Line `next-line', but ignoring visual line mode.
 This function is used by `eepitch-this-line'."
+  (interactive "p")
   (let ((line-move-visual nil))
     (next-line arg try-vscroll)))
 

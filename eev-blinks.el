@@ -61,6 +61,7 @@
 ;; «.find-eww»			(to "find-eww")
 ;; «.find-Package»		(to "find-Package")
 ;; «.find-epp»			(to "find-epp")
+;; «.find-efunctionpp»		(to "find-efunctionpp")
 ;; «.find-eloadhistory»		(to "find-eloadhistory")
 ;; «.find-einternals»		(to "find-einternals")
 ;; «.find-einsert»		(to "find-einsert")
@@ -1044,19 +1045,23 @@ that `find-epp' would print in a single line."
   (let ((ee-buffer-name (or ee-buffer-name "*pp*")))
     (apply 'find-estring-elisp (ee-ppp0 object) pos-spec-list)))
 
+;; «find-efunctionpp»  (to ".find-efunctionpp")
 ;; See: (find-elisp-intro "6. Defining functions")
 ;;      (find-elisp-intro "6. Defining functions" "lambda")
+;;      (find-elisp-intro "11. Byte-compiled functions")
+;;      (find-elisp-intro "11. Byte-compiled functions" "shows a lambda")
+;; Test: (find-efunctionpp 'find-fline)
+;;
 (defun find-efunctionpp (symbol &rest pos-spec-list)
 "Visit a temporary buffer containing the pretty-printed Lisp code for SYMBOL."
   (interactive (find-function-read))
-  (let ((ee-buffer-name
-	 (or ee-buffer-name (format "*function %S*" symbol))))
-    (apply 'find-epp
-	   (symbol-function symbol)
-	   ;; Note: if instead of the above we use
-	   ;;  `(fset ',symbol ',(symbol-function symbol))
-	   ;; the we get a buffer in which we can edit the code for SYMBOL.
-	   pos-spec-list)))
+  (let* ((fefpp (format "(find-efunctionpp '%S)" symbol))
+	 (ee-buffer-name (or ee-buffer-name (format "*%s*" fefpp)))
+	 (body (format ";; %s\n;; See: %S\n;;\n%s\n"
+		       fefpp
+		       '(find-eev "eev-blinks.el" "find-efunctionpp")
+		       (pp-to-string (symbol-function symbol)))))
+    (apply 'find-estring-elisp body pos-spec-list)))
 
 
 

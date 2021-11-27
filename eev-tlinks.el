@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211107
+;; Version:    20211126
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -92,10 +92,12 @@
 ;; «.find-newbrowser-links»		(to "find-newbrowser-links")
 ;; «.ee-0x0-upload-region»		(to "ee-0x0-upload-region")
 ;; «.find-0x0-links»			(to "find-0x0-links")
-;; «.find-red-star-links»		(to "find-red-star-links")
 ;; «.find-eepitch-bullet-links»		(to "find-eepitch-bullet-links")
+;; «.find-red-star-links»		(to "find-red-star-links")
+;;   «.ee-use-red-stars»		(to "ee-use-red-stars")
+;;   «.ee-use-red-bullets»		(to "ee-use-red-bullets")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
-;; «.find-1stclassvideo-links»	(to "find-1stclassvideo-links")
+;; «.find-1stclassvideo-links»		(to "find-1stclassvideo-links")
 
 
 (require 'eev-env)
@@ -1094,10 +1096,18 @@ Files that look like subtitle files are ignored."
 ;;      https://github.com/yt-dlp/yt-dlp
 ;;      https://github.com/yt-dlp/yt-dlp#Removed
 ;;
-;; Suggestion (2021oct17): install yt-dlp and put this in your .emacs:
+;; Suggestion (2021nov26): install yt-dlp and either put this in your .emacs,
 ;;
 ;;   (setq ee-youtubedl-command "yt-dlp -o '%(title)s-%(id)s.%(ext)s'")
-
+;;
+;; and put a copy of this fake youtube-dl script
+;;
+;;   http://angg.twu.net/bin/youtube-dl.html
+;;   http://angg.twu.net/bin/youtube-dl
+;;
+;; somewhere in your PATH, and use this:
+;;
+;;   (setq ee-youtubedl-command "youtube-dl -t")
 
 
 ;; The directories into which we usually download videos.
@@ -2534,8 +2544,8 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
-;; «find-red-star-links»        (to ".find-red-star-links")
 ;; «find-eepitch-bullet-links»  (to ".find-eepitch-bullet-links")
+;; «find-red-star-links»        (to ".find-red-star-links")
 ;; Skel: (find-find-links-links-new "red-star" "" "")
 ;; Test: (find-red-star-links)
 ;;
@@ -2597,6 +2607,23 @@ This function is used by `ee-0x0-upload-region'."
 ")
      )
    pos-spec-list))
+
+;; «ee-use-red-stars»  (to ".ee-use-red-stars")
+;; «ee-use-red-bullets»  (to ".ee-use-red-bullets")
+
+(defun ee-use-red-stars ()
+  "See: (find-red-star-links)"
+  (interactive)
+  (eepitch-set-glyph0 ?• nil)
+  (defun ee-adjust-red-stars (str) str))
+
+(defun ee-use-red-bullets ()
+  "See: (find-red-star-links)"
+  (interactive)
+  (eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
+  (defun ee-adjust-red-stars (str) (replace-regexp-in-string "" "•" str)))
+
+
 
 
 

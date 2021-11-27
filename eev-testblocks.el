@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211104
+;; Version:    20211121
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -40,8 +40,10 @@
 ;;   http://angg.twu.net/emacsconf2021.html
 ;;   http://angg.twu.net/LATEX/2021emacsconf.pdf
 
-;; «.ee-insert-test»	(to "ee-insert-test")
-;; «.examples»		(to "examples")
+;; «.eeit»			(to "eeit")
+;; «.ee-insert-test»		(to "ee-insert-test")
+;; «.ee-insert-test-block»	(to "ee-insert-test-block")
+;; «.examples»			(to "examples")
 
 
 
@@ -53,15 +55,20 @@
 ;;; |  __/  __/_____| | | | \__ \  __/ |  | ||_____| ||  __/\__ \ |_ 
 ;;;  \___|\___|     |_|_| |_|___/\___|_|   \__|     \__\___||___/\__|
 ;;;                                                                  
+;; «eeit»  (to ".eeit")
 ;; «ee-insert-test»  (to ".ee-insert-test")
+;; «ee-insert-test-block»  (to ".ee-insert-test-block")
 ;; See: (find-eepitch-intro "3. Test blocks")
 ;; Insert a "test block" in a Lua/Python/Ruby/shell/Tcl/etc script.
 
-(defalias 'eeit                 'ee-insert-test)
-(defalias 'ee-insert-test-block 'ee-insert-test)
+(defalias 'eeit           'ee-insert-test-block)
+(defalias 'ee-insert-test 'ee-insert-test-block)
 
-(defun ee-insert-test ()
-  "Insert a \"test block\" - an eepitch block in a multiline comment."
+(defun ee-insert-test-block ()
+  "Insert a \"test block\" - an eepitch block in a multiline comment.
+If the major mode is `foo-mode' then this function calls
+`ee-insert-test-foo-mode' if it exists, and yields an error if
+`ee-insert-test-foo-mode' is not defined."
   (interactive)
   (if (fboundp (intern (format "ee-insert-test-%s" major-mode)))
       (funcall (intern (format "ee-insert-test-%s" major-mode)))
@@ -153,6 +160,18 @@ dofile \"%s\"
 
 --]%s]
 " equals (buffer-name) equals)))))
+
+(defun ee-insert-test-maxima-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+/*
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+load(\"%s\");
+
+*/
+" (buffer-name)))))
 
 (defun ee-insert-test-org-mode ()
   (interactive)

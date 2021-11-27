@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211114
+;; Version:    20211125
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -193,12 +193,12 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 
 
-;;;   __             _   _  __       
-;;;  / _| ___  _ __ | |_(_)/ _|_   _ 
+;;;   __             _   _  __
+;;;  / _| ___  _ __ | |_(_)/ _|_   _
 ;;; | |_ / _ \| '_ \| __| | |_| | | |
 ;;; |  _| (_) | | | | |_| |  _| |_| |
 ;;; |_|  \___/|_| |_|\__|_|_|  \__, |
-;;;                            |___/ 
+;;;                            |___/
 ;;
 ;; «find-eintro» (to ".find-eintro")
 ;; 2019feb03: experimental. This is like `find-estring' but it runs
@@ -260,12 +260,12 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 
 
 
-;;;                                   _      _         _       _             
-;;;   ___  _____   __      __ _ _   _(_) ___| | __    (_)_ __ | |_ _ __ ___  
-;;;  / _ \/ _ \ \ / /____ / _` | | | | |/ __| |/ /____| | '_ \| __| '__/ _ \ 
+;;;                                   _      _         _       _
+;;;   ___  _____   __      __ _ _   _(_) ___| | __    (_)_ __ | |_ _ __ ___
+;;;  / _ \/ _ \ \ / /____ / _` | | | | |/ __| |/ /____| | '_ \| __| '__/ _ \
 ;;; |  __/  __/\ V /_____| (_| | |_| | | (__|   <_____| | | | | |_| | | (_) |
-;;;  \___|\___| \_/       \__, |\__,_|_|\___|_|\_\    |_|_| |_|\__|_|  \___/ 
-;;;                          |_|                                             
+;;;  \___|\___| \_/       \__, |\__,_|_|\___|_|\_\    |_|_| |_|\__|_|  \___/
+;;;                          |_|
 ;;
 ;; «find-eev-quick-intro» (to ".find-eev-quick-intro")
 ;; (find-intro-links "eev-quick")
@@ -511,7 +511,7 @@ For example,
   (find-efunction-links 'find-file)
 
 creates this buffer, and switches to it:
-   ____________________________________________________________________ 
+   ____________________________________________________________________
   |# (find-efunction-links 'find-file)                                 |
   |# (eek \"M-h M-f  find-file\")                                        |
   |# (find-eev-quick-intro \"4.2. `find-ekey-links' and  friends\")      |
@@ -564,7 +564,7 @@ elisp hyperlinks buffer containing some hyperlinks to \"here\" - and how
 it does that depends on the major mode and on the name of the current
 buffer. For example, typing `M-h M-h' here generates:
 
-   ___________________________________________________________________ 
+   ___________________________________________________________________
   |# See:                                                             |
   |# (find-eev-quick-intro \"4.1. `find-here-links'\")                  |
   |# (find-emacs-keys-intro \"1. Basic keys (eev)\" \"M-h M-h\")          |
@@ -723,7 +723,7 @@ The Emacs manuals are in \"info\" format, which means:
              |-- 3 ----- 3.1 --.-- 3.1.1
              |                 |-- 3.1.2
              |                 `-- 3.1.3
-             |-- Appendix A 
+             |-- Appendix A
              `-- Index
 
   c) each node has both a short name and a long name (its title),
@@ -745,7 +745,7 @@ The Emacs manuals are in \"info\" format, which means:
        GNU Emacs Manual                 (find-node \"(emacs)\"Top)
        Emacs Lisp / GNU Emacs Lisp
          Reference Manual               (find-node \"(elisp)\"Top)
-       An Introduction to 
+       An Introduction to
          Programming in Emacs Lisp      (find-node \"(eintr)\"Top)
 
   e) The \"Info directory\" lists all the installed info manuals.
@@ -763,7 +763,7 @@ The Emacs manuals are in \"info\" format, which means:
        * Emacs:               The extensible self-documenting text editor.
        * Emacs FAQ:           Frequently Asked Questions about Emacs.
        * Elisp:               The Emacs Lisp Reference Manual.
-       * Emacs Lisp Intro:    A simple introduction to Emacs Lisp 
+       * Emacs Lisp Intro:    A simple introduction to Emacs Lisp
                                 programming.
 
   f) Emacs uses \"Info mode\" when displaying nodes of manuals in
@@ -778,7 +778,7 @@ The Emacs manuals are in \"info\" format, which means:
 
      and the main ones are:
 
-       q         exit             (go back to some other buffer) 
+       q         exit             (go back to some other buffer)
        (arrows)  move point
        RET       follow link at point
        TAB       move to next link
@@ -1861,12 +1861,12 @@ This section was moved to:
 
 
 
-;;;                                      _                  
-;;;   ___ _ __ ___   __ _  ___ ___      | | _____ _   _ ___ 
+;;;                                      _
+;;;   ___ _ __ ___   __ _  ___ ___      | | _____ _   _ ___
 ;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| |/ / _ \ | | / __|
 ;;; |  __/ | | | | | (_| | (__\__ \_____|   <  __/ |_| \__ \
 ;;;  \___|_| |_| |_|\__,_|\___|___/     |_|\_\___|\__, |___/
-;;;                                               |___/     
+;;;                                               |___/
 ;;
 ;; «find-emacs-keys-intro» (to ".find-emacs-keys-intro")
 ;; Skel: (find-intro-links "emacs-keys")
@@ -2063,12 +2063,12 @@ M-B       -- eewrap-escript-block       (find-eev-quick-intro \"`M-B'\")
 
 
 
-;;;  _           _        _ _ 
+;;;  _           _        _ _
 ;;; (_)_ __  ___| |_ __ _| | |
 ;;; | | '_ \/ __| __/ _` | | |
 ;;; | | | | \__ \ || (_| | | |
 ;;; |_|_| |_|___/\__\__,_|_|_|
-;;;                           
+;;;
 
 ;; «find-eev-install-intro» (to ".find-eev-install-intro")
 ;; Skel: (find-intro-links "eev-install")
@@ -2164,7 +2164,7 @@ Here's what `(require 'eev-load)' does:
   2) The standard-display-table is changed to make three
      characters be displayed as colored glyphs: \"\" (char 15),
      \"«\" (char 171), and \"»\" (char 187).
-     
+
   3) The environment variables \"S\" and \"EEVDIR\" are set.
 
   4) An innocuous wrapper is installed around an internal
@@ -2194,7 +2194,7 @@ where `eev-beginner' turns eev-mode on and runs:
 See:
 
   (find-eev \"eev-beginner.el\")
-  
+
 If you have installed eev by following these instructions
 
   (find-eev-quick-intro \"1. Installing eev\")
@@ -2625,12 +2625,12 @@ See:
 
 
 
-;;;                  
+;;;
 ;;;   ___  _____   __
 ;;;  / _ \/ _ \ \ / /
-;;; |  __/  __/\ V / 
-;;;  \___|\___| \_/  
-;;;                  
+;;; |  __/  __/\ V /
+;;;  \___|\___| \_/
+;;;
 ;; This works as an index.
 ;; Skel: (find-intro-links "eev")
 ;; «find-eev-intro»  (to ".find-eev-intro")
@@ -2734,7 +2734,7 @@ Note that eev-mode.el has this commentary:
 
   ;; Turning on eev-mode simply activates the eev-mode-map keymap, and
   ;; adds an \"eev\" to the mode line to remind you this. Turning off
-  ;; eev-mode deactivates the keymap and the reminder. 
+  ;; eev-mode deactivates the keymap and the reminder.
 
 If you prefer to start with eev-mode off, omit the
 line `(eev-mode 1)' above or change it to `(eev-mode 0)'. To
@@ -2754,7 +2754,7 @@ things that happen are:
   2) The standard-display-table is changed to make three
      characters be displayed as colored glyphs: \"\" (char 15),
      \"«\" (char 171), and \"»\" (char 187).
-     
+
   3) The environment variables \"S\" and \"EEVDIR\" are set.
 
   4) An innocuous wrapper is installed around an internal
@@ -2855,12 +2855,12 @@ implement parts of this, please get in touch!
 
 
 
-;;;  _                         _ _       _        
-;;; | |__   ___ _ __ ___      | (_)_ __ | | _____ 
+;;;  _                         _ _       _
+;;; | |__   ___ _ __ ___      | (_)_ __ | | _____
 ;;; | '_ \ / _ \ '__/ _ \_____| | | '_ \| |/ / __|
 ;;; | | | |  __/ | |  __/_____| | | | | |   <\__ \
 ;;; |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
-;;;                                               
+;;;
 ;; «find-here-links-intro»  (to ".find-here-links-intro")
 ;; Skel: (find-intro-links "here-links")
 
@@ -3085,7 +3085,7 @@ and the \"1\" is a reference to this:
 
 Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
 
-   _______________           _____________________           ________________ 
+   _______________           _____________________           ________________
   |               |         |          |          |         |                |
   |               |         |          |  elinks  |         |                |
   |               |         |          |  buffer  |         |                |
@@ -3172,12 +3172,12 @@ The next steps are to learn how:
 
 
 
-;;;            __ _       _             
-;;;  _ __ ___ / _(_)_ __ (_)_ __   __ _ 
+;;;            __ _       _
+;;;  _ __ ___ / _(_)_ __ (_)_ __   __ _
 ;;; | '__/ _ \ |_| | '_ \| | '_ \ / _` |
 ;;; | | |  __/  _| | | | | | | | | (_| |
 ;;; |_|  \___|_| |_|_| |_|_|_| |_|\__, |
-;;;                               |___/ 
+;;;                               |___/
 ;;
 ;; «find-refining-intro» (to ".find-refining-intro")
 ;; Skel: (find-intro-links "refining")
@@ -3556,7 +3556,7 @@ anchors in the directory that has the source files of eev, i.e.,
 
 and only then do things like
 
-  (code-c-d \"mnwa\" \"~/MYNOTESWITHANCHORS/\" :anchor) 
+  (code-c-d \"mnwa\" \"~/MYNOTESWITHANCHORS/\" :anchor)
 
 but with better names, of course, and learn how to create links
 to the anchors in the files in that directory.
@@ -3618,12 +3618,12 @@ please get in touch!
 
 
 
-;;;                  _ 
+;;;                  _
 ;;;   _____   ____ _| |
 ;;;  / _ \ \ / / _` | |
 ;;; |  __/\ V / (_| | |
 ;;;  \___| \_/ \__,_|_|
-;;;                    
+;;;
 ;; «find-eval-intro»  (to ".find-eval-intro")
 ;; Skel: (find-intro-links "eval")
 ;; (find-TH "eev-article" "hyperlinks")
@@ -4079,12 +4079,12 @@ hyperlinks in scripts]
 
 
 
-;;;  _ _       _                                             _   _                 
-;;; | (_)_ __ | | _____        ___ ___  _ ____   _____ _ __ | |_(_) ___  _ __  ___ 
+;;;  _ _       _                                             _   _
+;;; | (_)_ __ | | _____        ___ ___  _ ____   _____ _ __ | |_(_) ___  _ __  ___
 ;;; | | | '_ \| |/ / __|_____ / __/ _ \| '_ \ \ / / _ \ '_ \| __| |/ _ \| '_ \/ __|
 ;;; | | | | | |   <\__ \_____| (_| (_) | | | \ V /  __/ | | | |_| | (_) | | | \__ \
 ;;; |_|_|_| |_|_|\_\___/      \___\___/|_| |_|\_/ \___|_| |_|\__|_|\___/|_| |_|___/
-;;;                                                                                
+;;;
 ;; «find-links-conv-intro» (to ".find-links-conv-intro")
 ;; Skel: (find-intro-links "links-conv")
 
@@ -4360,7 +4360,7 @@ readable text and \"usual\" hyperlinks that can be followed by
 typing RET on them, while `M-h M-f find-file' produces a buffer
 like this:
 
-   _____________________________________________________________ 
+   _____________________________________________________________
   |# (find-efunction-links 'find-file)                          |
   |# (where-is 'find-file)                                      |
   |# (describe-function 'find-file)                             |
@@ -4427,7 +4427,7 @@ Remember that `M-2 M-e' splits the window like this,
 
 where the \"source buffer\" is this one and the \"target buffer\" will be
 this in the first case,
-   ___________________________________________________________________ 
+   ___________________________________________________________________
   |# (find-latex-links \"{stem}\")                                      |
   |# (find-latex-links \"/tmp/test\")                                   |
   |# (find-eev-quick-intro \"`find-latex-links'\")                      |
@@ -4540,12 +4540,12 @@ be expanded later:
 
 
 
-;;;  _ _       _        
-;;; | (_)_ __ | | _____ 
+;;;  _ _       _
+;;; | (_)_ __ | | _____
 ;;; | | | '_ \| |/ / __|
 ;;; | | | | | |   <\__ \
 ;;; |_|_|_| |_|_|\_\___/
-;;;                     
+;;;
 ;; Skel: (find-intro-links "links")
 ;; «find-links-intro»  (to ".find-links-intro")
 
@@ -4670,7 +4670,7 @@ for a few other cases. Try the sexps below:
 Each one of them tests a different case of `find-here-links',
 creating a window setup like this:
 
-   ______________________________________ 
+   ______________________________________
   |               |                      |
   |               |      target of       |
   |               |        sexp          |
@@ -4699,7 +4699,7 @@ in a way that does not disturb much our attention. Consider this
 diagram [note: it DOES NOT imply that the Emacs frame is split into three
 windows - typically we will switch between buffers in a single window]:
 
-   ______________________________________ 
+   ______________________________________
   |               |                      |
   |               |      something       |
   |              ==>    interesting      |
@@ -4724,7 +4724,7 @@ and this series of steps:
   8. continue navigating & doing stuff.
 
 At (8) we are essentially back to (1), but we have added to our
-e-script buffer a link to \"something interesting\". 
+e-script buffer a link to \"something interesting\".
 
 Note that to add refining we need to add a step before (2) and
 another one after (3):
@@ -4871,7 +4871,7 @@ buffer, and so on. They don't try to be very smart -
 Several elisp hyperlinks buffers are composed of two parts: a
 series of links at the top, and then a template-generated text
 that is mean to be copied to somewhere else. The canonical
-example is 
+example is
 
   (find-eev-update-links)
 
@@ -4929,12 +4929,12 @@ scripts etc\]
 
 
 
-;;;                  _ _       _     
-;;;   ___  ___ _ __ (_) |_ ___| |__  
-;;;  / _ \/ _ \ '_ \| | __/ __| '_ \ 
+;;;                  _ _       _
+;;;   ___  ___ _ __ (_) |_ ___| |__
+;;;  / _ \/ _ \ '_ \| | __/ __| '_ \
 ;;; |  __/  __/ |_) | | || (__| | | |
 ;;;  \___|\___| .__/|_|\__\___|_| |_|
-;;;           |_|                    
+;;;           |_|
 ;;
 ;; «find-eepitch-intro»  (to ".find-eepitch-intro")
 ;; Skel: (find-intro-links "eepitch")
@@ -5016,7 +5016,7 @@ like this,
   |  (this intro)  |  (\"*shell*\")  |
   |                |               |
   |________________|_______________|
-  
+
 and the last three <f8>s - on \"non-red star lines\" - send the
 lines
 
@@ -5689,12 +5689,12 @@ What functions can generate target buffers:
 
 
 
-;;;                           
-;;; __      ___ __ __ _ _ __  
-;;; \ \ /\ / / '__/ _` | '_ \ 
+;;;
+;;; __      ___ __ __ _ _ __
+;;; \ \ /\ / / '__/ _` | '_ \
 ;;;  \ V  V /| | | (_| | |_) |
-;;;   \_/\_/ |_|  \__,_| .__/ 
-;;;                    |_|    
+;;;   \_/\_/ |_|  \__,_| .__/
+;;;                    |_|
 ;;
 ;; Skel: (find-intro-links "wrap")
 ;; «find-wrap-intro»  (to ".find-wrap-intro")
@@ -5918,12 +5918,12 @@ kinds of scripts.
 
 
 
-;;;             _                       
-;;;   ___  ___ (_)_   _ _ __ ___  _ __  
-;;;  / _ \/ _ \| | | | | '_ ` _ \| '_ \ 
+;;;             _
+;;;   ___  ___ (_)_   _ _ __ ___  _ __
+;;;  / _ \/ _ \| | | | | '_ ` _ \| '_ \
 ;;; |  __/  __/| | |_| | | | | | | |_) |
-;;;  \___|\___|/ |\__,_|_| |_| |_| .__/ 
-;;;          |__/                |_|    
+;;;  \___|\___|/ |\__,_|_| |_| |_| .__/
+;;;          |__/                |_|
 ;;
 ;; (find-elnode "Defining Commands")
 ;; (find-enode "Arguments")
@@ -5995,7 +5995,7 @@ items to our wishlist:
   7) the source code must be very simple.
 
 
-  
+
 2. A miniature
 ==============
 My original solution was this: I used only one keybinding, `M-j',
@@ -6135,7 +6135,7 @@ modifying them.
 
 6. Making an `eejump-nn*' work
 ==============================
-If you execute a line like 
+If you execute a line like
 
   (defun eejump-9* () (find-efunction 'eejump-9*))
 
@@ -6215,12 +6215,12 @@ then you'll be attributing just a \"temporary\" meaning to
 
 
 
-;;;                   _                    
-;;;   __ _ _ __   ___| |__   ___  _ __ ___ 
+;;;                   _
+;;;   __ _ _ __   ___| |__   ___  _ __ ___
 ;;;  / _` | '_ \ / __| '_ \ / _ \| '__/ __|
 ;;; | (_| | | | | (__| | | | (_) | |  \__ \
 ;;;  \__,_|_| |_|\___|_| |_|\___/|_|  |___/
-;;;                                        
+;;;
 ;; «find-anchors-intro» (to ".find-anchors-intro")
 ;; Skel: (find-intro-links "anchors")
 
@@ -6354,12 +6354,12 @@ anchors.
 
 
 
-;;;                _                          _ 
+;;;                _                          _
 ;;;   ___ ___   __| | ___        ___       __| |
 ;;;  / __/ _ \ / _` |/ _ \_____ / __|____ / _` |
 ;;; | (_| (_) | (_| |  __/_____| (_|_____| (_| |
 ;;;  \___\___/ \__,_|\___|      \___|     \__,_|
-;;;                                             
+;;;
 ;; «find-code-c-d-intro»  (to ".find-code-c-d-intro")
 
 (defun find-code-c-d-intro (&rest rest) (interactive)
@@ -6442,7 +6442,7 @@ function `find-code-c-d' is just for debugging, and we can regard
 it as a hyperlink to the code that this sexp would execute:
 
   (code-c-d \"lua51\" \"~/usrc/lua-5.1.4/\")
-  
+
 So, to define a family of functions including `find-lua51file'
 and `find-lua51w3m', for a given \"mnemonic\" - \"lua51\" in this
 case - and a given \"directory\" - \"~/usrc/lua-5.1.4/\" - we run
@@ -6524,12 +6524,12 @@ Try: (find-code-pdf      \"CODE\" \"FILE.pdf\")
 
 
 
-;;;            _  __       _ _ _        
-;;;  _ __   __| |/ _|     | (_) | _____ 
+;;;            _  __       _ _ _
+;;;  _ __   __| |/ _|     | (_) | _____
 ;;; | '_ \ / _` | |_ _____| | | |/ / _ \
 ;;; | |_) | (_| |  _|_____| | |   <  __/
 ;;; | .__/ \__,_|_|       |_|_|_|\_\___|
-;;; |_|                                 
+;;; |_|
 ;;
 ;; «find-pdf-like-intro»  (to ".find-pdf-like-intro")
 
@@ -6709,7 +6709,7 @@ The `(+ -110 113)'s in
   (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
   (find-livesofanimalstext (+ -110 113) \"LECTURE I.\")
 
-are a bit mysterious at first sight. 
+are a bit mysterious at first sight.
 
 We are accessing a PDF that is an excerpt of a book. The third
 page of the PDF has a \"[113]\" at its footer to indicate that it
@@ -7001,12 +7001,12 @@ comments. Try:
 
 
 
-;;;  _                           
+;;;  _
 ;;; | |__  _ ____  ____  ____  __
 ;;; | '_ \| '__\ \/ /\ \/ /\ \/ /
-;;; | |_) | |   >  <  >  <  >  < 
+;;; | |_) | |   >  <  >  <  >  <
 ;;; |_.__/|_|  /_/\_\/_/\_\/_/\_\
-;;;                              
+;;;
 ;; «find-brxxx-intro»  (to ".find-brxxx-intro")
 
 (defun find-brxxx-intro (&rest rest) (interactive)
@@ -7406,12 +7406,12 @@ In dired mode each line corresponds to a file
 
 
 
-;;;                       
-;;;  _ __  ___ _ __   ___ 
+;;;
+;;;  _ __  ___ _ __   ___
 ;;; | '_ \/ __| '_ \ / _ \
 ;;; | |_) \__ \ | | |  __/
 ;;; | .__/|___/_| |_|\___|
-;;; |_|                   
+;;; |_|
 ;;
 ;; «find-psne-intro»  (to ".find-psne-intro")
 ;; (find-TH "eev-article" "local-copies")
@@ -7615,7 +7615,7 @@ is error-prone and boring.
 Eev implements a command to do that, that works in both directions -
 it is called `ee-flip-psne-ness', and it searches for the next
 non-psne-or-psne URL and it \"flips its psne-ness\": it converts
-non-psne URLs to psne URLs and psne URLs to non-psne URLs. 
+non-psne URLs to psne URLs and psne URLs to non-psne URLs.
 
 To try it you will have to run this:
 
@@ -7683,12 +7683,12 @@ the URL to the end of a log file. So \"p-sn-e\".
 
 
 
-;;;                  _ _         __      _     _            
-;;;   __ _ _   _  __| (_) ___   / /_   _(_) __| | ___  ___  
-;;;  / _` | | | |/ _` | |/ _ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
+;;;                  _ _         __      _     _
+;;;   __ _ _   _  __| (_) ___   / /_   _(_) __| | ___  ___
+;;;  / _` | | | |/ _` | |/ _ \ / /\ \ / / |/ _` |/ _ \/ _ \
 ;;; | (_| | |_| | (_| | | (_) / /  \ V /| | (_| |  __/ (_) |
-;;;  \__,_|\__,_|\__,_|_|\___/_/    \_/ |_|\__,_|\___|\___/ 
-;;;                                                         
+;;;  \__,_|\__,_|\__,_|_|\___/_/    \_/ |_|\__,_|\___|\___/
+;;;
 ;; «find-audiovideo-intro» (to ".find-audiovideo-intro")
 ;; Skel: (find-intro-links "audiovideo")
 
@@ -7928,7 +7928,7 @@ but `M-h M-e' produces many more links.
 
 4.2. `eewrap-audiovideo'
 ------------------------
-And older, and clumsier, way of creating 
+And older, and clumsier, way of creating
 
 If you type `M-V' (`eewrap-audiovideo') on a line containing a
 shorthand word and a file name of an audio or video file, for
@@ -8057,7 +8057,7 @@ turn `eev-avadj-mode' on. Now `M-p' should work! If you type
 `M-p' on any of the lines with timestamps below it will open the
 default audio/video file at that timestamp.
 
-  0:00 
+  0:00
   0:10 calls the baby
   0:40 where's the baby
   1:04 right position
@@ -8111,7 +8111,7 @@ Here is an example of changing `'ee-mpv-video-options' temporarily:
           (cons \"--video-rotate=90\" ee-mpv-video-options)))
       (find-mpv-video fname pos)))
 
-  
+
 
 
 
@@ -8485,7 +8485,7 @@ that
 
   (find-eev2020video \"17:20\")
 
-runs 
+runs
 
   (find-eevvideo-links \"eev2020\" \"emacsconf2020\" \"hOAqBc42Gg8\" \"17:20\")
 
@@ -8519,12 +8519,12 @@ here:
 
 
 
-;;;                  _ _   _          _           _               
+;;;                  _ _   _          _           _
 ;;;  _ __ ___  _   _| | |_(_)_      _(_)_ __   __| | _____      __
 ;;; | '_ ` _ \| | | | | __| \ \ /\ / / | '_ \ / _` |/ _ \ \ /\ / /
-;;; | | | | | | |_| | | |_| |\ V  V /| | | | | (_| | (_) \ V  V / 
-;;; |_| |_| |_|\__,_|_|\__|_| \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/  
-;;;                                                               
+;;; | | | | | | |_| | | |_| |\ V  V /| | | | | (_| | (_) \ V  V /
+;;; |_| |_| |_|\__,_|_|\__|_| \_/\_/ |_|_| |_|\__,_|\___/ \_/\_/
+;;;
 ;; «find-multiwindow-intro» (to ".find-multiwindow-intro")
 ;; Skel: (find-intro-links "multiwindow")
 
@@ -8561,7 +8561,7 @@ default window setup for eepitch, which is this,
 is not enough; other setups, like these,
 
    ______________________
-  |          |           |        _________________________ 
+  |          |           |        _________________________
   |          |  shell A  |       |            |            |
   |          |___________|       |   script   |     GDB    |
   |  script  |           |       |            |            |
@@ -8585,7 +8585,7 @@ Suppose that we are in a buffer A, and we want to create a window
 configuration with A at the left, and with the buffers B and C
 stacked on one another at the right. That is:
 
-   ___________           ___________ 
+   ___________           ___________
   |           |         |     |     |
   |           |         |     |  B  |
   |     A     |   -->   |  A  |_____|
@@ -8654,7 +8654,7 @@ how to extend it - see the source:
 ===================
 Very often we want to create window setups like
 
-   _______________            _______________ 
+   _______________            _______________
   |       |       |          |       |       |
   |       |       |          |       |   B   |
   |   A   |   B   |    or    |   A   |_______| ;
@@ -8871,12 +8871,12 @@ The source code is simple enough, so take a look:
 
 
 
-;;;           _          
-;;;  _ __ ___(_)_ __ ___ 
+;;;           _
+;;;  _ __ ___(_)_ __ ___
 ;;; | '__/ __| | '__/ __|
-;;; | | | (__| | | | (__ 
+;;; | | | (__| | | | (__
 ;;; |_|  \___|_|_|  \___|
-;;;                      
+;;;
 ;; «find-rcirc-intro» (to ".find-rcirc-intro")
 ;; Skel: (find-intro-links "rcirc")
 
@@ -8941,7 +8941,7 @@ the third sexp is a \"sexp hyperlink to the LiberaChat channel
       |           |  LiberaChat |
       |           |    server   |
       |           |   messages  |
-      |  current  |_____________|    
+      |  current  |_____________|
       |  buffer   |             |
       |           |    #eev     |
       |           |   channel   |
@@ -9071,12 +9071,12 @@ See:
 
 
 
-;;;  _                       _       _            
-;;; | |_ ___ _ __ ___  _ __ | | __ _| |_ ___  ___ 
+;;;  _                       _       _
+;;; | |_ ___ _ __ ___  _ __ | | __ _| |_ ___  ___
 ;;; | __/ _ \ '_ ` _ \| '_ \| |/ _` | __/ _ \/ __|
 ;;; | ||  __/ | | | | | |_) | | (_| | ||  __/\__ \
 ;;;  \__\___|_| |_| |_| .__/|_|\__,_|\__\___||___/
-;;;                   |_|                         
+;;;                   |_|
 ;;
 ;; «find-templates-intro» (to ".find-templates-intro")
 ;; Skel: (find-intro-links "templates")
@@ -9154,7 +9154,7 @@ See:
 Try:
 
   (ee-template00 \"a{(+ 2 3)}b\")
- 
+
   (let ((hi \"Here: \")
         (a 22)
         (b 33))
@@ -9354,12 +9354,12 @@ Etc:
 
 
 
-;;;                                          _ 
+;;;                                          _
 ;;;  _ __  _ __ ___ _ __   __ _ _ __ ___  __| |
 ;;; | '_ \| '__/ _ \ '_ \ / _` | '__/ _ \/ _` |
 ;;; | |_) | | |  __/ |_) | (_| | | |  __/ (_| |
 ;;; | .__/|_|  \___| .__/ \__,_|_|  \___|\__,_|
-;;; |_|            |_|                         
+;;; |_|            |_|
 ;;
 ;; «find-prepared-intro»  (to ".find-prepared-intro")
 ;; (find-eev "eev-bounded.el")
@@ -9585,12 +9585,12 @@ But try these:
 
 
 
-;;;  _                           _          _ 
+;;;  _                           _          _
 ;;; | |__   ___  _   _ _ __   __| | ___  __| |
 ;;; | '_ \ / _ \| | | | '_ \ / _` |/ _ \/ _` |
 ;;; | |_) | (_) | |_| | | | | (_| |  __/ (_| |
 ;;; |_.__/ \___/ \__,_|_| |_|\__,_|\___|\__,_|
-;;;                                           
+;;;
 ;; «find-bounded-intro» (to ".find-bounded-intro")
 ;; Skel: (find-intro-links "bounded")
 (defun find-bounded-intro (&rest pos-spec-list) (interactive)
@@ -9678,12 +9678,12 @@ so you should do something like this, but for your favourite key:
 
 
 
-;;;       _                            _     
-;;;   ___| |__   __ _ _ __  _ __   ___| |___ 
+;;;       _                            _
+;;;   ___| |__   __ _ _ __  _ __   ___| |___
 ;;;  / __| '_ \ / _` | '_ \| '_ \ / _ \ / __|
 ;;; | (__| | | | (_| | | | | | | |  __/ \__ \
 ;;;  \___|_| |_|\__,_|_| |_|_| |_|\___|_|___/
-;;;                                          
+;;;
 ;; «find-channels-intro» (to ".find-channels-intro")
 ;; Skel: (find-intro-links "channels")
 
@@ -9878,28 +9878,28 @@ communication happens through fifos and ptys, that are not shown
 - but it's easy to build a complete diagram from this. The arrows
 indicate flow of information.
 
-             keyboard  mouse      display	    	  
-                 |       |           ^		   
-                 v       v           |		   
-            +----------------------------+          
-            |                            |	   
-            |             X              |	   
-            |                            |	   
-            +----------------------------+          
-   key/mouse | ^ display    key/mouse | ^ display   
-      events v | commands      events v | commands       
-         +---------+              +---------+       
-         |         |              |         |       
-         |  emacs  |              |  xterm  |       
-         |         |              |         |       
-         +---------+              +---------+       
-                            chars and | ^ chars and 
-                              signals v | signals   
-                                  +---------+       
-                                  |         |       
-                                  |   sh    |       
-                                  |         |       
-                                  +---------+       
+             keyboard  mouse      display
+                 |       |           ^
+                 v       v           |
+            +----------------------------+
+            |                            |
+            |             X              |
+            |                            |
+            +----------------------------+
+   key/mouse | ^ display    key/mouse | ^ display
+      events v | commands      events v | commands
+         +---------+              +---------+
+         |         |              |         |
+         |  emacs  |              |  xterm  |
+         |         |              |         |
+         +---------+              +---------+
+                            chars and | ^ chars and
+                              signals v | signals
+                                  +---------+
+                                  |         |
+                                  |   sh    |
+                                  |         |
+                                  +---------+
 
 To make the external shell at the right able to receive commands
 from Emacs we will insert a program between the \"xterm\" and the
@@ -9930,15 +9930,15 @@ below; the temporal order is from top to bottom.
 				    |    xterm    |
 				    |             |
 				    +-------------+
-   +-----------+                         |  ^	  
-   |           | --> eeg.A.str           v  |     
+   +-----------+                         |  ^
+   |           | --> eeg.A.str           v  |
    |   emacs   | <-- eeg.A.pid      +-------------+
    |           | -----------------> |             |
    +-----------+     eeg.A.str ---> | eechannel A |
                                     |             |
 				    +-------------+
-                                         |  ^	
-				         v  |	
+                                         |  ^
+				         v  |
 				    +-------------+
 				    |             |
 				    |     sh      |
@@ -9998,15 +9998,15 @@ protocol are not shown.
    |   emacs   |:::::::::::>|    xterm    |
    |           |            |             |
    +-----------+            +-------------+
-                              ::   |  ^   
-                              \\/   v  |   
+                              ::   |  ^
+                              \\/   v  |
                             +-------------+
                             |             |
               eeg.A.pid <-- | eechannel A |
                             |             |
                             +-------------+
-                              ::   |  ^   
-                              \\/   v  |  
+                              ::   |  ^
+                              \\/   v  |
                             +-------------+
                             |             |
                             |     sh      |
@@ -10194,12 +10194,12 @@ How to set it up
 
 
 
-;;;        _     _                
-;;; __   _(_) __| | ___  ___  ___ 
+;;;        _     _
+;;; __   _(_) __| | ___  ___  ___
 ;;; \ \ / / |/ _` |/ _ \/ _ \/ __|
 ;;;  \ V /| | (_| |  __/ (_) \__ \
 ;;;   \_/ |_|\__,_|\___|\___/|___/
-;;;                               
+;;;
 ;; «find-videos-intro» (to ".find-videos-intro")
 ;; Skel: (find-intro-links "videos")
 
@@ -10313,7 +10313,7 @@ so trivial from Emacs. If you open the htmlized version of this
 section in a browser - its URL is:
 
   http://angg.twu.net/eev-intros/find-videos-intro.html#2
-  
+
 you will notice that links like
 
   (find-eev2020video \"6:25\" \"`find-video'\")
@@ -10334,7 +10334,7 @@ in this way:
   1. \"How to record executable notes with eev - and how to play them back\"
      http://angg.twu.net/emacsconf2019.html
      (find-eev2019video \"0:00\")
-     
+
   2. \"On why most of the best features in eev look like 5-minute hacks\"
      http://angg.twu.net/emacsconf2020.html
      (find-eev2020video \"0:00\")
@@ -10420,12 +10420,12 @@ The function `find-eevvideo-links' is explained here:
 
 
 
-;;;        _     _                  _ _       _        
-;;; __   _(_) __| | ___  ___       | (_)_ __ | | _____ 
+;;;        _     _                  _ _       _
+;;; __   _(_) __| | ___  ___       | (_)_ __ | | _____
 ;;; \ \ / / |/ _` |/ _ \/ _ \ _____| | | '_ \| |/ / __|
 ;;;  \ V /| | (_| |  __/ (_) |_____| | | | | |   <\__ \
 ;;;   \_/ |_|\__,_|\___|\___/      |_|_|_| |_|_|\_\___/
-;;;                                                    
+;;;
 ;; «find-video-links-intro»  (to ".find-video-links-intro")
 ;; Skel: (find-intro-links "video-links")
 ;; Test: (find-video-links-intro)
@@ -10574,7 +10574,7 @@ the right directories:
 If you've never heard of dired, then read this:
 
   (find-enode \"Dired\")
-  
+
 
 
 
@@ -10802,12 +10802,12 @@ know something like this, please get in touch!
 
 
 
-;;;      _       __             
-;;;   __| | ___ / _|_   _ _ __  
-;;;  / _` |/ _ \ |_| | | | '_ \ 
+;;;      _       __
+;;;   __| | ___ / _|_   _ _ __
+;;;  / _` |/ _ \ |_| | | | '_ \
 ;;; | (_| |  __/  _| |_| | | | |
 ;;;  \__,_|\___|_|  \__,_|_| |_|
-;;;                             
+;;;
 ;; «find-defun-intro»  (to ".find-defun-intro")
 ;; Skel: (find-intro-links "defun")
 
@@ -10993,7 +10993,7 @@ See:
 
 When you execute an `(interactive ...)' it does nothing - it
 simply ignores its arguments (which aren't even evaluated!) and
-returns nil. But just as 
+returns nil. But just as
 
 
   (defun my-insert (obj) (insert (format \"\\n  ;; \\\\--> %S\" obj)))
@@ -11027,12 +11027,12 @@ returns nil. But just as
 
 
 
-;;;                                      _       _             
-;;;   ___ _ __ ___   __ _  ___ ___      (_)_ __ | |_ _ __ ___  
-;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| | '_ \| __| '__/ _ \ 
+;;;                                      _       _
+;;;   ___ _ __ ___   __ _  ___ ___      (_)_ __ | |_ _ __ ___
+;;;  / _ \ '_ ` _ \ / _` |/ __/ __|_____| | '_ \| __| '__/ _ \
 ;;; |  __/ | | | | | (_| | (__\__ \_____| | | | | |_| | | (_) |
-;;;  \___|_| |_| |_|\__,_|\___|___/     |_|_| |_|\__|_|  \___/ 
-;;;                                                            
+;;;  \___|_| |_| |_|\__,_|\___|___/     |_|_| |_|\__|_|  \___/
+;;;
 ;; «find-emacs-intro» (to ".find-emacs-intro")
 ;; Skel: (find-intro-links "emacs")
 
@@ -11388,12 +11388,12 @@ How do I mark a section as \"don't export this\"?
 
 
 
-;;;                           _       _       
-;;;   ___       ___  ___ _ __(_)_ __ | |_ ___ 
+;;;                           _       _
+;;;   ___       ___  ___ _ __(_)_ __ | |_ ___
 ;;;  / _ \_____/ __|/ __| '__| | '_ \| __/ __|
 ;;; |  __/_____\__ \ (__| |  | | |_) | |_\__ \
 ;;;  \___|     |___/\___|_|  |_| .__/ \__|___/
-;;;                            |_|            
+;;;                            |_|
 
 ;; «find-escripts-intro» (to ".find-escripts-intro")
 ;; Skel: (find-intro-links "escripts")
@@ -12017,7 +12017,7 @@ to Emacs.
 
 5.4. Eepitch blocks
 -------------------
-We saw in 
+We saw in
 
   (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
 
@@ -12326,12 +12326,12 @@ Example:
 
 
 
-;;;   ____ _ _   
-;;;  / ___(_) |_ 
+;;;   ____ _ _
+;;;  / ___(_) |_
 ;;; | |  _| | __|
-;;; | |_| | | |_ 
+;;; | |_| | | |_
 ;;;  \____|_|\__|
-;;;              
+;;;
 ;; «find-git-intro»  (to ".find-git-intro")
 ;; Skel: (find-intro-links "git")
 
@@ -12565,12 +12565,12 @@ HELP PLEEEASEEEE
 
 
 
-;;; __        ___        _                _                       
-;;; \ \      / / |      | |__   ___  __ _(_)_ __  _ __   ___ _ __ 
+;;; __        ___        _                _
+;;; \ \      / / |      | |__   ___  __ _(_)_ __  _ __   ___ _ __
 ;;;  \ \ /\ / / __)_____| '_ \ / _ \/ _` | | '_ \| '_ \ / _ \ '__|
-;;;   \ V  V /\__ \_____| |_) |  __/ (_| | | | | | | | |  __/ |   
-;;;    \_/\_/ (   /     |_.__/ \___|\__, |_|_| |_|_| |_|\___|_|   
-;;;            |_|                  |___/                         
+;;;   \ V  V /\__ \_____| |_) |  __/ (_| | | | | | | | |  __/ |
+;;;    \_/\_/ (   /     |_.__/ \___|\__, |_|_| |_|_| |_|\___|_|
+;;;            |_|                  |___/
 ;;
 ;; «find-windows-beginner-intro»  (to ".find-windows-beginner-intro")
 ;; Skel: (find-intro-links "windows-beginner")
@@ -13274,12 +13274,12 @@ this:
 
 
 
-;;;  _____                   _               
-;;; | ____|_  _____ _ __ ___(_)___  ___  ___ 
+;;;  _____                   _
+;;; | ____|_  _____ _ __ ___(_)___  ___  ___
 ;;; |  _| \ \/ / _ \ '__/ __| / __|/ _ \/ __|
 ;;; | |___ >  <  __/ | | (__| \__ \  __/\__ \
 ;;; |_____/_/\_\___|_|  \___|_|___/\___||___/
-;;;                                          
+;;;
 ;; «find-eev-exercises-intro»  (to ".find-eev-exercises-intro")
 ;; Skel: (find-intro-links "eev-exercises")
 ;; Test: (find-eev-exercises-intro)
@@ -13301,7 +13301,7 @@ It is meant as both a tutorial and a sandbox.
 
 0. Introduction
 ===============
-This is a set of exercises that I am using in this series of
+This is a set of exercises that I am preparing for this series of
 workshops:
 
   http://angg.twu.net/2021-workshop.html
@@ -13329,7 +13329,8 @@ the material in these sections of the two most basic tutorials,
   (find-windows-beginner-intro \"3. Using M-x and installing eev\")
   (find-windows-beginner-intro \"4. Understanding buffers and the mode line\")
 
-and that they have seen this video,
+and that they have seen the \"installation and navigation\" video,
+especially this part of it,
 
   (find-eevnavvideo \"6:28\" \"M-j: you can forget practically everything...\")
   (find-eevnavvideo \"6:41\" \"if you type just M-j\")
@@ -13351,7 +13352,7 @@ hyperlinks and saving them to your notes - i.e., to your ~/TODO.
 ===========================
 The documentation of eev says at several places that people
 should \"save all interesting links to their notes\". It is
-easier to learn this if we split it into:
+easier to learn that if we split it into these tasks:
 
   a. save links to your notes
   b. test these links
@@ -13361,14 +13362,182 @@ easier to learn this if we split it into:
 
   [TODO: translate and expand:]
 
-        1. copiar alguns links do M-j
-        2. copiar alguns links do M-2 M-j
-        3. copiar alguns (eek \"M-h M-k ...\")s
         4. ir pro tutorial sobre o M-h M-3
         5. copiar um dos links pro vídeo
         6. ir pro código fonte
         7. copiar o link pro código fonte
 
+
+
+2. Some abbreviations
+=====================
+Sequences of keys like `M-2 M-1 M-j' can be typed by keeping the meta
+key pressed and then typing `2', `1', and 'j'. We will sometimes write
+these keys sequences in an abbreviated form, like this: `M-21j'.
+
+Some intros, like this one,
+
+  (find-here-links-intro \"4. `find-here-links-3'\")
+
+draw window configurations like this:
+
+   _____________________
+  |          |          |
+  |          |  elinks  |
+  |          |  buffer  |
+  |  target  |__________|
+  |  buffer  |          |
+  |          |  notes   |
+  |          |  buffer  |
+  |__________|__________|
+
+we will often use abbreviations like [T], [E], and [N] for the
+descriptions of the buffers in the windows.
+
+
+
+3. Copying existing links
+=========================
+
+
+3.1. Copy from the `M-j' buffer
+-------------------------------
+If you type `M-j' you will \"jump\" to a temporary buffer that has a
+header that is beginner-friendly, then a blank line, and then a very
+technical part that all beginners should ignore. This is explained
+here:
+
+  (find-eev-quick-intro \"7.2. The list of eejump targets\")
+
+  [Video links:]
+    (find-eevnavvideo \"5:17\" \"1. Basic keys (eev)\")
+    (find-eevnavvideo \"5:26\"   \"M-e goes to the end of the line and...\")
+    (find-eevnavvideo \"6:28\"   \"M-j: you can forget practically everything...\")
+    (find-eevnavvideo \"6:41\"   \"if you type just M-j\")
+    (find-eevnavvideo \"6:48\"   \"has a header that is beginner-friendly\")
+    (find-eevnavvideo \"9:48\"   \"M-j with numeric prefixes\")
+
+Exercise: learn how to do copy and paste by reading this,
+
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+
+then:
+
+  1. use `M-j' to jump to the (find-eejumps) buffer (\"[J]\"),
+  2. use `M-21j' or `M-31j' to open your ~/TODO file - your \"notes
+     buffer\", \"[N]\" - in the right window,
+  3. use copy and paste to copy the header from [J] to [N].
+
+In a diagram:
+
+         _________              _______________
+        |         |            |       |       |
+   M-j  |   [J]   |    M-21j   |  [J]  |  [N]  |
+  ----> |         | ---------> |      ::>      |
+        |         |  or M-31j  |       |       |
+        |_________|            |_______|_______|
+
+The \"::>\" means \"copy the header from the left window to the right
+window\".
+
+
+
+
+3.2. Copy from (find-emacs-keys-intro)
+--------------------------------------
+Now one of the lines in your notes buffer should be this one:
+
+  ;;         M-2 M-j  runs:  (find-emacs-keys-intro)
+
+Exercise:
+
+  1. Use `M-2j' to go to (find-emacs-keys-intro),
+  2. Mark the whole section `1. Basic keys (eev)'
+  3. Copy it (hint: `M-w'),
+  4. Use `M-21j' or `M-31j' to display your notes buffer in the right
+     window,
+  5. Paste the section `1. Basic keys (eev)' to your notes buffer.
+
+In a diagram:
+
+          __________              ________________
+         |          |            |        |       |
+   M-2j  |   [EK]   |    M-21j   |  [EK]  |  [N]  |
+  -----> |          | ---------> |       ::>      |
+         |          |  or M-31j  |        |       |
+         |__________|            |________|_______|
+
+
+
+
+3.3. Copy from `find-ekey-links'
+--------------------------------
+One of the lines in your notes buffer is this one,
+
+  ;;         M-5 M-j  runs:  (find-eev-quick-intro)
+
+and the section 4.2 in (find-eev-quick-intro) is:
+
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+
+Exercise:
+
+  1. use M-5j to go to (find-eev-quick-intro) - a.k.a. \"the main
+     tutorial\",
+  2. go to the section 4.2 in that main tutorial, and find where it
+     says \"Try the eek links below\",
+  3. run the eek link that says:
+
+       (eek \"M-h M-k  C-s  ;; isearch-forward\")
+
+  4. it should open a temporary buffer whose buffer name is \"*Elisp
+     hyperlinks*\". Find the two lines in that buffer that say:
+
+       # (Info-goto-emacs-command-node 'isearch-forward)
+       # (find-enode \"Command Index\" \"* isearch-forward:\")
+
+  5. mark and copy those lines,
+  6. use `M-21j' or `M-31j' to open your notes buffer in the right
+     window,
+  7. paste those lines to your notes buffer.
+
+In a diagram:
+
+          __________         __________              ________________
+         |          |       |          |            |        |       |
+   M-5j  |   [MT]   |  M-e  |   [EH]   |    M-21j   |  [EH]  |  [N]  |
+  -----> | sec. 4.2 | ----> |          | ---------> |       ::>      |
+         |          |       |          |  or M-31j  |        |       |
+         |__________|       |__________|            |________|_______|
+
+
+3.4. A variant
+--------------
+Someone who knows how to use `M-h M-k' (`find-ekey-links') and
+who doesn't need to split windows can do essentially the same as
+we did in the previous section with fewer keystrokes. Let's see
+how.
+
+Exercise:
+
+  1. Type `M-hk C-s' to open a temporary buffer with elisp
+     hyperlinks on the key `C-s',
+  2. mark, and copy with `M-w', the lines that say:
+
+       # (Info-goto-emacs-command-node 'isearch-forward)
+       # (find-enode \"Command Index\" \"* isearch-forward:\")
+
+  3. use `M-1j' to go to your notes buffer,
+  4. paste those lines to your notes buffer with `C-y'.
+
+In a diagram:
+
+              ___________          ___________
+             |           |        |           |
+   M-hk C-s  |    [EH]   |  M-1j  |    [N]    |
+  ---------> | mark, M-w | -----> |    C-y    |
+             |           |        |           |
+             |___________|        |___________|
 
 " pos-spec-list)))
 
@@ -13378,12 +13547,12 @@ easier to learn this if we split it into:
 
 
 
-;;;  _   _                                     _         _                  
-;;; | |_| |__  _ __ ___  ___   _ __ ___   __ _(_)_ __   | | _____ _   _ ___ 
+;;;  _   _                                     _         _
+;;; | |_| |__  _ __ ___  ___   _ __ ___   __ _(_)_ __   | | _____ _   _ ___
 ;;; | __| '_ \| '__/ _ \/ _ \ | '_ ` _ \ / _` | | '_ \  | |/ / _ \ | | / __|
 ;;; | |_| | | | | |  __/  __/ | | | | | | (_| | | | | | |   <  __/ |_| \__ \
 ;;;  \__|_| |_|_|  \___|\___| |_| |_| |_|\__,_|_|_| |_| |_|\_\___|\__, |___/
-;;;                                                               |___/     
+;;;                                                               |___/
 
 ;; «find-three-main-keys-intro»  (to ".find-three-main-keys-intro")
 ;; Skel: (find-intro-links "three-main-keys")
@@ -13639,7 +13808,7 @@ Next steps:
 
 Etc, etc, etc...
 Note that learning to read comes after learning to write!...
-See: 
+See:
 
   (find-here-links-intro \"1.1. Reading and writing\")
 
@@ -13661,12 +13830,12 @@ Btw, the videos that I produced using this \"script\" are here:
 
 
 
-;;;   __ _           _            _ _                 _       _             
-;;;  / _(_)_ __   __| |       ___| (_)___ _ __       (_)_ __ | |_ _ __ ___  
-;;; | |_| | '_ \ / _` |_____ / _ \ | / __| '_ \ _____| | '_ \| __| '__/ _ \ 
+;;;   __ _           _            _ _                 _       _
+;;;  / _(_)_ __   __| |       ___| (_)___ _ __       (_)_ __ | |_ _ __ ___
+;;; | |_| | '_ \ / _` |_____ / _ \ | / __| '_ \ _____| | '_ \| __| '__/ _ \
 ;;; |  _| | | | | (_| |_____|  __/ | \__ \ |_) |_____| | | | | |_| | | (_) |
-;;; |_| |_|_| |_|\__,_|      \___|_|_|___/ .__/      |_|_| |_|\__|_|  \___/ 
-;;;                                      |_|                                
+;;; |_| |_|_| |_|\__,_|      \___|_|_|___/ .__/      |_|_| |_|\__|_|  \___/
+;;;                                      |_|
 ;;
 ;; «find-elisp-intro»  (to ".find-elisp-intro")
 ;; Skel: (find-intro-links "elisp")
@@ -14243,7 +14412,7 @@ defines a function
   (find-efunction      'find-ebufferandpos)
 
 that jumps to a (BUFFER . POS); `find-efunction' and friends are
-implemented using `find-ebufferandpos'. Try: 
+implemented using `find-ebufferandpos'. Try:
 
   (find-ebufferandpos
    (find-function-noselect 'find-fline)
@@ -14289,12 +14458,12 @@ See: (find-lexical-intro)
 
 
 
-;;;  _           _           _ 
+;;;  _           _           _
 ;;; | | _____  _(_) ___ __ _| |
 ;;; | |/ _ \ \/ / |/ __/ _` | |
 ;;; | |  __/>  <| | (_| (_| | |
 ;;; |_|\___/_/\_\_|\___\__,_|_|
-;;;                            
+;;;
 ;; «find-lexical-intro»  (to ".find-lexical-intro")
 ;; Skel: (find-intro-links "lexical")
 
@@ -14446,7 +14615,7 @@ See: (find-elnode \"Anonymous Functions\" \"Macro: lambda\")
     )
 
   (let ((x 42))
-    (function 
+    (function
       (lambda () x)
       )
     )
@@ -14467,7 +14636,7 @@ See: (find-elnode \"Dynamic Binding\" \"defun getx\")
   (setq x 99)
   (getx)
   (let ((x 42)) (getx))
- 
+
 
 
 
