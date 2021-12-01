@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211126
+;; Version:    20211201
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -2698,47 +2698,61 @@ This function is used by `ee-0x0-upload-region'."
 
 
 ;; «find-1stclassvideo-links»  (to ".find-1stclassvideo-links")
-;; Skel: (find-find-links-links-new "eevvideo-1stclass" "c" "")
+;; Skel: (find-find-links-links-new "1stclassvideo" "c" "")
+;; Skel: (find-find-links-links-new "1stclassvideo" "c" "title mp4 yp page lang")
 ;;  See: (find-eev "eev-videolinks.el" "first-class-videos")
 ;;       (find-eev "eev-videolinks.el" "second-class-videos")
 ;; Tests: (find-1stclassvideo-links "eev2019")
 ;;        (find-1stclassvideo-links "eev2020")
 ;;
 (defun find-1stclassvideo-links (&optional c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for a first-class video."
-  (interactive)
+  "Visit a temporary buffer containing hyperlinks for eevvideo-1stclass."
+  (interactive (list (ee-1stclassvideo-around-point-ask)))
   (setq c (or c "{c}"))
-  (apply
-   'find-elinks-elisp
-   `((find-1stclassvideo-links ,c ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-1stclassvideo-links)
-     ""
-     ,(ee-template0 "\
-;; Definition of the function:
-;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
-;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
-;; (find-efunction 'find-{c}video)
-
-;; Play:
-;; (find-{c}video \"0:00\")
-
-;; Index with time marks:
-;; (find-angg \".emacs.videos\" \"{c}\")
-;; http://angg.twu.net/.emacs.videos.html#{c}
-
-;; Places with more info about this video:
-;; (find-eev \"eev-videolinks.el\" \"{c}\")
-;; (find-angg \".emacs.templates\" \"eev-videos-data\" \"{c}\")
-;; http://angg.twu.net/.emacs.templates.html#eev-videos-data
-;; (find-videos-intro \"1. Some videos\" \"{c}\")
+  (let* ((title   (ee-1stclassvideos-field c :title))
+	 (mp4     (ee-1stclassvideos-field c :mp4))
+	 (yt      (ee-1stclassvideos-field c :yt))
+	 (page    (ee-1stclassvideos-field c :page))
+	 (lang    (ee-1stclassvideos-field c :lang))
+	 (mp4stem (ee-1stclassvideos-mp4stem c))
+	 (hash    (ee-1stclassvideos-hash c)))
+    (apply
+     'find-elinks
+     `((find-1stclassvideo-links ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-1stclassvideo-links)
+       ""
+       ,(ee-template0 "\
+;; Title: {title}
+;; MP4:   {mp4}
+;; YT:    {yt}
+;; Page:  {page}
+;; Info:  (find-eev \"eev-videolinks.el\" \"{c}\")
+;;            (find-1stclassvideo-links \"{c}\")
+;;
+;; Index: http://angg.twu.net/.emacs.videos.html#{c}
+;;         (find-angg        \".emacs.videos\"    \"{c}\")
 
 ;; See:
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
+
+;; Definition of the function:
+;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
+;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
+;;               (find-efunction 'find-{c}video)
+
+;; Play:
+;; (find-{c}video \"0:00\")
+
+;; Other places with info about this video:
+;; (find-angg \".emacs.templates\" \"eev-videos-data\" \"{c}\")
+;; http://angg.twu.net/.emacs.templates.html#eev-videos-data
+;; (find-videos-intro \"1. Some videos\" \"{c}\")
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
+
 
 
 

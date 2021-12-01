@@ -1,3 +1,24 @@
+2021-12-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-exercises-intro): rewritten.
+
+2021-11-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-1stclassvideo-around-point-ask): new function.
+
+	* eev-tlinks.el (find-1stclassvideo-links): use
+	`ee-1stclassvideo-around-point-ask'.
+
+	* eev-videolinks.el (ee-1stclassvideos-mp4stem)
+	(ee-1stclassvideos-hash): new functions.
+
+2021-11-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-field): new function.
+
+	* eev-tlinks.el (find-1stclassvideo-links): use
+	`ee-1stclassvideos-field'.
+
 2021-11-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-youtubedl-command): added another suggestion

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211104
+;; Version:    20211128
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -149,6 +149,11 @@ This function is not very smart - it doesn't understand section names."
   (read-string (or prompt "Manpage: ")
 	       (ee-manpagename-around-point)))
 
+(defun ee-1stclassvideo-around-point-ask (&optional prompt)
+"Ask for the name of a first-class video; the default is a string around point."
+  (let ((str (read-string (or prompt "Stem (\"c\") of the video: ")
+			  (ee-stuff-around-point "A-Za-z0-9"))))
+    (replace-regexp-in-string "video$" "" str)))
 
 
 

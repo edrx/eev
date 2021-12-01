@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211109
+;; Version:    20211127
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -48,16 +48,18 @@
 ;;   «.find-eevtestblsvideo»	(to "find-eevtestblsvideo")
 ;;   «.find-eevvlinksvideo»	(to "find-eevvlinksvideo")
 ;; «.more-info»			(to "more-info")
+;; «.ee-1stclassvideos-info»	(to "ee-1stclassvideos-info")
 ;;   «.eev2019»			(to "eev2019")
 ;;   «.eev2020»			(to "eev2020")
 ;;   «.eev2021»			(to "eev2021")
 ;;   «.eevnav»			(to "eevnav")
 ;;   «.eevtempl»		(to "eevtempl")
-;;   «.fherel»			(to "fherel")
+;;   «.eevfherel»		(to "eevfherel")
 ;;   «.eevtestbls»		(to "eevtestbls")
 ;;   «.eevvlinks»		(to "eevvlinks")
 ;;   «.oficina2021a»		(to "oficina2021a")
 ;;   «.oficina2021b»		(to "oficina2021b")
+;; «.ee-1stclassvideos-field»	(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»	(to "second-class-videos")
 ;;   «.code-eevvideo»		(to "code-eevvideo")
 
@@ -411,6 +413,7 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
 ;;; |_|  |_|\___/|_|  \___| |_|_| |_|_|  \___/ 
 ;;;                                            
 ;; «more-info»  (to ".more-info")
+;; «ee-1stclassvideos-info»  (to ".ee-1stclassvideos-info")
 ;; More info on the first-class videos, in a format that is easy to
 ;; access from Lisp. I am just starting to play with this, and the
 ;; functions that transform the data in this variable into other
@@ -436,7 +439,14 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
     ("eev2021"
      :title "Test blocks"
      :mp4  "http://angg.twu.net/eev-videos/emacsconf2021.mp4"
-     ;; :yt "(Not yet)"
+     :yt   "http://www.youtube.com/watch?v=qM0Luz78qGw"
+     :page "http://angg.twu.net/emacsconf2021.html")
+    ;;
+    ;; «eev2021b»  (to ".eev2021b")
+    ("eev2021b"
+     :title "Test blocks in Dednat6"
+     :mp4  "http://angg.twu.net/eev-videos/emacsconf2021-dednat6.mp4"
+     :yt   "http://www.youtube.com/watch?v=QUMo7vgkHJI"
      :page "http://angg.twu.net/emacsconf2021.html")
     ;;
     ;; «eevnav»  (to ".eevnav")
@@ -453,8 +463,8 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
      :yt    "http://www.youtube.com/watch?v=91-9YfRPsuk"
      :page  "http://angg.twu.net/2020-some-template-based.html")
     ;;
-    ;; «fherel»  (to ".fherel")
-    ("fherel"
+    ;; «eevfherel»  (to ".eevfherel")
+    ("eevfherel"
      :title "How to create hyperlinks to \"here\" with `find-here-links'"
      :mp4   "http://angg.twu.net/eev-videos/2020-find-here-links.mp4"
      :yt    "http://www.youtube.com/watch?v=8jtiBlaDor4"
@@ -462,7 +472,7 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
     ;;
     ;; «eevtestbls»  (to ".eevtestbls")
     ("eevtestbls"
-     :title "Using test blocks in eev"
+     :title "Using test blocks in eev (jan/2021)"
      :mp4   "http://angg.twu.net/eev-videos/2021-test-blocks.mp4"
      :yt    "http://www.youtube.com/watch?v=fpsF_M55W4o"
      :page  "http://angg.twu.net/2021-test-blocks.html")
@@ -487,7 +497,7 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
      :lang  "portuguese")
     ;;
     ;; «oficina2021b»  (to ".oficina2021b")
-    (oficina2021b
+    ("oficina2021b"
      :title "Exercícios de criar e guardar links (1)"
      :mp4   "http://angg.twu.net/eev-videos/2021-oficina-2.mp4"
      :yt    "https://www.youtube.com/watch?v=XbuDnkfizYs"
@@ -495,6 +505,34 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
      :lang  "portuguese")
     ;;
     ))
+
+
+;; «ee-1stclassvideos-field»  (to ".ee-1stclassvideos-field")
+;;
+;;                           (find-eppp ee-1stclassvideos-info)
+;;                     (assoc "eev2021" ee-1stclassvideos-info)
+;;                (cdr (assoc "eev2021" ee-1stclassvideos-info))
+;;     (plist-get (cdr (assoc "eev2021" ee-1stclassvideos-info)) :page)
+;;     (plist-get (cdr (assoc "foo"     ee-1stclassvideos-info)) :page)
+;; (ee-1stclassvideos-field   "eev2021" :page)
+;; (ee-1stclassvideos-field   "eev2021" :mp4)
+;; (ee-1stclassvideos-field   "eev2021" :yt)
+;; (ee-1stclassvideos-mp4stem "eev2021")
+;; (ee-1stclassvideos-hash    "eev2021")
+;; (find-eev "eev-videolinks.el" "more-info")
+;;
+(defun ee-1stclassvideos-field (c &optional field)
+  (plist-get (cdr (assoc c ee-1stclassvideos-info)) field))
+
+(defun ee-1stclassvideos-mp4stem (c)
+  (let ((mp4 (ee-1stclassvideos-field c :mp4)))
+     (replace-regexp-in-string "^.*/\\([^/]*\\)\\.mp4$" "\\1" mp4)))
+
+(defun ee-1stclassvideos-hash (c)
+  (let ((yt (ee-1stclassvideos-field c :yt)))
+     (replace-regexp-in-string "^.*=\\([^=]*\\)$" "\\1" yt)))
+
+
 
 
 
