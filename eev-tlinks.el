@@ -1838,6 +1838,8 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
      (find-efunction 'find-eevshortvideo-links)
      ""
      ,(ee-template0 "\
+;; (find-1stclassvideo-links \"{c}\")
+
 ;; Skel: (find-eevshortvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\")
 ;;  See: (find-videos-intro \"1. Some videos\" \"{stem}\")
 ;; Index: http://angg.twu.net/.emacs.videos.html#{c}
@@ -2717,7 +2719,7 @@ This function is used by `ee-0x0-upload-region'."
 	 (mp4stem (ee-1stclassvideos-mp4stem c))
 	 (hash    (ee-1stclassvideos-hash c)))
     (apply
-     'find-elinks
+     'find-elinks-elisp
      `((find-1stclassvideo-links ,c ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-1stclassvideo-links)
@@ -2737,11 +2739,6 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
 
-;; Definition of the function:
-;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
-;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
-;;               (find-efunction 'find-{c}video)
-
 ;; Play:
 ;; (find-{c}video \"0:00\")
 
@@ -2749,6 +2746,26 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-angg \".emacs.templates\" \"eev-videos-data\" \"{c}\")
 ;; http://angg.twu.net/.emacs.templates.html#eev-videos-data
 ;; (find-videos-intro \"1. Some videos\" \"{c}\")
+
+;; Definition of the function:
+;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
+;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
+;;               (find-efunction 'find-{c}video)
+
+;; <find-{c}video>
+;; Skel: (find-1stclassvideo-links \"{c}\")
+;; Tests: (find-{c}video \"0:00\")
+;;        (find-efunctiondescr 'find-{c}video)
+(defun find-{c}video (&optional time &rest rest)
+  \"Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \\\"eev-videolinks.el\\\" \\\"{c}\\\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \\\"7. \\\" \\\"find-eev-video\\\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials.\"
+  (interactive)
+  (find-eev-video \"{mp4stem}\" \"{hash}\" time))
 ")
        )
      pos-spec-list)))

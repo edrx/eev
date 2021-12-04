@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211127
+;; Version:    20211203
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -47,6 +47,12 @@
 ;;   «.find-eevfherelvideo»	(to "find-eevfherelvideo")
 ;;   «.find-eevtestblsvideo»	(to "find-eevtestblsvideo")
 ;;   «.find-eevvlinksvideo»	(to "find-eevvlinksvideo")
+;;   «.find-2021workshop1video»	(to "find-2021workshop1video")
+;;   «.find-2021workshop2video»	(to "find-2021workshop2video")
+;;   «.find-2021workshop3video»	(to "find-2021workshop3video")
+;;   «.find-2021workshop4video»	(to "find-2021workshop4video")
+;;   «.find-2021workshop5video»	(to "find-2021workshop5video")
+;;   «.find-2021workshop6video»	(to "find-2021workshop6video")
 ;; «.more-info»			(to "more-info")
 ;; «.ee-1stclassvideos-info»	(to "ee-1stclassvideos-info")
 ;;   «.eev2019»			(to "eev2019")
@@ -59,6 +65,12 @@
 ;;   «.eevvlinks»		(to "eevvlinks")
 ;;   «.oficina2021a»		(to "oficina2021a")
 ;;   «.oficina2021b»		(to "oficina2021b")
+;;   «.2021workshop1»		(to "2021workshop1")
+;;   «.2021workshop2»		(to "2021workshop2")
+;;   «.2021workshop3»		(to "2021workshop3")
+;;   «.2021workshop4»		(to "2021workshop4")
+;;   «.2021workshop5»		(to "2021workshop5")
+;;   «.2021workshop6»		(to "2021workshop6")
 ;; «.ee-1stclassvideos-field»	(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»	(to "second-class-videos")
 ;;   «.code-eevvideo»		(to "code-eevvideo")
@@ -403,6 +415,99 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
   (interactive)
   (find-eev-video "2021-video-links" "xQqWufQgzVY" time))
 
+;; «find-2021workshop1video»  (to ".find-2021workshop1video")
+;; Skel: (find-eevshortvideo-links "2021workshop1" "2021-workshop-1" "xQqWufQgzVY")
+;;  See: (find-videos-intro "1. Some videos" "2021-workshop-1")
+;; Index: http://angg.twu.net/.emacs.videos.html#2021workshop1
+;;  Test: (find-2021workshop1video "0:00")
+(defun find-2021workshop1video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-videos-intro \"1. Some videos\" \"2021-workshop-1\")
+     http://angg.twu.net/2021-workshop-1.html
+     for more info on this particular video,
+and: (find-video-links-intro \"7. `find-eev-video'\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-workshop-1" "HuqJFPD871E" time))
+
+;; «find-2021workshop2video»  (to ".find-2021workshop2video")
+;; Skel: (find-eevshortvideo-links "2021workshop2" "2021-workshop-2" "xQqWufQgzVY")
+;;  See: (find-videos-intro "1. Some videos" "2021-workshop-2")
+;; Index: http://angg.twu.net/.emacs.videos.html#2021workshop2
+;;  Test: (find-2021workshop2video "0:00")
+(defun find-2021workshop2video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-videos-intro \"1. Some videos\" \"2021-workshop-2\")
+     http://angg.twu.net/2021-workshop-2.html
+     for more info on this particular video,
+and: (find-video-links-intro \"7. `find-eev-video'\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-workshop-2" "hqqIlZBXNhk" time))
+
+;; «find-2021workshop3video»  (to ".find-2021workshop3video")
+;; Skel: (find-1stclassvideo-links "2021workshop3")
+;; Tests: (find-2021workshop3video "0:00")
+;;        (find-efunctiondescr 'find-2021workshop3video)
+(defun find-2021workshop3video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2021workshop3\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-workshop-3" "r83inf9s8zo" time))
+
+;; «find-2021workshop4video»  (to ".find-2021workshop4video")
+;; Skel: (find-1stclassvideo-links "2021workshop4")
+;; Tests: (find-2021workshop4video "0:00")
+;;        (find-efunctiondescr 'find-2021workshop4video)
+(defun find-2021workshop4video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2021workshop4\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-workshop-4" "lhpHHjBUxv8" time))
+
+;; «find-2021workshop5video»  (to ".find-2021workshop5video")
+;; Skel: (find-1stclassvideo-links "2021workshop5")
+;; Tests: (find-2021workshop5video "0:00")
+;;        (find-efunctiondescr 'find-2021workshop5video)
+(defun find-2021workshop5video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2021workshop5\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-workshop-5" "VzRsterVSXs" time))
+
+;; «find-2021workshop6video»  (to ".find-2021workshop6video")
+;; Skel: (find-1stclassvideo-links "2021workshop6")
+;; Tests: (find-2021workshop6video "0:00")
+;;        (find-efunctiondescr 'find-2021workshop6video)
+(defun find-2021workshop6video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2021workshop6\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-workshop-6" "-gi15-liGaU" time))
+
+
 
 
 
@@ -503,6 +608,48 @@ and: (find-video-links-intro \"7. `find-eev-video'\")
      :yt    "https://www.youtube.com/watch?v=XbuDnkfizYs"
      :page  "http://angg.twu.net/2021-oficina.html"
      :lang  "portuguese")
+    ;;
+    ;; «2021workshop1»  (to ".2021workshop1")
+    ("2021workshop1"
+     :title "The base cases 1 and 2 (workshop 2021-dec-04)"
+     :mp4   "http://angg.twu.net/eev-videos/2021-workshop-1.mp4"
+     :yt    "https://www.youtube.com/watch?v=HuqJFPD871E"
+     :page  "http://angg.twu.net/2021-workshop.html")
+    ;;
+    ;; «2021workshop2»  (to ".2021workshop2")
+    ("2021workshop2"
+     :title "Creating a link to a file with a 2-window setting (workshop 2021-dec-04)"
+     :mp4  "http://angg.twu.net/eev-videos/2021-workshop-2.mp4"
+     :yt   "http://www.youtube.com/watch?v=hqqIlZBXNhk"
+     :page "http://angg.twu.net/emacsconf2021.html")
+    ;;
+    ;; «2021workshop3»  (to ".2021workshop3")
+    ("2021workshop3"
+     :title "Material on `M-3 M-e' (workshop 2021-dec-04)"
+     :mp4  "http://angg.twu.net/eev-videos/2021-workshop-3.mp4"
+     :yt   "http://www.youtube.com/watch?v=r83inf9s8zo"
+     :page "http://angg.twu.net/emacsconf2021.html")
+    ;;
+    ;; «2021workshop4»  (to ".2021workshop4")
+    ("2021workshop4"
+     :title "Invisible text (workshop 2021-dec-04)"
+     :mp4  "http://angg.twu.net/eev-videos/2021-workshop-4.mp4"
+     :yt   "http://www.youtube.com/watch?v=lhpHHjBUxv8"
+     :page "http://angg.twu.net/emacsconf2021.html")
+    ;;
+    ;; «2021workshop5»  (to ".2021workshop5")
+    ("2021workshop5"
+     :title "Copy from left to right (workshop 2021-dec-04)"
+     :mp4  "http://angg.twu.net/eev-videos/2021-workshop-5.mp4"
+     :yt   "http://www.youtube.com/watch?v=VzRsterVSXs"
+     :page "http://angg.twu.net/emacsconf2021.html")
+    ;;
+    ;; «2021workshop6»  (to ".2021workshop6")
+    ("2021workshop6"
+     :title "`find-extra-file-links' (workshop 2021-dec-04)"
+     :mp4  "http://angg.twu.net/eev-videos/2021-workshop-6.mp4"
+     :yt   "http://www.youtube.com/watch?v=-gi15-liGaU"
+     :page "http://angg.twu.net/emacsconf2021.html")
     ;;
     ))
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211130
+;; Version:    20211204
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -10463,8 +10463,9 @@ They contain links like these,
 that are \"short links to eev video tutorials\". These functions
 with names like `find-eev*video' are _sort of_ expanded to
 functions that specify explicitly which video on youtube to play,
-or where is the file with the local copy of that video. For the
-general idea of how this expansion is implemented, see:
+and where the local copy of the video can be found if we prefer
+to play the local copy. For the general idea of how this
+expansion is implemented, see:
 
   (find-eev-quick-intro \"9. Shorter hyperlinks\")
   (find-eev-quick-intro \"9.1. `code-c-d'\")
@@ -13303,10 +13304,16 @@ this:
 \(Re)generate: (find-eev-exercises-intro)
 Source code:  (find-efunction 'find-eev-exercises-intro)
 More intros:  (find-eev-quick-intro)
+              (find-here-links-intro)
+              (find-refining-intro)
+              (find-escripts-intro)
               (find-eev-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
+The quickest way to open or recreate this is with `M-x ex',
+but you will need to run this:
+  (defun ex () (interactive) (find-eev-exercises-intro))
 
 
 
@@ -13400,18 +13407,28 @@ I will suppose:
      (find-refining-intro)
      (find-refining-intro \"1. Pos-spec-lists\")
 
-
-..and just that. The previous workshop that I gave required
-installing external programs, but this one will not be like that.
-For more info on that previous workshop, see:
+The prerequisites are just the ones above. The previous workshop
+that I gave required installing external programs, but this one
+will not be like that. For more info on that previous workshop,
+see:
 
   http://angg.twu.net/2021-workshop.html#november
 
 
 
 
+
 1. The base cases
 =================
+Watch this video first:
+
+  [Video links:]
+    (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
+    (find-2021workshop1video \"0:52\"   \"The instructions are here\")
+    (find-2021workshop1video \"1:24\" \"The base case 2\")
+    (find-2021workshop1video \"1:39\"   \"What I need to do is slightly\")
+    (find-2021workshop1video \"1:55\"   \"This is not yet the link that I want\")
+
 
 1.1. The base case 1
 --------------------
@@ -13459,6 +13476,11 @@ or:
 
   create / select / copy / go back
 
+[Video links:]
+  (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
+  (find-2021workshop1video \"0:52\" \"The instructions are here\")
+
+
 
 
 
@@ -13492,11 +13514,11 @@ The diagram will be this one,
 
    _______________           _____________________           ________________
   |               |         |          |          |         |                |
-  |               |         |          |  elinks  |         |                |
-  |               |         |          |  buffer  |         |                |
-  |               |         |          | M-hy ::  |         |                |
-  |    target     | M-h M-3 |  target  |______::__| M-h M-1 |     target     |
-  |    buffer     | ------> |  buffer  |      \\/  | ------> |     buffer     |
+  |               |         |  target  |  elinks  |         |                |
+  |               |         |  buffer  |  buffer  |         |                |
+  |               |         |    M-w   | M-hy ::  |         |                |
+  |    target     | M-h M-3 |          |______::__| M-h M-1 |     target     |
+  |    buffer     | ------> |          |      \\/  | ------> |     buffer     |
   |               |         |          |          |         |     buffer     |
   |               |         |          |  notes   |         |                |
   |               |         |          |  buffer  |         |                |
@@ -13511,162 +13533,173 @@ an abbreviation for `M-h M-y' at some point; the placement of the
   (find-refining-intro \"2. Refining hyperlinks\")
   (find-refining-intro \"2. Refining hyperlinks\" \"M-h M-y\")
 
+[Video links:]
+  (find-2021workshop1video \"1:24\" \"The base case 2\")
+  (find-2021workshop1video \"1:39\" \"What I need to do is slightly\")
+  (find-2021workshop1video \"1:55\" \"This is not yet the link that I want\")
 
 
 
 
+1.3. The base case 3
+--------------------
+The base case 3 will only make sense to people who understand
+anchors, short hyperlinks and anchors, using `M-1 M-h M-w' to
+copy the preceding tag to the kill ring, and using `M-h M--' to
+shrink a hyperlink to make it point to an anchor. You can learn
+these extra prerequisites here:
 
-
-  (find-here-links-intro \"4. `find-here-links-3'\")
-  (find-here-links-intro \"5. `find-here-links-1'\")
-  (find-here-links-intro \"5. `find-here-links-1'\" \"eevfherel\")
-
-
-2.1. Variants of `save'
------------------------
-
-2.2. Variants of `create'
--------------------------
-
-  (eek \"M-h M-k      M-j  ;; eejump\")
-                 M-2 M-j     runs:  (find-emacs-keys-intro)
-                 M-5 M-j     runs:  (find-eev-quick-intro)
-  (eek \"M-h M-k  M-h M-k  ;; find-ekey-links\")
-  (eek \"M-h M-k  M-h M-f  ;; find-efunction-links\")
-  (eek \"M-h M-k  M-h M-h  ;; find-here-links\")
-  (eek \"M-h M-k  M-h M-3  ;; find-here-links-3\")
-
-
-2.3. How to learn to `select'
------------------------------
-
-2.4. Variants of `refine'
--------------------------
-  (find-refining-intro \"2. Refining hyperlinks\")
-  (find-refining-intro \"2. Refining hyperlinks\" \"M-h M-y\")
+  (find-eev-quick-intro \"8. Anchors\")
+  (find-eev-quick-intro \"8.1. Introduction: `to'\")
+  (find-eev-quick-intro \"8.5. Hyperlinks to anchors in other files\")
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \":anchor\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \":anchor\" \"3)\")
   (find-anchors-intro \"2. Shrinking\")
-  (find-anchors-intro \"2. Shrinking\" \"`M-h M--'\")
+  (find-anchors-intro \"3. The preceding tag\")
 
-2.5. Variants of `copy'
------------------------
-  (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
+   _______________           _____________________           ________________
+  |               |         |          |          |         |                |
+  |               |         |  target  |  elinks  |         |                |
+  |               |         |  buffer  |  buffer  |         |                |
+  |    target     |         |   M-1hw  | M-h2 ::  |         |     target     |
+  |    buffer     |         |          | M-hy ::  |         |     buffer     |
+  |               |         |          | M-h- ::  |         |                |
+  |               | M-h M-3 |          |______::__| M-h M-1 |                |
+  |               | ------> |          |      \\/  | ------> |                |
+  |               |         |          |          |         |                |
+  |               |         |          |  notes   |         |                |
+  |               |         |          |  buffer  |         |                |
+  |_______________|         |__________|__________|         |________________|
 
-2.6. Variants of `go back'
---------------------------
-  (eek \"M-h M-k  M-h M-1  ;; find-here-links-1\")
-  (find-eval-intro \"5. Going back\" \"`M-K' instead of `M-k'\")
+Exercise: watch this video and try to reproduce what happens in it:
 
+  (find-2021workshop7video \"0:00\")
 
-1. Saving interesting links
-===========================
-The documentation of eev says at several places that people
-should \"save all interesting links to their notes\". It is
-easier to learn that if we split it into these tasks:
+Use this to go to the target that appears in the video:
 
-  a. save links to your notes
-  b. test these links
-  c. mark the links that you don't understand
-  d. undestand what each link does (with M-h M-f)
-  e. recognize which links are interesting
-
-
-2. Some abbreviations
-=====================
-Sequences of keys like `M-2 M-1 M-j' can be typed by keeping the meta
-key pressed and then typing `2', `1', and 'j'. We will sometimes write
-these keys sequences in an abbreviated form, like this: `M-21j'.
-
-Some intros, like this one,
-
-  (find-here-links-intro \"4. `find-here-links-3'\")
-
-draw window configurations like this:
-
-   _____________________
-  |          |          |
-  |          |  elinks  |
-  |          |  buffer  |
-  |  target  |__________|
-  |  buffer  |          |
-  |          |  notes   |
-  |          |  buffer  |
-  |__________|__________|
-
-we will often use abbreviations like [T], [E], and [N] for the
-descriptions of the buffers in the windows.
-
-
-
-3. Copying existing links
-=========================
-
-
-3.1. Copy from the `M-j' buffer
--------------------------------
-If you type `M-j' you will \"jump\" to a temporary buffer that has a
-header that is beginner-friendly, then a blank line, and then a very
-technical part that all beginners should ignore. This is explained
-here:
-
-  (find-eev-quick-intro \"7.2. The list of eejump targets\")
-
-  [Video links:]
-    (find-eevnavvideo \"5:17\" \"1. Basic keys (eev)\")
-    (find-eevnavvideo \"5:26\"   \"M-e goes to the end of the line and...\")
-    (find-eevnavvideo \"6:28\"   \"M-j: you can forget practically everything...\")
-    (find-eevnavvideo \"6:41\"   \"if you type just M-j\")
-    (find-eevnavvideo \"6:48\"   \"has a header that is beginner-friendly\")
-    (find-eevnavvideo \"9:48\"   \"M-j with numeric prefixes\")
-
-Exercise: learn how to do copy and paste by reading this,
-
-  (find-eev-quick-intro \"5.2. Cutting and pasting\")
-
-then:
-
-  1. use `M-j' to jump to the (find-eejumps) buffer (\"[J]\"),
-  2. use `M-21j' or `M-31j' to open your ~/TODO file - your \"notes
-     buffer\", \"[N]\" - in the right window,
-  3. use copy and paste to copy the header from [J] to [N].
-
-In a diagram:
-
-         _________              _______________
-        |         |            |       |       |
-   M-j  |   [J]   |    M-21j   |  [J]  |  [N]  |
-  ----> |         | ---------> |      ::>      |
-        |         |  or M-31j  |       |       |
-        |_________|            |_______|_______|
-
-The \"::>\" means \"copy the header from the left window to the right
-window\".
+  (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-field\")
 
 
 
 
-3.2. Copy from (find-emacs-keys-intro)
---------------------------------------
-Now one of the lines in your notes buffer should be this one:
+2. Copy from left to right
+==========================
 
-  ;;         M-2 M-j  runs:  (find-emacs-keys-intro)
+2.1. Two basic exercises
+------------------------
+In the diagrams below the names of the buffers are abbreviated:
 
-Exercise:
+  [EX] - (find-eev-exercises-intro)
+   [J] - (find-eejumps)
+   [N] - notes, i.e., (find-fline \"~/TODO\")
+  [EK] - (find-emacs-keys-intro)
 
-  1. Use `M-2j' to go to (find-emacs-keys-intro),
-  2. Mark the whole section `1. Basic keys (eev)'
-  3. Copy it (hint: `M-w'),
-  4. Use `M-21j' or `M-31j' to display your notes buffer in the right
-     window,
-  5. Paste the section `1. Basic keys (eev)' to your notes buffer.
+   ________         _______          ______________               ________
+  |        |       |       |        |       |      |             |        |
+  |  [EX]  | M-j   |  [J]  | M-21j  |  [J]  |  [N] | C-x 1 M-K*  |  [EX]  |
+  |        | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
+  |________|       |_______|        |_______|______|             |________|
 
-In a diagram:
+   ________         _______          ______________               ________
+  |        |       |       |        |       |      |             |        |
+  |  [EX]  | M-2j  |  [EK] | M-21j  |  [EK] |  [N] | C-x 1 M-K*  |  [EX]  |
+  |        | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
+  |________|       |_______|        |_______|______|             |________|
 
-          __________              ________________
-         |          |            |        |       |
-   M-2j  |   [EK]   |    M-21j   |  [EK]  |  [N]  |
-  -----> |          | ---------> |       ::>      |
-         |          |  or M-31j  |        |       |
-         |__________|            |________|_______|
+`M-21j' is `M-2 M-1 M-j' written in an abbreviated form -
+        mnemonic: \"hold the meta key, type 21j, lift meta\" - and
+ `M-K*' means \"type M-K as many times as needed\".
+
+Watch this video and try to reproduce what happens in it:
+
+  (find-2021workshop5video \"0:00\")
+
+
+
+
+2.2. `find-extra-file-links'
+----------------------------
+Here you will need to understand `code-c-d' and
+`find-extra-file-links'. See:
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
+
+The diagram will be this one:
+
+   ________       _______	  _______          ______________               ________
+  |        |     |       |	 |       |        |       |      |             |        |
+  |  [EX]  |     |  [D]  | M-he  |  [EH] | M-21j  |  [EH] |  [N] | C-x 1 M-K*  |  [EX]  |
+  |        | --> |       | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
+  |________|     |_______|       |_______|        |_______|______|             |________|
+
+Where [D] is a dired buffer. Watch this video and try to
+reproduce what happens in it:
+
+  (find-2021workshop6video \"0:00\")
+
+Do this twice. In the first time you should create elisp
+hyperlinks pointing to this directory and this file,
+
+  (find-efile \"play/\")
+  (find-efile \"play/\" \"life.el\")
+
+and in the second time you should create elisp hyperlinks to a
+directory and a file that you find interesting.
+
+
+
+
+
+2.3. Invisible text
+-------------------
+Run this sexp:
+
+  (eek \"3*<up> C-a C-SPC C-e\")
+
+and then use `M-w' to copy the region to the kill ring and `M-hy'
+to yank it into this sexp:
+
+  (insert \"\\n\")
+
+Instead of getting the first sexp below you will get the second
+one:
+
+  (insert \"\\n\" \"2.3. Invisible text\")
+  (insert \"\\n\" \"2.3. Invisible text\\n-------------------\")
+
+That's becase when you type `C-e' on the title of a section of an
+\"intro\" the `C-e' takes you to the right of the line _after_
+the invisible text. If you type `<left> <right>' there this moves
+the point to a position before the invisible text.
+
+Exercise: create a pair of elisp hyperlinks, the first one
+pointing to this intro and the second pointing to this section,
+and copy the pair to your notes. You'll have to watch the video
+to understand some tricky points and you will have to follow the
+diagram below.
+
+   ________         _______          _______________               ________
+  |        |       |       |        |        |      |             |        |
+  |  [EX]  | M-hh  |  [EH] | M-21j  |  [EH]  |  [N] | C-x 1 M-K*  |  [EX]  |
+  |  M-w   | ----> |       | -----> |  M-h2 ::> C-y | ----------> |        |
+  |        |       |       |        |  M-hy  |      |             |        |
+  |________|       |_______|        |________|______|             |________|
+
+[Video links:]
+  (find-2021workshop4video \"0:00\")
+
+
+
+
+
+
+[The rest is old]
+
 
 
 
@@ -13739,6 +13772,120 @@ In a diagram:
   ---------> | mark, M-w | -----> |    C-y    |
              |           |        |           |
              |___________|        |___________|
+
+
+
+
+
+2.1. Variants of `save'
+-----------------------
+
+2.2. Variants of `create'
+-------------------------
+
+  (eek \"M-h M-k      M-j  ;; eejump\")
+                 M-2 M-j     runs:  (find-emacs-keys-intro)
+                 M-5 M-j     runs:  (find-eev-quick-intro)
+  (eek \"M-h M-k  M-h M-k  ;; find-ekey-links\")
+  (eek \"M-h M-k  M-h M-f  ;; find-efunction-links\")
+  (eek \"M-h M-k  M-h M-h  ;; find-here-links\")
+  (eek \"M-h M-k  M-h M-3  ;; find-here-links-3\")
+
+2.3. How to learn to `select'
+-----------------------------
+
+2.4. Variants of `refine'
+-------------------------
+  (find-refining-intro \"2. Refining hyperlinks\")
+  (find-refining-intro \"2. Refining hyperlinks\" \"M-h M-y\")
+  (find-anchors-intro \"2. Shrinking\")
+  (find-anchors-intro \"2. Shrinking\" \"`M-h M--'\")
+
+2.5. Variants of `copy'
+-----------------------
+  (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
+
+2.6. Variants of `go back'
+--------------------------
+  (eek \"M-h M-k  M-h M-1  ;; find-here-links-1\")
+  (find-eval-intro \"5. Going back\" \"`M-K' instead of `M-k'\")
+
+
+
+
+3. A two-window setting
+=======================
+Exercise: copy the diagram below to your notes,
+
+   ____________         _____________          ____________        _____________
+  |      |     |       |      |      |        |      |     |      |      |      |
+  | [EX] | [T] | M-hh  | [EX] | [EH] | M-21j  | [EH] | [N] | M-K* | [EH] | [EX] |
+  |      | M-w | ----> |      | M-h2 | -----> |      | C-y | ---> |      |      |
+  |      |     |       |      | M-hy |        |      |     |      |      |      |
+  |      |     |       |      | M-w  |        |      |     |      |      |      |
+  |______|_____|       |______|______|        |______|_____|      |______|______|
+
+then come back here and type `C-x 1 C-x 3' to split the window.
+In the window at the right, go this directory,
+
+  (find-efile \"\")
+
+find the subdirectory \"play\", enter it, find the file
+\"life.el\", and inside the file \"life.el\" find the line that
+starts with this string, with a space at its end:
+
+  \"(defun life \"
+
+Then follow the instructions in the diagram above to create a
+link to the file \"life.el\". Refine that link to make it point
+to the first occurrence of the string \"(defun life \" inside the
+file \"life.el\", and copy the original link and the refined one
+to your notes.
+
+[Video links:]
+  (find-2021workshop2video \"0:00\")
+
+
+
+
+
+1. Saving interesting links
+===========================
+The documentation of eev says at several places that people
+should \"save all interesting links to their notes\". It is
+easier to learn that if we split it into these tasks:
+
+  a. save links to your notes
+  b. test these links
+  c. mark the links that you don't understand
+  d. undestand what each link does (with M-h M-f)
+  e. recognize which links are interesting
+
+
+2. Some abbreviations
+=====================
+Sequences of keys like `M-2 M-1 M-j' can be typed by keeping the meta
+key pressed and then typing `2', `1', and 'j'. We will sometimes write
+these keys sequences in an abbreviated form, like this: `M-21j'.
+
+Some intros, like this one,
+
+  (find-here-links-intro \"4. `find-here-links-3'\")
+
+draw window configurations like this:
+
+   _____________________
+  |          |          |
+  |          |  elinks  |
+  |          |  buffer  |
+  |  target  |__________|
+  |  buffer  |          |
+  |          |  notes   |
+  |          |  buffer  |
+  |__________|__________|
+
+we will often use abbreviations like [T], [E], and [N] for the
+descriptions of the buffers in the windows.
 
 " pos-spec-list)))
 

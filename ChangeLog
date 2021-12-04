@@ -1,4 +1,18 @@
+2021-12-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2021workshop4video)
+	(find-2021workshop5video, find-2021workshop6video): new functions.
+
+	* eev-intro.el (find-eev-exercises-intro): several new sections.
+
+2021-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2021workshop2video)
+	(find-2021workshop3video): new functions.
+
 2021-12-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2021workshop1video): new function.
 
 	* eev-intro.el (find-eev-exercises-intro): rewritten.
 

@@ -438,7 +438,7 @@ instead of inserting."
   ⇐ <= \\Leftarrow
   ⇒ => \\funto
   ⇔ LR \\Leftrightarrow
-  ⇝ s> \\squigglyarrow
+  ⇝ s> \\rightsquigarrow
   ∀ fa \\forall
   ∂ Pa \\partial
   ∃ ex \\exists
