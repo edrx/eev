@@ -1,3 +1,10 @@
+2021-12-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* README: rewritten to explain an issue with autoloads.
+
+	* eev-intro.el (find-saving-links-intro): new function.
+	(find-eev-intro): mention `(find-saving-links-intro)'.
+
 2021-12-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-2021workshop4video)
