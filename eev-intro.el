@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211205
+;; Version:    20211206
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -30,13 +30,12 @@
 
 ;;; Commentary:
 ;;
-;; Sometime around 2015 I realized that I could make write a sandboxed
-;; tutorial - (find-eev-quick-intro) - that could be THE starting
+;; Sometime around 2015 I realized that I could make a sandboxed
+;; tutorial - (find-eev-quick-intro) - that would be THE starting
 ;; point of eev. It would be:
 ;;
 ;;   1) an interactive tutorial for beginners,
-;;   2) the thing that emacs shows when it starts (when we invoke it
-;;      as "~/eev"),
+;;   2) the thing that emacs shows when it starts,
 ;;   3) a tutorial for advanced users,
 ;;   4) an index to the other sandboxed tutorials, that were mostly
 ;;      quite technical (and incomplete),
@@ -48,7 +47,6 @@
 ;; (find-eev-quick-intro). See:
 ;;
 ;;   (find-eevfile "eev-beginner.el" "defun eev-beginner ")
-;;
 
 ;; To use this, simply execute any of the sexps below:
 ;;   (find-eev-quick-intro)
@@ -301,8 +299,9 @@ For more material on eev, see:
 The easiest way to install eev is with `M-x list-packages', as
 explained in this video:
 
-  http://www.youtube.com/watch?v=kxBjiUo88_U
+  http://angg.twu.net/2020-list-packages-eev-nav.html
   http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
+  http://www.youtube.com/watch?v=kxBjiUo88_U
 
 The three links in the \"Video links:\" block below
 
@@ -314,7 +313,8 @@ The three links in the \"Video links:\" block below
 point to positions in that video; to learn how to use links like
 those, visit this URL:
 
-  http://angg.twu.net/eev-intros/find-videos-intro.html#2
+  http://angg.twu.net/eev-intros/find-video-links-intro.html
+                                (find-video-links-intro)
 
 Installing eev does NOT activate eev-mode. To activate eev-mode
 and open this tutorial, run `M-x eev-beginner'.
@@ -2233,19 +2233,31 @@ See:
 =======================
 These are the current ways to download and install eev:
 
-  1. as an Emacs package, with `M-x list-packages';
+  1. as an Emacs package, with `M-x list-packages'. See this
+     video for _very detailed_ instructions:
+
+       http://angg.twu.net/2020-list-packages-eev-nav.html
 
   2. as an Emacs package, by downloading a file named
      eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
      links like these ones - but you'll have to correct the date:
 
-       http://elpa.gnu.org/packages/eev.html
-       http://elpa.gnu.org/packages/eev-20201013.tar
-       http://angg.twu.net/eev-current/
-       http://angg.twu.net/eev-current/eev2.tar
-       http://angg.twu.net/eev-current/eev-20201013.tar
+       https://elpa.gnu.org/packages/eev.html
+       https://elpa.gnu.org/packages/eev-20211205.tar
 
-     and then running `M-x package-install-file';
+     and then running `M-x package-install-file'.
+
+     If you're on M$ Windows and using Emacs 27.2 then you will
+     probably need this method, because of this bug:
+
+       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00482.html
+       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00530.html
+       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00556.html
+       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg02148.html
+
+     There is a link to download Emacs28-pretest here:
+
+       (find-windows-beginner-intro \"1. Download and install Emacs\")
 
   3. by using the script in section 5.1 below, that downloads a
      .tgz from
@@ -2261,7 +2273,6 @@ These are the current ways to download and install eev:
 
        (add-to-list 'load-path \"~/path-to-the-eev-source/\")
        (require 'eev-load)
-       (autoload 'eev-beginner \"eev-beginner\")
        (eev-mode 1)               ; optional
 
   5. by downloading the git repo from
@@ -2272,7 +2283,6 @@ These are the current ways to download and install eev:
 
        (add-to-list 'load-path \"~/path-to-the-eev-source/\")
        (require 'eev-load)
-       (autoload 'eev-beginner \"eev-beginner\")
        (eev-mode 1)               ; optional
 
 
@@ -2303,7 +2313,7 @@ block of shell commands below into a terminal,
 }
 
 and then execute the commands in it. This is explained in this
-somewhat outdated video (from 2016!):
+outdated video (from 2016!):
 
   http://angg.twu.net/eev-videos/video-eev-quick-0.mp4
 
@@ -3648,6 +3658,14 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
+\"Taking executable notes\" consists mainly on:
+  a. recording commands sent to shell-like programs,
+  b. saving elisp hyperlinks to everything interesting
+     that we find.
+\"(Generating and) saving links\" is the harder half.
+This intro is about how to do that fluently.
+It is based on ideas that I tested in this workshop:
+  http://angg.twu.net/2021-workshop.html
 
 THIS IS A WORK IN PROGRESS AND IS CURRENTLY A MESS.
 This was split from:
@@ -10810,7 +10828,13 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-This intro is being rewritten.
+This intro needs to be rewritten!!!
+Most of the things here were reimplemented
+in a much better way in nov/2019. See:
+  (find-video-links-intro \"2. From the HTML\")
+  (find-video-links-intro \"9. First-class videos\")
+  (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-info\")
+
 Prerequisites:
   (find-psne-intro)
   (find-audiovideo-intro)
@@ -13276,6 +13300,19 @@ http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2
 
 You may need to create a desktop icon or shortcut to
 <emacsdir>/bin/runemacs.exe.
+
+
+
+1.1. Using Emacs 27.2 on Windows
+--------------------------------
+Installing eev - or any other package from ELPA - on Emacs 27.2
+on Windows may be tricky. For details, see:
+
+  (find-eev-install-intro \"5. Ways to download eev\")
+  (find-eev-install-intro \"5. Ways to download eev\" \"2.\")
+  (find-eev-install-intro \"5. Ways to download eev\" \"because of this bug\")
+
+So: please upgrade to Emacs28-pretest if you can!
 
 
 
