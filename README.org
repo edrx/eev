@@ -52,7 +52,7 @@ The best introductions to eev are:
 - its homepage: [[http://angg.twu.net/#eev]] .
 
 The "[Video links:]" blocks in the sandboxed tutorials are explained
-[[http://angg.twu.net/eev-intros/find-videos-intro.html#2][here]]; that link also has a list of the videos. See also [[https://lists.gnu.org/archive/html/emacs-devel/2021-05/msg00527.html][this
+[[http://angg.twu.net/eev-intros/find-video-links-intro.html#2][here]]; that link also has a list of the videos. See also [[https://lists.gnu.org/archive/html/emacs-devel/2021-05/msg00527.html][this
 announcement]] on emacs-devel.
 
 # (find-eev-quick-intro "3. Elisp hyperlinks")
@@ -113,4 +113,7 @@ friendly as possible both to:
 # http://angg.twu.net/LATEX/2019emacsconf.pdf#page=8
 # http://angg.twu.net/LATEX/2019emacsconf.pdf#page=13
 
+# Local Variables:
+# modes: (org-mode fundamental-mode)
+# End:
 

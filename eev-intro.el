@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211206
+;; Version:    20211207
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -3820,134 +3820,242 @@ doesn't say where.
 
 2. The base cases
 =================
-Watch this video first:
+All the methods to create and save elisp hyperlinks that we will
+see can be regarded as variants of the base cases 1, 2, and 3.
+The base cases 1, 2, and 3 all follow this pattern:
 
-  [Video links:]
-    (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
-    (find-2021workshop1video \"0:52\"   \"The instructions are here\")
-    (find-2021workshop1video \"1:24\" \"The base case 2\")
-    (find-2021workshop1video \"1:39\"   \"What I need to do is slightly\")
-    (find-2021workshop1video \"1:55\"   \"This is not yet the link that I want\")
+   _______________        _____________________        ________________
+  |               |      |          |          |      |                |
+  |               |      |         ::> elinks  |      |                |
+  |               |      |          |  buffer  |      |                |
+  |    target     | M-h3 |  target  |____::____| M-h1 |     target     |
+  |    buffer     | ---> |  buffer  |    \\/    | ---> |     buffer     |
+  |               |      |          |  notes   |      |                |
+  |               |      |          |  buffer  |      |                |
+  |_______________|      |__________|__________|      |________________|
+
+They only use two key sequences that change the window
+configuration -
+
+  M-h3  -   find here links beginner
+  M-h1  -   go back (to the previous window configuration)
+
+and they differ in the steps for editing the link in the elinks
+buffer before copying it to the notes buffer.
+
+  In the base case 1:    we do no editing, we just copy
+                         one link to the notes buffer,
+
+  In the base case 2:    we duplicate and refine, and we copy
+                         two links to the notes buffer,
+
+  In the base case 3:    we duplicate, refine, and shrink, and we copy
+                         two links to the notes buffer.
+
+The base cases 2 and 3 require us to copy to the kill ring a
+string that will be used for the refining. The operation \"copy a
+string from the target buffer to the kill ring\" consists of:
+
+  In the base case 1:    nothing
+
+  In the base case 2:    copy (with M-w)
+
+  In the base case 3:    copy last tag (with M-1hw)
+
+Let's see each one of the three base cases in detail and do one
+exercise for each one.
+
+
 
 
 2.1. The base case 1
 --------------------
-We are going to start by something that we will refer to as the
-\"base case 1\", and we will treat the other cases as variations
-of the base case 1. Here it is:
+The base case 1 is just this:
 
-  You realize that this buffer is interesting and you want to
-  save a link to it to your notes. Let's refer to this buffer as
-  the \"target buffer\", as the link will point to it. You run
-  this,
+   _____________        _____________________        _____________
+  |             |      |          |          |      |             |
+  |     [T]     |      |    [T]  ::>  [EH]   |      |     [T]     |
+  |             |      |          |   M-hw   |      |             |
+  |             | M-h3 |          |____::____| M-h1 |             |
+  |             | ---> |          |    \\/    | ---> |             |
+  |             |      |          |    [N]   |      |             |
+  |             |      |          |    C-y   |      |             |
+  |_____________|      |__________|__________|      |_____________|
 
-    (eek \"M-h M-3  ;; find-here-links-3\")
+In this case the arrow \"::>\" means just \"switch to the buffer
+with elisp hyperlinks\". In the [EH] buffer we copy the line with
+the hyperlink that points to the target to the kill ring with
+`M-hw' (\"copy this line\"), and then we switch to the notes
+buffer and we paste the hyperlink with `C-y' (\"yank\").
 
-  and you get a 3-window configuration like this one:
+If we treat the steps `M-h3', `M-hw' (\"copy this line\"),
+`C-y' (\"yank\"), and `M-h1' as \"obvious\" we can omit them from
+the diagram, and we get this:
 
-   _______________           _____________________           ________________
-  |               |         |          |          |         |                |
-  |               |         |          |  elinks  |         |                |
-  |               |         |          |  buffer  |         |                |
-  |    target     | M-h M-3 |  target  |__________| M-h M-1 |     target     |
-  |    buffer     | ------> |  buffer  |          | ------> |     buffer     |
-  |               |         |          |  notes   |         |                |
-  |               |         |          |  buffer  |         |                |
-  |_______________|         |__________|__________|         |________________|
+   _____________        _____________________        _____________
+  |             |      |          |          |      |             |
+  |     [T]     |      |    [T]  ::>  [EH]   |      |     [T]     |
+  |             |      |          |          |      |             |
+  |             |      |          |____::____|      |             |
+  |             | ---> |          |    \\/    | ---> |             |
+  |             |      |          |    [N]   |      |             |
+  |             |      |          |          |      |             |
+  |_____________|      |__________|__________|      |_____________|
 
-  you select the line of the \"elinks buffer\" that contains an
-  elisp hyperlink that points to the \"target buffer\", you copy
-  that line your \"notes buffer\" - that contains the file ~/TODO
-  - and you run this
+One of my reasons for preferring this diagram with less
+information is that now the step that means \"copy the hyperlink
+to the kill ring\" does not say how to do that - and we can use
+either `M-hw' or a more standard way to copy a line to the kill
+ring, like `C-SPC <down> M-w'.
 
-    (eek \"M-h M-1  ;; find-here-links-1\")
+Exercise 2.1a:
 
-  to go back to the original window configuration in which only
-  the target buffer was being shown.
+  Treat this intro as the target buffer. Use the method above to
+  generate a link to this target and to copy it to your notes.
 
-What you did can be summarized as:
+Let me introduce another abbreviation that I will use. In the
+exercises 2.1b, 2.2b, and 2.2c below we will use a target buffer
+that is different from the buffer with the exercises, and instead
+of representing what happens in the exercise with five window
+configurations, as
 
-  create  (the elisp hyperlinks buffer)
-  select  (the correct elisp hyperlink)
-  copy    (it to the notes buffer)
-  go back (to the previous window configuration)
+   ________      _______      ____________      _______      ________
+  |        |    |       |    |     |      |    |       |    |        |
+  |  [EX]  | -> |  [T]  | -> | [T]::>[EH] | -> |  [T]  | -> |  [EX]  |
+  |        |    |       |    |     |__::__|    |       |    |        |
+  |        |    |       |    |     |  \\/  |    |       |    |        |
+  |        |    |       |    |     |  [N] |    |       |    |        |
+  |________|    |_______|    |_____|______|    |_______|    |________|
 
-or:
+I will omit the second and the fourth window configurations and
+draw something equivalent to this:
 
-  create / select / copy / go back
+   ________                   ____________                   ________
+  |        |                 |     |      |                 |        |
+  |  [EX]  | --------------> | [T]::>[EH] | --------------> |  [EX]  |
+  |        |                 |     |__::__|                 |        |
+  |        |                 |     |  \\/  |                 |        |
+  |        |                 |     |  [N] |                 |        |
+  |________|                 |_____|______|                 |________|
 
-[Video links:]
-  (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
-  (find-2021workshop1video \"0:52\" \"The instructions are here\")
+or, even worse, I will simply expect that people will be able to
+take the diagram of the previous exercise, i.e., of the
+exercises 2.1a, 2.2a, and 2.3a, that are like this,
 
+                 _______      ____________      _______                
+                |       |    |     |      |    |       |               
+                |  [T]  | -> | [T]::>[EH] | -> |  [T]  |              
+                |       |    |     |__::__|    |       |              
+                |       |    |     |  \\/  |    |       |              
+                |       |    |     |  [N] |    |       |                
+                |_______|    |_____|______|    |_______|              
+
+and convert it mentally to a diagram with \"[EX]\" in the
+extremities. So:
+
+Exercise 2.1b:
+
+  Follow this link:
+
+    (find-enode \"Setting Mark\")
+
+  it will open an info page. Treat that info page as the
+  \"target\" and use the method above to create a link to that
+  target and to copy it to your notes. After that come back to
+  this intro using `M-K*' - i.e., \"bury buffer\" as many times
+  as needed - or using any other method. Note that this exercise
+  starts and ends with a window configuraton in which only the
+  buffer \"[EX]\" is shown, so it uses implicitly the
+  abbreviation that I've just described.
+
+  [Video links:]
+    (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
+    (find-2021workshop1video \"0:52\"   \"The instructions are here\")
 
 
 
 
 2.2. The base case 2
 --------------------
-The \"base case 2\" is similar to the base case 1, but in the
-base case 2 we will create a link with a pos-spec-list containing
-the name of this section. Pos-spec-lists are explained here:
+The base case 2 is similar to the base case 1 but here we
+duplicate and refine the hyperlink. Its diagram is:
 
-  (find-eev2020video \"2:53\" \"pos-spec-lists\")
+   _____________        _____________________        _____________
+  |             |      |          |          |      |             |
+  |     [T]     |      |    [T]  ::>  [EH]   |      |     [T]     |
+  |             |      |          |   M-h2   |      |             |
+  |             |      |          |   M-hy   |      |             |
+  |             |      |          |____::____|      |             |
+  |             | ---> |          |    \\/    | ---> |             |
+  |             |      |          |    [N]   |      |             |
+  |             |      |          |          |      |             |
+  |_____________|      |__________|__________|      |_____________|
 
-The sequence of steps in the base case 2 will include two new
-steps:
+Here many obvious (?!?!) steps were omitted. Here's how to read
+it aloud including the omitted steps:
 
-  save    (the name of this section to the kill ring)        <- new!
-  create  (the elisp hyperlinks buffer)
-  select  (the correct elisp hyperlink)
-  refine  (add the name of the section to the pos-spec-list) <- new!
-  copy    (it to the notes buffer)
-  go back (to the previous window configuration)
+  find here links beginner
+  In the target buffer:
+    copy a string to the kill ring
+  In the elisp hyperlinks buffer:
+    find the hyperlink to the target
+    duplicate
+    refine
+    copy the original and the refined links to the kill ring
+  In the notes buffer:
+    paste
+  go back to the previous window configuration
 
-so:
+Exercise 2.2a:
 
-  save / create / select / refine / copy / go back
+  Treat this intro as the target buffer and the \"(?!?!)\" as the
+  string that will be used in the refinement. Use the method
+  above to generate two links - one to this intro and one to the
+  first occurrence of \"(?!?!)\" in it - and copy these two links
+  to your notes.
 
-instead of:
+Exercise 2.2b:
 
-         create / select /          copy / go back
+  Follow this link:
 
-The diagram will be this one,
+    (find-enode \"Setting Mark\" \"C-x C-x\")
 
-   _______________           _____________________           ________________
-  |               |         |          |          |         |                |
-  |               |         |  target  |  elinks  |         |                |
-  |               |         |  buffer  |  buffer  |         |                |
-  |               |         |    M-w   | M-hy ::  |         |                |
-  |    target     | M-h M-3 |          |______::__| M-h M-1 |     target     |
-  |    buffer     | ------> |          |      \\/  | ------> |     buffer     |
-  |               |         |          |          |         |     buffer     |
-  |               |         |          |  notes   |         |                |
-  |               |         |          |  buffer  |         |                |
-  |_______________|         |__________|__________|         |________________|
+  it will open an info page and search for the first occurence of
+  \"C-x C-x\" in it. Treat that info page as the \"target\" and
+  use the method above to create:
 
-The dotted arrow indicates a copy and paste from the elinks
-buffer to the notes buffer, and the `M-hy' at the left of the
-dotted arrow indicated the we will have to type `M-hy' - that is
-an abbreviation for `M-h M-y' at some point; the placement of the
-`M-hy' suggests that it is typed before the cut and paste.
+    1. a link to that target
+    2. a refinement of that link that points to the \"C-x C-x\"
 
-  (find-refining-intro \"2. Refining hyperlinks\")
-  (find-refining-intro \"2. Refining hyperlinks\" \"M-h M-y\")
+  then copy this pair of links to your notes. After that come
+  back to this intro using `M-K*' - i.e., \"bury buffer\" as many
+  times as needed - or using any other method. Note that here the
+  initial and the final window configurations are just \"[EX]\",
+  so we are using implicitly the abbreviation that omits some
+  window configurations that was explained before the exercise
+  2.1b.
 
-[Video links:]
-  (find-2021workshop1video \"1:24\" \"The base case 2\")
-  (find-2021workshop1video \"1:39\" \"What I need to do is slightly\")
-  (find-2021workshop1video \"1:55\" \"This is not yet the link that I want\")
-
+  [Video links:]
+    (find-2021workshop1video \"1:24\" \"The base case 2\")
+    (find-2021workshop1video \"1:39\"   \"What I need to do is slightly\")
+    (find-2021workshop1video \"1:55\"   \"This is not yet the link that I want\")
 
 
 
 2.3. The base case 3
 --------------------
-The base case 3 will only make sense to people who understand
-anchors, short hyperlinks and anchors, using `M-1 M-h M-w' to
-copy the preceding tag to the kill ring, and using `M-h M--' to
-shrink a hyperlink to make it point to an anchor. You can learn
-these extra prerequisites here:
+In the base case 2 we edited the hyperlink by doing duplicate and
+refine; in the base case 3 we will will edit it by doing
+duplicate, refine, _and shrink_.
+
+Very few other sections of this intro depend on this one - so you
+may skip this.
+
+The base case 3 will only make sense to people who understand:
+anchors, short hyperlinks to anchors, using `M-1hw' to copy the
+preceding tag to the kill ring, and using `M--' to shrink a
+hyperlink to make it point to an anchor. You can learn these
+extra prerequisites here:
 
   (find-eev-quick-intro \"8. Anchors\")
   (find-eev-quick-intro \"8.1. Introduction: `to'\")
@@ -3960,30 +4068,86 @@ these extra prerequisites here:
   (find-anchors-intro \"2. Shrinking\")
   (find-anchors-intro \"3. The preceding tag\")
 
-   _______________           _____________________           ________________
-  |               |         |          |          |         |                |
-  |               |         |  target  |  elinks  |         |                |
-  |               |         |  buffer  |  buffer  |         |                |
-  |    target     |         |   M-1hw  | M-h2 ::  |         |     target     |
-  |    buffer     |         |          | M-hy ::  |         |     buffer     |
-  |               |         |          | M-h- ::  |         |                |
-  |               | M-h M-3 |          |______::__| M-h M-1 |                |
-  |               | ------> |          |      \\/  | ------> |                |
-  |               |         |          |          |         |                |
-  |               |         |          |  notes   |         |                |
-  |               |         |          |  buffer  |         |                |
-  |_______________|         |__________|__________|         |________________|
+Also, the base case 3 will only _look useful_ to people who can
+imagine using anchors in their own files. The main techniques for
+creating anchors are described in the two first links below, and
+the other three links point to an experimental feature of eev
+that I use to move the first half of an index/section pair to the
+index section of a file with few keystrokes.
 
-Exercise: watch this video and try to reproduce what happens in it:
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+  (find-refining-intro \"5. Pointing to anchors\")
+  (find-refining-intro \"5. Pointing to anchors\" \"but I don't touch-type\")
+  (find-eev \"eev-hydras.el\")
 
-  (find-2021workshop7video \"0:00\")
+The diagram for the base case 3 is this one. Note - ta-da! - that
+we are introducing another abbreviation: we are omitting the
+window settings in the extremities.
 
-Use this to go to the target that appears in the video:
+         _____________________       
+        |          |          |      
+        |    [T]  ::>  [EH]   |      
+        |   M-1hw  |   M-h2   |      
+        |          |   M-hy   | 
+   ---> |          |   M-h-   | ---> 
+        |          |____::____|      
+        |          |    \\/    |
+        |          |    [N]   |      
+        |          |          |      
+        |__________|__________|      
 
-  (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-field\")
+One way to pronounce that diagram is:
+
+  go to the target buffer
+  find here links beginner
+  in the target buffer:
+    copy last tag
+  in the elisp hyperlinks buffer:
+    duplicate
+    refine
+    shrink
+    copy the original and the refined links to the kill ring
+  In the notes buffer:
+    paste
+  go back to the original window configuration
+
+Exercise 2.3a:
+
+  Omitted. Try to understand why! =)
+
+Exercise 2.3b:
+
+  This hyperlink
+
+    (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-field\")
+
+  points to an anchor in one of the source files of eev. Use it
+  to go to that anchor, and pretend that you arrived there by
+  accident, found that anchor interesting, and decided that you
+  had to put a link to it in your notes. Use the method above to
+  create
+
+    1. a link to that file
+    2. a link to that anchor in that file
+
+  and then copy the two links to your notes.
 
 
 
+
+The rest will be rewritten
+
+
+
+[Video links:]
+  (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
+  (find-2021workshop1video \"0:52\" \"The instructions are here\")
+
+[Video links:]
+  (find-2021workshop1video \"1:24\" \"The base case 2\")
+  (find-2021workshop1video \"1:39\" \"What I need to do is slightly\")
+  (find-2021workshop1video \"1:55\" \"This is not yet the link that I want\")
 
 3. Copy from left to right
 ==========================
@@ -4092,14 +4256,6 @@ diagram below.
 
 [Video links:]
   (find-2021workshop4video \"0:00\")
-
-
-
-
-
-
-[The rest is old]
-
 
 
 

@@ -1,3 +1,8 @@
+2021-12-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-saving-links-intro): rewrote several
+	sections.
+
 2021-12-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* README: rewritten to explain an issue with autoloads.
