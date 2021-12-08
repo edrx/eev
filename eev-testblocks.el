@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211121
+;; Version:    20211208
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -246,6 +246,19 @@ load \"%s\"
 ;; 
 ;; |#
 ;; " (buffer-name)))))
+
+(defun ee-insert-test-sml-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+(*
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sml
+use \"%s\";
+
+*)
+" (buffer-name)))))
 
 (defun ee-insert-test-sh-mode ()
   (interactive)

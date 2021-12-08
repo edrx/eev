@@ -3696,7 +3696,7 @@ that we will use in the text of this intro and in its videos.
         Pronounciations
   C-w     cut
   M-w     copy,  or copy into the kill ring
-  C-y     paste, or copy from the kill ring
+  C-y     paste, or copy from the kill ring, or yank
 
   C-x 0   delete window
   C-x 1   one window
@@ -3743,7 +3743,7 @@ We will use two ways to explain what our abbreviations for buffer
 names, like [EX], [EH], and [N], mean: pronounciations and sexps.
 For example:
 
-  [EX]    exercises     (find-eev-exercises-intro)
+  [EX]    exercises     (find-saving-links-intro)
   [HL]    here-links    (find-here-links)
    [N]    notes         (find-fline \"~/TODO\")
 

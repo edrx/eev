@@ -1,3 +1,7 @@
+2021-12-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-sml-mode): new function.
+
 2021-12-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-saving-links-intro): rewrote several
