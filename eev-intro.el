@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211207
+;; Version:    20211215
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2581,7 +2581,7 @@ Here is an excerpt of one of my e-mails to Stefan:
     different from, say, the one that a Python user feels today
     because he has huge libraries at his fingertips.\"
 
-    (From: http://angg.twu.net/miniforth-article.html)
+    (From: <http://angg.twu.net/miniforth-article.html>)
 
 
 
@@ -4236,10 +4236,24 @@ one:
   (insert \"\\n\" \"2.3. Invisible text\")
   (insert \"\\n\" \"2.3. Invisible text\\n-------------------\")
 
-That's becase when you type `C-e' on the title of a section of an
-\"intro\" the `C-e' takes you to the right of the line _after_
-the invisible text. If you type `<left> <right>' there this moves
-the point to a position before the invisible text.
+That's because the title line contains some invisible text, and
+the `M-hy' clears all the properties of the text that it inserts,
+including the invisibility property. Invisible text is explained
+here:
+
+  (find-elnode \"Invisible Text\")
+
+When you type `C-e' on the title of a section of an \"intro\" the
+`C-e' takes you to the right of the line _after_ the invisible
+text. If you type `<left> <right>' there this moves the point to
+a position before the invisible text. So, if you want to copy the
+title of a section of an intro to use in a refinement, use
+
+  C-a C-SPC C-e <left> <right> M-w
+
+instead of:
+
+  C-a C-SPC C-e M-w
 
 Exercise: create a pair of elisp hyperlinks, the first one
 pointing to this intro and the second pointing to this section,
@@ -6130,6 +6144,15 @@ for examples:
 
   (find-eev \"eev-testblocks.el\" \"examples\")
 
+My presentation at the EmacsConf2021 was about test blocks.
+Links:
+
+  Pages:  http://angg.twu.net/emacsconf2021.html
+          https://emacsconf.org/2021/talks/test/
+  Slides: http://angg.twu.net/LATEX/2021emacsconf.pdf
+  Video:  https://emacsconf.org/2021/talks/test/
+          (find-eev2021video \"0:00\")
+
 
 
 
@@ -6199,37 +6222,94 @@ are hyperlinks, and the ones in \"\"-lines are not.
 
 
 
+3.3. `eepitch-preprocess-line'
+------------------------------
+The key <f8> is bound to `eepitch-this-line'. You can see the
+source code of that function by following this hyperlink:
 
+  (find-efunction 'eepitch-this-line)
 
+The source of `eepitch-this-line' contains this mysterious setq:
 
+  (let ((line (buffer-substring (ee-bol) (ee-eol))))
+    (setq line (eepitch-preprocess-line line))
+    ...
+    )
 
+By default `eepitch-preprocess-line' is a no-op that simply
+returns this argument unchanged. Its definition is just this:
 
+  ;; See:
+  ;; (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+  (defun eepitch-preprocess-line (line) line)
 
+Remember that the behavior of <f8> is usually described in
+human-friendly terms as:
 
+  \"lines starting with two red stars are treated as comments,
+   lines starting with a red star are executed as lisp, 
+   and other lines are sent to the target buffer.\"
 
+The function `eepitch-preprocess-line' is a stub that lets us
+change in arbitrary ways what is the \"line\" that is processed
+in the sense above. Let's see a simple example. Try:
 
+  (replace-regexp-in-string \"^abc\" \"\"    \"foo\")
+  (replace-regexp-in-string \"^abc\" \"\" \"abcfoo\")
+  (replace-regexp-in-string \"^abc\" \"\" \"abcfooabc\")
+  (replace-regexp-in-string \"^abc\" \"\"    \"fooabc\")
 
+A `(replace-regexp-in-string \"^abc\" \"\" ...)' deletes an
+initial \"abc\" from a string if that string starts with \"abc\",
+but returns other strings unchanged. So, if we redefine
+`eepitch-preprocess-line' in this way,
 
+  (setq eepitch-preprocess-regexp \"^#: \")
+  (defun eepitch-preprocess-line (line)
+    (replace-regexp-in-string eepitch-preprocess-regexp \"\" line))
 
+then the
 
+  (let ((line (buffer-substring (ee-bol) (ee-eol))))
+    (setq line (eepitch-preprocess-line line))
+    ...
+    )
 
+in the source of `eepitch-this-line' will first set `line' to the
+string in the current line between the beginning-of-line and the
+end-of-line, and then if `line' starts with \"#: \" that prefix
+is deleted from it; and it this \"line after removing the
+prefix\" that is processed according the the rules of two red
+stars/one red star/no red stars.
 
+Now let's see a practical example. Gnuplot does not support
+multiline comments, and using exactly the hack above I can make
+<f8> ignore the prefix \"#: \". Then a block like this in a
+Gnuplot file
 
+#:  (eepitch-shell)
+#:  (eepitch-kill)
+#:  (eepitch-shell)
+#: gnuplot
+#: load \"foo.plt\"
+#: plot sin(x)
 
+works as a test block. Running
 
+  (setq eepitch-preprocess-regexp \"\")
 
+or
 
+  (defun eepitch-preprocess-line (line) line)
 
+disables the hack.
 
-
-
-
-
-
-
-
-
-
+Some languages have syntaxes for comments that are much more
+eepitch-unfriendly and test-blocks-unfriendly than this. An
+extreme example is SmallTalk, in which comments are delimited by
+double quotes and can't contain double quotes. It should be
+possible to use `eepitch-preprocess-line' to add support for test
+blocks in SmallTalk source files - but I haven't tried that yet.
 
 
 

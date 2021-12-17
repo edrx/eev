@@ -1,4 +1,25 @@
+2021-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-find-w3m-links): new function.
+	(ee-eww-bufferp): new function.
+	(ee-find-eww-links): new function.
+	(ee-fhl-main-program): added an entry for eww-mode.
+
+2021-12-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-preprocess-line): new function.
+	(eepitch-this-line): use `eepitch-preprocess-line'.
+
+	* eev-intro.el (find-eepitch-intro): added a new section that
+	explains `eepitch-preprocess-line'.
+
+2021-12-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2021orgfornonusersvideo): new function.
+
 2021-12-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-sml): new function.
 
 	* eev-testblocks.el (ee-insert-test-sml-mode): new function.
 

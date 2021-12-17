@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210607
+;; Version:    20211216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-compose-hash.el>
@@ -30,17 +30,69 @@
 ;;                                                (find-eev-intro)
 ;;                                                (find-here-links-intro)
 
-;; «.ee-composes-do»	(to "ee-composes-do")
-;; «.to-strings»	(to "to-strings")
-;; «.compose»		(to "compose")
-;; «.faces»		(to "faces")
-;; «.bigstr-specs»	(to "bigstr-specs")
-
 ;;; Commentary:
 
-;; This is a new, experimental feature that is not loaded by default.
-;; I use LaTeX a lot, and Emacs has several ways to insert non-ascii
-;; characters - like these ones:
+;; This is a new, experimental feature of eev that is not loaded by
+;; default and that has been tested by very few people. I mentioned
+;; it on help-gnu-emacs in this thread:
+;;
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-12/msg00173.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-12/threads.html#00173
+;;
+;; Its advantages over the official input methods are:
+;;
+;;   1. People can learn to use this very quickly and learn input
+;;      methods later - see the msg00173 above.
+;;
+;;   2. Each unicode character can be associated to a face and a
+;;      color, like the red stars and green "«»"s used by eev:
+;;
+;;        (find-eev-intro "1. `eev-mode'")
+;;        (find-eev-intro "1. `eev-mode'" "colored glyphs")
+;;        http://angg.twu.net/eev-intros/find-eev-intro.html#1
+;;        (find-eev-quick-intro "6.4. Red stars")
+;;        http://angg.twu.net/eev-intros/find-eev-quick-intro.html#6.4
+;;
+;;   3. These faces can be turned on and off. I usually keep them on
+;;      almost all the time, and turn them off only for editing Agda
+;;      code.
+;;
+;;   4. New characters are easy to add.
+;;
+;;   5. Each unicode character can be associated to LaTeX code. I use
+;;      lualatex most of the time but when I have to prepare a file to
+;;      be uploaded to Arxiv I have to make it compilable with both
+;;      lualatex and pdflatex; this file includes hacks that generates
+;;      "definitions in lualatex" and "definitions in pdflatex" for
+;;      all the unicode characters that have LaTeX code associated to
+;;      them. See:
+;;
+;;        (find-LATEX "edrx21chars.tex")
+;;        (find-LATEX "edrx21chars-d.tex")
+;;        (find-LATEX "2021composes-hash.tex")
+;;        http://angg.twu.net/LATEX/edrx21chars.tex.html
+;;        http://angg.twu.net/LATEX/edrx21chars-d.tex.html
+;;        http://angg.twu.net/LATEX/2021composes-hash.tex.html
+;;
+;;      If you just want to test this, see:
+;;
+;;        (find-LATEX "2021composes-hash.tex" "test")
+;;        http://angg.twu.net/LATEX/2021composes-hash.tex.html#test
+;;
+;; The disadvantages are obvious: this is non-standard, some parts of
+;; the code are ugly and need to be rewritten, some names of functions
+;; and variables will change, etc, etc.
+
+
+
+;; «.ee-composes-do»		(to "ee-composes-do")
+;; «.to-strings»		(to "to-strings")
+;; «.compose»			(to "compose")
+;; «.faces»			(to "faces")
+;; «.unicode-characters»	(to "unicode-characters")
+;; «.bigstr-specs»		(to "bigstr-specs")
+
+;; Older docs:
 ;;
 ;;   Greek letters: (find-einsert '((900 1000)))
 ;;   Some mathematical characters: (find-einsert '((8592 9000)))
@@ -319,6 +371,7 @@ instead of inserting."
 ;;; |_.__/|_|\__, |___/\__|_|    |___/ .__/ \___|\___|___/
 ;;;          |___/                   |_|                  
 ;;
+;; «unicode-characters»  (to ".unicode-characters")
 ;; «bigstr-specs»  (to ".bigstr-specs")
 ;; These are the default bigstr specs.
 ;; I uses setq instead of defvar because this is a hack!...
@@ -539,32 +592,32 @@ instead of inserting."
 
   ;; Categories
   face: ee-composes-face-category
-  𝐀 cA \\catA
-  𝐁 cB \\catB
-  𝐂 cC \\catC
-  𝐃 cD \\catD
-  𝐄 cE \\catE
-  𝐅 cF \\catF
-  𝐆 cG \\catG
-  𝐇 cH \\catH
-  𝐈 cI \\catI
-  𝐉 cJ \\catJ
-  𝐊 cK \\catK
-  𝐋 cL \\catL
-  𝐌 cM \\catM
-  𝐍 cN \\catN
-  𝐎 cO \\catO
-  𝐏 cP \\catP
-  𝐐 cQ \\catQ
-  𝐑 cR \\catR
-  𝐒 cS \\catS
-  𝐓 cT \\catT
-  𝐔 cU \\catU
-  𝐕 cV \\catV
-  𝐖 cW \\catW
-  𝐗 cX \\catX
-  𝐘 cY \\catY
-  𝐙 cZ \\catZ
+  𝐀 cA \\mathbf{A}
+  𝐁 cB \\mathbf{B}
+  𝐂 cC \\mathbf{C}
+  𝐃 cD \\mathbf{D}
+  𝐄 cE \\mathbf{E}
+  𝐅 cF \\mathbf{F}
+  𝐆 cG \\mathbf{G}
+  𝐇 cH \\mathbf{H}
+  𝐈 cI \\mathbf{I}
+  𝐉 cJ \\mathbf{J}
+  𝐊 cK \\mathbf{K}
+  𝐋 cL \\mathbf{L}
+  𝐌 cM \\mathbf{M}
+  𝐍 cN \\mathbf{N}
+  𝐎 cO \\mathbf{O}
+  𝐏 cP \\mathbf{P}
+  𝐐 cQ \\mathbf{Q}
+  𝐑 cR \\mathbf{R}
+  𝐒 cS \\mathbf{S}
+  𝐓 cT \\mathbf{T}
+  𝐔 cU \\mathbf{U}
+  𝐕 cV \\mathbf{V}
+  𝐖 cW \\mathbf{W}
+  𝐗 cX \\mathbf{X}
+  𝐘 cY \\mathbf{Y}
+  𝐙 cZ \\mathbf{Z}
 
 
 ")

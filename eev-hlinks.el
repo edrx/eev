@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211031
+;; Version:    20211216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -108,6 +108,7 @@
    (:if (ee-info-bufferp)      (ee-find-info-links))
    (:if (ee-man-bufferp)       (ee-find-man-links))
    (:if (ee-grep-bufferp)      (ee-find-grep-links))
+   (:if (ee-eww-bufferp)       (ee-find-eww-links))
    (:if (ee-w3m-bufferp)       (ee-find-w3m-links))
    (:if (ee-dired-bufferp)     (ee-find-file-links))
    (:if (ee-wdired-bufferp)    (ee-find-file-links))
@@ -330,6 +331,7 @@ See: (find-here-links-intro)"
 (defun ee-info-bufferp      () (eq major-mode 'Info-mode))
 (defun ee-dired-bufferp     () (eq major-mode 'dired-mode))
 (defun ee-wdired-bufferp    () (eq major-mode 'wdired-mode))
+(defun ee-eww-bufferp       () (eq major-mode 'eww-mode))
 (defun ee-w3m-bufferp       () (eq major-mode 'w3m-mode))
 (defun ee-custom-bufferp    () (eq major-mode 'Custom-mode))
 (defun ee-epackages-bufferp () (eq major-mode 'package-menu-mode))
@@ -399,6 +401,8 @@ See: (find-here-links-intro)"
 (defun ee-find-ecolors-links   () `((find-ecolors)))
 (defun ee-find-epackages-links () `((find-epackages)))
 (defun ee-find-pdftext-links   () (ee-pdflike-page-links))
+(defun ee-find-eww-links       () `((find-eww ,(plist-get eww-data :url))))
+(defun ee-find-w3m-links       () `((find-w3m ,w3m-current-url)))
 
 
 ;; For debugging.

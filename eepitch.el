@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211124
+;; Version:    20211215
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -407,6 +407,7 @@ See: (find-eepitch-intro)
 and: `eepitch', `eepitch-regexp', `eepitch-comment-regexp'."
   (interactive)
   (let ((line (buffer-substring (ee-bol) (ee-eol))))  ; get line contents
+    (setq line (eepitch-preprocess-line line))        ;   and preprocess it
     (cond ((string-match eepitch-comment-regexp line) ; comment lines
 	   (message "Comment: %s" line))              ;  are message'd,
 	  ((string-match eepitch-regexp line)         ; red star lines
@@ -416,6 +417,9 @@ and: `eepitch', `eepitch-regexp', `eepitch-comment-regexp'."
 	     (eepitch-line line))))		      ;  are sent
   (ee-next-line 1))
 
+;; See:
+;; (find-eepitch-intro "3.3. `eepitch-preprocess-line'")
+(defun eepitch-preprocess-line (line) line)
 
 
 
@@ -956,12 +960,13 @@ The arguments are explained here:
 
 
 ;; Haskell, ML, Erlang, Coq:
+(defun eepitch-ghci   () (interactive) (eepitch-comint "ghci" "ghci"))
 (defun eepitch-hugs   () (interactive) (eepitch-comint "hugs" "hugs"))
 (defun eepitch-hugs98 () (interactive) (eepitch-comint "hugs" "hugs -98"))
-(defun eepitch-ghci   () (interactive) (eepitch-comint "ghci" "ghci"))
 (defun eepitch-ocaml  () (interactive) (eepitch-comint "ocaml" "ocaml"))
-(defun eepitch-labltk () (interactive) (eepitch-comint "labltk" "labltk"))
 (defun eepitch-polyml () (interactive) (eepitch-comint "polyml" "poly"))
+(defun eepitch-sml    () (interactive) (eepitch-comint "sml" "sml"))
+(defun eepitch-labltk () (interactive) (eepitch-comint "labltk" "labltk"))
 (defun eepitch-erl    () (interactive) (eepitch-comint "erl" "erl"))
 (defun eepitch-coqtop () (interactive) (eepitch-comint "coqtop" "coqtop"))
 

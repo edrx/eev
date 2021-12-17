@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211203
+;; Version:    20211211
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -32,48 +32,50 @@
 
 ;; (load "eev-videolinks.el")
 
-;; «.find-eev-video»		(to "find-eev-video")
-;; «.find-eevlocal-links»	(to "find-eevlocal-links")
-;; «.select»			(to "select")
-;;   «.ee-use-youtube-videos»	(to "ee-use-youtube-videos")
-;;   «.ee-use-local-videos»	(to "ee-use-local-videos")
-;; «.first-class-videos»	(to "first-class-videos")
-;;  «.video-tutorials»		(to "video-tutorials")
-;;   «.find-eev2019video»	(to "find-eev2019video")
-;;   «.find-eev2020video»	(to "find-eev2020video")
-;;   «.find-eev2021video»	(to "find-eev2021video")
-;;   «.find-eevnavvideo»	(to "find-eevnavvideo")
-;;   «.find-eevtemplvideo»	(to "find-eevtemplvideo")
-;;   «.find-eevfherelvideo»	(to "find-eevfherelvideo")
-;;   «.find-eevtestblsvideo»	(to "find-eevtestblsvideo")
-;;   «.find-eevvlinksvideo»	(to "find-eevvlinksvideo")
-;;   «.find-2021workshop1video»	(to "find-2021workshop1video")
-;;   «.find-2021workshop2video»	(to "find-2021workshop2video")
-;;   «.find-2021workshop3video»	(to "find-2021workshop3video")
-;;   «.find-2021workshop4video»	(to "find-2021workshop4video")
-;;   «.find-2021workshop5video»	(to "find-2021workshop5video")
-;;   «.find-2021workshop6video»	(to "find-2021workshop6video")
-;; «.more-info»			(to "more-info")
-;; «.ee-1stclassvideos-info»	(to "ee-1stclassvideos-info")
-;;   «.eev2019»			(to "eev2019")
-;;   «.eev2020»			(to "eev2020")
-;;   «.eev2021»			(to "eev2021")
-;;   «.eevnav»			(to "eevnav")
-;;   «.eevtempl»		(to "eevtempl")
-;;   «.eevfherel»		(to "eevfherel")
-;;   «.eevtestbls»		(to "eevtestbls")
-;;   «.eevvlinks»		(to "eevvlinks")
-;;   «.oficina2021a»		(to "oficina2021a")
-;;   «.oficina2021b»		(to "oficina2021b")
-;;   «.2021workshop1»		(to "2021workshop1")
-;;   «.2021workshop2»		(to "2021workshop2")
-;;   «.2021workshop3»		(to "2021workshop3")
-;;   «.2021workshop4»		(to "2021workshop4")
-;;   «.2021workshop5»		(to "2021workshop5")
-;;   «.2021workshop6»		(to "2021workshop6")
-;; «.ee-1stclassvideos-field»	(to "ee-1stclassvideos-field")
-;; «.second-class-videos»	(to "second-class-videos")
-;;   «.code-eevvideo»		(to "code-eevvideo")
+;; «.find-eev-video»			(to "find-eev-video")
+;; «.find-eevlocal-links»		(to "find-eevlocal-links")
+;; «.select»				(to "select")
+;;   «.ee-use-youtube-videos»		(to "ee-use-youtube-videos")
+;;   «.ee-use-local-videos»		(to "ee-use-local-videos")
+;; «.first-class-videos»		(to "first-class-videos")
+;;  «.video-tutorials»			(to "video-tutorials")
+;;   «.find-eev2019video»		(to "find-eev2019video")
+;;   «.find-eev2020video»		(to "find-eev2020video")
+;;   «.find-eev2021video»		(to "find-eev2021video")
+;;   «.find-eevnavvideo»		(to "find-eevnavvideo")
+;;   «.find-eevtemplvideo»		(to "find-eevtemplvideo")
+;;   «.find-eevfherelvideo»		(to "find-eevfherelvideo")
+;;   «.find-eevtestblsvideo»		(to "find-eevtestblsvideo")
+;;   «.find-eevvlinksvideo»		(to "find-eevvlinksvideo")
+;;   «.find-2021workshop1video»		(to "find-2021workshop1video")
+;;   «.find-2021workshop2video»		(to "find-2021workshop2video")
+;;   «.find-2021workshop3video»		(to "find-2021workshop3video")
+;;   «.find-2021workshop4video»		(to "find-2021workshop4video")
+;;   «.find-2021workshop5video»		(to "find-2021workshop5video")
+;;   «.find-2021workshop6video»		(to "find-2021workshop6video")
+;;   «.find-2021orgfornonusersvideo»	(to "find-2021orgfornonusersvideo")
+;; «.more-info»				(to "more-info")
+;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
+;;   «.eev2019»				(to "eev2019")
+;;   «.eev2020»				(to "eev2020")
+;;   «.eev2021»				(to "eev2021")
+;;   «.eevnav»				(to "eevnav")
+;;   «.eevtempl»			(to "eevtempl")
+;;   «.eevfherel»			(to "eevfherel")
+;;   «.eevtestbls»			(to "eevtestbls")
+;;   «.eevvlinks»			(to "eevvlinks")
+;;   «.oficina2021a»			(to "oficina2021a")
+;;   «.oficina2021b»			(to "oficina2021b")
+;;   «.2021workshop1»			(to "2021workshop1")
+;;   «.2021workshop2»			(to "2021workshop2")
+;;   «.2021workshop3»			(to "2021workshop3")
+;;   «.2021workshop4»			(to "2021workshop4")
+;;   «.2021workshop5»			(to "2021workshop5")
+;;   «.2021workshop6»			(to "2021workshop6")
+;;   «.2021orgfornonusers»		(to "2021orgfornonusers")
+;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
+;; «.second-class-videos»		(to "second-class-videos")
+;;   «.code-eevvideo»			(to "code-eevvideo")
 
 ;;; Commentary:
 
@@ -507,6 +509,20 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
   (interactive)
   (find-eev-video "2021-workshop-6" "-gi15-liGaU" time))
 
+;; «find-2021orgfornonusersvideo»  (to ".find-2021orgfornonusersvideo")
+;; Skel: (find-1stclassvideo-links "2021orgfornonusers")
+;; Tests: (find-2021orgfornonusersvideo "0:00")
+;;        (find-efunctiondescr 'find-2021orgfornonusersvideo)
+(defun find-2021orgfornonusersvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2021orgfornonusers\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-org-for-non-users" "Eh5Wz9Vh_XM" time))
 
 
 
@@ -650,6 +666,13 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-6.mp4"
      :yt   "http://www.youtube.com/watch?v=-gi15-liGaU"
      :page "http://angg.twu.net/emacsconf2021.html")
+    ;;
+    ;; «2021orgfornonusers»  (to ".2021orgfornonusers")
+    ("2021orgfornonusers"
+     :title "Org for Non-Users (2021)"
+     :mp4  "http://angg.twu.net/eev-videos/2021-org-for-non-users.mp4"
+     :yt   "http://www.youtube.com/watch?v=Eh5Wz9Vh_XM"
+     :page "http://angg.twu.net/2021-org-for-non-users.html")
     ;;
     ))
 
