@@ -1,3 +1,21 @@
+2021-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-ekbmacro-links): small changes.
+	(find-emajormode-links): new function.
+	(find-eminormodes-links): new function.
+
+	* eev-blinks.el (find-eppm): new function.
+
+2021-12-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-package-url): new function.
+	(ee-find-epackage-links0): mostly rewritten.
+
+2021-12-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-multiwindow.el (ee-first-frame-with-title)
+	(ee-select-frame, find-wset-F): new functions.
+
 2021-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hlinks.el (ee-find-w3m-links): new function.

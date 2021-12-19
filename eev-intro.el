@@ -6225,8 +6225,9 @@ are hyperlinks, and the ones in \"\"-lines are not.
 3.3. `eepitch-preprocess-line'
 ------------------------------
 The key <f8> is bound to `eepitch-this-line'. You can see the
-source code of that function by following this hyperlink:
+source code of that function by following these hyperlinks:
 
+  (find-eev \"eepitch.el\" \"eepitch-this-line\")
   (find-efunction 'eepitch-this-line)
 
 The source of `eepitch-this-line' contains this mysterious setq:
@@ -6278,7 +6279,7 @@ then the
 in the source of `eepitch-this-line' will first set `line' to the
 string in the current line between the beginning-of-line and the
 end-of-line, and then if `line' starts with \"#: \" that prefix
-is deleted from it; and it this \"line after removing the
+is deleted from it; and it is this \"line after removing the
 prefix\" that is processed according the the rules of two red
 stars/one red star/no red stars.
 
@@ -6296,7 +6297,7 @@ Gnuplot file
 
 works as a test block. Running
 
-  (setq eepitch-preprocess-regexp \"\")
+  (setq eepitch-preprocess-regexp \"^\")
 
 or
 

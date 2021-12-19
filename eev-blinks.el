@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211101
+;; Version:    20211219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -1044,6 +1044,10 @@ This is a variant of `find-epp' that is more suitable for objects
 that `find-epp' would print in a single line."
   (let ((ee-buffer-name (or ee-buffer-name "*pp*")))
     (apply 'find-estring-elisp (ee-ppp0 object) pos-spec-list)))
+
+(defun find-eppm (code &rest pos-spec-list)
+  "This is essentially the same as (find-epp (macroexpand CODE))."
+  (apply 'find-epp (macroexpand code) pos-spec-list))
 
 ;; «find-efunctionpp»  (to ".find-efunctionpp")
 ;; See: (find-elisp-intro "6. Defining functions")

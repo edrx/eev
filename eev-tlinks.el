@@ -43,11 +43,27 @@
 ;;
 ;; See:
 ;;   (find-links-conv-intro "3. Classification")
+;;   (find-links-conv-intro "3. Classification" "c)")
 ;;   (find-links-conv-intro "3. Classification" "find-elinks")
-
-;; NOTE (written in 2019mar05): some of the functions here are very
-;; old and ugly and I haven't used them in ages. They will be deleted
-;; in the next few (or many) months.
+;;   (find-links-conv-intro "3. Classification" "eev-tlinks.el")
+;;
+;; Many of the functions in this file are "five-minute hacks" whose
+;; first versions were written in two steps. In the first step I ran
+;; `M-x find-find-links-links-new', adjusted the arguments in the
+;; first line of the temporary buffer and regenerated the buffer; this
+;; gave me a "skeleton" for the real function. In the second step I
+;; adjusted the arguments of the `find-elinks' and the string inside
+;; the `ee-template0'. Each function here that was written in this way
+;; has a "Skel:" line in the comments about its definition, and if you
+;; run the sexp in the "Skel:" line you get its skeleton. There is a
+;; video explaining this here:
+;;
+;;   (to "find-find-links-links-new")
+;;
+;; Some of the functions in this file were written with an ancestor of
+;; `find-find-links-links-new' that generated uglier code; they need
+;; to be rewritten. Also, some functions here are very old, and I
+;; haven't used or tested them in ages; they deserve to be deleted.
 
 
 
@@ -327,13 +343,17 @@ This is an internal function used by `find-{stem}-links'.\"
   (setq vars (or vars "{vars}"))
   (apply 'find-elinks-elisp
    `((find-find-links-links-new ,stem ,args ,vars ,@pos-spec-list)
-     (find-find-links-links-new "mytask" "foo bar" "" ,@pos-spec-list)
-     (find-find-links-links-new "mytask" "foo bar" "plic bletch" ,@pos-spec-list)
+     (find-find-links-links-new "mytaskA" "" "")
+     (find-find-links-links-new "mytaskB" "foo" "")
+     (find-find-links-links-new "mytaskC" "foo bar" "")
+     (find-find-links-links-new "mytaskD" "foo bar baz" "plic bletch")
+     (find-find-links-links-new)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-find-links-links-new)
      ""
      ,(ee-template0 ";; <find-{stem}-links>")
-     ,(concat ";; Skel: " (ee-S `(find-find-links-links-new ,stem ,args ,vars)))
+     ,(concat       ";; Skel: " (ee-S `(find-find-links-links-new ,stem ,args ,vars)))
+     ,(ee-template0 ";; Test: (find-{stem}-links)")
      ";;"
      ,(ee-ffll-defun stem args vars)
      )

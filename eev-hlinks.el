@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211216
+;; Version:    20211219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -75,6 +75,7 @@
 ;; «.ee-fhl-main-program»	(to "ee-fhl-main-program")
 ;; «.ee-fhl-run»		(to "ee-fhl-run")
 ;; «.ee-find-here-links»	(to "ee-find-here-links")
+;; «.ee-find-here-links-old»	(to "ee-find-here-links-old")
 ;; «.find-here-links»		(to "find-here-links")
 ;;
 ;; «.low-level-functions»	(to "low-level-functions")
@@ -100,7 +101,10 @@
 ;; by a program in a domain-specific language that should be easy to
 ;; understand, easy to extend, and easy to debug - the one below.
 ;;
+;; `find-here-links' runs this "program" with `ee-fhl-run'.
+;;
 ;; Try: (find-eppp ee-fhl-main-program)
+;;     (ee-fhl-run ee-fhl-main-program)
 
 (defvar ee-fhl-main-program
  '(:or
@@ -157,9 +161,10 @@
 
 (defun ee-fhl-run (fhl-program)
   "See `ee-fhl-main-program'."
-  (setq ee-fhl-if-sexp1 nil)
-  (setq ee-fhl-if-sexp2 nil)
-  (ee-fhl-eval fhl-program))
+  (setq ee-fhl-sexp1 nil)
+  (setq ee-fhl-sexp2 nil)
+  (ee-fhl-eval fhl-program)
+  (list ee-fhl-sexp1 ee-fhl-sexp2))
 
 ;; Tests:
 ;; (ee-fhl-eval  '(:eval (+ 20 3)))
@@ -204,7 +209,7 @@ return the result of (eval ee-fhl-sexp2), slightly preprocessed."
   (cons "" (eval ee-fhl-sexp2)))
 
 
-
+;; «ee-find-here-links-old»  (to ".ee-find-here-links-old")
 ;; Old version:
 ;; (defun ee-find-here-links ()
 ;;   (cond ;; by major mode

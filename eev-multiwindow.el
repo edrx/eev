@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211031
+;; Version:    20211217
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-multiwindow.el>
@@ -143,6 +143,32 @@ that. This is mainly for `find-wset'."
 (defun find-wset-= () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-! () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
 
+
+
+
+;; Support for frames.
+;; Inspired by this discussion:
+;; https://lists.gnu.org/archive/html/eev/2021-11/index.html
+;;
+(defun ee-first-frame-with-title (title)
+  "Return the first frame with title TITLE or nil if none exists."
+  (let ((frameswiththattitle
+	 (cl-loop for frame in (frame-list)
+		  if (equal title (frame-parameter frame 'title))
+		  collect frame)))
+    (car frameswiththattitle)))
+
+(defun ee-select-frame (title)
+  "Like `select-frame-set-input-focus', but on a frame with title TITLE.
+Use the first frame with that title if several exist. If there isn't a
+frame with that title, create one."
+  (let ((frame (ee-first-frame-with-title title)))
+    (if frame
+	(select-frame-set-input-focus frame)
+      (let ((newframe (make-frame `((title . ,title)))))
+	(select-frame-set-input-focus newframe)))))
+
+(defun find-wset-F () (ee-select-frame (car sexps)) (setq sexps (cdr sexps)))
 
 
 

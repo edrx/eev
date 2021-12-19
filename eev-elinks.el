@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211128
+;; Version:    20211219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -70,14 +70,19 @@
 ;; «.ee-find-xxxfile-sexps»	(to "ee-find-xxxfile-sexps")
 ;; «.find-file-links»		(to "find-file-links")
 ;; «.find-grep-links»		(to "find-grep-links")
-;; «.find-ekbmacro-links»	(to "find-ekbmacro-links")
 ;; «.find-pdflike-page-links»	(to "find-pdflike-page-links")
 ;; «.ee-hyperlink-prefix»	(to "ee-hyperlink-prefix")
+
 ;; «.find-eface-links»		(to "find-eface-links")
 ;; «.find-ecolor-links»		(to "find-ecolor-links")
 ;; «.find-epackage-links»	(to "find-epackage-links")
-;; «.ee-package-dir»		(to "ee-package-dir")
+;;   «.ee-package-desc»		(to "ee-package-desc")
+;;   «.ee-package-dir»		(to "ee-package-dir")
 ;; «.find-esetkey-links»	(to "find-esetkey-links")
+;; «.find-ekbmacro-links»	(to "find-ekbmacro-links")
+;; «.find-emajormode-links»	(to "find-emajormode-links")
+;; «.find-eminormodes-links»	(to "find-eminormodes-links")
+;; «.find-emodeline-links»	(to "find-emodeline-links")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -488,9 +493,15 @@ This is an internal function used by `find-ekey-links' and
 ;; «find-einfo-links» (to ".find-einfo-links")
 ;; Tests: (progn (find-enode "Lisp Eval") (find-einfo-links))
 ;;        (progn (find-enode "Lisp Eval") (eek "M-h M-i"))
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-h\M-i" 'find-einfo-links)
+;;
+;; Key binding:
+;; (find-eev "eev-mode.el" "eev-mode-map-set")
+;; (find-eev "eev-mode.el" "eev-mode-map-set" "\\M-h\\M-i")
+;;
+;; See:
+;; (find-eev "eev-hlinks.el" "ee-fhl-main-program")
+;; (find-eev "eev-hlinks.el" "ee-fhl-main-program" "(ee-find-info-links)")
+;; (find-eev-quick-intro "10.2. Generating short hyperlinks to info nodes")
 
 (defvar ee-info-file "")
 
@@ -913,34 +924,6 @@ when this is true remove the prefix D from FNAME, and put the sexp
 
 
 
-;;;   __ _           _                                      
-;;;  / _(_)_ __   __| |      _ __ ___   __ _  ___ _ __ ___  
-;;; | |_| | '_ \ / _` |_____| '_ ` _ \ / _` |/ __| '__/ _ \ 
-;;; |  _| | | | | (_| |_____| | | | | | (_| | (__| | | (_) |
-;;; |_| |_|_| |_|\__,_|     |_| |_| |_|\__,_|\___|_|  \___/ 
-;;;                                                         
-;; «find-ekbmacro-links» (to ".find-ekbmacro-links")
-;; Skel: (find-find-links-links-old "M" "macro" "")
-;; (find-efunction 'find-ekbmacro-links)
-
-;; Moved to eev-mode.el:
-;; (define-key eev-mode-map "\M-hM" 'find-ekbmacro-links)
-
-(defun find-ekbmacro-links () (interactive)
-  (find-elinks `(
-    (find-ekbmacro-links)
-    ""
-    (format-kbd-macro last-kbd-macro)
-    (setq last-kbd-macro (kbd ,(format-kbd-macro last-kbd-macro)))
-    ""
-    (find-enode "Keyboard Macros")
-    (find-enode "Edit Keyboard Macro")
-    (eek "M-h M-k C-x C-k C-e  ;; kmacro-edit-macro-repeat")
-    (eek "        C-x C-k C-e  ;; kmacro-edit-macro-repeat")
-    (eek "M-h M-k C-x C-k l    ;; kmacro-edit-lossage")
-    (eek "        C-x C-k l    ;; kmacro-edit-lossage")
-    )))
-
 
 
 ;;;            _  __ _ _ _                                     
@@ -1259,6 +1242,18 @@ If D is t then try to use `ee-package-dir' to get the directory."
 # (find-epp     (ee-package-desc '{pkg}))
 # (find-estruct (ee-package-desc '{pkg}))
 
+# (package-initialize)
+# (package-refresh-contents)
+# (package-install '{pkg})
+# (find-epackage   '{pkg})
+# (ee-package-dir  '{pkg})
+# (find-fline    (ee-package-dir '{pkg}))
+# (find-epp     (ee-package-desc '{pkg}))
+# (find-estruct (ee-package-desc '{pkg}))
+# (kill-new      (ee-package-url '{pkg}))
+# (insert \"\\n# \" (ee-package-url '{pkg}))
+# (package-delete (ee-package-desc '{pkg}))
+
 # (find-epackage-links '{pkg} \"{c}\" t)
 # (find-epackage       '{pkg})
 # (code-c-d \"{c}\" \"{d}\")
@@ -1300,6 +1295,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
 
 
 
+;; «ee-package-desc»  (to ".ee-package-desc")
 ;; «ee-package-dir»  (to ".ee-package-dir")
 ;; This function converts a package name (a symbol) into the directory
 ;; in which that package was installed (or nil), using functions from
@@ -1322,15 +1318,6 @@ If D is t then try to use `ee-package-dir' to get the directory."
 ;;      (find-efunction 'describe-package-1)
 ;;      (find-efunction 'describe-package-1 "(let* ((desc ")
 ;;
-(defun ee-package-dir (pkg)
-"Convert the name of the package PKG to the directory where it was installed."
-  (let* ((desc (ee-package-desc pkg))
-	 (dir (and desc (package-desc-dir desc))))
-    (if (stringp dir)
-	(replace-regexp-in-string
-	 "\\([^/]\\)$" "\\1/"
-	 (ee-shorten-file-name dir)))))
-
 (defun ee-package-desc (pkg)
 "An internal function used by `ee-package-dir'.
 Convert PKG - a symbol - to a package-desc structure (or to nil)."
@@ -1340,6 +1327,22 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
 	(if built-in
 	    (package--from-builtin built-in)
 	  (cadr (assq pkg package-archive-contents))))))
+
+(defun ee-package-dir (pkg)
+"Convert the name of the package PKG to the directory where it was installed."
+  (let* ((desc (ee-package-desc pkg))
+	 (dir (and desc (package-desc-dir desc))))
+    (if (stringp dir)
+	(replace-regexp-in-string
+	 "\\([^/]\\)$" "\\1/"
+	 (ee-shorten-file-name dir)))))
+
+(defun ee-package-url (pkg)
+  "Convert the name of the package PKG to its website."
+  (let ((desc (ee-package-desc pkg)))
+    (and desc (alist-get :url (package-desc-extras desc)))))
+
+
 
 
 
@@ -1415,6 +1418,163 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
   "An internal function used by `find-esetkey-links'."
   (let ((symbol (symbol-at-point)))
     (if (commandp symbol) symbol)))
+
+
+
+
+;;;   __ _           _                                      
+;;;  / _(_)_ __   __| |      _ __ ___   __ _  ___ _ __ ___  
+;;; | |_| | '_ \ / _` |_____| '_ ` _ \ / _` |/ __| '__/ _ \ 
+;;; |  _| | | | | (_| |_____| | | | | | (_| | (__| | | (_) |
+;;; |_| |_|_| |_|\__,_|     |_| |_| |_|\__,_|\___|_|  \___/ 
+;;;                                                         
+;; «find-ekbmacro-links» (to ".find-ekbmacro-links")
+;; Skel: (find-find-links-links-new "ekbmacro" "" "")
+;; Test: (find-ekbmacro-links)
+;;
+;; The standard way to save and edit keyboard macros is with
+;; the key sequences explained here,
+;;   (find-enode "Keyboard Macros")
+;;   (find-enode "Save Keyboard Macro")
+;;   (find-enode "Edit Keyboard Macro")
+;; but I prefer to use this function. It is bound to `M-h M':
+;;   (find-eev "eev-mode.el" "eev-mode-map-set")
+;;   (find-eev "eev-mode.el" "eev-mode-map-set" "\\M-hM")
+;;
+(defun find-ekbmacro-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks on keyboard macros."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-ekbmacro-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-ekbmacro-links)
+     ""
+     (format-kbd-macro last-kbd-macro)
+     (setq last-kbd-macro (kbd ,(format-kbd-macro last-kbd-macro)))
+     (eek ,(format-kbd-macro last-kbd-macro))
+     ""
+     (find-enode "Keyboard Macros")
+     (find-enode "Save Keyboard Macro")
+     (find-enode "Edit Keyboard Macro")
+     (eek "M-h M-k C-x C-k C-e  ;; kmacro-edit-macro-repeat")
+     (eek "        C-x C-k C-e  ;; kmacro-edit-macro-repeat")
+     (eek "M-h M-k C-x C-k l    ;; kmacro-edit-lossage")
+     (eek "        C-x C-k l    ;; kmacro-edit-lossage")
+     )
+   pos-spec-list))
+
+
+
+;; «find-emajormode-links»  (to ".find-emajormode-links")
+;; Skel: (find-find-links-links-new "emajormode" "mode" "")
+;; Test: (find-emajormode-links major-mode)
+;;
+(defun find-emajormode-links (&optional mode &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about the major mode."
+  (interactive (list major-mode))
+  (setq mode (or mode "{mode}"))
+  (apply
+   'find-elinks
+   `((find-emajormode-links ,mode ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-emajormode-links)
+     ""
+     (find-efunction-links ',mode)
+     (find-efunctiondescr  ',mode)
+     (find-efunction       ',mode)
+     ""
+     (find-estring (documentation ',mode))
+     (find-estring (documentation ',mode t))
+     )
+   pos-spec-list))
+
+
+
+
+;; «find-eminormodes-links»  (to ".find-eminormodes-links")
+;; Skel: (find-find-links-links-new "eminormodes" "" "")
+;; Test: (find-eminormodes-links)
+;;
+(defun find-eminormodes-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about minor modes."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-eminormodes-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eminormodes-links)
+     ""
+     (find-elnode "Minor Modes")
+     (find-eppp minor-mode-list)
+     (find-eppp local-minor-modes)
+     (find-eppp global-minor-modes)
+     ""
+     (require 'dash)
+     (find-eppp (--filter (not (boundp it)) minor-mode-list))
+     (find-eppp (--filter (and (boundp it) (symbol-value it)) minor-mode-list))
+     (find-elinks (--map `(find-efunctiondescr ',it) minor-mode-list))
+     (find-elinks (--map `(find-efunction ',it) minor-mode-list))
+     ""
+     (find-elnode "Active Keymaps")
+     (find-elnode "Standard Keymaps")
+     (find-elnode "Searching Keymaps")
+     (find-elnode "Controlling Active Maps")
+     (find-elnode "Controlling Active Maps" "current-minor-mode-maps")
+     (find-elnode "Controlling Active Maps" "minor-mode-key-binding")
+     (find-eppp (current-minor-mode-maps))
+     (find-eppp minor-mode-map-alist)
+     (find-eppp (-map 'car minor-mode-map-alist))
+     ""
+     (find-efunctiondescr 'define-minor-mode)
+     (find-efunction 'define-minor-mode)
+     (find-eppm '(define-minor-mode ee-FOO-mode "no doc" :keymap ee-FOO-map))
+     )
+   pos-spec-list))
+
+
+
+
+;; «find-emodeline-links»  (to ".find-emodeline-links")
+;; Skel: (find-find-links-links-new "emodeline" "" "")
+;; Test: (find-emodeline-links)
+;;
+(defun find-emodeline-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about the mode line.
+You can use this to understand how the mode line works."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-emodeline-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-emodeline-links)
+     ""
+     (find-elnode "Mode Line Format")
+     (find-elnode "Emulating Mode Line")
+     (find-evardescr 'mode-line-format)
+     (find-epp mode-line-format)
+     (find-epp (format-mode-line mode-line-format))
+     (find-epp (format-mode-line mode-line-format 'header-line))
+     (ee-no-properties (format-mode-line mode-line-format))
+     (insert "\n# " (format-mode-line mode-line-format))
+     ""
+     (find-evardescr 'mode-line-front-space)
+     (find-evardescr 'mode-line-mule-info)
+     (find-evardescr 'mode-line-client)
+     (find-evardescr 'mode-line-modified)
+     (find-evardescr 'mode-line-remote)
+     (find-evardescr 'mode-line-frame-identification)
+     (find-evardescr 'mode-line-buffer-identification)
+     (find-evardescr 'mode-line-position)
+     (find-evardescr 'mode-line-modes)
+     (find-evardescr 'mode-line-misc-info)
+     (find-evardescr 'mode-line-end-spaces)
+     )
+   pos-spec-list))
+
+
+
+
 
 
 
