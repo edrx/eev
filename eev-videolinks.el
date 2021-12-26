@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211211
+;; Version:    20211226
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -54,6 +54,7 @@
 ;;   «.find-2021workshop5video»		(to "find-2021workshop5video")
 ;;   «.find-2021workshop6video»		(to "find-2021workshop6video")
 ;;   «.find-2021orgfornonusersvideo»	(to "find-2021orgfornonusersvideo")
+;;   «.find-2021ffllvideo»		(to "find-2021ffllvideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -73,6 +74,7 @@
 ;;   «.2021workshop5»			(to "2021workshop5")
 ;;   «.2021workshop6»			(to "2021workshop6")
 ;;   «.2021orgfornonusers»		(to "2021orgfornonusers")
+;;   «.2021ffll»			(to "2021ffll")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -524,6 +526,21 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
   (interactive)
   (find-eev-video "2021-org-for-non-users" "Eh5Wz9Vh_XM" time))
 
+;; «find-2021ffllvideo»  (to ".find-2021ffllvideo")
+;; Skel: (find-1stclassvideo-links "2021ffll")
+;; Tests: (find-2021ffllvideo "0:00")
+;;        (find-efunctiondescr 'find-2021ffllvideo)
+(defun find-2021ffllvideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2021ffll\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2021-ffll" "h1CEL2fmkyc" time))
+
 
 
 
@@ -637,35 +654,35 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
      :title "Creating a link to a file with a 2-window setting (workshop 2021-dec-04)"
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-2.mp4"
      :yt   "http://www.youtube.com/watch?v=hqqIlZBXNhk"
-     :page "http://angg.twu.net/emacsconf2021.html")
+     :page "http://angg.twu.net/2021-workshop.html")
     ;;
     ;; «2021workshop3»  (to ".2021workshop3")
     ("2021workshop3"
      :title "Material on `M-3 M-e' (workshop 2021-dec-04)"
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-3.mp4"
      :yt   "http://www.youtube.com/watch?v=r83inf9s8zo"
-     :page "http://angg.twu.net/emacsconf2021.html")
+     :page "http://angg.twu.net/2021-workshop.html")
     ;;
     ;; «2021workshop4»  (to ".2021workshop4")
     ("2021workshop4"
      :title "Invisible text (workshop 2021-dec-04)"
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-4.mp4"
      :yt   "http://www.youtube.com/watch?v=lhpHHjBUxv8"
-     :page "http://angg.twu.net/emacsconf2021.html")
+     :page "http://angg.twu.net/2021-workshop.html")
     ;;
     ;; «2021workshop5»  (to ".2021workshop5")
     ("2021workshop5"
      :title "Copy from left to right (workshop 2021-dec-04)"
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-5.mp4"
      :yt   "http://www.youtube.com/watch?v=VzRsterVSXs"
-     :page "http://angg.twu.net/emacsconf2021.html")
+     :page "http://angg.twu.net/2021-workshop.html")
     ;;
     ;; «2021workshop6»  (to ".2021workshop6")
     ("2021workshop6"
      :title "`find-extra-file-links' (workshop 2021-dec-04)"
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-6.mp4"
      :yt   "http://www.youtube.com/watch?v=-gi15-liGaU"
-     :page "http://angg.twu.net/emacsconf2021.html")
+     :page "http://angg.twu.net/2021-workshop.html")
     ;;
     ;; «2021orgfornonusers»  (to ".2021orgfornonusers")
     ("2021orgfornonusers"
@@ -673,6 +690,13 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
      :mp4  "http://angg.twu.net/eev-videos/2021-org-for-non-users.mp4"
      :yt   "http://www.youtube.com/watch?v=Eh5Wz9Vh_XM"
      :page "http://angg.twu.net/2021-org-for-non-users.html")
+    ;;
+    ;; «2021ffll»  (to ".2021ffll")
+    ("2021ffll"
+     :title "How I write 5-minute hacks in eev using `M-x find-find-links-links-new'"
+     :mp4  "http://angg.twu.net/eev-videos/2021-ffll.mp4"
+     :yt   "http://www.youtube.com/watch?v=h1CEL2fmkyc"
+     :page "http://angg.twu.net/2021-ffll.html")
     ;;
     ))
 

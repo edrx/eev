@@ -1,3 +1,7 @@
+2021-12-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2021ffllvideo): new function.
+
 2021-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (find-ekbmacro-links): small changes.

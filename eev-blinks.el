@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211219
+;; Version:    20211220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -105,6 +105,8 @@
 ;;;                 
 ;; «eek» (to ".eek")
 ;; See: (find-eev-quick-intro "3. Elisp hyperlinks" "eek")
+;;      (find-efunctiondescr 'edmacro-mode)
+;;      (find-ekbmacro-links)
 
 (defun eek (str)
   "Execute STR as a keyboard macro. See `edmacro-mode' for the exact format.\n

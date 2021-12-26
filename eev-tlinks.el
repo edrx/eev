@@ -93,7 +93,7 @@
 ;; «.code-psnevideo»			(to "code-psnevideo")
 ;; «.code-eevvideo»			(to "code-eevvideo")
 ;; «.code-eevvideo-local»		(to "code-eevvideo-local")
-;; «.hardcoded-paths»			(to "hardcoded-paths")
+;;   «.hardcoded-paths»			(to "hardcoded-paths")
 ;; «.find-eev-video-links»		(to "find-eev-video-links")
 ;; «.find-eevshortvideo-links»		(to "find-eevshortvideo-links")
 ;;
@@ -343,11 +343,11 @@ This is an internal function used by `find-{stem}-links'.\"
   (setq vars (or vars "{vars}"))
   (apply 'find-elinks-elisp
    `((find-find-links-links-new ,stem ,args ,vars ,@pos-spec-list)
+     (find-find-links-links-new)
      (find-find-links-links-new "mytaskA" "" "")
      (find-find-links-links-new "mytaskB" "foo" "")
      (find-find-links-links-new "mytaskC" "foo bar" "")
      (find-find-links-links-new "mytaskD" "foo bar baz" "plic bletch")
-     (find-find-links-links-new)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-find-links-links-new)
      ""
@@ -1891,19 +1891,24 @@ and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
 ;;; |_| |_|_| |_|\__,_|     |_|\__,_|\__\___/_/\_\    |_|_|_| |_|_|\_\___/
 ;;;                                                                       
 ;; «find-latex-links» (to ".find-latex-links")
-;; See:
-;;   (find-eev-quick-intro "7.5. `find-latex-links'")
-
+;; Skel: (find-find-links-links-new "latex" "stem" "stem-")
+;; Tests: (find-latex-links)
+;;        (find-latex-links "/tmp/foo")
+;;        (find-latex-links "/tmp/foo" 2)
+;;        (find-latex-links "/tmp/foo" 2 "copy-rest")
+;;   See: (find-eev-quick-intro "7.5. `find-latex-links'")
+;;
 (defun find-latex-links (&optional stem &rest pos-spec-list)
 "Visit a temporary buffer containing a template for creating a LaTeX document."
   (interactive)
   (setq stem (or stem "{stem}"))
-  (let ((stem- (file-name-nondirectory stem)))
-    (apply 'find-elinks
+  (let* ((stem- (file-name-nondirectory stem)))
+    (apply
+     'find-elinks
      `((find-latex-links ,stem ,@pos-spec-list)
        (find-latex-links "/tmp/test")
        ;; Convention: the first sexp always regenerates the buffer.
-       ;; (find-efunction 'find-latex-links)
+       (find-efunction 'find-latex-links)
        (find-eev-quick-intro "7.5. `find-latex-links'")
        (find-eev-quick-intro "7.5. `find-latex-links'" "change the \"{stem}\"")
        (find-eev-quick-intro "7.5. `find-latex-links'" "top line")
@@ -1923,14 +1928,11 @@ and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
 \\documentclass{<}article{>}
 \\begin{<}document{>}
 
-\\end{<}document{>}")
+\\end{<}document{>}
+")
        )
      pos-spec-list)))
 
-;; Tests: (find-latex-links)
-;;        (find-latex-links "/tmp/foo")
-;;        (find-latex-links "/tmp/foo" 2)
-;;        (find-latex-links "/tmp/foo" 2 "copy-rest")
 
 
 

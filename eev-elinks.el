@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211219
+;; Version:    20211220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1082,6 +1082,9 @@ means."
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-eface-links)
        ""
+       (find-enode "Faces")
+       (find-elnode "Faces")
+       ""
        (find-efacedescr     ',face-symbol)
        (find-efaces         ',face-symbol)
        (find-eface          ',face-symbol)
@@ -1159,6 +1162,9 @@ to understand how this is used. ARG is usually
    `((find-ecolor-links ,initialcolor ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-ecolor-links)
+     ""
+     (find-enode "Colors")
+     (find-elnode "Color Names")
      ""
      (find-ecolor-links (ee-color-choose-tk ,(or initialcolor "gray")))
      (find-ecolor-links ,(or initialcolor "gray"))
@@ -1260,6 +1266,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
 # (find-{c}file \"\")
 
 # http://elpa.gnu.org/packages/{pkg}.html
+# http://elpa.nongnu.org/nongnu/{pkg}.html
 # http://melpa.org/#/{pkg}
 ")))
 
@@ -1457,6 +1464,7 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
      (find-enode "Keyboard Macros")
      (find-enode "Save Keyboard Macro")
      (find-enode "Edit Keyboard Macro")
+     (find-efunctiondescr 'edmacro-mode)
      (eek "M-h M-k C-x C-k C-e  ;; kmacro-edit-macro-repeat")
      (eek "        C-x C-k C-e  ;; kmacro-edit-macro-repeat")
      (eek "M-h M-k C-x C-k l    ;; kmacro-edit-lossage")
