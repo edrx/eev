@@ -1,3 +1,14 @@
+2022-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (find-pdftoolsr-page): new function.
+
+2022-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (find-xpdf-page): define it explicitly.
+	(find-pdftools-page): rewritten. The new version always calls
+	`revert-buffer' and it uses `pdf-loader-install' instead of
+	`pdf-tools-install'.
+
 2021-12-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-2021ffllvideo): new function.

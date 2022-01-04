@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211011
+;; Version:    20220104
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -646,6 +646,11 @@ version just returns the value of the variable
     ,@(if page `(,(format "%s%d" (ee-find-xpdf-colon) page)))
     ))
 
+(defun find-xpdf-page (fname &optional page &rest rest)
+  "This defun will be overridden by the `code-pdfbackend' below.
+We define it just to make this work: (find-efunction 'find-xpdf-page)"
+  (find-bgprocess (ee-find-xpdf-page fname page)))
+
 ;; (find-code-pdfbackend "xpdf-page")
         (code-pdfbackend "xpdf-page")
 
@@ -724,27 +729,72 @@ version just returns the value of the variable
 ;; This backend uses the Emacs package `pdf-tools' - that is "a better
 ;; DocView" - to display a PDF in an Emacs buffer. See:
 ;;
-;;   https://github.com/politza/pdf-tools
-;;   (find-epackage 'pdf-tools)
+;;   https://github.com/vedang/pdf-tools/
+;;   (find-epackage-links 'pdf-tools)
+;;   (find-epackage       'pdf-tools)
 ;;   (find-enode "Document View")
-;;   http://angg.twu.net/find-pdf-page.html
 ;;
-;; Note that we don't have an `ee-find-pdftools-page', and
-;; the the defun below OVERRIDES `find-pdftools-page'.
+;; Note that `*-pdftools-page' is an atypical backend. In all the
+;; "normal" backends the function `ee-find-FOO-page' returns the name
+;; of an external program and its command-line arguments, and
+;; `find-FOO-page' uses `find-bgprocess' to call that external
+;; program...
+;;
+;; In the `*-pdftools-page' family of functions the function
+;; `ee-find-pdftools-page' does not exist, and the
+;; `(defun find-pdftools-page ...)' below OVERRIDES the
+;; `(defun find-pdftools-page ...)' executed by the
+;; `(code-pdfbackend "pdftools-page")'.
 ;;
 ;; (find-code-pdfbackend "pdftools-page")
         (code-pdfbackend "pdftools-page")
 
-(defun find-pdftools-page (fname &optional page &rest rest)
-  (pdf-tools-install)
-  (find-fline fname)
-  (if page (pdf-view-goto-page (or page 1))))
+(defun find-pdftools-page (pdffile &optional page &rest rest)
+  "Open PDFFILE in the current window using pdf-tools.
+If PAGE is given, go to that page; if PAGE is nil, stay in the
+current page."
+  ;;
+  ;; `pdf-loader-install' makes sure that pdf-tools is loaded and
+  ;; that it has set up `auto-mode-alist' and `magic-mode-alist' to
+  ;; make PDF files be opened in `pdf-view-mode' instead of in
+  ;; `doc-view-mode'. See:
+  ;;   (find-evardescr 'auto-mode-alist "pdf")
+  ;;   (find-evardescr 'auto-mode-alist "pdf-view-mode")
+  ;;   (find-evardescr 'auto-mode-alist "doc-view-mode")
+  ;;   (find-efunction 'pdf-loader-install)
+  ;;   (find-efunction 'pdf-tools-install)
+  ;;
+  ;; Old way: (pdf-tools-install)
+  (pdf-loader-install)
+  ;; Open pdffile. You will get weird results if it is not a PDF.
+  (find-fline pdffile)
+  ;; Reload the PDF if it has changed.
+  (revert-buffer nil 'noconfirm)
+  ;; If PAGE is given, go to that page.
+  (if page (pdf-view-goto-page page)))
+
+
+;; Test:
+;;   (defalias 'find-pdf-page 'find-xpdf-page)
+;;   (defalias 'find-pdf-page 'find-pdftoolsr-page)
+;;   (find-pdf-page "~/Coetzee99.pdf" 1)
+;;   (find-pdf-page "~/Coetzee99.pdf" 3)
+(defun find-pdftoolsr-page (fname &optional page &rest rest)
+  "Like `find-pdftools-page', but opens the PDF in the right window."
+  (interactive)
+  (find-2a nil '(find-pdftools-page fname page)))
 
 
 
-;; I use this function to redisplay the generated PDFs after
-;; recompiling their LaTeX source. TODO: document this.
-;; My notes are here: (find-es "emacs" "ee-pdftools-revert-all")
+
+;; The function `ee-pdftools-revert-all' below - from 2019 - was a
+;; trick that I used to redisplay PDFs when I recompiled their LaTeX
+;; source. In jan/2022 I added a `(revert-buffer ...)' to
+;; `find-pdftools-page', and I _think_ that this will let me rewrite
+;; my hacks that use `ee-pdftools-revert-all' in a much better way.
+;;
+;; My old notes are here: (find-es "emacs" "ee-pdftools-revert-all")
+;; This function will probably be declared obsolete soon.
 ;;
 (defun ee-pdftools-revert-all ()
 "Run `revert-buffer' in all windows in which pdf-tools is showing PDFs.
