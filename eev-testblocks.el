@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211208
+;; Version:    20220105
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -160,6 +160,20 @@ dofile \"%s\"
 
 --]%s]
 " equals (buffer-name) equals)))))
+
+(defun ee-insert-test-makefile-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+# (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+# (setq eepitch-preprocess-regexp \"^\")
+# (setq eepitch-preprocess-regexp \"^# \")
+#
+#  (eepitch-shell)
+#  (eepitch-kill)
+#  (eepitch-shell)
+# make -f %s TARGET
+
+" (buffer-name)))))
 
 (defun ee-insert-test-maxima-mode ()
   (interactive)

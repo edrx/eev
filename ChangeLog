@@ -1,3 +1,9 @@
+2022-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-makefile-mode): new function.
+
+	* eev-videolinks.el (find-2022eevmake0video): new function.
+
 2022-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el (find-pdftoolsr-page): new function.

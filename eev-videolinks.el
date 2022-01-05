@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211226
+;; Version:    20220105
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -75,6 +75,7 @@
 ;;   «.2021workshop6»			(to "2021workshop6")
 ;;   «.2021orgfornonusers»		(to "2021orgfornonusers")
 ;;   «.2021ffll»			(to "2021ffll")
+;;   «.2022eevmake0»			(to "2022eevmake0")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -541,6 +542,21 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
   (interactive)
   (find-eev-video "2021-ffll" "h1CEL2fmkyc" time))
 
+;; <find-2022eevmake0video>
+;; Skel: (find-1stclassvideo-links "2022eevmake0")
+;; Tests: (find-2022eevmake0video "0:00")
+;;        (find-efunctiondescr 'find-2022eevmake0video)
+(defun find-2022eevmake0video (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2022eevmake0\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2022-eev-make-0" "Iql5C-yQk5c" time))
+
 
 
 
@@ -698,6 +714,12 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
      :yt   "http://www.youtube.com/watch?v=h1CEL2fmkyc"
      :page "http://angg.twu.net/2021-ffll.html")
     ;;
+    ;; «2022eevmake0»  (to ".2022eevmake0")
+    ("2022eevmake0"
+     :title "Using eev to test make(files)"
+     :mp4  "http://angg.twu.net/eev-videos/2022-eev-make-0.mp4"
+     :yt   "http://www.youtube.com/watch?v=Iql5C-yQk5c"
+     :page "http://angg.twu.net/eev-make.html")
     ))
 
 
