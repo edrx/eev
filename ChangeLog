@@ -1,3 +1,16 @@
+2022-01-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eppp-with-prefix): new function.
+	(find-eregionpp): new function.
+	(find-ebuffercontents, ee-buffer-contents, ee-buffer-contents0):
+	new functions.
+	(find-ebufferlocalvars): new function.
+
+2022-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-makefile-gmake-mode): new
+	function.
+
 2022-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-testblocks.el (ee-insert-test-makefile-mode): new function.

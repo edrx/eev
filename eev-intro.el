@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211215
+;; Version:    20220106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -6303,7 +6303,27 @@ or
 
   (defun eepitch-preprocess-line (line) line)
 
-disables the hack.
+disables the hack. A similar technique for using test blocks in
+makefiles is explained here:
+
+  http://angg.twu.net/eev-make.html
+  (find-2022eevmake0video)
+
+Running `M-x eeit' in a makefile runs
+`ee-insert-test-makefile-mode', that inserts a test block like
+this:
+
+  # See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+  # (setq eepitch-preprocess-regexp \"^\")
+  # (setq eepitch-preprocess-regexp \"^#T \")
+  #
+  #T  (eepitch-shell)
+  #T  (eepitch-kill)
+  #T  (eepitch-shell)
+  #T make -f nameofthismakefile TARGET
+
+The lines that start with just \"# \" serve as a reminder that
+you need a special setup to make that test block work.
 
 Some languages have syntaxes for comments that are much more
 eepitch-unfriendly and test-blocks-unfriendly than this. An

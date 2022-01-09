@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211220
+;; Version:    20220109
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -48,6 +48,7 @@
 ;; «.find-fline»		(to "find-fline")
 ;; «.find-wottb»		(to "find-wottb")
 ;; «.find-efaces»		(to "find-efaces")
+;; «.find-eregionpp»		(to "find-eregionpp")
 ;; «.find-ebufferandpos»	(to "find-ebufferandpos")
 ;; «.find-ebuffer»		(to "find-ebuffer")
 ;; «.find-eoutput»		(to "find-eoutput")
@@ -451,6 +452,64 @@ inspecting text proprties."
   (find-epp0 (text-properties-at (point))))
 
 (defalias 'find-etp 'find-etpat)
+
+
+
+
+;;;   __ _           _                           _                         
+;;;  / _(_)_ __   __| |       ___ _ __ ___  __ _(_) ___  _ __  _ __  _ __  
+;;; | |_| | '_ \ / _` |_____ / _ \ '__/ _ \/ _` | |/ _ \| '_ \| '_ \| '_ \ 
+;;; |  _| | | | | (_| |_____|  __/ | |  __/ (_| | | (_) | | | | |_) | |_) |
+;;; |_| |_|_| |_|\__,_|      \___|_|  \___|\__, |_|\___/|_| |_| .__/| .__/ 
+;;;                                        |___/              |_|   |_|    
+;;
+;; «find-eregionpp»  (to ".find-eregionpp")
+;; The functions `find-etpat', `find-etpat0' and `find-etpat00'
+;; defined above can be used to the examine the text properties of
+;; characters in a buffer; `find-eregionpp' can be used to examine all
+;; text properties in a region.
+
+;; Test:
+;; (eek "2*<down> C-a C-SPC <down> C-x 1 C-x 3 C-x o <<find-eregionpp>>")
+;;
+(defun find-eregionpp (b e)
+  "Show the text properties of the text in the region."
+  (interactive "r")
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-eregionpp)*")))
+    (find-epp (buffer-substring b e))))
+
+;; One way to inspect text properties in buffers with weird keymaps is
+;; to copy the contents of these buffers to other buffers that are in
+;; fundamental mode, then edit the copy to leave only the parts that
+;; we want to inspect, and then use `find-eregionpp'.
+
+;; Tests:
+;; (find-wset "1_3o_o"   nil              '(find-ebuffercontents))
+;; (find-wset "1_3o_o" '(find-eevfile "") '(find-ebuffercontents))
+;;
+(defun find-ebuffercontents (&optional b &rest pos-spec-list)
+  "Show a copy of `(ee-buffer-contents B)' in a buffer in fundamental mode.
+This function does not copy overlays.
+BUG: at this moment invisible text is not copied. I need to fix that!!!"
+  (interactive)
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-ebuffercontents)*")))
+    (apply 'find-estring (ee-buffer-contents b) pos-spec-list)))
+
+(defun ee-buffer-contents (&optional b)
+  "Like `ee-buffer-contents0', but uses the current buffer if B is nil.
+If B neither nil nor an existing buffer this function returns the
+empty string instead of throwing an error."
+  (setq b (or b (current-buffer)))
+  (if (get-buffer b) (ee-buffer-contents0 b) ""))
+
+(defun ee-buffer-contents0 (b)
+  "Return the contents of the buffer B. 
+B must be a buffer or the name of an existing buffer. If the
+buffer B is narrowed this function returns only its accessible
+portion."
+  (with-current-buffer b
+    (buffer-substring (point-min) (point-max))))
+
 
 
 
@@ -1069,6 +1128,16 @@ that `find-epp' would print in a single line."
 		       (pp-to-string (symbol-function symbol)))))
     (apply 'find-estring-elisp body pos-spec-list)))
 
+;; Test: (find-eppp-with-prefix ";; HELLO\n" '(1 "2" (3 4)))
+;;
+(defun find-eppp-with-prefix (prefix object &rest pos-spec-list)
+  "Like `find-eppp', but puts PREFIX at the beginning of the buffer."
+  (let ((ee-buffer-name (or ee-buffer-name "*pp*")))
+    (apply 'find-estring-elisp
+	   (concat prefix (ee-ppp0 object))
+	   pos-spec-list)))
+
+
 
 
 ;;;  _                 _       _     _     _                   
@@ -1146,6 +1215,23 @@ Example: (find-eminorkeymapdescr 'eev-mode)"
 Example: (find-ekeymapdescr (ee-minor-mode-keymap 'eev-mode))"
   (cdr (assq mode-symbol minor-mode-map-alist)))
 
+;; Tests:
+;;                                        (find-ebufferlocalvars)
+;;                                        (find-ebufferlocalvars "mode-name")
+;; (find-wset "1_3o_" '(find-eevfile "") '(find-ebufferlocalvars "mode-name"))
+;; 
+(defun find-ebufferlocalvars (&rest pos-spec-list)
+  "Show the result of running `(buffer-local-variables)' in the current buffer."
+  (interactive)
+  (let ((ee-buffer-name (or ee-buffer-name "*(buffer-local-variables)*")))
+    (apply
+     'find-eppp-with-prefix
+     ";; See:
+;; (find-elnode \"Creating Buffer-Local\" \"buffer-local-variables\")
+;; (find-efunction 'find-ebufferlocalvars)\n\n"
+     (buffer-local-variables)
+     pos-spec-list)))
+
 ;; Broken? See: (find-efile "international/ccl.el")
 (defun find-eccldump (ccl-code &rest pos-spec-list)
   "Hyperlink to the result of running `ccl-dump' on CCL-CODE.
@@ -1168,6 +1254,7 @@ Examples: (find-echarsetchars 'mule-unicode-0100-24ff \"733x\")
 		 (list-non-iso-charset-chars charset))
 		(t (error "Invalid character set %s" charset)))
 	 pos-spec-list))
+
 
 
 

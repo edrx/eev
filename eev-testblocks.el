@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220105
+;; Version:    20220107
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -161,17 +161,31 @@ dofile \"%s\"
 --]%s]
 " equals (buffer-name) equals)))))
 
+(defun ee-insert-test-makefile-gmake-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+# See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+# (setq eepitch-preprocess-regexp \"^\")
+# (setq eepitch-preprocess-regexp \"^#T \")
+#
+#T  (eepitch-shell)
+#T  (eepitch-kill)
+#T  (eepitch-shell)
+#T make -f %s TARGET
+
+" (buffer-name)))))
+
 (defun ee-insert-test-makefile-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
-# (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+# See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
 # (setq eepitch-preprocess-regexp \"^\")
-# (setq eepitch-preprocess-regexp \"^# \")
+# (setq eepitch-preprocess-regexp \"^#T \")
 #
-#  (eepitch-shell)
-#  (eepitch-kill)
-#  (eepitch-shell)
-# make -f %s TARGET
+#T  (eepitch-shell)
+#T  (eepitch-kill)
+#T  (eepitch-shell)
+#T make -f %s TARGET
 
 " (buffer-name)))))
 
