@@ -2,7 +2,7 @@
 ;; The basic hyperlinks are the ones that do not depend on templates,
 ;; and that are not created by `code-c-d' and friends.
 
-;; Copyright (C) 1999-2021 Free Software Foundation, Inc.
+;; Copyright (C) 1999-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220109
+;; Version:    20220115
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -49,6 +49,7 @@
 ;; «.find-wottb»		(to "find-wottb")
 ;; «.find-efaces»		(to "find-efaces")
 ;; «.find-eregionpp»		(to "find-eregionpp")
+;; «.find-ebuffercontents»	(to "find-ebuffercontents")
 ;; «.find-ebufferandpos»	(to "find-ebufferandpos")
 ;; «.find-ebuffer»		(to "find-ebuffer")
 ;; «.find-eoutput»		(to "find-eoutput")
@@ -472,12 +473,22 @@ inspecting text proprties."
 ;; Test:
 ;; (eek "2*<down> C-a C-SPC <down> C-x 1 C-x 3 C-x o <<find-eregionpp>>")
 ;;
-(defun find-eregionpp (b e)
-  "Show the text properties of the text in the region."
-  (interactive "r")
-  (let ((ee-buffer-name (or ee-buffer-name "*(find-eregionpp)*")))
+(defun find-eregionpp (b e use-print-circle)
+  "Show the text properties of the text in the region.
+This function pretty-prints the result of `(buffer-substring B
+E)' and shows the result in a temporary buffer; B and E are the
+extremities of the region. If this function is called with a
+numeric argument, as in `C-u M-x find-eregionpp', then the
+pretty-printer is run with the flag `print-circle' turned on, and
+this makes the pretty-printer display copies of shared subobjects
+using a more compact notation. See:
+  (find-elnode \"Circular Objects\")"
+  (interactive "r\nP")
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-eregionpp)*"))
+	(print-circle use-print-circle))
     (find-epp (buffer-substring b e))))
 
+;; «find-ebuffercontents»  (to ".find-ebuffercontents")
 ;; One way to inspect text properties in buffers with weird keymaps is
 ;; to copy the contents of these buffers to other buffers that are in
 ;; fundamental mode, then edit the copy to leave only the parts that

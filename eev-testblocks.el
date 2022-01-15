@@ -1,6 +1,6 @@
 ;;; eev-testblocks.el - create "test blocks" using multiline comments.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220107
+;; Version:    20220115
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -100,6 +100,20 @@ gcc -o {fname} {fnamec}
 */
 ")))))
 
+(defun ee-insert-test-fennel-mode ()
+  (interactive)
+  (let* ((fname (buffer-name))
+	 (stem  (replace-regexp-in-string ".fnl$" "" fname)))
+    (insert (ee-adjust-red-stars (format "
+(comment \"Test block:
+ (eepitch-fennel)
+ (eepitch-kill)
+ (eepitch-fennel)
+,reload %s
+
+\")
+" stem)))))
+
 (defun ee-insert-test-haskell-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -135,6 +149,21 @@ include(\"%s\")
 
 =#
 " (buffer-name)))))
+
+(defun ee-insert-test-latex-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+%% See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+%% (setq eepitch-preprocess-regexp \"^\")
+%% (setq eepitch-preprocess-regexp \"^%%T ?\")
+%%
+%%T  (eepitch-shell)
+%%T  (eepitch-kill)
+%%T  (eepitch-shell)
+%%T 
+
+" ; (buffer-name)
+))))
 
 (defun ee-insert-test-lisp-mode ()
   (interactive)

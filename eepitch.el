@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012,2015,2018,2019,2020,2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211215
+;; Version:    20220115
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -957,6 +957,9 @@ The arguments are explained here:
   (eepitch-comint "mit-scheme" "mit-scheme"))
 (defun eepitch-tinyscheme () (interactive)
   (eepitch-comint "tinyscheme" "tinyscheme"))
+;;
+(defun eepitch-fennel () (interactive) (eepitch-comint "fennel" "fennel"))
+;; Or: (defun eepitch-fennel () (interactive) (eepitch '(fennel-repl nil)))
 
 
 ;; Haskell, ML, Erlang, Coq:

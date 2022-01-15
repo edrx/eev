@@ -1,3 +1,16 @@
+2022-01-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-fennel-mode): new function.
+
+	* eepitch.el (eepitch-fennel): new function.
+
+	* eev-tlinks.el (find-red-star-links): Added instructions for
+	using `M-x ee-use-red-bullets' and `M-x ee-use-red-stars'.
+
+2022-01-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-latex-mode): new function.
+
 2022-01-09  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-eppp-with-prefix): new function.
