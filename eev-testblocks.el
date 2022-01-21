@@ -114,6 +114,20 @@ gcc -o {fname} {fnamec}
 \")
 " stem)))))
 
+(defun ee-insert-test-gnuplot-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+# (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+# (setq eepitch-preprocess-regexp \"\")
+# (setq eepitch-preprocess-regexp \"^#: \")
+#
+#:  (eepitch-shell)
+#:  (eepitch-kill)
+#:  (eepitch-shell)
+#: gnuplot %s
+
+" (buffer-name)))))
+
 (defun ee-insert-test-haskell-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "

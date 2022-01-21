@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220115
+;; Version:    20220118
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -2650,13 +2650,18 @@ This function is used by `ee-0x0-upload-region'."
   "See: (find-red-star-links 2 \"high-level\")"
   (interactive)
   (eepitch-set-glyph0 ?• nil)
-  (defun ee-adjust-red-stars (str) str))
+  (defun ee-adjust-red-stars (str) str)
+  (redisplay 'force)
+  (message "Now `M-T' and `M-x eeit' will use red stars."))
 
 (defun ee-use-red-bullets ()
   "See: (find-red-star-links 2 \"high-level\")"
   (interactive)
   (eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
-  (defun ee-adjust-red-stars (str) (replace-regexp-in-string "" "•" str)))
+  (defun ee-adjust-red-stars (str) (replace-regexp-in-string "" "•" str))
+  (redisplay 'force)
+  (message "Now `M-T' and `M-x eeit' will use red bullets."))
+
 
 
 
@@ -2677,6 +2682,8 @@ This function is used by `ee-0x0-upload-region'."
      (find-eev-quick-intro "9. Shorter hyperlinks")
      (find-eev-quick-intro "9.1. `code-c-d'")
      (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" "to anchors")
+     (find-2022findeevanggvideo "11:30" "(find-angg-es-links)")
+     (find-2022findeevanggvideo "14:12" "the find-wgeta searches for")
      ""
      ,(ee-template0 "\
 
@@ -2773,6 +2780,12 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
 
 ;; Play:
+;; (find-{c}video \"0:00\")
+
+;; Setups:
+ ' (find-ssr-links     \"{c}\" \"{mp4stem}\" \"{hash}\")
+ ' (code-eevvideo      \"{c}\" \"{mp4stem}\" \"{hash}\")
+ ' (code-eevlinksvideo \"{c}\" \"{mp4stem}\" \"{hash}\")
 ;; (find-{c}video \"0:00\")
 
 ;; Other places with info about this video:

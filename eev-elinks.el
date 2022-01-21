@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211220
+;; Version:    20220120
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -273,6 +273,7 @@ This is an internal function used by `find-efunction-links' and
     (find-efunction ',f)
     (find-efunctionpp ',f)
     (find-efunctiond ',f)
+    (find-ealias ',f)
     ""
     ,@(if (commandp f)
 	  `((Info-goto-emacs-command-node ',f)

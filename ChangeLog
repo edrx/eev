@@ -1,6 +1,20 @@
+2022-01-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-ealias): new function.
+
+2022-01-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-use-red-stars, ee-use-red-bullets): use
+	`redisplay' and display a message.
+
+2022-01-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2022findeevanggvideo): new function.
+
 2022-01-15  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-testblocks.el (ee-insert-test-fennel-mode): new function.
+	(ee-insert-test-gnuplot-mode): new function.
 
 	* eepitch.el (eepitch-fennel): new function.
 

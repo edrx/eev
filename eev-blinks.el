@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220115
+;; Version:    20220120
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -502,7 +502,7 @@ using a more compact notation. See:
   "Show a copy of `(ee-buffer-contents B)' in a buffer in fundamental mode.
 This function does not copy overlays.
 BUG: at this moment invisible text is not copied. I need to fix that!!!"
-  (interactive)
+  (interactive (list (current-buffer)))
   (let ((ee-buffer-name (or ee-buffer-name "*(find-ebuffercontents)*")))
     (apply 'find-estring (ee-buffer-contents b) pos-spec-list)))
 
@@ -565,6 +565,15 @@ The `find-function' function of Emacs can be used as a hyperlink
 support a POS-SPEC-LIST like this function does."
   (interactive (find-function-read))
   (apply 'find-ebufferandpos (find-function-noselect symbol) pos-spec-list))
+
+(defun find-ealias (symbol &rest pos-spec-list)
+  "Like `find-efunction', but do not resolve aliases to functions.
+See: https://lists.gnu.org/archive/html/help-gnu-emacs/2022-01/msg00323.html"
+  (interactive (find-function-read))
+  (apply 'find-ebufferandpos
+         (find-function-search-for-symbol
+          symbol nil (symbol-file symbol 'defun))
+         pos-spec-list))
 
 (defun find-evariable (symbol &rest pos-spec-list)
   "Hyperlink to the result of running `find-variable' on SYMBOL."
@@ -1097,6 +1106,9 @@ This is Debian-specific. See `find-Package'."
 ;; Tests:
 ;;   (find-epp '(mapcar (lambda (a) (* a a)) '(2 3 4 5)))
 ;;   (find-efunctionpp 'find-efunction)
+;;   (find-epp  '(1 "2" (3 4)))
+;;   (find-eppp '(1 "2" (3 4)))
+;;   (find-eppm '(cl-loop for k from 1 do (if (foo) (cl-return (bar)))))
 
 (defun find-epp0 (object)
   "Display a pretty-printed version of OBJECT in the echo area.
