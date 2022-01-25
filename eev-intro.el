@@ -1,6 +1,6 @@
 ;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2013-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220106
+;; Version:    20220125
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -14637,6 +14637,8 @@ Different people prefer different kinds of tutorials.
 Many people love the eintr, but I don't: (find-node \"(eintr)Top\")
 This tutorial here is what I would have liked to have had access to
 when I started learning Emacs Lisp.
+The ideas behind the style of this tutorial are explained here:
+  http://angg.twu.net/find-elisp-intro.html
 
 TODO: integrate this with these older intros:
   (find-eval-intro)

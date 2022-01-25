@@ -1,6 +1,6 @@
 ;;; eev-videolinks.el --- support for [Video links:] blocks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2021 Free Software Foundation, Inc.
+;; Copyright (C) 2021-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220116
+;; Version:    20220125
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -57,6 +57,7 @@
 ;;   «.find-2021ffllvideo»		(to "find-2021ffllvideo")
 ;;   «.find-2022eevmake0video»		(to "find-2022eevmake0video")
 ;;   «.find-2022findeevanggvideo»	(to "find-2022findeevanggvideo")
+;;   «.find-2022findelispintrovideo»	(to "find-2022findelispintrovideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -79,6 +80,7 @@
 ;;   «.2021ffll»			(to "2021ffll")
 ;;   «.2022eevmake0»			(to "2022eevmake0")
 ;;   «.2022findeevangg»			(to "2022findeevangg")
+;;   «.2022findelispintro»		(to "2022findelispintro")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -575,6 +577,21 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
   (interactive)
   (find-eev-video "2022-find-eev-angg" "FoAzpGzFCSE" time))
 
+;; «find-2022findelispintrovideo»  (to ".find-2022findelispintrovideo")
+;; Skel: (find-1stclassvideo-links "2022findelispintro")
+;; Tests: (find-2022findelispintrovideo "0:00")
+;;        (find-efunctiondescr 'find-2022findelispintrovideo)
+(defun find-2022findelispintrovideo (&optional time &rest rest)
+  "Play one of the video tutorials of eev starting at TIME.
+See: (find-eev \"eev-videolinks.el\" \"2022findelispintro\")
+     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
+     for more info on this particular video,
+and: (find-video-links-intro \"7. \" \"find-eev-video\")
+ or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+     for more info on these video tutorials."
+  (interactive)
+  (find-eev-video "2022-find-elisp-intro" "WowDSciGs1A" time))
+
 
 
 
@@ -745,6 +762,13 @@ and: (find-video-links-intro \"7. \" \"find-eev-video\")
      :mp4  "http://angg.twu.net/eev-videos/2022-find-eev-angg.mp4"
      :yt   "http://www.youtube.com/watch?v=FoAzpGzFCSE"
      :page "http://angg.twu.net/eev-find-angg.html")
+    ;;
+    ;; «2022findelispintro»  (to ".2022findelispintro")
+    ("2022findelispintro"
+     :title "Why eev has a weird elisp tutorial and how to use it"
+     :mp4  "http://angg.twu.net/eev-videos/2022-find-elisp-intro.mp4"
+     :yt   "http://www.youtube.com/watch?v=WowDSciGs1A"
+     :page "http://angg.twu.net/find-elisp-intro.html")
     ))
 
 

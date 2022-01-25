@@ -1,6 +1,15 @@
+2022-01-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2022findelispintrovideo): new function.
+
+	* eev-intro.el (find-elisp-intro): added a mention to
+	<http://angg.twu.net/find-elisp-intro.html>.
+
 2022-01-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-ealias): new function.
+
+	* eev-elinks.el (ee-find-efunction-links): use `find-ealias'.
 
 2022-01-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
