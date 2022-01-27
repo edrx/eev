@@ -1,3 +1,10 @@
+2022-01-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-shortdefp-maxlen-name)
+	(ee-shortdefp-maxlen-def): new variables.
+	(ee-shortdefp, ee-shortdef-symbols, ee-find-eeshortdefs-body)
+	(ee-find-eeshortdefs-header, find-eeshortdefs): new functions.
+
 2022-01-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-2022findelispintrovideo): new function.
