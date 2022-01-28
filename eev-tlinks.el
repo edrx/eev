@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220118
+;; Version:    20220128
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -114,6 +114,7 @@
 ;;   «.ee-use-red-bullets»		(to "ee-use-red-bullets")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
 ;; «.find-1stclassvideo-links»		(to "find-1stclassvideo-links")
+;; «.find-advicebefore-links»		(to "find-advicebefore-links")
 
 
 (require 'eev-env)
@@ -2816,6 +2817,47 @@ and: (find-video-links-intro \\\"7. \\\" \\\"find-eev-video\\\")
        )
      pos-spec-list)))
 
+
+
+
+;; «find-advicebefore-links»  (to ".find-advicebefore-links")
+;; Skel: (find-find-links-links-new "advicebefore" "fun" "")
+;; Test: (find-advicebefore-links)
+;;       (find-advicebefore-links "FOO")
+;;
+;; I wrote this when I was trying to learn edebug and I was failing
+;; miserably.
+;;
+(defun find-advicebefore-links (&optional fun &rest pos-spec-list)
+"Visit a temporary buffer containing code for adding advice to FUN.
+The temporary buffer will contain code for advice-add'ing a
+logging function to FUN, for advice-remove'ing the logging
+function, and for inspecting the log. See the demo to understand
+how this works."
+  (interactive)
+  (setq fun (or fun "{fun}"))
+  (apply
+   'find-elinks-elisp
+   `((find-advicebefore-links ,fun ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-advicebefore-links)
+     ";;"
+     ,(ee-template0 "\
+;; See: (find-elnode \"Advice Combinators\")
+;; Demo: http://angg.twu.net/elisp/find-advicebefore-links.el.html
+;;       http://angg.twu.net/elisp/find-advicebefore-links.el
+;; (find-wget \"http://angg.twu.net/elisp/find-advicebefore-links.el\")
+
+(setq  ee-log nil)
+(defun ee-log (f r) (setq ee-log (cons (cons f r) ee-log)))
+(defun ee-log-{fun} (&rest r) (ee-log '{fun} r))
+(advice-add   '{fun}  :before 'ee-log-{fun})
+;;
+(advice-remove '{fun}         'ee-log-{fun})
+(find-2a nil '(find-eppp ee-log))
+")
+     )
+   pos-spec-list))
 
 
 

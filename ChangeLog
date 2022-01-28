@@ -1,3 +1,7 @@
+2022-01-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-advicebefore-links): new function.
+
 2022-01-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-shortdefp-maxlen-name)
