@@ -2836,6 +2836,8 @@ and: (find-video-links-intro \\\"7. \\\" \\\"find-eev-video\\\")
 ;; Try: (find-1stclassvideos)
 ;;
 (defun find-1stclassvideos (&rest rest)
+  "Visit a temporary buffer with a list of all first-class videos of eev."
+  (interactive)
   (let* ((ee-buffer-name (or ee-buffer-name "*(find-1stclassvideos)*"))
 	 (f (lambda (s) `(find-1stclassvideo-links ,s)))
 	 (finds (mapcar f (ee-1stclassvideos))))
