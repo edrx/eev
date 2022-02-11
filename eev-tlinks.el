@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220128
+;; Version:    20220211
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -2741,47 +2741,65 @@ This function is used by `ee-0x0-upload-region'."
 
 
 ;; «find-1stclassvideo-links»  (to ".find-1stclassvideo-links")
-;; Skel: (find-find-links-links-new "1stclassvideo" "c" "")
-;; Skel: (find-find-links-links-new "1stclassvideo" "c" "title mp4 yp page lang")
+;; Skel: (find-find-links-links-new "1stclassvideo" "c" "body")
 ;;  See: (find-eev "eev-videolinks.el" "first-class-videos")
 ;;       (find-eev "eev-videolinks.el" "second-class-videos")
-;; Tests: (find-1stclassvideo-links "eev2019")
-;;        (find-1stclassvideo-links "eev2020")
+;; Tests: (find-1stclassvideo-links)
+;;        (find-1stclassvideo-links "eev2019")
+;;        (find-1stclassvideo-links "foo")
+;;        (find-estring (ee-find-1stclassvideo-links "eev2019"))
+;;        (find-estring (ee-find-1stclassvideo-links "foo"))
 ;;
 (defun find-1stclassvideo-links (&optional c &rest pos-spec-list)
-  "Visit a temporary buffer containing hyperlinks for eevvideo-1stclass."
+"Visit a temporary buffer containing hyperlinks for 1stclassvideo."
   (interactive (list (ee-1stclassvideo-around-point-ask)))
   (setq c (or c "{c}"))
-  (let* ((title   (ee-1stclassvideos-field c :title))
-	 (mp4     (ee-1stclassvideos-field c :mp4))
-	 (yt      (ee-1stclassvideos-field c :yt))
-	 (page    (ee-1stclassvideos-field c :page))
-	 (lang    (ee-1stclassvideos-field c :lang))
-	 (mp4stem (ee-1stclassvideos-mp4stem c))
-	 (hash    (ee-1stclassvideos-hash c)))
+  (let* ((body (if (member c (ee-1stclassvideos))
+		   (ee-find-1stclassvideo-links c)
+		 ";; Not in: (ee-1stclassvideos)")))
     (apply
      'find-elinks-elisp
      `((find-1stclassvideo-links ,c ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-1stclassvideo-links)
+       (find-1stclassvideos)
        ""
-       ,(ee-template0 "\
+       ,body
+       )
+     pos-spec-list)))
+
+(defun ee-find-1stclassvideo-links (c)
+  "An internal function used by `find-1stclassvideo-links'."
+  (let* ((title   (ee-1stclassvideos-field c :title))
+	 (mp4     (ee-1stclassvideos-field c :mp4))
+	 (yt      (ee-1stclassvideos-field c :yt))
+	 (page    (ee-1stclassvideos-field c :page))
+	 (date    (ee-1stclassvideos-field c :date))
+	 (length  (ee-1stclassvideos-field c :length))
+	 (comment (ee-1stclassvideos-field c :comment))
+	 (lang    (ee-1stclassvideos-field c :lang))
+	 (mp4stem (ee-1stclassvideos-mp4stem c))
+	 (hash    (ee-1stclassvideos-hash c)))
+    (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
 ;; YT:    {yt}
 ;; Page:  {page}
+;; Comment: {comment}
+;; Date:    {date}
+;; Length:  {length}
+;;
+;; Play:  (find-{c}video \"0:00\")
 ;; Info:  (find-eev \"eev-videolinks.el\" \"{c}\")
 ;;            (find-1stclassvideo-links \"{c}\")
 ;;
 ;; Index: http://angg.twu.net/.emacs.videos.html#{c}
 ;;         (find-angg        \".emacs.videos\"    \"{c}\")
+;;         (find-angg-es-links)
 
 ;; See:
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
-
-;; Play:
-;; (find-{c}video \"0:00\")
 
 ;; Setups:
  ' (find-ssr-links     \"{c}\" \"{mp4stem}\" \"{hash}\")
@@ -2813,9 +2831,19 @@ and: (find-video-links-intro \\\"7. \\\" \\\"find-eev-video\\\")
      for more info on these video tutorials.\"
   (interactive)
   (find-eev-video \"{mp4stem}\" \"{hash}\" time))
-")
-       )
-     pos-spec-list)))
+")))
+
+;; Try: (find-1stclassvideos)
+;;
+(defun find-1stclassvideos (&rest rest)
+  (let* ((ee-buffer-name (or ee-buffer-name "*(find-1stclassvideos)*"))
+	 (f (lambda (s) `(find-1stclassvideo-links ,s)))
+	 (finds (mapcar f (ee-1stclassvideos))))
+    (apply 'find-elinks-elisp
+	   `((find-1stclassvideos)
+	     ,@finds)
+	   rest)))
+
 
 
 
@@ -2846,7 +2874,7 @@ how this works."
 ;; See: (find-elnode \"Advice Combinators\")
 ;; Demo: http://angg.twu.net/elisp/find-advicebefore-links.el.html
 ;;       http://angg.twu.net/elisp/find-advicebefore-links.el
-;; (find-wget \"http://angg.twu.net/elisp/find-advicebefore-links.el\")
+;; (find-wget-elisp \"http://angg.twu.net/elisp/find-advicebefore-links.el\")
 
 (setq  ee-log nil)
 (defun ee-log (f r) (setq ee-log (cons (cons f r) ee-log)))

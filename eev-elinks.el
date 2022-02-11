@@ -1,6 +1,6 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220120
+;; Version:    20220211
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -154,11 +154,28 @@ This function is not very smart - it doesn't understand section names."
   (read-string (or prompt "Manpage: ")
 	       (ee-manpagename-around-point)))
 
-(defun ee-1stclassvideo-around-point-ask (&optional prompt)
+(defun ee-1stclassvideo-around-point-ask ()
 "Ask for the name of a first-class video; the default is a string around point."
-  (let ((str (read-string (or prompt "Stem (\"c\") of the video: ")
-			  (ee-stuff-around-point "A-Za-z0-9"))))
-    (replace-regexp-in-string "video$" "" str)))
+  (ee-1stclassvideo-ask (ee-stuff-around-point "A-Za-z0-9")))
+
+;; See: (find-eev "eev-videolinks.el" "ee-1stclassvideos-info")
+;; Tests: (ee-1stclassvideo-ask "foo")
+;;        (ee-1stclassvideo-ask "eev2020")
+;;        (ee-1stclassvideo-ask "eev2020video")
+;;        (ee-1stclassvideos)
+;;
+(defun ee-1stclassvideo-ask (default0)
+  "An internal function used by `ee-1stclassvideo-around-point-ask'."
+  (let* ((default1 (replace-regexp-in-string "video$" "" default0))
+	 (videos   (ee-1stclassvideos))
+	 (default  (if (member default1 videos) default1))
+	 (promptd  (if default (format " (default: %s)" default) ""))
+	 (prompt   (format "Stem (\"c\") of the video:%s " promptd)))
+    (completing-read prompt videos nil nil nil nil default)))
+
+(defun ee-1stclassvideos ()
+  (sort (mapcar 'car ee-1stclassvideos-info) 'string<))
+  
 
 
 
@@ -274,6 +291,7 @@ This is an internal function used by `find-efunction-links' and
     (find-efunctionpp ',f)
     (find-efunctiond ',f)
     (find-ealias ',f)
+    (find-eppp (symbol-plist ',f))
     ""
     ,@(if (commandp f)
 	  `((Info-goto-emacs-command-node ',f)
@@ -324,6 +342,7 @@ This is an internal function used by `find-efunction-links' and
      (find-evardescr ',var)
      (find-evariable ',var)
      (find-epp ,var)
+     (find-eppp (symbol-plist ',var))
      ""
      (find-enode "Variable Index" ,(format "* %S:" var))
      (find-elnode "Index" ,(format "* %S:" var))

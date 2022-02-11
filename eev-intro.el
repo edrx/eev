@@ -10255,9 +10255,9 @@ programs; but to simplify we will say just \"shells\"). Here is
 an overview of how it worked: if the user marked the three lines
 below,
 
-  rm -Rv /tmp/foo
-  mkdir  /tmp/foo/
-  cd     /tmp/foo/
+  rm -Rfv /tmp/foo/
+  mkdir   /tmp/foo/
+  cd      /tmp/foo/
 
 and typed `M-x eev' (which stood for \"Emacs-execute-verbosely\")
 then Emacs would save those three lines into a temporary script
@@ -10282,13 +10282,14 @@ eev' and \"ee\" work. First execute these two sexps:
   (make-directory \"~/.eev/\" 'force)
   (eev \"rm -Rv /tmp/foo\\nmkdir  /tmp/foo/\\ncd     /tmp/foo/\\n\")
 
-Now run this script
+Now run this script:
 
  (eepitch-bash)
  (eepitch-kill)
  (eepitch-bash)
 export PS1='$PWD# '
 function ee () { set -v; . ~/.eev/ee.sh; set +v; }
+ee
 
 
 

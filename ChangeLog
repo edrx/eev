@@ -1,3 +1,19 @@
+2022-02-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-find-1stclassvideo-links): new function.
+	(find-1stclassvideos): new function.
+	(find-1stclassvideo-links): use `ee-find-1stclassvideo-links' and
+	`find-1stclassvideos'.
+
+	* eev-elinks.el (ee-1stclassvideo-ask): new function.
+	(ee-1stclassvideo-around-point-ask): use `ee-1stclassvideo-ask'.
+	(ee-1stclassvideos): new function.
+
+2022-02-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): Added dates,
+	lengths, comments, and links to play the videos.
+
 2022-01-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-advicebefore-links): new function.

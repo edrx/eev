@@ -498,6 +498,7 @@ instead of inserting."
   ∅ em \\emptyset
   ∇ Na \\nabla
   ∈ in \\in
+  ∎ qe \\blacksquare
   ∖ sm \\backslash
   ∘ oo \\circ
   √ sq \\sqrt
@@ -620,16 +621,16 @@ instead of inserting."
   𝐙 cZ \\mathbf{Z}
 
   face: ee-composes-face-math
-  ₀ _0 {{}_0}
-  ₁ _1 {{}_1}
-  ₂ _2 {{}_2}
-  ₃ _3 {{}_3}
-  ₄ _4 {{}_4}
-  ₅ _5 {{}_5}
-  ₆ _6 {{}_6}
-  ₇ _7 {{}_7}
-  ₈ _8 {{}_8}
-  ₉ _9 {{}_9}
+  ₀ _0 {{\\ensuremath{{}_0}}}
+  ₁ _1 {{\\ensuremath{{}_1}}}
+  ₂ _2 {{\\ensuremath{{}_2}}}
+  ₃ _3 {{\\ensuremath{{}_3}}}
+  ₄ _4 {{\\ensuremath{{}_4}}}
+  ₅ _5 {{\\ensuremath{{}_5}}}
+  ₆ _6 {{\\ensuremath{{}_6}}}
+  ₇ _7 {{\\ensuremath{{}_7}}}
+  ₈ _8 {{\\ensuremath{{}_8}}}
+  ₉ _9 {{\\ensuremath{{}_9}}}
   ₊ _+ {{}_+}
   ₋ _- {{}_-}
   ₌ _= {{}_=}
