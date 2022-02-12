@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220211
+;; Version:    20220212
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -2744,14 +2744,14 @@ This function is used by `ee-0x0-upload-region'."
 ;; Skel: (find-find-links-links-new "1stclassvideo" "c" "body")
 ;;  See: (find-eev "eev-videolinks.el" "first-class-videos")
 ;;       (find-eev "eev-videolinks.el" "second-class-videos")
-;; Tests: (find-1stclassvideo-links)
-;;        (find-1stclassvideo-links "eev2019")
+;; Tests: (find-1stclassvideo-links "eev2019")
 ;;        (find-1stclassvideo-links "foo")
+;;        (find-1stclassvideo-links)
 ;;        (find-estring (ee-find-1stclassvideo-links "eev2019"))
 ;;        (find-estring (ee-find-1stclassvideo-links "foo"))
 ;;
 (defun find-1stclassvideo-links (&optional c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for 1stclassvideo."
+"Visit a temporary buffer containing stuff for a first-class video."
   (interactive (list (ee-1stclassvideo-around-point-ask)))
   (setq c (or c "{c}"))
   (let* ((body (if (member c (ee-1stclassvideos))
@@ -2798,19 +2798,15 @@ This function is used by `ee-0x0-upload-region'."
 ;;         (find-angg-es-links)
 
 ;; See:
+;; (find-video-links-intro \"9. First-class videos\")
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
 
-;; Setups:
+;; Setup (as a 2nd-class video):
  ' (find-ssr-links     \"{c}\" \"{mp4stem}\" \"{hash}\")
  ' (code-eevvideo      \"{c}\" \"{mp4stem}\" \"{hash}\")
  ' (code-eevlinksvideo \"{c}\" \"{mp4stem}\" \"{hash}\")
 ;; (find-{c}video \"0:00\")
-
-;; Other places with info about this video:
-;; (find-angg \".emacs.templates\" \"eev-videos-data\" \"{c}\")
-;; http://angg.twu.net/.emacs.templates.html#eev-videos-data
-;; (find-videos-intro \"1. Some videos\" \"{c}\")
 
 ;; Definition of the function:
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
@@ -2818,17 +2814,12 @@ This function is used by `ee-0x0-upload-region'."
 ;;               (find-efunction 'find-{c}video)
 
 ;; <find-{c}video>
-;; Skel: (find-1stclassvideo-links \"{c}\")
-;; Tests: (find-{c}video \"0:00\")
-;;        (find-efunctiondescr 'find-{c}video)
-(defun find-{c}video (&optional time &rest rest)
-  \"Play one of the video tutorials of eev starting at TIME.
-See: (find-eev \\\"eev-videolinks.el\\\" \\\"{c}\\\")
-     http://angg.twu.net/eev-current/eev-videolinks.el.html#eev2020
-     for more info on this particular video,
-and: (find-video-links-intro \\\"7. \\\" \\\"find-eev-video\\\")
- or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
-     for more info on these video tutorials.\"
+;; Info: (find-1stclassvideo-links \"{c}\")
+;; Play: (find-{c}video \"0:00\")
+\(defun find-{c}video (&optional time &rest rest)
+  \"Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \\\"{c}\\\")\"
   (interactive)
   (find-eev-video \"{mp4stem}\" \"{hash}\" time))
 ")))
@@ -2839,7 +2830,7 @@ and: (find-video-links-intro \\\"7. \\\" \\\"find-eev-video\\\")
   "Visit a temporary buffer with a list of all first-class videos of eev."
   (interactive)
   (let* ((ee-buffer-name (or ee-buffer-name "*(find-1stclassvideos)*"))
-	 (f (lambda (s) `(find-1stclassvideo-links ,s)))
+	 (f (lambda (s) (list 'find-1stclassvideo-links s)))
 	 (finds (mapcar f (ee-1stclassvideos))))
     (apply 'find-elinks-elisp
 	   `((find-1stclassvideos)

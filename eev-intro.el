@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220125
+;; Version:    20220212
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -11106,6 +11106,12 @@ Prerequisites:
 
 1. Some videos
 ==============
+NOTE: this list of first-class videos is obsolete!
+You can get the current list by running one of these sexps:
+
+  (find-1stclassvideos)
+  (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-info\")
+
 At this moment I have these eight videos about eev (I am
 deliberately ignoring the ones that I consider obsolete!):
 
@@ -11618,6 +11624,22 @@ The data about these first-class videos is kept in the variable
 `ee-1stclassvideos-info', that is defined here:
 
   (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-info\")
+
+The most user-friendly way to access this data for a particular
+video is with a sexp with `find-1stclassvideo-links', like this
+one:
+
+  (find-1stclassvideo-links \"2022findeevangg\")
+
+and the best and most user-friendly way to access the list of
+videos is by running `M-x find-1stclassvideos', or:
+
+  (find-1stclassvideos)
+
+That function displays a temporary buffer with a list of all
+first-class videos, with a `find-1stclassvideo-links' sexp for
+each one.
+
 
 
 

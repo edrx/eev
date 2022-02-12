@@ -1,3 +1,22 @@
+2022-02-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-find-1stclassvideo-links): changed the part of
+	the template that has a "(defun find-*video ...)".
+	(find-1stclassvideos): added an (interactive).
+
+	* eev-videolinks.el (find-eev2019video, find-eev2020video)
+	(find-eev2021video, find-eev2021bvideo, find-eevnavvideo)
+	(find-eevtemplvideo, find-eevfherelvideo, find-eevtestblsvideo)
+	(find-eevvlinksvideo, find-oficina2021avideo)
+	(find-oficina2021bvideo, find-2021workshop1video)
+	(find-2021workshop2video, find-2021workshop3video)
+	(find-2021workshop4video, find-2021workshop5video)
+	(find-2021workshop6video, find-2021orgfornonusersvideo)
+	(find-2021ffllvideo, find-2022eevmake0video)
+	(find-2022findeevanggvideo, find-2022findelispintrovideo):
+	redefined using the new template.
+	(find-2021ssrvideo): new function.
+
 2022-02-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-find-1stclassvideo-links): new function.
