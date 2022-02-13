@@ -1098,7 +1098,7 @@ means."
          (bg (face-background face-symbol)))
     (apply
      'find-elinks
-     `((find-eface-links ,face-symbol ,@pos-spec-list)
+     `((find-eface-links ',face-symbol ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-eface-links)
        ""

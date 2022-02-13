@@ -1,3 +1,7 @@
+2022-02-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-oficina20210video): new function.
+
 2022-02-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-find-1stclassvideo-links): changed the part of

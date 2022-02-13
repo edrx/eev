@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220210
+;; Version:    20220213
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -48,7 +48,9 @@
 ;;   «.find-eevfherelvideo»		(to "find-eevfherelvideo")
 ;;   «.find-eevtestblsvideo»		(to "find-eevtestblsvideo")
 ;;   «.find-eevvlinksvideo»		(to "find-eevvlinksvideo")
+;;   «.find-oficina20210video»		(to "find-oficina20210video")
 ;;   «.find-oficina2021avideo»		(to "find-oficina2021avideo")
+;;   «.find-oficina2021bvideo»		(to "find-oficina2021bvideo")
 ;;   «.find-2021ssrvideo»		(to "find-2021ssrvideo")
 ;;   «.find-2021workshop1video»		(to "find-2021workshop1video")
 ;;   «.find-2021workshop2video»		(to "find-2021workshop2video")
@@ -71,6 +73,7 @@
 ;;   «.eevfherel»			(to "eevfherel")
 ;;   «.eevtestbls»			(to "eevtestbls")
 ;;   «.eevvlinks»			(to "eevvlinks")
+;;   «.oficina20210»			(to "oficina20210")
 ;;   «.oficina2021a»			(to "oficina2021a")
 ;;   «.oficina2021b»			(to "oficina2021b")
 ;;   «.2021ssr»				(to "2021ssr")
@@ -395,6 +398,16 @@ For more info on this particular video, run:
   (interactive)
   (find-eev-video "2021-video-links" "xQqWufQgzVY" time))
 
+;; «find-oficina20210video»  (to ".find-oficina20210video")
+;; Info: (find-1stclassvideo-links "oficina20210")
+;; Play: (find-oficina20210video "0:00")
+(defun find-oficina20210video (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"oficina20210\")"
+  (interactive)
+  (find-eev-video "2021projeto-de-ensino" "OW6WRnSQwc0" time))
+
 ;; «find-oficina2021avideo»  (to ".find-oficina2021avideo")
 ;; Info: (find-1stclassvideo-links "oficina2021a")
 ;; Play: (find-oficina2021avideo "0:00")
@@ -405,7 +418,7 @@ For more info on this particular video, run:
   (interactive)
   (find-eev-video "2021-oficina-1" "acFPMuZ5Jf4" time))
 
-;; «find-oficina2021bvideo»  (to ".find-oficina2021avideo")
+;; «find-oficina2021bvideo»  (to ".find-oficina2021bvideo")
 ;; Info: (find-1stclassvideo-links "oficina2021b")
 ;; Play: (find-oficina2021bvideo "0:00")
 (defun find-oficina2021bvideo (&optional time &rest rest)
@@ -646,10 +659,6 @@ For more info on this particular video, run:
      :length  "4:45"
      :comment "My first video on test blocks. Watch the video `eev2021' instead.")
     ;;
-    ;; :title "Short videos about workflows - and how to upload them"
-    ;; :page  "http://angg.twu.net/2021-ssr.html"
-    ;; ^ bad & obsolete
-    ;;
     ;; «eevvlinks»  (to ".eevvlinks")
     ;; Play: (find-eevvlinksvideo "0:00")
     ("eevvlinks"
@@ -660,6 +669,18 @@ For more info on this particular video, run:
      :date    "2021may10"
      :length  "14:56"
      :comment "A very good tutorial on how the `(find-*video)' links work.")
+    ;;
+    ;; «oficina20210»  (to ".oficina20210")
+    ;; Play: (find-oficina20210video "0:00")
+    ("oficina20210"
+     :title "Introdução ao Software Livre: Python, Shell, Lua, Emacs, eev"
+     :mp4   "http://angg.twu.net/eev-videos/2021projeto-de-ensino.mp4"
+     :yt    "http://www.youtube.com/watch?v=OW6WRnSQwc0"
+     :page  "http://angg.twu.net/2021-oficina.html"
+     :lang  "portuguese"
+     :date    "2021sep05"
+     :length  "1:27:01"
+     :comment "A (long) non-technical introduction to Free Software, Emacs, and eev.")
     ;;
     ;; «oficina2021a»  (to ".oficina2021a")
     ;; Play: (find-oficina2021avideo "0:00")

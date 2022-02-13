@@ -2754,7 +2754,8 @@ This function is used by `ee-0x0-upload-region'."
 "Visit a temporary buffer containing stuff for a first-class video."
   (interactive (list (ee-1stclassvideo-around-point-ask)))
   (setq c (or c "{c}"))
-  (let* ((body (if (member c (ee-1stclassvideos))
+  (let* ((ee-buffer-name (or ee-buffer-name "*find-1stclassvideo-links*"))
+	 (body (if (member c (ee-1stclassvideos))
 		   (ee-find-1stclassvideo-links c)
 		 ";; Not in: (ee-1stclassvideos)")))
     (apply
