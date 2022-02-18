@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220213
+;; Version:    20220218
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -91,6 +91,7 @@
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
+;;   «.code-youtubevideo»		(to "code-youtubevideo")
 
 ;;; Commentary:
 
@@ -573,6 +574,7 @@ For more info on this particular video, run:
   '(;;
     ;; «eev2019»  (to ".eev2019")
     ;; Play: (find-eev2019video "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2019")
     ("eev2019"
      :title "How to record executable notes with eev - and how to play them back"
      :mp4   "http://angg.twu.net/eev-videos/emacsconf2019.mp4"
@@ -584,6 +586,7 @@ For more info on this particular video, run:
     ;;
     ;; «eev2020»  (to ".eev2020")
     ;; Play: (find-eev2020video "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2020")
     ("eev2020"
      :title "On why most of the best features in eev look like 5-minute hacks"
      :mp4   "http://angg.twu.net/eev-videos/emacsconf2020.mp4"
@@ -595,6 +598,7 @@ For more info on this particular video, run:
     ;;
     ;; «eev2021»  (to ".eev2021")
     ;; Play: (find-eev2021video "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2021")
     ("eev2021"
      :title "Test blocks"
      :mp4   "http://angg.twu.net/eev-videos/emacsconf2021.mp4"
@@ -606,6 +610,7 @@ For more info on this particular video, run:
     ;;
     ;; «eev2021b»  (to ".eev2021b")
     ;; Play: (find-eev2021bvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2021b")
     ("eev2021b"
      :title "Test blocks in Dednat6"
      :mp4   "http://angg.twu.net/eev-videos/emacsconf2021-dednat6.mp4"
@@ -617,6 +622,7 @@ For more info on this particular video, run:
     ;;
     ;; «eevnav»  (to ".eevnav")
     ;; Play: (find-eevnavvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eevnav")
     ("eevnav"
      :title "How to install eev with M-x list-packages and how to navigate its tutorials"
      :mp4   "http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4"
@@ -628,6 +634,7 @@ For more info on this particular video, run:
     ;;
     ;; «eevtempl»  (to ".eevtempl")
     ;; Play: (find-eevtemplvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eevtempl")
     ("eevtempl"
      :title "Some template-based functions of eev that are not five-minute hacks"
      :mp4   "http://angg.twu.net/eev-videos/2020-some-template-based.mp4"
@@ -639,6 +646,7 @@ For more info on this particular video, run:
     ;;
     ;; «eevfherel»  (to ".eevfherel")
     ;; Play: (find-eevfherelvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eevfherel")
     ("eevfherel"
      :title "How to create hyperlinks to \"here\" with `find-here-links'"
      :mp4   "http://angg.twu.net/eev-videos/2020-find-here-links.mp4"
@@ -650,6 +658,7 @@ For more info on this particular video, run:
     ;;
     ;; «eevtestbls»  (to ".eevtestbls")
     ;; Play: (find-eevtestblsvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eevtestbls")
     ("eevtestbls"
      :title "Using test blocks in eev (jan/2021)"
      :mp4   "http://angg.twu.net/eev-videos/2021-test-blocks.mp4"
@@ -661,6 +670,7 @@ For more info on this particular video, run:
     ;;
     ;; «eevvlinks»  (to ".eevvlinks")
     ;; Play: (find-eevvlinksvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eevvlinks")
     ("eevvlinks"
      :title "How to use the `[Video links:]' blocks in the `intro's of eev"
      :mp4   "http://angg.twu.net/eev-videos/2021-video-links.mp4"
@@ -672,6 +682,7 @@ For more info on this particular video, run:
     ;;
     ;; «oficina20210»  (to ".oficina20210")
     ;; Play: (find-oficina20210video "0:00")
+    ;; Index: (find-1stclassvideoindex "oficina20210")
     ("oficina20210"
      :title "Introdução ao Software Livre: Python, Shell, Lua, Emacs, eev"
      :mp4   "http://angg.twu.net/eev-videos/2021projeto-de-ensino.mp4"
@@ -684,6 +695,7 @@ For more info on this particular video, run:
     ;;
     ;; «oficina2021a»  (to ".oficina2021a")
     ;; Play: (find-oficina2021avideo "0:00")
+    ;; Index: (find-1stclassvideoindex "oficina2021a")
     ("oficina2021a"
      :title "Como instalar o eev no Emacs"
      :mp4   "http://angg.twu.net/eev-videos/2021-oficina-1.mp4"
@@ -696,6 +708,7 @@ For more info on this particular video, run:
     ;;
     ;; «oficina2021b»  (to ".oficina2021b")
     ;; Play: (find-oficina2021bvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "oficina2021b")
     ("oficina2021b"
      :title "Exercícios de criar e guardar links (1)"
      :mp4   "http://angg.twu.net/eev-videos/2021-oficina-2.mp4"
@@ -708,6 +721,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021ssr»  (to ".2021ssr")
     ;; Play: (find-2021ssrvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2021ssr")
     ("2021ssr"
      :title "Short videos about workflows - and how to upload them"
      :mp4  "http://angg.twu.net/eev-videos/2021-ssr.mp4"
@@ -719,6 +733,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021workshop1»  (to ".2021workshop1")
     ;; Play: (find-2021workshop1video "0:00")
+    ;; Index: (find-1stclassvideoindex "2021workshop1")
     ("2021workshop1"
      :title "The base cases 1 and 2 (workshop 2021-dec-04)"
      :mp4   "http://angg.twu.net/eev-videos/2021-workshop-1.mp4"
@@ -730,6 +745,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021workshop2»  (to ".2021workshop2")
     ;; Play: (find-2021workshop2video "0:00")
+    ;; Index: (find-1stclassvideoindex "2021workshop2")
     ("2021workshop2"
      :title "Creating a link to a file with a 2-window setting (workshop 2021-dec-04)"
      :mp4   "http://angg.twu.net/eev-videos/2021-workshop-2.mp4"
@@ -741,6 +757,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021workshop3»  (to ".2021workshop3")
     ;; Play: (find-2021workshop3video "0:00")
+    ;; Index: (find-1stclassvideoindex "2021workshop3")
     ("2021workshop3"
      :title "Material on `M-3 M-e' (workshop 2021-dec-04)"
      :mp4   "http://angg.twu.net/eev-videos/2021-workshop-3.mp4"
@@ -752,6 +769,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021workshop4»  (to ".2021workshop4")
     ;; Play: (find-2021workshop4video "0:00")
+    ;; Index: (find-1stclassvideoindex "2021workshop4")
     ("2021workshop4"
      :title "Invisible text (workshop 2021-dec-04)"
      :mp4  "http://angg.twu.net/eev-videos/2021-workshop-4.mp4"
@@ -763,6 +781,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021workshop5»  (to ".2021workshop5")
     ;; Play: (find-2021workshop5video "0:00")
+    ;; Index: (find-1stclassvideoindex "2021workshop5")
     ("2021workshop5"
      :title "Copy from left to right (workshop 2021-dec-04)"
      :mp4   "http://angg.twu.net/eev-videos/2021-workshop-5.mp4"
@@ -774,6 +793,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021workshop6»  (to ".2021workshop6")
     ;; Play: (find-2021workshop6video "0:00")
+    ;; Index: (find-1stclassvideoindex "2021workshop6")
     ("2021workshop6"
      :title "`find-extra-file-links' (workshop 2021-dec-04)"
      :mp4   "http://angg.twu.net/eev-videos/2021-workshop-6.mp4"
@@ -785,6 +805,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021orgfornonusers»  (to ".2021orgfornonusers")
     ;; Play: (find-2021orgfornonusersvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2021orgfornonusers")
     ("2021orgfornonusers"
      :title "Org for Non-Users (2021)"
      :mp4   "http://angg.twu.net/eev-videos/2021-org-for-non-users.mp4"
@@ -796,6 +817,7 @@ For more info on this particular video, run:
     ;;
     ;; «2021ffll»  (to ".2021ffll")
     ;; Play: (find-2021ffllvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2021ffll")
     ("2021ffll"
      :title "How I write 5-minute hacks in eev using `M-x find-find-links-links-new'"
      :mp4   "http://angg.twu.net/eev-videos/2021-ffll.mp4"
@@ -807,6 +829,7 @@ For more info on this particular video, run:
     ;;
     ;; «2022eevmake0»  (to ".2022eevmake0")
     ;; Play: (find-2022eevmake0video "0:00")
+    ;; Index: (find-1stclassvideoindex "2022eevmake0")
     ("2022eevmake0"
      :title "Using eev to test make(files)"
      :mp4   "http://angg.twu.net/eev-videos/2022-eev-make-0.mp4"
@@ -818,6 +841,7 @@ For more info on this particular video, run:
     ;;
     ;; «2022findeevangg»  (to ".2022findeevangg")
     ;; Play: (find-2022findeevanggvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2022findeevangg")
     ("2022findeevangg"
      :title "Running executable notes from http://angg.twu.net/ with find-angg and find-wget"
      :mp4   "http://angg.twu.net/eev-videos/2022-find-eev-angg.mp4"
@@ -829,6 +853,7 @@ For more info on this particular video, run:
     ;;
     ;; «2022findelispintro»  (to ".2022findelispintro")
     ;; Play: (find-2022findelispintrovideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2022findelispintro")
     ("2022findelispintro"
      :title "Why eev has a weird elisp tutorial and how to use it"
      :mp4   "http://angg.twu.net/eev-videos/2022-find-elisp-intro.mp4"
@@ -950,6 +975,33 @@ For more info on this particular video, run:
   (eval (ee-read (ee-code-eev{mod}video "links" c stem hash))))
 
 
+
+;; «code-youtubevideo»  (to ".code-youtubevideo")
+;; This block implements a way to create short hyperlinks to videos
+;; that exist only on youtube. We can regard `code-youtubevideo' as a
+;; variant of `code-eevvideo' that doesn't receive an mp4stem.
+;; TODO: write docs!
+;;
+;; See:  (find-eev "eev-audiovideo.el" "find-youtube-video")
+;; Test: (find-code-youtubevideo "punch" "K6LmZ0A1s9U" "Punch and Judy")
+;;              
+(defun      code-youtubevideo (c hash &rest rest)
+  (eval (ee-read      (ee-code-youtubevideo c hash))))
+(defun find-code-youtubevideo (c hash &rest rest)
+  (find-estring-elisp (ee-code-youtubevideo c hash)))
+(defun   ee-code-youtubevideo (c hash)
+  (ee-template0 "\
+;; (find-code-youtubevideo \"{c}\" \"{hash}\")
+;;      (code-youtubevideo \"{c}\" \"{hash}\")
+;;
+;; Tests: (find-youtubedl-links nil \"TITLE\" \"{hash}\" nil \"{c}\")
+;;        (find-youtube-video \"{hash}\" \"0:00\")
+;;        (find-{c}video \"0:00\")
+
+(defun find-{c}video (&optional time &rest rest)
+  (interactive)
+  (find-youtube-video \"{hash}\" time))
+"))
 
 
 

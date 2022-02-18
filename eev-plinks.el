@@ -1,6 +1,6 @@
 ;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211021
+;; Version:    20220214
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -413,6 +413,23 @@ If wget can't download URL then this function runs `error'."
 ;; (find-wget  "http://angg.twu.net/eev-current/DOESNOTEXIST")
 ;; (find-wget-elisp  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
 ;; (find-wgeta-elisp "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+
+(defun find-anggwget (fname &rest pos-spec-list)
+  "See `find-wget' and this: (find-angg-es-links)"
+  (apply 'find-wget (concat "http://angg.twu.net/" fname) pos-spec-list))
+
+(defun find-anggwgeta (fname &rest pos-spec-list)
+  "See `find-wgeta' and this: (find-angg-es-links)"
+  (apply 'find-wgeta (concat "http://angg.twu.net/" fname) pos-spec-list))
+
+(defun find-anggwget-elisp (fname &rest pos-spec-list)
+  "See `find-wget-elisp' and this: (find-angg-es-links)"
+  (apply 'find-wget-elisp (concat "http://angg.twu.net/" fname) pos-spec-list))
+
+(defun find-anggwgeta-elisp (fname &rest pos-spec-list)
+  "See `find-wgeta-elisp' and this: (find-angg-es-links)"
+  (apply 'find-wgeta-elisp (concat "http://angg.twu.net/" fname) pos-spec-list))
+
 
 
 

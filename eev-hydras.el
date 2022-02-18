@@ -38,8 +38,13 @@
 ;;   (find-refining-intro "5. Pointing to anchors")
 ;;   (find-refining-intro "5. Pointing to anchors" "but I don't touch-type")
 ;;
-;; It depends on the package "hydra" (from ELPA).
-;; To learn how this works, load this file and run this tutorial - i.e.:
+;; It depends on the package "hydra" (from ELPA). You can install it
+;; with `M-x list-packages', or with:
+;;
+;;   (find-epackage-links 'hydra "hydra" t)
+;;
+;; To learn how this experimental feature works, load this file and
+;; run its tutorial - i.e., execute these two sexps:
 ;;
 ;;   (require 'eev-hydras)
 ;;   (find-eev-index-edit-intro)

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220212
+;; Version:    20220218
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -114,6 +114,9 @@
 ;;   «.ee-use-red-bullets»		(to "ee-use-red-bullets")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
 ;; «.find-1stclassvideo-links»		(to "find-1stclassvideo-links")
+;; «.find-1stclassvideoindex»		(to "find-1stclassvideoindex")
+;; «.find-1stclassvideodef»		(to "find-1stclassvideodef")
+;; «.find-1stclassvideos»		(to "find-1stclassvideos")
 ;; «.find-advicebefore-links»		(to "find-advicebefore-links")
 
 
@@ -1002,6 +1005,7 @@ emacs    -fg bisque -bg black                  eev-readme.el
      (setq ee-youtubedl-dir   ,ee-youtubedl-dir)
      ""
      (find-audiovideo-intro "6. Youtube-dl")
+     (find-eev "eev-tlinks.el" "ee-youtubedl-command")
      ""
      ,(ee-template0 "\
  (eepitch-shell2)
@@ -1020,7 +1024,7 @@ cd {dir}
 {ee-youtubedl-command} -f 18 --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
 {ee-youtubedl-command}       --restrict-filenames --all-subs 'http://www.youtube.com/watch?v={hash}'
 
-# (find-es \"video\" \"youtube-dl\")
+# Play the local copy:
 # (find-fline \"{dir}\" \"{hash}\")
 # (find-fline \"{dir}\" \"{title}-{hash}\")
 # (find-fline \"{dir}\" \"{title}-{hash}{ext-}\")
@@ -1031,6 +1035,11 @@ cd {dir}
 
 # Error messages (for the player):
 # (find-ebuffer \"*Messages*\")
+
+# Play on youtube:
+# (find-youtube-video \"{hash}\" \"0:00\")
+# (code-youtubevideo \"{stem}\" \"{hash}\" \"{title}\")
+# (find-{stem}video \"0:00\")
 ")
      )
    pos-spec-list))
@@ -2791,12 +2800,14 @@ This function is used by `ee-0x0-upload-region'."
 ;; Length:  {length}
 ;;
 ;; Play:  (find-{c}video \"0:00\")
-;; Info:  (find-eev \"eev-videolinks.el\" \"{c}\")
+;; Info:  (find-1stclassvideodef        \"{c}\")
+;;        (find-eev \"eev-videolinks.el\" \"{c}\")
 ;;            (find-1stclassvideo-links \"{c}\")
 ;;
-;; Index: http://angg.twu.net/.emacs.videos.html#{c}
-;;         (find-angg        \".emacs.videos\"    \"{c}\")
-;;         (find-angg-es-links)
+;; Index: (find-1stclassvideoindex              \"{c}\")
+;;        http://angg.twu.net/.emacs.videos.html#{c}
+;;        (find-angg         \".emacs.videos\"    \"{c}\")
+;;        (find-angg-es-links)
 
 ;; See:
 ;; (find-video-links-intro \"9. First-class videos\")
@@ -2825,7 +2836,23 @@ For more info on this particular video, run:
   (find-eev-video \"{mp4stem}\" \"{hash}\" time))
 ")))
 
-;; Try: (find-1stclassvideos)
+
+;; «find-1stclassvideoindex»  (to ".find-1stclassvideoindex")
+;; «find-1stclassvideodef»    (to ".find-1stclassvideodef")
+;; Tests: (find-1stclassvideoindex "2022findeevangg")
+;;        (find-1stclassvideoindex "2022findelispintro")
+;;        (find-1stclassvideodef   "2022findelispintro")
+;;
+(defun find-1stclassvideoindex (c &rest pos-spec-list)
+  (interactive (list (ee-1stclassvideo-around-point-ask)))
+  (apply 'find-anggwgeta-elisp ".emacs.videos" c pos-spec-list))
+
+(defun find-1stclassvideodef (c &rest pos-spec-list)
+  (interactive (list (ee-1stclassvideo-around-point-ask)))
+  (apply 'find-eev "eev-videolinks.el" c pos-spec-list))
+
+;; «find-1stclassvideos»  (to ".find-1stclassvideos")
+;; Test: (find-1stclassvideos)
 ;;
 (defun find-1stclassvideos (&rest rest)
   "Visit a temporary buffer with a list of all first-class videos of eev."

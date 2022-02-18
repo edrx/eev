@@ -761,28 +761,30 @@ newlines, as \"big strings\". This is a bit childish, I know..."
 ;;      (find-clnode "Structures" "cl-defstruct")
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00177.html
 ;;
-;; (find-epp (macroexpand ' (cl-defstruct mypoint x y) ))
+;; Test:
 ;;
-;; (cl-defstruct mypoint x y)
-;; (cl-defstruct (mypoint-colored (:include point)) color)
-;;
-;; (setq myp (make-mypoint         :x 3 :y 4))
-;; (setq myp (make-mypoint-colored :x 3 :y 4))
-;; (setq myp (make-mypoint-colored :x 3 :y 4 :color "green"))
-;; 
-;;                       (ee-struct-class       myp)
-;;                       (ee-struct-slot-names  myp)
-;;                       (ee-struct-slot-names+ myp)
-;;                       (ee-struct-index-table myp)
-;;      (find-ehashtable (ee-struct-index-table myp))
-;;       (gethash 'x     (ee-struct-index-table myp))
-;;       (gethash 'y     (ee-struct-index-table myp))
-;;       (gethash 'color (ee-struct-index-table myp))
-;;                                              myp
-;;                       (ee-struct-to-string   myp)
-;;
-;;                                (find-estruct myp)
-;;               (find-estruct (ee-struct-class myp))
+;;   (find-epp (macroexpand ' (cl-defstruct mypoint x y) ))
+;;  
+;;   (cl-defstruct mypoint x y)
+;;   (cl-defstruct (mypoint-colored (:include point)) color)
+;;  
+;;   (setq myp (make-mypoint         :x 3 :y 4))
+;;   (setq myp (make-mypoint-colored :x 3 :y 4))
+;;   (setq myp (make-mypoint-colored :x 3 :y 4 :color "green"))
+;;   
+;;                         (ee-struct-class       myp)
+;;                         (ee-struct-slot-names  myp)
+;;                         (ee-struct-slot-names+ myp)
+;;                         (ee-struct-index-table myp)
+;;        (find-ehashtable (ee-struct-index-table myp))
+;;         (gethash 'x     (ee-struct-index-table myp))
+;;         (gethash 'y     (ee-struct-index-table myp))
+;;         (gethash 'color (ee-struct-index-table myp))
+;;                                                myp
+;;                         (ee-struct-to-string   myp)
+;;  
+;;                                  (find-estruct myp)
+;;                 (find-estruct (ee-struct-class myp))
 ;;
 ;; WARNING: this is a quick hack.
 ;; THANKS: to pjb from #emacs.

@@ -1,3 +1,22 @@
+2022-02-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (code-youtubevideo, find-code-youtubevideo)
+	(ee-code-youtubevideo): new functions.
+
+	* eev-tlinks.el (find-youtubedl-links): use `code-youtubevideo'.
+
+2022-02-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-1stclassvideodef): new function.
+
+2022-02-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-1stclassvideoindex): new function.
+	(ee-find-1stclassvideo-links): use `find-1stclassvideoindex'.
+
+	* eev-plinks.el (find-anggwget, find-anggwgeta)
+	(find-anggwget-elisp, find-anggwgeta-elisp): new function.
+
 2022-02-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-oficina20210video): new function.
