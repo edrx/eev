@@ -3511,7 +3511,7 @@ that the extra argument `:anchor' in
 
   (code-c-d \"eev\" ee-eev-source-directory :anchor)
 
-let us abbreviate the link below, that points to an anchor,
+lets us abbreviate the link below, that points to an anchor,
 
   (find-eevfile \"eev-blinks.el\" \"«find-wottb»\")
 

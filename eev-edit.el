@@ -1,6 +1,6 @@
 ;;; eev-edit.el -- tools for editing (mainly refining) elisp hyperlinks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2020 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20201228
+;; Version:    20220224
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -44,6 +44,7 @@
 ;; «.ee-duplicate-this-line»		(to "ee-duplicate-this-line")
 ;; «.ee-yank-pos-spec»			(to "ee-yank-pos-spec")
 ;; «.ee-copy-this-line-to-kill-ring»	(to "ee-copy-this-line-to-kill-ring")
+;; «.ee-copy-preceding-tag»		(to "ee-copy-preceding-tag")
 ;; «.ee-shrink-hyperlink-at-eol»	(to "ee-shrink-hyperlink-at-eol")
 ;; «.ee-flip-psne-ness»			(to "ee-flip-psne-ness")
 ;; «.eewrap-vldi-list-line»		(to "eewrap-vldi-list-line")
@@ -143,11 +144,10 @@ With a prefix argument run `ee-copy-preceding-tag-to-kill-ring' instead."
       (message msg))))
 
 
-
-;; Experimental, 2019aug29
+;; «ee-copy-preceding-tag»  (to ".ee-copy-preceding-tag")
 ;; See: (find-anchors-intro "3. The preceding tag")
+;;      (find-anchors-intro "3. The preceding tag" "M-1 M-h M-w")
 ;;
-;; (defun ee-tag-re () (ee-tolatin1 "«\\([!-~]+\\)»"))
 (defvar ee-tag-re-utf-8 "«\\([!-~]+\\)»")
 (defun  ee-tag-re () ee-tag-re-utf-8)
 
@@ -163,7 +163,8 @@ A \"tag\" is the string between \"«»\"s in an anchor."
 	       (msg   (format "Copied \"%s\" to the kill ring" str)))
 	  (eeflash start end eeflash-copy)
 	  (kill-new str)
-	  (message msg))
+	  (message msg)
+	  str)
       (error "No preceding tag!"))))
     
 

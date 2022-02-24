@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211107
+;; Version:    20220224
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -141,6 +141,7 @@
 (require 'eev-env)	       ; (find-eev "eev-env.el")
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
 (require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
+(require 'eev-kla)             ; (find-eev "eev-kla.el")
 ;;
 ;; Hyperlinks to audio, video, and IRC:
 ;;   (find-video-links-intro)
