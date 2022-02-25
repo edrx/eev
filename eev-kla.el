@@ -33,10 +33,12 @@
 ;;                                                (find-prepared-intro)
 
 ;; «.intro»		(to "intro")
+;; «.test»		(to "test")
 ;; «.ee-preferred-c»	(to "ee-preferred-c")
 ;; «.utils»		(to "utils")
 ;; «.eekla»		(to "eekla")
 ;; «.eeklf»		(to "eeklf")
+;; «.aliases»		(to "aliases")
 
 
 
@@ -44,6 +46,20 @@
 ;;; Commentary:
 
 ;; «intro»  (to ".intro")
+;;
+;; 0. Prerequisites
+;; ================
+;; This tool will only make sense to people who understand `code-c-d',
+;; anchors, and `find-here-links' very well. See:
+;;
+;;   (find-eev-quick-intro "9.1. `code-c-d'")
+;;   (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'")
+;;   (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" "to anchors")
+;;   (find-eev-quick-intro "8. Anchors")
+;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
+;;   (find-eev-quick-intro "4.1. `find-here-links'")
+;;
+;;
 ;;
 ;; 1. Choosing a link to here
 ;; ==========================
@@ -77,6 +93,7 @@
 ;; have to choose the "right" link by hand.
 ;;
 ;;
+;;
 ;; 2. Our preferred link to here
 ;; =============================
 ;; This file implement a VERY HACKY way to choose the "right" link
@@ -104,23 +121,60 @@
 ;;   (find-eev ".dir-locals.el")
 ;;
 ;;
+;;
 ;; 3. Commands
 ;; ===========
-;; At this moment this file implements these commands:
+;; At the moment this file implements these commands:
 ;;
-;;   1) `M-x eekla', that <K>ills a <L>ink to an <A>nchor. See:
+;;   1) `M-x eekla', that <K>ills a <L>ink to an <A>nchor.
+;;      See: (find-anchors-intro "3. The preceding tag" "M-1 M-h M-w")
+;;           (find-refining-intro "5. Pointing to anchors")
 ;;
-;;      (find-anchors-intro "3. The preceding tag" "M-1 M-h M-w")
-;;      (find-refining-intro "5. Pointing to anchors")
+;;         «test»  (to ".test")
 ;;
-;;   2) `M-x ee-preferred-c-show', that shows the current directory
+;;      To test this, run `M-x eekla' here. It will highlight the
+;;      anchor above ("test") for a fraction of a second and will show
+;;      this message in the echo area:
+;;
+;;        Copied to the kill ring: (find-eev "eev-kla.el" "test")
+;;
+;;   2) `M-x eeklf', that <K>ills a <L>ink to a <F>ile.
+;;       To test this, just run `M-x eeklf'. You will see this message
+;;       in the echo area:
+;;
+;;         Copied to the kill ring: (find-eevfile "eev-kla.el")
+;;
+;;   3) `M-x ee-preferred-c-show', that shows the current directory
 ;;      and the value of `ee-preferred-c' at the window at the right.
 ;;      This is useful to check if the ".dir-locals.el" file was
-;;      correctly written.
+;;      correctly written. Try:
 ;;
-;; Try them! =)
+;;        (ee-preferred-c-show)
 ;;
 ;; TODO: `M-x eekls', that <K>ills a <L>ink to a <S>tring.
+;;
+;;
+;;
+;; 4. The gory details
+;; ===================
+;; The function `find-here-links' calls the function
+;; `ee-find-here-links' to generate the non-header part of the
+;; "*(find-here-links)*" buffer. When `ee-find-here-links' decides
+;; that "here" is a file it calls the function `ee-find-file-links' to
+;; generate a series of links to the current file.
+;;
+;; If you really, really, REALLY want to know the innards of how this
+;; works and how `ee-find-file-links' consults the data stored by
+;; `code-c-d' to generate these links, follow the links below:
+;;
+;;   (find-eev "eev-hlinks.el" "ee-find-here-links")
+;;   (find-eev "eev-elinks.el" "find-file-links")
+;;   (find-eev "eev-elinks.el" "ee-find-xxxfile-sexps")
+;;   (find-eev "eev-elinks.el" "ee-code-c-d-filter")
+;;   (find-eev "eev-elinks.el" "ee-code-c-d-filter" "Try:")
+
+
+
 
 
 ;; «ee-preferred-c»  (to ".ee-preferred-c")
@@ -185,7 +239,7 @@
 ;; <K>ill <L>ink to <File>.
 
 (defun ee-klf-sexp (c fname)
-  (format "(find-%sfile \"%s\")" c (ee-kla-fname c fname)))
+  (format "(find-%sfile \"%s\")" c (ee-kl-fname c fname)))
 
 (defun eeklf ()
   "Put in the kill ring a link to this file."
@@ -195,9 +249,12 @@
     (ee-kl-kill (ee-klf-sexp c fname))))
 
 
+;; «aliases»  (to ".aliases")
 ;; I use these aliases:
 ;; (defalias 'kla 'eekla)
 ;; (defalias 'klf 'eeklf)
+
+
 
 (provide 'eev-kla)
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211219
+;; Version:    20220224
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -72,17 +72,105 @@
 
 
 
+;; «.find-here-links»		(to "find-here-links")
+;; «.ee-find-here-links»	(to "ee-find-here-links")
+;; «.ee-find-here-links-tests»	(to "ee-find-here-links-tests")
 ;; «.ee-fhl-main-program»	(to "ee-fhl-main-program")
 ;; «.ee-fhl-run»		(to "ee-fhl-run")
-;; «.ee-find-here-links»	(to "ee-find-here-links")
+;;
 ;; «.ee-find-here-links-old»	(to "ee-find-here-links-old")
-;; «.find-here-links»		(to "find-here-links")
 ;;
 ;; «.low-level-functions»	(to "low-level-functions")
 ;; «.tests-and-links»		(to "tests-and-links")
 ;;
 ;; «.find-here-links-beginner»	(to "find-here-links-beginner")
 ;; «.find-here-links-3»		(to "find-here-links-3")
+
+
+
+
+
+
+;;;   __ _           _       _                         _ _       _        
+;;;  / _(_)_ __   __| |     | |__   ___ _ __ ___      | (_)_ __ | | _____ 
+;;; | |_| | '_ \ / _` |_____| '_ \ / _ \ '__/ _ \_____| | | '_ \| |/ / __|
+;;; |  _| | | | | (_| |_____| | | |  __/ | |  __/_____| | | | | |   <\__ \
+;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
+;;;                                                                       
+;; «find-here-links»  (to ".find-here-links")
+;; Skel: (find-find-links-links-new "here" "" "")
+;; See: (find-eev "eev-mode.el" "eev-mode-map-set" "find-here-links")
+;;      (find-eev-quick-intro "`M-h M-h'")
+;;      (find-here-links-intro)
+;;      (find-links-conv-intro "3. Classification")
+;;      (find-links-conv-intro "3. Classification" "that violate")
+;; Tests: (find-here-links)
+;;        (progn (find-enode "Screen") (find-here-links))
+;;
+;; TODO: write one test for each kind of "here" that we support.
+;;
+(defun find-here-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks pointing to \"here\".
+See: (find-here-links-intro)"
+  (interactive)
+  (let ((ee-buffer-name "*(find-here-links)*"))
+    (apply
+     'find-elinks
+     `(;; The first line of a find-here-links buffer DOES NOT
+       ;; regenerates the buffer - instead the first lines point to
+       ;; help pages.
+       ,@(ee-find-here-links0)
+       ,@(ee-find-here-links)
+       )
+     pos-spec-list)))
+
+(defun ee-find-here-links0 ()
+  "The header used by `find-here-links'."
+  `(,(ee-H "See: ")
+    (find-eev-quick-intro "4.1. `find-here-links'")
+    (find-emacs-keys-intro "1. Basic keys (eev)" "M-h M-h")
+    (find-here-links-intro "4. `find-here-links-3'")
+    ))
+
+;; «ee-find-here-links»  (to ".ee-find-here-links")
+;;
+(defun ee-find-here-links ()
+  "Generate the non-header part of the \"*(find-here-links)*\" buffer.
+This function runs `(ee-fhl-run ee-fhl-main-program)', that runs
+the program in `ee-fhl-main-program' with `ee-fhl-run' until an
+expression like this in it
+
+  (:if SEXP1 SEXP2)
+
+succeeds. When the successful `(:if ___ ___)' is found its SEXP1
+is stored in the global variable `ee-fhl-sexp1' and its SEXP2 is
+stored in the global variable `ee-fhl-sexp2'. Their values will
+be things like:
+
+  SEXP1  =>  (ee-<kind>-bufferp)
+  SEXP2  =>  (ee-find-<kind>-links)
+
+For example, if we run `find-here-links' in an info buffer we
+will have this,
+
+  SEXP1  =>  (ee-info-bufferp)
+  SEXP2  =>  (ee-find-info-links)
+
+and `(eval (ee-find-info-links))' produces the non-header part of
+the \"*(find-here-links)*\" buffer."
+  (ee-fhl-run ee-fhl-main-program)
+  (cons "" (eval ee-fhl-sexp2)))
+
+
+;; «ee-find-here-links-tests»  (to ".ee-find-here-links-tests")
+;; Low-level tests:
+;;
+;;   (find-2a nil                 '(find-here-links))
+;;   (find-2a nil '(find-elinks (ee-find-here-links)))
+;;           (ee-fhl-run ee-fhl-main-program)
+;;                 (list ee-fhl-sexp1 ee-fhl-sexp2)
+;;                                    ee-fhl-sexp2
+;;   (find-2a nil '(find-elinks (eval ee-fhl-sexp2)))
 
 
 
@@ -96,12 +184,7 @@
 ;;;                           |_|              |___/                     
 ;;
 ;; «ee-fhl-main-program»  (to ".ee-fhl-main-program")
-;; In the past this "main program" was a big cond, that was easy to
-;; understand but hard to debug... in oct/2021 I replaced the big cond
-;; by a program in a domain-specific language that should be easy to
-;; understand, easy to extend, and easy to debug - the one below.
-;;
-;; `find-here-links' runs this "program" with `ee-fhl-run'.
+;; `ee-find-here-links' runs this "program" with `ee-fhl-run'.
 ;;
 ;; Try: (find-eppp ee-fhl-main-program)
 ;;     (ee-fhl-run ee-fhl-main-program)
@@ -194,19 +277,6 @@
 	   until fhl-result
            finally return fhl-result))
 
-;; «ee-find-here-links»  (to ".ee-find-here-links")
-;; Try:           (ee-find-here-links)
-;;   (find-elinks (ee-find-here-links))
-;;   ee-fhl-sexp1
-;;   ee-fhl-sexp2
-
-(defun ee-find-here-links ()
-  "Run all the `(:if SEXP1 SEXP2)'s in `ee-fhl-main-program' until
-one succeeds. When the successful `(:if ___ ___)' is found store
-its SEXP1 in `ee-fhl-sexp1', its SEXP2 in `ee-fhl-sexp2', and
-return the result of (eval ee-fhl-sexp2), slightly preprocessed."
-  (ee-fhl-run ee-fhl-main-program)
-  (cons "" (eval ee-fhl-sexp2)))
 
 
 ;; «ee-find-here-links-old»  (to ".ee-find-here-links-old")
@@ -242,52 +312,6 @@ return the result of (eval ee-fhl-sexp2), slightly preprocessed."
 
 
 
-;;;   __ _           _       _                         _ _       _        
-;;;  / _(_)_ __   __| |     | |__   ___ _ __ ___      | (_)_ __ | | _____ 
-;;; | |_| | '_ \ / _` |_____| '_ \ / _ \ '__/ _ \_____| | | '_ \| |/ / __|
-;;; |  _| | | | | (_| |_____| | | |  __/ | |  __/_____| | | | | |   <\__ \
-;;; |_| |_|_| |_|\__,_|     |_| |_|\___|_|  \___|     |_|_|_| |_|_|\_\___/
-;;;                                                                       
-;; «find-here-links»  (to ".find-here-links")
-;; Skel: (find-find-links-links-new "here" "" "")
-;; Key binding:
-;;     (find-eev "eev-mode.el" "eev-mode-map-set" "M-h" "M-h" "find-here-links")
-;; See: (find-eev-quick-intro "`M-h M-h'")
-;;      (find-here-links-intro)
-;;      (find-links-conv-intro "3. Classification")
-;;      (find-links-conv-intro "3. Classification" "that violate")
-;; Tests: (find-here-links)
-;;        (progn (find-enode "Screen") (find-here-links))
-;;
-(defun find-here-links (&rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks pointing to \"here\".
-See: (find-here-links-intro)"
-  (interactive)
-  (let ((ee-buffer-name "*(find-here-links)*"))
-    (apply
-     'find-elinks
-     `(;; The first line of a find-here-links buffer DOES NOT
-       ;; regenerates the buffer - instead the first lines point to
-       ;; help pages.
-       ,@(ee-find-here-links0)
-       ,@(ee-find-here-links)
-       )
-     pos-spec-list)))
-
-(defun ee-find-here-links0 ()
-  "The header used by `find-here-links'."
-  `(,(ee-H "See: ")
-    (find-eev-quick-intro "4.1. `find-here-links'")
-    (find-emacs-keys-intro "1. Basic keys (eev)" "M-h M-h")
-    (find-here-links-intro "4. `find-here-links-3'")
-    ))
-
-
-
-
-
-
-
 ;;;  _                       _                _ 
 ;;; | |    _____      __    | | _____   _____| |
 ;;; | |   / _ \ \ /\ / /____| |/ _ \ \ / / _ \ |
@@ -295,7 +319,7 @@ See: (find-here-links-intro)"
 ;;; |_____\___/ \_/\_/      |_|\___| \_/ \___|_|
 ;;;                                             
 ;; «low-level-functions»  (to ".low-level-functions")
-;; Low lever functions used by the functions of the form
+;; Low level functions used by the functions of the form
 ;; `ee-*-bufferp' and `ee-find-*-links' defined in the next section.
 
 ;; Some tools for detecting which kind of buffer we're in.
@@ -408,15 +432,6 @@ See: (find-here-links-intro)"
 (defun ee-find-pdftext-links   () (ee-pdflike-page-links))
 (defun ee-find-eww-links       () `((find-eww ,(plist-get eww-data :url))))
 (defun ee-find-w3m-links       () `((find-w3m ,w3m-current-url)))
-
-
-;; For debugging.
-;; TODO: remember how to use this.
-;;
-;; (defun find-here-links-test (sexp)
-;; "See: (find-links-intro \"`find-here-links'\")"
-;;   (find-wset "13o_2o_o" sexp '(find-here-links)))
-
 
 
 

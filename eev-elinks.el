@@ -707,7 +707,7 @@ a hack to let use use `M-h M-i' for both \"intro\" and \"info\"."
 ;; `find-code-c-d-filter-1' and `find-code-c-d-filter-2' are debugging
 ;; functions.
 ;;
-;;   (find-epp ee-code-c-d-pairs)
+;;   (find-eppp ee-code-c-d-pairs)
 ;;   (find-code-c-d-filter-1 'c-d)
 ;;   (find-code-c-d-filter-1 'c)
 ;;   (find-code-c-d-filter-1 'd)
