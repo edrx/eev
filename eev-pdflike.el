@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220104
+;; Version:    20220226
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -283,6 +283,9 @@ newline are spurious - and replaces them by \"(ff)\"."
   (ee-template0 "\
 ;; (find-code-pdfbackend \"{pdfbackend}\")
 ;;      (code-pdfbackend \"{pdfbackend}\")
+;; (find-eev \"eev-pdflike.el\" \"code-pdfbackend\")
+;; (find-eevfile \"eev-pdflike.el\" \"\\\"{pdfbackend}\\\"\")
+;; (find-eevgrep \"grep --color=auto -nH -e '\\\"{pdfbackend}\\\"' eev-pdflike.el\")
 ;;
 ;; The code here defines this structure:
 ;;
@@ -316,6 +319,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   ;;
   (setq ee-pdflike-last 'find-{<}c{>}page)
   (defun find-{<}c{>}page (&optional page &rest rest)
+    (interactive)
     (setq ee-pdflike-last 'find-{<}c{>}page)
     (find-{pdfbackend} {<}(ee-pp0 fname){>} page))
   \"))
@@ -335,6 +339,9 @@ newline are spurious - and replaces them by \"(ff)\"."
   (ee-template0 "\
 ;; (find-code-pdftextbackend \"{pdftextbackend}\")
 ;;      (code-pdftextbackend \"{pdftextbackend}\")
+;; (find-eev \"eev-pdflike.el\" \"code-pdftextbackend\")
+;; (find-eevfile \"eev-pdflike.el\" \"\\\"{pdftextbackend}\\\"\")
+;; (find-eevgrep \"grep --color=auto -nH -e '\\\"{pdftextbackend}\\\"' eev-pdflike.el\")
 ;;
 ;; The code here defines this structure:
 ;;
@@ -371,6 +378,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   (setq ee-page-fname  {<}(ee-pp0 fname){>})
   (setq ee-page-offset {<}(ee-pp0 offset){>})
   (defun find-{<}c{>}text (&optional page &rest rest)
+    (interactive)
     (setq ee-page-c      {<}(ee-pp0 c){>})
     (setq ee-page-fname  {<}(ee-pp0 fname){>})
     (setq ee-page-offset {<}(ee-pp0 offset){>})
@@ -382,7 +390,7 @@ newline are spurious - and replaces them by \"(ff)\"."
 
 ;; «code-pdfbackendalias»  (to ".code-pdfbackendalias")
 ;; See: (find-eevfile "eev-pdflike.el" "2. ALIASES")
-;; Test: (find-code-pdfbackendalias "PDF-PAGE" "XPDF-PAGE")
+;; Test: (find-code-pdfbackendalias "NEWPDFPROG-PAGE" "OLDPDFPROG-PAGE")
 ;;
 (defun      code-pdfbackendalias (newbackend oldbackend)
   (eval (ee-read      (ee-code-pdfbackendalias newbackend oldbackend))))
@@ -392,6 +400,9 @@ newline are spurious - and replaces them by \"(ff)\"."
   (ee-template0 "\
 ;; (find-code-pdfbackendalias \"{newbackend}\" \"{oldbackend}\")
 ;;      (code-pdfbackendalias \"{newbackend}\" \"{oldbackend}\")
+;; (find-eev \"eev-pdflike.el\" \"code-pdfbackendalias\")
+;; (find-eevfile \"eev-pdflike.el\" \"\\\"{newbackend}\\\"\")
+;; (find-eevgrep \"grep --color=auto -nH  -e '\\\"{newbackend}\\\"' eev-pdflike.el\")
 ;;
 \(defalias   'ee-find-{newbackend}   'ee-find-{oldbackend})
 \(defalias      'find-{newbackend}      'find-{oldbackend})
