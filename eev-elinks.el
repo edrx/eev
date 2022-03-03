@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220211
+;; Version:    20220226
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -83,6 +83,7 @@
 ;; «.find-emajormode-links»	(to "find-emajormode-links")
 ;; «.find-eminormodes-links»	(to "find-eminormodes-links")
 ;; «.find-emodeline-links»	(to "find-emodeline-links")
+;; «.find-emenubar-links»	(to "find-emenubar-links")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -1601,6 +1602,54 @@ You can use this to understand how the mode line works."
    pos-spec-list))
 
 
+;; «find-emenubar-links»  (to ".find-emenubar-links")
+;; Skel: (find-find-links-links-new "emenubar" "" "")
+;; Test: (find-emenubar-links)
+;;
+(defun find-emenubar-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about the menu bar."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-emenubar-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-emenubar-links)
+     ""
+     ,(ee-template0 "\
+# (find-enode  \"Menu Bar\")
+# (find-elnode \"Menu Bar\")
+# (find-efile  \"menu-bar.el\")
+# (find-elnode \"Easy Menu\")
+# (find-efile  \"easymenu.el\")
+# (find-egrep \"grep --color=auto -nH --null -e easy-menu-define *.el */*.el\")
+
+# (describe-bindings [(menu-bar)])
+# (describe-bindings [(menu-bar) file])
+# (describe-bindings [(menu-bar) edit])
+# (describe-bindings [(menu-bar) options])
+# (describe-bindings [(menu-bar) buffer])
+# (describe-bindings [(menu-bar) tools])
+# (describe-bindings [(menu-bar) help-menu])
+
+# (find-ekeymapdescr menu-bar-file-menu)
+# (find-ekeymapdescr menu-bar-edit-menu)
+# (find-ekeymapdescr menu-bar-options-menu)
+# (find-eapropos    \"menu-bar.*buffer\")
+# (find-ekeymapdescr menu-bar-tools-menu)
+# (find-ekeymapdescr menu-bar-help-menu)
+# (find-evardescr   'menu-bar-final-items)
+
+# (find-efunctiondescr 'menu-bar-mode)
+# (call-interactively  'menu-bar-mode)
+# (find-esetkey-links (kbd \"s-m\") 'menu-bar-mode)
+
+# (load             \"menu-bar.el\")
+# (find-efunctionpp 'menu-bar-mode)
+# (menu-bar-mode 'toggle)
+# (load             \"menu-bar.elc\")
+")
+     )
+   pos-spec-list))
 
 
 

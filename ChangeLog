@@ -1,3 +1,18 @@
+2022-03-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-quick-intro): rewrote the section "10.2.
+	Generating short hyperlinks to info nodes" following some ideas
+	by Bruno Macedo (thanks!=)).
+
+2022-02-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-code-pdfbackend): make the functions of the
+	form `find-xxxpage' interactive.
+	(ee-code-pdftextbackend): make the functions of the form
+	`find-xxxtext' interactive.
+
+	* eev-elinks.el (find-emenubar-links): new function.
+
 2022-02-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-0x0-upload): rewritten.
