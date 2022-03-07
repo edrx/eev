@@ -1,4 +1,4 @@
-;;; eev-kla.el -- kill link to anchor and variants.  -*- lexical-binding: nil; -*-
+;;; eev-kla.el -- kill link to anchor and friends.  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220224
+;; Version:    20220307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -144,6 +144,10 @@
 ;;
 ;;         Copied to the kill ring: (find-eevfile "eev-kla.el")
 ;;
+;;   3) `M-x eeklas'
+;;
+;;   4) `M-x eeklfs'
+;;
 ;;   3) `M-x ee-preferred-c-show', that shows the current directory
 ;;      and the value of `ee-preferred-c' at the window at the right.
 ;;      This is useful to check if the ".dir-locals.el" file was
@@ -193,16 +197,63 @@
 
 
 ;; «utils»  (to ".utils")
+;; Tests: (ee-kl-c)
+;;        (ee-kl-dir)
+;;        (ee-kl-fname)
+;;                   ee-edir
+;;        (ee-kl-dir   "e")
+;;                         (ee-efile "textmodes/fill.el")
+;;        (ee-kl-fname "e" (ee-efile "textmodes/fill.el"))
 ;;
-(defun ee-kl-dir (c)
-  (ee-expand (eval (read (format "ee-%sdir" c)))))
+(defun ee-kl-c ()
+  (or ee-preferred-c (error "`ee-preferred-c' is nil here!")))
 
-(defun ee-kl-fname (c fname)
-  (ee-remove-prefix (ee-kl-dir c) (ee-expand fname)))
+(defun ee-kl-dir (&optional c)
+  (ee-expand (eval (read (format "ee-%sdir" (or c (ee-kl-c)))))))
+
+(defun ee-kl-fname (&optional c fname)
+  (ee-remove-prefix (ee-kl-dir c) (ee-expand (or fname buffer-file-name))))
+
+;; Tests: (ee-kl-anchor)
+;;        (ee-kl-region)
+;;        (ee-kl-kill "(FOO \"BAR\")")
+;;
+(defun ee-kl-anchor ()
+  (ee-copy-preceding-tag-to-kill-ring))
+
+(defun ee-kl-region ()
+  (if (not (use-region-p)) (error "The region is not active!"))
+  (buffer-substring-no-properties (point) (mark)))
 
 (defun ee-kl-kill (sexp)
   (kill-new (concat sexp "\n"))
   (message "Copied to the kill ring: %s" sexp))
+
+
+
+;; Tests:
+;;   (defun find-2ae (sexp) (find-2a nil `(find-estring ,sexp :end)))
+;;   (find-2ae ' (concat "FOO\n" "BAR") )
+;;   (find-2ae ' (ee-kla-sexp  "eev" "foo.el" "ANCHOR") )
+;;   (find-2ae ' (ee-klas-sexp "eev" "foo.el" "ANCHOR" "FOO\nBAR") )
+;;   (find-2ae ' (ee-klf-sexp  "eev" "foo.el") )
+;;   (find-2ae ' (ee-klfs-sexp "eev" "foo.el" "FOO\nBAR") )
+;;        
+(defun ee-kla-sexp (c fname anchor)
+  (format "(find-%s \"%s\" \"%s\")" c fname anchor))
+
+(defun ee-klas-sexp (c fname anchor str)
+  (format "(find-%s \"%s\" \"%s\" %s)" c fname anchor (ee-S str)))
+
+(defun ee-klf-sexp (c fname)
+  (format "(find-%sfile \"%s\")" c fname))
+
+(defun ee-klfs-sexp (c fname str)
+  (format "(find-%sfile \"%s\" %s)" c fname (ee-S str)))
+
+
+
+
 
 
 
@@ -213,46 +264,46 @@
 ;;;  \___|\___|_|\_\_|\__,_|
 ;;;                         
 ;; «eekla»  (to ".eekla")
-;; <K>ill <L>ink to <A>nchor.
+;; <K>ill <L>ink to <A>nchor,
+;; <K>ill <L>ink to <A>nchor and <S>tring,
+;; <K>ill <L>ink to <File>.
+;; <K>ill <L>ink to <File> and <S>tring.
 ;; More precisely: produce a link to the preceding anchor and put it
 ;; in the kill-ring.
 
-(defun ee-kla-sexp (c fname anchor)
-  (format "(find-%s \"%s\" \"%s\")" c (ee-kl-fname c fname) anchor))
+;; (eek "C-e 4*<left> C-SPC <<klas>>")
+
 
 (defun eekla ()
-  "Put in the kill ring a link to the preceding anchor."
+  "<K>ill <L>ink to <A>nchor.
+Put in the kill ring a link to the preceding anchor."
   (interactive)
-  (let* ((c (or ee-preferred-c (error "`ee-preferred-c' is nil here!")))
-         (fname buffer-file-name)
-	 (anchor (ee-copy-preceding-tag-to-kill-ring)))
-    (ee-kl-kill (ee-kla-sexp c fname anchor))))
+  (ee-kl-kill (ee-kla-sexp (ee-kl-c) (ee-kl-fname) (ee-kl-anchor))))
 
-
-;;;            _    _  __ 
-;;;   ___  ___| | _| |/ _|
-;;;  / _ \/ _ \ |/ / | |_ 
-;;; |  __/  __/   <| |  _|
-;;;  \___|\___|_|\_\_|_|  
-;;;                       
-;; «eeklf»  (to ".eeklf")
-;; <K>ill <L>ink to <File>.
-
-(defun ee-klf-sexp (c fname)
-  (format "(find-%sfile \"%s\")" c (ee-kl-fname c fname)))
+(defun eeklas ()
+  "<K>ill <L>ink to <A>nchor and <S>tring.
+Put in the kill ring a link to the preceding anchor."
+  (interactive)
+  (ee-kl-kill (ee-klas-sexp (ee-kl-c) (ee-kl-fname) (ee-kl-anchor) (ee-kl-region))))
 
 (defun eeklf ()
-  "Put in the kill ring a link to this file."
+  "<K>ill <L>ink to <F>ile."
   (interactive)
-  (let* ((c (or ee-preferred-c (error "`ee-preferred-c' is nil here!")))
-         (fname buffer-file-name))
-    (ee-kl-kill (ee-klf-sexp c fname))))
+  (ee-kl-kill (ee-klf-sexp (ee-kl-c) (ee-kl-fname))))
+
+(defun eeklfs ()
+  "<K>ill <L>ink to <F>ile and <S>tring."
+  (interactive)
+  (ee-kl-kill (ee-klfs-sexp (ee-kl-c) (ee-kl-fname) (ee-kl-region))))
+
 
 
 ;; «aliases»  (to ".aliases")
 ;; I use these aliases:
-;; (defalias 'kla 'eekla)
-;; (defalias 'klf 'eeklf)
+;; (defalias 'kla  'eekla)
+;; (defalias 'klas 'eeklas)
+;; (defalias 'klf  'eeklf)
+;; (defalias 'klfs 'eeklfs)
 
 
 

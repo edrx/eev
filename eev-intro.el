@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220212
+;; Version:    20220303
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1753,30 +1753,44 @@ If you run this
 
 then these three hyperlinks will point to the same info node:
 
-  (info      \"(elisp)Top\")
-  (find-node \"(elisp)Top\")
-  (find-elnode      \"Top\")
+  (info      \"(elisp)Box Diagrams\")
+  (find-node \"(elisp)Box Diagrams\")
+  (find-elnode      \"Box Diagrams\")
 
-Note that the last one is a short hyperlink. If you open that
-info node and type `M-h M-h' this will run `find-here-links',
-that will run something similar to:
+Note that the last one is a short hyperlink. If you follow it and
+then type `M-h M-h' you will see that the last hyperlink in the
+\"*(find-here-links)*\" is exactly that short hyperlink. But try
+this big sexp:
 
-  (find-einfo-links \"(elisp)Top\")
+  (progn (find-elnode \"Box Diagrams\")
+         (eek \"C-h r    ;; info-emacs-manual\")
+         (eek \"M-h M-h  ;; find-here-links\")
+         )
 
-The code that produces the short hyperlink to an info node is not
-currently very smart. If you look at the definition of
-`find-elnode' here
+You will get a \"*(find-here-links)*\" buffer that points to a
+page in the \"(emacs)\" manual instead of to one in the
+\"(elisp)\" manual, and that does not have a short hyperlink at
+the end. What happened?
 
-  (find-code-c-d \"el\" ee-emacs-lisp-directory \"elisp\")
+The trick is that the code that produces that short hyperlink
+uses two global variables and runs conditionally. When you run
 
-you will see that it saves the \"el\" and the \"elisp\" in global
-variables by running this:
+  (find-elnode \"Box Diagrams\")
+
+it sets these two variables:
 
   (setq ee-info-code \"el\")
   (setq ee-info-file \"elisp\")
 
-The short hyperlink to an info node is only produced when Info is
-visiting a node in a manual whose name matches the variable
+You can check that in its source code:
+
+  (find-efunctionpp 'find-elnode)
+  (find-code-c-d \"el\" ee-emacs-lisp-directory \"elisp\")
+
+The sub-function of `find-here-links' that is executed when
+`find-here-links' detects that \"here\" is an info node only
+generates the short hyperlink when the current \"info file\"
+corresponds to the value saved in the global variable
 `ee-info-file'.
 
 
@@ -1827,9 +1841,11 @@ There are two main ways to generate lines like these
   (code-pdf-page \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf\")
   (code-pdf-text \"asy\" \"/usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf\")
 
-without having to type much. One way, that is somewhat confusing,
-is with `M-C' (`eewrap-code-c-d') and `M-P' (`eewrap-pdflike');
-you can test it by running the `eek' sexps below:
+without having to type much. The old way is with
+`M-C' (`eewrap-code-c-d') and `M-P' (`eewrap-pdflike'), that
+transform the current line in a way similar to
+`M-T' (`eewrap-eepitch'). You can test these key sequences by
+running the `eek' sexps below:
 
   (eek \"<down> M-C\")
   asy /usr/local/texlive/2019/texmf-dist/doc/asymptote/
@@ -1837,7 +1853,10 @@ you can test it by running the `eek' sexps below:
   (eek \"<down> M-P\")
   asy /usr/local/texlive/2019/texmf-dist/doc/asymptote/asymptote.pdf
 
-We will only discuss here the other way.
+The new way is with `M-h M-e', that is explained here:
+
+  (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
+
 
 
 
