@@ -1,3 +1,8 @@
+2022-03-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-template0.el (ee-template0-lex, ee-template00-lex)
+	(ee-template000-lex): new functions.
+
 2022-03-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-code.el (eev-version): new function.
