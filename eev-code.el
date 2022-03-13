@@ -1,6 +1,6 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211006
+;; Version:    20220309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -50,6 +50,7 @@
 ;; «.ee-tail-call2»	(to "ee-tail-call2")
 ;; «.code-c-d»		(to "code-c-d")
 ;; «.code-c-d-s»	(to "code-c-d-s")
+;; «.eev-version»	(to "eev-version")
 
 
 
@@ -363,6 +364,25 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 ;; Used by `find-epackage-links':
 (code-c-d "elpa" "~/.emacs.d/elpa/")
 ;; (find-elpafile "")
+
+
+
+;;;                                         _             
+;;;   ___  _____   __   __   _____ _ __ ___(_) ___  _ __  
+;;;  / _ \/ _ \ \ / /___\ \ / / _ \ '__/ __| |/ _ \| '_ \ 
+;;; |  __/  __/\ V /_____\ V /  __/ |  \__ \ | (_) | | | |
+;;;  \___|\___| \_/       \_/ \___|_|  |___/_|\___/|_| |_|
+;;;                                                       
+;; «eev-version»  (to ".eev-version")
+;; Test: (eev-version)
+
+(defun eev-version ()
+  "Show the current version of eev (in the file eev.el).
+This function simply opens the file eev.el and jumps to the right
+line in it. Extracting the version as a string would be harder."
+  (interactive)
+  (find-eevfile "eev.el" "Version:"))
+
 
 
 

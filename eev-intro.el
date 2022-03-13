@@ -8352,16 +8352,14 @@ environment variable $S is set to ~/snarf/; then running this
   echo     'http://www.gnu.org/software/emacs/emacs-paper.html' >> ~/.psne.log
 
   # (find-fline \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
-  # (find-w3m   \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
+  # (find-eww   \"$S/http/www.gnu.org/software/emacs/emacs-paper.html\")
 
 creates a local copy of `emacs-paper.html' inside ~/snarf/http/
 and appends the URL to the file ~/.psne.log. The two lines in
 comments are hyperlinks to the local copy; The `find-fline' opens
-it as a file in the obvious way, and `find-w3m' opens it \"as
-HTML\", using a text-mode web browser called w3m that can be run
-either in standalone mode or inside Emacs; `find-w3m' uses w3m's
-Emacs interface, and it accepts extra arguments, which are
-treated as a pos-spec-list.
+it as a file in the obvious way, and `find-eww' opens it \"as
+HTML\", using a text-mode web browser called eww that runs
+entirely inside Emacs.
 
 
 

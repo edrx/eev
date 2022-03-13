@@ -1,6 +1,6 @@
 ;;; eev-template0.el -- implement functions that eval `{}'s in a string.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,13 +19,19 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211102
+;; Version:    20220313
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-template0.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-template0.el.html>
 ;;       See also: <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                                                (find-eev-quick-intro)
+
+;; «.ee-template0»	(to "ee-template0")
+;; «.lexical-binding»	(to "lexical-binding")
+;; «.ee-template0-lex»	(to "ee-template0-lex")
+
+
 
 ;;; Commentary:
 ;;
@@ -83,16 +89,35 @@
 ;;
 ;; Important: `ee-template0' is _INCOMPATIBLE WITH LEXICAL BINDING_.
 ;; See the comments at the end of this file.
+
+
+
+
+;;;                  _                       _       _        ___  
+;;;   ___  ___      | |_ ___ _ __ ___  _ __ | | __ _| |_ ___ / _ \ 
+;;;  / _ \/ _ \_____| __/ _ \ '_ ` _ \| '_ \| |/ _` | __/ _ \ | | |
+;;; |  __/  __/_____| ||  __/ | | | | | |_) | | (_| | ||  __/ |_| |
+;;;  \___|\___|      \__\___|_| |_| |_| .__/|_|\__,_|\__\___|\___/ 
+;;;                                   |_|                          
 ;;
-;; «.lexical-binding»	(to "lexical-binding")
-
-
+;; «ee-template0»  (to ".ee-template0")
 
 (defvar ee-template00-re "{\\([^{}]+\\)}"
   "To make `ee-template0' use other delimiters instead of `{}'s
 set this variable temporarily in a `let'.")
 
-
+;; Test:
+;; (ee-template0 "{<} a{(+ 2 3)} {>}")
+;;
+(defun ee-template0 (str)
+  "Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
+Substrings of the form `{<}' and `{>}' in STR are replaced by `{'
+and `}' respectively; apart from that, this is the same as
+`ee-template00'.
+Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
+             -->  \"{ 5 }\""
+  (let ((< "{") (> "}"))
+    (ee-template00 str)))
 
 ;; Tests:
 ;; (ee-template00 "a{(+ 2 3)}b")
@@ -112,21 +137,6 @@ Examples:\n
      (lambda (_code_) (format "%s" (eval (read (substring _code_ 1 -1)))))
      str 'fixedcase 'literal)))
 
-;; Test:
-;; (ee-template0 "{<} a{(+ 2 3)} {>}")
-;;
-(defun ee-template0 (str)
-  "Replace substrings enclosed by `{}'s in STR by the result of evaluating them.
-Substrings of the form `{<}' and `{>}' in STR are replaced by `{'
-and `}' respectively; apart from that, this is the same as
-`ee-template00'.
-Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
-             -->  \"{ 5 }\""
-  (let ((< "{") (> "}"))
-    (ee-template00 str)))
-
-
-
 
 
 
@@ -138,7 +148,7 @@ Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
 ;;;                                                          |___/ 
 ;; «lexical-binding»  (to ".lexical-binding")
 ;;
-;; Here is a demo of what fails in lexical binding.
+;; Here is a demo of how `ee-template0' can fail in lexical binding.
 ;; Note that the defun below is commented out with an initial "'".
 '
 (defun ee-dynlex-test (a b)
@@ -165,14 +175,73 @@ Example:  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
 ;;   (find-lexical-intro "0. How to use this" "`M-1 M-1 M-e'")
 ;;   (find-lexical-intro "5. A thread")
 ;;
-;; Here are some messages in help-gnu-emacs and in emacs-devel about
-;; dynamic binding being deprecated:
+;; Here are some messages in help-gnu-emacs, emacs-devel and
+;; bug-gnu-emacs about dynamic binding being deprecated:
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00054.html
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00085.html
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00095.html
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-06/msg00096.html
 ;;   https://lists.gnu.org/archive/html/emacs-devel/2021-09/msg01854.html
+;;   https://debbugs.gnu.org/cgi/bugreport.cgi?bug=30078#86 Drew (cites RMS)
 
+
+
+;;;             _           
+;;;            | | _____  __
+;;;       _____| |/ _ \ \/ /
+;;;  _ _ |_____| |  __/>  < 
+;;; (_|_|_)    |_|\___/_/\_\
+;;;                         
+;; «ee-template0-lex»  (to ".ee-template0-lex")
+;; `ee-template0-lex' is a variant of `ee-template0' that doesn't need
+;; dynamic binding and that should work well in lexical binding. It is
+;; implemented as a macro, so beginners would probably find it much
+;; harder to understand than `ee-template0'.
+;;
+;; This is not used by eev. See:
+;;   (find-eevgrep "grep --color=auto -nH -e ee-template0 *.el")
+;;
+;; The source code of eev needs to be clear to beginners, so I prefer
+;; to use `ee-template0' everywhere in the source - but in theory it
+;; should be possible to replace all occurrences of `ee-template0' by
+;; `ee-template0-lex'.
+;;
+;; This is based on code sent by Stefan Monnier.
+
+(defmacro ee-template0-lex (str)
+  "A replacement for `ee-template0' that doesn't need dynamic binding.
+This is a macro, and a call to
+  (ee-template0-lex \"ab{(+ c d)}ef\")
+is replaced by something equivalent (but to not exactly equal) to:
+  (concat \"ab\" (format \"%s\" (+ c d)) \"ef\")
+See the source code for examples and tests."
+  (ee-template00-lex str))
+
+(defun ee-template00-lex (str)
+  "An internal function used by `ee-template0-lex'."
+  `(let ((< "{") (> "}"))
+     (ignore < >)   ; Silence byte-compiler in case `str' doesn't use those
+     ,(ee-template000-lex str)))
+
+(defun ee-template000-lex (str)
+  "An internal function used by `ee-template00-lex'."
+  (let ((exprs '())
+        (i 0))
+    (while (string-match "{\\([^{}]+\\)}" str i)
+      (push (substring str i (match-beginning 0)) exprs)
+      (setq i (match-end 0))
+      (push `(format "%s" ,(read (match-string 1 str))) exprs))
+    (push (substring str i) exprs)
+    (cons 'concat (delete "" (nreverse exprs)))))
+
+;; Tests:
+;;               (ee-template0-lex "{<} a{(+ 2 3)} {>}")
+;; (macroexpand '(ee-template0-lex "{<} a{(+ 2 3)} {>}"))
+;;              (ee-template00-lex "{<} a{(+ 2 3)} {>}")
+;;             (ee-template000-lex "{<} a{(+ 2 3)} {>}")
+;;
+' (let ((hi "Here:") (a 22) (b 33))
+    (ee-template0-lex "{hi} {a} + {b} = {(+ a b)}"))
 
 
 
