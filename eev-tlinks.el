@@ -2904,7 +2904,7 @@ how this works."
 ;; «find-osm-links»  (to ".find-osm-links")
 ;; Skel: (find-find-links-links-new "osm" "lat lon zoom" "")
 ;; Test: (find-osm-links)
-;;  See: (find-efunction 'find-osm)
+;;  See: (find-eev "eev-plinks.el" "find-osm")
 ;;
 (defun find-osm-links (&optional lat lon zoom &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for OpenStreetMap viewer."

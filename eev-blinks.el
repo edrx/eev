@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220126
+;; Version:    20220316
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -1029,19 +1029,42 @@ it doesn't convert relative filenames into urls. See
 
 ;; «find-eww»  (to ".find-eww")
 ;; Tests: (find-eww "http://angg.twu.net/")
+;;        (find-eww "http://angg.twu.net/" "Welcome")
 ;;        (find-eww "/tmp/")
 ;;
+(defvar ee-find-eww-search-yes nil)
+(defvar ee-find-eww-search-for nil)
+
 (defun find-eww (url &rest pos-spec-list)
   "Hyperlink to a page in HTML. Use eww as the browser.
 URL can be either a real URL or a file name.
-The POS-SPEC-LIST is ignored. =("
+
+This function searches for POS-SPEC-LIST in the page, but only
+after eww finishes rendering it. This is implemented by a hook:
+this function saves the POS-SPEC-LIST in the variable
+`ee-find-eww-search-for' and sets the variable
+`ee-find-eww-search-yes' to t; `eww' runs the function
+`ee-find-eww-search' after rendering the page, and
+`ee-find-eww-search' processes these two variables."
+  (setq ee-find-eww-search-for pos-spec-list)
+  (setq ee-find-eww-search-yes t)
   (eww (replace-regexp-in-string "^/" "file:///" (ee-expand url))))
 
+(defun ee-find-eww-search ()
+  "This function is run after eww finishes rendering a page.
+If `ee-find-eww-search-yes' is true it searches for
+`ee-find-eww-search-for' and sets `ee-find-eww-search-yes' to
+false. These variables are set by `find-eww'."
+  (when ee-find-eww-search-yes
+    (setq ee-find-eww-search-yes nil)
+    (apply 'ee-goto-position ee-find-eww-search-for)))
+
+(add-hook 'eww-after-render-hook 'ee-find-eww-search)
+
 ;; (code-c-d "eww" (ee-elfile "net/") "eww" :gz)
-;; ;; (find-ewwfile "")
-;; ;; (find-ewwfile "eww.el")
-;; ;; (find-ewwnode "")
-;; 
+;; (find-ewwfile "" "eww.el")
+;; (find-ewwfile "eww.el")
+;; (find-ewwnode "")
 
 
 

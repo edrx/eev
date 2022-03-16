@@ -1,5 +1,10 @@
 2022-03-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-blinks.el (ee-find-eww-search-yes, ee-find-eww-search-for):
+	new variables.
+	(ee-find-eww-search): new function.
+	(find-eww): set the variables for `ee-find-eww-search'.
+
 	* eev-plinks.el (find-osm): new function.
 
 	* eev-hlinks.el (ee-fhl-main-program): added support for osm.
