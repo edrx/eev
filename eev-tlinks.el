@@ -118,6 +118,7 @@
 ;; «.find-1stclassvideodef»		(to "find-1stclassvideodef")
 ;; «.find-1stclassvideos»		(to "find-1stclassvideos")
 ;; «.find-advicebefore-links»		(to "find-advicebefore-links")
+;; «.find-osm-links»			(to "find-osm-links")
 
 
 (require 'eev-env)
@@ -2895,6 +2896,46 @@ how this works."
 ")
      )
    pos-spec-list))
+
+
+
+
+
+;; «find-osm-links»  (to ".find-osm-links")
+;; Skel: (find-find-links-links-new "osm" "lat lon zoom" "")
+;; Test: (find-osm-links)
+;;  See: (find-efunction 'find-osm)
+;;
+(defun find-osm-links (&optional lat lon zoom &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for OpenStreetMap viewer."
+  (interactive)
+  (setq lat  (or lat  (ee-osm-lat)  "{lat}"))
+  (setq lon  (or lon  (ee-osm-lon)  "{lon}"))
+  (setq zoom (or zoom (ee-osm-zoom) "{zoom}"))
+  (apply
+   'find-elinks
+   `((find-osm-links ,lat ,lon ,zoom ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-osm-links)
+     ""
+     ,@(ee-find-osm-links lat lon zoom)
+     )
+   pos-spec-list))
+
+(defun ee-find-osm-links (&optional lat lon zoom)
+  "An internal function used by `find-osm-links'."
+  (setq lat  (or lat  (ee-osm-lat)  "{lat}"))
+  (setq lon  (or lon  (ee-osm-lon)  "{lon}"))
+  (setq zoom (or zoom (ee-osm-zoom) "{zoom}"))
+  ;;
+  `((find-osm ,lat ,lon ,zoom)
+    (osm-goto ,lat ,lon ,zoom)
+    (find-efunction 'find-osm)
+    (find-efunction 'osm-goto)))
+
+(defun ee-osm-lat  () (if (eq major-mode 'osm-mode) (osm--lat)))
+(defun ee-osm-lon  () (if (eq major-mode 'osm-mode) (osm--lon)))
+(defun ee-osm-zoom () (if (eq major-mode 'osm-mode)  osm--zoom))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220303
+;; Version:    20220313
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2613,13 +2613,20 @@ Dependency on dynamic binding should be avoided - see:
   (find-elnode \"Dynamic Binding Tips\")
   (find-elnode \"Lexical Binding\")
 
-but the main function that eev uses for template strings is
+but the _default_ function that eev uses for template strings is
 intrinsically incompatible with lexical binding. See the comments
-in its source file,
+in its source file:
 
   (find-eev \"eev-template0.el\")
+  (find-eev \"eev-template0.el\" \"lexical-binding\")
 
-and this tutorial:
+It is possible to use a replacement for it that works in lexical
+binding, but I prefer to not make this replacement the default.
+See:
+
+  (find-eev \"eev-template0.el\" \"ee-template0-lex\")
+
+See also this tutorial:
 
   (find-lexical-intro)
 

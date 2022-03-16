@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220214
+;; Version:    20220316
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -115,6 +115,7 @@
 ;; «.find-wget»		(to "find-wget")
 ;; «.find-gitk»		(to "find-gitk")
 ;; «.find-tkdiff»	(to "find-tkdiff")
+;; «.find-osm»		(to "find-osm")
 ;; «.find-firefox»	(to "find-firefox")
 ;; «.find-googlechrome»	(to "find-googlechrome")
 
@@ -441,10 +442,24 @@ If wget can't download URL then this function runs `error'."
   "Run gitk in the directory DIR."
   (ee-at0 dir '(find-bgprocess "gitk --all --date-order")))
 
-
 ;; «find-tkdiff» (to ".find-tkdiff")
 (defun find-tkdiff (f1 f2)
   (find-bgprocess `("tkdiff" ,f1 ,f2)))
+
+;; «find-osm»  (to ".find-osm")
+;; Tests: (find-osm  43.7731  11.2562 17 "Il Duomo")
+;;        (find-osm -22.5014 -41.9259 15 "Near home")
+;; Needs: (find-epackage-links 'osm)
+;;
+(defun find-osm (lat lon zoom &rest comments)
+"Open a map. LAT, LON and ZOOM are the latitude, longitude, and zoom factor.
+The COMMENTS are ignored. You need to have osm.el - OpenStreetMap
+viewer - installed for this to work, and Emacs 28 or later."
+  (require 'osm)
+  (same-window-prefix)
+  (osm-goto lat lon zoom))
+
+
 
 
 ;; «find-firefox»       (to ".find-firefox")
