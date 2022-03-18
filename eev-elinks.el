@@ -293,6 +293,7 @@ This is an internal function used by `find-efunction-links' and
     (find-efunctiond ',f)
     (find-ealias ',f)
     (find-eppp (symbol-plist ',f))
+    (find-hfunction ',f)
     ""
     ,@(if (commandp f)
 	  `((Info-goto-emacs-command-node ',f)
@@ -344,6 +345,7 @@ This is an internal function used by `find-efunction-links' and
      (find-evariable ',var)
      (find-epp ,var)
      (find-eppp (symbol-plist ',var))
+     (find-hvariable ',var)
      ""
      (find-enode "Variable Index" ,(format "* %S:" var))
      (find-elnode "Index" ,(format "* %S:" var))

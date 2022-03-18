@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220316
+;; Version:    20220317
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -47,6 +47,7 @@
 ;;   «.curved-single-quotes»	(to "curved-single-quotes")
 ;; «.find-fline»		(to "find-fline")
 ;; «.find-wottb»		(to "find-wottb")
+;; «.find-dbsw»			(to "find-dbsw")
 ;; «.find-efaces»		(to "find-efaces")
 ;; «.find-eregionpp»		(to "find-eregionpp")
 ;; «.find-ebuffercontents»	(to "find-ebuffercontents")
@@ -366,6 +367,25 @@ then go to the position specified by POS-SPEC-LIST.\n
 	 "*Help*" pos-spec-list))
 
 
+
+;;;   __ _           _           _ _                  
+;;;  / _(_)_ __   __| |       __| | |__  _____      __
+;;; | |_| | '_ \ / _` |_____ / _` | '_ \/ __\ \ /\ / /
+;;; |  _| | | | | (_| |_____| (_| | |_) \__ \\ V  V / 
+;;; |_| |_|_| |_|\__,_|      \__,_|_.__/|___/ \_/\_/  
+;;;                                                   
+;; «find-dbsw»  (to ".find-dbsw")
+;; See: https://lists.gnu.org/archive/html/help-gnu-emacs/2022-03/msg00354.html
+;; Thanks to Emanuel Berg for help with this!
+;;
+(defun find-dbsw-call (sexp &rest pos-spec-list)
+  "Run SEXP in \"display-buffer-same-window mode\" and go to POS-SPEC-LIST.
+This is similar to `find-wottb-call' but uses another method to
+force using the same window. This is an experimental hack and may
+change soon."
+  (let ((display-buffer-overriding-action '(display-buffer-same-window)))
+    (eval sexp))
+  (apply 'ee-goto-position pos-spec-list))
 
 
 

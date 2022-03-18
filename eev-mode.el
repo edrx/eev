@@ -278,7 +278,8 @@ Commands to edit hyperlinks:
      ,eev-mode-help
      :init-value nil
      :global t
-     :lighter ,eev-mode-lighter)
+     :lighter ,eev-mode-lighter
+     :group 'eev)
    ;; 
    ))
 

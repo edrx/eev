@@ -1,3 +1,19 @@
+2022-03-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-helpful.el: new file.
+
+	* eev-elinks.el (find-evariable-links): added a link to helpful.
+	(ee-find-efunction-links): added a link to helpful.
+
+	* eev-hlinks.el (ee-helpful-bufferp): new function.
+	(ee-fhl-main-program): use `ee-helpful-bufferp'.
+
+	* eev-plinks.el (find-osm): use `find-dbsw-call'.
+
+2022-03-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-dbsw-call): new function.
+
 2022-03-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-find-eww-search-yes, ee-find-eww-search-for):

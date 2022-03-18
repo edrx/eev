@@ -202,6 +202,7 @@ the \"*(find-here-links)*\" buffer."
    (:if (ee-custom-bufferp)    (ee-find-custom-links))
    (:if (ee-epackages-bufferp) (ee-find-epackages-links))
    (:if (ee-osm-bufferp)       (ee-find-osm-links))
+   (:if (ee-helpful-bufferp)   (ee-find-helpful-links))
    ;;
    ;; By buffer name:
    (:if (ee-intro-bufferp)     (ee-find-intro-links))
@@ -366,6 +367,7 @@ the \"*(find-here-links)*\" buffer."
 (defun ee-custom-bufferp    () (eq major-mode 'Custom-mode))
 (defun ee-epackages-bufferp () (eq major-mode 'package-menu-mode))
 (defun ee-osm-bufferp       () (eq major-mode 'osm-mode))
+(defun ee-helpful-bufferp   () (eq major-mode 'helpful-mode))
 
 ;; By buffer name
 (defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))

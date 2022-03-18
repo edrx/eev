@@ -456,8 +456,7 @@ If wget can't download URL then this function runs `error'."
 The COMMENTS are ignored. You need to have osm.el - OpenStreetMap
 viewer - installed for this to work, and Emacs 28 or later."
   (require 'osm)
-  (same-window-prefix)
-  (osm-goto lat lon zoom))
+  (find-dbsw-call `(osm-goto ,lat ,lon ,zoom)))
 
 
 
