@@ -1,4 +1,11 @@
+2022-03-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-eval.el (ee-goto-eol): new function.
+	(ee-eval-sexp-eol): use `ee-goto-eol'.
+
 2022-03-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-find-grep): use `find-dbsw-call'.
 
 	* eev-helpful.el: new file.
 

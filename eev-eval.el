@@ -1,6 +1,6 @@
 ;;; eev-eval.el -- variants of eval-last-sexp.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210813
+;; Version:    20220320
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -226,8 +226,17 @@ The listing above shows the default behaviors. To add a special
 behavior for, say, ARG=42, define a function
 `ee-eval-last-sexp-42'."
   (interactive "P")
-  (end-of-line)
+  (ee-goto-eol)
   (ee-eval-last-sexp arg))
+
+
+(defun ee-goto-eol ()
+  "Go to the end of the line.
+Replace this function by something more complex if you use modes
+that put timestamps at the end of the line and you want to make
+`M-e' ignore these timestamps."
+  (interactive)
+  (end-of-line))
 
 
 ;; See: (find-eval-intro "`M-E' (meta-shift-e)")

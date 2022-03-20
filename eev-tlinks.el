@@ -2749,7 +2749,7 @@ This function is used by `ee-0x0-upload-region'."
 ;;        (find-estring (ee-find-1stclassvideo-links "foo"))
 ;;
 (defun find-1stclassvideo-links (&optional c &rest pos-spec-list)
-"Visit a temporary buffer containing stuff for a first-class video."
+"Visit a temporary buffer containing links about a first-class video."
   (interactive (list (ee-1stclassvideo-around-point-ask)))
   (setq c (or c "{c}"))
   (let* ((ee-buffer-name (or ee-buffer-name "*find-1stclassvideo-links*"))

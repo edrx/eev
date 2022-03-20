@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220309
+;; Version:    20220318
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -294,7 +294,7 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
   "Example: (ee-find-grep ee-eetcdir \"grep -niH -e tetris *\")
 Note: the POS-SPEC-LIST arguments are currently not used."
   (let ((default-directory (ee-expand (or dir default-directory))))
-    (grep grep-command-args)))
+    (find-dbsw-call `(grep ,grep-command-args))))
 
 (defun ee-find-xxxsh (dir command &rest pos-spec-list)
   "Run COMMAND at DIR and display the result. See `code-c-d'."
