@@ -1,3 +1,10 @@
+2022-03-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-osm-str): new function.
+
+	* eev-tlinks.el (find-osm-links): include a link with
+	`find-osm-str'.
+
 2022-03-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-eval.el (ee-goto-eol): new function.

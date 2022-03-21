@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220316
+;; Version:    20220321
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -457,6 +457,12 @@ The COMMENTS are ignored. You need to have osm.el - OpenStreetMap
 viewer - installed for this to work, and Emacs 28 or later."
   (require 'osm)
   (find-dbsw-call `(osm-goto ,lat ,lon ,zoom)))
+
+;; Test: (find-osm-str "43.7731,11.2562,17" "Il Duomo")
+;;
+(defun find-osm-str (latlonzoomstr &rest comments)
+  (apply 'find-osm (mapcar 'string-to-number
+			   (split-string latlonzoomstr "[^-.0-9]+"))))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220225
+;; Version:    20220321
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -2904,6 +2904,7 @@ how this works."
 ;; «find-osm-links»  (to ".find-osm-links")
 ;; Skel: (find-find-links-links-new "osm" "lat lon zoom" "")
 ;; Test: (find-osm-links)
+;;       (find-osm-links  43.7731  11.2562 17 "Il Duomo")
 ;;  See: (find-eev "eev-plinks.el" "find-osm")
 ;;
 (defun find-osm-links (&optional lat lon zoom &rest pos-spec-list)
@@ -2931,7 +2932,12 @@ how this works."
   `((find-osm ,lat ,lon ,zoom)
     (osm-goto ,lat ,lon ,zoom)
     (find-efunction 'find-osm)
-    (find-efunction 'osm-goto)))
+    (find-efunction 'osm-goto)
+    ""
+    ,(ee-template0 "\
+# (find-osm-str \"{lat},{lon},{zoom}\")
+# https://www.google.com.br/maps/@{lat},{lon},{zoom}z?hl=en")
+    ))
 
 (defun ee-osm-lat  () (if (eq major-mode 'osm-mode) (osm--lat)))
 (defun ee-osm-lon  () (if (eq major-mode 'osm-mode) (osm--lon)))
