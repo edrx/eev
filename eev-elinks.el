@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220316
+;; Version:    20220323
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -121,6 +121,8 @@
 ;; (find-elnode "Index" "* thing-at-point:")
 ;; (find-efunction        'thing-at-point)
 ;; (find-efile            "thingatpt.el")
+(defun ee-url-at-point ()
+  (ee-no-properties (thing-at-point 'url)))
 
 (defun ee-stuff-around-point0 (chars)
   (interactive "MChars: \np")		; for tests

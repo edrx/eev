@@ -1,3 +1,7 @@
+2022-03-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-url-at-point): new function.
+
 2022-03-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (find-osm-str): new function.
