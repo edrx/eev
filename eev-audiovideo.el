@@ -604,6 +604,8 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;        (ee-find-youtube-video "xQqWufQgzVY" "1:23")
 ;;        (ee-find-youtube-video "xQqWufQgzVY" "1:23" "Bla")
 ;;           (find-youtube-video "xQqWufQgzVY" "1:23")
+;;        (ee-find-youtube-video "FoAzpGzFCSE" "15:14" "nice")
+;;           (find-youtube-video "FoAzpGzFCSE" "15:14" "nice")
 ;;
 (defvar ee-find-youtube-video-program 'find-googlechrome)
 

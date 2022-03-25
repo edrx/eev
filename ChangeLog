@@ -1,3 +1,8 @@
+2022-03-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newbrowser-links): new function (inspired by
+	a chat with Quiliro Ordoñez).
+
 2022-03-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (ee-url-at-point): new function.
