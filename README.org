@@ -14,7 +14,7 @@
 # (find-eev "README.org")
 # 
 # (find-orgnode "Table of Contents")
-#+OPTIONS: toc:nil num:ni
+#+OPTIONS: toc:nil num:nil
 
 * Introduction
 

@@ -1,3 +1,9 @@
+2022-03-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-pip3-links): new function.
+	(find-yttranscript-links): new function.
+	(find-youtubedl-links): use `find-yttranscript-links'.
+
 2022-03-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-newbrowser-links): new function (inspired by

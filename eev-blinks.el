@@ -494,7 +494,7 @@ inspecting text proprties."
 ;; Test:
 ;; (eek "2*<down> C-a C-SPC <down> C-x 1 C-x 3 C-x o <<find-eregionpp>>")
 ;;
-(defun find-eregionpp (b e use-print-circle)
+(defun find-eregionpp (b e &optional use-print-circle)
   "Show the text properties of the text in the region.
 This function pretty-prints the result of `(buffer-substring B
 E)' and shows the result in a temporary buffer; B and E are the

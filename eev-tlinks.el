@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220324
+;; Version:    20220329
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -120,6 +120,8 @@
 ;; «.find-advicebefore-links»		(to "find-advicebefore-links")
 ;; «.find-osm-links»			(to "find-osm-links")
 ;; «.find-newbrowser-links»		(to "find-newbrowser-links")
+;; «.find-pip3-links»			(to "find-pip3-links")
+;; «.find-yttranscript-links»		(to "find-yttranscript-links")
 
 
 (require 'eev-env)
@@ -1042,6 +1044,9 @@ cd {dir}
 # (find-youtube-video \"{hash}\" \"0:00\")
 # (code-youtubevideo \"{stem}\" \"{hash}\" \"{title}\")
 # (find-{stem}video \"0:00\")
+
+# Transcript:
+# (find-yttranscript-links \"{stem}\" \"{hash}\")
 ")
      )
    pos-spec-list))
@@ -3021,6 +3026,78 @@ how this works."
 ")
      )
    pos-spec-list))
+
+
+
+
+;; «find-pip3-links»  (to ".find-pip3-links")
+;; Skel: (find-find-links-links-new "pip3" "pkg" "")
+;; Test: (find-pip3-links "youtube-transcript-downloader")
+;;
+(defun find-pip3-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing a script for pip3."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (apply
+   'find-elinks
+   `((find-pip3-links ,pkg ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-pip3-links)
+     ""
+     ,(ee-template0 "\
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-man \"pip3\")
+# (find-sh \"pip3 list\" \"{pkg}\")
+pip3 show {pkg}
+pip3 install {pkg}
+
+")
+     )
+   pos-spec-list))
+
+
+
+
+;; «find-yttranscript-links»  (to ".find-yttranscript-links")
+;; Skel: (find-find-links-links-new "yttranscript" "c hash" "")
+;; Test: (find-yttranscript-links)
+;;       (find-yttranscript-links "acmetour" "dP1xVpMPn8M")
+;; Based on:
+;; https://ag91.github.io/blog/2022/03/27/an-elisp-snippet-to-dowload-youtube-videos-transcripts/
+;;
+(defun find-yttranscript-links (&optional c hash &rest pos-spec-list)
+"Display a temporary script that downloads a transcript from youtube."
+  (interactive (list nil (ee-youtubedl-hash-around-point)))
+  (setq c (or c "{c}"))
+  (setq hash (or hash "{hash}"))
+  (apply
+   'find-elinks
+   `((find-yttranscript-links ,c ,hash ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-yttranscript-links)
+     ""
+     ,(ee-template0 "\
+# (find-pip3-links \"youtube-transcript-downloader\")
+# (find-youtubedl-links nil nil \"{hash}\" nil \"{c}\")
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+ (python-mode)
+import youtube_transcript_downloader
+url    = \"http://www.youtube.com/watch?v={hash}\"
+tr     = youtube_transcript_downloader.get_transcript(url)
+trits0 = tr.items()
+trits1 = '\\n'.join(('% (find-{c}video \"' + key + '\" \"' + text + '\")' for key, text in trits0))
+print(trits1)
+
+")
+     )
+   pos-spec-list))
+
+
 
 
 
