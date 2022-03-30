@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220329
+;; Version:    20220330
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -997,21 +997,23 @@ emacs    -fg bisque -bg black                  eev-readme.el
   (setq title (or title (ee-youtubedl-guess-title dir hash) "{title}"))
   (setq ext-  (or ext-  (ee-youtubedl-guess-ext- dir hash)  "{ext-}"))
   (setq stem  (or stem "{stem}"))
-  (apply
-   'find-elinks
-   `((find-youtubedl-links ,dir ,title ,hash ,ext- ,stem ,@pos-spec-list)
-    (find-youtubedl-links ,dir nil ,hash nil ,stem)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-youtubedl-links)
-     ""
-     ,@(ee-youtubedl-dir-links nil hash stem)
-     (setq ee-youtubedl-dirs ',ee-youtubedl-dirs)
-     (setq ee-youtubedl-dir   ,ee-youtubedl-dir)
-     ""
-     (find-audiovideo-intro "6. Youtube-dl")
-     (find-eev "eev-tlinks.el" "ee-youtubedl-command")
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*find-youtubedl-links*")))
+    (apply
+     'find-elinks
+     `((find-youtubedl-links ,dir ,title ,hash ,ext- ,stem ,@pos-spec-list)
+       (find-youtubedl-links ,dir nil ,hash nil ,stem)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-youtubedl-links)
+       ""
+       ,@(ee-youtubedl-dir-links nil hash stem)
+       (setq ee-youtubedl-dirs ',ee-youtubedl-dirs)
+       (setq ee-youtubedl-dir   ,ee-youtubedl-dir)
+       ""
+       (find-audiovideo-intro "6. Youtube-dl")
+       (find-eev "eev-tlinks.el" "ee-youtubedl-command")
+       ""
+       ,(ee-template0 "\
+ (sh-mode)
  (eepitch-shell2)
  (eepitch-kill)
  (eepitch-shell2)
@@ -1048,8 +1050,8 @@ cd {dir}
 # Transcript:
 # (find-yttranscript-links \"{stem}\" \"{hash}\")
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 
 
@@ -3045,11 +3047,22 @@ how this works."
      (find-efunction 'find-pip3-links)
      ""
      ,(ee-template0 "\
+# https://pip.pypa.io/en/stable/
+# (find-status   \"python3-pip\")
+# (find-vldifile \"python3-pip.list\")
+# (find-udfile   \"python3-pip/\")
+# (find-sh \"pip3 list\" \"{pkg}\")
+# (find-sh \"pip3 show {pkg}\")
+
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-# (find-man \"pip3\")
-# (find-sh \"pip3 list\" \"{pkg}\")
+sudo apt-get install python3-pip
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-man \"1 pip3\")
 pip3 show {pkg}
 pip3 install {pkg}
 
@@ -3064,28 +3077,29 @@ pip3 install {pkg}
 ;; Skel: (find-find-links-links-new "yttranscript" "c hash" "")
 ;; Test: (find-yttranscript-links)
 ;;       (find-yttranscript-links "acmetour" "dP1xVpMPn8M")
-;; Based on:
-;; https://ag91.github.io/blog/2022/03/27/an-elisp-snippet-to-dowload-youtube-videos-transcripts/
+;; See: https://lists.gnu.org/archive/html/eev/2022-03/msg00008.html
+;;      http://angg.twu.net/IMAGES/2022find-yttranscript-links.png
 ;;
 (defun find-yttranscript-links (&optional c hash &rest pos-spec-list)
 "Display a temporary script that downloads a transcript from youtube."
   (interactive (list nil (ee-youtubedl-hash-around-point)))
   (setq c (or c "{c}"))
   (setq hash (or hash "{hash}"))
-  (apply
-   'find-elinks
-   `((find-yttranscript-links ,c ,hash ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-yttranscript-links)
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*find-yttranscript-links*")))
+    (apply
+     'find-elinks
+     `((find-yttranscript-links ,c ,hash ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-yttranscript-links)
+       ""
+       ,(ee-template0 "\
 # (find-pip3-links \"youtube-transcript-downloader\")
 # (find-youtubedl-links nil nil \"{hash}\" nil \"{c}\")
 
+ (python-mode)
  (eepitch-python)
  (eepitch-kill)
  (eepitch-python)
- (python-mode)
 import youtube_transcript_downloader
 url    = \"http://www.youtube.com/watch?v={hash}\"
 tr     = youtube_transcript_downloader.get_transcript(url)
@@ -3094,8 +3108,8 @@ trits1 = '\\n'.join(('% (find-{c}video \"' + key + '\" \"' + text + '\")' for ke
 print(trits1)
 
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 
 

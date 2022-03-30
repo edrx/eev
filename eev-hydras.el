@@ -1,6 +1,6 @@
 ;;; eev-hydras.el --- eev functions that use hydra.el.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2021 Free Software Foundation, Inc.
+;; Copyright (C) 2021-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211025
+;; Version:    20220330
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hydras.el>
@@ -86,6 +86,8 @@
 
 
 ;; «hydra-eev-index-edit»  (to ".hydra-eev-index-edit")
+;; Try: (find-eapropos    "hydra-eev-index-edit")
+;;      (find-ekeymapdescr hydra-eev-index-edit/keymap)
 ;;
 (defhydra hydra-eev-index-edit (:color green :hint nil)
   "
