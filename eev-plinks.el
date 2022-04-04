@@ -450,6 +450,7 @@ If wget can't download URL then this function runs `error'."
 ;; Tests: (find-osm  43.7731  11.2562 17 "Il Duomo")
 ;;        (find-osm -22.5014 -41.9259 15 "Near home")
 ;; Needs: (find-epackage-links 'osm)
+;; See:   (find-eev "eev-tlinks.el" "find-osm-links")
 ;;
 (defun find-osm (lat lon zoom &rest comments)
 "Open a map. LAT, LON and ZOOM are the latitude, longitude, and zoom factor.

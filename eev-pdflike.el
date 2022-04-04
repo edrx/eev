@@ -1,6 +1,6 @@
 ;;; eev-pdflike.el -- hyperlinks to documents made of pages.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220226
+;; Version:    20220404
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -184,6 +184,7 @@
 ;; «.find-djview-page»			(to "find-djview-page")
 ;; «.find-evince-page»			(to "find-evince-page")
 ;; «.find-mupdfpage»			(to "find-mupdfpage")
+;; «.find-okularpage»			(to "find-okularpage")
 ;; «.find-gv-page»			(to "find-gv-page")
 ;; «.find-djvutxt-text»			(to "find-djvutxt-text")
 ;; «.find-firefox-page»			(to "find-firefox-page")
@@ -283,9 +284,11 @@ newline are spurious - and replaces them by \"(ff)\"."
   (ee-template0 "\
 ;; (find-code-pdfbackend \"{pdfbackend}\")
 ;;      (code-pdfbackend \"{pdfbackend}\")
-;; (find-eev \"eev-pdflike.el\" \"code-pdfbackend\")
-;; (find-eevfile \"eev-pdflike.el\" \"\\\"{pdfbackend}\\\"\")
-;; (find-eevgrep \"grep --color=auto -nH -e '\\\"{pdfbackend}\\\"' eev-pdflike.el\")
+;;
+;; This is similar to a `code-c-d' - see:
+;;   (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;   (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+;; but it defines the four functions in the left in the diagram below:
 ;;
 ;; The code here defines this structure:
 ;;
@@ -297,8 +300,13 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;;                                  |
 ;;                      find-code-{pdfbackend}
 ;;
-;; where `ee-find-{pdfbackend}'
-;; is an external function.
+;; The function `find-{pdfbackend}' calls `ee-find-{pdfbackend}',
+;; that need to be defined externally.
+;;
+;; See:
+;; (find-eev \"eev-pdflike.el\" \"code-pdfbackend\")
+;; (find-eevfile \"eev-pdflike.el\" \"\\\"{pdfbackend}\\\"\")
+;; (find-eevgrep \"grep --color=auto -nH -e '\\\"{pdfbackend}\\\"' eev-pdflike.el\")
 ;;
 \(defun      find-{pdfbackend} (fname &optional page &rest rest)
   (find-bgprocess (ee-find-{pdfbackend} fname page)))
@@ -941,6 +949,32 @@ may want to put here code that cleans up that page information.")
 
 ;; (find-code-pdfbackend "mupdf-page")
         (code-pdfbackend "mupdf-page")
+
+
+
+;;;        _          _            
+;;;   ___ | | ___   _| | __ _ _ __ 
+;;;  / _ \| |/ / | | | |/ _` | '__|
+;;; | (_) |   <| |_| | | (_| | |   
+;;;  \___/|_|\_\\__,_|_|\__,_|_|   
+;;;                                
+;; «find-okularpage»  (to ".find-okularpage")
+;; Test: (find-pdf-like-intro "2. Preparation")
+;;       (find-okular-page "~/Coetzee99.pdf" 3)
+;;
+(defun     find-okular-page (fname &optional page &rest rest)
+  (find-bgprocess (ee-find-okular-page fname page)))
+(defvar ee-find-okular-page-options '())
+(defun  ee-find-okular-page (fname &optional page &rest rest)
+  `("okular"
+    ,@ee-find-okular-page-options
+    ,@(if page `("-p" ,(format "%s" page)))
+    ,fname
+    ))
+
+;; (find-code-pdfbackend "okular-page")
+        (code-pdfbackend "okular-page")
+
 
 
 

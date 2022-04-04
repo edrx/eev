@@ -1,3 +1,16 @@
+2022-04-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newpdfviewer-links): new function.
+
+	* eev-pdflike.el (find-okular-page, ee-find-okular-page-options)
+	(ee-find-okular-page): new functions.
+	(ee-code-pdfbackend): rewrote the comments in the template.
+
+2022-04-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-osm-lat): use `osm--lat' instead of `(osm--lat)'.
+	(ee-osm-lon): use `osm--lon' instead of `(osm--lon)'.
+
 2022-03-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-pip3-links): new function.

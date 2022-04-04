@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220330
+;; Version:    20220403
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -106,6 +106,7 @@
 ;; «.find-eeit-links»			(to "find-eeit-links")
 ;; «.find-texlive-links»		(to "find-texlive-links")
 ;; «.find-newbrowser-links»		(to "find-newbrowser-links")
+;; «.find-newpdfviewer-links»		(to "find-newpdfviewer-links")
 ;; «.ee-0x0-upload-region»		(to "ee-0x0-upload-region")
 ;; «.find-0x0-links»			(to "find-0x0-links")
 ;; «.find-eepitch-bullet-links»		(to "find-eepitch-bullet-links")
@@ -119,7 +120,6 @@
 ;; «.find-1stclassvideos»		(to "find-1stclassvideos")
 ;; «.find-advicebefore-links»		(to "find-advicebefore-links")
 ;; «.find-osm-links»			(to "find-osm-links")
-;; «.find-newbrowser-links»		(to "find-newbrowser-links")
 ;; «.find-pip3-links»			(to "find-pip3-links")
 ;; «.find-yttranscript-links»		(to "find-yttranscript-links")
 
@@ -2502,6 +2502,65 @@ sudo ./install-tl -select-repository
 
 
 
+;; «find-newpdfviewer-links»  (to ".find-newpdfviewer-links")
+;; Skel: (find-find-links-links-new "newpdfviewer" "short binary" "")
+;; Test: (find-newpdfviewer-links "okular")
+;;
+(defun find-newpdfviewer-links (&optional short binary &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for newpdfviewer."
+  (interactive)
+  (setq short (or short "{short}"))
+  (setq binary (or binary short "{binary}"))
+  (apply
+   'find-elinks-elisp
+   `((find-newpdfviewer-links ,short ,binary ,@pos-spec-list)
+     (find-newpdfviewer-links "{short}" "{binary}" ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-newpdfviewer-links)
+     ""
+     ,(ee-template0 "\
+
+;; <find-{short}-page>
+;; Skel:  (find-newpdfviewer-links \"{short}\" \"{binary}\")
+;; Tests: (find-pdf-like-intro \"2. Preparation\")
+;;        (ee-find-{short}-page \"~/Coetzee99.pdf\" 3)
+;;           (find-{short}-page \"~/Coetzee99.pdf\" 3)
+;;
+\(defun     find-{short}-page (fname &optional page &rest rest)
+  (find-bgprocess (ee-find-{short}-page fname page)))
+\(defvar ee-find-{short}-page-options '())
+\(defun  ee-find-{short}-page (fname &optional page &rest rest)
+  `(\"{binary}\"
+    ,@ee-find-{short}-page-options
+    ;; Each PDF viewer selects the initial page in a different way.
+    ;; See: (find-man \"{binary}\")
+    ,@(if page `(\"-p\" ,(format \"%s\" page)))
+    ,fname
+    ))
+
+;; Extra definitions:
+;; (find-code-pdfbackend \"mupdf-page\")
+        (code-pdfbackend \"mupdf-page\")
+
+;; Compare the code above with:
+;; (find-eev \"eev-pdflike.el\" \"find-mupdfpage\")
+
+
+
+;; To make `find-{short}-page' the default viewer for PDFs,
+;; read: (find-eev \"eev-pdflike.el\" \"change-default-viewer\") 
+;; and run:
+(defalias 'find-pdf-page 'find-{short}-page)
+;;
+;; Test: (find-pdf-like-intro \"2. Preparation\")
+;;       (find-pdf-page \"~/Coetzee99.pdf\" 3)
+")
+     )
+   pos-spec-list))
+
+
+
+
 ;;;   ___        ___  
 ;;;  / _ \__  __/ _ \ 
 ;;; | | | \ \/ / | | |
@@ -2947,9 +3006,9 @@ how this works."
 # https://www.google.com.br/maps/@{lat},{lon},{zoom}z?hl=en")
     ))
 
-(defun ee-osm-lat  () (if (eq major-mode 'osm-mode) (osm--lat)))
-(defun ee-osm-lon  () (if (eq major-mode 'osm-mode) (osm--lon)))
-(defun ee-osm-zoom () (if (eq major-mode 'osm-mode)  osm--zoom))
+(defun ee-osm-lat  () (if (eq major-mode 'osm-mode) osm--lat))
+(defun ee-osm-lon  () (if (eq major-mode 'osm-mode) osm--lon))
+(defun ee-osm-zoom () (if (eq major-mode 'osm-mode) osm--zoom))
 
 
 
