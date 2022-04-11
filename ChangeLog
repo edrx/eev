@@ -1,3 +1,7 @@
+2022-04-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newbrowser-links): rewrote the template.
+
 2022-04-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-newpdfviewer-links): new function.

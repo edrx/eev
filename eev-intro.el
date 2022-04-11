@@ -14927,10 +14927,9 @@ this introduction. See:
   (find-elnode \"Programming Types\" \"Primitive Function Type\")
   (find-elnode \"Primitive Function Type\" \"subrs\")
 
-Also, functions can be byte-compiled, and they can expect and
-receive any number of arguments. See:
+Also, functions can be byte-compiled (see section 11), and they
+can expect and receive any number of arguments. See:
 
-  (find-eval-intro \"10.1. Byte-compiled functions\")
   (find-elnode \"Defining Functions\" \"defun bar (a &optional b &rest c)\")
 
 Try:

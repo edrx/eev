@@ -2443,7 +2443,7 @@ sudo ./install-tl -select-repository
 ;;;                                                            
 ;; «find-newbrowser-links»  (to ".find-newbrowser-links")
 ;; Skel: (find-find-links-links-new "newbrowser" "browser binary b" "")
-;; Test: (find-newbrowser-links "googlechrome" "google-chrome" "g")
+;; Test: (find-newbrowser-links "g" "googlechrome" "google-chrome")
 ;;
 (defun find-newbrowser-links (&optional browser binary b &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for newbrowser."
@@ -2498,6 +2498,97 @@ sudo ./install-tl -select-repository
 ")
      )
    pos-spec-list))
+
+
+
+;; «find-newbrowser-links»  (to ".find-newbrowser-links")
+;; Skel: (find-find-links-links-new "newbrowser" "shrt longname binary" "")
+;; Test: (find-newbrowser-links)
+;;       (find-newbrowser-links "g" "googlechrome" "google-chrome")
+;; See:  http://angg.twu.net/eev-customize.html
+;;
+(defun find-newbrowser-links (&optional shrt longname binary &rest pos-spec-list)
+"Visit a temporary buffer containing a script to set up an atypical browser."
+  (interactive)
+  (setq shrt (or shrt "{shrt}"))
+  (setq longname (or longname "{longname}"))
+  (setq binary (or binary "{binary}"))
+  (apply
+   'find-elinks-elisp
+   `((find-newbrowser-links ,shrt ,longname ,binary ,@pos-spec-list)
+     (find-newbrowser-links "g" "googlechrome" "google-chrome")
+     (find-newbrowser-links "g" "iceweasel" "iceweasel-uxp")
+     (find-newbrowser-links "v" "vivaldi" "vivaldi")
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-newbrowser-links)
+     ""
+     ,(ee-template0 "\
+;; 0. Basic tests:
+;; (setq ee-nb-prog \"{binary}\")
+;; (setq ee-nb-pdfp \"https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf#page=3\")
+;; (find-bgprocess (list ee-nb-prog \"http://www.lua.org/start.html\"))
+;; (find-bgprocess (list ee-nb-prog ee-nb-pdfp))
+
+
+;; 1. Define `find-{longname}' and `br{shrt}'.
+;; See:  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"not free\")
+;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"find-googlechrome\")
+;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"M-x brff\")
+;;       (find-eev \"eev-plinks.el\" \"find-googlechrome\")
+;;       (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
+;; Test: (find-{longname} \"http://www.lua.org/start.html\")
+;;       (br{shrt} \"http://www.lua.org/start.html\")
+;;
+(defun find-{longname} (url &rest rest)
+  (find-bgprocess `(\"{binary}\" ,url)))
+;;
+(code-brurl 'find-{longname}  :remote 'br{shrt}  :local 'br{shrt}l  :dired 'br{shrt}d)
+
+
+;; 2. Configure `find-youtube-video'.
+;; You will need this if you don't want to
+;; set up a video player like mpv or vlc.
+;; See:  (find-video-links-intro \"3. `find-youtube-video'\")
+;;       (find-video-links-intro \"5. Local copies\")
+;;       (find-eev \"eev-audiovideo.el\" \"find-youtube-video\")
+;; Test: (ee-find-youtube-video \"FoAzpGzFCSE\" \"15:14\" \"nice\")
+;;          (find-youtube-video \"FoAzpGzFCSE\" \"15:14\")
+;;                 (find-2022findeevanggvideo \"15:14\")
+(setq ee-find-youtube-video-program 'find-{longname})
+
+
+;; 3. Configure `find-pdf-page' to make it use the browser.
+;; Use this when you don't want to set up a standalone PDF viewer.
+;; See:  (find-pdf-like-intro \"2. Preparation\")
+;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
+;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\" \"If you have xpdf\")
+;;       (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
+;;       (find-eev \"eev-pdflike.el\" \"find-firefox-page\")
+;;       (find-code-pdfbackend \"{longname}-page\")
+;; Test: (ee-find-{longname}-page \"~/Coetzee99.pdf\" 3)
+;;          (find-{longname}-page \"~/Coetzee99.pdf\" 3)
+;;                 (find-pdf-page \"~/Coetzee99.pdf\" 3)
+;;
+(defun ee-find-{longname}-page (fname &optional page)
+  `(\"{binary}\" ,(ee-fname-page-to-url fname page)))
+(code-pdfbackend \"{longname}-page\")
+(defalias 'find-pdf-page 'find-{longname}-page)
+;;
+;; To configure `find-pdf-page' to make it use a
+;; standalone PDF viewer, run one of the sexps below:
+;;   (defalias 'find-pdf-page 'find-xpdf-page)
+;;   (defalias 'find-pdf-page 'find-mupdf-page)
+;; or see: (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
+
+")
+     )
+   pos-spec-list))
+
+
+
+
+
 
 
 
@@ -3010,83 +3101,6 @@ how this works."
 (defun ee-osm-lon  () (if (eq major-mode 'osm-mode) osm--lon))
 (defun ee-osm-zoom () (if (eq major-mode 'osm-mode) osm--zoom))
 
-
-
-
-
-;; «find-newbrowser-links»  (to ".find-newbrowser-links")
-;; Skel: (find-find-links-links-new "newbrowser" "shrt longname binary" "")
-;; Test: (find-newbrowser-links)
-;;
-(defun find-newbrowser-links (&optional shrt longname binary &rest pos-spec-list)
-"Visit a temporary buffer containing a script to set up an atypical browser."
-  (interactive)
-  (setq shrt (or shrt "{shrt}"))
-  (setq longname (or longname "{longname}"))
-  (setq binary (or binary "{binary}"))
-  (apply
-   'find-elinks-elisp
-   `((find-newbrowser-links ,shrt ,longname ,binary ,@pos-spec-list)
-     (find-newbrowser-links "g" "googlechrome" "google-chrome")
-     (find-newbrowser-links "g" "iceweasel" "iceweasel-uxp")
-     (find-newbrowser-links "v" "vivaldi" "vivaldi")
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-newbrowser-links)
-     ""
-     ,(ee-template0 "\
-;; Basic tests:
-;; (find-sh0 \"which {binary}\")
-;; (find-bgprocess \"{binary} http://www.lua.org/start.html\")
-;; (find-bgprocess \"{binary} https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf#page=3\")
-
-
-;; Define `find-{longname}':
-;; Test: (find-{longname} \"http://www.lua.org/start.html\")
-;;  See: (find-eev \"eev-plinks.el\" \"find-googlechrome\")
-(defun find-{longname} (url &rest rest)
-  (find-bgprocess `(\"{binary}\" ,url)))
-
-
-;; Define `br{shrt}':
-;; See:  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
-;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"not free\")
-;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"M-x brff\")
-;;       (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
-;; Test: (br{shrt} \"http://www.lua.org/start.html\")
-(code-brurl 'find-{longname}  :remote 'br{shrt}  :local 'br{shrt}l  :dired 'br{shrt}d)
-
-
-;; Define `find-{longname}-page':
-;; See:  (find-eev \"eev-pdflike.el\" \"find-firefox-page\")
-;;       (find-code-pdfbackend \"{longname}-page\")
-;; Test: (ee-find-{longname}-page \"~/Coetzee99.pdf\" 3)
-;;          (find-{longname}-page \"~/Coetzee99.pdf\" 3)
-;;
-(defun ee-find-{longname}-page (fname &optional page)
-  `(\"{binary}\" ,(ee-fname-page-to-url fname page)))
-;;
-(code-pdfbackend \"{longname}-page\")
-
-
-;; Configure `find-pdf-page':
-;; See:  (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
-;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\" \"If you have xpdf\")
-;;       (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
-;; Test: (find-pdf-like-intro \"2. Preparation\")
-;;       (find-pdf-page \"~/Coetzee99.pdf\" 3)
-(defalias 'find-pdf-page 'find-xpdf-page)
-(defalias 'find-pdf-page 'find-{longname}-page)
-(defalias 'find-pdf-page 'find-mupdf-page)
-
-
-;; Configure `find-youtube-video':
-;; See:  (find-eev \"eev-audiovideo.el\" \"find-youtube-video\")
-;; Test: (ee-find-youtube-video \"FoAzpGzFCSE\" \"15:14\" \"nice\")
-;;          (find-youtube-video \"FoAzpGzFCSE\" \"15:14\")
-(setq ee-find-youtube-video-program 'find-{longname})
-")
-     )
-   pos-spec-list))
 
 
 
