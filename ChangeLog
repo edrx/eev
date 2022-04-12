@@ -1,3 +1,11 @@
+2022-04-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-nov-bufferp): new function.
+	(ee-fhl-main-program): added support for nov.el.
+
+	* eev-tlinks.el (find-nov-links, ee-find-nov-links, find-nov): new
+	functions.
+
 2022-04-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-newbrowser-links): rewrote the template.

@@ -122,6 +122,7 @@
 ;; «.find-osm-links»			(to "find-osm-links")
 ;; «.find-pip3-links»			(to "find-pip3-links")
 ;; «.find-yttranscript-links»		(to "find-yttranscript-links")
+;; «.find-nov-links»			(to "find-nov-links")
 
 
 (require 'eev-env)
@@ -3184,6 +3185,50 @@ print(trits1)
        )
      pos-spec-list)))
 
+
+
+;;;                       _ 
+;;;  _ __   _____   _____| |
+;;; | '_ \ / _ \ \ / / _ \ |
+;;; | | | | (_) \ V /  __/ |
+;;; |_| |_|\___/ \_(_)___|_|
+;;;                         
+;; «find-nov-links»  (to ".find-nov-links")
+;; Skel:  (find-find-links-links-new "nov" "fname" "")
+;; Tests: (find-elinks-elisp (ee-find-nov-links "FOO.epub"))
+;;                              (find-nov-links "FOO.epub")
+;;                              (find-nov-links)
+;;
+(defun find-nov-links (&optional fname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for nov."
+  (interactive (list (if (ee-nov-bufferp) buffer-file-truename)))
+  (setq fname (or fname "{fname}"))
+  (apply
+   'find-elinks-elisp
+   `((find-nov-links ,fname ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-nov-links)
+     ""
+     ,@(ee-find-nov-links fname)
+     )
+   pos-spec-list))
+
+(defun ee-find-nov-links (&optional fname)
+  (setq fname (or fname (if (ee-nov-bufferp) buffer-file-truename)))
+  (setq fname (or fname "{fname}"))
+  (list (ee-template0 "\
+;; See: (find-epackage-links 'nov)
+;;      https://depp.brause.cc/nov.el/
+;; Needs: (add-to-list 'auto-mode-alist '(\"\\\\.epub\\\\'\" . nov-mode))
+;;
+(find-fline {(ee-S fname)})
+(find-nov {(ee-S fname)})
+")))
+
+(defun find-nov (fname &rest rest)
+  "Open FNAME in nov.el mode. See: (find-nov-links)
+This doesn't support pos-spec lists yet."
+  (find-fline fname))
 
 
 
