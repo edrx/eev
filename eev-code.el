@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220318
+;; Version:    20220412
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -200,6 +200,13 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ;; {(ee-S `(find-code-c-d ,c ,d ,@rest))} 
    ;; {(ee-S `(ee-code-c-d-base ,c ,d))} 
    ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+   ;;      (find-elisp-intro \"5. Variables\")
+   ;;      (find-elisp-intro \"5. Variables\" \"setq\")
+   ;;      (find-elisp-intro \"6. Defining functions\")
+   ;;      (find-elisp-intro \"6. Defining functions\" \"defun\")
+   ;;      (find-elisp-intro \"11. Byte-compiled functions\")
+   ;;      (eek \"M-h M-f  apply\")
+   ;;      (eek \"M-h M-f  interactive\")
    ;;
    (setq ee-{c}dir \"{d}\")
    (defun ee-{c}file (str)
