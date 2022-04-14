@@ -1,3 +1,12 @@
+2022-04-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-find-psne-echo-options): new function.
+	(find-psne-links, ee-find-psne-core): added the argument
+	`echo-options'.
+
+	* eev-intro.el (find-windows-beginner-intro): added the section
+	"5.6.1. Echo in Eshell".
+
 2022-04-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-code.el (ee-code-c-d-base): added some links to the

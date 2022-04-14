@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220412
+;; Version:    20220413
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -72,7 +72,7 @@
 ;;
 ;; «.find-find-links-links»		(to "find-find-links-links")
 ;; «.find-find-links-links-new»		(to "find-find-links-links-new")
-;; «.ee-ffll-functions»			(to "ee-ffll-functions")
+;;   «.ee-ffll-functions»		(to "ee-ffll-functions")
 ;;
 ;; «.find-intro-links»			(to "find-intro-links")
 ;; «.find-eev-header-links»		(to "find-eev-header-links")
@@ -81,15 +81,16 @@
 ;; «.find-eev-install-links»		(to "find-eev-install-links")
 ;; «.find-eev-update-links»		(to "find-eev-update-links")
 ;; «.find-youtubedl-links»		(to "find-youtubedl-links")
-;; «.ee-youtubedl-command»		(to "ee-youtubedl-command")
+;;   «.ee-youtubedl-command»		(to "ee-youtubedl-command")
 ;; «.find-psne-links»			(to "find-psne-links")
+;;   «.ee-find-psne-echo-options»	(to "ee-find-psne-echo-options")
 ;; «.find-git-links»			(to "find-git-links")
 ;; «.find-fossil-links»			(to "find-fossil-links")
 ;; «.find-apt-get-source-links»		(to "find-apt-get-source-links")
 ;;
 ;; «.find-eevvideo-links»		(to "find-eevvideo-links")
 ;; «.find-psnevideo-links»		(to "find-psnevideo-links")
-;; «.ee-psne-if-needed»			(to "ee-psne-if-needed")
+;;   «.ee-psne-if-needed»		(to "ee-psne-if-needed")
 ;; «.code-psnevideo»			(to "code-psnevideo")
 ;; «.code-eevvideo»			(to "code-eevvideo")
 ;; «.code-eevvideo-local»		(to "code-eevvideo-local")
@@ -1215,52 +1216,61 @@ Files that look like subtitle files are ignored."
 ;;; |_|                   
 ;;
 ;; «find-psne-links» (to ".find-psne-links")
-;; Skel: (find-find-links-links-new "psne" "url wget-options" "")
+;; Skel: (find-find-links-links-new "psne" "url wget-options echo-options" "")
 ;; Test: (find-psne-links "http://foo/bar")
+;;       (find-psne-links "http://foo/bar" "-nc" "-N")
 ;;  See: (find-psne-intro "3. The new way: `M-x brep'")
 ;;       (find-psne-intro "3. The new way: `M-x brep'" "find-psne-links")
-
-(defun find-psne-links (&optional url wget-options &rest pos-spec-list)
+;;       (find-windows-beginner-intro "5.6.1. Echo in Eshell")
+;;
+(defun find-psne-links (&optional url wget-options echo-options &rest pos-spec-list)
 "See: (find-psne-intro)"
   (interactive)
   (setq url (or url "{url}"))
   (setq wget-options (or wget-options "-nc"))
+  (setq echo-options (or echo-options (ee-find-psne-echo-options)))
   (apply
    'find-elinks
-   `((find-psne-links ,url ,wget-options ,@pos-spec-list)
-     (find-psne-links ,url "-c" ,@pos-spec-list)
-     (find-psne-links ,url "" ,@pos-spec-list)
+   `((find-psne-links ,url ,wget-options ,echo-options ,@pos-spec-list)
+     (find-psne-links ,url "-c" "" ,@pos-spec-list)
+     (find-psne-links ,url "" "" ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-psne-links)
      ""
      ,(ee-adjust-red-stars " (eepitch-shell2)")
-     ,(ee-find-psne-core url wget-options)
+     ,(ee-find-psne-core url wget-options echo-options)
      )
    pos-spec-list))
 
-;; Test:
+;; Tests:
 ;; (find-estring (ee-find-psne-core "http://www.lua.org/start.html"))
+;; (find-estring (ee-find-psne-core "http://www.lua.org/start.html" "-nc" "-N"))
 ;;
-(defun ee-find-psne-core (url &optional wget-options)
+(defun ee-find-psne-core (url &optional wget-options echo-options)
   "This is an internal function used by `find-psne-links'."
   (let* ((localurl (ee-url-to-fname0 url))
 	 (localdir (file-name-directory localurl))
 	 (fname0 (file-name-nondirectory localurl))
-	 (o (format "%3s" (or wget-options ""))))
+	 (o (format "%-3s" (or wget-options "")))
+	 (e (format "%-3s" (or echo-options
+			       (ee-find-psne-echo-options)))))
     (ee-template0 "\
 mkdir -p {localdir}
 cd       {localdir}
 wget {o} '{url}'
-echo     '{url}' >> ~/.psne.log
+echo {e} '{url}' >> ~/.psne.log
 
 # (find-fline \"{localdir}\")
 # (find-fline \"{localdir}\" \"{fname0}\")
 # (find-fline \"{localurl}\")
 ")))
 
-;; Links to the old version:
-;; (find-eev "eev-browse-url.el" "find-psne-links")
-;; (find-eev "eev-browse-url.el" "brep")
+
+;; «ee-find-psne-echo-options»  (to ".ee-find-psne-echo-options")
+;; See: (find-windows-beginner-intro "5.6.1. Echo in Eshell")
+(defun ee-find-psne-echo-options ()
+  (if (eq system-type 'windows-nt) "-N" ""))
+
 
 
 

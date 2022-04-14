@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220313
+;; Version:    20220413
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -1225,12 +1225,21 @@ described above.
 For more on `M-x', and on why the defuns above need the
 \"(interactive)\", see:
 
-  (find-node \"(emacs)M-x\")
-  (find-node \"(emacs)Commands\")
-  (find-node \"(elisp)Defining Commands\")
+  (find-enode \"M-x\")
+  (find-enode \"Commands\")
+  (find-elnode \"Defining Commands\")
+
+Remember that you can list all current eejump targets with:
+
+  (find-eejumps)
+
+you can list the current commands with very short names with:
+
+  (find-eeshortdefs)
 
 [Video links:]
   (find-eev2020video \"19:03\" \"commands with very short names\")
+  (find-eev2020video \"21:07\" \"commands with very short numbers\")
 
 
 
@@ -13911,6 +13920,73 @@ tecnhical details, see:
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00051.html
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00058.html
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00126.html
+
+
+
+5.6.1. Echo in Eshell
+---------------------
+Note that the \"echo\" of Eshell has a quirk: if you run these
+lines
+
+  echo http://foo.bar/    >> ~/.psne.log
+  echo http://qux.bletch/ >> ~/.psne.log
+  echo http://plic.ploc/  >> ~/.psne.log
+
+on a \"normal\" unix shell these URLs will be appended to
+~/.psne.log with newlines separating them, but if you run that in
+Eshell they will be appended without newlines. One way to fix
+that is to invoke the (built-in!) echo of Eshell with the \"-N\"
+option, like this:
+
+  echo -N http://foo.bar/    >> ~/.psne.log
+  echo -N http://qux.bletch/ >> ~/.psne.log
+  echo -N http://plic.ploc/  >> ~/.psne.log
+
+The option \"-N\" (\"terminate with a newline\") is only
+explained in the source of eshell:
+
+  (find-efile \"eshell/em-basic.el\" \"defun eshell/echo\" \"?N\")
+
+`find-psne-links' accepts two optional arguments after the URL.
+The first of them is called `wget-options', and when it is not
+given it defaults to \"-nc\" (\"no-clobber\"). The optional
+argument is called `echo-options', and _ideally_ it should
+default to \"\" on \"normal\" unix shells, and to \"-N\" on
+eshell. When it is not given eev runs the function
+`ee-find-psne-echo-options' to decide what to do, and the
+default definition of that function is:
+
+  ;; See: (find-eev \"eev-tlinks.el\" \"ee-find-psne-echo-options\")
+  ;;
+  (defun ee-find-psne-echo-options ()
+    (if (eq system-type 'windows-nt) \"-N\" \"\"))
+
+which means: if a person is \"on Windows\", suppose that she is
+using Eshell, and that she needs \"echo -N\"; is a person is on
+\"non-Windows\", suppose that she is using a \"normal\" unix
+shell, and that she needs just \"echo\", without the \"-N\". The
+exact definition of the term \"on Windows\" can be found here:
+
+  (find-evardescr 'system-type      \"windows-nt\")
+  (find-elnode \"System Environment\" \"windows-nt\")
+
+The suppositions above are often wrong. Here is the easiest way
+to fix them: if you are \"on Windows\" but you use a \"normal\"
+unix shell, you can put these two lines in your ~/.emacs to
+override the definition above:
+
+  ;; See: (find-windows-beginner-intro \"5.6.1. Echo in Eshell\")
+  (defun ee-find-psne-echo-options () \"\")
+
+and if you are \"on non-Windows\" but you use mostly Eshell, you
+can put this in your ~/.emacs instead:
+
+  ;; See: (find-windows-beginner-intro \"5.6.1. Echo in Eshell\")
+  (defun ee-find-psne-echo-options () \"-N\")
+
+If you use both Eshell and \"normal\" unix shells you can try to
+redefine `ee-find-psne-echo-options' in other ways. If you find a
+smarter way that works well, please get in touch!!!
 
 
 
