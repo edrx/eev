@@ -1,3 +1,13 @@
+2022-04-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wconfig.el: new file.
+
+2022-04-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (find-pdftotext-page): define it explicitly.
+
+	* eepitch.el (eepitch-eshell3): new function.
+
 2022-04-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-find-psne-echo-options): new function.

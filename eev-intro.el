@@ -13949,12 +13949,12 @@ explained in the source of eshell:
 
 `find-psne-links' accepts two optional arguments after the URL.
 The first of them is called `wget-options', and when it is not
-given it defaults to \"-nc\" (\"no-clobber\"). The optional
-argument is called `echo-options', and _ideally_ it should
-default to \"\" on \"normal\" unix shells, and to \"-N\" on
-eshell. When it is not given eev runs the function
-`ee-find-psne-echo-options' to decide what to do, and the
-default definition of that function is:
+given it defaults to \"-nc\" (\"no-clobber\"). The second
+optional argument is called `echo-options', and _ideally_ it
+should default to \"\" on \"normal\" unix shells, and to \"-N\"
+on eshell. When it is not given eev runs the function
+`ee-find-psne-echo-options' to decide what to do, and the default
+definition of that function is:
 
   ;; See: (find-eev \"eev-tlinks.el\" \"ee-find-psne-echo-options\")
   ;;

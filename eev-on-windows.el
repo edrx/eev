@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211110
+;; Version:    20220416
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
@@ -60,10 +60,29 @@
 
 ;;; Commentary:
 ;;
-;; Experimental, undocumented, and messy. Every time that I give a
-;; workshop to Windows users this file changes a lot. Most of what was
-;; here in the last revision was rewritten in a more human-readable
-;; form and placed in:
+;; Long short short: this is obsolete.
+;;
+;; Long story medium-sized: In 2021 I found some Windows users who
+;; were interested in learning Emacs and eev, and I wrote this to try
+;; to make configuring eev on Windows easier. See:
+;;
+;;   http://angg.twu.net/2021-2022-workshops.html
+;;   (find-windows-beginner-intro)
+;;
+;; In april/2022 I started to work on a different approach for
+;; configuring eev on Windows, and I declared that this file had
+;; become obsolete. The new approach is here:
+;;
+;;   (find-eev "eev-wconfig.el")
+;;   http://angg.twu.net/eev-customize.html
+;;
+;; Long story long: read the rest of this file (warning: old stuff!).
+
+
+;; I wrote this for some Experimental, undocumented, and messy. Every
+;; time that I give a workshop to Windows users this file changes a
+;; lot. Most of what was here in the last revision was rewritten in a
+;; more human-readable form and placed in:
 ;;
 ;;   (find-windows-beginner-intro)
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220115
+;; Version:    20220416
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -493,6 +493,7 @@ scratch."
 (defun eepitch-shell3  () (interactive) (eepitch '(shell "*shell 3*")))
 (defun eepitch-eshell  () (interactive) (eepitch '(eshell)))
 (defun eepitch-eshell2 () (interactive) (eepitch '(eshell 2)))
+(defun eepitch-eshell3 () (interactive) (eepitch '(eshell 3)))
 
 
 

@@ -3031,6 +3031,7 @@ For more info on this particular video, run:
 ;; Skel: (find-find-links-links-new "advicebefore" "fun" "")
 ;; Test: (find-advicebefore-links)
 ;;       (find-advicebefore-links "FOO")
+;; Screenshot: http://angg.twu.net/IMAGES/find-advicebefore-links.png
 ;;
 ;; I wrote this when I was trying to learn edebug and I was failing
 ;; miserably.

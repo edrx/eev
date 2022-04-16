@@ -628,6 +628,8 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; (find-code-pdfbackendalias "pdf-text" "pdftotext-text")
         (code-pdfbackendalias "pdf-text" "pdftotext-text")
 
+(defalias 'find-pdf-text 'find-pdftotext-text)
+
 
 
 
@@ -694,6 +696,11 @@ We define it just to make this work: (find-efunction 'find-xpdf-page)"
 (defun ee-find-pdftotext-text (fname &rest rest)
   `(,ee-pdftotext-program "-layout" "-enc" "Latin1" ,(ee-expand fname) "-"))
 
+(defun find-pdftotext-page (fname &optional page &rest rest)
+  "This defun will be overridden by the `code-pdftextbackend' below.
+We define it just to make this work: (find-efunction 'find-pdftotext-page)"
+  (apply 'find-sh-page (ee-find-pdftotext-text fname) page rest))
+
 ;; (find-man "1 pdftotext")
 ;; (find-man "1 pdftotext" "-enc encoding-name")
 ;;
@@ -716,7 +723,7 @@ We define it just to make this work: (find-efunction 'find-xpdf-page)"
 ;;;   |_|\___/_/\_\ \_/\_/ \___/|_|  |_|\_\___/
 ;;;                                            
 ;; «find-texworkspdf-page» (to ".find-texworkspdf-page")
-;; At this moment TeXworks is my default PDF viewer on W$s. See:
+;; At one point TeXworks was my default PDF viewer on W$s. See:
 ;;
 ;;   http://www.tug.org/texworks/
 ;;   https://tug.org/pipermail/tex-live/2019-March/043227.html
