@@ -13606,10 +13606,9 @@ Version of these instructions: 2021nov13.
 Read the README below and then install Emacs using either the
 link to the .exe or the link to the .zip:
 
-http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/
-http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/README-windows-binaries
-http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2021-01-15-installer.exe
-http://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.50-snapshot-2021-01-15.zip
+https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/
+https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/README-windows-binaries
+https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.92-installer.exe
 
 You may need to create a desktop icon or shortcut to
 <emacsdir>/bin/runemacs.exe.

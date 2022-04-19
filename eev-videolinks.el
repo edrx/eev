@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220218
+;; Version:    20220419
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -63,6 +63,7 @@
 ;;   «.find-2022eevmake0video»		(to "find-2022eevmake0video")
 ;;   «.find-2022findeevanggvideo»	(to "find-2022findeevanggvideo")
 ;;   «.find-2022findelispintrovideo»	(to "find-2022findelispintrovideo")
+;;   «.find-2022pict2eluavideo»		(to "find-2022pict2eluavideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -88,6 +89,7 @@
 ;;   «.2022eevmake0»			(to "2022eevmake0")
 ;;   «.2022findeevangg»			(to "2022findeevangg")
 ;;   «.2022findelispintro»		(to "2022findelispintro")
+;;   «.2022pict2elua»			(to "2022pict2elua")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -549,6 +551,16 @@ For more info on this particular video, run:
   (interactive)
   (find-eev-video "2022-find-elisp-intro" "WowDSciGs1A" time))
 
+;; «find-2022pict2eluavideo»  (to ".find-2022pict2eluavideo")
+;; Info: (find-1stclassvideo-links "2022pict2elua")
+;; Play: (find-2022pict2eluavideo "0:00")
+(defun find-2022pict2eluavideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2022pict2elua\")"
+  (interactive)
+  (find-eev-video "2022-pict2e-lua" "hiHsUhGVLGM" time))
+
 
 
 
@@ -862,6 +874,19 @@ For more info on this particular video, run:
      :date    "2022jan23"
      :length  "21:12"
      :comment "A very good video on the design decisions behind `(find-elisp-intro)'.")
+    ;;
+    ;; «2022pict2elua»  (to ".2022pict2elua")
+    ;; Play: (find-2022pict2eluavideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2022pict2elua")
+    ("2022pict2elua"
+     :title "Pict2e-lua: a library for diagrams that is being developed with eev and test blocks"
+     :mp4   "http://angg.twu.net/eev-videos/2022-pict2e-lua.mp4"
+     :yt    "http://www.youtube.com/watch?v=hiHsUhGVLGM"
+     :page  "http://angg.twu.net/pict2e-lua.html"
+     :date    "2022apr18"
+     :length  "8:13"
+     :comment "A very good demo of test blocks.")
+    ;;
     ))
 
 

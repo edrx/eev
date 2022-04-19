@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220412
+;; Version:    20220417
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -386,7 +386,9 @@ the \"*(find-here-links)*\" buffer."
   (let ((f (ee-efunctiondescr-bufferp)))
     `((find-efunction-links ',f)
       (find-efunctiondescr ',f)
-      (find-efunction ',f))))
+      (find-efunction ',f)
+      (describe-function ',f)
+      )))
 
 (defvar ee-evardescr-re "^\\([^ \t\n]+\\) is a variable")
 (defun  ee-evardescr-bufferp () (ee-buffer-help ee-evardescr-re 1))
@@ -394,14 +396,18 @@ the \"*(find-here-links)*\" buffer."
   (let ((v (ee-evardescr-bufferp)))
     `((find-evariable-links ',v)
       (find-evardescr ',v)
-      (find-evariable ',v))))
+      (find-evariable ',v)
+      (describe-variable ',v)
+      )))
 
 (defvar ee-efacedescr-re "^Face: \\([^ \t\n]+\\)")
 (defun  ee-efacedescr-bufferp () (ee-buffer-help ee-efacedescr-re 1))
 (defun  ee-find-efacedescr-links ()
   (let ((f (ee-efacedescr-bufferp)))
     `((find-eface-links ',f)
-      (find-efacedescr ',f))))
+      (find-efacedescr ',f)
+      (describe-face ',f)
+      )))
 
 (defvar ee-epackage-re "^\\([^ \t\n]+\\) is a[ -~]+ package")
 (defvar ee-epackage-re-27 "^Package \\([^ \t\n]+\\) is") ; for Emacs 27
@@ -416,13 +422,17 @@ the \"*(find-here-links)*\" buffer."
 (defvar ee-man-re "^\\*Man \\(.*\\)\\*$")
 (defun  ee-find-man-links () 
   (let ((mp (ee-buffer-re ee-man-re)))
-    `((find-man ,mp))))
+    `((find-man ,mp)
+      (man ,mp)
+      )))
 
 (defvar ee-custom-re "^\\*Customize Group: \\(.*\\)\\*$")
 (defun  ee-find-custom-links () 
   (let* ((name   (ee-buffer-re ee-custom-re))
 	 (symbol (intern (downcase (replace-regexp-in-string " " "-" name)))))
-    `((find-customizegroup ',symbol))))
+    `((find-customizegroup ',symbol)
+      (customize-group ',symbol)
+      )))
 
 ;; Other cases
 (defun ee-file-bufferp     () buffer-file-name)

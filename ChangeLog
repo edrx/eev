@@ -1,3 +1,15 @@
+2022-04-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added
+	"2022pict2elua".
+	(find-2022pict2eluavideo): new function.
+
+2022-04-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-find-efunctiondescr-links)
+	(ee-find-evardescr-links, ee-find-efacedescr-links)
+	(ee-find-man-links, ee-find-custom-links): added non-eev links.
+
 2022-04-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-wconfig.el: new file.
