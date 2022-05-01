@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220419
+;; Version:    20220501
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -618,6 +618,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/emacsconf2021.html"
      :date    "2021nov21"
      :length  "6:04"
+     :subs    ".vtt"
      :comment "START BY THIS VIDEO!!!")
     ;;
     ;; «eev2021b»  (to ".eev2021b")
@@ -885,6 +886,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/pict2e-lua.html"
      :date    "2022apr18"
      :length  "8:13"
+     :subs    ".vtt"
      :comment "A very good demo of test blocks.")
     ;;
     ))

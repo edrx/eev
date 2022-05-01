@@ -1,6 +1,6 @@
 ;;; eev-kla.el -- kill link to anchor and friends.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -24,13 +24,8 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-kla.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-psne-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-prepared-intro.html>
+;;       See also: <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
-;;                                                (find-psne-intro)
-;;                                                (find-prepared-intro)
 
 ;; «.intro»		(to "intro")
 ;; «.test»		(to "test")

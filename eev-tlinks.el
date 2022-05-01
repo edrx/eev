@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220413
+;; Version:    20220501
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -97,6 +97,7 @@
 ;;   «.hardcoded-paths»			(to "hardcoded-paths")
 ;; «.find-eev-video-links»		(to "find-eev-video-links")
 ;; «.find-eevshortvideo-links»		(to "find-eevshortvideo-links")
+;; «.find-wgeteevsubtitles-links»	(to "find-wgeteevsubtitles-links")
 ;;
 ;; «.find-latex-links»			(to "find-latex-links")
 ;; «.find-lua-links»			(to "find-lua-links")
@@ -1911,6 +1912,62 @@ and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
 
 
 
+;; «find-wgeteevsubtitles-links»  (to ".find-wgeteevsubtitles-links")
+;; Skel:  (find-find-links-links-new "wgeteevsubtitles" "stem exts" "cmds")
+;; Tests: (find-wgeteevsubtitles-links "emacsconf2021" ".vtt")
+;;        (find-estring (ee-wgeteevsubtitles-cmds "emacsconf2021" ".vtt .srt"))
+;; See:   (find-wgetnode "Download Options" "-nc" "--no-clobber")
+;;        (find-wgetnode "Download Options" "-N" "--timestamping")
+;;        (find-wgetnode "Time-Stamping")
+;;
+(defun find-wgeteevsubtitles-links (&optional stem exts &rest pos-spec-list)
+"Visit a temporary buffer containing a script for downloading subtitles.
+The script downloads an eev video and it subtitles. For example,
+if STEM is \"emacsconf2021\" and EXTS is \".vtt .srt\" then the
+main part of the script will be:\n
+  mkdir -p $S/http/angg.twu.net/eev-videos/
+  cd       $S/http/angg.twu.net/eev-videos/
+  wget -nc  http://angg.twu.net/eev-videos/emacsconf2021.mp4
+  wget -N   http://angg.twu.net/eev-videos/emacsconf2021.vtt
+  wget -N   http://angg.twu.net/eev-videos/emacsconf2021.srt\n
+The subtitles are downloaded again if the ones in
+http://angg.twu.net/ are newer than the local copy."
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (setq exts (or exts "{exts}"))
+  (let* ((cmds (ee-wgeteevsubtitles-cmds stem exts)))
+    (apply
+     'find-elinks
+     `((find-wgeteevsubtitles-links ,stem ,exts ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wgeteevsubtitles-links)
+       ""
+       ,(ee-template0 "\
+ (eepitch-shell2)
+ (eepitch-kill)
+ (eepitch-shell2)
+{cmds}
+# (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"{stem}.mp4\")
+# (find-video \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+")
+       )
+     pos-spec-list)))
+
+(defun ee-wgeteevsubtitles-cmds (stem exts)
+  "An internal function used by `find-wgeteevsubtitles-links'."
+  (let* ((dir         "$S/http/angg.twu.net/eev-videos/")
+         (url- (concat "http://angg.twu.net/eev-videos/" stem))
+         (f (lambda (ext) (format "wget -N   %s%s\n" url- ext)))
+         (wgets (mapconcat f (split-string exts))))
+    (ee-template0 "\
+mkdir -p {dir}
+cd       {dir}
+wget -nc  {url-}.mp4
+{wgets}\
+")))
+
+
+
 
 
 
@@ -2947,7 +3004,8 @@ This function is used by `ee-0x0-upload-region'."
 	 (comment (ee-1stclassvideos-field c :comment))
 	 (lang    (ee-1stclassvideos-field c :lang))
 	 (mp4stem (ee-1stclassvideos-mp4stem c))
-	 (hash    (ee-1stclassvideos-hash c)))
+	 (hash    (ee-1stclassvideos-hash c))
+	 (dlsubs  (ee-1stclassvideos-dlsubs c)))
     (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
@@ -2966,6 +3024,7 @@ This function is used by `ee-0x0-upload-region'."
 ;;        http://angg.twu.net/.emacs.videos.html#{c}
 ;;        (find-angg         \".emacs.videos\"    \"{c}\")
 ;;        (find-angg-es-links)
+{dlsubs}\
 
 ;; See:
 ;; (find-video-links-intro \"9. First-class videos\")
@@ -2993,6 +3052,26 @@ For more info on this particular video, run:
   (interactive)
   (find-eev-video \"{mp4stem}\" \"{hash}\" time))
 ")))
+
+;; Tests: (ee-1stclassvideos-dlsubs "2022pict2elua")
+;;        (find-1stclassvideo-links "2022pict2elua")
+;;        (ee-1stclassvideos-dlsubs "2021workshop6")
+;;        (find-1stclassvideo-links "2021workshop6")
+;;
+(defun ee-1stclassvideos-dlsubs (c)
+  "An internal function used by `find-1stclassvideo-links'."
+  (let ((exts (ee-1stclassvideos-field c :subs)))
+    (if (eq exts nil)
+	""
+      (let ((mp4stem (ee-1stclassvideos-mp4stem c)))
+	(ee-template0 "\
+;;
+;; Download subtitles:
+;;        (find-wgeteevsubtitles-links \"{mp4stem}\" \"{exts}\")
+")
+	))))
+
+
 
 
 ;; «find-1stclassvideoindex»  (to ".find-1stclassvideoindex")
@@ -3187,9 +3266,10 @@ pip3 install {pkg}
  (eepitch-python)
 import youtube_transcript_downloader
 url    = \"http://www.youtube.com/watch?v={hash}\"
+f      = \"find-{c}video\"
 tr     = youtube_transcript_downloader.get_transcript(url)
 trits0 = tr.items()
-trits1 = '\\n'.join(('% (find-{c}video \"' + key + '\" \"' + text + '\")' for key, text in trits0))
+trits1 = '\\n'.join(('% (' + f + ' \"' + key + '\" \"' + text + '\")' for key, text in trits0))
 print(trits1)
 
 ")

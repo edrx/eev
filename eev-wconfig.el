@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220416
+;; Version:    20220501
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wconfig.el>
@@ -27,72 +27,141 @@
 ;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                 <http://angg.twu.net/eev-intros/find-psne-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-prepared-intro.html>
 ;;                                                (find-eev-intro)
 ;;                                                (find-psne-intro)
-;;                                                (find-prepared-intro)
 
 ;;; Comment:
 
+;; «intro»  (to ".intro")
+;;
+;; 1. Introduction
+;; ===============
+;; Some parts of eev call external programs:
+;;
+;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
+;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks" "firefox")
+;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks" "chrome")
+;;   (find-eev-quick-intro "6.2. Other targets")
+;;   (find-eev-quick-intro "6.2. Other targets" "python")
+;;   (find-psne-intro "1. Local copies of files from the internet")
+;;   (find-psne-intro "1. Local copies of files from the internet" "wget")
+;;   (find-video-links-intro "1. Introduction")
+;;   (find-video-links-intro "1. Introduction" "[Video links:]")
+;;   (find-audiovideo-intro "4.3. A demo")
+;;   (find-audiovideo-intro "4.3. A demo" "mpv")
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files")
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files" "xpdf")
+;;   (find-pdf-like-intro "3. Hyperlinks to PDF files" "pdftotext")
+;;
+;; On *NIX systems the installation of these programs is easy, and no
+;; configuration is needed - if "firefox", "google-chrome", "python3",
+;; "wget", "xpdf", "pdftotext", and "mpv" are in the path then eev
+;; simply calls them with the right arguments, and (usually)
+;; everything works.
+;;
+;; On M$ Windows things are much harder: 1) eev needs to know the full
+;; paths of the ".exe"s of these programs, 2) wget and pdftotext are
+;; hard to install, 3) it is better to use a browser to open PDFs, 4)
+;; I don't have access to a machine with Windows, 5) I have very
+;; little access to people who use Windows and who can be convinced to
+;; test this...
+;;
+;; This file is an attempt to solve this problem both "without magic"
+;; and "with very little magic". Remember that:
+;;
+;;     "Any sufficiently advanced technology
+;;      is indistinguishable from magic"
+;;
+;; Here I will use the term "magic" as a shorthand for "black box".
+;; A black box that is hard to open, and hard to look inside, is an
+;; "advanced technology that is indistinguishable from magic".
+;;
+;; In dec/2021 I recorded a video, called "Org for Non-Users",
+;;
+;;   http://angg.twu.net/2021-org-for-non-users.html
+;;   (find-1stclassvideo-links "2021orgfornonusers")
+;;   (find-1stclassvideoindex  "2021orgfornonusers")
+;;
+;; in which I explained why I always found Org so hard to learn. Many
+;; things in Org are implemented in ways that I don't understand, and
+;; practically every time that I try to learn more features of Org I
+;; start to ask questions like "hey, how is this implemented?", and I
+;; get stuck trying to answer these "non-user" questions instead of
+;; simply learning how to use the feature "as a user"...
+;;
+;; In the language of black boxes what happens when I try to learn Org
+;; is this. I try to learn a new feature; I see lots of black boxes; I
+;; try to open these black boxes, and fail miserably; I get frustrated
+;; and exhausted; I postpone learning that feature to another day.
+;;
+;; I have the same relationship with `M-x customize'.
+;;
+;; The most "user-friendly" way to configure Emacs is with
+;; `customize'. Try:
+;;
+;;   (eek "M-x customize")
+;;   (customize-group    'processes)
+;;   (customize-group    'shell)
+;;   (customize-variable 'explicit-bash-args)
+;;   (customize-face     'eev-glyph-face-red)
+;;
+;; Over the years I have experimented with several alternatives to
+;; customize that "use less magic". This page,
+;;
+;;   http://angg.twu.net/eev-customize.html
+;;
+;; from april/2022, describe some of my experiments.
+;;
+;; I started to work on eev-wconfig.el a few days after making that
+;; page. Eev-wconfig.el uses all the ideas there, plus a few new ones.
+;;
+;; Eev-wconfig can be used both "with no magic" and "with some magic".
+;; Both ways create temporary buffers that have parts that perform
+;; configuration steps and parts with elisp hyperlinks "that open the
+;; (black) boxes" and explain what the configuration steps do.
+;;
+;;
+;; «usage»  (to ".usage")
+;;
+;; 2. Usage
+;; ========
 ;; This file is not loaded by default. To use it, run:
 ;;
 ;;   (require 'eev-wconfig)
 ;;   (find-wconfig-links)
 ;;
-;; Or:
+;; The `(find-wconfig-links)' will create a temporary buffer with
+;; instructions.
 ;;
-;;   (load (buffer-file-name))
-;;   (find-wconfig-links)
-;;   (find-wconfig-wget-links)
-;;   (find-wconfig-shell-links)
-;;   (find-wconfig-pdf-links)
-;;   (find-wconfig-lua-links)
-;;   (find-wconfig-mpv-links)
-;;
-;; This is another attempt - based on ideas that I had in april/2022 -
-;; to make eev easy to configure on M$ Windows. This attempt is mostly
-;; targeted to "non-users", and it follows many of the principles that
-;; I explained in these two videos,
-;;
-;;   Title: Org for Non-Users (2021)
-;;   Page:  http://angg.twu.net/2021-org-for-non-users.html
-;;   Play:  (find-2021orgfornonusersvideo "0:00")
-;;   Info:  (find-1stclassvideo-links "2021orgfornonusers")
-;;   Index: (find-1stclassvideoindex  "2021orgfornonusers")
-;;
-;;   Title: Why eev has a weird elisp tutorial and how to use it
-;;   Page:  http://angg.twu.net/find-elisp-intro.html
-;;   Play:  (find-2022findelispintrovideo "0:00")
-;;   Info:  (find-1stclassvideo-links "2022findelispintro")
-;;   Index: (find-1stclassvideoindex  "2022findelispintro")
-;;
-;; and in this page:
-;;
-;;   http://angg.twu.net/eev-customize.html
-;;
-;; More precisely, this is targeted to people who like to "open the
-;; lid" to see how things look inside, and who don't mind if at first
-;; they understand only a bit of what they see; and who are still
-;; using mostly M$ Windows, but who are trying to use GNU/Linux more.
-;; I believe that these people will find this approach much more
-;; interesting and fun than my previous attempts.
-;;
-;; At this moment (2022apr16) I am testing this with a friend with
-;; whom I interact mostly via Telegram and IRC. The docs are very
-;; incomplete!
+;; I am working on a video about this. I will add more instructions
+;; after finishing the video.
+
 
 
 ;; Index:
-;; «.find-wconfig-links»	(to "find-wconfig-links")
-;; «.find-wconfig-wget-links»	(to "find-wconfig-wget-links")
-;; «.find-wconfig-shell-links»	(to "find-wconfig-shell-links")
-;; «.find-wconfig-pdf-links»	(to "find-wconfig-pdf-links")
-;; «.find-wconfig-lua-links»	(to "find-wconfig-lua-links")
-;; «.find-wconfig-mpv-links»	(to "find-wconfig-mpv-links")
+;; «.intro»				(to "intro")
+;; «.usage»				(to "usage")
+;; «.find-wconfig-links»		(to "find-wconfig-links")
+;; «.find-wconfig-browser-links»	(to "find-wconfig-browser-links")
+;; «.find-wconfig-wget-links»		(to "find-wconfig-wget-links")
+;; «.find-wconfig-shell-links»		(to "find-wconfig-shell-links")
+;; «.find-wconfig-lua-links»		(to "find-wconfig-lua-links")
+;; «.find-wconfig-mpv-links»		(to "find-wconfig-mpv-links")
+;; «.find-wconfig-magic-links»		(to "find-wconfig-magic-links")
+;;   «.ee-wconfig-run-magic»		(to "ee-wconfig-run-magic")
+;; «.find-wconfig-undo-links»		(to "find-wconfig-undo-links")
 
 
 
 
+
+;;; __        __               __ _       
+;;; \ \      / /__ ___  _ __  / _(_) __ _ 
+;;;  \ \ /\ / / __/ _ \| '_ \| |_| |/ _` |
+;;;   \ V  V / (_| (_) | | | |  _| | (_| |
+;;;    \_/\_/ \___\___/|_| |_|_| |_|\__, |
+;;;                                 |___/ 
+;;
 ;; «find-wconfig-links»  (to ".find-wconfig-links")
 ;; Skel: (find-find-links-links-new "wconfig" "" "")
 ;; Test: (find-wconfig-links)
@@ -100,21 +169,117 @@
 (defun find-wconfig-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig."
   (interactive)
-  (apply
-   'find-elinks-elisp
-   `((find-wconfig-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-wconfig-links)
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-links)
+       ""
+       ,(ee-template0 "\
+;; See: (find-eev \"eev-wconfig.el\" \"intro\")
+
+
+;; To configure eev on Windows \"without magic\", follow
+;; the instructions in each of the five wconfigs belows:
+
+(find-wconfig-browser-links)
 (find-wconfig-wget-links)
 (find-wconfig-shell-links)
-(find-wconfig-pdf-links)
 (find-wconfig-lua-links)
 (find-wconfig-mpv-links)
+
+
+;; To configure eev on Windows \"with some magic\",
+;; follow the instructions in:
+
+(find-wconfig-magic-links)
+
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
+
+
+
+
+;;;  ____                                  
+;;; | __ ) _ __ _____      _____  ___ _ __ 
+;;; |  _ \| '__/ _ \ \ /\ / / __|/ _ \ '__|
+;;; | |_) | | | (_) \ V  V /\__ \  __/ |   
+;;; |____/|_|  \___/ \_/\_/ |___/\___|_|   
+;;;                                        
+;; «find-wconfig-browser-links»  (to ".find-wconfig-browser-links")
+;; Skel: (find-find-links-links-new "wconfig-browser" "" "")
+;; Test: (find-wconfig-browser-links)
+;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-browser-links))
+;;
+(defun find-wconfig-browser-links (&rest pos-spec-list)
+"Visit a temporary buffer containing a script for configuring the browser."
+  (interactive)
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-browser-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-browser-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-browser-links)
+       ""
+       ,(ee-template0 "\
+
+;; 0. The variable
+;; ===============
+;; See: (find-elisp-intro \"5. Variables\")
+;; The current value of the variable `ee-googlechrome-program' is:
+(setq ee-googlechrome-program
+  \"{ee-googlechrome-program}\")
+
+
+;; 1. Configure Chrome
+;; ===================
+;; Replace the string below by the full path of chrome.exe
+;; and then execute the sexp below with `M-e'.
+;; Note that you NEED to replace all the `\\'s in it by `/'s.
+;;
+(setq ee-googlechrome-program
+ \"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe\")
+
+
+;; 2. Test
+;; =======
+;; Try: (find-googlechrome \"https://www.lua.org/\")
+
+
+;; 3. Update this page
+;; ===================
+;; See: (find-links-intro \"5. The first line regenerates the buffer\")
+;; This page is generated by a template. Run the sexp in the
+;; first line to regenerate this page and to make the first and
+;; the last `setq's display the current value of the
+;; variable `ee-googlechrome-program'.
+
+
+;; 4. Save your configuration
+;; ==========================
+;; The \"init file\" is explained here: (find-enode \"Init File\")
+;; Hint: `M-5 M-5 M-j' runs: (find-fline \"~/.emacs\")
+;; See: (eek         \"M-j\")
+;; Try: (eek \"M-5 M-5 M-j\")
+;;
+;; Copy the updated version of the block below -
+;; including the three commented lines at the top -
+;; to your init file.
+
+;; See: (find-eev \"eev-load.el\" \"autoloads\")
+;;      (find-eev \"eev-wconfig.el\" \"intro\")
+;;      (find-wconfig-browser-links)
+(require 'eev-load)
+(require 'eev-wconfig)
+(setq ee-googlechrome-program
+  \"{ee-googlechrome-program}\")
+
+")
+       )
+     pos-spec-list)))
+
 
 
 
@@ -133,84 +298,154 @@
 (defun find-wconfig-wget-links (&rest pos-spec-list)
 "Visit a temporary buffer containing a script for configuring wget on Windows."
   (interactive)
-  (apply
-   'find-elinks-elisp
-   `((find-wconfig-wget-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-wconfig-wget-links)
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-wget-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-wget-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-wget-links)
+       ""
+       ,(ee-template0 "\
+;; Note: only run this after configuring the browser!
+;; See: (find-wconfig-browser-links)
+
 
 ;; 1. Download wget.exe
 ;; ====================
-;; Run the sexps below to download a wget for Windows and put it
-;; in ~/bin/wget.exe. For more info on that wget.exe, see:
-;;   http://angg.twu.net/2021-oficina/
-;;   http://angg.twu.net/2021-oficina/README
+;; Run each of the uncommented sexps below with `M-e'.
+;; Note that some of the sexps are longer than one line.
+;; See: (find-eev-quick-intro \"2. Evaluating Lisp\")
+;;      (find-eev-quick-intro \"2. Evaluating Lisp\" \"M-0 M-e\")
 ;;
+;; The sexps below will download a wget.exe from:
+;;   http://angg.twu.net/eev-wconfig/
+;; And put it in:
+;;   (find-fline \"~/eev-wconfig/\")
+
 (require 'eww)
 (defun ee-download-with-eww (url dir)
   (url-retrieve url #'eww-download-callback (list url dir)))
-;;
-(mkdir       \"~/bin/\" t)
-(delete-file \"~/bin/wget.exe\")
-(ee-download-with-eww \"http://angg.twu.net/2021-oficina/wget.exe\" \"~/bin/\")
-;;
-;; Tests:
-;;   (find-fline \"~/bin/\")
-;;   (find-fline \"~/bin/\" \"wget.exe\")
-;;   (find-callprocess \"~/bin/wget.exe --help\")
-;; and:
+
+(mkdir       \"~/eev-wconfig/\" t)
+(delete-file \"~/eev-wconfig/wget.exe\")
+(ee-download-with-eww \"http://angg.twu.net/eev-wconfig/wget.exe\"
+             \"~/eev-wconfig/\")
+
+
+;; 2. Use wget.exe to download some other files
+;; ============================================
+;; See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
+;;      (find-eev-quick-intro \"6.1. The main key: <F8>\")
+;; Run the eepitch block below with `<f8>'s.
 
  (eepitch-eshell)
  (eepitch-kill)
  (eepitch-eshell)
-rm --help
-ls --help
+mkdir -p ~/eev-wconfig/
+rm -fv   ~/eev-wconfig/README-wconfig.el
+rm -fv   ~/eev-wconfig/pdftotext.exe
+rm -fv   ~/eev-wconfig/lua52.exe
+rm -fv   ~/eev-wconfig/lua52.dll
+rm -fv   ~/eev-wconfig/lua53.exe
+rm -fv   ~/eev-wconfig/lua53.dll
+rm -fv   ~/eev-wconfig/lua54.exe
+rm -fv   ~/eev-wconfig/lua54.dll
+cd       ~/eev-wconfig/
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/README-wconfig.el
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/pdftotext.exe
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua52.exe
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua52.dll
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua53.exe
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua53.dll
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua54.exe
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua54.dll
 
-ls ~/bin/
-~/bin/wget.exe --version
-~/bin/wget.exe --help
-cd ~/bin/
-rm -fv README
-~/bin/wget.exe http://angg.twu.net/2021-oficina/README
-ls -lF       README
-ls -lF ~/bin/README
+# (find-callprocess0 '(\"~/eev-wconfig/wget.exe\"      \"--help\"))
+# (find-callprocess0 '(\"~/eev-wconfig/pdftotext.exe\" \"--help\"))
+# (find-callprocess0 '(\"~/eev-wconfig/lua52.exe\"     \"-v\"))
+# (find-callprocess0 '(\"~/eev-wconfig/lua53.exe\"     \"-v\"))
+# (find-callprocess0 '(\"~/eev-wconfig/lua54.exe\"     \"-v\"))
+
+mkdir -p ~/eev-wconfig/
+rm -fv   ~/eev-wconfig/Coetzee99.pdf
+rm -fv   ~/eev-wconfig/2022dragABC.mp4
+cd       ~/eev-wconfig/
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/Coetzee99.pdf
+~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/2022dragABC.mp4
 
 
 
-;; 2. Configure `find-wget'
-;; ========================
-;; Run this:
-;;
-(setq ee-wget-program \"~/bin/wget.exe\")
-;;
-;; To test it, run the tests in the sections \"Tests:\" here:
+
+;; 3. Make `find-wget' use ~/eev-wconfig/wget.exe
+;; ==============================================
+;; Run this sexp with `M-e':
+
+(setq ee-wget-program \"~/eev-wconfig/wget.exe\")
+
+;; Then run the tests in the second sexp below:
 ;;   (find-eev \"eev-plinks.el\" \"find-wget\")
-;;   (find-eev \"eev-plinks.el\" \"find-wget\" \"Tests:\")
+;;   (find-eev \"eev-plinks.el\" \"find-wget\" \";; Tests:\")
+;; Some of the tests point to \"anchors\".
 ;; The concept of \"anchor\" is explained here:
 ;;   (find-eev-quick-intro \"8. Anchors\")
 
 
 
-;; 3. Save the settings in your ~/.emacs
-;; =====================================
-;; If all the tests above worked, put the two lines below
-;; in your ~/.emacs:
+;; 4. Use the browser as a PDF viewer
+;; ==================================
+;; Run this sexp with `M-e':
+
+(defalias 'find-pdf-page 'find-googlechrome-page)
+
+;; Tests:
+;;   (find-googlechrome \"~/eev-wconfig/Coetzee99.pdf\")
+;;   (find-pdf-page     \"~/eev-wconfig/Coetzee99.pdf\")
+;;   (find-pdf-page     \"~/eev-wconfig/Coetzee99.pdf\" 3)
+;; For the technical details, see:
+;;   (find-efunctiondescr 'find-pdf-page)
+;;   (find-eev \"eev-pdflike.el\" \"find-googlechrome-page\")
+;;   (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
+
+
+;; 5. Use ~/eev-wconfig/pdftotext.exe to view PDFs as text
+;; =======================================================
+;; Run this sexp with `M-e':
+
+(setq ee-pdftotext-program \"~/eev-wconfig/pdftotext.exe\")
+
+;; Tests:
+;;   (find-pdf-text \"~/eev-wconfig/Coetzee99.pdf\")
+;;   (find-pdf-text \"~/eev-wconfig/Coetzee99.pdf\" 3)
+;; For the technical details, see:
+;;   (find-eev \"eev-pdflike.el\" \"find-pdftotext-text\")
+
+
+
+;; 6. Test if the browser can play videos
+;; ======================================
+;; Try this:
+;;   (find-googlechrome \"~/eev-wconfig/2022dragABC.mp4\")
+;; The browser doesn't support \"time offsets\" - see:
+;;   (find-audiovideo-intro \"1. Time offsets\")
+;; We will need to install mpv for that.
+
+
+
+
+;; 7. Save these configs in your init file
+;; =======================================
+;; This is similar to: (find-wconfig-browser-links 2 \"4. Save\")
+;; Save the block below - including the comment - to your ~/.emacs:
 
 ;; See: (find-wconfig-wget-links)
-(setq ee-wget-program \"~/bin/wget.exe\")
+(setq ee-wget-program      \"~/eev-wconfig/wget.exe\")
+(setq ee-pdftotext-program \"~/eev-wconfig/pdftotext.exe\")
+(defalias 'find-pdf-page 'find-googlechrome-page)
 
-
-
-;; Random notes
-;; ============
-;; The two sexps below undoes the configurations above:
-;;   (setq ee-wget-program \"wget\")
 
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 
 
@@ -230,32 +465,27 @@ ls -lF ~/bin/README
 (defun find-wconfig-shell-links (&rest pos-spec-list)
 "Visit a temporary buffer containing a script for configuring eshell on Windows."
   (interactive)
-  (apply
-   'find-elinks-elisp
-   `((find-wconfig-shell-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-wconfig-shell-links)
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-shell-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-shell-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-shell-links)
+       ""
+       ,(ee-template0 "\
 ;; Note: only run this after configuring wget!
 ;; See: (find-wconfig-wget-links)
-
-;; (find-windows-beginner-intro \"5.5. Shell Mode\")
-;; (find-eev-quick-intro \"6. Controlling shell-like programs\")
-;; (find-eepitch-intro \"1.2. Two targets\")
-;; (find-node \"(eshell)Top\")
-;; (find-node \"(eshell)Command Index\")
-
 
 
 ;; 1. Make Eshell use wget.exe
 ;; ===========================
-;; Run this to configure Eshell to use ~/bin/wget.exe:
-;;
-;;   (require 'eshell)
-;;   (require 'em-alias)
-;;   (eshell/alias \"wget\" \"~/bin/wget.exe $*\")
-;;
+;; Run the sexps below to configure Eshell to use ~/eev-wconfig/wget.exe:
+
+(require 'eshell)
+(require 'em-alias)
+(eshell/alias \"wget\")
+(eshell/alias \"wget\" \"~/eev-wconfig/wget.exe $*\")
+
 ;; The block above only need to be run once.
 ;; For the technical details, see:
 ;;
@@ -275,7 +505,7 @@ ls -lF ~/bin/README
  (eepitch-kill)
  (eepitch-eshell)
 which wget
-~/bin/wget.exe --version
+~/eev-wconfig/wget.exe --version
 wget --version
 
 
@@ -293,108 +523,40 @@ wget --version
 
 
 
- (eepitch-eshell)
- (eepitch-kill)
- (eepitch-eshell)
-which wget
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-which wget
+;; 3. Configure the `echo' of eshell
+;; =================================
+;; See: (find-windows-beginner-intro \"5.6.1. Echo in Eshell\")
+(defun ee-find-psne-echo-options () \"-N\")
 
 
-;; 3. Save this config in your ~/.emacs
-;; ====================================
-;; If the two eepitch blocks above behaved in the same way,
-;; then put this block of four lines in your ~/.emacs:
+
+;; 4. Check if `M-x brep' and psne-ing work
+;; ========================================
+;; See: (find-psne-intro)
+;; and run the test in section 3:
+;;      (find-psne-intro \"3. The new way: `M-x brep'\")
+;; Also, check if in the temporary buffer generated by this sexp:
+;;      (find-psne-links \"https://www.lua.org/index.html\")
+;; you get an \"echo -N\" or just an \"echo\".
+;; You should get \"echo -N\".
+
+
+
+
+;; 5. Save some configs in your init file
+;; ======================================
+;; This is similar to: (find-wconfig-browser-links 2 \"4. Save\")
+;; Save the block below - including the comments - to your ~/.emacs:
 
 ;; See: (find-wconfig-shell-links)
 (defun eepitch-shell  () (interactive) (eepitch-eshell))
 (defun eepitch-shell2 () (interactive) (eepitch-eshell2))
 (defun eepitch-shell3 () (interactive) (eepitch-eshell3))
-
-
-
-;; 4. Note for *nix users testing this
-;; ===================================
-;; The configuration above can  be reverted with:
-;;
-(defun eepitch-shell  () (interactive) (eepitch '(shell)))
-(defun eepitch-shell2 () (interactive) (eepitch '(shell \"*shell 2*\")))
-(defun eepitch-shell2 () (interactive) (eepitch '(shell \"*shell 3*\")))
+(defun ee-find-psne-echo-options () \"-N\")
 
 ")
-     )
-   pos-spec-list))
-
-
-
-;;;  ____     _  __ 
-;;; |  _ \ __| |/ _|
-;;; | |_) / _` | |_ 
-;;; |  __/ (_| |  _|
-;;; |_|   \__,_|_|  
-;;;                 
-;; «find-wconfig-pdf-links»  (to ".find-wconfig-pdf-links")
-;; Skel: (find-find-links-links-new "wconfig-pdf" "" "")
-;; Test: (find-wconfig-pdf-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-pdf-links))
-;;
-(defun find-wconfig-pdf-links (&rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for wconfig-pdf."
-  (interactive)
-  (apply
-   'find-elinks-elisp
-   `((find-wconfig-pdf-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-wconfig-pdf-links)
-     ""
-     ,(ee-template0 "\
-;; Note: only run this after configuring
-;; the pdf viewer, wget, and Eshell! See:
-;;   (find-newbrowser-links nil nil nil \"3. Configure `find-pdf-page'\")
-;;   (find-wconfig-wget-links)
-;;   (find-wconfig-shell-links)
-
-
-
-;; 1. Download pdftotext and a PDF file
-;; ====================================
-;; Run:
-
- (eepitch-eshell)
- (eepitch-kill)
- (eepitch-eshell)
-cd ~/bin/
-rm -fv ~/bin/pdftotext.exe
-wget http://angg.twu.net/2021-oficina/pdftotext.exe
-rm -fv ~/Coetzee99.pdf
-cd
-wget https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-
-# Tests:
-~/bin/pdftotext.exe --help
-#
-# (find-callprocess \"~/bin/pdftotext.exe --help\")
-
-
-
-;; 2. Configure pdftotext
-;; ======================
-;; Run this:
-(setq ee-pdftotext-program \"~/bin/pdftotext.exe\")
-;;
-;; And then run these tests:
-(find-pdf-page \"~/Coetzee99.pdf\")
-(find-pdf-page \"~/Coetzee99.pdf\" 3)
-(find-pdf-text \"~/Coetzee99.pdf\")
-(find-pdf-text \"~/Coetzee99.pdf\" 3)
-
-
-")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 
 
@@ -414,49 +576,85 @@ wget https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
 (defun find-wconfig-lua-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig-lua."
   (interactive)
-  (apply
-   'find-elinks-elisp
-   `((find-wconfig-lua-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-wconfig-lua-links)
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-lua-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-lua-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-lua-links)
+       ""
+       ,(ee-template0 "\
+;; Note: only run this after downloading Lua!
+;; See: (find-wconfig-wget-links 2 \"2. Use wget.exe to download\")
+
+
+;; 1. Test if we can run Lua from Eshell
+;; =====================================
+;; The option `-i' means \"run in interactive mode\".
 
  (eepitch-eshell)
  (eepitch-kill)
  (eepitch-eshell)
-rm -fv ~/bin/lua52.exe
-wget http://angg.twu.net/2021-oficina/lua52.exe
-rm -fv ~/bin/lua52.dll
-wget http://angg.twu.net/2021-oficina/lua52.dll
-
- (eepitch-eshell)
- (eepitch-kill)
- (eepitch-eshell)
-~/bin/lua5.2 -v
-~/bin/lua5.2 -i
+~/eev-wconfig/lua52.exe -v
+~/eev-wconfig/lua52.exe -i
   print(2+3)
   os.exit()
 
 
-;; See: (find-eev-quick-intro \"6.2. Other targets\")
 
+;; 2. Configure eepitch
+;; ====================
+;; See: (find-eev-quick-intro \"6.2. Other targets\")
 ;; Redefine `eepitch-lua51' and `eepitch-lua52' to make
-;; them (both) use ~/bin/lua52.exe.
+;; them (both) use ~/eev-wconfig/lua52.exe.
 
 (defun eepitch-lua51 () (interactive)
-  (eepitch-comint \"lua52.exe\" \"~/bin/lua52.exe -i\"))
+  (eepitch-comint \"lua52.exe\" \"~/eev-wconfig/lua52.exe -i\"))
 (defun eepitch-lua52 () (interactive)
-  (eepitch-comint \"lua52.exe\" \"~/bin/lua52.exe -i\"))
+  (eepitch-comint \"lua52.exe\" \"~/eev-wconfig/lua52.exe -i\"))
+(defun eepitch-lua53 () (interactive)
+  (eepitch-comint \"lua53.exe\" \"~/eev-wconfig/lua53.exe -i\"))
+(defun eepitch-lua54 () (interactive)
+  (eepitch-comint \"lua54.exe\" \"~/eev-wconfig/lua54.exe -i\"))
 
+;; Test:
+
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+print(2+3)
+for k,v in pairs(_G) do print(k) end
+
+
+
+;; 3. Save some configs in your init file
+;; ======================================
+;; This is similar to: (find-wconfig-browser-links 2 \"4. Save\")
+;; Save the block below - including the comments - to your ~/.emacs:
+
+;; See: (find-wconfig-lua-links)
+(defun eepitch-lua51 () (interactive)
+  (eepitch-comint \"lua52.exe\" \"~/eev-wconfig/lua52.exe -i\"))
+(defun eepitch-lua52 () (interactive)
+  (eepitch-comint \"lua52.exe\" \"~/eev-wconfig/lua52.exe -i\"))
+(defun eepitch-lua53 () (interactive)
+  (eepitch-comint \"lua53.exe\" \"~/eev-wconfig/lua53.exe -i\"))
+(defun eepitch-lua54 () (interactive)
+  (eepitch-comint \"lua54.exe\" \"~/eev-wconfig/lua54.exe -i\"))
 
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 
 
-
+;;;  __  __            
+;;; |  \/  |_ ____   __
+;;; | |\/| | '_ \ \ / /
+;;; | |  | | |_) \ V / 
+;;; |_|  |_| .__/ \_/  
+;;;        |_|         
+;;
 ;; «find-wconfig-mpv-links»  (to ".find-wconfig-mpv-links")
 ;; Skel: (find-find-links-links-new "wconfig-mpv" "" "")
 ;; Test: (find-wconfig-mpv-links)
@@ -465,22 +663,249 @@ wget http://angg.twu.net/2021-oficina/lua52.dll
 (defun find-wconfig-mpv-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig-mpv."
   (interactive)
-  (apply
-   'find-elinks-elisp
-   `((find-wconfig-mpv-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-wconfig-mpv-links)
-     ""
-     ,(ee-template0 "\
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-mpv-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-mpv-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-mpv-links)
+       ""
+       ,(ee-template0 "\
+;; This configuration step is similar to:
+;;   (find-wconfig-browser-links)
 
-;; (find-video-links-intro \"6. Configuring Mpv\")
+;; The current value of the variable `ee-mpv-program' is:
+(setq ee-mpv-program
+  \"{ee-mpv-program}\")
 
-(setenv \"MPVDIR\" \"c:/Users/danie/OneDrive/Documentos/mpv\")
-(setq ee-mpv-program \"$MPVDIR/mpv.exe\")
+
+;; 1. Configure the path
+;; =====================
+;; Make sure that mpv is installed.
+;; See: https://en.wikipedia.org/wiki/Mpv_(media_player)
+;;      https://mpv.io/
+;;      https://mpv.io/installation/
+;;
+;; Replace the string below by the full path of mpv.exe -
+;; note that you NEED to replace all the \\s in it by /s:
+
+(setq ee-mpv-program
+  \"c:/Users/danie/OneDrive/Documentos/mpv/mpv.eve\")
+
+
+;; 2. Test
+;; =======
+;; This test uses a short video that was downloaded by:
+;;   (find-wconfig-wget-links \"2. Use wget.exe to download\")
+;; Check that the file exists: 
+;;   (find-fline \"~/eev-wconfig/\" \"2022dragABC.mp4\")
+;; Try to play it with mpv:
+;;   (find-mpv-video \"~/eev-wconfig/2022dragABC.mp4\"
+;;   (find-video     \"~/eev-wconfig/2022dragABC.mp4\"
+
+
+;; 3. Saving...
+
+(setq ee-mpv-program
+  \"{ee-mpv-program}\")
+
 
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
+
+
+
+;;;  __  __             _      
+;;; |  \/  | __ _  __ _(_) ___ 
+;;; | |\/| |/ _` |/ _` | |/ __|
+;;; | |  | | (_| | (_| | | (__ 
+;;; |_|  |_|\__,_|\__, |_|\___|
+;;;               |___/        
+;;
+;; «find-wconfig-magic-links»  (to ".find-wconfig-magic-links")
+;; Skel: (find-find-links-links-new "wconfig-magic" "" "")
+;; Test: (find-wconfig-magic-links)
+;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-magic-links))
+;;
+(defun find-wconfig-magic-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for wconfig-magic."
+  (interactive)
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-magic-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-magic-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-magic-links)
+       ""
+       ,(ee-template0 "\
+;; You are not expected to understand this!
+;; See: https://thenewstack.io/not-expected-understand-explainer/
+
+
+;; 1. Configure chrome and mpv
+;; ===========================
+;; See: (find-wconfig-browser-links \"1. Configure Chrome\")
+;;      (find-wconfig-browser-links \"3. Update this page\")
+;;      (find-wconfig-mpv-links)
+;; The current values of `ee-googlechrome-program'
+;; and `ee-mpv-program' are:
+;;
+(setq ee-googlechrome-program
+  \"{ee-googlechrome-program}\")
+(setq ee-mpv-program
+  \"{ee-mpv-program}\")
+
+;; Set them to full paths, like:
+(setq ee-googlechrome-program
+ \"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe\")
+(setq ee-mpv-program
+  \"c:/Users/danie/OneDrive/Documentos/mpv/mpv.eve\")
+
+
+
+;; 2. Things that you need to run once
+;; ===================================
+;; See: (find-wconfig-wget-links)
+;;      (find-wconfig-shell-links)
+
+
+
+;; 3. Magic
+;; ========
+;; Running `(ee-wconfig-run-magic)'
+;; runs the three blocks of code below.
+;; See: (find-efunction     'ee-wconfig-run-magic)
+;;      (find-estring-elisp 'ee-wconfig-magic-code)
+
+{ee-wconfig-magic-code}
+
+
+
+;; 4. Save your configuration
+;; ==========================
+;; See: (find-wconfig-browser-links \"4. Save your configuration\")
+
+;; See: (find-wconfig-magic-links)
+;;      (find-wconfig-magic-links 2 \"1. Configure chrome and mpv\")
+;;      (find-wconfig-magic-links 2 \"3. Magic\")
+;;      (find-eev \"eev-load.el\" \"autoloads\")
+;;      (find-eev \"eev-wconfig.el\" \"intro\")
+;;
+(require 'eev-load)
+(require 'eev-wconfig)
+(setq ee-googlechrome-program
+  \"{ee-googlechrome-program}\")
+(setq ee-mpv-program
+  \"{ee-mpv-program}\")
+(ee-wconfig-run-magic)
+
+
+")
+       )
+     pos-spec-list)))
+
+
+
+
+;; «ee-wconfig-run-magic»  (to ".ee-wconfig-run-magic")
+;; Test: (find-estring-elisp ee-wconfig-magic-code)
+(defun ee-wconfig-run-magic ()
+  "This function simply runs `(eval ee-wconfig-magic-code)'.
+See the variable `ee-wconfig-magic-code'."
+  (interactive)
+  (eval ee-wconfig-magic-code))
+
+(defvar ee-wconfig-magic-code "\
+;; See: (find-wconfig-wget-links)
+(setq ee-wget-program      \"~/eev-wconfig/wget.exe\")
+(setq ee-pdftotext-program \"~/eev-wconfig/pdftotext.exe\")
+(defalias 'find-pdf-page 'find-googlechrome-page)
+
+;; See: (find-wconfig-shell-links)
+(defun eepitch-shell  () (interactive) (eepitch-eshell))
+(defun eepitch-shell2 () (interactive) (eepitch-eshell2))
+(defun eepitch-shell3 () (interactive) (eepitch-eshell3))
+(defun ee-find-psne-echo-options () \"-N\")
+
+;; See: (find-wconfig-lua-links)
+(defun eepitch-lua51 () (interactive)
+  (eepitch-comint \"lua52.exe\" \"~/bin/lua52.exe -i\"))
+(defun eepitch-lua52 () (interactive)
+  (eepitch-comint \"lua52.exe\" \"~/bin/lua52.exe -i\"))
+(defun eepitch-lua53 () (interactive)
+  (eepitch-comint \"lua53.exe\" \"~/bin/lua53.exe -i\"))
+(defun eepitch-lua54 () (interactive)
+  (eepitch-comint \"lua54.exe\" \"~/bin/lua54.exe -i\"))
+")
+
+
+
+
+
+;;;  _   _           _       
+;;; | | | |_ __   __| | ___  
+;;; | | | | '_ \ / _` |/ _ \ 
+;;; | |_| | | | | (_| | (_) |
+;;;  \___/|_| |_|\__,_|\___/ 
+;;;                          
+;; «find-wconfig-undo-links»  (to ".find-wconfig-undo-links")
+;; Skel: (find-find-links-links-new "wconfig-undo" "" "")
+;; Test: (find-wconfig-undo-links)
+;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-undo-links))
+;;
+(defun find-wconfig-undo-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for wconfig-undo."
+  (interactive)
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-undo-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-undo-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wconfig-undo-links)
+       ""
+       ,ee-wconfig-undo-links
+       )
+     pos-spec-list)))
+
+(defvar ee-wconfig-undo-links "\
+;; You are not expected to understand this!
+;; See: https://thenewstack.io/not-expected-understand-explainer/
+;; The progn below contains some direty tricks for testing this
+;; on a machine running Debian GNU/Linux.
+
+(progn
+
+(setq ee-googlechrome-program \"google-chrome\")
+
+;; (find-angg \"bin/eev-wconfig\")
+(find-sh0 \"eev-wconfig d\")
+(find-sh0 \"eev-wconfig w\")
+;; (find-sh0 \"eev-wconfig c\")
+
+(setq ee-wget-program \"wget\")
+(defalias 'find-pdf-page 'find-xpdf-page)
+(setq ee-pdftotext-program \"pdftotext\")
+
+(require 'eshell)
+(require 'em-alias)
+(eshell/alias \"wget\")
+(defun eepitch-shell  () (interactive) (eepitch '(shell)))
+(defun eepitch-shell2 () (interactive) (eepitch '(shell \"*shell 2*\")))
+(defun eepitch-shell2 () (interactive) (eepitch '(shell \"*shell 3*\")))
+(defun ee-find-psne-echo-options () \"\")
+
+(setq ee-mpv-program \"mpv\")
+
+(defun eepitch-lua51  () (interactive) (eepitch-comint \"lua51\" \"lua5.1\"))
+(defun eepitch-lua52  () (interactive) (eepitch-comint \"lua52\" \"lua5.2\"))
+(defun eepitch-lua53  () (interactive) (eepitch-comint \"lua53\" \"lua5.3\"))
+(defun eepitch-lua54  () (interactive) (eepitch-comint \"lua54\" \"lua5.4\"))
+
+)
+")
+
+
 
 
 
