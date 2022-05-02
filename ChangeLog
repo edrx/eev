@@ -1,4 +1,24 @@
+2022-05-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-customizeoption): new function.
+	(find-customizevariable): new function.
+	(find-customizeapropos): new function.
+	(find-customizeface): new function.
+
+	* eev-hlinks.el (ee-find-custom-f-links): new function.
+	(ee-find-custom-v-links): new function.
+	(ee-custom-f-re): new variable.
+	(ee-custom-v-re): new variable.
+	(ee-custom-f-bufferp): new function.
+	(ee-custom-v-bufferp): new function.
+	(ee-custom-bufferp): use `ee-custom-re' instead of the major mode.
+	(ee-fhl-main-program): added `(:if (ee-custom-v-bufferp) ...)'.
+	(ee-fhl-main-program): added `(:if (ee-custom-f-bufferp) ...)'.
+
 2022-05-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-custom-lispify-tag-name): new function.
+	(ee-find-custom-links): use `ee-custom-lispify-tag-name'.
 
 	* eev-tlinks.el (find-wgeteevsubtitles-links)
 	(ee-wgeteevsubtitles-cmds): new functions.

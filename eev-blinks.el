@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220317
+;; Version:    20220502
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -332,7 +332,11 @@ then go to the position specified by POS-SPEC-LIST.\n
   (apply 'find-wottb-call '(disassemble function) "*Disassemble*"
 	 pos-spec-list))
 
-;; Test: (find-customizegroup 'processes)
+;; Tests: (find-customizegroup    'processes)
+;;        (find-customizeoption   'fill-column)
+;;        (find-customizevariable 'fill-column)
+;;        (find-customizeapropos  "subed")
+;;        (find-customizeface     'font-lock-comment-face)
 ;;
 (defun find-customizegroup (group &rest pos-spec-list)
   "Hyperlink to the result of running `customize-group' on GROUP."
@@ -344,6 +348,28 @@ then go to the position specified by POS-SPEC-LIST.\n
   (apply 'find-wottb-call '(customize-group group)
 	 (format "*Customize Group: %s*" (custom-unlispify-tag-name group))
 	 pos-spec-list))
+
+(defun find-customizeoption (symbol &rest rest)
+  "Hyperlink to the result of running `customize-option' on SYMBOL."
+  (interactive (custom-variable-prompt))
+  (apply 'find-dbsw-call `(customize-option ',symbol) rest))
+
+(defun find-customizevariable (symbol &rest rest)
+  "Hyperlink to the result of running `customize-variable' on SYMBOL."
+  (interactive (custom-variable-prompt))
+  (apply 'find-dbsw-call `(customize-variable ',symbol) rest))
+
+(defun find-customizeapropos (pattern &optional type &rest rest)
+  "Hyperlink to the result of running `customize-apropos' on PATTERN."
+  (interactive (list (apropos-read-pattern "symbol") nil))
+  (apply 'find-dbsw-call `(customize-apropos pattern type) rest))
+
+(defun find-customizeface (face &rest rest)
+  "Hyperlink to the result of running `customize-face' on PATTERN."
+  (interactive (list (read-face-name
+		      "Customize face"
+                      (or (face-at-point t t) "all faces") t)))
+  (apply 'find-dbsw-call `(customize-face face) rest))
 
 ;; Tests: (find-epackages nil "\n  0x0 ")
 ;;        (find-epackages t   "\n  0x0 ")

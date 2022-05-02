@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220417
+;; Version:    20220502
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -199,7 +199,6 @@ the \"*(find-here-links)*\" buffer."
    (:if (ee-w3m-bufferp)       (ee-find-w3m-links))
    (:if (ee-dired-bufferp)     (ee-find-file-links))
    (:if (ee-wdired-bufferp)    (ee-find-file-links))
-   (:if (ee-custom-bufferp)    (ee-find-custom-links))
    (:if (ee-epackages-bufferp) (ee-find-epackages-links))
    (:if (ee-osm-bufferp)       (ee-find-osm-links))
    (:if (ee-helpful-bufferp)   (ee-find-helpful-links))
@@ -207,6 +206,9 @@ the \"*(find-here-links)*\" buffer."
    ;;
    ;; By buffer name:
    (:if (ee-intro-bufferp)     (ee-find-intro-links))
+   (:if (ee-custom-bufferp)    (ee-find-custom-links))
+   (:if (ee-custom-f-bufferp)  (ee-find-custom-f-links))
+   (:if (ee-custom-v-bufferp)  (ee-find-custom-v-links))
    (:if (ee-freenode-bufferp)  (ee-find-freenode-links))
    (:if (ee-ecolors-bufferp)   (ee-find-ecolors-links))
    (:if (ee-efaces-bufferp)    (ee-find-efaces-links))
@@ -340,6 +342,13 @@ the \"*(find-here-links)*\" buffer."
 
 (defun ee-buffer-help (re n) (intern (or (ee-buffer-help-re0 re n) "nil")))
 
+;; Tests: (custom-unlispify-tag-name  'foo-bar)
+;;        (ee-custom-lispify-tag-name "Foo Bar")
+(defun ee-custom-lispify-tag-name (str)
+  "Do the inverse of `custom-unlispify-tag-name'."
+  (intern (downcase (replace-regexp-in-string " " "-" str))))
+
+
 
 ;;;  _____         _                         _   _ _       _        
 ;;; |_   _|__  ___| |_ ___    __ _ _ __   __| | | (_)_ __ | | _____ 
@@ -365,7 +374,7 @@ the \"*(find-here-links)*\" buffer."
 (defun ee-wdired-bufferp    () (eq major-mode 'wdired-mode))
 (defun ee-eww-bufferp       () (eq major-mode 'eww-mode))
 (defun ee-w3m-bufferp       () (eq major-mode 'w3m-mode))
-(defun ee-custom-bufferp    () (eq major-mode 'Custom-mode))
+;; (defun ee-custom-bufferp () (eq major-mode 'Custom-mode))
 (defun ee-epackages-bufferp () (eq major-mode 'package-menu-mode))
 (defun ee-osm-bufferp       () (eq major-mode 'osm-mode))
 (defun ee-helpful-bufferp   () (eq major-mode 'helpful-mode))
@@ -377,6 +386,9 @@ the \"*(find-here-links)*\" buffer."
 (defun ee-ecolors-bufferp  () (ee-buffer-eq "*Colors*"))
 (defun ee-efaces-bufferp   () (ee-buffer-eq "*Faces*"))
 (defun ee-pdftext-bufferp  () (ee-buffer-re "^pdftotext"))
+(defun ee-custom-bufferp   () (ee-buffer-re ee-custom-re))
+(defun ee-custom-f-bufferp () (ee-buffer-re ee-custom-f-re))
+(defun ee-custom-v-bufferp () (ee-buffer-re ee-custom-v-re))
 
 ;; By buffer name (when it is "*Help*")
 (defvar ee-efunctiondescr-re
@@ -429,9 +441,29 @@ the \"*(find-here-links)*\" buffer."
 (defvar ee-custom-re "^\\*Customize Group: \\(.*\\)\\*$")
 (defun  ee-find-custom-links () 
   (let* ((name   (ee-buffer-re ee-custom-re))
-	 (symbol (intern (downcase (replace-regexp-in-string " " "-" name)))))
+	 (symbol (ee-custom-lispify-tag-name name)))
     `((find-customizegroup ',symbol)
       (customize-group ',symbol)
+      )))
+
+(defvar ee-custom-f-re "^\\*Customize Face: \\(.*\\)\\*$")
+(defun  ee-find-custom-f-links () 
+  (let* ((name   (ee-buffer-re ee-custom-f-re))
+	 (symbol (ee-custom-lispify-tag-name name)))
+    `((find-eface-links ',symbol)
+      (find-customizeface ',symbol)
+      (customize-face ',symbol)
+      )))
+
+(defvar ee-custom-v-re "^\\*Customize Option: \\(.*\\)\\*$")
+(defun  ee-find-custom-v-links () 
+  (let* ((name   (ee-buffer-re ee-custom-v-re))
+	 (symbol (ee-custom-lispify-tag-name name)))
+    `((find-evariable-links ',symbol)
+      (find-customizeoption ',symbol)
+      (find-customizevariable ',symbol)
+      (customize-option ',symbol)
+      (customize-variable ',symbol)
       )))
 
 ;; Other cases
