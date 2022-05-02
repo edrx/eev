@@ -1941,6 +1941,7 @@ http://angg.twu.net/ are newer than the local copy."
      `((find-wgeteevsubtitles-links ,stem ,exts ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-wgeteevsubtitles-links)
+       (find-video-links-intro "5.1. Subtitles")
        ""
        ,(ee-template0 "\
  (eepitch-shell2)

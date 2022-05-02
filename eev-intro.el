@@ -11516,6 +11516,52 @@ The local copy will be played with Mpv, with:
 
 
 
+5.1. Subtitles
+--------------
+Some video have subtitles. If you run this sexp
+
+  (find-wgeteevsubtitles-links \"2022-pict2e-lua\" \".vtt\")
+
+it will create a temporary buffer with this eepitch block:
+
+ (eepitch-shell2)
+ (eepitch-kill)
+ (eepitch-shell2)
+  mkdir -p $S/http/angg.twu.net/eev-videos/
+  cd       $S/http/angg.twu.net/eev-videos/
+  wget -nc  http://angg.twu.net/eev-videos/2022-pict2e-lua.mp4
+  wget -N   http://angg.twu.net/eev-videos/2022-pict2e-lua.vtt
+
+The \"-nc\" says to wget that if the .mp4 (the video) is already
+downloaded then it shouldn't try to download it again; the \"-N\" says
+to wget that if the version of the .vtt (the subtitles) at
+angg.twu.net is newer than the local copy then wget should download
+the newer version, and replace the local copy with the newer version.
+
+When a video has subtitles its `find-1stclassvideo-links' page
+contains a section titled \"Download subtitles:\". Compare:
+
+  (find-1stclassvideo-links \"2022pict2elua\")
+  (find-1stclassvideo-links \"2021workshop6\")
+
+The video \"2022pict2elua\" has subtitles, and \"2021workshop6\" doesn't.
+
+When both the .mp4 and .vtt files are present mpv plays the local copy
+with subtitles. Try:
+
+  (find-video \"$S/http/angg.twu.net/eev-videos/2022-pict2e-lua.mp4\")
+  (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"2022-pict2e-lua\")
+  (find-2022pict2eluavideo \"7:12\")
+
+The process of downloading or updating subtitles is not well
+integrated in the rest of eev yet, and at this moment the \"right\" way
+to download subtitles is with `find-1stclassvideo-links' and with the
+link in its \"Download subtitles\" section.
+
+
+
+
+
 6. Configuring Mpv
 ==================
 After installing Mpv you may have to configure its path. On
@@ -11671,7 +11717,9 @@ videos is by running `M-x find-1stclassvideos', or:
 
 That function displays a temporary buffer with a list of all
 first-class videos, with a `find-1stclassvideo-links' sexp for
-each one.
+each one. Here is a screenshot:
+
+  http://angg.twu.net/IMAGES/2022find-1stclassvideos.png
 
 
 

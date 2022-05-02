@@ -1,5 +1,11 @@
 2022-05-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-video-links-intro): new section: "5.1.
+	Subtitles".
+
+	* eev-videolinks.el (ee-1stclassvideos-info): indicate that the
+	video "2022findelispintro" has subtitles.
+
 	* eev-blinks.el (find-customizeoption): new function.
 	(find-customizevariable): new function.
 	(find-customizeapropos): new function.

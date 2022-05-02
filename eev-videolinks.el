@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220501
+;; Version:    20220502
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -874,6 +874,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/find-elisp-intro.html"
      :date    "2022jan23"
      :length  "21:12"
+     :subs    ".vtt"
      :comment "A very good video on the design decisions behind `(find-elisp-intro)'.")
     ;;
     ;; «2022pict2elua»  (to ".2022pict2elua")
