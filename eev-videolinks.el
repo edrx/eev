@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220502
+;; Version:    20220505
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -64,6 +64,8 @@
 ;;   «.find-2022findeevanggvideo»	(to "find-2022findeevanggvideo")
 ;;   «.find-2022findelispintrovideo»	(to "find-2022findelispintrovideo")
 ;;   «.find-2022pict2eluavideo»		(to "find-2022pict2eluavideo")
+;;   «.find-2022eevwconfigpt1video»	(to "find-2022eevwconfigpt1video")
+;;   «.find-2022eevwconfigpt2video»	(to "find-2022eevwconfigpt2video")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -90,6 +92,8 @@
 ;;   «.2022findeevangg»			(to "2022findeevangg")
 ;;   «.2022findelispintro»		(to "2022findelispintro")
 ;;   «.2022pict2elua»			(to "2022pict2elua")
+;;   «.2022eevwconfigpt1»		(to "2022eevwconfigpt1")
+;;   «.2022eevwconfigpt2»		(to "2022eevwconfigpt2")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -561,6 +565,26 @@ For more info on this particular video, run:
   (interactive)
   (find-eev-video "2022-pict2e-lua" "hiHsUhGVLGM" time))
 
+;; «find-2022eevwconfigpt1video»  (to ".find-2022eevwconfigpt1video")
+;; Info: (find-1stclassvideo-links "2022eevwconfigpt1")
+;; Play: (find-2022eevwconfigpt1video "0:00")
+(defun find-2022eevwconfigpt1video (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2022eevwconfigpt1\")"
+  (interactive)
+  (find-eev-video "2022-eev-wconfig-pt-1" "bdLbocmo3r8" time))
+
+;; «find-2022eevwconfigpt2video»  (to ".find-2022eevwconfigpt2video")
+;; Info: (find-1stclassvideo-links "2022eevwconfigpt2")
+;; Play: (find-2022eevwconfigpt2video "0:00")
+(defun find-2022eevwconfigpt2video (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2022eevwconfigpt2\")"
+  (interactive)
+  (find-eev-video "2022-eev-wconfig-pt-2" "ZAAxrJX-Am8" time))
+
 
 
 
@@ -889,6 +913,32 @@ For more info on this particular video, run:
      :length  "8:13"
      :subs    ".vtt"
      :comment "A very good demo of test blocks.")
+    ;;
+    ;; «2022eevwconfigpt1»  (to ".2022eevwconfigpt1")
+    ;; Play: (find-2022eevwconfigpt1video "0:00")
+    ;; Index: (find-1stclassvideoindex "2022eevwconfigpt1")
+    ("2022eevwconfigpt1"
+     :title "Configuração sem mágica: um experimento com o eev (versão em Português)"
+     :mp4   "http://angg.twu.net/eev-videos/2022-eev-wconfig-pt-1.mp4"
+     :yt    "http://www.youtube.com/watch?v=bdLbocmo3r8"
+     :page  "http://angg.twu.net/eev-wconfig.html"
+     :lang  "portuguese"
+     :date    "2022may02"
+     :length  "29:20"
+     :comment "A video in Portuguese about eev-wconfig.el.")
+    ;;
+    ;; «2022eevwconfigpt2»  (to ".2022eevwconfigpt2")
+    ;; Play: (find-2022eevwconfigpt2video "0:00")
+    ;; Index: (find-1stclassvideoindex "2022eevwconfigpt2")
+    ("2022eevwconfigpt2"
+     :title "Configuração sem mágica: um experimento com o eev (versão em Português, parte 2)"
+     :mp4   "http://angg.twu.net/eev-videos/2022-eev-wconfig-pt-2.mp4"
+     :yt    "http://www.youtube.com/watch?v=ZAAxrJX-Am8"
+     :page  "http://angg.twu.net/eev-wconfig.html"
+     :lang  "portuguese"
+     :date    "2022may02"
+     :length  "46:00"
+     :comment "A video in Portuguese about eev-wconfig.el - second part.")
     ;;
     ))
 

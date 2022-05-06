@@ -1,3 +1,10 @@
+2022-05-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2022eevwconfigpt1video)
+	(find-2022eevwconfigpt2video): new functions.
+	(ee-1stclassvideos-info): added entries for "2022eevwconfigpt1"
+	and "2022eevwconfigpt2".
+
 2022-05-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-video-links-intro): new section: "5.1.

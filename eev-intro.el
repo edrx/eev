@@ -13644,7 +13644,7 @@ rewrite lots of things.
 
 This is my N-th attempt to rewrite this tutorial.
 
-Version of these instructions: 2021nov13.
+Version of these instructions: 2022may03.
 
 
 
@@ -13758,6 +13758,7 @@ There's a video about these basic steps here:
   \"How to install eev with M-x list-packages and how to navigate its tutorials\"
   http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4
              http://angg.twu.net/2020-list-packages-eev-nav.html
+             http://angg.twu.net/.emacs.videos.html#eevnav
              http://www.youtube.com/watch?v=kxBjiUo88_U
 
 
@@ -14809,6 +14810,7 @@ This tutorial here is what I would have liked to have had access to
 when I started learning Emacs Lisp.
 The ideas behind the style of this tutorial are explained here:
   http://angg.twu.net/find-elisp-intro.html
+  (find-1stclassvideo-links \"2022findelispintro\")
 
 TODO: integrate this with these older intros:
   (find-eval-intro)

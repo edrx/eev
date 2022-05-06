@@ -221,6 +221,7 @@
      'find-elinks-elisp
      `((find-wconfig-browser-links ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
        (find-efunction 'find-wconfig-browser-links)
        ""
        ,(ee-template0 "\
@@ -303,6 +304,7 @@
      'find-elinks-elisp
      `((find-wconfig-wget-links ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
        (find-efunction 'find-wconfig-wget-links)
        ""
        ,(ee-template0 "\
@@ -470,6 +472,7 @@ cd       ~/eev-wconfig/
      'find-elinks-elisp
      `((find-wconfig-shell-links ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
        (find-efunction 'find-wconfig-shell-links)
        ""
        ,(ee-template0 "\
@@ -581,6 +584,7 @@ wget --version
      'find-elinks-elisp
      `((find-wconfig-lua-links ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
        (find-efunction 'find-wconfig-lua-links)
        ""
        ,(ee-template0 "\
@@ -668,6 +672,7 @@ for k,v in pairs(_G) do print(k) end
      'find-elinks-elisp
      `((find-wconfig-mpv-links ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
        (find-efunction 'find-wconfig-mpv-links)
        ""
        ,(ee-template0 "\
@@ -704,11 +709,14 @@ for k,v in pairs(_G) do print(k) end
 ;;   (find-video     \"~/eev-wconfig/2022dragABC.mp4\"
 
 
-;; 3. Saving...
+;; 3. Saving
+;; =========
+;; This is similar to: (find-wconfig-browser-links 2 \"4. Save\")
+;; Save the block below - including the comment - to your ~/.emacs:
 
+;; See: (find-wconfig-mpv-links)
 (setq ee-mpv-program
   \"{ee-mpv-program}\")
-
 
 ")
        )
@@ -736,6 +744,7 @@ for k,v in pairs(_G) do print(k) end
      'find-elinks-elisp
      `((find-wconfig-magic-links ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
        (find-efunction 'find-wconfig-magic-links)
        ""
        ,(ee-template0 "\
