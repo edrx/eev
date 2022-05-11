@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220501
+;; Version:    20220511
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -82,8 +82,12 @@
 ;; «.find-eev-update-links»		(to "find-eev-update-links")
 ;; «.find-youtubedl-links»		(to "find-youtubedl-links")
 ;;   «.ee-youtubedl-command»		(to "ee-youtubedl-command")
+;;
 ;; «.find-psne-links»			(to "find-psne-links")
 ;;   «.ee-find-psne-echo-options»	(to "ee-find-psne-echo-options")
+;; «.find-psne-eevvideo-links»		(to "find-psne-eevvideo-links")
+;; «.find-psne-1stclassvideo-links»	(to "find-psne-1stclassvideo-links")
+;;
 ;; «.find-git-links»			(to "find-git-links")
 ;; «.find-fossil-links»			(to "find-fossil-links")
 ;; «.find-apt-get-source-links»		(to "find-apt-get-source-links")
@@ -1274,6 +1278,101 @@ echo {e} '{url}' >> ~/.psne.log
 
 
 
+;;;                                                    _     _            
+;;;  _ __  ___ _ __   ___        ___  _____   ____   _(_) __| | ___  ___  
+;;; | '_ \/ __| '_ \ / _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
+;;; | |_) \__ \ | | |  __/_____|  __/  __/\ V /  \ V /| | (_| |  __/ (_) |
+;;; | .__/|___/_| |_|\___|      \___|\___| \_/    \_/ |_|\__,_|\___|\___/ 
+;;; |_|                                                                   
+;;
+;; «find-psne-eevvideo-links»  (to ".find-psne-eevvideo-links")
+;; Skel: (find-find-links-links-new "psne-eevvideo" "stem exts" "")
+;; Test: (find-psne-eevvideo-links "NAMEOFTHEVIDEO" ".srt .vtt")
+;; See:  (find-video-links-intro "5.1. Subtitles")
+;;
+;; NOTE: `find-psne-eevvideo-links', `ee-psne-eevvideo-core', and
+;;       `find-psne-1stclassvideo-links' were written in 2022may11 and
+;;       will probably replace some of the older functions for
+;;       downloading videos from http://angg.twu.net/ soon - the older
+;;       functions didn't have support for subtitles, and these
+;;       functions do.
+;;
+(defun find-psne-eevvideo-links (&optional stem exts &rest pos-spec-list)
+"Visit a temporary buffer containing a script for downloading a video."
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (setq exts (or exts "{exts}"))
+  (apply
+   'find-elinks
+   `((find-psne-eevvideo-links ,stem ,exts ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-psne-eevvideo-links)
+     ""
+     ,(ee-psne-eevvideo-core stem exts)
+     ,(ee-template0 "\
+")
+     )
+   pos-spec-list))
+
+;; Tests:
+;; (find-estring (ee-psne-eevvideo-core "NAMEOFTHEVIDEO" ".vtt .srt"))
+;; (find-estring (ee-psne-eevvideo-core "NAMEOFTHEVIDEO" ""))
+;; (defun ee-find-psne-echo-options () "-N")
+;; (defun ee-find-psne-echo-options () "")
+;;
+(defun ee-psne-eevvideo-core (stem exts)
+  "An internal function used by `find-psne-eevvideo-links'."
+  (let* ((dir         "$S/http/angg.twu.net/eev-videos/")
+         (url- (concat "http://angg.twu.net/eev-videos/" stem))
+	 (eo (format "%-3s" (ee-find-psne-echo-options)))
+         (wf (lambda (ext) (format "wget -N   %s%s\n" url- ext)))
+         (ef (lambda (ext) (format "echo %s  %s%s >> ~/.psne.log\n" eo url- ext)))
+         (wgets (mapconcat wf (split-string exts)))
+         (echos (mapconcat ef (cons ".mp4" (split-string exts))))
+	 )
+    (ee-template0 "\
+# (find-psne-intro \"1. Local copies of files from the internet\")
+# (find-video-links-intro \"5. Local copies\")
+# (find-video-links-intro \"5.1. Subtitles\")
+
+ (sh-mode)
+ (eepitch-shell2)
+ (eepitch-kill)
+ (eepitch-shell2)
+mkdir -p {dir}
+cd       {dir}
+wget -nc  {url-}.mp4
+{wgets}\
+{echos}\
+
+# (find-fline \"{dir}\" \"{stem}.mp4\")
+# (find-video \"{dir}{stem}.mp4\")
+")))
+
+;; «find-psne-1stclassvideo-links»  (to ".find-psne-1stclassvideo-links")
+;; Skel: (find-find-links-links-new "psne-1stclassvideo" "c" "stem subexts")
+;; Test: (find-psne-1stclassvideo-links "eev2021")
+;;       (find-psne-1stclassvideo-links "2021workshop6")
+;;
+(defun find-psne-1stclassvideo-links (&optional c &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for psne-1stclassvideo."
+  (interactive)
+  (setq c (or c "{c}"))
+  (let* ((stem    (ee-1stclassvideos-mp4stem c))
+         (subexts (or (ee-1stclassvideos-field c :subs) "")))
+    (apply
+     'find-elinks
+     `((find-psne-1stclassvideo-links ,c ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-psne-1stclassvideo-links)
+       ""
+       ,(ee-psne-eevvideo-core stem subexts)
+       )
+     pos-spec-list)))
+
+
+
+
 
 
 
@@ -1640,7 +1739,8 @@ netcat -l -p {tgtport}
 
 ;; «ee-psne-if-needed»  (to ".ee-psne-if-needed")
 ;; Tests:
-;; (ee-psne-if-needed "http://www.gnu.org/software/emacs/emacs-paper.html")
+;;               (ee-psne-if-needed "https://www.lua.org/index.html")
+;; (find-estring (ee-psne-if-needed "https://www.lua.org/index.html"))
 ;; (find-estring (ee-psne-if-needed "http://www.foo.org/bar.html"))
 ;; (find-estring (ee-psne-download  "http://www.foo.org/bar.html"))
 ;; (find-estring (ee-psne-download0 "http://www.foo.org/bar.html"))
@@ -1920,6 +2020,9 @@ and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
 ;;        (find-wgetnode "Download Options" "-N" "--timestamping")
 ;;        (find-wgetnode "Time-Stamping")
 ;;
+;; NOTE: this function was superseded by
+;;       `find-psne-1stclassvideo-links' and will be deleted soon!
+;;
 (defun find-wgeteevsubtitles-links (&optional stem exts &rest pos-spec-list)
 "Visit a temporary buffer containing a script for downloading subtitles.
 The script downloads an eev video and it subtitles. For example,
@@ -1967,7 +2070,7 @@ wget -nc  {url-}.mp4
 {wgets}\
 ")))
 
-
+;; 2022may10: 
 
 
 
@@ -3067,8 +3170,9 @@ For more info on this particular video, run:
       (let ((mp4stem (ee-1stclassvideos-mp4stem c)))
 	(ee-template0 "\
 ;;
-;; Download subtitles:
-;;        (find-wgeteevsubtitles-links \"{mp4stem}\" \"{exts}\")
+;; Download or update subtitles:
+;;        (find-psne-1stclassvideo-links \"{c}\")
+;;        (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")
 ")
 	))))
 

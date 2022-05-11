@@ -1,3 +1,28 @@
+2022-05-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-video-links-intro): rewrote the section "5.1.
+	Subtitles".
+
+	* eev-tlinks.el (find-psne-eevvideo-links)
+	(ee-psne-eevvideo-core, find-psne-1stclassvideo-links): new
+	functions.
+	(ee-1stclassvideos-dlsubs): use `find-psne-1stclassvideo-links'
+	and `find-psne-eevvideo-links' instead of
+	`find-wgeteevsubtitles-links'.
+	(find-wgeteevsubtitles-links): marked as obsolete.
+
+	* eev-videolinks.el (ee-1stclassvideos-localmp4)
+	(ee-1stclassvideos-mp4found): new functions.
+
+2022-05-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-eevlocal-body): rewritten.
+
+2022-05-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-etpat): use `find-dbsw-call' instead of
+	`find-wottb-call'.
+
 2022-05-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-2022eevwconfigpt1video)

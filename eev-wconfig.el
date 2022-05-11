@@ -147,8 +147,12 @@
 ;; «.find-wconfig-shell-links»		(to "find-wconfig-shell-links")
 ;; «.find-wconfig-lua-links»		(to "find-wconfig-lua-links")
 ;; «.find-wconfig-mpv-links»		(to "find-wconfig-mpv-links")
+;;
 ;; «.find-wconfig-magic-links»		(to "find-wconfig-magic-links")
 ;;   «.ee-wconfig-run-magic»		(to "ee-wconfig-run-magic")
+;;
+;; «.find-wconfig-exercises-links»	(to "find-wconfig-exercises-links")
+;;
 ;; «.find-wconfig-undo-links»		(to "find-wconfig-undo-links")
 
 
@@ -211,7 +215,6 @@
 ;; «find-wconfig-browser-links»  (to ".find-wconfig-browser-links")
 ;; Skel: (find-find-links-links-new "wconfig-browser" "" "")
 ;; Test: (find-wconfig-browser-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-browser-links))
 ;;
 (defun find-wconfig-browser-links (&rest pos-spec-list)
 "Visit a temporary buffer containing a script for configuring the browser."
@@ -294,7 +297,6 @@
 ;; «find-wconfig-wget-links»  (to ".find-wconfig-wget-links")
 ;; Skel: (find-find-links-links-new "wconfig-wget" "" "")
 ;; Test: (find-wconfig-wget-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-wget-links))
 ;;
 (defun find-wconfig-wget-links (&rest pos-spec-list)
 "Visit a temporary buffer containing a script for configuring wget on Windows."
@@ -462,7 +464,6 @@ cd       ~/eev-wconfig/
 ;; «find-wconfig-shell-links»  (to ".find-wconfig-shell-links")
 ;; Skel: (find-find-links-links-new "wconfig-shell" "" "")
 ;; Test: (find-wconfig-shell-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-shell-links))
 ;;
 (defun find-wconfig-shell-links (&rest pos-spec-list)
 "Visit a temporary buffer containing a script for configuring eshell on Windows."
@@ -524,6 +525,17 @@ wget --version
 (defun eepitch-shell2 () (interactive) (eepitch-eshell2))
 (defun eepitch-shell3 () (interactive) (eepitch-eshell3))
 
+;; Test: check that the two eepitch
+;; blocks below both run Eshell.
+
+ (eepitch-eshell)
+ (eepitch-kill)
+ (eepitch-eshell)
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
 
 
 ;; 3. Configure the `echo' of eshell
@@ -574,7 +586,6 @@ wget --version
 ;; «find-wconfig-lua-links»  (to ".find-wconfig-lua-links")
 ;; Skel: (find-find-links-links-new "wconfig-lua" "" "")
 ;; Test: (find-wconfig-lua-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-lua-links))
 ;;
 (defun find-wconfig-lua-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig-lua."
@@ -662,7 +673,6 @@ for k,v in pairs(_G) do print(k) end
 ;; «find-wconfig-mpv-links»  (to ".find-wconfig-mpv-links")
 ;; Skel: (find-find-links-links-new "wconfig-mpv" "" "")
 ;; Test: (find-wconfig-mpv-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-mpv-links))
 ;;
 (defun find-wconfig-mpv-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig-mpv."
@@ -734,7 +744,6 @@ for k,v in pairs(_G) do print(k) end
 ;; «find-wconfig-magic-links»  (to ".find-wconfig-magic-links")
 ;; Skel: (find-find-links-links-new "wconfig-magic" "" "")
 ;; Test: (find-wconfig-magic-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-magic-links))
 ;;
 (defun find-wconfig-magic-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig-magic."
@@ -797,6 +806,7 @@ for k,v in pairs(_G) do print(k) end
 
 ;; See: (find-wconfig-magic-links)
 ;;      (find-wconfig-magic-links 2 \"1. Configure chrome and mpv\")
+;;      (find-wconfig-magic-links 2 \"2. Things that you need to run once\")
 ;;      (find-wconfig-magic-links 2 \"3. Magic\")
 ;;      (find-eev \"eev-load.el\" \"autoloads\")
 ;;      (find-eev \"eev-wconfig.el\" \"intro\")
@@ -851,6 +861,45 @@ See the variable `ee-wconfig-magic-code'."
 
 
 
+;;;  _____                   _               
+;;; | ____|_  _____ _ __ ___(_)___  ___  ___ 
+;;; |  _| \ \/ / _ \ '__/ __| / __|/ _ \/ __|
+;;; | |___ >  <  __/ | | (__| \__ \  __/\__ \
+;;; |_____/_/\_\___|_|  \___|_|___/\___||___/
+;;;                                          
+;; «find-wconfig-exercises-links»  (to ".find-wconfig-exercises-links")
+;; Skel: (find-find-links-links-new "wconfig-exercises" "" "")
+;; Test: (find-wconfig-exercises-links)
+;;
+(defun find-wconfig-exercises-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for wconfig-exercises."
+  (interactive)
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-wconfig-exercises-links)*")))
+    (apply
+     'find-elinks-elisp
+     `((find-wconfig-exercises-links ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-wconfig-links)
+       (find-efunction 'find-wconfig-exercises-links)
+       ""
+       ,(ee-template0 "\
+;; 1. Understand `code-c-d'
+;; ========================
+
+;; 2. Download the .zip
+
+;; 3. Understand `M-h M-e'
+;; =======================
+
+;; Exercise: learn Org!
+;; See: http://angg.twu.net/eev-wconfig.el#learn-org
+
+")
+       )
+     pos-spec-list)))
+
+
+
 
 ;;;  _   _           _       
 ;;; | | | |_ __   __| | ___  
@@ -861,7 +910,6 @@ See the variable `ee-wconfig-magic-code'."
 ;; «find-wconfig-undo-links»  (to ".find-wconfig-undo-links")
 ;; Skel: (find-find-links-links-new "wconfig-undo" "" "")
 ;; Test: (find-wconfig-undo-links)
-;;       (defun edt () (interactive) (eval-defun nil) (find-wconfig-undo-links))
 ;;
 (defun find-wconfig-undo-links (&rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for wconfig-undo."
@@ -913,6 +961,7 @@ See the variable `ee-wconfig-magic-code'."
 
 )
 ")
+
 
 
 

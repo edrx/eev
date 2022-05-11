@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220502
+;; Version:    20220507
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -484,8 +484,8 @@ See `find-etpat0' and `find-etpat00' for lower-level tools for
 inspecting text proprties."
   (interactive)
   (setq pos (or pos (point)))
-  (apply 'find-wottb-call '(describe-text-properties pos)
-	 "*Help*" pos-spec-list))
+  (apply 'find-dbsw-call '(describe-text-properties pos)
+	 pos-spec-list))
 
 (defun find-etpat0 (&rest pos-spec-list)
 "Hyperlink to a pretty version of the result of (text-properties-at (point))."

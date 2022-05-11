@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220505
+;; Version:    20220511
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -195,20 +195,26 @@
 ;; (find-estring (ee-eevlocal-body "emacsconf2020" "0123456789a" nil))
 ;; (find-estring (ee-eevlocal-body "emacsconf2020" "0123456789a" "1:23"))
 ;; (find-estring (ee-eevlocal-body "emacsconf1234" "0123456789a" "1:23"))
-
-(defun ee-eevlocal-body (stem hash time)
-  "An internal function used by `find-eevlocal-links'."
-  (let ((url (format "http://angg.twu.net/eev-videos/%s.mp4" stem)))
-    (concat (ee-eevlocal-youtube-comment hash time)
-	    "\n" (ee-psne-url-comment url)
-	    "\n\n" (ee-eevlocal-psne stem time)
-	    )))
-
-;; Tests:
 ;; (find-estring (ee-eevlocal-youtube-comment "0123456789a" nil))
 ;; (find-estring (ee-eevlocal-youtube-comment "0123456789a" ""))
 ;; (find-estring (ee-eevlocal-youtube-comment "0123456789a" "1:23"))
-;;
+;; (find-estring (ee-psne-url-comment "http://www.foo.org/bar.html"))
+;; (find-estring (ee-eevlocal-psne "emacsconf1234" nil))
+;; (find-estring (ee-eevlocal-psne "emacsconf2020" nil))
+;; (find-estring (ee-eevlocal-psne "emacsconf2020" "1:23"))
+
+(defun ee-eevlocal-body (stem hash time)
+  "An internal function used by `find-eevlocal-links'."
+  (let* ((url (format "http://angg.twu.net/eev-videos/%s.mp4" stem))
+	 (youtube-comment (ee-eevlocal-youtube-comment hash time))
+	 (psne-comment    (ee-psne-url-comment         url))
+	 (psne            (ee-eevlocal-psne            stem time)))
+    (ee-template0 "\
+{youtube-comment}
+{psne-comment}
+{psne}\
+")))
+
 (defun ee-eevlocal-youtube-comment (hash time)
   "An internal function used by `find-eevlocal-links'."
   (let* ((youtubeurl (ee-find-youtube-url hash time))
@@ -221,9 +227,11 @@
 ")))
 
 ;; Tests:
-;; (find-estring (ee-eevlocal-psne "emacsconf1234" nil))
 ;; (find-estring (ee-eevlocal-psne "emacsconf2020" nil))
 ;; (find-estring (ee-eevlocal-psne "emacsconf2020" "1:23"))
+;; (find-estring (ee-eevlocal-psne "emacsconf2345" nil))
+;; (find-estring (ee-psne-if-needed "https://www.lua.org/index.html"))
+;; (find-estring (ee-psne-if-needed "http://foo/bar"))
 ;; (find-estring (ee-eevlocal-findmpvvideo "emacsconf2020" nil))
 ;; (find-estring (ee-eevlocal-findmpvvideo "emacsconf2020" "{foo}"))
 ;; (find-estring (ee-eevlocal-findmpvvideo "emacsconf2020" "1:23"))
@@ -243,6 +251,7 @@
     (ee-template0 "\
 # (find-mpv-video \"{fname}\"{timearg})
 ")))
+
 
 
 
@@ -945,16 +954,18 @@ For more info on this particular video, run:
 
 ;; «ee-1stclassvideos-field»  (to ".ee-1stclassvideos-field")
 ;;
-;;                           (find-eppp ee-1stclassvideos-info)
-;;                     (assoc "eev2021" ee-1stclassvideos-info)
-;;                (cdr (assoc "eev2021" ee-1stclassvideos-info))
-;;     (plist-get (cdr (assoc "eev2021" ee-1stclassvideos-info)) :page)
-;;     (plist-get (cdr (assoc "foo"     ee-1stclassvideos-info)) :page)
-;; (ee-1stclassvideos-field   "eev2021" :page)
-;; (ee-1stclassvideos-field   "eev2021" :mp4)
-;; (ee-1stclassvideos-field   "eev2021" :yt)
-;; (ee-1stclassvideos-mp4stem "eev2021")
-;; (ee-1stclassvideos-hash    "eev2021")
+;;                            (find-eppp ee-1stclassvideos-info)
+;;                      (assoc "eev2021" ee-1stclassvideos-info)
+;;                 (cdr (assoc "eev2021" ee-1stclassvideos-info))
+;;      (plist-get (cdr (assoc "eev2021" ee-1stclassvideos-info)) :page)
+;;      (plist-get (cdr (assoc "foo"     ee-1stclassvideos-info)) :page)
+;; (ee-1stclassvideos-field    "eev2021" :page)
+;; (ee-1stclassvideos-field    "eev2021" :mp4)
+;; (ee-1stclassvideos-field    "eev2021" :yt)
+;; (ee-1stclassvideos-mp4stem  "eev2021")
+;; (ee-1stclassvideos-localmp4 "eev2021")
+;; (ee-1stclassvideos-mp4found "eev2021")
+;; (ee-1stclassvideos-hash     "eev2021")
 ;; (find-eev "eev-videolinks.el" "more-info")
 ;;
 (defun ee-1stclassvideos-field (c &optional field)
@@ -968,6 +979,14 @@ For more info on this particular video, run:
   (let ((yt (ee-1stclassvideos-field c :yt)))
      (replace-regexp-in-string "^.*=\\([^=]*\\)$" "\\1" yt)))
 
+(defun ee-1stclassvideos-localmp4 (c)
+  (ee-shorten-file-name
+   (ee-url-to-fname
+    (ee-1stclassvideos-field c :mp4))))
+
+(defun ee-1stclassvideos-mp4found (c)
+  (ee-psne-downloaded-p
+   (ee-1stclassvideos-field c :mp4)))
 
 
 
