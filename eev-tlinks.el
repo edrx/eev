@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220511
+;; Version:    20220512
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -87,6 +87,7 @@
 ;;   «.ee-find-psne-echo-options»	(to "ee-find-psne-echo-options")
 ;; «.find-psne-eevvideo-links»		(to "find-psne-eevvideo-links")
 ;; «.find-psne-1stclassvideo-links»	(to "find-psne-1stclassvideo-links")
+;; «.find-1stclassvideo-video»		(to "find-1stclassvideo-video")
 ;;
 ;; «.find-git-links»			(to "find-git-links")
 ;; «.find-fossil-links»			(to "find-fossil-links")
@@ -1278,6 +1279,7 @@ echo {e} '{url}' >> ~/.psne.log
 
 
 
+
 ;;;                                                    _     _            
 ;;;  _ __  ___ _ __   ___        ___  _____   ____   _(_) __| | ___  ___  
 ;;; | '_ \/ __| '_ \ / _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
@@ -1286,41 +1288,44 @@ echo {e} '{url}' >> ~/.psne.log
 ;;; |_|                                                                   
 ;;
 ;; «find-psne-eevvideo-links»  (to ".find-psne-eevvideo-links")
-;; Skel: (find-find-links-links-new "psne-eevvideo" "stem exts" "")
-;; Test: (find-psne-eevvideo-links "NAMEOFTHEVIDEO" ".srt .vtt")
+;; Skel:  (find-find-links-links-new "psne-eevvideo" "stem exts time" "")
+;; Tests: (find-psne-eevvideo-links "NAMEOFTHEVIDEO" ".srt .vtt")
+;;        (find-psne-eevvideo-links "NAMEOFTHEVIDEO" ".srt")
+;;        (find-psne-eevvideo-links "NAMEOFTHEVIDEO" "")
+;;        (find-psne-eevvideo-links "NAMEOFTHEVIDEO" "" "1:23")
 ;; See:  (find-video-links-intro "5.1. Subtitles")
 ;;
-;; NOTE: `find-psne-eevvideo-links', `ee-psne-eevvideo-core', and
-;;       `find-psne-1stclassvideo-links' were written in 2022may11 and
-;;       will probably replace some of the older functions for
-;;       downloading videos from http://angg.twu.net/ soon - the older
-;;       functions didn't have support for subtitles, and these
-;;       functions do.
+;; NOTE: `find-psne-eevvideo-links', `ee-psne-eevvideo-core',
+;;       `find-psne-1stclassvideo-links',
+;;       `ee-psne-1stclassvideo-play', and `find-1stclassvideo-video'
+;;       were written in 2022may11 and will probably replace several
+;;       older functions soon... these new functions have support for
+;;       subtitles, and the older ones didn't.
 ;;
-(defun find-psne-eevvideo-links (&optional stem exts &rest pos-spec-list)
+(defun find-psne-eevvideo-links (&optional stem exts time &rest pos-spec-list)
 "Visit a temporary buffer containing a script for downloading a video."
   (interactive)
   (setq stem (or stem "{stem}"))
   (setq exts (or exts "{exts}"))
+  (setq time (or time "0:00"))
   (apply
    'find-elinks
-   `((find-psne-eevvideo-links ,stem ,exts ,@pos-spec-list)
+   `((find-psne-eevvideo-links ,stem ,exts ,time ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-psne-eevvideo-links)
      ""
-     ,(ee-psne-eevvideo-core stem exts)
-     ,(ee-template0 "\
-")
+     ,(ee-psne-eevvideo-core stem exts time)
      )
    pos-spec-list))
 
 ;; Tests:
-;; (find-estring (ee-psne-eevvideo-core "NAMEOFTHEVIDEO" ".vtt .srt"))
-;; (find-estring (ee-psne-eevvideo-core "NAMEOFTHEVIDEO" ""))
+;; (find-estring (ee-psne-eevvideo-core "NAME" ".vtt .srt" "0:00"))
+;; (find-estring (ee-psne-eevvideo-core "NAME" ".vtt"      "0:00"))
+;; (find-estring (ee-psne-eevvideo-core "NAME" ""          "0:00"))
 ;; (defun ee-find-psne-echo-options () "-N")
 ;; (defun ee-find-psne-echo-options () "")
 ;;
-(defun ee-psne-eevvideo-core (stem exts)
+(defun ee-psne-eevvideo-core (stem exts time)
   "An internal function used by `find-psne-eevvideo-links'."
   (let* ((dir         "$S/http/angg.twu.net/eev-videos/")
          (url- (concat "http://angg.twu.net/eev-videos/" stem))
@@ -1347,28 +1352,71 @@ wget -nc  {url-}.mp4
 
 # (find-fline \"{dir}\" \"{stem}.mp4\")
 # (find-video \"{dir}{stem}.mp4\")
+# (find-video \"{dir}{stem}.mp4\" \"{time}\")
 ")))
 
+
+;;;                             _     _       _               
+;;;  _ __  ___ _ __   ___      / |___| |_ ___| | __ _ ___ ___ 
+;;; | '_ \/ __| '_ \ / _ \_____| / __| __/ __| |/ _` / __/ __|
+;;; | |_) \__ \ | | |  __/_____| \__ \ || (__| | (_| \__ \__ \
+;;; | .__/|___/_| |_|\___|     |_|___/\__\___|_|\__,_|___/___/
+;;; |_|                                                       
+;;
 ;; «find-psne-1stclassvideo-links»  (to ".find-psne-1stclassvideo-links")
-;; Skel: (find-find-links-links-new "psne-1stclassvideo" "c" "stem subexts")
+;; Skel: (find-find-links-links-new "psne-1stclassvideo" "c time" "stem subexts")
 ;; Test: (find-psne-1stclassvideo-links "eev2021")
 ;;       (find-psne-1stclassvideo-links "2021workshop6")
 ;;
-(defun find-psne-1stclassvideo-links (&optional c &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for psne-1stclassvideo."
+(defun find-psne-1stclassvideo-links (&optional c time &rest pos-spec-list)
+"Visit a temporary buffer with a script for downloading the video C."
   (interactive)
   (setq c (or c "{c}"))
+  (setq time (or time "0:00"))
   (let* ((stem    (ee-1stclassvideos-mp4stem c))
          (subexts (or (ee-1stclassvideos-field c :subs) "")))
     (apply
      'find-elinks
-     `((find-psne-1stclassvideo-links ,c ,@pos-spec-list)
+     `((find-psne-1stclassvideo-links ,c ,time ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-psne-1stclassvideo-links)
        ""
-       ,(ee-psne-eevvideo-core stem subexts)
+       ,(ee-psne-eevvideo-core stem subexts time)
+       ,(ee-psne-1stclassvideo-play c time)
        )
      pos-spec-list)))
+
+;; Test:
+;; (find-estring (ee-psne-1stclassvideo-play "eev2021" "1:23"))
+;;
+(defun ee-psne-1stclassvideo-play (c time)
+  "An internal function used by `find-psne-1sclassvideo-links'."
+  (let* ((localmp4 (ee-1stclassvideos-localmp4 c))
+	 (yt       (ee-1stclassvideos-field    c :yt))
+	 (timearg  (ee-time-to-arg          time))
+         (yttime   (ee-time-to-youtube-time time))
+	 )
+    (ee-template0 "\
+# (find-1stclassvideo-video \"{c}\" \"{time}\")
+# (find-{c}video \"{time}\")
+
+# {yt}{yttime}
+")))
+
+
+;; «find-1stclassvideo-video»  (to ".find-1stclassvideo-video")
+;; Tests: (find-1stclassvideo-video "eev2021")
+;;        (find-eevvideossh0 "mv -v emacsconf2021.mp4 /tmp/")
+;;        (find-eevvideossh0 "mv -v /tmp/emacsconf2021.mp4 .")
+;;
+(defun find-1stclassvideo-video (c &optional time &rest rest)
+  "Play the first-class video C starting at TIME.
+If a local copy of C is not found, run `find-psne-1stclassvideo-links'."
+  (setq time (or time "0:00"))
+  (if (ee-1stclassvideos-mp4found c)
+      (find-video (ee-1stclassvideos-localmp4 c) time)
+    (find-psne-1stclassvideo-links c time)))
+
 
 
 
@@ -3097,6 +3145,9 @@ This function is used by `ee-0x0-upload-region'."
        )
      pos-spec-list)))
 
+;; Test:
+;; (find-estring-elisp (ee-find-1stclassvideo-links "eev2021"))
+;;
 (defun ee-find-1stclassvideo-links (c)
   "An internal function used by `find-1stclassvideo-links'."
   (let* ((title   (ee-1stclassvideos-field c :title))
@@ -3109,7 +3160,8 @@ This function is used by `ee-0x0-upload-region'."
 	 (lang    (ee-1stclassvideos-field c :lang))
 	 (mp4stem (ee-1stclassvideos-mp4stem c))
 	 (hash    (ee-1stclassvideos-hash c))
-	 (dlsubs  (ee-1stclassvideos-dlsubs c)))
+	 (dlsubs  (ee-1stclassvideos-dlsubs c))
+	 (defun   (ee-find-1stclassvideo-defun c mp4stem hash)))
     (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
@@ -3146,6 +3198,13 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
 ;;               (find-efunction 'find-{c}video)
 
+{defun}")))
+
+;; Test:
+;; (find-estring-elisp (ee-find-1stclassvideo-defun "C" "M" "H"))
+;;
+(defun ee-find-1stclassvideo-defun (c mp4stem hash)
+  (ee-template0 "\
 ;; <find-{c}video>
 ;; Info: (find-1stclassvideo-links \"{c}\")
 ;; Play: (find-{c}video \"0:00\")
@@ -3155,7 +3214,7 @@ For more info on this particular video, run:
   (find-1stclassvideo-links \\\"{c}\\\")\"
   (interactive)
   (find-eev-video \"{mp4stem}\" \"{hash}\" time))
-")))
+"))
 
 ;; Tests: (ee-1stclassvideos-dlsubs "2022pict2elua")
 ;;        (find-1stclassvideo-links "2022pict2elua")
@@ -3166,7 +3225,11 @@ For more info on this particular video, run:
   "An internal function used by `find-1stclassvideo-links'."
   (let ((exts (ee-1stclassvideos-field c :subs)))
     (if (eq exts nil)
-	""
+	"\
+;;
+;; This video doesn't have subtitles. See:
+;;        (find-video-links-intro \"5.1. Subtitles\")
+"
       (let ((mp4stem (ee-1stclassvideos-mp4stem c)))
 	(ee-template0 "\
 ;;

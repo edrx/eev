@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220511
+;; Version:    20220512
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -42,7 +42,7 @@
 ;;   «.find-eev2019video»		(to "find-eev2019video")
 ;;   «.find-eev2020video»		(to "find-eev2020video")
 ;;   «.find-eev2021video»		(to "find-eev2021video")
-;;   «.find-eev2021bvideo»	        (to "find-eev2021bvideo")
+;;   «.find-eev2021bvideo»		(to "find-eev2021bvideo")
 ;;   «.find-eevnavvideo»		(to "find-eevnavvideo")
 ;;   «.find-eevtemplvideo»		(to "find-eevtemplvideo")
 ;;   «.find-eevfherelvideo»		(to "find-eevfherelvideo")
@@ -332,7 +332,7 @@ of the videos and play them with mpv. Compare with
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eev2019\")"
   (interactive)
-  (find-eev-video "emacsconf2019" "86yiRG8YJD0" time))
+  (find-1stclassvideo-video "eev2019" time))
 
 ;; «find-eev2020video»  (to ".find-eev2020video")
 ;; Info: (find-1stclassvideo-links "eev2020")
@@ -342,7 +342,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eev2020\")"
   (interactive)
-  (find-eev-video "emacsconf2020" "hOAqBc42Gg8" time))
+  (find-1stclassvideo-video "eev2020" time))
 
 ;; «find-eev2021video»  (to ".find-eev2021video")
 ;; Info: (find-1stclassvideo-links "eev2021")
@@ -352,7 +352,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eev2021\")"
   (interactive)
-  (find-eev-video "emacsconf2021" "qM0Luz78qGw" time))
+  (find-1stclassvideo-video "eev2021" time))
 
 ;; «find-eev2021bvideo»  (to ".find-eev2021bvideo")
 ;; Info: (find-1stclassvideo-links "eev2021b")
@@ -362,7 +362,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eev2021b\")"
   (interactive)
-  (find-eev-video "emacsconf2021-dednat6" "QUMo7vgkHJI" time))
+  (find-1stclassvideo-video "eev2021b" time))
 
 ;; «find-eevnavvideo»  (to ".find-eevnavvideo")
 ;; Info: (find-1stclassvideo-links "eevnav")
@@ -372,7 +372,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eevnav\")"
   (interactive)
-  (find-eev-video "2020-list-packages-eev-nav" "kxBjiUo88_U" time))
+  (find-1stclassvideo-video "eevnav" time))
 
 ;; «find-eevtemplvideo»  (to ".find-eevtemplvideo")
 ;; Info: (find-1stclassvideo-links "eevtempl")
@@ -382,7 +382,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eevtempl\")"
   (interactive)
-  (find-eev-video "2020-some-template-based" "91-9YfRPsuk" time))
+  (find-1stclassvideo-video "eevtempl" time))
 
 ;; «find-eevfherelvideo»  (to ".find-eevfherelvideo")
 ;; Info: (find-1stclassvideo-links "eevfherel")
@@ -392,7 +392,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eevfherel\")"
   (interactive)
-  (find-eev-video "2020-find-here-links" "8jtiBlaDor4" time))
+  (find-1stclassvideo-video "eevfherel" time))
 
 ;; «find-eevtestblsvideo»  (to ".find-eevtestblsvideo")
 ;; Info: (find-1stclassvideo-links "eevtestbls")
@@ -402,7 +402,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eevtestbls\")"
   (interactive)
-  (find-eev-video "2021-test-blocks" "fpsF_M55W4o" time))
+  (find-1stclassvideo-video "eevtestbls" time))
 
 ;; «find-eevvlinksvideo»  (to ".find-eevvlinksvideo")
 ;; Info: (find-1stclassvideo-links "eevvlinks")
@@ -412,7 +412,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"eevvlinks\")"
   (interactive)
-  (find-eev-video "2021-video-links" "xQqWufQgzVY" time))
+  (find-1stclassvideo-video "eevvlinks" time))
 
 ;; «find-oficina20210video»  (to ".find-oficina20210video")
 ;; Info: (find-1stclassvideo-links "oficina20210")
@@ -422,7 +422,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"oficina20210\")"
   (interactive)
-  (find-eev-video "2021projeto-de-ensino" "OW6WRnSQwc0" time))
+  (find-1stclassvideo-video "oficina20210" time))
 
 ;; «find-oficina2021avideo»  (to ".find-oficina2021avideo")
 ;; Info: (find-1stclassvideo-links "oficina2021a")
@@ -432,7 +432,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"oficina2021a\")"
   (interactive)
-  (find-eev-video "2021-oficina-1" "acFPMuZ5Jf4" time))
+  (find-1stclassvideo-video "oficina2021a" time))
 
 ;; «find-oficina2021bvideo»  (to ".find-oficina2021bvideo")
 ;; Info: (find-1stclassvideo-links "oficina2021b")
@@ -442,7 +442,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"oficina2021b\")"
   (interactive)
-  (find-eev-video "2021-oficina-2" "XbuDnkfizYs" time))
+  (find-1stclassvideo-video "oficina2021b" time))
 
 ;; «find-2021ssrvideo»  (to ".find-2021ssrvideo")
 ;; Info: (find-1stclassvideo-links "2021ssr")
@@ -452,7 +452,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021ssr\")"
   (interactive)
-  (find-eev-video "2021-ssr" "_0_NLXTVhBk" time))
+  (find-1stclassvideo-video "2021ssr" time))
 
 ;; «find-2021workshop1video»  (to ".find-2021workshop1video")
 ;; Info: (find-1stclassvideo-links "2021workshop1")
@@ -462,7 +462,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021workshop1\")"
   (interactive)
-  (find-eev-video "2021-workshop-1" "HuqJFPD871E" time))
+  (find-1stclassvideo-video "2021workshop1" time))
 
 ;; «find-2021workshop2video»  (to ".find-2021workshop2video")
 ;; Info: (find-1stclassvideo-links "2021workshop2")
@@ -472,7 +472,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021workshop2\")"
   (interactive)
-  (find-eev-video "2021-workshop-2" "hqqIlZBXNhk" time))
+  (find-1stclassvideo-video "2021workshop2" time))
 
 ;; «find-2021workshop3video»  (to ".find-2021workshop3video")
 ;; Info: (find-1stclassvideo-links "2021workshop3")
@@ -482,7 +482,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021workshop3\")"
   (interactive)
-  (find-eev-video "2021-workshop-3" "r83inf9s8zo" time))
+  (find-1stclassvideo-video "2021workshop3" time))
 
 ;; «find-2021workshop4video»  (to ".find-2021workshop4video")
 ;; Info: (find-1stclassvideo-links "2021workshop4")
@@ -492,7 +492,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021workshop4\")"
   (interactive)
-  (find-eev-video "2021-workshop-4" "lhpHHjBUxv8" time))
+  (find-1stclassvideo-video "2021workshop4" time))
 
 ;; «find-2021workshop5video»  (to ".find-2021workshop5video")
 ;; Info: (find-1stclassvideo-links "2021workshop5")
@@ -502,7 +502,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021workshop5\")"
   (interactive)
-  (find-eev-video "2021-workshop-5" "VzRsterVSXs" time))
+  (find-1stclassvideo-video "2021workshop5" time))
 
 ;; «find-2021workshop6video»  (to ".find-2021workshop6video")
 ;; Info: (find-1stclassvideo-links "2021workshop6")
@@ -512,7 +512,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021workshop6\")"
   (interactive)
-  (find-eev-video "2021-workshop-6" "-gi15-liGaU" time))
+  (find-1stclassvideo-video "2021workshop6" time))
 
 ;; «find-2021orgfornonusersvideo»  (to ".find-2021orgfornonusersvideo")
 ;; Info: (find-1stclassvideo-links "2021orgfornonusers")
@@ -522,7 +522,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021orgfornonusers\")"
   (interactive)
-  (find-eev-video "2021-org-for-non-users" "Eh5Wz9Vh_XM" time))
+  (find-1stclassvideo-video "2021orgfornonusers" time))
 
 ;; «find-2021ffllvideo»  (to ".find-2021ffllvideo")
 ;; Info: (find-1stclassvideo-links "2021ffll")
@@ -532,7 +532,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2021ffll\")"
   (interactive)
-  (find-eev-video "2021-ffll" "h1CEL2fmkyc" time))
+  (find-1stclassvideo-video "2021ffll" time))
 
 ;; «find-2022eevmake0video»  (to ".find-2022eevmake0video")
 ;; Info: (find-1stclassvideo-links "2022eevmake0")
@@ -542,7 +542,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2022eevmake0\")"
   (interactive)
-  (find-eev-video "2022-eev-make-0" "Iql5C-yQk5c" time))
+  (find-1stclassvideo-video "2022eevmake0" time))
 
 ;; «find-2022findeevanggvideo»  (to ".find-2022findeevanggvideo")
 ;; Info: (find-1stclassvideo-links "2022findeevangg")
@@ -552,7 +552,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2022findeevangg\")"
   (interactive)
-  (find-eev-video "2022-find-eev-angg" "FoAzpGzFCSE" time))
+  (find-1stclassvideo-video "2022findeevangg" time))
 
 ;; «find-2022findelispintrovideo»  (to ".find-2022findelispintrovideo")
 ;; Info: (find-1stclassvideo-links "2022findelispintro")
@@ -562,7 +562,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2022findelispintro\")"
   (interactive)
-  (find-eev-video "2022-find-elisp-intro" "WowDSciGs1A" time))
+  (find-1stclassvideo-video "2022findelispintro" time))
 
 ;; «find-2022pict2eluavideo»  (to ".find-2022pict2eluavideo")
 ;; Info: (find-1stclassvideo-links "2022pict2elua")
@@ -572,7 +572,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2022pict2elua\")"
   (interactive)
-  (find-eev-video "2022-pict2e-lua" "hiHsUhGVLGM" time))
+  (find-1stclassvideo-video "2022pict2elua" time))
 
 ;; «find-2022eevwconfigpt1video»  (to ".find-2022eevwconfigpt1video")
 ;; Info: (find-1stclassvideo-links "2022eevwconfigpt1")
@@ -582,7 +582,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2022eevwconfigpt1\")"
   (interactive)
-  (find-eev-video "2022-eev-wconfig-pt-1" "bdLbocmo3r8" time))
+  (find-1stclassvideo-video "2022eevwconfigpt1" time))
 
 ;; «find-2022eevwconfigpt2video»  (to ".find-2022eevwconfigpt2video")
 ;; Info: (find-1stclassvideo-links "2022eevwconfigpt2")
@@ -592,8 +592,7 @@ For more info on this particular video, run:
 For more info on this particular video, run:
   (find-1stclassvideo-links \"2022eevwconfigpt2\")"
   (interactive)
-  (find-eev-video "2022-eev-wconfig-pt-2" "ZAAxrJX-Am8" time))
-
+  (find-1stclassvideo-video "2022eevwconfigpt2" time))
 
 
 
@@ -614,6 +613,15 @@ For more info on this particular video, run:
 ;; that shows a temporary buffer with many lines like these ones:
 ;;
 ;;   (find-1stclassvideo-links "eev2021")
+;;
+;; Each entry in `ee-1stclassvideos-info' is of the form (c plist).
+;; The term `c' is a reference to this:
+;;
+;;   (find-eev-quick-intro "9.1. `code-c-d'" "{c}")
+;;   (find-eev-quick-intro "9.1. `code-c-d'" "{c}" "code")
+;;
+;; For example, the entry ("eev2019" ...) contains info about the
+;; video that can be played with `(find-eev2019video)'.
 ;;
 (defvar ee-1stclassvideos-info
   '(;;

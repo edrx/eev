@@ -1,3 +1,26 @@
+2022-05-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-eev2019video, find-eev2020video)
+	(find-eev2021video, find-eev2021bvideo, find-eevnavvideo)
+	(find-eevtemplvideo, find-eevfherelvideo, find-eevtestblsvideo)
+	(find-eevvlinksvideo, find-oficina20210video)
+	(find-oficina2021avideo, find-oficina2021bvideo)
+	(find-2021ssrvideo, find-2021workshop1video)
+	(find-2021workshop2video, find-2021workshop3video)
+	(find-2021workshop4video, find-2021workshop5video)
+	(find-2021workshop6video, find-2021orgfornonusersvideo)
+	(find-2021ffllvideo, find-2022eevmake0video)
+	(find-2022findeevanggvideo, find-2022findelispintrovideo)
+	(find-2022pict2eluavideo, find-2022eevwconfigpt1video)
+	(find-2022eevwconfigpt2video): use `find-1stclassvideo-video'.
+
+	* eev-tlinks.el (ee-psne-1stclassvideo-play)
+	(find-1stclassvideo-video): new functions.
+	(ee-find-1stclassvideo-defun): new function.
+	(ee-find-1stclassvideo-links): use `ee-find-1stclassvideo-defun'.
+
+	* eev-code.el: added `(code-c-d "eevvideos" ...).
+
 2022-05-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-video-links-intro): rewrote the section "5.1.
