@@ -3213,7 +3213,7 @@ This function is used by `ee-0x0-upload-region'."
 For more info on this particular video, run:
   (find-1stclassvideo-links \\\"{c}\\\")\"
   (interactive)
-  (find-eev-video \"{mp4stem}\" \"{hash}\" time))
+  (find-1stclassvideo-video \"{c}\" time))
 "))
 
 ;; Tests: (ee-1stclassvideos-dlsubs "2022pict2elua")

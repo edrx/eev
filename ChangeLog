@@ -1,3 +1,16 @@
+2022-05-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (ee-time-to-youtube-time): fixed a bug.
+
+2022-05-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2022eevwconfigvideo): new function.
+	(ee-1stclassvideos-info): added an entry for "2022eevwconfig".
+
+2022-05-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-eface-links): added some items.
+
 2022-05-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-eev2019video, find-eev2020video)

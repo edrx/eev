@@ -1113,6 +1113,7 @@ means."
        (find-efacedescr     ',face-symbol)
        (find-efaces         ',face-symbol)
        (find-eface          ',face-symbol)
+       (describe-face       ',face-symbol)
        (customize-face      ',face-symbol)
        (set-face-foreground ',face-symbol ,fg)
        (set-face-background ',face-symbol ,bg)
@@ -1120,6 +1121,9 @@ means."
        (find-ecolor-links ,fg)
        (find-ecolor-links ,bg)
        (find-ecolors)
+       ""
+       (face-all-attributes ',face-symbol (selected-frame))
+       (find-epp (face-all-attributes ',face-symbol (selected-frame)))
        ""
        (face-id ',face-symbol)
        (find-epp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))

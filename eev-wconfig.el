@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220501
+;; Version:    20220516
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wconfig.el>
@@ -47,6 +47,7 @@
 ;;   (find-psne-intro "1. Local copies of files from the internet" "wget")
 ;;   (find-video-links-intro "1. Introduction")
 ;;   (find-video-links-intro "1. Introduction" "[Video links:]")
+;;   (find-video-links-intro "5.1. Subtitles")
 ;;   (find-audiovideo-intro "4.3. A demo")
 ;;   (find-audiovideo-intro "4.3. A demo" "mpv")
 ;;   (find-pdf-like-intro "3. Hyperlinks to PDF files")
@@ -72,9 +73,13 @@
 ;;     "Any sufficiently advanced technology
 ;;      is indistinguishable from magic"
 ;;
-;; Here I will use the term "magic" as a shorthand for "black box".
-;; A black box that is hard to open, and hard to look inside, is an
-;; "advanced technology that is indistinguishable from magic".
+;; Here I will use the term "magic" as a shorthand for a "sufficiently
+;; advanced technology", i.e., something complex and non-obvious,
+;; "that is indistinguishable from magic", in the sense of being
+;; almost impossible to understand. I will also use "black box" as a
+;; near-synonym for "magic"; "black box" has more letters than
+;; "magic", but it invites us to use expressions like "opening the
+;; black box".
 ;;
 ;; In dec/2021 I recorded a video, called "Org for Non-Users",
 ;;
@@ -198,6 +203,11 @@
 ;; follow the instructions in:
 
 (find-wconfig-magic-links)
+
+
+;; Exercise: Learn Org!
+
+(find-wconfig-exercises-links)
 
 ")
        )
@@ -883,16 +893,41 @@ See the variable `ee-wconfig-magic-code'."
        (find-efunction 'find-wconfig-exercises-links)
        ""
        ,(ee-template0 "\
+;; Exercise: learn Org!
+;; See: http://angg.twu.net/eev-wconfig.html
+;;      http://angg.twu.net/eev-wconfig.html#learn-org
+
+
 ;; 1. Understand `code-c-d'
 ;; ========================
+;; (find-eev-quick-intro \"9. Shorter hyperlinks\")
+;; (find-eev-quick-intro \"9. Shorter hyperlinks\" \"[Video links:]\")
+;; (find-eev-quick-intro \"9.1. `code-c-d'\")
 
 ;; 2. Download the .zip
+;; ====================
+;; From:
+;;   http://angg.twu.net/eev-wconfig.html#learn-org
+;; and unpack it.
+
+;; 3. Create a link to the directory
+;; =================================
+;; Something like:
+;;   (find-fline \"C:/I/unpacked/the/videos/here/\")
+;; This may help:
+;;   (find-enode \"Dired\")
 
 ;; 3. Understand `M-h M-e'
 ;; =======================
+;; See: (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
+;; and use that to create links like these:
 
-;; Exercise: learn Org!
-;; See: http://angg.twu.net/eev-wconfig.el#learn-org
+(code-c-d \"rainerkoenig\" \"C:/I/unpacked/the/videos/here/\")
+;; (find-rainerkoenigfile \"\")
+(code-video \"E02S01video\" \".../OrgMode_E02S01_-_Tags-GcUVvlClo9k.webm\")
+;; (find-E02S01video \"0:00\")
+
+
 
 ")
        )

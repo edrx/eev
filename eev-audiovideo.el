@@ -255,7 +255,7 @@ default is \"#\", but in some situations we need \"&\" instead."
 	   (format "%st=%sm%ss" c (match-string 1 str) (match-string 2 str)))
           ((string-match "^\\([0-9]+\\):\\([0-9][0-9]\\):\\([0-9][0-9]\\)$" str)
 	   (format "%st=%sh%sm%ss" c (match-string 1 str) (match-string 2 str)
-		   (match-string 2 str))))))
+		   (match-string 3 str))))))
 
 ;; Tests: (ee-time-to-arg "")
 ;;        (ee-time-to-arg nil)
