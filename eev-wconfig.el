@@ -130,16 +130,17 @@
 ;;
 ;; 2. Usage
 ;; ========
-;; This file is not loaded by default. To use it, run:
+;; To use this, run:
 ;;
-;;   (require 'eev-wconfig)
 ;;   (find-wconfig-links)
 ;;
 ;; The `(find-wconfig-links)' will create a temporary buffer with
-;; instructions.
+;; instructions. For more info, see the video:
 ;;
-;; I am working on a video about this. I will add more instructions
-;; after finishing the video.
+;;   http://angg.twu.net/eev-wconfig.html
+;;   http://angg.twu.net/.emacs.videos.html#2022eevwconfig
+;;   (find-1stclassvideo-links "2022eevwconfig")
+;;   (find-1stclassvideoindex  "2022eevwconfig")
 
 
 
