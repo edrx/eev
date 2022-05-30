@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220516
+;; Version:    20220530
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wconfig.el>
@@ -257,9 +257,14 @@
  \"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe\")
 
 
-;; 2. Test
-;; =======
-;; Try: (find-googlechrome \"https://www.lua.org/\")
+;; 2. Tests
+;; ========
+;; Try:
+;;   (find-googlechrome \"https://www.lua.org/\")
+;; Also, the section 3.1 of the main tutorial describes a
+;; quick way to open the \"url at point\" with `M-x brg'.
+;; Try it:
+;;   (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
 
 
 ;; 3. Update this page
@@ -277,10 +282,15 @@
 ;; Hint: `M-5 M-5 M-j' runs: (find-fline \"~/.emacs\")
 ;; See: (eek         \"M-j\")
 ;; Try: (eek \"M-5 M-5 M-j\")
+;; If you need to review how to do copy-and-paste and saving, see:
+;;   (find-eev-quick-intro \"5.2. Cutting and pasting\")
+;;   (find-emacs-keys-intro \"3. Cutting & pasting\")
+;;   (find-emacs-keys-intro \"7. Files and buffers\")
+;;   (find-emacs-keys-intro \"7. Files and buffers\" \"C-x C-s\")
 ;;
 ;; Copy the updated version of the block below -
 ;; including the three commented lines at the top -
-;; to your init file.
+;; to your init file, and save it with `C-x C-s'.
 
 ;; See: (find-eev \"eev-load.el\" \"autoloads\")
 ;;      (find-eev \"eev-wconfig.el\" \"intro\")
@@ -290,6 +300,33 @@
 (setq ee-googlechrome-program
   \"{ee-googlechrome-program}\")
 
+
+;; 5. Save some things to your ~/TODO
+;; ==================================
+;; Remember that you are encouraged to use the file ~/TODO as a messy
+;; log file, and that you can access it with `M-1 M-j'. See:
+;;   (find-here-links-intro \"1. Alternating between \\\"task\\\" and \\\"notes\\\"\")
+;;   (find-refining-intro \"3. Three buffers\")
+;;   (find-refining-intro \"3. Three buffers\" \"~/TODO\")
+;;   (find-refining-intro \"3. Three buffers\" \"M-1 M-j\")
+;; Copy the two uncommented sexps below to your ~/TODO, and save it:
+
+(find-wconfig-links)
+(find-wconfig-browser-links)
+
+
+;; 6. Test your saved configuration
+;; ================================
+;; Open a second Emacs without closing this one, and check that in the
+;; second Emacs you can run `M-x eev-beginner' to load eev and open
+;; `(find-eev-quick-intro)'; then run `M-1 M-j' in the second Emacs to
+;; access your ~/TODO, and check that the lines
+;;   (find-wconfig-links)
+;;   (find-wconfig-browser-links)
+;; that you saved in the section 5 are there. Run the tests in the
+;; section 2 of `(find-wconfig-browser-links)' and check that they
+;; work - i.e., that the second Emacs is using the right value for the
+;; variable `ee-googlechrome-program'.
 ")
        )
      pos-spec-list)))
@@ -725,8 +762,8 @@ for k,v in pairs(_G) do print(k) end
 ;; Check that the file exists: 
 ;;   (find-fline \"~/eev-wconfig/\" \"2022dragABC.mp4\")
 ;; Try to play it with mpv:
-;;   (find-mpv-video \"~/eev-wconfig/2022dragABC.mp4\"
-;;   (find-video     \"~/eev-wconfig/2022dragABC.mp4\"
+;;   (find-mpv-video \"~/eev-wconfig/2022dragABC.mp4\")
+;;   (find-video     \"~/eev-wconfig/2022dragABC.mp4\")
 
 
 ;; 3. Saving

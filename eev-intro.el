@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220413
+;; Version:    20220525
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -13667,7 +13667,7 @@ harder to explain:
 
   http://www.youtube.com/watch?v=86yiRG8YJD0#t=15m11s
   (find-eev2019video \"15:11\" \"Demo: the eepitch block\")
-  (find-angg \".emacs.videos\" \"eev2019\")
+  http://angg.twu.net/.emacs.videos.html#eev2019
 
 I don't have easy access to Windows machines, so I have to rely
 on friends to test some things for me. I also don't have easy
@@ -14081,160 +14081,91 @@ smarter way that works well, please get in touch!!!
 6. Video links
 ==============
 If you're on Windows you need to start by configuring your
-browser and the path to it, as described here:
+browser and the path to it. The old instructions for that are
+here...
 
   (find-video-links-intro)
   (find-video-links-intro \"3. `find-youtube-video'\")
   (find-video-links-intro \"4. Configuring the browser\")
 
-and by making `find-eev-video' use the browser to play the
-videos. For that you need to run this sexp,
-
-  (ee-use-youtube-videos)
-
-as explained here:
-
-  (find-video-links-intro \"7. `find-eev-video'\")
-
-Also install the Mpv video player, configure its path, and check
-that Emacs can find it. This is explained here:
-
-  (find-video-links-intro \"6. Configuring Mpv\")
-
-The next sections of this tutorial will suppose that you know how
-to configure that path to external programs, and how to test
-them.
-
-IMPORTANT: save the sexps with `setenv' that you used to
-configure the paths to your notes. See:
-
-  (find-here-links-intro \"4. `find-here-links-3'\")
-  (find-here-links-intro \"4. `find-here-links-3'\" \"~/TODO\")
+...but in may/2022 I created a better way. It is explained in
+the next section.
 
 
 
 
-7. eev-on-windows.el
-====================
-The file eev-on-windows.el contains several functions that will
-be used in the next sections. It is not loaded by default, so you
-need to do this:
 
-  (require 'eev-on-windows)
+7. eev-wconfig.el
+=================
+NOTE: until may/2022 this section was about this module:
 
-If you are on Windows you will also need to download some
-\".exe\" files by running the sexps below. Each of the sexps that
-start with `ee-download-with-eww' may take several seconds to
-complete, and it's better to wait until it sends a message like
-\"Saved (filename.exe)\" to the echo area before executing other
-sexps with `M-e'.
+  (find-eev \"eev-on-windows.el\")
 
-  (mkdir \"~/bin/\" t)
-  (delete-file \"~/bin/wget.exe\")
-  (delete-file \"~/bin/pdftotext.exe\")
-  (delete-file \"~/bin/lua52.exe\")
-  (delete-file \"~/bin/lua52.dll\")
-  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/wget.exe\" \"~/bin/\")
-  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/pdftotext.exe\" \"~/bin/\")
-  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/lua52.exe\" \"~/bin/\")
-  (ee-download-with-eww \"http://angg.twu.net/2021-oficina/lua52.dll\" \"~/bin/\")
+that became obsolete, and was superseded by:
 
-The sexps in the block above only need to be executed once - you
-don't need to execute them at each Emacs session. You can test if
-they worked by running the sexps below:
+  (find-eev \"eev-wconfig.el\")
+  (find-eev \"eev-wconfig.el\" \"intro\")
 
-  (find-fline \"~/bin/\" \"wget.exe\")
-  (find-fline \"~/bin/\" \"pdftotext.exe\")
-  (find-fline \"~/bin/\" \"lua52.exe\")
-  (find-callprocess `(\"~/bin/wget.exe\"      \"--help\"))
-  (find-callprocess `(\"~/bin/pdftotext.exe\" \"--help\"))
-  (find-callprocess `(\"~/bin/lua52.exe\"     \"--help\"))
+To run eev-wconfig you need to run these sexps:
+
+  (require 'eev-wconfig)
+  (find-wconfig-links)
+
+`(find-wconfig-links)' shows a temporary buffer with links to
+several \"sub-wconfigs\". The main ones are:
+
+  (find-wconfig-browser-links)
+  (find-wconfig-wget-links)
+  (find-wconfig-shell-links)
+  (find-wconfig-lua-links)
+  (find-wconfig-mpv-links)
+  (find-wconfig-exercises-links)
+
+Each one of these sub-wconfigs has detailed instructions for
+configuring the thing/word after it: browser, wget, (E)shell,
+Lua, Mpv. The best way to understand how to use these
+sub-wconfigs is by watching the video about eev-wconfig, that is
+here:
+
+  Page:  http://angg.twu.net/eev-wconfig.html
+  Index: (find-1stclassvideoindex  \"2022eevwconfig\")
+  Info:  (find-1stclassvideo-links \"2022eevwconfig\")
+  Play:  (find-2022eevwconfigvideo   \"0:00\")
+         (find-2022eevwconfigvideo   \"17:29\" \"(find-wconfig-browser-links)\")
+         (find-2022eevwconfigvideo   \"26:52\" \"...a long digression...\")
+         (find-2022eevwconfigvideo   \"39:20\" \"(find-wconfig-wget-links)\")
+         (find-2022eevwconfigvideo   \"53:41\" \"(find-wconfig-shell-links)\")
+         (find-2022eevwconfigvideo   \"57:45\" \"(find-wconfig-lua-links)\")
+         (find-2022eevwconfigvideo   \"59:17\" \"(find-wconfig-mpv-links)\")
+         (find-2022eevwconfigvideo \"1:06:16\" \"(find-wconfig-exercises-links)\")
+
+Note that I've included links to the parts of the video that
+describe each one of the sub-wconfigs, and note that you will
+only be able to use the `find-2022eevwconfigvideo' links _to play
+local copies of the videos_ after configuring mpv... so it's
+better to start by accessing this section in a browser, at:
+
+  http://angg.twu.net/eev-intros/find-windows-beginner-intro.html#7
+
 
 
 
 7.1. `ee-use-windows'
 ---------------------
-If you are on Windows you should run this:
-
-  (ee-use-windows)
-
-Its source code is here:
-
-  (find-eev \"eev-on-windows.el\" \"ee-use-windows\")
-
-Most of what it does is explained in the next sections.
-
+(Obsolete, deleted)
 
 
 
 
 7.2. Testing wget.exe
 ---------------------
-Try to run this eepitch block with <f8>s:
-
- (eepitch-eshell)
- (eepitch-kill)
- (eepitch-eshell)
-  rm --help
-  ls --help
-  rm -fv $S/http/www.gnu.org/software/emacs/emacs-paper.html
-  ls -l  $S/http/www.gnu.org/software/emacs/emacs-paper.html
-  #
-  mkdir -p $S/http/www.gnu.org/software/emacs/
-  cd       $S/http/www.gnu.org/software/emacs/
-  wget -nc 'http://www.gnu.org/software/emacs/emacs-paper.html'
-  echo     'http://www.gnu.org/software/emacs/emacs-paper.html' >> ~/.psne.log
-  #
-  ls -l  $S/http/www.gnu.org/software/emacs/emacs-paper.html
-  rm -fv $S/http/www.gnu.org/software/emacs/emacs-paper.html
-
-Now try to follow the instructions here to download the same URL
-with `M-x brep':
-
-  (find-psne-intro \"3. The new way: `M-x brep'\")
-
-`M-x brep' uses `eepitch-shell', that on Windows runs cmd.exe by
-default, but in the last section we ran `ee-use-windows', that
-redefines `eepitch-shell' to makes it use Eshell instead of
-cmd.exe - and it also makes the command \"wget\" in eshell run
-~/bin/wget.exe.
-
-Eev also uses wget in the function `find-wget' and its variants
-`find-wgeta', `find-wget-elisp', and `find-wgeta-elisp'. Try the
-tests here, and check that they work:
-
-  (find-eev \"eev-plinks.el\" \"find-wget\")
-  (find-eev \"eev-plinks.el\" \"find-wget\" \"Tests:\")
-
+(Obsolete, deleted)
 
 
 
 7.3. Lua
 --------
-`ee-use-windows' also redefine `eepitch-lua51' to make it run
-~/bin/lua52.exe, that you downloaded in section 7, and it runs
-`ee-use-youtube-videos', that you've run explicitly in section 6.
-Try this link to a video:
-
-  (find-eevtestblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
-
-it should play the video in a browser. The video shows what
-happens when we run an eepitch block that calls Lua and
-everything works correctly. Check that these two eepitch blocks
-work as expected:
-
- (eepitch-lua51)
- (eepitch-kill)
- (eepitch-lua51)
-  print(2+3)
-  os.exit()
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-  ~/bin/lua52.exe -i
-  print(2+3)
-  os.exit()
+(Obsolete, deleted)
 
 
 
@@ -14283,92 +14214,26 @@ The three behaviors are explained here:
 
 7.5. Downloading PDFs
 ---------------------
-Now try all the tests in the sections 1-5 and 7 of:
-
-  (find-pdf-like-intro)
-
-This test in section 2 will not work,
-
-  (find-sh0 \"ls -l ~/Coetzee99.pdf\")
-
-because it requires a Unix-style `ls'. It works in Eshell,
-though. Try:
-
- (eepitch-eshell)
- (eepitch-kill)
- (eepitch-eshell)
-  ls --help
-  ls -l ~/Coetzee99.pdf
-
-That's because eshell defines its `ls' in Lisp. See:
-
-  (find-eshellnode \"Built-ins\")
-
-Also, the tests in section 6 don't work on Windows - one of the
-things that `ee-use-windows' does is to make `find-pdf-page' use
-a browser to open PDFs, and section 6 uses a PDF viewer called
-\"xpdf\". Take a look:
-
-  (find-pdf-like-intro \"6. How the external programs are called\")
-
-So: check that everything in sections 1-5 and 7 work, except for
-the test that uses `ls'. The links to pages of PDFs converted to
-text should work - the conversion to text will be done by
-~/bin/pdftotext.exe, that you downloaded and tested in section 7.
+(Obsolete, deleted)
 
 
 
 
 7.6. Saving your settings
 -------------------------
-If all the tests above worked then you can save your settings.
-I will refer to the block below as the \"Windows setting block\":
-
-  ;; See: (find-windows-beginner-intro \"8. Summary\")
-  ;;      (find-video-links-intro \"4. Configuring the browser\")
-  ;;      (find-video-links-intro \"6. Configuring Mpv\")
-  (require 'beginner)
-  (require 'eev-on-windows)
-  (ee-use-windows)
-  (setenv \"FIREFOXDIR\"      \"c:/Program Files/Mozilla Firefox\")
-  (setenv \"GOOGLECHROMEDIR\" \"c:/Program Files/Google/Chrome/Application\")
-  (setenv \"MPVDIR\"          \"c:/Users/myusername/path/to/mpv\")
-  ;;
-  ;; Choose one:
-  (ee-use-googlechrome)
-  ;;(ee-use-firefox)
-
-Copy that block to your ~/TODO, but with the right paths in the
-`setenv's. I will refer to that modified copy as the \"Windows
-setting block in ~/TODO\".
+(Obsolete, deleted)
 
 
 
 7.7. Testing your settings
 --------------------------
-The best way to test your \"Windows setting block in ~/TODO\" is
-by doing this. Start a second Emacs without closing this one, and
-on that second Emacs run:
-
-  1. `M-x eev-beginner',
-  2. `M-1 M-j' (to access your ~/TODO),
-  3. type `M-e' on each line of your \"Windows setting block in
-     ~/TODO\" _that is not commented with with a \";;\".
-
-Then... [TODO: complete this!]
+(Obsolete, deleted)
 
 
 
 7.8. Saving your settings to your ~/.emacs
 ------------------------------------------
-See:
-
-  (find-elnode \"Init File\" \".emacs\")
-
-A quick way to visit your ~/.emacs is with `M-5 M-5 M-j'. It runs
-this:
-
-  (find-fline \"~/.emacs\")
+(Obsolete, deleted)
 
 
 
