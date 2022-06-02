@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220512
+;; Version:    20220601
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1332,8 +1332,8 @@ echo {e} '{url}' >> ~/.psne.log
 	 (eo (format "%-3s" (ee-find-psne-echo-options)))
          (wf (lambda (ext) (format "wget -N   %s%s\n" url- ext)))
          (ef (lambda (ext) (format "echo %s  %s%s >> ~/.psne.log\n" eo url- ext)))
-         (wgets (mapconcat wf (split-string exts)))
-         (echos (mapconcat ef (cons ".mp4" (split-string exts))))
+         (wgets (mapconcat wf (split-string exts) ""))
+         (echos (mapconcat ef (cons ".mp4" (split-string exts)) ""))
 	 )
     (ee-template0 "\
 # (find-psne-intro \"1. Local copies of files from the internet\")

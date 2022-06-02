@@ -1,3 +1,11 @@
+2022-06-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-load.el (eev-beginner): tell the autoload for `eev-beginner'
+	that `eev-beginner' is an interactive function.
+
+	* eev-tlinks.el (ee-psne-eevvideo-core): added the "sep" argument
+	to the mapconcats.
+
 2022-05-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-audiovideo.el (ee-time-to-youtube-time): fixed a bug.

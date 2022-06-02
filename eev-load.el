@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220530
+;; Version:    20220601
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -170,7 +170,9 @@
 
 ;; Make `M-x eev-beginner' work in the "expert setups" too.
 ;; See: (find-efunctiondescr 'autoload "If FUNCTION is already defined")
-(autoload 'eev-beginner "eev-beginner") ; (find-eev "eev-beginner.el")
+(autoload 'eev-beginner "eev-beginner" 
+  "Load all basic modules of eev, turn eev-mode on, and open a tutorial."
+  'interactive)                 ; (find-eev "eev-beginner.el")
 
 
 
