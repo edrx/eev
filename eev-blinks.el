@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220507
+;; Version:    20220605
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -1450,6 +1450,7 @@ Hint: install the Debian package \"unicode-data\".")
 ;;         M-1 M-j  runs:  (find-fline \"~/TODO\")
 ;;     M-2 M-1 M-j  shows the file ~/TODO in the right window
 ;;     M-3 M-1 M-j  opens ~/TODO in the right window
+;;         M-7 M-j  runs:  (find-elisp-intro)
 ;; Current eejump targets:\n\n")
 
 (defun ee-find-eejumps-body ()

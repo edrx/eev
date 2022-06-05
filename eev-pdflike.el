@@ -189,6 +189,7 @@
 ;; «.find-djvutxt-text»			(to "find-djvutxt-text")
 ;; «.find-firefox-page»			(to "find-firefox-page")
 ;; «.find-googlechrome-page»		(to "find-googlechrome-page")
+;;   «.ee-fname-page-to-url»		(to "ee-fname-page-to-url")
 ;;
 ;; «.aliases»				(to "aliases")
 ;; «.code-brxxxs»			(to "code-brxxxs")
@@ -1041,8 +1042,9 @@ may want to put here code that cleans up that page information.")
 ;;; | |_) | | | (_) \ V  V /\__ \  __/ |  \__ \
 ;;; |____/|_|  \___/ \_/\_/ |___/\___|_|  |___/
 ;;;                                            
-;; «find-firefox-page»  (to ".find-firefox-page")
+;; «find-firefox-page»       (to ".find-firefox-page")
 ;; «find-googlechrome-page»  (to ".find-googlechrome-page")
+;;   «ee-fname-page-to-url»  (to ".ee-fname-page-to-url")
 ;;
 ;; Some browsers can open a PDF file "/tmp/foo.pdf" at page 42 if we
 ;; add a "#page=42" to its URL - i.e., if we ask them to open the URL

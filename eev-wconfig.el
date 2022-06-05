@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220530
+;; Version:    20220605
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-wconfig.el>
@@ -148,18 +148,18 @@
 ;; «.intro»				(to "intro")
 ;; «.usage»				(to "usage")
 ;; «.find-wconfig-links»		(to "find-wconfig-links")
-;; «.find-wconfig-browser-links»	(to "find-wconfig-browser-links")
-;; «.find-wconfig-wget-links»		(to "find-wconfig-wget-links")
-;; «.find-wconfig-shell-links»		(to "find-wconfig-shell-links")
-;; «.find-wconfig-lua-links»		(to "find-wconfig-lua-links")
-;; «.find-wconfig-mpv-links»		(to "find-wconfig-mpv-links")
+;;   «.find-wconfig-browser-links»	(to "find-wconfig-browser-links")
+;;   «.find-wconfig-wget-links»		(to "find-wconfig-wget-links")
+;;   «.find-wconfig-shell-links»	(to "find-wconfig-shell-links")
+;;   «.find-wconfig-lua-links»		(to "find-wconfig-lua-links")
+;;   «.find-wconfig-mpv-links»		(to "find-wconfig-mpv-links")
 ;;
-;; «.find-wconfig-magic-links»		(to "find-wconfig-magic-links")
-;;   «.ee-wconfig-run-magic»		(to "ee-wconfig-run-magic")
+;;   «.find-wconfig-magic-links»	(to "find-wconfig-magic-links")
+;;     «.ee-wconfig-run-magic»		(to "ee-wconfig-run-magic")
 ;;
-;; «.find-wconfig-exercises-links»	(to "find-wconfig-exercises-links")
+;;   «.find-wconfig-exercises-links»	(to "find-wconfig-exercises-links")
 ;;
-;; «.find-wconfig-undo-links»		(to "find-wconfig-undo-links")
+;;   «.find-wconfig-undo-links»		(to "find-wconfig-undo-links")
 
 
 
@@ -690,7 +690,43 @@ for k,v in pairs(_G) do print(k) end
 
 
 
-;; 3. Save some configs in your init file
+;; 3. Other languages: Python
+;; ==========================
+;; If you have Python installed, please test the block below...
+;; According to these messages in help-gnu-emacs,
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2022-06/msg00019.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2022-06/msg00020.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2022-06/msg00022.html
+;; on Windows Python needs \"-u\" and \"-i\" to work as a REPL in Eshell.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+python3 -u -i
+print(2+3)
+
+;; If that worked - i.e., if after the print(2+3) you got a \"5\"
+;; and another prompt - then try to redefine `eepitch-python' with:
+
+(defun eepitch-python () (interactive)
+  (eepitch-comint \"python3\" \"python3 -u -i\"))
+
+;; ...and test if this works. Note that here we send four lines to
+;; the Python REPL: a definition for the function \"square\", a
+;; blank line, and a test that calls \"square\".
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+def square (x):
+    return x*x
+
+print(square(5))
+
+
+
+
+;; 4. Save some configs in your init file
 ;; ======================================
 ;; This is similar to: (find-wconfig-browser-links 2 \"4. Save\")
 ;; Save the block below - including the comments - to your ~/.emacs:
@@ -704,6 +740,8 @@ for k,v in pairs(_G) do print(k) end
   (eepitch-comint \"lua53.exe\" \"~/eev-wconfig/lua53.exe -i\"))
 (defun eepitch-lua54 () (interactive)
   (eepitch-comint \"lua54.exe\" \"~/eev-wconfig/lua54.exe -i\"))
+(defun eepitch-python () (interactive)
+  (eepitch-comint \"python3\" \"python3 -u -i\"))
 
 ")
        )
@@ -1031,6 +1069,7 @@ See the variable `ee-wconfig-magic-code'."
 (defun eepitch-lua52  () (interactive) (eepitch-comint \"lua52\" \"lua5.2\"))
 (defun eepitch-lua53  () (interactive) (eepitch-comint \"lua53\" \"lua5.3\"))
 (defun eepitch-lua54  () (interactive) (eepitch-comint \"lua54\" \"lua5.4\"))
+(defun eepitch-python () (interactive) (eepitch-comint \"python3\" \"python3\"))
 
 )
 ")

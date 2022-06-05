@@ -1,3 +1,11 @@
+2022-06-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-find-eejumps-header): added a pointer to
+	`(find-elisp-intro)'.
+
+	* eev-wconfig.el (find-wconfig-lua-links): added a section on
+	Python.
+
 2022-06-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-load.el (eev-beginner): tell the autoload for `eev-beginner'
