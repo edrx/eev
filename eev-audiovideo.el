@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211107
+;; Version:    20220608
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -540,7 +540,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
     ;;
     (defun find-{c} (&optional time &rest rest)
       (interactive (list (ee-time-around-point)))
-      (setq ee-audioaudio-last 'find-{c})
+      (setq ee-audiovideo-last 'find-{c})
       (if (eq time t)
         \"Just setting the default audio\"
         (find-mpv-audio {(ee-S fname)} time)))

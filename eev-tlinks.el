@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220601
+;; Version:    20220605
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1434,8 +1434,8 @@ If a local copy of C is not found, run `find-psne-1stclassvideo-links'."
 ;; «find-git-links» (to ".find-git-links")
 ;; (find-find-links-links "g" "git" "usrc/ git/ gitname")
 ;; (find-find-links-links "g" "git" "url c")
-(define-key eev-mode-map "\M-hg" 'find-git-links-1)
-(define-key eev-mode-map "\M-hg" 'find-git-links)
+
+(defvar ee-git-dir "~/usrc/" "See `find-git-links'.")
 
 (defun ee-git-url-stem (url)
   (replace-regexp-in-string "^\\(.*/\\)\\([^/]+?\\)\\(\\.git\\)?$" "\\2" url))
@@ -1446,8 +1446,6 @@ If a local copy of C is not found, run `find-psne-1stclassvideo-links'."
 	 (concat "\\<\\(https?:\\|git:\\)"
 		 thing-at-point-url-path-regexp)))
     (thing-at-point 'url)))
-
-(setq ee-git-dir "~/usrc/") ;; Used by find-git-links
 
 (defun find-git-links (&optional url c &rest pos-spec-list)
 "Visit a temporary buffer containing a script for downloading a git repo."
@@ -2487,7 +2485,7 @@ os.exit()
 
 ;; «find-emacs-tangents-links»  (to ".find-emacs-tangents-links")
 ;; Skel: (find-find-links-links-new "emacs-tangents" "yyyy mm dd msg txtstem" "")
-;; Test: (find-emacs-tangents-links "2020" "10" "05")
+;; Test: (find-emacs-tangents-links "2022" "06" "06")
 ;;
 (defun find-emacs-tangents-links (&optional yyyy mm dd msg txtstem &rest pos-spec-list)
 "Visit a temporary buffer with hyperlinks to a post in emacs-tangents."

@@ -46,6 +46,8 @@
 ;; «.obsolete»		(to "obsolete")
 
 
+(require 'eev-code)
+
 
 
 ;;;      _      _ _           _ _                

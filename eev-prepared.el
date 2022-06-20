@@ -46,6 +46,7 @@
 
 
 (require 'eev-env)
+(require 'eev-code)
 
 (ee-setenv "EEVTMPDIR" "$HOME/.eev")	; ee.sh and other temp scripts
 (ee-setenv "EEVRCDIR"  "$EEVDIR/rcfiles")

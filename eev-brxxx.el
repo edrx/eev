@@ -131,8 +131,7 @@
 ;; «.code-brxxxs»		(to "code-brxxxs")
 
 
-
-(require 'eev-code)			; (find-eev "eev-code.el")
+(require 'eev-code)	      ; (find-eev "eev-code.el")
 
 (autoload 'browse-url-interactive-arg "browse-url")
 

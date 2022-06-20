@@ -1,4 +1,18 @@
+2022-06-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-buffer-local-variables): new function.
+	(find-ebufferlocalvars): use `ee-buffer-local-variables'.
+
+2022-06-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-audiovideo.el (ee-code-mpv-audio): Fixed a typo.
+
 2022-06-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-git-dir): converted the setq to a defvar.
+
+	* eev-mode.el (eev-mode-map-set): moved the `define-key' for
+	`find-git-links' from eev-tlinks.el to here.
 
 	* eev-blinks.el (ee-find-eejumps-header): added a pointer to
 	`(find-elisp-intro)'.

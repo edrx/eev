@@ -53,6 +53,11 @@
 ;; «.eev-version»	(to "eev-version")
 
 
+(require 'eepitch)	   ; For: `ee-read'
+(require 'eev-template0)   ; See: (find-eev "eev-template0.el")
+(require 'eev-wrap)        ; For: `ee-S'
+
+
 
 
 
