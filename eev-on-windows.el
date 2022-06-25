@@ -24,7 +24,7 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-on-windows.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-on-windows.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
+;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
@@ -60,7 +60,10 @@
 
 ;;; Commentary:
 ;;
-;; Long short short: this is obsolete.
+;; Long short short: this is obsolete, and has been superseded by:
+;;
+;;   (find-eev "eev-wconfig.el")
+;;   http://angg.twu.net/eev-wconfig.html
 ;;
 ;; Long story medium-sized: In 2021 I found some Windows users who
 ;; were interested in learning Emacs and eev, and I wrote this to try

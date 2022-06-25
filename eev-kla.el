@@ -24,7 +24,8 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-kla.el.html>
-;;       See also: <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
+;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
 ;; «.intro»		(to "intro")

@@ -24,7 +24,8 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-coding.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-coding.el.html>
-;;       See also: <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
+;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 
 ;;; Commentary:
 

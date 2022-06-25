@@ -24,7 +24,7 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-prepared.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-prepared.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
+;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 

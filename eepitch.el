@@ -24,7 +24,7 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eepitch.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
+;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eepitch-intro.html>
 ;;                                                (find-eev-quick-intro)

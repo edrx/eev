@@ -24,7 +24,7 @@
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-mode.el>
 ;;       htmlized: <http://angg.twu.net/eev-current/eev-mode.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
+;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
 ;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                                                (find-eev-quick-intro)
 
