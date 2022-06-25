@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220307
+;; Version:    20220625
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -293,12 +293,35 @@ Put in the kill ring a link to the preceding anchor."
 
 
 
+
+(defun eekla2 ()
+  "Insert a link \"to here\" \"there\" and a link \"to there\" \"here\".
+Run `eekla' in this window, and save the result in `kla-here';
+then run `eekla' in the next window, and save the result in
+`kla-here'; then insert `kla-there' \"here\" and `kla-here'
+\"there\"."
+  (interactive)
+  (let* ((kla-here  (progn (eekla)
+			   (car kill-ring)))
+         (kla-there (progn (other-window 1)
+			   (eekla)
+			   (other-window -1)
+			   (car kill-ring))))
+    (insert kla-there)
+    (other-window 1)
+    (insert kla-here)
+    (other-window -1)))
+
+
+
 ;; «aliases»  (to ".aliases")
 ;; I use these aliases:
 ;; (defalias 'kla  'eekla)
 ;; (defalias 'klas 'eeklas)
 ;; (defalias 'klf  'eeklf)
 ;; (defalias 'klfs 'eeklfs)
+;; (defalias 'klfs 'eeklfs)
+;; (defalias 'kla2 'eekla2)
 
 
 

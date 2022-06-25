@@ -1,3 +1,9 @@
+2022-06-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (find-here-links, ee-find-here-links): added an
+	"&optional arg" to the argument list, for debugging.
+	(ee-find-here-debug-links): new function.
+
 2022-06-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-buffer-local-variables): new function.

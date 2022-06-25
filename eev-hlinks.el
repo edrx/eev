@@ -1,6 +1,6 @@
 ;;; eev-hlinks.el --- `find-here-links' and variants.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2020-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2020-2022 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220502
+;; Version:    20220625
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -61,10 +61,42 @@
 ;;
 ;; Their names are of the form `ee-*-bufferp' and `ee-find-*-links'.
 ;;
-;; TODO: Some of the `ee-find-*-links' functions are defined in other
-;; files. Which ones? Give examples!
 ;;
-;;   (find-eapropos "ee-find-.*-links")
+;; Debug mode
+;; ==========
+;; The best way to understand how this works is to run
+;; `find-here-links' with a prefix argument. When we run
+;; `find-here-links' _without_ a prefix argument it displays a header
+;; and then the links to "here"; _with_ a prefix argument it displays
+;; the header and then a lot of internal information about "here". For
+;; example, if you run
+;;
+;;   (eek "M-h M-h  ;; find-here-links")
+;;
+;; then "here" is a file, and `find-here-links' displays a header and
+;; then the result of:
+;;
+;;   (ee-find-file-links)
+;;
+;; If you run, say,
+;;
+;;   (eek "M-0 M-h M-h  ;; M-0 find-here-links")
+;;
+;; then `find-here-links' will detect which kind of "here" is "here",
+;; and will display the header and then the result of
+;; `(ee-find-here-debug-links)'. Most of that will be static text, but
+;; that output will also contain lines like these ones,
+;;
+;;   (find-efunction 'ee-file-bufferp)
+;;   (find-efunction 'ee-find-file-links)
+
+
+;; TODO
+;; ====
+;; 1. Some of the `ee-find-*-links' functions are defined in other
+;;    files. Which ones? Give examples! This may help:
+;;
+;;      (find-eapropos "ee-find-.*-links")
 ;;
 ;; The main workhorse function in this file is `ee-find-here-links',
 ;; Its current version runs the program in `ee-fhl-main-program' using
@@ -74,6 +106,7 @@
 
 ;; «.find-here-links»		(to "find-here-links")
 ;; «.ee-find-here-links»	(to "ee-find-here-links")
+;; «.ee-find-here-debug-links»	(to "ee-find-here-debug-links")
 ;; «.ee-find-here-links-tests»	(to "ee-find-here-links-tests")
 ;; «.ee-fhl-main-program»	(to "ee-fhl-main-program")
 ;; «.ee-fhl-run»		(to "ee-fhl-run")
@@ -109,10 +142,12 @@
 ;;
 ;; TODO: write one test for each kind of "here" that we support.
 ;;
-(defun find-here-links (&rest pos-spec-list)
+(defun find-here-links (&optional arg &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks pointing to \"here\".
+If ARG is not nil, show some info about how `find-here-links'
+detected which kind of \"here\" the current buffer is.
 See: (find-here-links-intro)"
-  (interactive)
+  (interactive "P")
   (let ((ee-buffer-name "*(find-here-links)*"))
     (apply
      'find-elinks
@@ -120,7 +155,7 @@ See: (find-here-links-intro)"
        ;; regenerates the buffer - instead the first lines point to
        ;; help pages.
        ,@(ee-find-here-links0)
-       ,@(ee-find-here-links)
+       ,@(ee-find-here-links arg)
        )
      pos-spec-list)))
 
@@ -134,7 +169,7 @@ See: (find-here-links-intro)"
 
 ;; «ee-find-here-links»  (to ".ee-find-here-links")
 ;;
-(defun ee-find-here-links ()
+(defun ee-find-here-links (&optional arg)
   "Generate the non-header part of the \"*(find-here-links)*\" buffer.
 This function runs `(ee-fhl-run ee-fhl-main-program)', that runs
 the program in `ee-fhl-main-program' with `ee-fhl-run' until an
@@ -157,13 +192,45 @@ will have this,
   SEXP2  =>  (ee-find-info-links)
 
 and `(eval (ee-find-info-links))' produces the non-header part of
-the \"*(find-here-links)*\" buffer."
-  (ee-fhl-run ee-fhl-main-program)
-  (cons "" (eval ee-fhl-sexp2)))
+the \"*(find-here-links)*\" buffer.
+
+If ARG is non-nil, show some info about how `ee-fhl-run' decided
+which kind \"here\" the current buffer is."
+  (ee-detect-here)
+  (if arg
+      (cons "" (ee-find-here-debug-links))
+    (cons "" (eval ee-fhl-sexp2))))
+
+;; «ee-find-here-debug-links»  (to ".ee-find-here-debug-links")
+;; See: (find-eevfile "eev-hlinks.el" "Debug mode")
+;;      (find-eev     "eev-hlinks.el" "find-here-links" "If ARG")
+;;
+(defun ee-find-here-debug-links ()
+  `("# The last call to"
+    "#     '(find-here-links ARG)"
+    "#  -> '(ee-detect-here)"
+    "#  -> '(ee-fhl-run ee-fhl-main-program)"
+    "# produced this:"
+    ,(format "#   ee-fhl-sexp1  =>  %s" (ee-S ee-fhl-sexp1))
+    ,(format "#   ee-fhl-sexp2  =>  %s" (ee-S ee-fhl-sexp2))
+    "# See:"
+    "#   ee-fhl-sexp1"
+    "#   ee-fhl-sexp2"
+    ,(format "#   (find-efunction '%s)" (car ee-fhl-sexp1))
+    ,(format "#   (find-efunction '%s)" (car ee-fhl-sexp2))
+    "#   (find-eev \"eev-hlinks.el\" \"find-here-links\")"
+    "#   (find-eev \"eev-hlinks.el\" \"find-here-links\" \"If ARG\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-find-here-links\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-find-here-debug-links\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-fhl-run\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-fhl-run\" \"ee-detect-here\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-fhl-main-program\")"
+    ))
+
 
 
 ;; «ee-find-here-links-tests»  (to ".ee-find-here-links-tests")
-;; Low-level tests:
+;; Low-level tests (old, written before `ee-find-here-debug-links'):
 ;;
 ;;   (find-2a nil                 '(find-here-links))
 ;;   (find-2a nil '(find-elinks (ee-find-here-links)))
@@ -188,6 +255,14 @@ the \"*(find-here-links)*\" buffer."
 ;;
 ;; Try: (find-eppp ee-fhl-main-program)
 ;;     (ee-fhl-run ee-fhl-main-program)
+;;
+;; Note the _AT THIS MOMENT_ the easiest way to add support for a new
+;; kind of "here" in `ee-fhl-main-program' is to override this
+;; variable by setq-ing it in your init file... this is just because
+;; I've been lazy and I haven't implemented YET a way to make
+;; `ee-fhl-main-program' call "subprograms". If you need to extend
+;; this please get in touch with me and I'll implement the missing
+;; parts!!!
 
 (defvar ee-fhl-main-program
  '(:or
@@ -281,6 +356,12 @@ the \"*(find-here-links)*\" buffer."
 	   for fhl-result = (ee-fhl-eval fhl-sexp)
 	   until fhl-result
            finally return fhl-result))
+
+(defun ee-detect-here ()
+  "To understand this, run `find-here-links' with a prefix argument.
+This is the standard high-level way to call `ee-fhl-run'."
+  (ee-fhl-run ee-fhl-main-program))
+
 
 
 
