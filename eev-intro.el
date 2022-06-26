@@ -94,6 +94,7 @@
 ;; «.find-git-intro»			(to "find-git-intro")
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 ;; «.find-eev-exercises-intro»		(to "find-eev-exercises-intro")
+;; «.find-kla-test-intro»		(to "find-kla-test-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -2751,22 +2752,23 @@ These are etcs:
 
 These ones explain advanced features that require extra setup:
 
-  31. (find-prepared-intro)
-  32. (find-bounded-intro)
-  33. (find-channels-intro)
+  31. (find-kla-test-intro)
+  32. (find-prepared-intro)
+  33. (find-bounded-intro)
+  34. (find-channels-intro)
 
 This one was used in a video:
 
-  34. (find-three-main-keys-intro)
+  35. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  35. (find-emacs-intro)
-  36. (find-defun-intro)
+  36. (find-emacs-intro)
+  37. (find-defun-intro)
 
-Item 25 is an index of old video tutorials, with scripts for
-downloading local copies of them and links to important positions
-in the videos.
+For an index of the videos, run:
+
+    (find-1stclassvideos)
 
 
 
@@ -3215,6 +3217,13 @@ The next steps are to learn how:
        (find-emacs-keys-intro \"Some other keys that create\")
 
 
+
+8. Debugging
+============
+The best way to understand the innards of `find-here-links' is to
+call it in \"debug mode\". This is explained here:
+
+  (find-eevfile \"eev-hlinks.el\" \"Debug mode\")
 " pos-spec-list)))
 
 ;; (find-here-links-intro)
@@ -14392,6 +14401,131 @@ see:
 " pos-spec-list)))
 
 ;; (find-eev-exercises-intro)
+
+
+
+
+;;;  _    _       
+;;; | | _| | __ _ 
+;;; | |/ / |/ _` |
+;;; |   <| | (_| |
+;;; |_|\_\_|\__,_|
+;;;               
+;; «find-kla-test-intro»  (to ".find-kla-test-intro")
+;; Skel: (find-intro-links "kla-test")
+;; Test: (find-kla-test-intro)
+
+(defun find-kla-test-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-kla-test-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-kla-test-intro)
+Source code:  (find-efunction 'find-kla-test-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+Pre-requisites:
+  (find-saving-links-intro)
+  (find-saving-links-intro \"2.3. The base case 3\")
+
+
+
+1. Introduction
+===============
+THIS IS AN ADVANCED FEATURE!!!
+
+The function `eekla' implements a way to create links to anchors
+that requires fewer keystrokes than the way described here,
+
+  (find-saving-links-intro)
+  (find-saving-links-intro \"2.3. The base case 3\")
+
+but to understand this new way you will need to understand all
+the pre-requisites of the \"Base case 3\" - see the link above -
+and also file-local, or dir-local, variables, that are explained
+in these pages of the Emacs manual:
+
+      (find-enode \"Specifying File Variables\")
+  or: (find-enode \"Directory Variables\")
+
+The code for `eekla', `eeklf', `eekl2' and friends is here:
+
+  (find-eev \"eev-kla.el\")
+  (find-eev \"eev-kla.el\" \"aliases\")
+
+
+
+2. Setup for a demo
+===================
+We need to create some test directories in /tmp/eev-kla-test/.
+Run this eepitch block:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rfv /tmp/eev-kla-test/
+  mkdir   /tmp/eev-kla-test/
+  mkdir   /tmp/eev-kla-test/dira/
+  mkdir   /tmp/eev-kla-test/dirb/
+
+We need to create some files there. Take a look at the source of
+`ee-kla-demo-write-three-files' here,
+
+  (find-eev \"eev-kla.el\" \"demo\")
+
+and after understanding it, run this:
+
+  (code-c-d \"klat\"  \"/tmp/eev-kla-test/\")
+  (code-c-d \"klata\" \"/tmp/eev-kla-test/dira/\")
+  (code-c-d \"klatb\" \"/tmp/eev-kla-test/dirb/\")
+  (ee-kla-demo-write-three-files)
+
+and inspect that directory with:
+
+  (find-fline \"/tmp/eev-kla-test/\")
+  (find-fline \"/tmp/eev-kla-test/dira/\")
+  (find-fline \"/tmp/eev-kla-test/dirb/\")
+  (find-fline \"/tmp/eev-kla-test/dira/foo\")
+  (find-fline \"/tmp/eev-kla-test/dirb/bar\")
+  (find-fline \"/tmp/eev-kla-test/.dir-locals.el\")
+
+
+
+3. Run some tests
+=================
+Run this 4-line sexp
+
+  (find-3a nil
+   ' (find-fline \"/tmp/eev-kla-test/dira/foo\")
+   ' (find-fline \"/tmp/eev-kla-test/dirb/bar\")
+   )
+
+to create a window setting like this:
+   _________________
+  |         |       |
+  |         |  foo  |
+  |  intro  |_______|
+  |         |       |
+  |         |  bar  |
+  |_________|_______|
+
+Go to the window showing the file \"foo\", run `M-x eekla' in
+several positions of that file - after each anchor and in the
+beginning - and understand the messages in the echo area. Then do
+the same in the window with the file \"bar\".
+
+
+\[TODO]: Explain how to test eekla2. See:
+  (find-eev \"eev-kla.el\" \"eekla2\")
+
+
+" pos-spec-list)))
+
+;; (find-kla-test-intro)
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220605
+;; Version:    20220625
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -215,14 +215,11 @@
   "Count the number of lines in STR (which should be newline-terminated)."
   (length (replace-regexp-in-string "[^\n]" "" str)))
 
-(defun ee-copy-rest0 (skip code)
-  "Copy the rest of this buffer to the kill ring and execute CODE.
-The rest of this buffer is everything from the beginning of the next line -
-optionally moving down SKIP lines - to the end of the buffer."
-  ;; (setq nlines (+ 1 (or nlines 0)))
+(defun ee-copy-rest00 (skip gotoend code)
+  "An internal function used by `ee-copy-rest0'."
   (setq skip (or skip 0))
   (let* ((start (save-excursion (move-beginning-of-line (+ 2 skip)) (point)))
-	 (end   (point-max))
+	 (end   (eval gotoend))
 	 (str   (buffer-substring start end))
 	 (len   (ee-count-lines str))
 	 (msg   `(Copied ,len lines to the kill ring - use C-y to paste)))
@@ -230,6 +227,12 @@ optionally moving down SKIP lines - to the end of the buffer."
     (kill-new str)
     (eval code)
     msg))
+
+(defun ee-copy-rest0 (skip code)
+  "Copy the rest of this buffer to the kill ring and execute CODE.
+The rest of this buffer is everything from the beginning of the next line -
+optionally moving down SKIP lines - to the end of the buffer."
+  (ee-copy-rest00 skip '(point-max) code))
 
 (defun ee-copy-rest  (skip code)
   "Copy the rest of this buffer to the kill ring and execute CODE.

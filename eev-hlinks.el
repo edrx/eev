@@ -89,6 +89,10 @@
 ;;
 ;;   (find-efunction 'ee-file-bufferp)
 ;;   (find-efunction 'ee-find-file-links)
+;;
+;; that display information about the results that were generated and
+;; saved in the last time that the function `ee-detect-here' was
+;; called.
 
 
 ;; TODO

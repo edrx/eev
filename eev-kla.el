@@ -33,6 +33,8 @@
 ;; «.ee-preferred-c»	(to "ee-preferred-c")
 ;; «.utils»		(to "utils")
 ;; «.eekla»		(to "eekla")
+;; «.eekla2»		(to "eekla2")
+;; «.demo»		(to "demo")
 ;; «.eeklf»		(to "eeklf")
 ;; «.aliases»		(to "aliases")
 
@@ -294,6 +296,15 @@ Put in the kill ring a link to the preceding anchor."
 
 
 
+;;;            _    _       ____  
+;;;   ___  ___| | _| | __ _|___ \ 
+;;;  / _ \/ _ \ |/ / |/ _` | __) |
+;;; |  __/  __/   <| | (_| |/ __/ 
+;;;  \___|\___|_|\_\_|\__,_|_____|
+;;;                               
+;; «eekla2»  (to ".eekla2")
+;; See: (find-kla-test-intro)
+;;      (find-kla-test-intro "3. Run some tests")
 
 (defun eekla2 ()
   "Insert a link \"to here\" \"there\" and a link \"to there\" \"here\".
@@ -312,6 +323,50 @@ then run `eekla' in the next window, and save the result in
     (other-window 1)
     (insert kla-here)
     (other-window -1)))
+
+
+;;;  ____                       
+;;; |  _ \  ___ _ __ ___   ___  
+;;; | | | |/ _ \ '_ ` _ \ / _ \ 
+;;; | |_| |  __/ | | | | | (_) |
+;;; |____/ \___|_| |_| |_|\___/ 
+;;;                             
+;; «demo»  (to ".demo")
+;; See: (find-kla-test-intro)
+;;      (find-kla-test-intro "2. Setup for a demo")
+
+(defun ee-kla-demo-write-file (fname contents)
+  "See: (find-kla-test-intro)"
+  (write-region contents nil fname))
+
+(defun ee-kla-demo-write-three-files ()
+  "See: (find-kla-test-intro)"
+  ;;
+  (ee-kla-demo-write-file "/tmp/eev-kla-test/dira/foo"
+  "This file: /tmp/eev-kla-test/dira/foo
+Index:
+# «.a1»   (to \"a1\")
+# «.a2»   (to \"a2\")\n
+Body:
+# «a1»    (to \".a1\")\n
+# «a2»    (to \".a2\")\n\n")
+  ;;
+  (ee-kla-demo-write-file "/tmp/eev-kla-test/dirb/bar"
+  "This file: /tmp/eev-kla-test/dirb/bar
+Index:
+# «.b1»   (to \"b1\")
+# «.b2»   (to \"b2\")\n
+Body:
+# «b1»    (to \".b1\")\n
+# «b2»    (to \".b2\")\n\n")
+  ;;
+  (ee-kla-demo-write-file "/tmp/eev-kla-test/.dir-locals.el"
+  ";; This file: /tmp/eev-kla-test/.dir-locals.el
+;;
+((\"dira\" . ((nil . ((ee-preferred-c . \"klata\")))))
+ (\"dirb\" . ((nil . ((ee-preferred-c . \"klatb\")))))
+ )")
+  )
 
 
 

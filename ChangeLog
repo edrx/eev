@@ -1,4 +1,14 @@
+2022-06-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kla-demo-write-file)
+	(ee-kla-demo-write-three-files, eekla2): new functions.
+
+	* eev-intro.el (find-kla-test-intro): New function.
+
 2022-06-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-copy-rest00): new function.
+	(ee-copy-rest0): use `ee-copy-rest00'.
 
 	* eev-hlinks.el (find-here-links, ee-find-here-links): added an
 	"&optional arg" to the argument list, for debugging.
