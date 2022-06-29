@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220625
+;; Version:    20220628
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -203,6 +203,10 @@
 ;;                         (ee-efile "textmodes/fill.el")
 ;;        (ee-kl-fname "e" (ee-efile "textmodes/fill.el"))
 ;;
+;; TODO: add support for "living fossils" to ee-kl-fname.
+;; See: (find-angg-es-links 2 "and suffixes")
+;; Prototype: (find-angg ".emacs" "eev-kla-fossils")
+
 (defun ee-kl-c ()
   (or ee-preferred-c (error "`ee-preferred-c' is nil here!")))
 
@@ -354,16 +358,17 @@ Body:
   (ee-kla-demo-write-file "/tmp/eev-kla-test/dirb/bar"
   "This file: /tmp/eev-kla-test/dirb/bar
 Index:
-# «.b1»   (to \"b1\")
-# «.b2»   (to \"b2\")\n
+-- «.b1»   (to \"b1\")
+-- «.b2»   (to \"b2\")\n
 Body:
-# «b1»    (to \".b1\")\n
-# «b2»    (to \".b2\")\n\n")
+-- «b1»    (to \".b1\")\n
+-- «b2»    (to \".b2\")\n\n")
   ;;
   (ee-kla-demo-write-file "/tmp/eev-kla-test/.dir-locals.el"
   ";; This file: /tmp/eev-kla-test/.dir-locals.el
 ;;
-((\"dira\" . ((nil . ((ee-preferred-c . \"klata\")))))
+(; (\"dira\" . ((nil . ((ee-preferred-c . \"klata\")))))
+ (\"\"     . ((nil . ((ee-preferred-c . \"klat\")))))
  (\"dirb\" . ((nil . ((ee-preferred-c . \"klatb\")))))
  )")
   )
@@ -375,7 +380,6 @@ Body:
 ;; (defalias 'kla  'eekla)
 ;; (defalias 'klas 'eeklas)
 ;; (defalias 'klf  'eeklf)
-;; (defalias 'klfs 'eeklfs)
 ;; (defalias 'klfs 'eeklfs)
 ;; (defalias 'kla2 'eekla2)
 

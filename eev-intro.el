@@ -1974,6 +1974,7 @@ See: (find-enode \"Keys\" \"key sequence\")
 C-g   keyboard-quit (\"get out\")  (find-enode \"Quitting\" \"C-g\")
 M-x   execute-extended-command   (find-enode \"M-x\" \"Running Commands by Name\")
 
+More about buffers:              (find-enode \"Buffers\")
 More about the minibuffer:       (find-enode \"Minibuffer\")
 More about TAB - for completion: (find-enode \"Completion\")
                 for indentation: (find-enode \"Indentation\")
@@ -1987,6 +1988,7 @@ See also: (find-enode \"Mode Line\" \"(MAJOR MINOR)\")
           (find-enode \"Mode Line\" \" MINOR is a list\")
           (find-enode \"Mode Line\" \" BUF \")
           (find-enode \"Mode Line\" \" BUF \" \"name of the buffer\")
+          (find-enode \"Echo Area\")
 
 
 

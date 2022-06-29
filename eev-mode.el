@@ -178,6 +178,8 @@ and: (find-eval-intro \"`M-k'\")"
 ;; `eev-mode-map' with different keybindings you can do that by
 ;; putting something like this
 ;;
+;;   ;; See: (find-eev "eev-mode.el" "when-not-eev-mode-map")
+;;   ;;
 ;;   (setq eev-mode-map (make-sparse-keymap))
 ;;   (define-key eev-mode-map "\M-e" 'ee-eval-sexp-eol)
 ;;   (define-key eev-mode-map "\M-E" 'ee-eval-last-sexp)
