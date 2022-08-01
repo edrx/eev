@@ -126,7 +126,8 @@ Examples: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
 ;;;                                                  |_|                     
 ;;
 ;; «code-c-d-pairs» (to ".code-c-d-pairs")
-;; Used by: (find-eev "eev-elinks.el" "ee-code-c-d-filter")
+;; Explained here: (find-eev "eev-elinks.el" "ee-code-c-d-filter")
+;;      Called by: (find-efunction 'code-c-d "ee-code-c-d-add-pair")
 
 (defvar ee-code-c-d-pairs nil
   "Each (code-c-d C D) call generates an entry (C (ee-expand D)) here.

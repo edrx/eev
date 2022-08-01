@@ -10339,9 +10339,11 @@ ee
 
 2. `ee'
 =======
-\[Explain how several interpreters can be programmed to accept
-an `ee' command to execute temporary scripts\]
+\[TODO: Write this section! Explain how several interpreters can
+be programmed to accept an `ee' command to execute temporary
+scripts...]
 
+  See (obs: this is very old!):
   http://angg.twu.net/eev-article.html#making-progs-receive-cmds
 
   (find-eev \"eev-langs.el\")
@@ -10621,7 +10623,8 @@ Before eepitch had been invented eev had two other ways to send
 commands to external shell-like programs. The first way,
 described here,
 
-  (find-prepared-intro \"\\n`ee'\\n\")
+  (find-prepared-intro)
+  (find-prepared-intro \"2. `ee'\")
 
 was technically very simple: running `M-x eev' would save a
 series of commands - usually the contents of the region - into a

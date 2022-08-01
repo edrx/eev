@@ -224,7 +224,7 @@
   (ee-copy-preceding-tag-to-kill-ring))
 
 (defun ee-kl-region ()
-  (if (not (use-region-p)) (error "The region is not active!"))
+  ; (if (not (use-region-p)) (error "The region is not active!"))
   (buffer-substring-no-properties (point) (mark)))
 
 (defun ee-kl-kill (sexp)

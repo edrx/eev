@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220416
+;; Version:    20220801
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -48,6 +48,7 @@
 ;; «.other-terms»		(to "other-terms")
 ;;   «.eepitch-ansiterm»	(to "eepitch-ansiterm")
 ;;   «.eepitch-vterm»		(to "eepitch-vterm")
+;;   «.eepitch-sly»		(to "eepitch-sly")
 ;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
 
@@ -898,6 +899,26 @@ The arguments are explained here:
   (interactive)
   (prog1 (eepitch `(find-vtermprocess ,program ,name0))
     (setq eepitch-line 'eepitch-line-vterm)))
+
+;; «eepitch-sly»  (to ".eepitch-sly")
+;; This is a prototype. See:
+;; https://github.com/joaotavora/sly/issues/527
+;;
+(defun find-slyprocess ()
+  "Go to a Sly REPL buffer, This function is used by `eepitch-sly'."
+  (require 'sly)
+  (sly-setup)
+  (if (and (sly-current-connection)
+	   (sly-mrepl--find-buffer))
+      (find-ebuffer (sly-mrepl--find-buffer) :end)
+    (let ((sly-command-switch-to-existing-lisp 'never)
+	  (sly-auto-select-connection 'never)
+	  (sly-lisp-implementations '((sbcl ("sbcl"))))
+	  (sly-default-lisp 'sbcl))
+      (sly))))
+
+(defun eepitch-sly () (interactive)
+  (eepitch '(find-slyprocess)))
 
 
 
