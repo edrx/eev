@@ -3116,6 +3116,21 @@ This function is used by `ee-0x0-upload-region'."
    pos-spec-list))
 
 
+;; Based on this suggestion by Quiliro Ordoñez, but simpler:
+;; https://lists.gnu.org/archive/html/eev/2022-08/msg00005.html
+;;
+(defun find-angg-not-configured (&rest rest) (interactive)
+  (error "`find-angg' not configured! Run: (find-angg-es-links)"))
+
+(defun find-es-not-configured (&rest rest) (interactive)
+  (error "`find-es' not configured! Run: (find-angg-es-links)"))
+
+(if (not (fboundp 'find-angg)) (defalias 'find-angg 'find-angg-not-configured))
+(if (not (fboundp 'find-es))   (defalias 'find-es   'find-es-not-configured))
+
+
+
+
 
 ;; «find-1stclassvideo-links»  (to ".find-1stclassvideo-links")
 ;; Skel: (find-find-links-links-new "1stclassvideo" "c" "body")

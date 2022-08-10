@@ -1,3 +1,8 @@
+2022-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-angg-not-configured)
+	(find-es-not-configured): new functions.
+
 2022-08-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (find-slyprocess, eepitch-sly): new functions.
