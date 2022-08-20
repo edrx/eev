@@ -930,7 +930,8 @@ The arguments are explained here:
 ;;;                   |___/             |___/           
 ;;
 ;; «eepitch-langs»  (to ".eepitch-langs")
-;; See: (find-eepitch-intro "2.5. `find-comintprocess'")
+;; See: (find-eev-quick-intro "6.2. Other targets")
+;;      (find-eepitch-intro "2.5. `find-comintprocess'")
 
 ;; Shells:
 ;; These three are commented out because they are defined above.

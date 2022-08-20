@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220525
+;; Version:    20220820
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -11535,15 +11535,14 @@ The local copy will be played with Mpv, with:
 [NOTE: The support for subtitles was added
 in may/2022, and it's a work in progress]
 
-Some video have subtitles. The low-level way to download a video
-and its subtitles is with sexps like these ones - try them:
+Some of the videos in
 
-  (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \"\")
-  (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \".srt\")
-  (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \".srt .vtt\")
+  http://angg.twu.net/eev-videos/
 
-The third sexp generates a temporary buffer whose core is this
-eepitch block:
+have subtitles in separate files. If a video called
+NAMEOFTHEVIDEO(.mp4) has subtitles in two formats, .srt and .srt,
+then the _low-level way_ to download it from the eev home page
+would be with this eepitch block:
 
  (eepitch-shell2)
  (eepitch-kill)
@@ -11554,58 +11553,79 @@ eepitch block:
   wget -N   http://angg.twu.net/eev-videos/NAMEOFTHEVIDEO.srt
   wget -N   http://angg.twu.net/eev-videos/NAMEOFTHEVIDEO.vtt
 
-The \"-nc\" says to wget that if the .mp4 (the video) is already
-downloaded then it (the wget) shouldn't try to download it again;
-the \"-N\" says to wget that if the version of the file at
-angg.twu.net is newer than the local copy then wget should
-download the newer version, and replace the local copy with the
-newer version. The argument \".srt .vtt\" is a list of the
-extensions of the subtitles.
+The eepitch block above follows all the conventions that are
+explained here,
 
-The high-level way to play a first-class video (see section 9)
-is with sexps like this one:
+  (find-psne-intro \"1. Local copies of files from the internet\")
+
+except for the arguments to wget. The help message for wget
+explains \"-nc\" and \"-N\" as:
+
+  (find-sh \"wget --help\" \"-nc, --no-clobber\")
+  (find-sh \"wget --help\" \"-N,  --timestamping\")
+
+  -nc, --no-clobber        skip downloads that would download to
+                             existing files (overwriting them)
+  -N,  --timestamping      don't re-retrieve files unless newer than
+                             local
+
+The \".mp4\"s at angg.twu.net are never updated, so if we already
+have a local copy of the .mp4 then wget shouldn't try to download
+it again. In contrast, subtitle files are revised occasionally,
+so if the subtitle files on angg.twu.net are newer than the local
+copy then wget should download the newer version, and overwrite
+the local subtitle files with their newer versions.
+
+The _medium-level way_ to download videos from angg.twu.net, with
+or without subtitles, is by running sexps like these ones:
+
+  (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \"\")
+  (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \".srt\")
+  (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \".srt .vtt\")
+
+Try them - they create temporary buffers with scripts like the
+one in the beginning of this section, but with different commands
+for downloading subtitles: the sexp with \".srt .vtt\" creates a
+script that downloads two subtitle files, the one with \".srt\"
+creates a script that downloads just one, and the sexp with \"\"
+creates a script that doesn't try to download any subtitle files.
+
+The _high-level way_ to play a first-class video is with sexps
+like this one - see section 9 for details:
 
   (find-eev2021video)
 
-The sexp above calls:
+The sexp above calls this one,
 
   (find-1stclassvideo-video \"eev2021\")
 
-and that sexp uses the information in `ee-1stclassvideos-info' -
-i.e., from here:
+that will play the local copy of the video if it exists, or
+download a local copy if we don't have a local copy of it yet.
+The entry about the video \"eev2021\" in the list of first-class
+videos is here:
 
-  (find-eev \"eev-videolinks.el\" \"ee-1stclassvideos-info\")
-  (find-1stclassvideodef \"eev2021\")
+  (find-eev \"eev-videolinks.el\" \"eev2021\")
 
-to convert the \"eev2021\" to the name of an .mp4 file. When the
-local copy of the video is not found the
-sexp `(find-1stclassvideo-video ...)' above calls this,
+Try these sexps:
 
-  (find-psne-1stclassvideo-links \"eev2021\")
+  (ee-1stclassvideos-mp4stem  \"eev2021\")
+  (ee-1stclassvideos-localmp4 \"eev2021\")
+  (ee-1stclassvideos-mp4found \"eev2021\")
+  (ee-1stclassvideos-field    \"eev2021\"       :subs)
+  (ee-1stclassvideos-field    \"2021workshop5\" :subs)
 
-that is similar to `find-psne-eevvideo-links'. Compare:
+You will see that the video \"eev2021\" has subtitles, and the
+video \"2021workshop5\" doesn't.
 
-  (find-psne-1stclassvideo-links \"eev2021\")
-  (find-psne-eevvideo-links \"emacsconf2021\" \".vtt\")
-
-The conversion from \"eev2021\" to \"emacsconf2021\" and \".vtt\"
-is done by:
-
-  (ee-1stclassvideos-mp4stem \"eev2021\")
-  (ee-1stclassvideos-field   \"eev2021\" :subs)
-
-The support for subtitles is recent, and is still a bit
-primitive. The temporary buffer generated by
+NOTE: the support for subtitles is recent, and is still a bit
+rough. The temporary buffer generated by
 `find-1stclassvideo-links' contains a few extra lines when a
 video has subtitles - compare:
 
-  (find-1stclassvideo-links \"2022pict2elua\")
-  (find-1stclassvideo-links \"2021workshop6\")
+  (find-1stclassvideo-links \"eev2021\")
+  (find-1stclassvideo-links \"2021workshop5\")
 
-The video \"2022pict2elua\" has subtitles, and \"2021workshop6\"
-doesn't.
-
-The process of downloading or updating subtitles is not well
+but the process of downloading or updating subtitles is not well
 integrated in the rest of eev yet, and at this moment the
 \"right\" way to download or update subtitles is with
 `find-1stclassvideo-links' and with the link in its \"Download

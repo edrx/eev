@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220813
+;; Version:    20220818
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -39,8 +39,44 @@
 ;;   https://lists.nongnu.org/mailman/listinfo/eev
 ;;
 ;;
-;; 1. Introduction 
-;; ===============
+;; 1. Very short introduction
+;; ==========================
+;; We can load this file and make it define some new functions with:
+;;
+;;   (load (buffer-file-name))
+;;   (ee-rstdoc-defun-all)
+;;
+;; After that these three sexps - try them! -
+;;
+;;   (find-pydoc  "tutorial/classes")
+;;   (find-pydocw "tutorial/classes")
+;;   (find-pydocr "tutorial/classes")
+;;   
+;; will work as sexp hyperlinks to these two URLs and this file:
+;;
+;;                https://docs.python.org/3/tutorial/classes.html
+;;            /usr/share/doc/python3.9/html/tutorial/classes.html
+;;   /usr/share/doc/python3.9/html/_sources/tutorial/classes.rst.txt
+;;
+;; If we look at the comments of `ee-rstdoc-defun-all', at
+;;
+;;   (find-eev "eev-rstdoc.el" "ee-rstdoc-defun-all")
+;;
+;; we will see that they are:
+;;
+;;   See: (find-code-rstdoc ee-rstdoc-python)
+;;        (find-code-rstdoc ee-rstdoc-sympy)
+;;        (find-code-rstdoc ee-rstdoc-matplotlib)
+;;
+;; The first `find-code-rstdoc' shows that the corresponding
+;; `code-rstdoc' defines four functions: `find-pydoc', `find-pydocw',
+;; `find-pydocr', and `pdk'. The first three are very easy to
+;; understand; the fourth, `pdk', is much stranger, and it is it that
+;; makes this module practical to use.
+;;
+;;
+;; 2. Long introduction 
+;; ====================
 ;; On my Debian box I have two local files that are related to this
 ;; page of the Python docs:
 ;;
@@ -190,8 +226,11 @@
 ;;           (code-rstdoc ee-rstdoc-python)
 ;;   ;; (find-code-rstdoc ee-rstdoc-sympy)
 ;;           (code-rstdoc ee-rstdoc-sympy)
+;;   ;; (find-code-rstdoc ee-rstdoc-matplotlib)
+;;           (code-rstdoc ee-rstdoc-matplotlib)
 
 
+;; «.ee-rstdoc-defun-all»	(to "ee-rstdoc-defun-all")
 
 ;; Should I use cl-defstruct instead?
 ;; See: (find-node "(cl)Structures" "cl-defstruct")
@@ -268,6 +307,9 @@
          (kill      (slot-value rd 'kill))
 	 )
     (ee-template0 "\
+;; (find-code-rstdoc {name})
+;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;
 (defun {find-html} (str &rest rest)
   \"Open the local html page associated to the rstdoc STR.
 This function uses {name} to transform STR in the right way.\"
@@ -296,8 +338,9 @@ and to convert it into a sexp.\"
 (setq ee-rstdoc-python
       (ee-rstdoc
        :name      'ee-rstdoc-python
-       :res       '("#.*$" ".html$" ".rst.txt$" "^file://"
+       :res       '("#.*$" "\\?.*$" ".html$" ".rst.txt$" "^file://"
                     "^https://docs.python.org/3/"
+		    "^/usr/share/doc/python[0-9.]*-doc/html/"
 		    "^/usr/share/doc/python3-doc/html/"
 		    "^/usr/share/doc/python3.9-doc/html/")
        :base-html "file:///usr/share/doc/python3.9-doc/html/"
@@ -312,7 +355,7 @@ and to convert it into a sexp.\"
 (setq ee-rstdoc-sympy
       (ee-rstdoc
        :name      'ee-rstdoc-sympy
-       :res       '("#.*$" ".html$" ".rst.txt$" "^file://"
+       :res       '("#.*$" "\\?.*$" ".html$" ".rst.txt$" "^file://"
 		    "^/usr/share/doc/python-sympy-doc/html/"
 		    "^/docs.sympy.org/latest/")
        :base-html "file:///usr/share/doc/python-sympy-doc/html/"
@@ -323,6 +366,32 @@ and to convert it into a sexp.\"
        :find-web  'find-sympydocw
        :kill      'sdk
        ))
+
+(setq ee-rstdoc-matplotlib
+      (ee-rstdoc
+       :name      'ee-rstdoc-matplotlib
+       :res       '("#.*$" "\\?.*$" ".html$" ".rst.txt$" "^file://"
+		    "^/usr/share/doc/python-matplotlib-doc/html/"
+		    "^/docs.matplotlib.org/latest/")
+       :base-html "file:///usr/share/doc/python-matplotlib-doc/html/"
+       :base-rst  "/usr/share/doc/python-matplotlib-doc/html/_sources/"
+       :base-web  "https://matplotlib.org/stable/"
+       :find-html 'find-mpldoc
+       :find-rst  'find-mpldocr
+       :find-web  'find-mpldocw
+       :kill      'mdk
+       ))
+
+;; «ee-rstdoc-defun-all»  (to ".ee-rstdoc-defun-all")
+;; See: (find-code-rstdoc ee-rstdoc-python)
+;;      (find-code-rstdoc ee-rstdoc-sympy)
+;;      (find-code-rstdoc ee-rstdoc-matplotlib)
+;;
+(defun ee-rstdoc-defun-all ()
+  (interactive)
+  (code-rstdoc ee-rstdoc-python)
+  (code-rstdoc ee-rstdoc-sympy)
+  (code-rstdoc ee-rstdoc-matplotlib))
 
 
 
