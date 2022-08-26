@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220820
+;; Version:    20220825
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -954,7 +954,8 @@ print(open(\"/tmp/o\").read())
   It is possible to display all the targets at the same time,
   using advanced features that are explained here:
 
-    (find-multiwindow-intro \"find-3EE\")
+    (find-multiwindow-intro \"4. Several eepitch targets\")
+    (find-multiwindow-intro \"7. Eepitch blocks for two targets\")
 
   Here is a demo:
 
@@ -6118,7 +6119,9 @@ The sexp
 
 switches to a buffer called \"*buffer name*\" and if that buffer
 does not have an associated process then it runs \"program and
-args\" there in comint mode.
+args\" there in comint mode. Comint is explained here:
+
+  (find-enode \"Shell Mode\")
 
 The sexp
 
@@ -6134,6 +6137,25 @@ Most `eepitch-<lang>' functions are defined using
   (find-eev \"eepitch.el\" \"eepitch-langs\")
   (find-eev \"eepitch.el\" \"find-comintprocess\")
   (find-eev \"eepitch.el\" \"find-comintprocess\" \"defun eepitch-comint \")
+
+
+
+2.6. `find-vtermprocess'
+------------------------
+Some programs don't run well inside comint buffers, but run well
+inside other terminal emulators that are harder to set up but
+that handle more escape sequences, like vterm:
+
+  https://github.com/akermu/emacs-libvterm
+
+Most `eepitch-<lang>' functions are defined using
+`eepitch-comint' and `find-comintprocess'; the `eepitch-<lang>'
+functions that need vterm are defined using `eepitch-vterm' and
+`find-vtermprocess'. See:
+
+  (find-eev \"eepitch.el\" \"other-terms\")
+  (find-eev \"eepitch.el\" \"eepitch-langs-vterm\")
+ 
 
 
 
@@ -11532,9 +11554,6 @@ The local copy will be played with Mpv, with:
 
 5.1. Subtitles
 --------------
-[NOTE: The support for subtitles was added
-in may/2022, and it's a work in progress]
-
 Some of the videos in
 
   http://angg.twu.net/eev-videos/

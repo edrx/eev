@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220818
+;; Version:    20220826
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -249,6 +249,7 @@
    (find-html :initarg :find-html)
    (find-rst  :initarg :find-rst)
    (find-web  :initarg :find-web)
+   (c         :initarg :c)
    (kill      :initarg :kill)
    ))
 
@@ -304,6 +305,8 @@
          (find-html (slot-value rd 'find-html))
          (find-web  (slot-value rd 'find-web))
          (find-rst  (slot-value rd 'find-rst))
+         (base-rst  (slot-value rd 'base-rst))
+         (c         (slot-value rd 'c))
          (kill      (slot-value rd 'kill))
 	 )
     (ee-template0 "\
@@ -325,6 +328,8 @@ This function uses {name} to transform STR.\"
 This function uses {name} to transform STR.\"
   (apply 'find-fline (ee-rstdoc-rst {name} str) rest))
 
+(code-c-d \"{c}r\" \"{base-rst}\")
+
 (defun {kill} ()
   \"Put on the kill ring a sexp hyperlink to the rstdoc at point.
 This function uses {name} to shrink the rstdoc at point
@@ -338,7 +343,7 @@ and to convert it into a sexp.\"
 (setq ee-rstdoc-python
       (ee-rstdoc
        :name      'ee-rstdoc-python
-       :res       '("#.*$" "\\?.*$" ".html$" ".rst.txt$" "^file://"
+       :res       '("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
                     "^https://docs.python.org/3/"
 		    "^/usr/share/doc/python[0-9.]*-doc/html/"
 		    "^/usr/share/doc/python3-doc/html/"
@@ -349,14 +354,16 @@ and to convert it into a sexp.\"
        :find-html 'find-pydoc
        :find-rst  'find-pydocr
        :find-web  'find-pydocw
+       :c         "pydoc"
        :kill      'pdk
        ))
 
 (setq ee-rstdoc-sympy
       (ee-rstdoc
        :name      'ee-rstdoc-sympy
-       :res       '("#.*$" "\\?.*$" ".html$" ".rst.txt$" "^file://"
+       :res       '("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://" "^https?:/"
 		    "^/usr/share/doc/python-sympy-doc/html/"
+		    "^/docs.sympy.org/[0-9.]+/"
 		    "^/docs.sympy.org/latest/")
        :base-html "file:///usr/share/doc/python-sympy-doc/html/"
        :base-rst  "/usr/share/doc/python-sympy-doc/html/_sources/"
@@ -364,13 +371,14 @@ and to convert it into a sexp.\"
        :find-html 'find-sympydoc
        :find-rst  'find-sympydocr
        :find-web  'find-sympydocw
+       :c         "sympydoc"
        :kill      'sdk
        ))
 
 (setq ee-rstdoc-matplotlib
       (ee-rstdoc
        :name      'ee-rstdoc-matplotlib
-       :res       '("#.*$" "\\?.*$" ".html$" ".rst.txt$" "^file://"
+       :res       '("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
 		    "^/usr/share/doc/python-matplotlib-doc/html/"
 		    "^/docs.matplotlib.org/latest/")
        :base-html "file:///usr/share/doc/python-matplotlib-doc/html/"
@@ -379,6 +387,7 @@ and to convert it into a sexp.\"
        :find-html 'find-mpldoc
        :find-rst  'find-mpldocr
        :find-web  'find-mpldocw
+       :c         "rstdoc"
        :kill      'mdk
        ))
 

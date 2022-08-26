@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220801
+;; Version:    20220825
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -51,6 +51,7 @@
 ;;   «.eepitch-sly»		(to "eepitch-sly")
 ;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
+;; «.eepitch-langs-vterm»	(to "eepitch-langs-vterm")
 
 ;;; Commentary:
 
@@ -1057,6 +1058,21 @@ The arguments are explained here:
 (defun eepitch-pacmd () (interactive) (eepitch-comint "pacmd" "pacmd"))
 
 
+;; «eepitch-langs-vterm»  (to ".eepitch-langs-vterm")
+;; See: (find-eepitch-intro "2.6. `find-vtermprocess'")
+;;
+(defun eepitch-isympy () (interactive) (eepitch-vterm "isympy3" "isympy3"))
+;;
+;; If you want to redefine the `eepitch-<lang>'s below to make them
+;; use vterm instead of comint, then copy the block below to your
+;; ~/.emacs, deleting the initial ";;"s:
+;;
+;; ;; See: (find-eev "eepitch.el" "eepitch-langs-vterm")
+;; (defun eepitch-shell  () (interactive) (eepitch-vterm nil "shell"))
+;; (defun eepitch-shell2 () (interactive) (eepitch-vterm nil "shell 2"))
+;; (defun eepitch-shell3 () (interactive) (eepitch-vterm nil "shell 3"))
+;; (defun eepitch-julia  () (interactive) (eepitch-vterm "julia" "julia"))
+;; (defun eepitch-nodejs () (interactive) (eepitch-vterm "nodejs" "nodejs"))
 
 
 
