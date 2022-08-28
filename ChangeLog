@@ -1,3 +1,11 @@
+2022-08-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rstdoc.el: rewritten completely.
+
+2022-08-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-load.el: added a (require 'eev-rstdoc).
+
 2022-08-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eepitch-intro): added the section "2.6.

@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220601
+;; Version:    20220827
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -144,6 +144,7 @@
 (require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
 (require 'eev-kla)             ; (find-eev "eev-kla.el")
 (require 'eev-helpful)         ; (find-eev "eev-helpful.el")
+(require 'eev-rstdoc)          ; (find-eev "eev-rstdoc.el")
 ;;
 ;; Configuration on M$ Windows.
 (require 'eev-wconfig)         ; (find-eev "eev-wconfig.el")

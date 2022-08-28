@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220826
+;; Version:    20220828
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -28,235 +28,313 @@
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
+;; «.introduction»		(to "introduction")
+;; «.default-defvars»		(to "default-defvars")
+;;   «.ee-rstdoc-:py»		(to "ee-rstdoc-:py")
+;;   «.ee-rstdoc-:sympy»	(to "ee-rstdoc-:sympy")
+;;   «.ee-rstdoc-:mpl»		(to "ee-rstdoc-:mpl")
+;; «.basic-ops»			(to "basic-ops")
+;; «.around-point»		(to "around-point")
+;; «.code-rstdoc»		(to "code-rstdoc")
+;; «.default-defuns»		(to "default-defuns")
+
+
+;; «introduction»  (to ".introduction")
 
 ;; 0. Warning
 ;; ==========
-;; This is an experimental feature that is not loaded by default.
-;; It is being discussed in the eev mailing list:
+;; This is an experimental feature.
+;; See these posts in the mailing list:
 ;;
 ;;   https://lists.gnu.org/archive/html/eev/
 ;;   https://lists.gnu.org/archive/html/eev/2022-08/threads.html
+;;   https://lists.gnu.org/archive/html/eev/2022-08/msg00011.html
+;;   https://lists.gnu.org/archive/html/eev/2022-08/msg00013.html
 ;;   https://lists.nongnu.org/mailman/listinfo/eev
 ;;
 ;;
 ;; 1. Very short introduction
 ;; ==========================
-;; We can load this file and make it define some new functions with:
-;;
-;;   (load (buffer-file-name))
-;;   (ee-rstdoc-defun-all)
-;;
-;; After that these three sexps - try them! -
-;;
-;;   (find-pydoc  "tutorial/classes")
-;;   (find-pydocw "tutorial/classes")
-;;   (find-pydocr "tutorial/classes")
-;;   
-;; will work as sexp hyperlinks to these two URLs and this file:
-;;
-;;                https://docs.python.org/3/tutorial/classes.html
-;;            /usr/share/doc/python3.9/html/tutorial/classes.html
-;;   /usr/share/doc/python3.9/html/_sources/tutorial/classes.rst.txt
-;;
-;; If we look at the comments of `ee-rstdoc-defun-all', at
-;;
-;;   (find-eev "eev-rstdoc.el" "ee-rstdoc-defun-all")
-;;
-;; we will see that they are:
-;;
-;;   See: (find-code-rstdoc ee-rstdoc-python)
-;;        (find-code-rstdoc ee-rstdoc-sympy)
-;;        (find-code-rstdoc ee-rstdoc-matplotlib)
-;;
-;; The first `find-code-rstdoc' shows that the corresponding
-;; `code-rstdoc' defines four functions: `find-pydoc', `find-pydocw',
-;; `find-pydocr', and `pdk'. The first three are very easy to
-;; understand; the fourth, `pdk', is much stranger, and it is it that
-;; makes this module practical to use.
-;;
-;;
-;; 2. Long introduction 
-;; ====================
-;; On my Debian box I have two local files that are related to this
-;; page of the Python docs:
-;;
-;;                https://docs.python.org/3/tutorial/classes.html
-;;
-;; They are:
-;;
-;;            /usr/share/doc/python3.9/html/tutorial/classes.html
-;;   /usr/share/doc/python3.9/html/_sources/tutorial/classes.rst.txt
-;;
-;; The first one is a local copy of the HTML page, and on my machine
-;; opening that local copy with a browser is much faster than opening
-;; the remote version. The second one is the source code in RST
-;; (a.k.a. "reSructuredText") of the HTML page, and when I want to
-;; copy and paste text from the examples I prefer to do that by
-;; accessing the .rst.txt rather than by accessing the HTML.
-;;
-;; Similarly, this page of the SymPy docs
-;;
-;;                   https://docs.sympy.org/latest/gotchas.html
-;;
-;; is related to these two local files:
-;;
-;;            /usr/share/doc/python-sympy-doc/html/gotchas.html
-;;   /usr/share/doc/python-sympy-doc/html/_sources/gotchas.rst.txt
-;;
-;; After loading this file in the right way (I will explain that
-;; soon!) I can access those pages and files with the sexp hyperlinks
-;; below:
-;;
-;;     (find-pydoc  "tutorial/classes")
-;;     (find-pydocw "tutorial/classes")
-;;     (find-pydocr "tutorial/classes")
-;;     (find-sympydoc  "gotchas")
-;;     (find-sympydocw "gotchas")
-;;     (find-sympydocr "gotchas")
-;;
-;; The hyperlink functions above also support anchors. for example,
-;; the first two sexp hyperlinks below
-;;
-;;     (find-pydoc  "tutorial/classes#class-objects")
-;;     (find-pydocw "tutorial/classes#class-objects")
-;;     (find-pydocr "tutorial/classes#class-objects")
-;;
-;; open these urls with a browser (with the function
-;; `ee-rstdoc-browse-url'):
-;;
-;;                  https://docs.python.org/3/tutorial/classes.html#class-objects
-;;   file:///usr/share/doc/python3.9-doc/html/tutorial/classes.html#class-objects
-;;
-;; In `find-pydocr' the anchor is ignored.
-;;
-;; In a nutshell, what is happening here is that the variable
-;; `ee-rstdoc-python' contains instructions for shrinking strings like
-;; these
-;;
-;;                  https://docs.python.org/3/tutorial/classes.html
-;;          /usr/share/doc/python3.9-doc/html/tutorial/classes.html
-;;   file:///usr/share/doc/python3.9-doc/html/tutorial/classes.html
-;;     /usr/share/doc/python3.9/html/_sources/tutorial/classes.rst.txt
-;;
-;; into this,
-;;
-;;                                            tutorial/classes
-;;
-;; and also instructions for expanding these strings in several ways -
-;; for example, to obtain the URLs of the local and the remote home
-;; pages, and to obtain the file name of the .rst.txt... and the
-;; variable `ee-rstdoc-sympy' contains other, different instructions for
-;; shrinking and expanding strings, tailored to the SymPy docs.
-;;
-;;
-;; 2. Try it
-;; =========
 ;; Try this:
 ;;
 ;;   (load (buffer-file-name))
-;;   (find-code-rstdoc ee-rstdoc-python)
+;;   (ee-rstdoc-default-defuns)
+;;   (find-pydocw    "tutorial/classes")
+;;   (find-sympydocw "tutorials/intro-tutorial/gotchas#equals-signs")
+;;   (find-mpldocw   "tutorials/introductory/pyplot")
 ;;
-;; The function `find-code-rstdoc' is similar to `find-code-c-d',
-;; described here -
+;; Each one of the `find-*docw' functions above expands its argument
+;; in a different way, converts it to a URL, and opens it in a
+;; browser. These "ways of expanding" are configurable, but what makes
+;; this package really useful is that is also has configurable "ways
+;; of shortening" that can be used to produce other elisp hyperlinks
+;; like the ones above. Let me explain that with an example. The "we"
+;; in the example below is obviously a user who knows how this works;
+;; we want to become like "we".
 ;;
-;;   (find-eev-quick-intro "9. Shorter hyperlinks")
+;; The documentation of Python in intended to be read in a browser.
+;; The `find-pydocw' sexp above opens this URL in a browser:
 ;;
-;; it shows the code that this sexp would execute:
+;;   https://docs.python.org/3/tutorial/classes.html
 ;;
-;;        (code-rstdoc ee-rstdoc-python)
+;; Suppose that we navigate the Python tutorial a bit, and we find
+;; this other section in it that we want to keep a link to:
 ;;
-;; In the temporary buffer created by
+;;   https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions
 ;;
-;;   (find-code-rstdoc ee-rstdoc-python)
+;; We copy that URL to an Emacs buffer, and then we type `M-x pdk'
+;; (mnemonic: "Python-doc-kill") with the point on that URL. The `M-x
+;; pdk' will inspect the text around the point, shorten it in the
+;; right way, and it will display this message in the echo area:
 ;;
-;; you can see the definition of four functions: `find-pydoc',
-;; `find-pydocw', `find-pydocr', and `pdk'. The first three are sexp
-;; hyperlinks, and have been explained above. The last one, `pdk', is
-;; intended to be invoked as `M-x pdk', and it is a practical way to
-;; shrink URLs and file names and to produce sexp hyperlinks like this
-;; one,
+;;   Copied to the kill ring:
+;;   # (find-pydoc "tutorial/controlflow#lambda-expressions")
 ;;
-;;   (find-pydoc "tutorial/classes#class-objects")
+;; Then we use `C-y' to insert that line, and `M-h M-2 M-h M-2' to
+;; duplicate it twice. We get this (modulo the ";;s"):
 ;;
-;; that can be easily transformed to
+;;   # (find-pydoc "tutorial/controlflow#lambda-expressions")
+;;   # (find-pydoc "tutorial/controlflow#lambda-expressions")
+;;   # (find-pydoc "tutorial/controlflow#lambda-expressions")
 ;;
-;;   (find-pydocw "tutorial/classes#class-objects")
-;;   (find-pydocr "tutorial/classes#class-objects")
+;; Then we add a "w" and a "r" in the right places, and the three
+;; lines above become these ones:
 ;;
-;; by adding the letters "w" and "r" by hand.
+;;   # (find-pydoc  "tutorial/controlflow#lambda-expressions")
+;;   # (find-pydocw "tutorial/controlflow#lambda-expressions")
+;;   # (find-pydocr "tutorial/controlflow#lambda-expressions")
 ;;
-;; The best way to understand how `M-x pdk' works is by trying it. Run
-;; these two sexps:
+;; The first two sexps above will open URLs like these ones:
 ;;
-;;   (load (buffer-file-name))
-;;   (code-rstdoc ee-rstdoc-python)
+;;   file:///usr/share/doc/python3.9-doc/html/tutorial/controlflow.html#lambda-expressions
+;;   https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions
 ;;
-;; The sexp with `load' above should return `t' and the sexp with
-;; `code-rstdoc' should return `pdk'. The `pdk' is because the sexp
-;; with `code-rstdoc' executes the four defuns in the string that this
-;; sexp
+;; i.e., the `find-pydoc' uses the local copy of the Python docs, that
+;; the browser can open very quickly, and the `find-pydocw' uses the
+;; copy "from the web", that takes longer. The third sexp, the one
+;; with `find-pydocr', opens this file:
 ;;
-;;   (find-code-rstdoc ee-rstdoc-python)
+;;   /usr/share/doc/python3.9/html/_sources/tutorial/controlflow.rst.txt
 ;;
-;; displays in a temporary buffer, and the last defun returns `pdk'.
-;; Try `M-x pdk' with the point on each one of the strings below:
+;; that is the source of "control.html", in RST format - see:
 ;;
-;;                 https://docs.python.org/3/tutorial/classes.html#class-objects
-;;         /usr/share/doc/python3.9-doc/html/tutorial/classes.html#class-objects
-;;  file:///usr/share/doc/python3.9-doc/html/tutorial/classes.html#class-objects
-;;    /usr/share/doc/python3.9/html/_sources/tutorial/classes.rst.txt#class-objects
-;;                                           tutorial/classes#class-objects
+;;   https://en.wikipedia.org/wiki/ReStructuredText
 ;;
-;; In all cases you will get this message in the echo area:
-;;
-;;   Copied to the kill ring: (find-pydoc "tutorial/classes#class-objects")
-;;
-;; Then try to insert that sexp with `C-y' and run it.
+;; I find it much easier to copy examples from a .rst than from the
+;; HTML pages.
 ;;
 ;;
-;; 3. Loading this
-;; ===============
-;; The right way to load this is by putting these lines in your
-;; ~/.emacs - obviously after the place in which you load eev, and
-;; without the initial ";;" in each line:
+;; 2. Tutorials
+;; ============
+;; "Normal" tutorials have a lot of explanatory text, and a few
+;; examples. We can use elisp hyperlinks of the kinds above to create
+;; tutorials in another style - made of lots of executable examples,
+;; plus elisp hyperlinks in comments that point to the standard,
+;; "normal" tutorials, and to reference manuals. There are some
+;; examples of tutorials in that style here:
 ;;
-;;   ;; (find-eev "eev-rstdoc.el")
-;;   (require 'eev-rstdoc)
-;;   ;; (find-code-rstdoc ee-rstdoc-python)
-;;           (code-rstdoc ee-rstdoc-python)
-;;   ;; (find-code-rstdoc ee-rstdoc-sympy)
-;;           (code-rstdoc ee-rstdoc-sympy)
-;;   ;; (find-code-rstdoc ee-rstdoc-matplotlib)
-;;           (code-rstdoc ee-rstdoc-matplotlib)
+;;   (find-es "python" "tut-strings")
+;;   (find-es "sympy" "tutorial")
+;;   http://angg.twu.net/e/python.e.html#tut-strings
+;;   http://angg.twu.net/e/sympy.e.html#tutorial
+;;   http://angg.twu.net/eepitch.html#tutorials
+;;
+;;
+;; 3. How this works
+;; =================
+;; The main function defined in this file is `code-rst', that works
+;; similarly to `code-c-d', that is explained in this section of the
+;; main tutorial:
+;;
+;;   (find-eev-quick-intro "9.1. `code-c-d'")
+;;   (find-eev-quick-intro "9.1. `code-c-d'" "find-code-c-d")
+;;
+;; A sexp like
+;;
+;;   (code-rstdoc :py)
+;;
+;; generates some code - incluing defuns - and runs it. A sexp like
+;;
+;;   (find-code-rstdoc :py)
+;;
+;; generates the same code, and then shows it in a temporary buffer
+;; instead of running it. The comments in that code contains LOTS of
+;; simple tests and links to docs, so the temporary buffer generated
+;; by the `find-code-rstdoc' is a good starting point for
+;; understanding how this works.
+;;
+;; Look at the last defun in each of the `find-code-rstdoc's below:
+;;
+;;   (find-code-rstdoc :py)
+;;   (find-code-rstdoc :sympy)
+;;   (find-code-rstdoc :mpl)
+;;
+;; They define "killing functions" - i.e., functions that put lines in
+;; the kill ring - called `pdk', `sdk', and `mdk'. These functions
+;; violate the principle that each package should only define
+;; functions with certain prefixes - see:
+;;
+;;   (find-eev-intro "1. `eev-mode'")
+;;   (find-eev-intro "1. `eev-mode'" "prefixes")
+;;
+;; and this means that these sexps
+;;
+;;   (code-rstdoc :py)
+;;   (code-rstdoc :sympy)
+;;   (code-rstdoc :mpl)
+;;
+;; can't be run by default when eev is loaded - the user has to run
+;; them explicitly somehow. In the "Very short introduction" above I
+;; suggested running them with:
+;;
+;;   ;; See: (find-eev "eev-rstdoc.el" "default-defuns")
+;;   (ee-rstdoc-default-defuns)
+;;
+;;
+;; 4. Configuration
+;; ================
+;; Sexps like these
+;;
+;;        (code-rstdoc :py)
+;;   (find-code-rstdoc :py)
+;;
+;; use the data stored in the variable `ee-rstdoc-:py'. This file
+;; defines `ee-rstdoc-:py', and its variants for SymPy and MatPlotLib,
+;; `ee-rstdoc-:sympy' and `ee-rstdoc-:mpl', here,
+;;
+;;   (find-eev "eev-rstdoc.el" "ee-rstdoc-:py")
+;;   (find-eev "eev-rstdoc.el" "ee-rstdoc-:sympy")
+;;   (find-eev "eev-rstdoc.el" "ee-rstdoc-:mpl")
+;;
+;; and in a way that supposes that we are on Debian Stable, and that
+;; we have these packages installed:
+;;
+;;   python3.9-doc
+;;   python-sympy-doc
+;;   python-matplotlib-doc
+;;
+;; People on other distributions will probably have to take the
+;; `defvar's of `ee-rstdoc-:py', `ee-rstdoc-:sympy', and
+;; `ee-rstdoc-:mpl', convert them to setqs, adjust some of their
+;; fields, and put them in their init files. Note that each one of
+;; these setqs will have to be followed by a `code-rstdoc', or,
+;; preferrably, by a pair of lines like these:
+;;
+;;   ;; (find-code-rstdoc :py)
+;;           (code-rstdoc :py)
 
 
-;; «.ee-rstdoc-defun-all»	(to "ee-rstdoc-defun-all")
 
-;; Should I use cl-defstruct instead?
-;; See: (find-node "(cl)Structures" "cl-defstruct")
-;;      (find-node "(eieio)Quick Start" "defclass")
-;;      (find-node "(eieio)Slot Options" ":initarg")
-;;      (find-node "(eieio)Accessing Slots" "slot-value")
-;;
-(require 'eieio)
-
-(defclass ee-rstdoc ()
-  ((name      :initarg :name)
-   (res       :initarg :res)
-   (base-html :initarg :base-html)
-   (base-rst  :initarg :base-rst)
-   (base-web  :initarg :base-web)
-   (find-html :initarg :find-html)
-   (find-rst  :initarg :find-rst)
-   (find-web  :initarg :find-web)
-   (c         :initarg :c)
-   (kill      :initarg :kill)
-   ))
-
+;; Redefine if needed:
 (defalias 'ee-rstdoc-browse-url 'find-googlechrome)
 
-(defun ee-rstdoc-stem (rd str)
-  (dolist (re (slot-value rd 'res))
+
+
+;;; __     __         _       _     _           
+;;; \ \   / /_ _ _ __(_) __ _| |__ | | ___  ___ 
+;;;  \ \ / / _` | '__| |/ _` | '_ \| |/ _ \/ __|
+;;;   \ V / (_| | |  | | (_| | |_) | |  __/\__ \
+;;;    \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
+;;;                                             
+;; «default-defvars»  (to ".default-defvars")
+;; Each one of three variables below specify how a certain family of
+;; rstdoc functions should work. For example, `ee-rstdoc-:py'
+;; specifies both how the `find-pydoc*' functions should expand their
+;; arguments and how `M-x pdk' should shorten the string at point.
+;;
+;; See: (find-eev "eev-rstdoc.el" "introduction" "4. Configuration")
+
+;; «ee-rstdoc-:py»  (to ".ee-rstdoc-:py")
+;; Try: (find-code-rstdoc :py)
+;;      (find-code-rstdoc :sympy)
+;;      (find-code-rstdoc :mpl)
+;;
+(defvar ee-rstdoc-:py
+      '(:base      "index"
+        :base-web  "https://docs.python.org/3/"
+        :base-html "file:///usr/share/doc/python3.9-doc/html/"
+        :base-rst  "/usr/share/doc/python3.9/html/_sources/"
+        :rst       ".rst.txt"
+        :res       ("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
+                    "^https://docs.python.org/3/"
+                    "^/usr/share/doc/python[0-9.]*-doc/html/")
+        :kill      pdk
+	)
+      "See: (find-code-rstdoc :py)")
+
+;; «ee-rstdoc-:sympy»  (to ".ee-rstdoc-:sympy")
+(defvar ee-rstdoc-:sympy
+      '(:base      "index"
+        :base-web  "https://docs.sympy.org/latest/"
+        :base-html "file:///usr/share/doc/python-sympy-doc/html/"
+        :base-rst  "/usr/share/doc/python-sympy-doc/html/_sources/"
+	:res       ("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
+		    "^/usr/share/doc/python-sympy-doc/html/"
+		    "^https://docs.sympy.org/[0-9.]+/"
+		    "^https://docs.sympy.org/latest/")
+        :kill      sdk
+	)
+      "See: (find-code-rstdoc :sympy)")
+
+;; «ee-rstdoc-:mpl»  (to ".ee-rstdoc-:mpl")
+(defvar ee-rstdoc-:mpl
+      '(:base      "index"
+        :base-web  "https://matplotlib.org/stable/"
+        :base-html "/usr/share/doc/python-matplotlib-doc/html/"
+        :base-rst  "/usr/share/doc/python-matplotlib-doc/html/_sources/"
+        :res       ("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
+		    "^/usr/share/doc/python-matplotlib-doc/html/"
+	 	    "^https?://docs.matplotlib.org/latest/")
+        :kill      mdk)
+      "See: (find-code-rstdoc :mpl)")
+
+
+;;;  ____            _                        
+;;; | __ )  __ _ ___(_) ___    ___  _ __  ___ 
+;;; |  _ \ / _` / __| |/ __|  / _ \| '_ \/ __|
+;;; | |_) | (_| \__ \ | (__  | (_) | |_) \__ \
+;;; |____/ \__,_|___/_|\___|  \___/| .__/|___/
+;;;                                |_|        
+;;
+;; «basic-ops»  (to ".basic-ops")
+;; Basic operations. Most of them receive a "keyword" like :py,
+;; :sympy, or :mpl - see:
+;;
+;;   (find-elnode "Constant Variables")
+;;
+;; and they convert that into a symbol like `ee-rstdoc-:py' and read
+;; fields from the variable `ee-rstdoc-:py'.
+;;
+;; Tests:
+;; (ee-rstdoc-c   :py)
+;; (ee-rstdoc-c   'py)
+;; (ee-rstdoc-c   "py")
+;; (ee-rstdoc-kw  :py)
+;; (ee-rstdoc-kw  "py")
+;; (ee-rstdoc-var :py)
+;; (ee-rstdoc-var "py")
+;; (ee-rstdoc-getfield :py :base-web)
+;; (ee-rstdoc-getfield :py :foo)
+;; (ee-rstdoc-hashanchor "https://docs.python.org/3/index.html")
+;; (ee-rstdoc-hashanchor "https://docs.python.org/3/index.html#foo")
+;; (ee-rstdoc-stem   :py "https://docs.python.org/3/index.html#foo")
+;; (ee-rstdoc-short  :py "https://docs.python.org/3/index.html#foo")
+;; (ee-rstdoc-html   :py "https://docs.python.org/3/index.html#foo")
+;; (ee-rstdoc-web    :py "https://docs.python.org/3/index.html#foo")
+;; (ee-rstdoc-rst    :py "https://docs.python.org/3/index.html#foo")
+
+(defun ee-rstdoc-c   (kw) (replace-regexp-in-string "^:" "" (format "%s" kw)))
+(defun ee-rstdoc-kw  (kw) (format ":%s" (ee-rstdoc-c kw)))
+(defun ee-rstdoc-var (kw) (ee-intern "ee-rstdoc-:%s" (ee-rstdoc-c kw)))
+(defun ee-rstdoc-get (kw) (symbol-value (ee-rstdoc-var kw)))
+
+(defun ee-rstdoc-getfield (kw field)
+  (let ((result (plist-get (ee-rstdoc-get kw) field)))
+    (if (not result) (error "Empty field %S in %S" field (ee-rstdoc-var kw)))
+    result))
+
+(defun ee-rstdoc-stem (kw str)
+  (dolist (re (ee-rstdoc-getfield kw :res))
     (setq str (replace-regexp-in-string re "" str)))
   str)
 
@@ -265,147 +343,148 @@
       (format "#%s" (replace-regexp-in-string "^.*#" "" str))
     ""))
 
-(defun ee-rstdoc-short (rd str)
+(defun ee-rstdoc-short (kw str)
   (format "%s%s"
-	  (ee-rstdoc-stem rd str)
+	  (ee-rstdoc-stem kw str)
 	  (ee-rstdoc-hashanchor str)))
 
-(defun ee-rstdoc-html (rd str)
+(defun ee-rstdoc-html (kw &optional str)
+  (if (not str)
+      (setq str (ee-rstdoc-getfield kw :base)))
   (format "%s%s.html%s"
-	  (slot-value rd 'base-html)
-	  (ee-rstdoc-stem rd str)
+	  (ee-rstdoc-getfield kw :base-html)
+	  (ee-rstdoc-stem kw str)
 	  (ee-rstdoc-hashanchor str)))
 
-(defun ee-rstdoc-web (rd str)
+(defun ee-rstdoc-web (kw &optional str)
+  (if (not str)
+      (setq str (ee-rstdoc-getfield kw :base)))
   (format "%s%s.html%s"
-	  (slot-value rd 'base-web)
-	  (ee-rstdoc-stem rd str)
+	  (ee-rstdoc-getfield kw :base-web)
+	  (ee-rstdoc-stem kw str)
 	  (ee-rstdoc-hashanchor str)))
 
-(defun ee-rstdoc-rst (rd str)
-  (format "%s%s.rst.txt"
-	  (slot-value rd 'base-rst)
-	  (ee-rstdoc-stem rd str)))
+(defun ee-rstdoc-rst (kw &optional str)
+  (if (not str)
+      (setq str (ee-rstdoc-getfield kw :base)))
+  (format "%s%s%s"
+	  (ee-rstdoc-getfield kw :base-rst)
+	  (ee-rstdoc-stem kw str)
+	  (ee-rstdoc-getfield kw :rst)))
 
+
+;; «around-point»  (to ".around-point")
 ;; See: (find-eev "eev-elinks.el" "around-point")
 ;; Try: (rx (intersection (any "!-~") (not (any "\"<>"))))
 ;;  --> "[!#-;=?-~]"
 (defun ee-rstdoc-around-point ()
   (ee-stuff-around-point "!#-;=?-~"))
 
-(defun ee-rstdoc-short-around-point (rd)
-  (ee-rstdoc-short rd (ee-rstdoc-around-point)))
+(defun ee-rstdoc-short-around-point (kw)
+  (ee-rstdoc-short kw (ee-rstdoc-around-point)))
 
-(defun      code-rstdoc (rd)
-  (eval (ee-read (ee-code-rstdoc rd))))
-(defun find-code-rstdoc (rd &rest rest)
-  (apply 'find-estring-elisp (ee-code-rstdoc rd) rest))
-(defun   ee-code-rstdoc (rd)
-  (let* ((name      (slot-value rd 'name))
-         (find-html (slot-value rd 'find-html))
-         (find-web  (slot-value rd 'find-web))
-         (find-rst  (slot-value rd 'find-rst))
-         (base-rst  (slot-value rd 'base-rst))
-         (c         (slot-value rd 'c))
-         (kill      (slot-value rd 'kill))
+;; See: (find-code-rstdoc :py "ee-rstdoc-kill")
+;; Test: (ee-rstdoc-kill '(find-pydoc "index"))
+;; Based on: (find-efunction 'ee-kl-kill)
+(defun ee-rstdoc-kill (sexp)
+  (if (listp sexp)
+      (setq sexp (ee-S sexp)))
+  (kill-new (concat "# " sexp "\n"))
+  (message "Copied to the kill ring: # %s" sexp))
+
+
+
+;;;                _                     _      _            
+;;;   ___ ___   __| | ___       _ __ ___| |_ __| | ___   ___ 
+;;;  / __/ _ \ / _` |/ _ \_____| '__/ __| __/ _` |/ _ \ / __|
+;;; | (_| (_) | (_| |  __/_____| |  \__ \ || (_| | (_) | (__ 
+;;;  \___\___/ \__,_|\___|     |_|  |___/\__\__,_|\___/ \___|
+;;;                                                          
+;; «code-rstdoc»  (to ".code-rstdoc")
+;; Test: (find-code-rstdoc :py)
+;;
+(defun      code-rstdoc (kw)
+  (eval (ee-read (ee-code-rstdoc kw))))
+(defun find-code-rstdoc (kw &rest rest)
+  (apply 'find-estring-elisp (ee-code-rstdoc kw) rest))
+(defun   ee-code-rstdoc (kw0)
+  (let* ((c        (ee-rstdoc-c  kw0))
+         (kw       (ee-rstdoc-kw kw0))
+         (var      (ee-rstdoc-var kw))
+         (base     (ee-rstdoc-getfield kw :base))
+         (base-rst (ee-rstdoc-getfield kw :base-rst))
+         (kill     (ee-rstdoc-getfield kw :kill))
 	 )
     (ee-template0 "\
-;; (find-code-rstdoc {name})
+;; (find-code-rstdoc {kw})
+;;      (code-rstdoc {kw})
 ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
+;;      (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+;;      (find-eev \"eev-rstdoc.el\" \"variables\")
+;;      (find-eev \"eev-rstdoc.el\" \"code-rstdoc\")
 ;;
-(defun {find-html} (str &rest rest)
+;; Tests: (find-eppp {var})
+;;        (find-{c}doc-expand  \"{base}\")
+;;        (find-{c}docw-expand \"{base}\")
+;;        (find-{c}docr-expand \"{base}\")
+;;        (find-{c}doc  \"{base}\")
+;;        (find-{c}docw \"{base}\")
+;;        (find-{c}docr \"{base}\")
+;;        (find-{c}docrfile \"\")
+;;        (find-{c}docrsh \"find * | sort\")
+
+(defun find-{c}doc-expand  (str &rest rest) (ee-rstdoc-html {kw} str))
+(defun find-{c}docw-expand (str &rest rest) (ee-rstdoc-web  {kw} str))
+(defun find-{c}docr-expand (str &rest rest) (ee-rstdoc-rst  {kw} str))
+
+(defun find-{c}doc (&optional str &rest rest)
   \"Open the local html page associated to the rstdoc STR.
-This function uses {name} to transform STR in the right way.\"
-  (ee-rstdoc-browse-url (ee-rstdoc-html {name} str)))
+This function uses the data in `{var}' to transform STR.\"
+  (ee-rstdoc-browse-url (ee-rstdoc-html {kw} str)))
 
-(defun {find-web} (str &rest rest)
+(defun find-{c}docw (&optional str &rest rest)
   \"Open the remote html page associated to the rstdoc STR.
-This function uses {name} to transform STR.\"
-  (ee-rstdoc-browse-url (ee-rstdoc-web {name} str)))
+This function uses the data in `{var}' to transform STR.\"
+  (ee-rstdoc-browse-url (ee-rstdoc-web {kw} str)))
 
-(defun {find-rst} (str &rest rest)
+(defun find-{c}docr (&optional str &rest rest)
   \"Open the local .rst.txt file associated to the rstdoc STR
-This function uses {name} to transform STR.\"
-  (apply 'find-fline (ee-rstdoc-rst {name} str) rest))
+This function uses the data in `{var}' to transform STR.\"
+  (apply 'find-fline (ee-rstdoc-rst {kw} str) rest))
 
-(code-c-d \"{c}r\" \"{base-rst}\")
+(code-c-d \"{c}docr\" \"{base-rst}\")
 
 (defun {kill} ()
   \"Put on the kill ring a sexp hyperlink to the rstdoc at point.
-This function uses {name} to shrink the rstdoc at point
-and to convert it into a sexp.\"
+This function uses the regexps in the :res field of `{var}'
+to shorten the rstdoc at point.\"
   (interactive)
-  (ee-kl-kill
-   (format \"({find-html} \\\"%s\\\")\"
-           (ee-rstdoc-short-around-point {name}))))
+  (ee-rstdoc-kill
+   (format \"(find-{c}doc \\\"%s\\\")\"
+           (ee-rstdoc-short-around-point {kw}))))
 ")))
 
-(setq ee-rstdoc-python
-      (ee-rstdoc
-       :name      'ee-rstdoc-python
-       :res       '("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
-                    "^https://docs.python.org/3/"
-		    "^/usr/share/doc/python[0-9.]*-doc/html/"
-		    "^/usr/share/doc/python3-doc/html/"
-		    "^/usr/share/doc/python3.9-doc/html/")
-       :base-html "file:///usr/share/doc/python3.9-doc/html/"
-       :base-rst  "/usr/share/doc/python3.9/html/_sources/"
-       :base-web  "https://docs.python.org/3/"
-       :find-html 'find-pydoc
-       :find-rst  'find-pydocr
-       :find-web  'find-pydocw
-       :c         "pydoc"
-       :kill      'pdk
-       ))
 
-(setq ee-rstdoc-sympy
-      (ee-rstdoc
-       :name      'ee-rstdoc-sympy
-       :res       '("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://" "^https?:/"
-		    "^/usr/share/doc/python-sympy-doc/html/"
-		    "^/docs.sympy.org/[0-9.]+/"
-		    "^/docs.sympy.org/latest/")
-       :base-html "file:///usr/share/doc/python-sympy-doc/html/"
-       :base-rst  "/usr/share/doc/python-sympy-doc/html/_sources/"
-       :base-web  "https://docs.sympy.org/latest/"
-       :find-html 'find-sympydoc
-       :find-rst  'find-sympydocr
-       :find-web  'find-sympydocw
-       :c         "sympydoc"
-       :kill      'sdk
-       ))
 
-(setq ee-rstdoc-matplotlib
-      (ee-rstdoc
-       :name      'ee-rstdoc-matplotlib
-       :res       '("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
-		    "^/usr/share/doc/python-matplotlib-doc/html/"
-		    "^/docs.matplotlib.org/latest/")
-       :base-html "file:///usr/share/doc/python-matplotlib-doc/html/"
-       :base-rst  "/usr/share/doc/python-matplotlib-doc/html/_sources/"
-       :base-web  "https://matplotlib.org/stable/"
-       :find-html 'find-mpldoc
-       :find-rst  'find-mpldocr
-       :find-web  'find-mpldocw
-       :c         "rstdoc"
-       :kill      'mdk
-       ))
-
-;; «ee-rstdoc-defun-all»  (to ".ee-rstdoc-defun-all")
-;; See: (find-code-rstdoc ee-rstdoc-python)
-;;      (find-code-rstdoc ee-rstdoc-sympy)
-;;      (find-code-rstdoc ee-rstdoc-matplotlib)
+;; «default-defuns»  (to ".default-defuns")
+;; Try: (find-code-rstdoc :py)
+;;      (find-code-rstdoc :sympy)
+;;      (find-code-rstdoc :mpl)
 ;;
-(defun ee-rstdoc-defun-all ()
+;; This is mostly for tests.
+;; Most people will prefer to define their own variables -
+;; as in: (find-eev "eev-rstdoc.el" "variables")
+;; - and then run `code-rstdoc's on them.
+;;
+(defun ee-rstdoc-default-defuns ()
   (interactive)
-  (code-rstdoc ee-rstdoc-python)
-  (code-rstdoc ee-rstdoc-sympy)
-  (code-rstdoc ee-rstdoc-matplotlib))
+  (code-rstdoc :py)
+  (code-rstdoc :sympy)
+  (code-rstdoc :mpl))
 
 
 
 (provide 'eev-rstdoc)
-
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
