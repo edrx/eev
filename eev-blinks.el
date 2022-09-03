@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220618
+;; Version:    20220903
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -391,6 +391,18 @@ then go to the position specified by POS-SPEC-LIST.\n
   (interactive (list (intern (read-no-blanks-input "Package name: " ""))))
   (apply 'find-wottb-call '(describe-package pkg-desc)
 	 "*Help*" pos-spec-list))
+
+;; Test: (find-eshortdoc 'keymaps)
+;;  See: (find-efunction 'shortdoc-display-group)
+;; TODO: (autoload 'shortdoc-display-group "shortdoc")
+;; TODO: make the autoload work in the interactive clause.
+;;
+(defun find-eshortdoc (group &rest rest)
+  "Hyperlink to the output of `shortdoc-display-group'."
+  (interactive (list (completing-read "Show summary for functions in: "
+                                      (mapcar #'car shortdoc--groups))))
+  (require 'shortdoc)
+  (apply 'find-dbsw-call `(shortdoc-display-group ',group) rest))
 
 
 

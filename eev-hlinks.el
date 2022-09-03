@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220625
+;; Version:    20220903
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -292,6 +292,7 @@ which kind \"here\" the current buffer is."
    (:if (ee-ecolors-bufferp)   (ee-find-ecolors-links))
    (:if (ee-efaces-bufferp)    (ee-find-efaces-links))
    (:if (ee-pdftext-bufferp)   (ee-find-pdftext-links))
+   (:if (ee-eshortdoc-bufferp) (ee-find-eshortdoc-links))
    ;;
    ;; By buffer name, when it is "*Help*":
    (:if (ee-efunctiondescr-bufferp) (ee-find-efunctiondescr-links))
@@ -550,6 +551,13 @@ This is the standard high-level way to call `ee-fhl-run'."
       (customize-option ',symbol)
       (customize-variable ',symbol)
       )))
+
+(defvar ee-eshortdoc-re "^\\*Shortdoc \\(.*\\)\\*$")
+(defun  ee-eshortdoc-bufferp () (ee-buffer-re ee-eshortdoc-re))
+(defun  ee-find-eshortdoc-links ()
+  (let ((symbol (intern (ee-eshortdoc-bufferp))))
+    `((find-eshortdoc ',symbol)
+      (shortdoc-display-group ',symbol))))
 
 ;; Other cases
 (defun ee-file-bufferp     () buffer-file-name)
