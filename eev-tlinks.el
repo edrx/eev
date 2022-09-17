@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220625
+;; Version:    20220905
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -653,6 +653,7 @@ Try this: (find-debpkg-links \"bash\")"
     (apply 'find-elinks `(
       ;; Convention: the first sexp always regenerates the buffer.
       (find-debpkg-links ,pkgname ,@rest)
+      (find-efunction 'find-debpkg-links)
       (find-available ,pkgname)
       ""
       ,@(ee-links-for-debpkg pkgname)
@@ -668,6 +669,9 @@ Try this: (find-debpkg-links \"bash\")"
 {ee-H}(find-sh \"apt search '{pkgname}*'\")
 {ee-H}(find-sh \"apt search '{pkgname}*' 2> /dev/null\")
 {ee-H}(find-sh \"grep-aptavail -P {pkgname}\")
+{ee-H}(find-sh \"grep-aptavail -P -s Package {pkgname}\")
+{ee-H}(find-sh \"grep-aptavail -P -s Package {pkgname} | sort\")
+{ee-H}(find-sh \"grep-aptavail -P -s Package,Version {pkgname}\")
 {ee-H}(find-sh \"dpkg-query -W '{pkgname}*'\")
 
 http://packages.debian.org/{pkgname}

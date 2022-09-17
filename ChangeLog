@@ -1,3 +1,19 @@
+2022-09-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-edit.el (ee-preceding-tag-flash): new function.
+	(ee-copy-preceding-tag-to-kill-ring): use
+	`ee-preceding-tag-flash'.
+
+	* eev-kla.el: totally rewritten.
+
+2022-09-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-ecolor-links): added (read-color).
+
+2022-09-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-debpkg-links): small changes.
+
 2022-09-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hlinks.el (ee-eshortdoc-re): new variable.

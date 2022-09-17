@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220323
+;; Version:    20220906
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1189,6 +1189,7 @@ to understand how this is used. ARG is usually
   (apply
    'find-elinks
    `((find-ecolor-links ,initialcolor ,@pos-spec-list)
+     (find-ecolor-links (read-color))
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-ecolor-links)
      ""

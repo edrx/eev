@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220224
+;; Version:    20220917
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-edit.el>
@@ -151,21 +151,28 @@ With a prefix argument run `ee-copy-preceding-tag-to-kill-ring' instead."
 (defvar ee-tag-re-utf-8 "«\\([!-~]+\\)»")
 (defun  ee-tag-re () ee-tag-re-utf-8)
 
-(defun ee-copy-preceding-tag-to-kill-ring ()
-  "Copy the preceding tag to the kill ring and highlight (\"flash\") it.
+(defun ee-preceding-tag-flash ()
+  "Highlight (\"flash\") the preceding tag and return it.
 A \"tag\" is the string between \"«»\"s in an anchor."
   (interactive)
   (save-excursion
     (if (re-search-backward (ee-tag-re))
 	(let* ((start (match-beginning 1))
 	       (end   (match-end 1))
-	       (str   (ee-no-properties (match-string 1)))
-	       (msg   (format "Copied \"%s\" to the kill ring" str)))
+	       (str   (ee-no-properties (match-string 1))))
 	  (eeflash start end eeflash-copy)
-	  (kill-new str)
-	  (message msg)
 	  str)
       (error "No preceding tag!"))))
+
+(defun ee-copy-preceding-tag-to-kill-ring ()
+  "Copy the preceding tag to the kill ring and highlight (\"flash\") it.
+A \"tag\" is the string between \"«»\"s in an anchor."
+  (interactive)
+  (let* ((str (ee-preceding-tag-flash))
+	 (msg (format "Copied \"%s\" to the kill ring" str)))
+    (kill-new str)
+    (message msg)
+    str))
     
 
 
