@@ -1,3 +1,7 @@
+2022-09-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el: small changes in the docs.
+
 2022-09-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-edit.el (ee-preceding-tag-flash): new function.
