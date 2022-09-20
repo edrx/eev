@@ -1,6 +1,14 @@
+2022-09-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-insert): new variable.
+	(ee-kl-insert): new function.
+
 2022-09-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el: small changes in the docs.
+	(ee-kl-sexp-klt, eeklt): new functions.
+	(ee-kl-format): new function.
+	(ee-kl-kill): use the function `ee-kl-format'.
 
 2022-09-17  Eduardo Ochs  <eduardoochs@gmail.com>
 

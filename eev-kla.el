@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220918
+;; Version:    20220920
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -317,9 +317,13 @@
 ;;
 ;;        Copied to the kill ring: (find-eevfile "eev-kla.el" "bleh")
 ;;
-;; TODO: `M-x eeklt', that <K>ills a <L>ink made with (<T>o ...);
-;; rewrite `ee-preferred-c-show' - I deleted the old version.
+;;   5) `M-x eeklt': <K>ills a <L>ink made with (<T>o ...).
+;;      To test this, run `M-x eeklt' here. You will see this message
+;;      in the echo area:
 ;;
+;;         Copied to the kill ring: (to "test")
+;;
+;;   6) `M-x ee-kl-insert'. TODO: explain this.
 ;;
 ;;
 ;; 9. Aliases
@@ -333,7 +337,10 @@
 (defvar ee-preferred-c nil
   "See: (find-eev \"eev-kla.el\")")
 
-(defvar ee-kl-format "%s"
+(defvar ee-kl-format nil
+  "See: (find-eev \"eev-kla.el\")")
+
+(defvar ee-kl-insert nil
   "See: (find-eev \"eev-kla.el\")")
 
 ;;;###autoload
@@ -342,11 +349,21 @@
 ;;;###autoload
 (put   'ee-kl-format 'safe-local-variable #'stringp)
 
+;;;###autoload
+(put   'ee-kl-insert 'safe-local-variable #'stringp)
+
+(defun ee-kl-format (str)
+  (format (or ee-kl-format "%s") str))
+
 (defun ee-kl-kill (sexp)
   (if (not (stringp sexp))
       (setq sexp (ee-S sexp)))
-  (kill-new (format ee-kl-format sexp))
+  (kill-new (ee-kl-format sexp))
   (message "Copied to the kill ring: %s" sexp))
+
+(defun ee-kl-insert ()
+  (interactive)
+  (insert (format (or ee-kl-insert "%s") (car kill-ring))))
 
 
 
@@ -440,6 +457,10 @@
 	(ee-kl-shortfname :c c :fname fname)
 	region))
 
+(cl-defun ee-kl-sexp-klt
+    (&key (anchor (ee-kl-anchor)))
+  (list 'to anchor))
+
 ;; «kill-sexps»  (to ".kill-sexps")
 ;; Commands that push sexps into the kill ring. Note that
 ;; they are "(interactive)" and can be invoked with `M-x'.
@@ -466,6 +487,11 @@ Put in the kill ring a link to the preceding anchor."
   (interactive)
   (ee-kl-kill (ee-kl-sexp-klfs)))
 
+(defun eeklt ()
+  "<K>ill <L>ink to a (<T>o ...)."
+  (interactive)
+  (ee-kl-kill (ee-kl-sexp-klt)))
+
 ;; (eekla)
 
 
@@ -480,6 +506,7 @@ Put in the kill ring a link to the preceding anchor."
 ;; «eekla2»  (to ".eekla2")
 ;; See: (find-kla-test-intro)
 ;;      (find-kla-test-intro "3. Run some tests")
+;; TODO: make this use `kli'.
 
 (defun eekla2 ()
   "Insert a link \"to here\" \"there\" and a link \"to there\" \"here\".
@@ -509,7 +536,7 @@ then run `eekla' in the next window, and save the result in
 ;; «demo»  (to ".demo")
 ;; See: (find-kla-test-intro)
 ;;      (find-kla-test-intro "2. Setup for a demo")
-;; TODO: rewrite this.
+;; TODO: How obsolete is this? Check and rewrite!
 
 (defun ee-kla-demo-write-file (fname contents)
   "See: (find-kla-test-intro)"
@@ -554,9 +581,9 @@ Body:
 ;; (defalias 'klas 'eeklas)
 ;; (defalias 'klf  'eeklf)
 ;; (defalias 'klfs 'eeklfs)
+;; (defalias 'klt  'eeklt)
+;; (defalias 'kli  'ee-kl-insert)
 ;; (defalias 'kla2 'eekla2)
-
-
 
 (provide 'eev-kla)
 

@@ -5785,6 +5785,8 @@ It is meant as both a tutorial (for eepitch) and a sandbox.
 
 This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
+For a good visual introduction to eepitch, see this page:
+  http://angg.twu.net/eepitch.html
 
 My video for the EmacsConf2019 has a simple demo of eepitch:
   https://www.youtube.com/watch?v=86yiRG8YJD0&t=956
