@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220825
+;; Version:    20220920
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -14477,7 +14477,12 @@ It is meant as both a tutorial and a sandbox.
 Pre-requisites:
   (find-saving-links-intro)
   (find-saving-links-intro \"2.3. The base case 3\")
-
+WARNING:
+  In sep/2022 I rewrote eev-kla.el completely...
+  This hands-on tutorial is currently broken.
+  TODO: FIX IT!!!
+  See: http://angg.twu.net/emacsconf2022-kla.html
+       (find-eev \"eev-kla.el\")
 
 
 1. Introduction

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220320
+;; Version:    20220920
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-eval.el>
@@ -75,20 +75,22 @@
   "Like `(forward-sexp -1)' but always uses elisp syntax.
 This is an internal function used by `ee-eval-last-sexp'."
   (interactive)
-  (with-syntax-table emacs-lisp-mode-syntax-table
-    (forward-sexp -1)
-    (when (eq (preceding-char) ?\\)
-      (forward-char -1)
-      (when (eq (preceding-char) ??)
-	(forward-char -1))))
+  (let ((forward-sexp-function nil))
+    (with-syntax-table emacs-lisp-mode-syntax-table
+      (forward-sexp -1)
+      (when (eq (preceding-char) ?\\)
+	(forward-char -1)
+	(when (eq (preceding-char) ??)
+	  (forward-char -1)))))
   (point))
 
 (defun ee-forward-sexp ()
   "Like `(forward-sexp 1)' but always uses elisp syntax.
 This is an internal function used by `ee-eval-last-sexp'."
   (interactive)
-  (with-syntax-table emacs-lisp-mode-syntax-table
-    (forward-sexp 1))
+  (let ((forward-sexp-function nil))
+    (with-syntax-table emacs-lisp-mode-syntax-table
+      (forward-sexp 1)))
   (point))
 
 (defun ee-last-sexp ()

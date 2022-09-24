@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220920
+;; Version:    20220924
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -29,8 +29,13 @@
 ;;                                                (find-eev-intro)
 
 ;; «.intro»			(to "intro")
-;; «.variables»			(to "variables")
 ;;  «.test»			(to "test")
+;;
+;; «.variables»			(to "variables")
+;; «.ee-kl-format1»		(to "ee-kl-format1")
+;; «.ee-kl-kill»		(to "ee-kl-kill")
+;; «.ee-kl-format2»		(to "ee-kl-format2")
+;; «.ee-kl-insert»		(to "ee-kl-insert")
 ;; «.simple-defaults»		(to "simple-defaults")
 ;; «.other-defaults»		(to "other-defaults")
 ;; «.generate-sexps»		(to "generate-sexps")
@@ -323,47 +328,214 @@
 ;;
 ;;         Copied to the kill ring: (to "test")
 ;;
-;;   6) `M-x ee-kl-insert'. TODO: explain this.
+;;   6) `M-x ee-kl-insert' and `M-x eekla2', that are explained in the
+;;      next section.
+;;
 ;;
 ;;
 ;; 9. Aliases
 ;; ==========
-;; See: (find-eev "eev-kla.el" "aliases")
+;; The last section of this file - i.e.:
+;;
+;;   (find-eev "eev-kla.el" "aliases")
+;;
+;; suggests some aliases - for example, `M-x kla' for `M-x eekla'.
+;; From here onwards I will suppose that these aliases are active.
+;;
+;;
+;;
+;; 10. Bidirectional links
+;; ======================
+;; This page
+;;
+;;    http://angg.twu.net/emacsconf2022-kla.html
+;;
+;; has one of my submissions to the EmacsConf2022; its title is
+;; "Bidirectional links with eev", and that title refers to something
+;; that I will show in the last part - probably the last minute - of
+;; my video. The idea is that sometimes we have two windows displaying
+;; different files, like this:
+;;
+;;    _____________________
+;;   |          |          |
+;;   | ;; «a»   | # «b»    |
+;;   | _        | _        |
+;;   |          |          |
+;;   |__________|__________|
+;;   |__foo.el__|__bar.py__|
+;;
+;; In the drawing above the first window is visiting a file called
+;; "foo.el" (in Elisp) and the second one is visiting a file called
+;; "bar.py" (in Python). In the first one the point is just after an
+;; anchor whose tag is "a", and in the second one the point is after
+;; an anchor whose tag is "b".
+;;
+;; We want to create a link from the "a" to the "b", and a link from
+;; the "b" to the "a", with few keystrokes. Or, more precisely...
+;;
+;; An `M-x kla' in the first window generates a link like this,
+;;
+;;   (find-foo "foo.el" "a")
+;;
+;; and an `M-x kla' in the second window generates one like this:
+;;
+;;   (find-bar "bar.py" "b")
+;;
+;; We want a VERY VERY FAST WAY to put the first link on the second
+;; window, and the second link in the first window, to get something
+;; like this:
+;;    ____________________________________________________________
+;;   |                              |                             |
+;;   | ;; «a»                       | # «b»                       |
+;;   | ;; (find-bar "bar.py" "b")   | # (find-foo "foo.el" "a")   |
+;;   | _                            | _                           |
+;;   |                              |                             |
+;;   |______________________________|_____________________________|
+;;   |__foo.el______________________|__bar.py_____________________|
+;;
+;; we also want these links to be inserted in comments. In Elisp
+;; comments start with ";;", and in Python they start with "#".
+;;
+;; In pseudocode, what we want is roughly this:
+;;
+;;   1. start at the first window
+;;   2. generate a link to the "a" with `M-x kla'
+;;   3. switch to the next window
+;;   4. insert that link with a comment prefix and a newline
+;;   5. generate a link to the "b" with `M-x kla'
+;;   6. switch back to the first window
+;;   7. insert that link with a comment prefix and a newline
+;;
+;; The command `M-x kla2' (or `M-x eekla2') does that.
+;;
+;; The _current implementation_ of `M-x kla2' - that will probably
+;; change soon! - is based on the following ideas:
+;;
+;;   1. Some people prefer to make commands like `M-x kla' kill a sexp
+;;      with a newline added at its end. These people can run this
+;;
+;;        (setq ee-kl-format1 "%s\n")
+;; 
+;;      to set that preference globally; other people will leave that
+;;      variable as `nil'.
+;;
+;;   2. The comment prefix can only be added later, because it depends
+;;      on the file in which the sexp will be inserted. The easiest
+;;      way to define which comment prefix to use is to set the
+;;      variable `ee-kl-format2' in the local variables section of
+;;      that file.
+;;
+;;   3. The command `M-x kli' - or `ee-kl-insert' - is like `C-y', but
+;;      it also adds the comment prefix.
+;;
+;;   4. The functions `ee-kl-format1' and `ee-kl-format2' - used,
+;;      respectively, by `ee-kl-kill' and `ee-kl-insert' - could be
+;;      defined like this,
+;;
+;;        (defun ee-kl-format1 (str)
+;;          (format (or ee-kl-format1 "%s") str))
+;;        (defun ee-kl-format2 (str)
+;;          (format (or ee-kl-format2 "%s") str))
+;;
+;;      but we want to add a hack to the function `ee-kl-format2'. Its
+;;      real definition is this one:
+;;
+;;        (defun ee-kl-format2 (str)
+;;          (format (or ee-kl-format2 (ee-kl-format2-for-mode) "%s") str))
+;;
+;;      So: when the variable `ee-kl-format2' is nil we run the
+;;      function `ee-kl-format2-for-mode' to try to get a default
+;;      value for the comment prefix based on the major mode. The
+;;      current definition of `ee-kl-format2-for-mode' is very
+;;      simplistic, but it is intended to be overriden by the user.
+;;
+;;   5. My first implementation of `M-x kla2' ran `M-x kla' twice and
+;;      `M-x kli' twice. The current implementation uses variants of
+;;      `kla' and `kli' that do not change the kill ring and that
+;;      always add the newlines - i.e., it ignores the value of the
+;;      variable `ee-kl-format1'.
+;;
+;;
+;; 11. Please test!
+;; ================
+;; ..and get in touch, either through the mailing list,
+;;
+;;   https://lists.gnu.org/archive/html/eev/
+;;   https://lists.nongnu.org/mailman/listinfo/eev
+;;
+;; or by one of the ways listed here:
+;;
+;;   http://angg.twu.net/contact.html
+;;
+;; Thanks! =)
+
 
 
 
 ;; «variables»  (to ".variables")
+;; See: (find-eev "eev-kla.el" "intro" "ee-preferred-c")
+;;      (find-eev "eev-kla.el" "intro" "ee-kl-format1")
+;;      (find-eev "eev-kla.el" "intro" "ee-kl-format2")
+;;      (find-eev "eev-tlinks.el" "ee-copy-rest" "eeflash-copy")
 ;;
 (defvar ee-preferred-c nil
   "See: (find-eev \"eev-kla.el\")")
 
-(defvar ee-kl-format nil
+(defvar ee-kl-format1 nil
   "See: (find-eev \"eev-kla.el\")")
 
-(defvar ee-kl-insert nil
+(defvar ee-kl-format2 nil
   "See: (find-eev \"eev-kla.el\")")
+
+(defvar ee-kla2-flash-spec '(highlight 2.0))
 
 ;;;###autoload
 (put   'ee-preferred-c 'safe-local-variable #'stringp)
 
 ;;;###autoload
-(put   'ee-kl-format 'safe-local-variable #'stringp)
+(put   'ee-kl-format1 'safe-local-variable #'stringp)
 
 ;;;###autoload
-(put   'ee-kl-insert 'safe-local-variable #'stringp)
+(put   'ee-kl-insert2 'safe-local-variable #'stringp)
 
-(defun ee-kl-format (str)
-  (format (or ee-kl-format "%s") str))
+;; «ee-kl-format1»  (to ".ee-kl-format1")
+;; «ee-kl-kill»  (to ".ee-kl-kill")
+;;
+(defun ee-kl-sexp-to-string (str-or-sexp)
+  (if (stringp str-or-sexp)
+      str-or-sexp
+    (ee-S str-or-sexp)))
 
-(defun ee-kl-kill (sexp)
-  (if (not (stringp sexp))
-      (setq sexp (ee-S sexp)))
-  (kill-new (ee-kl-format sexp))
-  (message "Copied to the kill ring: %s" sexp))
+(defun ee-kl-format1 (str)
+  (format (or ee-kl-format1 "%s") str))
 
-(defun ee-kl-insert ()
+(defun ee-kl-kill (str-or-sexp)
+  (let ((str (ee-kl-sexp-to-string str-or-sexp)))
+    (kill-new (ee-kl-format1 str))
+    (message "Copied to the kill ring: %s" str)))
+
+;; «ee-kl-format2»  (to ".ee-kl-format2")
+;; «ee-kl-insert»  (to ".ee-kl-insert")
+;; Test: (ee-kl-format2-for-mode)
+;;
+(defun ee-kl-format2-for-mode (&optional mode)
+  (let ((plist '(emacs-lisp-mode ";; %s"
+		 haskell-mode    "-- %s"
+		 lua-mode        "-- %s"
+		 python-mode     "# %s"
+		 agda2-mode      "-- %s"
+		 latex-mode      "%% %s")))
+    (plist-get plist (or mode major-mode))))
+
+(defun ee-kl-format2 (str)
+  (format (or ee-kl-format2 (ee-kl-format2-for-mode) "%s") str))
+
+;; Used by `M-x kli'
+(defun ee-kl-insert (&optional str)
   (interactive)
-  (insert (format (or ee-kl-insert "%s") (car kill-ring))))
+  (let* ((str1 (or str (car kill-ring)))
+	 (str2 (ee-kl-format2 str1)))
+    (insert str2)))
 
 
 
@@ -463,7 +635,7 @@
 
 ;; «kill-sexps»  (to ".kill-sexps")
 ;; Commands that push sexps into the kill ring. Note that
-;; they are "(interactive)" and can be invoked with `M-x'.
+;; they can be invoked with `M-x'.
 ;;
 (defun eekla ()
   "<K>ill <L>ink to <A>nchor.
@@ -492,8 +664,6 @@ Put in the kill ring a link to the preceding anchor."
   (interactive)
   (ee-kl-kill (ee-kl-sexp-klt)))
 
-;; (eekla)
-
 
 
 
@@ -504,26 +674,33 @@ Put in the kill ring a link to the preceding anchor."
 ;;;  \___|\___|_|\_\_|\__,_|_____|
 ;;;                               
 ;; «eekla2»  (to ".eekla2")
-;; See: (find-kla-test-intro)
-;;      (find-kla-test-intro "3. Run some tests")
-;; TODO: make this use `kli'.
+;; See: (find-eev "eev-kla.el" "intro" "10. Bidirectional links")
+;;
+(defun ee-kla2-bol ()
+  (when (not (= (ee-bol) (point)))	; when not at bol
+    (move-beginning-of-line 2))		; do <down> C-a
+  (point))
+
+(defun ee-kla2-flash (pos1 pos2)
+  (eeflash pos1 (point) ee-kla2-flash-spec))
+
+(defun ee-kla2-insert (sexp)
+  (let* ((str1 (format "%s\n" (ee-S sexp)))
+	 (str2 (ee-kl-format2 str1))
+	 (pos1 (ee-kla2-bol)))
+    (insert str2)
+    (ee-kla2-flash pos1 (point))))
 
 (defun eekla2 ()
-  "Insert a link \"to here\" \"there\" and a link \"to there\" \"here\".
-Run `eekla' in this window, and save the result in `kla-here';
-then run `eekla' in the next window, and save the result in
-`kla-here'; then insert `kla-there' \"here\" and `kla-here'
-\"there\"."
+  "Insert a link \"to here\" \"there\" and a link \"to there\" \"here\"."
   (interactive)
-  (let* ((kla-here  (progn (eekla)
-			   (car kill-ring)))
-         (kla-there (progn (other-window 1)
-			   (eekla)
-			   (other-window -1)
-			   (car kill-ring))))
-    (insert kla-there)
+  (let* ((sexp1 (ee-kl-sexp-kla))
+	 (sexp2 (prog2 (other-window 1)
+		    (ee-kl-sexp-kla)
+		  (other-window -1))))
+    (ee-kla2-insert sexp2)
     (other-window 1)
-    (insert kla-here)
+    (ee-kla2-insert sexp1)
     (other-window -1)))
 
 
