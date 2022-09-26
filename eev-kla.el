@@ -36,6 +36,7 @@
 ;; «.ee-kl-kill»		(to "ee-kl-kill")
 ;; «.ee-kl-format2»		(to "ee-kl-format2")
 ;; «.ee-kl-insert»		(to "ee-kl-insert")
+;; «.guess»			(to "guess")
 ;; «.simple-defaults»		(to "simple-defaults")
 ;; «.other-defaults»		(to "other-defaults")
 ;; «.generate-sexps»		(to "generate-sexps")
@@ -345,7 +346,7 @@
 ;;
 ;;
 ;; 10. Bidirectional links
-;; ======================
+;; =======================
 ;; This page
 ;;
 ;;    http://angg.twu.net/emacsconf2022-kla.html
@@ -481,6 +482,9 @@
 (defvar ee-preferred-c nil
   "See: (find-eev \"eev-kla.el\")")
 
+(defvar ee-preferred-c-guess t
+  "See: (find-eev \"eev-kla.el\")")
+
 (defvar ee-kl-format1 nil
   "See: (find-eev \"eev-kla.el\")")
 
@@ -539,6 +543,78 @@
 
 
 
+;;;   ____                     
+;;;  / ___|_   _  ___  ___ ___ 
+;;; | |  _| | | |/ _ \/ __/ __|
+;;; | |_| | |_| |  __/\__ \__ \
+;;;  \____|\__,_|\___||___/___/
+;;;                            
+;; «guess»  (to ".guess")
+;; This is an obscure hack that is only run when the variable
+;; `ee-preferred-c-guess' is non-nil. Here's how it works...
+;;
+;; When the variable `ee-preferred-c' is nil, we can try to guess a
+;; good "c" for the current directory by examining the entries in
+;; `ee-code-c-d-pairs', filtering the pairs - the "c-d"s - that point
+;; to this directory or to one of its parents/ancestors, then
+;; filtering that list to pick up the entries that point closer to
+;; where we are, and then choosing one of those entries, and returning
+;; its "c". We always choose the first of these entries, but that's
+;; not always the best choice... (TODO: explain this!)
+;;
+;; Tests:
+;;                       (find-efile "subr.el")
+;;                         (ee-efile "subr.el")
+;;      (ee-kl-all-eds-for (ee-efile "subr.el"))
+;;      (ee-kl-best-ed-for (ee-efile "subr.el"))
+;;      (ee-kl-best-cs-for (ee-efile "subr.el"))
+;; (find-code-c-d-filter-2 (ee-efile "subr.el") '(list c d ed))
+;;
+;; For more on `ee-code-c-d-pairs', see:
+;;   (find-eev "eev-elinks.el" "ee-code-c-d-filter")
+
+(defun ee-kl-all-eds-for (fname)
+  (ee-code-c-d-filter-2 fname 'ed))
+
+(defun ee-kl-best-ed-for (fname)
+  (car (sort (ee-kl-all-eds-for fname) 'string>)))
+
+(defun ee-kl-best-cs-for (fname)
+  (let ((best-ed (ee-kl-best-ed-for fname)))
+    (if best-ed
+	(cl-loop for c-d in ee-code-c-d-pairs
+		 as c = (car c-d)
+		 as d = (cadr c-d)
+		 as ed = (ee-expand d)
+		 if (string= ed best-ed)
+		 collect c))))
+
+(defun ee-preferred-c-here-without-guess ()
+  (if ee-preferred-c
+      ee-preferred-c
+    (error "`ee-preferred-c' is nil here!")))
+
+(defun ee-preferred-c-here-with-guess ()
+  (if ee-preferred-c
+      ee-preferred-c
+    (let ((pref-c (car (ee-kl-best-cs-for (ee-kl-fname)))))
+      (if pref-c
+	  pref-c
+      (error "`ee-preferred-c' is nil here, and the guesses failed!")))))
+
+(defun ee-preferred-c-here ()
+  (if ee-preferred-c-guess
+      (ee-preferred-c-here-with-guess)
+    (ee-preferred-c-here-without-guess)))
+
+
+;;;  ____  _                 _            _       __             _ _       
+;;; / ___|(_)_ __ ___  _ __ | | ___    __| | ___ / _| __ _ _   _| | |_ ___ 
+;;; \___ \| | '_ ` _ \| '_ \| |/ _ \  / _` |/ _ \ |_ / _` | | | | | __/ __|
+;;;  ___) | | | | | | | |_) | |  __/ | (_| |  __/  _| (_| | |_| | | |_\__ \
+;;; |____/|_|_| |_| |_| .__/|_|\___|  \__,_|\___|_|  \__,_|\__,_|_|\__|___/
+;;;                   |_|                                                  
+;;
 ;; «simple-defaults»  (to ".simple-defaults")
 ;; "Simple defaults" - the functions that generate sexps, below, call
 ;; these functions when they don't receive keywords arguments. Tests:
@@ -548,9 +624,7 @@
 ;;   (ee-kl-region)
 ;;
 (defun ee-kl-c ()
-  (if (not ee-preferred-c)
-      (error "`ee-preferred-c' is nil here!")
-    ee-preferred-c))
+  (ee-preferred-c-here))
 
 (defun ee-kl-fname ()
   (or (buffer-file-name) (default-directory)))
@@ -559,10 +633,15 @@
   (ee-preceding-tag-flash))
 
 (defun ee-kl-region ()
-  ;; (if (not (use-region-p)) (error "The region is not active!"))
   (buffer-substring-no-properties (point) (mark)))
 
 
+;;;   ___  _   _                     _       __             _ _       
+;;;  / _ \| |_| |__   ___ _ __    __| | ___ / _| __ _ _   _| | |_ ___ 
+;;; | | | | __| '_ \ / _ \ '__|  / _` |/ _ \ |_ / _` | | | | | __/ __|
+;;; | |_| | |_| | | |  __/ |    | (_| |  __/  _| (_| | |_| | | |_\__ \
+;;;  \___/ \__|_| |_|\___|_|     \__,_|\___|_|  \__,_|\__,_|_|\__|___/
+;;;                                                                   
 ;; «other-defaults»  (to ".other-defaults")
 ;; "Other defaults" - same as above, but these ones
 ;; accept keyword arguments. Tests:
@@ -590,6 +669,13 @@
   (intern (format "find-%sfile" c)))
 
 
+;;;  ____                      
+;;; / ___|  _____  ___ __  ___ 
+;;; \___ \ / _ \ \/ / '_ \/ __|
+;;;  ___) |  __/>  <| |_) \__ \
+;;; |____/ \___/_/\_\ .__/|___/
+;;;                 |_|        
+;;
 ;; «generate-sexps»  (to ".generate-sexps")
 ;; Functions that generate sexps. Tests:
 ;;   (ee-kl-sexp-kla)
@@ -633,6 +719,13 @@
     (&key (anchor (ee-kl-anchor)))
   (list 'to anchor))
 
+
+;;;  _  ___ _ _     
+;;; | |/ (_) | |___ 
+;;; | ' /| | | / __|
+;;; | . \| | | \__ \
+;;; |_|\_\_|_|_|___/
+;;;                 
 ;; «kill-sexps»  (to ".kill-sexps")
 ;; Commands that push sexps into the kill ring. Note that
 ;; they can be invoked with `M-x'.
@@ -751,7 +844,12 @@ Body:
 
 
 
-
+;;;     _    _ _                     
+;;;    / \  | (_) __ _ ___  ___  ___ 
+;;;   / _ \ | | |/ _` / __|/ _ \/ __|
+;;;  / ___ \| | | (_| \__ \  __/\__ \
+;;; /_/   \_\_|_|\__,_|___/\___||___/
+;;;                                  
 ;; «aliases»  (to ".aliases")
 ;; I use these aliases:
 ;; (defalias 'kla  'eekla)

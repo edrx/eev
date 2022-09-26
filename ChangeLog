@@ -1,3 +1,13 @@
+2022-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-preferred-c-guess): new variable.
+	(ee-kl-all-eds-for, ee-kl-best-ed-for, ee-kl-best-cs-for): new
+	functions.
+	(ee-preferred-c-here-without-guess): new function.
+	(ee-preferred-c-here-with-guess): new function.
+	(ee-preferred-c-here): new function.
+	(ee-kl-c): use `ee-preferred-c-here'.
+
 2022-09-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el (ee-kla2-insert, ee-kla2-bol, ee-kla2-flash): new
