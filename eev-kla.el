@@ -494,13 +494,13 @@
 (defvar ee-kla2-flash-spec '(highlight 2.0))
 
 ;;;###autoload
-(put   'ee-preferred-c 'safe-local-variable #'stringp)
+(put 'ee-preferred-c 'safe-local-variable 'string-or-null-p)
 
 ;;;###autoload
-(put   'ee-kl-format1 'safe-local-variable #'stringp)
+(put 'ee-kl-format1 'safe-local-variable 'stringp)
 
 ;;;###autoload
-(put   'ee-kl-insert2 'safe-local-variable #'stringp)
+(put 'ee-kl-insert2 'safe-local-variable 'stringp)
 
 ;; «ee-kl-format1»  (to ".ee-kl-format1")
 ;; «ee-kl-kill»  (to ".ee-kl-kill")
@@ -627,7 +627,7 @@
   (ee-preferred-c-here))
 
 (defun ee-kl-fname ()
-  (or (buffer-file-name) (default-directory)))
+  (or (buffer-file-name) default-directory))
 
 (defun ee-kl-anchor ()
   (ee-preceding-tag-flash))
