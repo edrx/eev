@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220828
+;; Version:    20221009
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -44,7 +44,12 @@
 ;; 0. Warning
 ;; ==========
 ;; This is an experimental feature.
-;; See these posts in the mailing list:
+;; I'm still cleaning it up, and I'll give a presentation
+;; about it in the EmacsConf2022:
+;;
+;;   http://angg.twu.net/emacsconf2022-py.html
+;;
+;; See also these posts in the mailing list:
 ;;
 ;;   https://lists.gnu.org/archive/html/eev/
 ;;   https://lists.gnu.org/archive/html/eev/2022-08/threads.html
@@ -424,6 +429,7 @@
 ;;      (find-eev \"eev-rstdoc.el\" \"code-rstdoc\")
 ;;
 ;; Tests: (find-eppp {var})
+;;        (code-rstdoc {kw})
 ;;        (find-{c}doc-expand  \"{base}\")
 ;;        (find-{c}docw-expand \"{base}\")
 ;;        (find-{c}docr-expand \"{base}\")
