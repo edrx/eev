@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220404
+;; Version:    20221015
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -180,6 +180,7 @@
 ;; «.find-pdftotext-text»		(to "find-pdftotext-text")
 ;; «.find-texworkspdf-page»		(to "find-texworkspdf-page")
 ;; «.find-pdftools-page»		(to "find-pdftools-page")
+;; «.find-pdftoolsr-page»		(to "find-pdftoolsr-page")
 ;; «.find-xdvi-page»			(to "find-xdvi-page")
 ;; «.find-djview-page»			(to "find-djview-page")
 ;; «.find-evince-page»			(to "find-evince-page")
@@ -310,6 +311,7 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;; (find-eevgrep \"grep --color=auto -nH -e '\\\"{pdfbackend}\\\"' eev-pdflike.el\")
 ;;
 \(defun      find-{pdfbackend} (fname &optional page &rest rest)
+  (interactive \"fPDF file: \")
   (find-bgprocess (ee-find-{pdfbackend} fname page)))
 
 ;; (find-code-{pdfbackend} \"C\" \"FNAME\")
@@ -328,7 +330,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   ;;
   (setq ee-pdflike-last 'find-{<}c{>}page)
   (defun find-{<}c{>}page (&optional page &rest rest)
-    (interactive)
+    (interactive \\\"fPDF file: \\\")
     (setq ee-pdflike-last 'find-{<}c{>}page)
     (find-{pdfbackend} {<}(ee-pp0 fname){>} page))
   \"))
@@ -387,7 +389,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   (setq ee-page-fname  {<}(ee-pp0 fname){>})
   (setq ee-page-offset {<}(ee-pp0 offset){>})
   (defun find-{<}c{>}text (&optional page &rest rest)
-    (interactive)
+    (interactive \\\"fPDF file: \\\")
     (setq ee-page-c      {<}(ee-pp0 c){>})
     (setq ee-page-fname  {<}(ee-pp0 fname){>})
     (setq ee-page-offset {<}(ee-pp0 offset){>})
@@ -671,6 +673,7 @@ version just returns the value of the variable
 (defun find-xpdf-page (fname &optional page &rest rest)
   "This defun will be overridden by the `code-pdfbackend' below.
 We define it just to make this work: (find-efunction 'find-xpdf-page)"
+  (interactive "fPDF file: ")
   (find-bgprocess (ee-find-xpdf-page fname page)))
 
 ;; (find-code-pdfbackend "xpdf-page")
@@ -780,6 +783,7 @@ We define it just to make this work: (find-efunction 'find-pdftotext-page)"
   "Open PDFFILE in the current window using pdf-tools.
 If PAGE is given, go to that page; if PAGE is nil, stay in the
 current page."
+  (interactive "fPDF file: ")
   ;;
   ;; `pdf-loader-install' makes sure that pdf-tools is loaded and
   ;; that it has set up `auto-mode-alist' and `magic-mode-alist' to
@@ -793,14 +797,18 @@ current page."
   ;;
   ;; Old way: (pdf-tools-install)
   (pdf-loader-install)
-  ;; Open pdffile. You will get weird results if it is not a PDF.
-  (find-fline pdffile)
-  ;; Reload the PDF if it has changed.
+  ;;
+  ;; Open PDFFILE. You will get weird results if it is not a PDF.
+  ;; Use two tricks with "revert" to reload the PDF if it has changed.
+  (let ((revert-without-query '(".*")))
+    (find-fline pdffile))
   (revert-buffer nil 'noconfirm)
+  ;;
   ;; If PAGE is given, go to that page.
   (if page (pdf-view-goto-page page)))
 
 
+;; «find-pdftoolsr-page»  (to ".find-pdftoolsr-page")
 ;; Test:
 ;;   (defalias 'find-pdf-page 'find-xpdf-page)
 ;;   (defalias 'find-pdf-page 'find-pdftoolsr-page)
@@ -808,7 +816,7 @@ current page."
 ;;   (find-pdf-page "~/Coetzee99.pdf" 3)
 (defun find-pdftoolsr-page (fname &optional page &rest rest)
   "Like `find-pdftools-page', but opens the PDF in the right window."
-  (interactive)
+  (interactive "fPDF file: ")
   (find-2a nil '(find-pdftools-page fname page)))
 
 
