@@ -1,3 +1,10 @@
+2022-10-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (find-pdftools-page, find-xpdf-page)
+	(find-pdftoolsr-page): added an (interactive ...).
+	(ee-code-pdftextbackend, ee-code-pdfbackend): same.
+	(find-pdftools-page): use `revert-without-query'.
+
 2022-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el (ee-preferred-c-guess): new variable.

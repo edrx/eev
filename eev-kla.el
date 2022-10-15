@@ -28,6 +28,7 @@
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
+;; «.prerequisites»		(to "prerequisites")
 ;; «.intro»			(to "intro")
 ;;  «.test»			(to "test")
 ;;
@@ -50,8 +51,7 @@
 
 ;;; Commentary:
 
-;; «intro»  (to ".intro")
-;;
+;;   «prerequisites»  (to ".prerequisites")
 ;; 0. Prerequisites
 ;; ================
 ;; This tool will only make sense to people who understand anchors,
@@ -66,6 +66,7 @@
 ;;
 ;;
 ;;
+;;   «intro»  (to ".intro")
 ;; 1. Very short introduction
 ;; ==========================
 ;; This:
