@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220115
+;; Version:    20221016
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -113,6 +113,21 @@ gcc -o {fname} {fnamec}
 
 \")
 " stem)))))
+
+(defun ee-insert-test-f90-mode ()
+  (interactive)
+  (let* ((fullname  (buffer-name))
+	(shortname (replace-regexp-in-string "\\.[fF].*$" "" fullname)))
+    (insert (ee-adjust-red-stars (ee-template0 "
+!T  (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+!T  (setq eepitch-preprocess-regexp \"^!T ?\")
+!T  (eepitch-shell)
+!T  (eepitch-kill)
+!T  (eepitch-shell)
+!T gfortran {fullname} -o {shortname}
+!T ./{shortname}
+
+")))))
 
 (defun ee-insert-test-gnuplot-mode ()
   (interactive)

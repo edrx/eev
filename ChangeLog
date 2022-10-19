@@ -1,3 +1,16 @@
+2022-10-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eejump-links): new function.
+
+2022-10-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-shorterfname): new function.
+	(ee-kl-sexp-kla, ee-kl-sexp-klas): use `ee-kl-shorterfname'.
+
+2022-10-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-f90-mode): new function.
+
 2022-10-15  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-pdflike.el (find-pdftools-page, find-xpdf-page)
