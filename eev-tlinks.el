@@ -130,6 +130,7 @@
 ;; «.find-pip3-links»			(to "find-pip3-links")
 ;; «.find-yttranscript-links»		(to "find-yttranscript-links")
 ;; «.find-nov-links»			(to "find-nov-links")
+;; «.find-eejump-links»			(to "find-eejump-links")
 
 
 (require 'eev-env)
@@ -3508,6 +3509,58 @@ print(trits1)
   "Open FNAME in nov.el mode. See: (find-nov-links)
 This doesn't support pos-spec lists yet."
   (find-fline fname))
+
+
+
+
+;; «find-eejump-links»  (to ".find-eejump-links")
+;; Skel: (find-find-links-links-new "eejump" "n sexp" "strn strsexp def call")
+;; Test: (find-eejump-links)
+;;
+(defun find-eejump-links (&optional n sexp &rest pos-spec-list)
+"Visit a temporary buffer that (sort of) explains how to use eejump.
+N should be either a number or a symbol; SEXP should be a sexp."
+  (interactive)
+  (setq n (or n 999))
+  (setq sexp (or sexp '(find-elnode "")))
+  (let* ((strn    (format "%s" n))
+         (strsexp (ee-S sexp))
+         (call    (if (numberp n)
+		      (format "M-%sj" n)
+		    (format "M-x %s"n )))
+         (def     (ee-wrap-eejump strn strsexp)))
+    (apply
+     'find-elinks-elisp
+     `((find-eejump-links ,n ,sexp ,@pos-spec-list)
+       (find-eejump-links 999 '(find-elnode ""))
+       (find-eejump-links 'el '(find-elisp-intro))
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-eejump-links)
+       ""
+       ";; See:"
+       (find-eev-quick-intro "7. Quick access to one-liners")
+       (find-eev-quick-intro "7.3. Defining eejump targets")
+       (find-eev-quick-intro "7.4. Commands with very short names")
+       (find-elisp-intro "6. Defining functions")
+       (find-eejump-intro "shorthand" "`M-123j'")
+       (find-eejumps)
+       (find-eeshortdefs)
+       ""
+       ,(ee-template0 "\
+;; Typing `M-J' on the line below...
+{strn} {strsexp}
+
+;; ...converts it to:
+{def}
+
+;; After executing the defun above
+;; you will be able to run the sexp
+;;   {strsexp}
+;; by typing `{call}'.
+")
+       )
+     pos-spec-list)))
+
 
 
 

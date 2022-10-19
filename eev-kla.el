@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220926
+;; Version:    20221018
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -458,7 +458,34 @@
 ;;      variable `ee-kl-format1'.
 ;;
 ;;
-;; 11. Please test!
+;; 11. Overridable functions
+;; =========================
+;; On my machine I have some "living fossils" - the ones mentioned
+;; in `find-angg-es-links',
+;;
+;;   (find-angg-es-links)
+;;   (find-angg-es-links 2 "living fossil")
+;;   (find-eev "eev-tlinks.el" "find-angg-es-links")
+;;   (find-eev "eev-tlinks.el" "find-angg-es-links" "living fossil")
+;;
+;; ...and a few other ones. My trick for making `kla' and `klas'
+;; support them is to override `ee-kl-shorterfname', and redefine it
+;; in my ~/.emacs by a function that deletes the suffixes.
+;;
+;; Also, a friend of mine uses Doom Emacs, that uses straight.el, and
+;; he told me that in Doom Emacs this
+;;
+;;   (find-eev "eev-code.el" "code-c-d-s")
+;;   (find-eev "eev-code.el" "code-c-d-s" "ee-eev-source-directory")
+;;
+;; points to a directory that only has .el files, and all these ".el"s
+;; are symlinks. This breaks `ee-kl-shortfname', and I'm experimenting
+;; with variants of `ee-kl-shortfname' - that are hacks, and that have
+;; to be put in his ~/.emacs to override the original function - that
+;; contain code to handle these symlinks correctly.
+;;
+;;
+;; 12. Please test!
 ;; ================
 ;; ..and get in touch, either through the mailing list,
 ;;
@@ -648,6 +675,7 @@
 ;; accept keyword arguments. Tests:
 ;;   (ee-kl-dir)
 ;;   (ee-kl-shortfname)
+;;   (ee-kl-shorterfname)
 ;;   (ee-kl-find-c)
 ;;   (ee-kl-find-cfile)
 ;;
@@ -660,6 +688,11 @@
 	  (fname (ee-kl-fname)))
   (ee-remove-prefix (ee-expand (ee-kl-dir :c c))
 		    (ee-expand fname)))
+
+(cl-defun ee-kl-shorterfname
+    (&key (c     (ee-kl-c))
+	  (fname (ee-kl-fname)))
+  (ee-kl-shorterfname :c c :fname fname))
 
 (cl-defun ee-kl-find-c
     (&key (c (ee-kl-c)))
@@ -689,7 +722,7 @@
      &key (fname  (ee-kl-fname))
      &key (anchor (ee-kl-anchor)))
   (list (ee-kl-find-c :c c)
-	(ee-kl-shortfname :c c :fname fname)
+	(ee-kl-shorterfname :c c :fname fname)
 	anchor))
 
 (cl-defun ee-kl-sexp-klas
@@ -698,7 +731,7 @@
      &key (anchor (ee-kl-anchor))
      &key (region (ee-kl-region)))
   (list (ee-kl-find-c :c c)
-	(ee-kl-shortfname :c c :fname fname)
+	(ee-kl-shorterfname :c c :fname fname)
 	anchor
 	region))
 
