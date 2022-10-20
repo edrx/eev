@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220905
+;; Version:    20221019
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -129,6 +129,8 @@
 ;; «.find-osm-links»			(to "find-osm-links")
 ;; «.find-pip3-links»			(to "find-pip3-links")
 ;; «.find-yttranscript-links»		(to "find-yttranscript-links")
+;; «.find-importlib-links»		(to "find-importlib-links")
+;; «.find-pypi-links»			(to "find-pypi-links")
 ;; «.find-nov-links»			(to "find-nov-links")
 ;; «.find-eejump-links»			(to "find-eejump-links")
 
@@ -3386,26 +3388,29 @@ how this works."
 
 
 ;; «find-pip3-links»  (to ".find-pip3-links")
-;; Skel: (find-find-links-links-new "pip3" "pkg" "")
+;; Skel: (find-find-links-links-new "pip3" "pkg" "pkg_")
 ;; Test: (find-pip3-links "youtube-transcript-downloader")
 ;;
 (defun find-pip3-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing a script for pip3."
   (interactive)
   (setq pkg (or pkg "{pkg}"))
-  (apply
-   'find-elinks
-   `((find-pip3-links ,pkg ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-pip3-links)
-     ""
-     ,(ee-template0 "\
+  (let* ((pkg_ (string-replace "-" "_" pkg)))
+    (apply
+     'find-elinks
+     `((find-pip3-links ,pkg ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-pip3-links)
+       ""
+       ,(ee-template0 "\
 # https://pip.pypa.io/en/stable/
 # (find-status   \"python3-pip\")
 # (find-vldifile \"python3-pip.list\")
 # (find-udfile   \"python3-pip/\")
 # (find-sh \"pip3 list\" \"{pkg}\")
 # (find-sh \"pip3 show {pkg}\")
+# (find-importlib-links \"{pkg}\")
+# (find-pypi-links \"{pkg}\")
 
  (eepitch-shell)
  (eepitch-kill)
@@ -3418,10 +3423,9 @@ sudo apt-get install python3-pip
 # (find-man \"1 pip3\")
 pip3 show {pkg}
 pip3 install {pkg}
-
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
 
 
 
@@ -3464,6 +3468,86 @@ print(trits1)
 ")
        )
      pos-spec-list)))
+
+
+;; «find-importlib-links»  (to ".find-importlib-links")
+;; Skel: (find-find-links-links-new "importlib" "pkg" "pkg_")
+;; Tests: (find-importlib-links)
+;;        (find-importlib-links "requests")
+;;
+(defun find-importlib-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for importlib."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (let* ((pkg_ (string-replace "-" "_" pkg)))
+    (apply
+     'find-elinks
+     `((find-importlib-links ,pkg ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-importlib-links)
+       ""
+       (find-pip3-links ,pkg)
+       (find-pypi-links ,pkg)
+       (find-pydoc "library/importlib")
+       (find-pydoc "library/importlib.metadata")
+       ""
+       ,(ee-template0 "\
+ (python-mode)
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+import importlib.metadata, pprint
+import {pkg_}
+{pkg_}.__file__
+dist = importlib.metadata.distribution('{pkg}')
+pprint.pprint(dist.files)
+md = dist.metadata
+print('\\n'.join(md.keys()))
+md['Name']
+md['Version']
+md['Summary']
+md['Home-Page']
+")
+       )
+     pos-spec-list)))
+
+
+;; «find-pypi-links»  (to ".find-pypi-links")
+;; Skel: (find-find-links-links-new "pypi" "pkg" "pkg_")
+;; Test: (find-pypi-links)
+;;       (find-pypi-links "requests")
+;;
+(defun find-pypi-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for pypi."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (let* ((pkg_ (string-replace "-" "_" pkg)))
+    (apply
+     'find-elinks
+     `((find-pypi-links ,pkg ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-pypi-links)
+       ""
+       ,(ee-template0 "\
+# https://warehouse.pypa.io/api-reference/json.html
+# https://requests.readthedocs.io/en/latest/
+# (find-pip3-links \"requests\")
+# (find-importlib-links \"requests\")
+# (find-sh \"curl -s https://pypi.org/pypi/{pkg}/json | jq\")
+
+ (python-mode)
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+import requests, pprint
+r = requests.get('https://pypi.org/pypi/{pkg}/json')
+d = r.json()
+pprint.pprint(d['info'])
+pprint.pprint(d['info']['home_page'])
+")
+       )
+     pos-spec-list)))
+
 
 
 

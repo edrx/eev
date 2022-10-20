@@ -15116,8 +15116,8 @@ treat the details of this as a curiosity - but try the example below:
 
   (defun foo         (a) (* 10  a))
   (defun foo         (a) (* 100 a))
-  (fset 'foo (lambda (a) (* 10  a))
-  (fset 'foo (lambda (a) (* 100 a))
+  (fset 'foo (lambda (a) (* 10  a)))
+  (fset 'foo (lambda (a) (* 100 a)))
 
   (symbol-function 'foo)
                    (foo foo)

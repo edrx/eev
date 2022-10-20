@@ -1,6 +1,12 @@
+2022-10-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-code-pdfbackend, ee-code-pdftextbackend):
+	fixed a bug in the interactive.
+
 2022-10-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-eejump-links): new function.
+	(find-importlib-links, find-pypi-links): new functions.
 
 2022-10-18  Eduardo Ochs  <eduardoochs@gmail.com>
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221015
+;; Version:    20221020
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -330,7 +330,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   ;;
   (setq ee-pdflike-last 'find-{<}c{>}page)
   (defun find-{<}c{>}page (&optional page &rest rest)
-    (interactive \\\"fPDF file: \\\")
+    (interactive)
     (setq ee-pdflike-last 'find-{<}c{>}page)
     (find-{pdfbackend} {<}(ee-pp0 fname){>} page))
   \"))
@@ -389,7 +389,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   (setq ee-page-fname  {<}(ee-pp0 fname){>})
   (setq ee-page-offset {<}(ee-pp0 offset){>})
   (defun find-{<}c{>}text (&optional page &rest rest)
-    (interactive \\\"fPDF file: \\\")
+    (interactive)
     (setq ee-page-c      {<}(ee-pp0 c){>})
     (setq ee-page-fname  {<}(ee-pp0 fname){>})
     (setq ee-page-offset {<}(ee-pp0 offset){>})
