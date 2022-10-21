@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221019
+;; Version:    20221020
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -1087,14 +1087,13 @@ cd {dir}
 (defun ee-youtubedl-split (fname)
   "Split FNAME into (dir title hash ext ext-)."
   (string-match ee-youtubedl-ext-re fname)
-  (let (dir title hash ext- ext dth dt)
-    (setq ext-  (match-string 1 fname))
-    (setq ext   (match-string 0 fname))
-    (setq dth   (substring fname 0 (match-beginning 0)))
-    (setq hash  (substring dth -11))
-    (setq dt    (substring dth 0 -12))
-    (setq title (file-name-nondirectory dt))
-    (setq dir   (file-name-directory dt))
+  (let* ((ext-  (match-string 1 fname))
+	 (ext   (match-string 0 fname))
+	 (dth   (substring fname 0 (match-beginning 0)))
+	 (hash  (substring dth -11))
+	 (dt    (substring dth 0 -12))
+	 (title (file-name-nondirectory dt))
+	 (dir   (file-name-directory dt)))
     (list dir title hash ext- ext)))
 
 (defun ee-youtubedl-dir   (fname) (nth 0 (ee-youtubedl-split fname)))
@@ -1156,6 +1155,7 @@ Files that look like subtitle files are ignored."
 ;;
 ;; Suggestion (2021nov26): install yt-dlp and either put this in your .emacs,
 ;;
+;;   ;; From: (find-eev "eev-tlinks.el" "ee-youtubedl-command")
 ;;   (setq ee-youtubedl-command "yt-dlp -o '%(title)s-%(id)s.%(ext)s'")
 ;;
 ;; and put a copy of this fake youtube-dl script
@@ -3462,6 +3462,7 @@ url    = \"http://www.youtube.com/watch?v={hash}\"
 f      = \"find-{c}video\"
 tr     = youtube_transcript_downloader.get_transcript(url)
 trits0 = tr.items()
+trits1 = '\\n'.join((key + ' ' + text for key, text in trits0))
 trits1 = '\\n'.join(('% (' + f + ' \"' + key + '\" \"' + text + '\")' for key, text in trits0))
 print(trits1)
 

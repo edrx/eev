@@ -1,4 +1,12 @@
+2022-10-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2022yttranscriptvideo): new function.
+	(ee-1stclassvideos-info): added an entry for ""2022yttranscript".
+
 2022-10-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-youtubedl-split): use `let*'.
+	(find-yttranscript-links): added a shorter format.
 
 	* eev-pdflike.el (ee-code-pdfbackend, ee-code-pdftextbackend):
 	fixed a bug in the interactive.

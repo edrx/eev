@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220518
+;; Version:    2022oct21
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -67,6 +67,7 @@
 ;;   «.find-2022eevwconfigpt1video»	(to "find-2022eevwconfigpt1video")
 ;;   «.find-2022eevwconfigpt2video»	(to "find-2022eevwconfigpt2video")
 ;;   «.find-2022eevwconfigvideo»	(to "find-2022eevwconfigvideo")
+;;   «.find-2022yttranscriptvideo»	(to "find-2022yttranscriptvideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -96,6 +97,7 @@
 ;;   «.2022eevwconfigpt1»		(to "2022eevwconfigpt1")
 ;;   «.2022eevwconfigpt2»		(to "2022eevwconfigpt2")
 ;;   «.2022eevwconfig»			(to "2022eevwconfig")
+;;   «.2022yttranscript»		(to "2022yttranscript")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -606,6 +608,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "2022eevwconfig" time))
 
+;; «find-2022yttranscriptvideo»  (to ".find-2022yttranscriptvideo")
+;; Info: (find-1stclassvideo-links "2022yttranscript")
+;; Play: (find-2022yttranscriptvideo "0:00")
+(defun find-2022yttranscriptvideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2022yttranscript\")"
+  (interactive)
+  (find-1stclassvideo-video "2022yttranscript" time))
+
 
 
 
@@ -981,6 +993,18 @@ For more info on this particular video, run:
      :length  "1:15:48"
      :subs    ".vtt"
      :comment "This is mainly for beginners who use Windows.")
+    ;;
+    ;; «2022yttranscript»  (to ".2022yttranscript")
+    ;; Play: (find-2022yttranscriptvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2022yttranscript")
+    ("2022yttranscript"
+     :title "find-yttranscript-links: downloading transcripts of Youtube videos, in eev style"
+     :mp4   "http://angg.twu.net/eev-videos/2022-yttranscript.mp4"
+     :yt    "http://www.youtube.com/watch?v=SW3Tx-lHX3o"
+     :page  "http://angg.twu.net/find-yttranscript-links.html"
+     :date    "2022oct20"
+     :length  "28:28"
+     :comment "A video about `find-yttranscript-links'.")
     ;;
     ))
 
