@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220903
+;; Version:    20221023
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -271,17 +271,18 @@ which kind \"here\" the current buffer is."
 (defvar ee-fhl-main-program
  '(:or
    ;; By major mode:
-   (:if (ee-info-bufferp)      (ee-find-info-links))
-   (:if (ee-man-bufferp)       (ee-find-man-links))
-   (:if (ee-grep-bufferp)      (ee-find-grep-links))
-   (:if (ee-eww-bufferp)       (ee-find-eww-links))
-   (:if (ee-w3m-bufferp)       (ee-find-w3m-links))
-   (:if (ee-dired-bufferp)     (ee-find-file-links))
-   (:if (ee-wdired-bufferp)    (ee-find-file-links))
-   (:if (ee-epackages-bufferp) (ee-find-epackages-links))
-   (:if (ee-osm-bufferp)       (ee-find-osm-links))
-   (:if (ee-helpful-bufferp)   (ee-find-helpful-links))
-   (:if (ee-nov-bufferp)       (ee-find-nov-links))
+   (:if (ee-info-bufferp)       (ee-find-info-links))
+   (:if (ee-man-bufferp)        (ee-find-man-links))
+   (:if (ee-grep-bufferp)       (ee-find-grep-links))
+   (:if (ee-eww-bufferp)        (ee-find-eww-links))
+   (:if (ee-w3m-bufferp)        (ee-find-w3m-links))
+   (:if (ee-dired-bufferp)      (ee-find-file-links))
+   (:if (ee-wdired-bufferp)     (ee-find-file-links))
+   (:if (ee-epackages-bufferp)  (ee-find-epackages-links))
+   (:if (ee-osm-bufferp)        (ee-find-osm-links))
+   (:if (ee-helpful-bufferp)    (ee-find-helpful-links))
+   (:if (ee-nov-bufferp)        (ee-find-nov-links))
+   (:if (ee-telegachat-bufferp) (ee-find-telegachat-links))
    ;;
    ;; By buffer name:
    (:if (ee-intro-bufferp)     (ee-find-intro-links))
@@ -452,19 +453,20 @@ This is the standard high-level way to call `ee-fhl-run'."
 ;; used in the `ee-fhl-main-program', defined at the top of this file.
 
 ;; By major mode
-(defun ee-grep-bufferp      () (eq major-mode 'grep-mode))
-(defun ee-man-bufferp       () (eq major-mode 'Man-mode))
-(defun ee-rcirc-bufferp     () (eq major-mode 'rcirc-mode))
-(defun ee-info-bufferp      () (eq major-mode 'Info-mode))
-(defun ee-dired-bufferp     () (eq major-mode 'dired-mode))
-(defun ee-wdired-bufferp    () (eq major-mode 'wdired-mode))
-(defun ee-eww-bufferp       () (eq major-mode 'eww-mode))
-(defun ee-w3m-bufferp       () (eq major-mode 'w3m-mode))
-;; (defun ee-custom-bufferp () (eq major-mode 'Custom-mode))
-(defun ee-epackages-bufferp () (eq major-mode 'package-menu-mode))
-(defun ee-osm-bufferp       () (eq major-mode 'osm-mode))
-(defun ee-helpful-bufferp   () (eq major-mode 'helpful-mode))
-(defun ee-nov-bufferp       () (eq major-mode 'nov-mode))
+(defun ee-grep-bufferp       () (eq major-mode 'grep-mode))
+(defun ee-man-bufferp        () (eq major-mode 'Man-mode))
+(defun ee-rcirc-bufferp      () (eq major-mode 'rcirc-mode))
+(defun ee-info-bufferp       () (eq major-mode 'Info-mode))
+(defun ee-dired-bufferp      () (eq major-mode 'dired-mode))
+(defun ee-wdired-bufferp     () (eq major-mode 'wdired-mode))
+(defun ee-eww-bufferp        () (eq major-mode 'eww-mode))
+(defun ee-w3m-bufferp        () (eq major-mode 'w3m-mode))
+;; (defun ee-custom-bufferp  () (eq major-mode 'Custom-mode))
+(defun ee-epackages-bufferp  () (eq major-mode 'package-menu-mode))
+(defun ee-osm-bufferp        () (eq major-mode 'osm-mode))
+(defun ee-helpful-bufferp    () (eq major-mode 'helpful-mode))
+(defun ee-nov-bufferp        () (eq major-mode 'nov-mode))
+(defun ee-telegachat-bufferp () (eq major-mode 'telega-chat-mode))
 
 ;; By buffer name
 (defun ee-intro-bufferp    () (ee-buffer-re "^\\*(find-\\(.*\\)-intro)\\*$"))

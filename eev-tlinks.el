@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221020
+;; Version:    20221023
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -132,6 +132,7 @@
 ;; «.find-importlib-links»		(to "find-importlib-links")
 ;; «.find-pypi-links»			(to "find-pypi-links")
 ;; «.find-nov-links»			(to "find-nov-links")
+;; «.find-telegachat-links»		(to "find-telegachat-links")
 ;; «.find-eejump-links»			(to "find-eejump-links")
 
 
@@ -3390,6 +3391,7 @@ how this works."
 ;; «find-pip3-links»  (to ".find-pip3-links")
 ;; Skel: (find-find-links-links-new "pip3" "pkg" "pkg_")
 ;; Test: (find-pip3-links "youtube-transcript-downloader")
+;; See:  http://angg.twu.net/find-yttranscript-links.html
 ;;
 (defun find-pip3-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing a script for pip3."
@@ -3434,8 +3436,7 @@ pip3 install {pkg}
 ;; Skel: (find-find-links-links-new "yttranscript" "c hash" "")
 ;; Test: (find-yttranscript-links)
 ;;       (find-yttranscript-links "acmetour" "dP1xVpMPn8M")
-;; See: https://lists.gnu.org/archive/html/eev/2022-03/msg00008.html
-;;      http://angg.twu.net/IMAGES/2022find-yttranscript-links.png
+;; See:  http://angg.twu.net/find-yttranscript-links.html
 ;;
 (defun find-yttranscript-links (&optional c hash &rest pos-spec-list)
 "Display a temporary script that downloads a transcript from youtube."
@@ -3475,6 +3476,7 @@ print(trits1)
 ;; Skel: (find-find-links-links-new "importlib" "pkg" "pkg_")
 ;; Tests: (find-importlib-links)
 ;;        (find-importlib-links "requests")
+;; See:   http://angg.twu.net/find-yttranscript-links.html
 ;;
 (defun find-importlib-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for importlib."
@@ -3517,6 +3519,7 @@ md['Home-Page']
 ;; Skel: (find-find-links-links-new "pypi" "pkg" "pkg_")
 ;; Test: (find-pypi-links)
 ;;       (find-pypi-links "requests")
+;; See:  http://angg.twu.net/find-yttranscript-links.html
 ;;
 (defun find-pypi-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for pypi."
@@ -3594,6 +3597,55 @@ pprint.pprint(d['info']['home_page'])
   "Open FNAME in nov.el mode. See: (find-nov-links)
 This doesn't support pos-spec lists yet."
   (find-fline fname))
+
+
+;;;  _       _                  
+;;; | |_ ___| | ___  __ _  __ _ 
+;;; | __/ _ \ |/ _ \/ _` |/ _` |
+;;; | ||  __/ |  __/ (_| | (_| |
+;;;  \__\___|_|\___|\__, |\__,_|
+;;;                 |___/       
+;;
+;; «find-telegachat-links»  (to ".find-telegachat-links")
+;; Skel: (find-find-links-links-new "telegachat" "bufname" "")
+;; Test: (find-telegachat-links "◀<Emacs News and Posts@emacs_posts>")
+;;
+(defun find-telegachat-links (&optional bufname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for telegachat."
+  (interactive (list (buffer-name)))
+  (setq bufname (or bufname "{bufname}"))
+  (apply
+   'find-elinks
+   `((find-telegachat-links ,bufname ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-telegachat-links)
+     ""
+     ,@(ee-find-telegachat-links bufname)
+     )
+   pos-spec-list))
+
+(defun ee-find-telegachat-links (&optional bufname)
+  (setq bufname (or bufname (buffer-name)))
+  (let* ((chat       (with-current-buffer bufname telega-chatbuf--chat))
+         (username   (telega-chat-username chat))
+         (atusername (if username (format "@%s" username)))
+         (title      (plist-get chat :title))
+         (id         (plist-get chat :id))
+	 )
+    `((find-telegachat ,atusername)
+      (find-telegachat ,atusername ,title)
+      (find-telegachat ,id)
+      (find-telegachat ,id ,title)
+      ""
+      (find-ebuffer ,bufname)
+      (setq tcbuf ,bufname)
+      (setq tcchat (with-current-buffer tcbuf telega-chatbuf--chat))
+      (telega-tme-internal-link-to tcchat)
+      (find-eppp tcchat)
+      (plist-get tcchat :chat_id)
+      (plist-get tcchat :title)
+      (plist-get tcchat :id)
+      )))
 
 
 

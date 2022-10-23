@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220321
+;; Version:    20221023
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
@@ -116,6 +116,7 @@
 ;; «.find-gitk»		(to "find-gitk")
 ;; «.find-tkdiff»	(to "find-tkdiff")
 ;; «.find-osm»		(to "find-osm")
+;; «.find-telegachat»	(to "find-telegachat")
 ;; «.find-firefox»	(to "find-firefox")
 ;; «.find-googlechrome»	(to "find-googlechrome")
 
@@ -465,7 +466,14 @@ viewer - installed for this to work, and Emacs 28 or later."
   (apply 'find-osm (mapcar 'string-to-number
 			   (split-string latlonzoomstr "[^-.0-9]+"))))
 
-
+;; «find-telegachat»  (to ".find-telegachat")
+;; Tests: (find-telegachat "@emacs_telega")
+;;        (find-telegachat "@emacs_posts")
+;;        (find-telegachat "@emacs_posts" "Emacs News and Posts")
+;;
+(defun find-telegachat (name &rest rest)
+  (let ((url (format "tg:telega:%s" name)))
+    (find-dbsw-call `(telega-tme-open-tg ,url))))
 
 
 ;; «find-firefox»       (to ".find-firefox")

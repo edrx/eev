@@ -1,3 +1,13 @@
+2022-10-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-telegachat-links)
+	(ee-find-telegachat-links): new functions.
+
+	* eev-hlinks.el (ee-telegachat-bufferp): new function.
+	(ee-fhl-main-program): added an entry for telegachat.
+
+	* eev-plinks.el (find-telegachat): new function.
+
 2022-10-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-2022yttranscriptvideo): new function.
