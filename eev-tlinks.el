@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221023
+;; Version:    20221025
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -3174,18 +3174,19 @@ This function is used by `ee-0x0-upload-region'."
 ;;
 (defun ee-find-1stclassvideo-links (c)
   "An internal function used by `find-1stclassvideo-links'."
-  (let* ((title   (ee-1stclassvideos-field c :title))
-	 (mp4     (ee-1stclassvideos-field c :mp4))
-	 (yt      (ee-1stclassvideos-field c :yt))
-	 (page    (ee-1stclassvideos-field c :page))
-	 (date    (ee-1stclassvideos-field c :date))
-	 (length  (ee-1stclassvideos-field c :length))
-	 (comment (ee-1stclassvideos-field c :comment))
-	 (lang    (ee-1stclassvideos-field c :lang))
-	 (mp4stem (ee-1stclassvideos-mp4stem c))
-	 (hash    (ee-1stclassvideos-hash c))
-	 (dlsubs  (ee-1stclassvideos-dlsubs c))
-	 (defun   (ee-find-1stclassvideo-defun c mp4stem hash)))
+  (let* ((title    (ee-1stclassvideos-field c :title))
+	 (mp4      (ee-1stclassvideos-field c :mp4))
+	 (yt       (ee-1stclassvideos-field c :yt))
+	 (page     (ee-1stclassvideos-field c :page))
+	 (date     (ee-1stclassvideos-field c :date))
+	 (length   (ee-1stclassvideos-field c :length))
+	 (comment  (ee-1stclassvideos-field c :comment))
+	 (lang     (ee-1stclassvideos-field c :lang))
+	 (mp4stem  (ee-1stclassvideos-mp4stem c))
+         (mp4found (ee-1stclassvideos-mp4found c))
+	 (hash     (ee-1stclassvideos-hash c))
+	 (dlsubs   (ee-1stclassvideos-dlsubs c))
+	 (defun    (ee-find-1stclassvideo-defun c mp4stem hash)))
     (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
@@ -3244,24 +3245,40 @@ For more info on this particular video, run:
 ;;        (find-1stclassvideo-links "2022pict2elua")
 ;;        (ee-1stclassvideos-dlsubs "2021workshop6")
 ;;        (find-1stclassvideo-links "2021workshop6")
+;; See: (find-eev "eev-videolinks.el" "ee-1stclassvideos-field")
 ;;
 (defun ee-1stclassvideos-dlsubs (c)
   "An internal function used by `find-1stclassvideo-links'."
-  (let ((exts (ee-1stclassvideos-field c :subs)))
-    (if (eq exts nil)
-	"\
-;;
-;; This video doesn't have subtitles. See:
-;;        (find-video-links-intro \"5.1. Subtitles\")
-"
-      (let ((mp4stem (ee-1stclassvideos-mp4stem c)))
-	(ee-template0 "\
-;;
-;; Download or update subtitles:
+  (let* ((mp4stem  (ee-1stclassvideos-mp4stem c))
+         (mp4found (ee-1stclassvideos-mp4found c))
+	 (exts     (ee-1stclassvideos-field c :subs))
+	 (hassubs  exts)
+	 (template00 ";;
+;; You don't have a local copy of this video.
+;; To download a local copy, run this:
+;;       (find-psne-1stclassvideo-links \"{c}\")
+;; This video doesn't have subtitles.\n")
+	 (template01 ";;
+;; You don't have a local copy of this video.
+;; To download a local copy of the video with subtitles, run:
+;;       (find-psne-1stclassvideo-links \"{c}\")
+;;   or: (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")\n")
+	 (template10 ";;
+;; We have a local copy of this video.
+;; This video doesn't have subtitles.\n")
+	 (template11 ";;
+;; You have a local copy of this video.
+;; The upstream copy of this video has subtitles.
+;; If you don't have a local copy of its subtitles, run this:
 ;;        (find-psne-1stclassvideo-links \"{c}\")
-;;        (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")
-")
-	))))
+;;    or: (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")\n"))
+    (if mp4found
+	(if hassubs
+	    (ee-template0 template11)
+	  (ee-template0 template10))
+      (if hassubs
+	  (ee-template0 template01)
+	(ee-template0 template00)))))
 
 
 
@@ -3609,6 +3626,7 @@ This doesn't support pos-spec lists yet."
 ;; «find-telegachat-links»  (to ".find-telegachat-links")
 ;; Skel: (find-find-links-links-new "telegachat" "bufname" "")
 ;; Test: (find-telegachat-links "◀<Emacs News and Posts@emacs_posts>")
+;; See:  (find-eev "eev-plinks.el" "find-telegachat")
 ;;
 (defun find-telegachat-links (&optional bufname &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for telegachat."

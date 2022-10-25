@@ -470,6 +470,7 @@ viewer - installed for this to work, and Emacs 28 or later."
 ;; Tests: (find-telegachat "@emacs_telega")
 ;;        (find-telegachat "@emacs_posts")
 ;;        (find-telegachat "@emacs_posts" "Emacs News and Posts")
+;; See:   (find-eev "eev-tlinks.el" "find-telegachat-links")
 ;;
 (defun find-telegachat (name &rest rest)
   (let ((url (format "tg:telega:%s" name)))
