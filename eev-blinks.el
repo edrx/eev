@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220903
+;; Version:    20221028
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -50,6 +50,7 @@
 ;; «.find-dbsw»			(to "find-dbsw")
 ;; «.find-efaces»		(to "find-efaces")
 ;; «.find-eregionpp»		(to "find-eregionpp")
+;; «.find-eoverlayspp»		(to "find-eoverlayspp")
 ;; «.find-ebuffercontents»	(to "find-ebuffercontents")
 ;; «.find-ebufferandpos»	(to "find-ebufferandpos")
 ;; «.find-ebuffer»		(to "find-ebuffer")
@@ -532,20 +533,66 @@ inspecting text proprties."
 ;; Test:
 ;; (eek "2*<down> C-a C-SPC <down> C-x 1 C-x 3 C-x o <<find-eregionpp>>")
 ;;
-(defun find-eregionpp (b e &optional use-print-circle)
+(defun find-eregionpp (b e &optional arg)
+  "Show the text properties of the text in the region.
+This function pretty-prints the result of `(buffer-substring B
+E)' and shows the result in a temporary buffer; B and E are the
+extremities of the region. The argument ARG is passed to
+`ee-eregionpp-preprocess', that uses it to decide which text
+properties to omit."
+  (interactive "r\nP")
+  (let* ((ee-buffer-name (or ee-buffer-name "*(find-eregionpp)*"))
+	 (str (buffer-substring b e))
+	 (intervals0 (ee-string-intervals str))
+	 (intervals (ee-eregionpp-preprocess intervals0 arg)))
+    (find-epp intervals)))
+
+;; See: https://lists.gnu.org/archive/html/help-gnu-emacs/2022-10/msg00729.html
+;;      https://lists.gnu.org/archive/html/help-gnu-emacs/2022-10/msg00745.html
+(defun ee-string-intervals (str)
+  "This is similar to `object-intervals', but uses another output format."
+  (let ((pair< (lambda (pair1 pair2)
+                 (string< (symbol-name (car pair1))
+                          (symbol-name (car pair2))))))
+    (cl-loop for (b e props) in (object-intervals str)
+             for s = (substring-no-properties str b e)
+             for pairs = (cl-loop for (x y) on props by 'cddr
+                                  collect (list x y))
+             collect (cons s (sort pairs pair<)))))
+
+;; This is a stub!
+(defun ee-eregionpp-preprocess (intervals0 arg)
+  "Redefine this if you want ways to omit certain properties."
+  intervals0)
+
+;; Test:
+;; (eek "2*<down> C-a C-SPC <down> C-x 1 C-x 3 C-x o <<find-eregionpp0>>")
+;;
+(defun find-eregionpp0 (b e &optional use-print-circle)
   "Show the text properties of the text in the region.
 This function pretty-prints the result of `(buffer-substring B
 E)' and shows the result in a temporary buffer; B and E are the
 extremities of the region. If this function is called with a
-numeric argument, as in `C-u M-x find-eregionpp', then the
+numeric argument, as in `C-u M-x find-eregionpp0', then the
 pretty-printer is run with the flag `print-circle' turned on, and
 this makes the pretty-printer display copies of shared subobjects
 using a more compact notation. See:
   (find-elnode \"Circular Objects\")"
   (interactive "r\nP")
-  (let ((ee-buffer-name (or ee-buffer-name "*(find-eregionpp)*"))
+  (let ((ee-buffer-name (or ee-buffer-name "*(find-eregionpp0)*"))
 	(print-circle use-print-circle))
     (find-epp (buffer-substring b e))))
+
+;; «find-eoverlayspp»  (to ".find-eoverlayspp")
+(defun find-eoverlayspp ()
+  "Show the overlays at point."
+  (interactive)
+  (find-epp (mapcar 'ee-overlay-pp0 (overlays-at (point) 'sorted))))
+
+(defun ee-overlay-pp0 (ovl)
+  (let* ((props (overlay-properties ovl)))
+    (cons ovl (cl-loop for (a b) on props by 'cddr
+		       collect (list a b)))))
 
 ;; «find-ebuffercontents»  (to ".find-ebuffercontents")
 ;; One way to inspect text properties in buffers with weird keymaps is

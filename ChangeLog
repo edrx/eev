@@ -1,3 +1,15 @@
+2022-10-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eoverlayspp, ee-overlay-pp0): new functions.
+
+2022-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eregionpp): new function.
+	(ee-string-intervals): new function.
+	(ee-eregionpp-preprocess): new function.
+	(find-eregionpp0): I renamed the old function `find-eregionpp' to
+	`find-eregionpp0'.
+
 2022-10-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-1stclassvideos-dlsubs): rewritten.
