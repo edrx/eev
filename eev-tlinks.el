@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221025
+;; Version:    20221029
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -3642,18 +3642,25 @@ This doesn't support pos-spec lists yet."
      )
    pos-spec-list))
 
-(defun ee-find-telegachat-links (&optional bufname)
+(defun ee-find-telegachat-links (&optional bufname msgn)
   (setq bufname (or bufname (buffer-name)))
-  (let* ((chat       (with-current-buffer bufname telega-chatbuf--chat))
-         (username   (telega-chat-username chat))
-         (atusername (if username (format "@%s" username)))
-         (title      (plist-get chat :title))
-         (id         (plist-get chat :id))
+  (setq msgn    (or msgn (ee-telega-msgn)))
+  (let* ((chat        (with-current-buffer bufname telega-chatbuf--chat))
+         (username    (telega-chat-username chat))
+         (atusername  (if username (format "@%s" username)))
+         (atusernamen (format "%s#%s" atusername msgn))
+         (title       (plist-get chat :title))
+         (id          (plist-get chat :id))
+         (idn         (format "%s#%s" id msgn))
 	 )
     `((find-telegachat ,atusername)
       (find-telegachat ,atusername ,title)
+      (find-telegachat ,atusernamen)
+      (find-telegachat ,atusernamen ,title)
       (find-telegachat ,id)
       (find-telegachat ,id ,title)
+      (find-telegachat ,idn)
+      (find-telegachat ,idn ,title)
       ""
       (find-ebuffer ,bufname)
       (setq tcbuf ,bufname)
@@ -3664,6 +3671,10 @@ This doesn't support pos-spec lists yet."
       (plist-get tcchat :title)
       (plist-get tcchat :id)
       )))
+
+(defun ee-telega-msgn (&optional msg)
+  (setq msg (or msg (telega-msg-for-interactive)))
+  (/ (plist-get msg :id) telega-msg-id-step))
 
 
 

@@ -1,6 +1,12 @@
+2022-10-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-telega-msgn): new function.
+	(ee-find-telegachat-links): use `ee-telega-msgn'.
+
 2022-10-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-eoverlayspp, ee-overlay-pp0): new functions.
+	(ee-sort-pairs): new function.
 
 2022-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
 

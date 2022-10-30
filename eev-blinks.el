@@ -551,14 +551,18 @@ properties to omit."
 ;;      https://lists.gnu.org/archive/html/help-gnu-emacs/2022-10/msg00745.html
 (defun ee-string-intervals (str)
   "This is similar to `object-intervals', but uses another output format."
+  (cl-loop for (b e props) in (object-intervals str)
+	   for s = (substring-no-properties str b e)
+	   for pairs = (cl-loop for (x y) on props by 'cddr
+				collect (list x y))
+	   collect (cons s (ee-sort-pairs pairs))))
+
+(defun ee-sort-pairs (pairs)
+  "Sort a list of PAIRS of the the form (symbol value)."
   (let ((pair< (lambda (pair1 pair2)
                  (string< (symbol-name (car pair1))
                           (symbol-name (car pair2))))))
-    (cl-loop for (b e props) in (object-intervals str)
-             for s = (substring-no-properties str b e)
-             for pairs = (cl-loop for (x y) on props by 'cddr
-                                  collect (list x y))
-             collect (cons s (sort pairs pair<)))))
+    (sort pairs pair<)))
 
 ;; This is a stub!
 (defun ee-eregionpp-preprocess (intervals0 arg)

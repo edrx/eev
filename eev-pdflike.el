@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221020
+;; Version:    20221029
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
@@ -196,8 +196,14 @@
 ;; «.code-brxxxs»			(to "code-brxxxs")
 
 
+
 (require 'eev-plinks)			; (find-eev "eev-plinks.el")
 (require 'eev-brxxx)			; (find-eev "eev-brxxx.el")
+
+;; Autoloads for external functions.
+;; See: (find-elnode "Autoload")
+(autoload 'pdf-loader-install "pdf-tools")
+
 
 
 ;;;                  _       _     _           
