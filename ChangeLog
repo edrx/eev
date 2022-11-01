@@ -1,3 +1,9 @@
+2022-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-php): new function.
+
+	* eev-testblocks.el (ee-insert-test-php-mode): new function.
+
 2022-10-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-telega-msgn): new function.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221016
+;; Version:    20221101
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -270,6 +270,20 @@ load(\"%s\");
 #+end_comment
 
 ")))
+
+(defun ee-insert-test-php-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+<?php
+/*
+ (eepitch-php)
+ (eepitch-kill)
+ (eepitch-php)
+include '%s';
+
+*/
+?>
+" (buffer-name)))))
 
 (defun ee-insert-test-python-mode ()
   (interactive)
