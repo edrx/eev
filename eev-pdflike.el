@@ -202,7 +202,10 @@
 
 ;; Autoloads for external functions.
 ;; See: (find-elnode "Autoload")
-(autoload 'pdf-loader-install "pdf-tools")
+;; See also my temporary hack in:
+;;   (find-eev "eev-pdflike.el" "find-pdftools-page")
+;;   (find-eev "eev-pdflike.el" "find-pdftools-page" "require")
+;;(autoload 'pdf-loader-install "pdf-tools")
 
 
 
@@ -802,6 +805,8 @@ current page."
   ;;   (find-efunction 'pdf-tools-install)
   ;;
   ;; Old way: (pdf-tools-install)
+  (require 'pdf-tools)
+  (require 'pdf-loader)
   (pdf-loader-install)
   ;;
   ;; Open PDFFILE. You will get weird results if it is not a PDF.

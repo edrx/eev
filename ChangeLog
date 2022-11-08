@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+=======
+2022-11-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "2022tikz" has subtitles.
+
+2022-11-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2022tikzvideo): new function.
+	(ee-1stclassvideos-info): added an entry for "2022tikz".
+
+2022-11-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "oficina2021a" has subtitles.
+
+2022-11-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rstdoc.el (ee-code-rstdoc): made some functions interactive.
+	(ee-rstdoc-rst): fixed the behavior when str is nil.
+
+>>>>>>> UTF-8
 2022-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-php): new function.

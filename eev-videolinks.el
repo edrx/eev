@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2022oct21
+;; Version:    20221107
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -68,6 +68,7 @@
 ;;   «.find-2022eevwconfigpt2video»	(to "find-2022eevwconfigpt2video")
 ;;   «.find-2022eevwconfigvideo»	(to "find-2022eevwconfigvideo")
 ;;   «.find-2022yttranscriptvideo»	(to "find-2022yttranscriptvideo")
+;;   «.find-2022tikzvideo»		(to "find-2022tikzvideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -98,6 +99,7 @@
 ;;   «.2022eevwconfigpt2»		(to "2022eevwconfigpt2")
 ;;   «.2022eevwconfig»			(to "2022eevwconfig")
 ;;   «.2022yttranscript»		(to "2022yttranscript")
+;;   «.2022tikz»			(to "2022tikz")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -618,6 +620,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "2022yttranscript" time))
 
+;; «find-2022tikzvideo»  (to ".find-2022tikzvideo")
+;; Info: (find-1stclassvideo-links "2022tikz")
+;; Play: (find-2022tikzvideo "0:00")
+(defun find-2022tikzvideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2022tikz\")"
+  (interactive)
+  (find-1stclassvideo-video "2022tikz" time))
+
 
 
 
@@ -780,6 +792,7 @@ For more info on this particular video, run:
      :yt    "http://www.youtube.com/watch?v=acFPMuZ5Jf4"
      :page  "http://angg.twu.net/2021-oficina.html"
      :lang  "portuguese"
+     :subs   ".vtt"
      :date    "2021nov05"
      :length  "14:58"
      :comment "A very good introduction in Portuguese for beginners.")
@@ -1005,6 +1018,20 @@ For more info on this particular video, run:
      :date    "2022oct20"
      :length  "28:28"
      :comment "A video about `find-yttranscript-links'.")
+    ;;
+    ;; «2022tikz»  (to ".2022tikz")
+    ;; Play: (find-2022tikzvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2022tikz")
+    ("2022tikz"
+     :title "Eev and TikZ, or: how to learn TikZ using a REPL"
+     :mp4   "http://angg.twu.net/eev-videos/2022-eev-tikz.mp4"
+     :yt    "http://www.youtube.com/watch?v=d7nIzpXcV6c"
+     :page  "http://angg.twu.net/eev-tikz.html"
+     :lang  "portuguese"
+     :date    "2022nov02"
+     :subs    ".vtt"
+     :length  "1:36:27"
+     :comment "A way to learn TikZ using examples from the manual.")
     ;;
     ))
 

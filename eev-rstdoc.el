@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221009
+;; Version:    20221102
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -371,11 +371,11 @@
 
 (defun ee-rstdoc-rst (kw &optional str)
   (if (not str)
-      (setq str (ee-rstdoc-getfield kw :base)))
-  (format "%s%s%s"
-	  (ee-rstdoc-getfield kw :base-rst)
-	  (ee-rstdoc-stem kw str)
-	  (ee-rstdoc-getfield kw :rst)))
+      (ee-rstdoc-getfield kw :base-rst)
+    (format "%s%s%s"
+  	    (ee-rstdoc-getfield kw :base-rst)
+	    (ee-rstdoc-stem kw str)
+	    (ee-rstdoc-getfield kw :rst))))
 
 
 ;; «around-point»  (to ".around-point")
@@ -446,16 +446,19 @@
 (defun find-{c}doc (&optional str &rest rest)
   \"Open the local html page associated to the rstdoc STR.
 This function uses the data in `{var}' to transform STR.\"
+  (interactive)
   (ee-rstdoc-browse-url (ee-rstdoc-html {kw} str)))
 
 (defun find-{c}docw (&optional str &rest rest)
   \"Open the remote html page associated to the rstdoc STR.
 This function uses the data in `{var}' to transform STR.\"
+  (interactive)
   (ee-rstdoc-browse-url (ee-rstdoc-web {kw} str)))
 
 (defun find-{c}docr (&optional str &rest rest)
   \"Open the local .rst.txt file associated to the rstdoc STR
 This function uses the data in `{var}' to transform STR.\"
+  (interactive)
   (apply 'find-fline (ee-rstdoc-rst {kw} str) rest))
 
 (code-c-d \"{c}docr\" \"{base-rst}\")

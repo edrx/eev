@@ -113,6 +113,8 @@
 
 ;; «.find-urlretrieve»	(to "find-urlretrieve")
 ;; «.find-wget»		(to "find-wget")
+;; «.find-anggwget»	(to "find-anggwget")
+;; «.find-anggwgeta»	(to "find-anggwgeta")
 ;; «.find-gitk»		(to "find-gitk")
 ;; «.find-tkdiff»	(to "find-tkdiff")
 ;; «.find-osm»		(to "find-osm")
@@ -415,6 +417,12 @@ If wget can't download URL then this function runs `error'."
 ;; (find-wget  "http://angg.twu.net/eev-current/DOESNOTEXIST")
 ;; (find-wget-elisp  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
 ;; (find-wgeta-elisp "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;;
+;; «find-anggwget»   (to ".find-anggwget")
+;; «find-anggwgeta»  (to ".find-anggwgeta")
+;; See: (find-2022findeevanggvideo "10:54" "Let me now show something else.")
+;;      (find-2022findeevanggvideo "11:30"   "(find-angg-es-links)")
+;;      (find-angg-es-links)
 
 (defun find-anggwget (fname &rest pos-spec-list)
   "See `find-wget' and this: (find-angg-es-links)"
