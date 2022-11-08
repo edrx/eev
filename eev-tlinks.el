@@ -3007,12 +3007,13 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
-;; To make eepitch blocks use the red bullets by default,
-;; add this block to your ~/.emacs.  Note that this will make
-;; bullets appear in red in other places too, like in info manuals -
-;; for example here: (find-enode \"Using Region\")
-;; See: (find-red-star-links)
+;; To make eepitch blocks use red bullets by default, add the
+;; block below to your ~/.emacs (including the line with the
+;; \"See:\"). Note that this will make bullets appear in red in
+;; other places too, like in info manuals - for example here:
+;;   (find-enode \"Using Region\")
 ;;
+;; See: (find-red-star-links)
 \(eepitch-set-glyph0 ?• ?• 'eepitch-star-face)
 \(defun ee-adjust-red-stars (str) (replace-regexp-in-string \"\" \"•\" str))
 
@@ -3056,6 +3057,7 @@ This function is used by `ee-0x0-upload-region'."
 ;; «find-angg-es-links»  (to ".find-angg-es-links")
 ;; Skel: (find-find-links-links-new "angg-es" "" "")
 ;; Test: (find-angg-es-links)
+;;  See: http://angg.twu.net/eev-find-angg.html
 ;;
 (defun find-angg-es-links (&rest pos-spec-list)
 "Show an e-script for configuring `find-angg' and `find-es'."
