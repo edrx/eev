@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220920
+;; Version:    20221115
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -94,7 +94,7 @@
 ;; «.find-git-intro»			(to "find-git-intro")
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 ;; «.find-eev-exercises-intro»		(to "find-eev-exercises-intro")
-;; «.find-kla-test-intro»		(to "find-kla-test-intro")
+;; «.find-kla-intro»			(to "find-kla-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -2755,7 +2755,7 @@ These are etcs:
 
 These ones explain advanced features that require extra setup:
 
-  31. (find-kla-test-intro)
+  31. (find-kla-intro)
   32. (find-prepared-intro)
   33. (find-bounded-intro)
   34. (find-channels-intro)
@@ -14457,15 +14457,15 @@ see:
 ;;; |   <| | (_| |
 ;;; |_|\_\_|\__,_|
 ;;;               
-;; «find-kla-test-intro»  (to ".find-kla-test-intro")
-;; Skel: (find-intro-links "kla-test")
-;; Test: (find-kla-test-intro)
+;; «find-kla-intro»  (to ".find-kla-intro")
+;; Skel: (find-intro-links "kla")
+;; Test: (find-kla-intro)
 
-(defun find-kla-test-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-kla-test-intro)*"))
+(defun find-kla-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-kla-intro)*"))
     (apply 'find-eintro "\
-\(Re)generate: (find-kla-test-intro)
-Source code:  (find-efunction 'find-kla-test-intro)
+\(Re)generate: (find-kla-intro)
+Source code:  (find-efunction 'find-kla-intro)
 More intros:  (find-eev-quick-intro)
               (find-eev-intro)
               (find-eepitch-intro)
@@ -14474,109 +14474,329 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Pre-requisites:
-  (find-saving-links-intro)
-  (find-saving-links-intro \"2.3. The base case 3\")
 WARNING:
-  In sep/2022 I rewrote eev-kla.el completely...
-  This hands-on tutorial is currently broken.
-  TODO: FIX IT!!!
+  This is being rewritten!
   See: http://angg.twu.net/emacsconf2022-kla.html
        (find-eev \"eev-kla.el\")
+  The prerequisites for this tutorial are:
+    (find-eev-quick-intro \"8. Anchors\")
+    (find-eev-quick-intro \"9.1. `code-c-d'\")
+    (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+    (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\" \"to anchors\")
+    (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
+    (find-eev-quick-intro \"4.1. `find-here-links'\")
+
+
 
 
 1. Introduction
 ===============
-THIS IS AN ADVANCED FEATURE!!!
+In this section of the main tutorial
 
-The function `eekla' implements a way to create links to anchors
-that requires fewer keystrokes than the way described here,
+  (find-eev-quick-intro \"10.1. Generating short hyperlinks to files\")
+
+we saw that after running these three `code-c-d's,
+
+  (code-c-d \"foo\"  \"/tmp/FOO/\"          :anchor)
+  (code-c-d \"bar\"  \"/tmp/FOO/BAR/\"      :anchor)
+  (code-c-d \"plic\" \"/tmp/FOO/BAR/PLIC/\" :anchor)
+
+all these links will point to the same file:
+
+  (find-file  \"/tmp/FOO/BAR/PLIC/bletch\")
+  (find-fline \"/tmp/FOO/BAR/PLIC/bletch\")
+  (find-foofile        \"BAR/PLIC/bletch\")
+  (find-barfile            \"PLIC/bletch\")
+  (find-plicfile                \"bletch\")
+
+If we visit the file \"/tmp/FOO/BAR/PLIC/bletch\" and we type
+`M-h M-h' - i.e., `find-here-links' - there, we well get a
+temporary buffer whose \"core\" will be those five hyperlinks
+above... `find-here-links' doesn't know how to choose the
+\"best\" hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\", so it shows
+all the options. Usually at that point we choose the best
+hyperlink ourselves, we refine it with these keys,
+
+  (find-emacs-keys-intro \"1. Basic keys (eev)\")
+  (find-emacs-keys-intro \"1. Basic keys (eev)\" \"refining hyperlinks\")
+
+and we copy it to our notes.
+
+This takes many keystrokes. For example, suppose that we have
+anchors in /tmp/FOO/BAR/PLIC/bletch, and we want create a
+hyperlink to the anchor just before point and put that link in
+the kill ring. One sequence of keystrokes that does that is:
+
+  M-1 M-h M-w    ;; ee-copy-preceding-tag-to-kill-ring
+      M-h M-h    ;; find-here-links
+   8*<down>      ;; go to the line with the `(find-plicfile ...)'
+      M-h M-2    ;; ee-duplicate-this-line
+      M-h M-y    ;; ee-yank-pos-spec
+      M-h M--    ;; ee-shrink-hyperlink-at-eol
+      C-a        ;; move-beginning-of-line
+      C-SPC      ;; set-mark-command
+      <down>     ;; next-line
+      M-w        ;; kill-ring-save
+      M-k        ;; ee-kill-this-buffer
+
+The file eev-kla.el implements a way to do that with fewer
+keystrokes. If we are in /tmp/FOO/BAR/PLIC/bletch and we type
+`M-x eekla' - or `M-x kla', if we have defined certain aliases -
+then this will \"kill link to anchor\", which is a mnemonic for
+\"create the best link to the anchor before point and put in the
+kill ring\".
+
+The algorithm that chooses the \"best link\" sometimes needs some
+tinkering to work correctly, so here in this tutorial I will
+explain in details how it works, and how to replace its pieces
+when needed.
+
+The old way of producing these hyperlinks - the one that uses the
+sequence `M-1 M-h M-w ... M-k' - is explained here:
 
   (find-saving-links-intro)
   (find-saving-links-intro \"2.3. The base case 3\")
 
-but to understand this new way you will need to understand all
-the pre-requisites of the \"Base case 3\" - see the link above -
-and also file-local, or dir-local, variables, that are explained
-in these pages of the Emacs manual:
-
-      (find-enode \"Specifying File Variables\")
-  or: (find-enode \"Directory Variables\")
-
-The code for `eekla', `eeklf', `eekl2' and friends is here:
-
-  (find-eev \"eev-kla.el\")
-  (find-eev \"eev-kla.el\" \"aliases\")
 
 
 
-2. Setup for a demo
-===================
-We need to create some test directories in /tmp/eev-kla-test/.
-Run this eepitch block:
+2. `ee-code-c-d-pairs'
+======================
+A call to
 
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-  rm -Rfv /tmp/eev-kla-test/
-  mkdir   /tmp/eev-kla-test/
-  mkdir   /tmp/eev-kla-test/dira/
-  mkdir   /tmp/eev-kla-test/dirb/
+       (code-c-d \"foo\" \"/tmp/FOO/\" :anchor)
 
-We need to create some files there. Take a look at the source of
-`ee-kla-demo-write-three-files' here,
+does a bit more than just running the code shown by this sexp:
 
-  (find-eev \"eev-kla.el\" \"demo\")
+  (find-code-c-d \"foo\" \"/tmp/FOO/\" :anchor)
 
-and after understanding it, run this:
+It also runs this,
 
-  (code-c-d \"klat\"  \"/tmp/eev-kla-test/\")
-  (code-c-d \"klata\" \"/tmp/eev-kla-test/dira/\")
-  (code-c-d \"klatb\" \"/tmp/eev-kla-test/dirb/\")
-  (ee-kla-demo-write-three-files)
+  (ee-code-c-d-add-pair \"foo\" \"/tmp/FOO/\")
 
-and inspect that directory with:
+that modifies the variable `ee-code-c-d-pairs' in two steps: it
+first deletes all the elements of `ee-code-c-d-pairs' that are of
+the form (\"foo\" ...), and then it adds the pair
 
-  (find-fline \"/tmp/eev-kla-test/\")
-  (find-fline \"/tmp/eev-kla-test/dira/\")
-  (find-fline \"/tmp/eev-kla-test/dirb/\")
-  (find-fline \"/tmp/eev-kla-test/dira/foo\")
-  (find-fline \"/tmp/eev-kla-test/dirb/bar\")
-  (find-fline \"/tmp/eev-kla-test/.dir-locals.el\")
+  (\"foo\" \"/tmp/FOO/\")
+
+to the front of the list. If you want to look at the code that
+does that, it is here:
+
+  (find-eev \"eev-code.el\" \"code-c-d\")
+  (find-eev \"eev-code.el\" \"code-c-d-pairs\")
+
+and you can inspect the variable `ee-code-c-d-pairs' with:
+
+  (find-eppp ee-code-c-d-pairs)
+
+We will refer to the elements of `ee-code-c-d-pairs' as `c-d's. A
+`c-d' is a pair made of a `c' and a `d', where these `c' and `d'
+were the arguments given to a `code-c-d'.
 
 
 
-3. Run some tests
+3. The components
 =================
-Run this 4-line sexp
+In order to convert a filename like
 
-  (find-3a nil
-   ' (find-fline \"/tmp/eev-kla-test/dira/foo\")
-   ' (find-fline \"/tmp/eev-kla-test/dirb/bar\")
-   )
+  \"/tmp/FOO/BAR/PLIC/bletch\"
 
-to create a window setting like this:
-   _________________
-  |         |       |
-  |         |  foo  |
-  |  intro  |_______|
-  |         |       |
-  |         |  bar  |
-  |_________|_______|
+to a sexp like
 
-Go to the window showing the file \"foo\", run `M-x eekla' in
-several positions of that file - after each anchor and in the
-beginning - and understand the messages in the echo area. Then do
-the same in the window with the file \"bar\".
+       (find-plicfile \"bletch\")
+  or:  (find-plic     \"bletch\")
+
+eev needs to:
+
+  1. select all the `c-d's in `ee-code-c-d-pairs' whose `d's are
+     initial substrings of \"/tmp/FOO/BAR/PLIC/bletch\",
+
+  2. select the \"best one\" among these `c-d's; in our example
+     it will be
+
+       (\"plic\" \"/tmp/FOO/BAR/PLIC/\")
+
+  3. remove the prefix \"/tmp/FOO/BAR/PLIC/\" from
+     \"/tmp/FOO/BAR/PLIC/bletch\" to obtain \"bletch\"; we will
+     refer to \"/tmp/FOO/BAR/PLIC/bletch\" as the `fname', and to
+     the \"bletch\" as the \"rest\". We will abbreviate the
+     \"rest\" as `r', and we will refer to the length of `r' as
+     `l'. So in this case we have:
+
+       /tmp/FOO/BAR/PLIC/bletch
+       \\----------------/\\----/
+               d           r
+       \\----------------------/
+                 fname
+
+     and \"bletch\" has 6 characters, so `l' is 6.
+
+  4. build the sexp. We will refer to its components as:
+
+       (find-plicfile \"bletch\")
+             \\--/      \\----/
+              c        shortfname
+        \\-----------/
+         find-cfile
+
+       (find-plic     \"bletch\")
+             \\--/      \\----/
+              c        shorterfname
+        \\-------/
+         find-c
+
+     `shortfname' and `shortfname' will usually be equal to `r',
+     but not always. The differences will be explained in section
+     ___.
 
 
-\[TODO]: Explain how to test eekla2. See:
-  (find-eev \"eev-kla.el\" \"eekla2\")
+
+4. The best `l-r-c-d'
+=====================
+The algorithm that chooses the \"best\" `c-d' is here:
+
+  (find-eev \"eev-kla.el\" \"best-lrcd\")
+
+If `fname' is \"/tmp/FOO/BAR/PLIC/bletch\" and
+`ee-code-c-d-pairs' is this list,
+
+  ((\"plic\" \"/tmp/FOO/BAR/PLIC/\")
+   (\"bar\"  \"/tmp/FOO/BAR/\")
+   (\"foo\"  \"/tmp/FOO/\")
+   (\"eev\"  \"/home/edrx/eev-current/\")
+   (\"e\"    \"/usr/share/emacs/27.1/lisp/\"))
+
+then the `c-d's in `ee-code-c-d-pairs' that \"match\" `fname', in
+the sense their `d's are initial substrings of
+
+           \"/tmp/FOO/BAR/PLIC/bletch\"
+
+will be these ones:
+
+  ((\"plic\" \"/tmp/FOO/BAR/PLIC/\")
+   (\"bar\"  \"/tmp/FOO/BAR/\")
+   (\"foo\"  \"/tmp/FOO/\"))
+
+Try this:
+
+  (find-eppp (ee-kl-lrcds \"/tmp/FOO/BAR/PLIC/bletch\"))
+
+It will show something like this:
+
+  ((6           \"bletch\" \"plic\" \"/tmp/FOO/BAR/PLIC/\")
+   (11     \"PLIC/bletch\" \"bar\"  \"/tmp/FOO/BAR/\")
+   (15 \"BAR/PLIC/bletch\" \"foo\"  \"/tmp/FOO/\"))
+
+note that each `c-d' that matched `fname' was converted to an
+`l-r-c-d'; the `r' is the \"rest\" that remains of `fname' after
+the deleting the initial `d', and the `l' is the length of the
+\"rest\".
+
+This sexp
+
+  (ee-kl-lrcds \"/tmp/FOO/BAR/PLIC/bletch\")
+
+returns _all_ the `l-r-c-d's that match that filename; this sexp
+
+  (ee-kl-lrcd  \"/tmp/FOO/BAR/PLIC/bletch\")
+
+returns _the_ `l-r-c-d' that matches that filename - i.e., the
+\"best\" `l-r-c-d' that matches that filename. The best one is
+chosen by sorting the `l-r-c-d's by their `l's and then returning
+the first `l-r-c-d' in the sorted list. In that example the best
+`l-r-c-d' will be this one:
+
+  (6 \"bletch\" \"plic\" \"/tmp/FOO/BAR/PLIC/\")
+   
+Note that its `r' is as short as possible. When there are no
+`c-d's matching the filename the function `ee-kl-lrcd' returns
+nil.
+
+
+
+
+5. `cl-loop'
+============
+The functions that produce the best `l-r-c-d' are implemented
+using `cl-loop'. I didn't explain `cl-loop' in
+
+  (find-elisp-intro)
+
+because it was too complex, but let's see it now. The features of
+`cl-loop' that we will need are explained here:
+
+  (find-clnode \"Loop Basics\")
+  (find-clnode \"Accumulation Clauses\" \"collect FORM\")
+  (find-clnode \"Accumulation Clauses\" \"append FORM\")
+  (find-clnode \"For Clauses\" \"for VAR in LIST by FUNCTION\")
+  (find-clnode \"For Clauses\" \"for VAR on LIST by FUNCTION\")
+  (find-clnode \"For Clauses\" \"for VAR = EXPR1 then EXPR2\")
+  (find-clnode \"For Clauses\" \"destructuring\")
+  (find-clnode \"Other Clauses\" \"if CONDITION CLAUSE\")
+
+Try to understand these examples:
+
+  (cl-loop for x in '(1 2 3 4 5 6)
+           collect (* 10 x))
+
+  (cl-loop for sublist on '(a b c d e f)
+           collect sublist)
+
+  (cl-loop for sublist on '(a b c d e f) by 'cddr
+           collect sublist)
+
+  (cl-loop for (x y . rest) on '(a b c d e f) by 'cddr
+           collect (list x y rest))
+
+  (cl-loop for (x y) on '(a b c d e f) by 'cddr
+           collect (list x y))
+
+  (cl-loop for a in '(-3 -2 -1 0 1 2 3)
+           for sq = (* a a)
+           if (>= sq 4)
+           collect (list a sq))
+
+Note that this
+
+  (cl-loop for a in '(1 2 3)
+           for b in '(4 5 6)
+           collect (list a b))
+
+returns ((1 4) (2 5) (3 6)) - `cl-loop' runs the two `for's \"in
+parallel\" instead of treating them as nested. This is explained
+here:
+
+  (find-clnode \"For Clauses\" \"several\" \"for\" \"clauses in a row\")
+
+One way to make the `for's of the example above behave as nested
+is by nesting `cl-loop's and using `append' in the outer one
+instead of `collect', like this:
+
+  (cl-loop for a in '(1 2 3)
+           append (cl-loop for b in '(4 5 6)
+                           collect (list a b)))
+
+
+
+
+
+
+6. `cl-defun'
+=============
+See:
+
+  (find-clnode \"Argument Lists\" \"cl-defun\")
+  (find-clnode \"Argument Lists\" \"&key ((KEYWORD VAR) INITFORM SVAR)\")
+  (find-eev \"eev-kla.el\" \"other-defaults\")
+
+  (find-here-links-intro \"8. Debugging\")
+  (find-eevfile \"eev-hlinks.el\" \"Debug mode\")
 
 
 " pos-spec-list)))
 
-;; (find-kla-test-intro)
+;; (find-kla-intro)
 
 
 

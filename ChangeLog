@@ -1,5 +1,14 @@
-<<<<<<< HEAD
-=======
+2022-11-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-expand, ee-kl-prefixp, ee-kl-cds)
+	(ee-kl-lrcds, ee-kl-lrcd): new functions.
+
+	* eev-intro.el (find-kla-intro): rewritten completely.
+
+2022-11-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-kla-test-intro): renamed to find-kla-intro.
+
 2022-11-08  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
@@ -20,7 +29,6 @@
 	* eev-rstdoc.el (ee-code-rstdoc): made some functions interactive.
 	(ee-rstdoc-rst): fixed the behavior when str is nil.
 
->>>>>>> UTF-8
 2022-11-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-php): new function.

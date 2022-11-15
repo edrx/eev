@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221018
+;; Version:    20221115
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -28,7 +28,6 @@
 ;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
-;; «.prerequisites»		(to "prerequisites")
 ;; «.intro»			(to "intro")
 ;;  «.test»			(to "test")
 ;;
@@ -37,6 +36,7 @@
 ;; «.ee-kl-kill»		(to "ee-kl-kill")
 ;; «.ee-kl-format2»		(to "ee-kl-format2")
 ;; «.ee-kl-insert»		(to "ee-kl-insert")
+;; «.best-lrcd»			(to "best-lrcd")
 ;; «.guess»			(to "guess")
 ;; «.simple-defaults»		(to "simple-defaults")
 ;; «.other-defaults»		(to "other-defaults")
@@ -51,20 +51,34 @@
 
 ;;; Commentary:
 
-;;   «prerequisites»  (to ".prerequisites")
-;; 0. Prerequisites
-;; ================
-;; This tool will only make sense to people who understand anchors,
-;; `code-c-d', and `find-here-links' very well. See:
+;; WARNING (2022nov15): This is being rewritten!
+;; One of my presentations at the EmacsConf2022 will be about
+;; eev-kla.el. Its page is:
 ;;
-;;   (find-eev-quick-intro "8. Anchors")
-;;   (find-eev-quick-intro "9.1. `code-c-d'")
-;;   (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'")
-;;   (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" "to anchors")
-;;   (find-eev-quick-intro "4. Creating Elisp Hyperlinks")
-;;   (find-eev-quick-intro "4.1. `find-here-links'")
+;;   http://angg.twu.net/emacsconf2022-kla.html
 ;;
+;; Right now - 2022nov15 - I am in the middle of rewriting both and
+;; the code and the docs of eev-kla.el almost completely. The docs are
+;; being moved to:
 ;;
+;;   (find-kla-intro)
+;;
+;; And some concepts are changing. In my first versions of eev-kla.el
+;; the "preferred `c'" for a file was always obtained by reading the
+;; variable `ee-preferred-c', that was usually set using this:
+;;
+;;   (find-enode "Directory Variables")
+;;
+;; Then I added a way to guess the best `c' for a filename; then I
+;; made guessing the default way, and `ee-preferred-c' secondary; then
+;; I rewrote the algorithm for guessing, made it use this,
+;;
+;;   (find-kla-intro "4. The best `l-r-c-d'")
+;;   (find-kla-intro "5. `cl-loop'")
+;;
+;; and started to move all the docs to `(find-kla-intro)'.
+
+
 ;;
 ;;   «intro»  (to ".intro")
 ;; 1. Very short introduction
@@ -571,6 +585,56 @@
 
 
 
+
+;;;  ____            _     _                               _ 
+;;; | __ )  ___  ___| |_  | |      _ __       ___       __| |
+;;; |  _ \ / _ \/ __| __| | |_____| '__|____ / __|____ / _` |
+;;; | |_) |  __/\__ \ |_  | |_____| | |_____| (_|_____| (_| |
+;;; |____/ \___||___/\__| |_|     |_|        \___|     \__,_|
+;;;                                                          
+;; «best-lrcd»  (to ".best-lrcd")
+;; These functions try to choose the "best" `c-d' for a filename. They
+;; filter `ee-code-c-d-pairs' to find all the `c-d's that "match" that
+;; filename, then they choose the best one, and they return it
+;; converted to an `l-r-c-d'. The ideas and the terminology are
+;; explained here:
+;;   (find-kla-intro "4. The best `l-r-c-d'")
+
+(defun ee-kl-expand (fname)
+  (ee-expand fname))
+
+(defun ee-kl-prefixp (prefix str)
+  "If STR starts with PREFIX then return STR minus that prefix.
+When STR doesn't start with PREFIX, return nil."
+  (and (<= (length prefix) (length str))
+       (equal prefix (substring str 0 (length prefix)))
+       (substring str (length prefix))))
+
+(defun ee-kl-cds ()
+  "Return a copy of `ee-code-c-d-pairs' with all `d's ee-kl-expanded."
+  (cl-loop for (c d) in ee-code-c-d-pairs
+	   collect (list c (ee-kl-expand d))))
+
+(defun ee-kl-lrcds (fname)
+  "Return all the `c-d's in (ee-kl-cds) that match FNAME.
+Each matching `c-d' is converted to an `l-r-c-d'."
+  (cl-loop for (c d) in (ee-kl-cds)
+	   if (ee-kl-prefixp d fname)
+	   collect (let* ((r (ee-kl-prefixp d fname))
+			  (l (length r)))
+		     (list l r c d))))
+
+(defun ee-kl-lrcd (fname)
+  "Return the best lrcd in (ee-kl-lrcds FNAME).
+If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
+  (let* ((lrcds (ee-kl-lrcds fname))
+	 (l< (lambda (lrcd1 lrcd2) (< (car lrcd1) (car lrcd2))))
+	 (lrcds-sorted (sort lrcds l<)))
+    (car lrcds-sorted)))
+
+
+
+
 ;;;   ____                     
 ;;;  / ___|_   _  ___  ___ ___ 
 ;;; | |  _| | | |/ _ \/ __/ __|
@@ -838,19 +902,19 @@ Put in the kill ring a link to the preceding anchor."
 ;;; |____/ \___|_| |_| |_|\___/ 
 ;;;                             
 ;; «demo»  (to ".demo")
-;; See: (find-kla-test-intro)
-;;      (find-kla-test-intro "2. Setup for a demo")
+;; See: (find-kla-intro)
+;;      (find-kla-intro "2. Setup for a demo")
 ;; TODO: How obsolete is this? Check and rewrite!
 
 (defun ee-kla-demo-write-file (fname contents)
-  "See: (find-kla-test-intro)"
+  "See: (find-kla-intro)"
   (write-region contents nil fname))
 
 (defun ee-kla-demo-write-three-files ()
-  "See: (find-kla-test-intro)"
+  "See: (find-kla-intro)"
   ;;
-  (ee-kla-demo-write-file "/tmp/eev-kla-test/dira/foo"
-  "This file: /tmp/eev-kla-test/dira/foo
+  (ee-kla-demo-write-file "/tmp/eev-kla/dira/foo"
+  "This file: /tmp/eev-kla/dira/foo
 Index:
 # «.a1»   (to \"a1\")
 # «.a2»   (to \"a2\")\n
@@ -858,8 +922,8 @@ Body:
 # «a1»    (to \".a1\")\n
 # «a2»    (to \".a2\")\n\n")
   ;;
-  (ee-kla-demo-write-file "/tmp/eev-kla-test/dirb/bar"
-  "This file: /tmp/eev-kla-test/dirb/bar
+  (ee-kla-demo-write-file "/tmp/eev-kla/dirb/bar"
+  "This file: /tmp/eev-kla/dirb/bar
 Index:
 -- «.b1»   (to \"b1\")
 -- «.b2»   (to \"b2\")\n
@@ -867,8 +931,8 @@ Body:
 -- «b1»    (to \".b1\")\n
 -- «b2»    (to \".b2\")\n\n")
   ;;
-  (ee-kla-demo-write-file "/tmp/eev-kla-test/.dir-locals.el"
-  ";; This file: /tmp/eev-kla-test/.dir-locals.el
+  (ee-kla-demo-write-file "/tmp/eev-kla/.dir-locals.el"
+  ";; This file: /tmp/eev-kla/.dir-locals.el
 ;;
 (; (\"dira\" . ((nil . ((ee-preferred-c . \"klata\")))))
  (\"\"     . ((nil . ((ee-preferred-c . \"klat\")))))
