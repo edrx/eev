@@ -1,3 +1,11 @@
+2022-11-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-all-eds-for, ee-kl-best-ed-for)
+	(ee-kl-best-cs-for, ee-preferred-c-here-without-guess)
+	(ee-preferred-c-here-with-guess, ee-preferred-c-here)
+	(ee-kla-demo-write-file, ee-kla-demo-write-three-files)
+	(ee-kl-dir): deleted.
+
 2022-11-15  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el (ee-kl-expand, ee-kl-prefixp, ee-kl-cds)

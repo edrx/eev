@@ -36,14 +36,14 @@
 ;; «.ee-kl-kill»		(to "ee-kl-kill")
 ;; «.ee-kl-format2»		(to "ee-kl-format2")
 ;; «.ee-kl-insert»		(to "ee-kl-insert")
+;; «.ee-kl-expand»		(to "ee-kl-expand")
+;; «.default-args»		(to "default-args")
+;;
 ;; «.best-lrcd»			(to "best-lrcd")
-;; «.guess»			(to "guess")
-;; «.simple-defaults»		(to "simple-defaults")
-;; «.other-defaults»		(to "other-defaults")
+;; «.shorter-fnames»		(to "shorter-fnames")
 ;; «.generate-sexps»		(to "generate-sexps")
 ;; «.kill-sexps»		(to "kill-sexps")
 ;; «.eekla2»			(to "eekla2")
-;; «.demo»			(to "demo")
 ;; «.aliases»			(to "aliases")
 
 
@@ -215,90 +215,6 @@
 ;; The call to (ee-kl-fname) returns the file name of this file -
 ;; nothing mysterious here - but the call to (ee-kl-c) returns the
 ;; value of the variable `ee-preferred-c'.
-;;
-;;
-;;
-;; 6. `ee-preferred-c'
-;; ===================
-;; In short: in the example that we are discussing there are three
-;; possible sexp hyperlinks to this file:
-;;
-;;   /tmp/FOO/BAR/PLIC/bletch
-;;
-;; namely:
-;;
-;;   (find-foofile "BAR/PLIC/bletch")
-;;   (find-barfile "PLIC/bletch")
-;;   (find-plicfile "bletch")
-;;
-;; Each one is associated to a `c'. If `c' is "foo" we get the first
-;; one, if `c' is "bar" we get the second, and if `c' is "plic" we get
-;; the third one... and the value of the variable `ee-preferred-c'
-;; determines which is these short hyperlinks should be preferred.
-;;
-;; Try:
-;;
-;;   (find-evardescr 'ee-preferred-c)
-;;
-;; you will get an explanation like this - but the name of the
-;; directory will be different:
-;;
-;;   ee-preferred-c is a variable defined in ‘eev-kla.el’.
-;;
-;;   Its value is "eev"
-;;   Local in buffer eev-kla.el; global value is nil
-;;
-;;   See: (find-eev "eev-kla.el")
-;;
-;;     This variable’s value is directory-local, set by the file
-;;     ‘/home/edrx/eev-current/.dir-locals.el’.
-;;     This variable is safe as a file local variable if its value
-;;     satisfies the predicate ‘stringp’.
-;;
-;; and if you visit the .dir-locals.el file mentioned above, with:
-;;
-;;   (find-eev ".dir-locals.el")
-;;
-;; you will see that it has a header, and then this:
-;;
-;;   ;; See: (find-eev "eev-kla.el" "intro")
-;;   ;;      (find-enode "Directory Variables")
-;;   ;;      (find-enode "Directory Variables" "a subdirectory (a string)")
-;;   ;;
-;;   (("" . ((nil . ((ee-preferred-c . "eev")))))
-;;    )
-;;
-;;
-;;
-;; 7. `add-dir-local-variable'
-;; ===========================
-;; When I started created my own ".dir-locals.el" files - by hand! - I
-;; found their syntax very hard to get right... but there's this:
-;;
-;;   (find-enode "Directory Variables" "M-x add-dir-local-variable")
-;;   (find-enode "Directory Variables" "M-x delete-dir-local-variable")
-;;   (find-efunctiondescr 'add-dir-local-variable)
-;;   (find-efunctiondescr 'delete-dir-local-variable)
-;;
-;; The manual only explains how to run those functions with `M-x'.
-;; People who prefer the run them from sexps can use this example as a
-;; starting point:
-;;
-;;   (mkdir "/tmp/foo/bar/" t)
-'    (find-2a nil ' (progn
-                     (find-fline "/tmp/foo/bar/.dir-locals.el")
-                     (add-dir-local-variable nil 'ee-preferred-c "foo")))
-'    (find-2a nil ' (progn
-                     (find-fline "/tmp/foo/bar/.dir-locals.el")
-                     (add-dir-local-variable nil 'ee-preferred-c "bar")))
-'    (find-2a nil ' (progn
-                     (find-fline "/tmp/foo/bar/.dir-locals.el")
-                     (delete-dir-local-variable nil 'ee-preferred-c)))
-;;
-;; Note that the three sexps starting with `find-2a's are three lines
-;; long each, and they are commented out with a "'" at the beginning
-;; of the line. Also, note that you may need to save the dir-locals
-;; file, and reload the other file, for the changes to take effect.
 ;;
 ;;
 ;;
@@ -585,6 +501,26 @@
 
 
 
+;; «ee-kl-expand»  (to ".ee-kl-expand")
+;; Redefine this to support symlinks.
+;; TODO: write the docs.
+;;
+(defun ee-kl-expand (fname)
+  (ee-expand fname))
+
+
+;; «default-args»  (to ".default-args")
+;; See: (find-kla-intro "6. `cl-defun'")
+
+(defun ee-kl-fname ()
+  (or (buffer-file-name) default-directory))
+
+(defun ee-kl-anchor ()
+  (ee-preceding-tag-flash))
+
+(defun ee-kl-region ()
+  (buffer-substring-no-properties (point) (mark)))
+
 
 ;;;  ____            _     _                               _ 
 ;;; | __ )  ___  ___| |_  | |      _ __       ___       __| |
@@ -600,9 +536,6 @@
 ;; explained here:
 ;;   (find-kla-intro "4. The best `l-r-c-d'")
 
-(defun ee-kl-expand (fname)
-  (ee-expand fname))
-
 (defun ee-kl-prefixp (prefix str)
   "If STR starts with PREFIX then return STR minus that prefix.
 When STR doesn't start with PREFIX, return nil."
@@ -615,7 +548,8 @@ When STR doesn't start with PREFIX, return nil."
   (cl-loop for (c d) in ee-code-c-d-pairs
 	   collect (list c (ee-kl-expand d))))
 
-(defun ee-kl-lrcds (fname)
+(cl-defun ee-kl-lrcds
+    (&key (fname (ee-kl-fname)))
   "Return all the `c-d's in (ee-kl-cds) that match FNAME.
 Each matching `c-d' is converted to an `l-r-c-d'."
   (cl-loop for (c d) in (ee-kl-cds)
@@ -624,139 +558,39 @@ Each matching `c-d' is converted to an `l-r-c-d'."
 			  (l (length r)))
 		     (list l r c d))))
 
-(defun ee-kl-lrcd (fname)
+(cl-defun ee-kl-lrcd
+    (&key (fname (ee-kl-fname)))
   "Return the best lrcd in (ee-kl-lrcds FNAME).
 If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
-  (let* ((lrcds (ee-kl-lrcds fname))
+  (let* ((lrcds (ee-kl-lrcds :fname fname))
 	 (l< (lambda (lrcd1 lrcd2) (< (car lrcd1) (car lrcd2))))
 	 (lrcds-sorted (sort lrcds l<)))
     (car lrcds-sorted)))
 
+(cl-defun ee-kl-c
+    (&key (fname (ee-kl-fname)))
+  (nth 2 (ee-kl-lrcd :fname fname)))
 
+(cl-defun ee-kl-r
+    (&key (fname (ee-kl-fname)))
+  (nth 1 (ee-kl-lrcd :fname fname)))
 
+;; (ee-kl-lrcds)
+;; (ee-kl-lrcd)
+;; (ee-kl-r)
+;; (ee-kl-c)
 
-;;;   ____                     
-;;;  / ___|_   _  ___  ___ ___ 
-;;; | |  _| | | |/ _ \/ __/ __|
-;;; | |_| | |_| |  __/\__ \__ \
-;;;  \____|\__,_|\___||___/___/
-;;;                            
-;; «guess»  (to ".guess")
-;; This is an obscure hack that is only run when the variable
-;; `ee-preferred-c-guess' is non-nil. Here's how it works...
+;; «shorter-fnames»  (to ".shorter-fnames")
 ;;
-;; When the variable `ee-preferred-c' is nil, we can try to guess a
-;; good "c" for the current directory by examining the entries in
-;; `ee-code-c-d-pairs', filtering the pairs - the "c-d"s - that point
-;; to this directory or to one of its parents/ancestors, then
-;; filtering that list to pick up the entries that point closer to
-;; where we are, and then choosing one of those entries, and returning
-;; its "c". We always choose the first of these entries, but that's
-;; not always the best choice... (TODO: explain this!)
-;;
-;; Tests:
-;;                       (find-efile "subr.el")
-;;                         (ee-efile "subr.el")
-;;      (ee-kl-all-eds-for (ee-efile "subr.el"))
-;;      (ee-kl-best-ed-for (ee-efile "subr.el"))
-;;      (ee-kl-best-cs-for (ee-efile "subr.el"))
-;; (find-code-c-d-filter-2 (ee-efile "subr.el") '(list c d ed))
-;;
-;; For more on `ee-code-c-d-pairs', see:
-;;   (find-eev "eev-elinks.el" "ee-code-c-d-filter")
-
-(defun ee-kl-all-eds-for (fname)
-  (ee-code-c-d-filter-2 fname 'ed))
-
-(defun ee-kl-best-ed-for (fname)
-  (car (sort (ee-kl-all-eds-for fname) 'string>)))
-
-(defun ee-kl-best-cs-for (fname)
-  (let ((best-ed (ee-kl-best-ed-for fname)))
-    (if best-ed
-	(cl-loop for c-d in ee-code-c-d-pairs
-		 as c = (car c-d)
-		 as d = (cadr c-d)
-		 as ed = (ee-expand d)
-		 if (string= ed best-ed)
-		 collect c))))
-
-(defun ee-preferred-c-here-without-guess ()
-  (if ee-preferred-c
-      ee-preferred-c
-    (error "`ee-preferred-c' is nil here!")))
-
-(defun ee-preferred-c-here-with-guess ()
-  (if ee-preferred-c
-      ee-preferred-c
-    (let ((pref-c (car (ee-kl-best-cs-for (ee-kl-fname)))))
-      (if pref-c
-	  pref-c
-      (error "`ee-preferred-c' is nil here, and the guesses failed!")))))
-
-(defun ee-preferred-c-here ()
-  (if ee-preferred-c-guess
-      (ee-preferred-c-here-with-guess)
-    (ee-preferred-c-here-without-guess)))
-
-
-;;;  ____  _                 _            _       __             _ _       
-;;; / ___|(_)_ __ ___  _ __ | | ___    __| | ___ / _| __ _ _   _| | |_ ___ 
-;;; \___ \| | '_ ` _ \| '_ \| |/ _ \  / _` |/ _ \ |_ / _` | | | | | __/ __|
-;;;  ___) | | | | | | | |_) | |  __/ | (_| |  __/  _| (_| | |_| | | |_\__ \
-;;; |____/|_|_| |_| |_| .__/|_|\___|  \__,_|\___|_|  \__,_|\__,_|_|\__|___/
-;;;                   |_|                                                  
-;;
-;; «simple-defaults»  (to ".simple-defaults")
-;; "Simple defaults" - the functions that generate sexps, below, call
-;; these functions when they don't receive keywords arguments. Tests:
-;;   (ee-kl-c)
-;;   (ee-kl-fname)
-;;   (ee-kl-anchor)
-;;   (ee-kl-region)
-;;
-(defun ee-kl-c ()
-  (ee-preferred-c-here))
-
-(defun ee-kl-fname ()
-  (or (buffer-file-name) default-directory))
-
-(defun ee-kl-anchor ()
-  (ee-preceding-tag-flash))
-
-(defun ee-kl-region ()
-  (buffer-substring-no-properties (point) (mark)))
-
-
-;;;   ___  _   _                     _       __             _ _       
-;;;  / _ \| |_| |__   ___ _ __    __| | ___ / _| __ _ _   _| | |_ ___ 
-;;; | | | | __| '_ \ / _ \ '__|  / _` |/ _ \ |_ / _` | | | | | __/ __|
-;;; | |_| | |_| | | |  __/ |    | (_| |  __/  _| (_| | |_| | | |_\__ \
-;;;  \___/ \__|_| |_|\___|_|     \__,_|\___|_|  \__,_|\__,_|_|\__|___/
-;;;                                                                   
-;; «other-defaults»  (to ".other-defaults")
-;; "Other defaults" - same as above, but these ones
-;; accept keyword arguments. Tests:
-;;   (ee-kl-dir)
-;;   (ee-kl-shortfname)
-;;   (ee-kl-shorterfname)
-;;   (ee-kl-find-c)
-;;   (ee-kl-find-cfile)
-;;
-(cl-defun ee-kl-dir
-    (&key (c (ee-kl-c)))
-  (symbol-value (intern (format "ee-%sdir" c))))
-
 (cl-defun ee-kl-shortfname
-    (&key (c     (ee-kl-c))
-	  (fname (ee-kl-fname)))
-  (ee-remove-prefix (ee-expand (ee-kl-dir :c c))
-		    (ee-expand fname)))
+    (&key (c (ee-kl-c))
+	  (r (ee-kl-r)))
+  r)
 
 (cl-defun ee-kl-shorterfname
-    (&key (c     (ee-kl-c))
-	  (fname (ee-kl-fname)))
-  (ee-kl-shorterfname :c c :fname fname))
+    (&key (c (ee-kl-c))
+	  (r (ee-kl-r)))
+  r)
 
 (cl-defun ee-kl-find-c
     (&key (c (ee-kl-c)))
@@ -765,6 +599,12 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 (cl-defun ee-kl-find-cfile
     (&key (c (ee-kl-c)))
   (intern (format "find-%sfile" c)))
+
+
+
+
+
+
 
 
 ;;;  ____                      
@@ -783,34 +623,34 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 ;;
 (cl-defun ee-kl-sexp-kla
     (&key (c      (ee-kl-c))
-     &key (fname  (ee-kl-fname))
+     &key (r      (ee-kl-r))
      &key (anchor (ee-kl-anchor)))
   (list (ee-kl-find-c :c c)
-	(ee-kl-shorterfname :c c :fname fname)
+	(ee-kl-shorterfname :c c :r r)
 	anchor))
 
 (cl-defun ee-kl-sexp-klas
     (&key (c      (ee-kl-c))
-     &key (fname  (ee-kl-fname))
+     &key (r      (ee-kl-r))
      &key (anchor (ee-kl-anchor))
      &key (region (ee-kl-region)))
   (list (ee-kl-find-c :c c)
-	(ee-kl-shorterfname :c c :fname fname)
+	(ee-kl-shorterfname :c c :r r)
 	anchor
 	region))
 
 (cl-defun ee-kl-sexp-klf
-    (&key (c     (ee-kl-c))
-	  (fname (ee-kl-fname)))
+    (&key (c (ee-kl-c))
+	  (r (ee-kl-r)))
   (list (ee-kl-find-cfile :c c)
-	(ee-kl-shortfname :c c :fname fname)))
+	(ee-kl-shortfname :c c :r r)))
 
 (cl-defun ee-kl-sexp-klfs
     (&key (c      (ee-kl-c))
-	  (fname  (ee-kl-fname))
+	  (r      (ee-kl-r))
 	  (region (ee-kl-region)))
   (list (ee-kl-find-cfile :c c)
-	(ee-kl-shortfname :c c :fname fname)
+	(ee-kl-shortfname :c c :r r)
 	region))
 
 (cl-defun ee-kl-sexp-klt
@@ -893,52 +733,6 @@ Put in the kill ring a link to the preceding anchor."
     (other-window 1)
     (ee-kla2-insert sexp1)
     (other-window -1)))
-
-
-;;;  ____                       
-;;; |  _ \  ___ _ __ ___   ___  
-;;; | | | |/ _ \ '_ ` _ \ / _ \ 
-;;; | |_| |  __/ | | | | | (_) |
-;;; |____/ \___|_| |_| |_|\___/ 
-;;;                             
-;; «demo»  (to ".demo")
-;; See: (find-kla-intro)
-;;      (find-kla-intro "2. Setup for a demo")
-;; TODO: How obsolete is this? Check and rewrite!
-
-(defun ee-kla-demo-write-file (fname contents)
-  "See: (find-kla-intro)"
-  (write-region contents nil fname))
-
-(defun ee-kla-demo-write-three-files ()
-  "See: (find-kla-intro)"
-  ;;
-  (ee-kla-demo-write-file "/tmp/eev-kla/dira/foo"
-  "This file: /tmp/eev-kla/dira/foo
-Index:
-# «.a1»   (to \"a1\")
-# «.a2»   (to \"a2\")\n
-Body:
-# «a1»    (to \".a1\")\n
-# «a2»    (to \".a2\")\n\n")
-  ;;
-  (ee-kla-demo-write-file "/tmp/eev-kla/dirb/bar"
-  "This file: /tmp/eev-kla/dirb/bar
-Index:
--- «.b1»   (to \"b1\")
--- «.b2»   (to \"b2\")\n
-Body:
--- «b1»    (to \".b1\")\n
--- «b2»    (to \".b2\")\n\n")
-  ;;
-  (ee-kla-demo-write-file "/tmp/eev-kla/.dir-locals.el"
-  ";; This file: /tmp/eev-kla/.dir-locals.el
-;;
-(; (\"dira\" . ((nil . ((ee-preferred-c . \"klata\")))))
- (\"\"     . ((nil . ((ee-preferred-c . \"klat\")))))
- (\"dirb\" . ((nil . ((ee-preferred-c . \"klatb\")))))
- )")
-  )
 
 
 
