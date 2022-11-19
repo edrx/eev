@@ -35,15 +35,9 @@
 ;; (find-eev "eev-eval.el")
 ;; (find-eev "eev-bounded.el")
 
+;; «.specs»	(to "specs")
+;; «.eeflash»	(to "eeflash")
 
-;; New version - with a `-' because it is non-interactive, and
-;; consequently an internal function.
-
-(defun ee-flash (start end &optional face duration)
-  "Highlight the region between START and END using FACE, for time DURATION."
-  (let ((ovl (make-overlay start end)))
-    (overlay-put ovl 'face (or face 'region))
-    (run-at-time (or duration 1) nil 'delete-overlay ovl)))
 
 
 
@@ -52,11 +46,12 @@
 ;; To do: delete most of this, use just `ee-flash' instead.
 ;; Drop the idea of flash-specs as lists.
 
+;; «specs»  (to ".specs")
 ;; (setq eeb-highlight-spec '(highlight 0.2))
 (defvar ee-highlight-spec  '(highlight 0.75)) ; to do: rename highlight->flash
 (defvar eeb-highlight-spec '(highlight 0.5))
 (defvar eek-highlight-spec '(region 0.75))
-(defvar eeflash-default '(highlight 0.5))
+(defvar eeflash-default    '(highlight 0.5))
 
 
 ;;;             __ _           _     
@@ -66,7 +61,13 @@
 ;;;  \___|\___|_| |_|\__,_|___/_| |_|
 ;;;                                  
 ;;; temporary highlighting (flashing)
-;;;
+;; «eeflash»  (to ".eeflash")
+
+(defun ee-flash (start end &optional face duration)
+  "Highlight the region between START and END using FACE, for time DURATION."
+  (let ((ovl (make-overlay start end)))
+    (overlay-put ovl 'face (or face 'region))
+    (run-at-time (or duration 1) nil 'delete-overlay ovl)))
 
 (defun eeflash (start end &optional face duration)
   "Highlight the region between START and END using FACE, for time DURATION."

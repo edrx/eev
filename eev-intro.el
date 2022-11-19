@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221115
+;; Version:    20221119
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -14780,14 +14780,96 @@ instead of `collect', like this:
 
 
 
-
-
 6. `cl-defun'
 =============
-See:
+Some functions in eev-kla.el are defined with `cl-defun' to make
+them easy to test. If you execute this `cl-defun',
+
+  (cl-defun foo
+    (&key a
+          (b 2)
+          (c (* b 10)))
+    (list a b c))
+
+this defines a function that can be called with the arguments
+`a', `b', and `c' given in any order. Try:
+
+  (foo :a 4 :b 5 :c 6)
+  (foo :c 70 :b 80 :a 90)
+
+These \":keyword-value\" pairs can also be omitted. The
+
+    (&key a
+          (b 2)
+          (c (* b 10)))
+
+means:
+
+  1. when there isn't a pair `:a value-for-a', then set a to nil,
+  2. when there isn't a pair `:b value-for-b', then set b to 2,
+  3. when there isn't a pair `:c value-for-c', then set 3 to the
+     result of (* b 10).
+
+Try:
+
+  (foo               )
+  (foo           :c 6)
+  (foo      :b 5     )
+  (foo      :b 5 :c 6)
+  (foo :a 4          )
+  (foo :a 4      :c 6)
+  (foo :a 4 :b 5     )
+  (foo :a 4 :b 5 :c 6)
+
+The keyword arguments for `cl-defun' are explained here:
 
   (find-clnode \"Argument Lists\" \"cl-defun\")
   (find-clnode \"Argument Lists\" \"&key ((KEYWORD VAR) INITFORM SVAR)\")
+  (find-clnode \"Argument Lists\" \"&key c d (e 17)\")
+
+
+
+7. The default `c', `d', and `r'
+================================
+The functions `ee-kl-c', `ee-kl-d', and `ee-kl-r' are defined here:
+
+  (find-eev \"eev-kla.el\" \"ee-kl-r-c-d\")
+
+If they receive a `fname' they convert it to an `l-r-c-d' using
+the ideas in sections 3 and 4, and then they extract the `r', the
+`c', and the `d' from the `l-r-c-d'. If they don't receive a
+`fname' they use this as the default:
+
+  (find-eev \"eev-kla.el\" \"default-args\")
+  (find-eev \"eev-kla.el\" \"default-args\" \"(defun ee-kl-fname\")
+
+
+
+8. The functions that generate sexps
+====================================
+Try these tests:
+
+  (ee-kl-lrcd       :fname \"/tmp/FOO/BAR/PLIC/bletch\")
+  (ee-kl-c          :fname \"/tmp/FOO/BAR/PLIC/bletch\")
+  (ee-kl-r          :fname \"/tmp/FOO/BAR/PLIC/bletch\")
+  (ee-kl-find-cfile :fname \"/tmp/FOO/BAR/PLIC/bletch\")
+  (ee-kl-find-cfile :c \"plic\")
+  (ee-kl-sexp-klf   :fname \"/tmp/FOO/BAR/PLIC/bletch\")
+
+
+
+
+9. Symlinks
+===========
+See: (find-eev \"eev-kla.el\" \"ee-kl-expand\")
+
+
+
+10. Aliases
+===========
+See: (find-eev \"eev-kla.el\" \"aliases\")
+
+
   (find-eev \"eev-kla.el\" \"other-defaults\")
 
   (find-here-links-intro \"8. Debugging\")

@@ -1,3 +1,33 @@
+2022-11-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-kla-intro): several new sections.
+
+	* eev-kla.el (ee-kl-link-to-string-with-comment): new function.
+	(ee-kla2-bol): renamed to `ee-kla2-goto-bol'.
+
+2022-11-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-transforms): new variable.
+	(ee-kl-transform): new function.
+	(ee-kl-expand): use `ee-kl-transform'.
+	(ee-kl-format2-for-mode): deleted.
+	(ee-kl-comment-prefix): new function.
+	(ee-kl-insert): rewritten.
+	(ee-kl-format1, ee-kl-format2, ee-preferred-c)
+	(ee-preferred-c-guess): all these variables were deleted.
+	(ee-kl-format1): deleted this function.
+	(ee-kl-kill): don't call `ee-kl-format1' - always add a newline.
+	(ee-kl-sexp-to-string): deleted.
+	(ee-kl-lrcds, ee-kl-lrcd, ee-kl-r, ee-kl-c, ee-kl-d)
+	(ee-kl-shortfname, ee-kl-shorterfname, ee-kl-find-c)
+	(ee-kl-find-cfile, ee-kl-sexp-kla, ee-kl-sexp-klas)
+	(ee-kl-sexp-klf, ee-kl-sexp-klfs, ee-kl-sexp-klt): rewritten to
+	support nils.
+
+2022-11-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-remove-prefix): return nil when not a prefix.
+
 2022-11-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el (ee-kl-all-eds-for, ee-kl-best-ed-for)

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220906
+;; Version:    20221117
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -678,6 +678,11 @@ a hack to let use use `M-h M-i' for both \"intro\" and \"info\"."
 ;; This is a trick to make `find-file-links' generate short hyperlinks.
 ;; See: (find-eev-quick-intro "10.1. Generating short hyperlinks to files")
 ;;
+;; Note that this code is very old and uses only very basic Lisp
+;; functions. The functions in eev-kla.el do something similar to
+;; this, but using cl-loop. See:
+;;   (find-kla-intro)
+;;
 ;; Each call to `(code-c-d C D)' generates an entry `(C D)' in the
 ;; alist `ee-code-c-d-pairs'. Try:
 ;;
@@ -772,7 +777,9 @@ CODE is evaluated inside a `let' that sets the variables `c',
 
 (defun ee-remove-prefix (prefix str)
   "Example: (ee-remove-prefix \"ab\" \"abcde\") --> \"cde\""
-  (substring str (length prefix)))
+  (and (<= (length prefix) (length str))
+       (equal prefix (substring str 0 (length prefix)))
+       (substring str (length prefix))))
 
 (defun ee-replace-prefix0 (prefix newprefix fname)
   (if (ee-prefixp prefix fname)
