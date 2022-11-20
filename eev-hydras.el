@@ -47,7 +47,7 @@
 ;; run its tutorial - i.e., execute these two sexps:
 ;;
 ;;   (require 'eev-hydras)
-;;   (find-eev-index-edit-intro)
+;;   (find-edit-index-intro)
 ;;
 ;; This code will probably change a LOT in the next months.
 ;; Update: I recorded a video, it's here:
@@ -57,10 +57,8 @@
 
 
 
-;; «.hydra-eev-index-edit»		(to "hydra-eev-index-edit")
-;; «.find-eev-index-edit-intro»		(to "find-eev-index-edit-intro")
-
-
+;; «.ei»				(to "ei")
+;; «.ee-edit-index-hydra»		(to "ee-edit-index-hydra")
 
 ;; See: https://github.com/abo-abo/hydra
 ;;      (find-epackage-links 'hydra "hydra" t)
@@ -68,28 +66,50 @@
 ;;
 (require 'hydra)
 
-
-
-(defalias 'ei 'eev-index-edit)
-
-(defun eev-index-edit ()
-  "Call `eev-index-edit/body' to edit the index."
-  (interactive)
-  (hydra-eev-index-edit/body))
-
-(defun eev-index-replace (from-string to-string)
+(defun ee-edit-index-replace (from-string to-string)
   "Replace FROM-STRING to TO-STRING in the current line."
+  (eek "C-a")
   (search-forward from-string (ee-eol))
   (replace-match to-string)
   (eek "C-a"))
 
 
 
-;; «hydra-eev-index-edit»  (to ".hydra-eev-index-edit")
-;; Try: (find-eapropos    "hydra-eev-index-edit")
-;;      (find-ekeymapdescr hydra-eev-index-edit/keymap)
+;;;  __  __                  _ 
+;;; |  \/  |    __  __   ___(_)
+;;; | |\/| |____\ \/ /  / _ \ |
+;;; | |  | |_____>  <  |  __/ |
+;;; |_|  |_|    /_/\_\  \___|_|
+;;;                            
+;; «ei»  (to ".ei")
+;; This file is not loaded by default, but if you run
+;;   (require 'eev-hydras)
+;; this will define `M-x ei' as an alias for `M-x ee-edit-index'.
+(defalias 'ei 'ee-edit-index)
+
+(defun ee-edit-index ()
+  "Call `ee-edit-index-hydra/body' to edit the index."
+  (interactive)
+  (ee-edit-index-hydra/body))
+
+
+
+;;;  _   _           _           
+;;; | | | |_   _  __| |_ __ __ _ 
+;;; | |_| | | | |/ _` | '__/ _` |
+;;; |  _  | |_| | (_| | | | (_| |
+;;; |_| |_|\__, |\__,_|_|  \__,_|
+;;;        |___/                 
 ;;
-(defhydra hydra-eev-index-edit (:color green :hint nil)
+;; «ee-edit-index-hydra»  (to ".ee-edit-index-hydra")
+;; Running a `defhydra' defines many functions.
+;; You can inspect them with:
+;;   (find-eapropos       "ee-edit-index-hydra")
+;;   (find-ekeymapdescr    ee-edit-index-hydra/keymap)
+;;   (find-efunctiondescr 'ee-edit-index-hydra/body)
+;;   (find-efunctionpp    'ee-edit-index-hydra/body)
+;;
+(defhydra ee-edit-index-hydra (:color green :hint nil)
   "
 _q_:quit    ^^^^                                    _0_: delthiswindow
  werty:  _u_:prev    _i_:insert  _o_:second window  _p_:prev
@@ -98,143 +118,35 @@ asdfgh:  _j_:next    _k_:kill    _l_:eval
 Standard usage: _k__o__p__l__i__0_q
 Use `_,_'s and `_._'s between the `_i_' and the `_0_' to adjust the `(to ...)'.\n"
   ;;
-  ;; Left column: movement by anchors
-  ("u" (re-search-backward (ee-tag-re)))
-  ("j" (re-search-forward  (ee-tag-re)))
-  ;; Kill/Otherwindow/Prev/evaL/Insert/adj<-/adj->/delthiswindow:
+  ;; <k>ill, <o>ther window, <p>rev anchor, eva<l>, <i>nsert, C-x <0>:
   ("k" (eek "C-a C-SPC <down> C-w"))
   ("o" (eek "C-x 1 C-x 3 C-x o"))
   ("p" (re-search-backward (ee-tag-re)))
   ("l" (eek "M-e"))
   ("i" (eek "C-a <down> C-y <up>"))
-  ("," (eev-index-replace "\t(to "   "(to "))
-  ("." (eev-index-replace   "(to " "\t(to "))
   ("0" (eek "C-x 0"))
+  ("q" nil)
+  ;;
+  ;; Reindent:
+  ("," (ee-edit-index-replace "\t(to "   "(to "))
+  ("." (ee-edit-index-replace   "(to " "\t(to "))
+  ;;
+  ;; Next anchor and previous anchor:
+  ("n" (re-search-forward  (ee-tag-re)))
+  ("u" (re-search-backward (ee-tag-re)))
+  ("j" (re-search-forward  (ee-tag-re)))
+  ;;
   ;; Other keys:
   ("<down>" (eek "<down>"))
   ("<up>"   (eek "<up>"))
-  ("1"      (eek "C-x 1"))
-  ("2"      (eek "M-2 M-e"))
   ("<"      (eek "M-<"))
   ("M-<"    (eek "M-<"))
-  ("q"      nil))
+  ("1"      (eek "C-x 1"))
+  ("2"      (eek "M-2 M-e"))
+  )
 
 
 
-
-
-;; «find-eev-index-edit-intro»  (to ".find-eev-index-edit-intro")
-;; Skel: (find-intro-links "eev-index-edit")
-
-(defun find-eev-index-edit-intro (&rest pos-spec-list) (interactive)
-  (let ((ee-buffer-name "*(find-eev-index-edit-intro)*"))
-    (apply 'find-eintro "\
-\(Re)generate: (find-eev-index-edit-intro)
-Source code:  (find-efunction 'find-eev-index-edit-intro)
-More intros:  (find-eev-quick-intro)
-              (find-eev-intro)
-              (find-eepitch-intro)
-This buffer is _temporary_ and _editable_.
-It is meant as both a tutorial and a sandbox.
-
-
-
-This \"intro\" is a sandboxed tutorial for:
-
-  (find-eev \"eev-hydras.el\")
-  (find-refining-intro \"5. Pointing to anchors\")
-  (find-refining-intro \"5. Pointing to anchors\" \"but I don't touch-type\")
-
-In these sections about anchors in the main tutorial - see:
-
-  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
-  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
-
-I said that I organize the indexes of my e-script files - like:
-
-  (find-wget \"http://angg.twu.net/e/youtube.e\")
-              http://angg.twu.net/e/youtube.e.html
-
-by hand. This was true until april 2021, when I wrote a hydra for
-that and started to play with it.
-
-Remember that many functions in eev create temporary buffers that
-have many lines, or blocks of lines, that can be used to perform
-different actions; they act as visual interfaces in which the
-actions are spread vertically, with at most one action per line.
-Hydra.el lets us create interfaces in which each action is bound
-to a key, and the minibuffer/echo area is used to display a
-reminder of what each key does.
-
-This is an index, followed by two e-script blocks, and by a
-\"plic\" and a \"bletch\" that you will use to create new
-e-script blocks.
-
-
-
-# «.foo»	(to \"foo\")
-# «.bar»	(to \"bar\")
-
-
-
-#####
-#
-# foo
-# 2021may20
-#
-#####
-
-# «foo»  (to \".foo\")
-
-
-
-#####
-#
-# bar
-# 2021may20
-#
-#####
-
-# «bar»  (to \".bar\")
-
-
-plic
-bletch
-
-
-
-
-Here is the exercise.
-1) Use `M-B' to convert the line with \"plic\" above into an
-   e-script block, as explained here:
-
-     (find-eev-quick-intro \"8.4. Creating e-script blocks\")
-
-2) Put the point on the line that should be moved to the index -
-   the one whose anchor is <.plic> with double angle brackets -
-   and type:
-
-     C-l M-x ei RET kopli0q
-
-   The actions associated to \"kopli0q\" are:
-
-     (k)ill the current line
-     switch to the sec(o)nd window
-     move backwards to the line of the (p)revious anchor
-     eva(l) the current line - that has a `to' pointing to the index
-     (i)nsert, i.e., yank, the last kill after this line
-     (0): run `C-x 0' to delete the window that shows the index
-     (q)uit the `hydra-eev-index-edit' mode
-
-3) Do the same for the \"bletch\".
-
-4) Take a look at the source code and figure out how to use the
-   keys `1', ',', '.', <up>, and <down> in `hydra-eev-index-edit'
-   mode.
-
-" pos-spec-list)))
-
-;; (find-eev-index-edit-intro)
 
 
 

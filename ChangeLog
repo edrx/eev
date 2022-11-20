@@ -1,3 +1,14 @@
+2022-11-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hydras.el (eev-index-edit): renamed to `ee-edit-index'.
+	(eev-index-replace): renamed to `ee-edit-index-replace'.
+	(hydra-eev-index-edit): renamed to `ee-edit-index-hydra'.
+	(find-eev-index-edit-intro): deleted.
+
+	* eev-intro.el (find-edit-index-intro): new function.
+
+	* eepitch.el (eepitch-gnuplot): use `ee-with-pager-cat'.
+
 2022-11-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-kla-intro): several new sections.

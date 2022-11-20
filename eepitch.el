@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221101
+;; Version:    20221120
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -1014,7 +1014,8 @@ The arguments are explained here:
 ;; We force GhostScript's resolution to make its window fit on the screen.
 (defun eepitch-gs () (interactive) (eepitch-comint "gs" "gs -r45"))
 (defun eepitch-gs () (interactive) (eepitch-comint "gs" "gs -r60"))
-(defun eepitch-gnuplot () (interactive) (eepitch-comint "gnuplot" "gnuplot"))
+(defun eepitch-gnuplot () (interactive)
+  (eepitch '(ee-with-pager-cat '(find-comintprocess "gnuplot" "gnuplot"))))
 
 ;; Java-based languages:
 (defun eepitch-bsh () (interactive)

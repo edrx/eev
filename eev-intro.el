@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221119
+;; Version:    20221120
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -95,6 +95,7 @@
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 ;; «.find-eev-exercises-intro»		(to "find-eev-exercises-intro")
 ;; «.find-kla-intro»			(to "find-kla-intro")
+;; «.find-edit-index-intro»		(to "find-edit-index-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -2756,18 +2757,19 @@ These are etcs:
 These ones explain advanced features that require extra setup:
 
   31. (find-kla-intro)
-  32. (find-prepared-intro)
-  33. (find-bounded-intro)
-  34. (find-channels-intro)
+  32. (find-edit-index-intro)
+  33. (find-prepared-intro)
+  34. (find-bounded-intro)
+  35. (find-channels-intro)
 
 This one was used in a video:
 
-  35. (find-three-main-keys-intro)
+  36. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  36. (find-emacs-intro)
-  37. (find-defun-intro)
+  37. (find-emacs-intro)
+  38. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -14879,6 +14881,234 @@ See: (find-eev \"eev-kla.el\" \"aliases\")
 " pos-spec-list)))
 
 ;; (find-kla-intro)
+
+
+
+
+;;;           _ _ _        _           _           
+;;;   ___  __| (_) |_     (_)_ __   __| | _____  __
+;;;  / _ \/ _` | | __|____| | '_ \ / _` |/ _ \ \/ /
+;;; |  __/ (_| | | ||_____| | | | | (_| |  __/>  < 
+;;;  \___|\__,_|_|\__|    |_|_| |_|\__,_|\___/_/\_\
+;;;                                                
+;; «find-edit-index-intro»  (to ".find-edit-index-intro")
+;; Skel: (find-intro-links "edit-index")
+;; Test: (find-edit-index-intro)
+
+(defun find-edit-index-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-edit-index-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-edit-index-intro)
+Source code:  (find-efunction 'find-edit-index-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+This is a tutorial for:
+  (find-eev \"eev-hydras.el\")
+that is a module of eev that is not loaded by default.
+To test it you will need the package \"hydra\", from ELPA,
+  https://github.com/abo-abo/hydra
+and this `require':
+  (require 'eev-hydras)
+This will define `M-x ei' as an alias. See:
+  (find-eev \"eev-hydras.el\" \"ei\")
+
+
+
+
+0. Introduction
+===============
+These sections of the basic tutorial
+
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+
+explain how to create \"index/section anchor pairs\", but they
+say that the \"index\" line should be moved to the index at the
+top of the file _by hand_. \"Moving the index line to the index\"
+is a process that takes many steps, and even after years of
+practice I would still commit mistakes very often when doing it.
+Here we will see a way to perform it very quickly, with a
+sequence of keys like this one:
+
+  M-x ei RET kopli0q
+
+The obvious way of implementing \"moving the index line to the
+index\" would be by defining a function that would perform the
+many steps involved in this process, and that would check for
+many possible kinds of errors, and handle them correctly... but
+that turned out to be too hard.
+
+When we run `M-x ei', that is defined as an alias - see:
+
+  (find-eev \"eev-hydras.el\" \"ei\")
+
+it actives a hydra that interprets the letters in
+
+  kopli0q
+
+as these \"commands\":
+
+     <k>ill line
+     <o>ther window
+     <p>revious anchor
+  eva<l>
+     <i>insert
+     <0> `C-x 0'
+     <q>uit
+
+In my QWERTY keyboard I can type the letters in `kopli0' very
+quickly with my right hand, as its keys are arranged like this:
+
+          0
+    i   o   p
+      k   l
+
+I can do that without taking my eyes off the screen - yes, I am a
+VERY bad typist! But read this:
+
+  (find-refining-intro \"5. Pointing to anchors\")
+  (find-refining-intro \"5. Pointing to anchors\" \"but I don't touch-type\")
+
+and if anything fails I can recognize it immediately, and I can
+fix it with \"undo\"s in the right way. Also, after the <i> I
+sometimes type some <,>s and <.>s to adjust the indentation; this
+will be explained in the next section.
+
+
+
+
+1. Testing the hydra
+====================
+In this tutorial \"the hydra\" will mean `ee-edit-index-hydra'.
+Typing `M-x ei' will activate the hydra. When it is active you
+will see a message in the echo area showing its main keys. `q'
+will \"quit\" that hydra, and deactivate it. Some keys that the
+hydra don't understand will also quit it.
+
+The hydra understands the keys <up>, <down>, <,>, and <.>, among
+others. It interprets <up> and <down> in the obvious way, and it
+interprets <,> and <.> as commands that reindent a `(to ...)' by
+adding or deleting tabs before the \"(\". Test this here,
+
+  aaa\t(to \"bbb\")
+  cccc\t\t(to \"dddd\")
+  ee\t\t\t(to \"fffff\")
+
+and use the hydra to align the three `(to ...)'s.
+
+
+
+
+2. An index
+===========
+This is an index,
+
+# «.foo»\t\t(to \"foo\")
+# «.bar»\t\t(to \"bar\")
+
+followed by two \"e-script blocks\" created with `M-B'. See:
+
+  (find-eev-quick-intro \"8. Anchors\")
+  (find-eev-quick-intro \"8. Anchors\" \"`M-B'\")
+  (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+
+#####
+#
+# foo
+# 2021may20
+#
+#####
+
+# «foo»  (to \".foo\")
+
+
+#####
+#
+# bar
+# 2021may20
+#
+#####
+
+# «bar»  (to \".bar\")
+
+
+
+3. An exercise
+==============
+Here is an exercise.
+
+  1. Use `M-B' to convert the line with \"plic\" below into an
+     e-script block, as explained here:
+
+       (find-eev-quick-intro \"8.4. Creating e-script blocks\")
+
+     plic
+
+  2. Put the point on the \"index line\" above - that is the one
+     that looks like this,
+
+       # <.plic>  (to \"plic\")
+
+     but with green double angle brackets instead of \"<>\"s -
+     and type this, and watch what happens in each step:
+
+       C-l M-x ei RET kopli0q
+
+     The actions associated to \"kopli0q\" are:
+
+       <k>ill the current line
+       switch to the sec<o>nd window
+       move backwards to the line of the <p>revious anchor
+       eva<l> the current line - that has a `to' pointing to the index
+       <i>nsert, i.e., yank, the last kill after this line
+       <0>: run `C-x 0' to delete the window that shows the index
+       <q>uit the hydra.
+
+   3. Do the same for the \"bletch\" below:
+
+        bletch
+
+      but now also use <,>s, <.>s, and <up>s and <down>s between
+      the <i> and the <0> to align all the `(to ...)'s in the index.
+
+
+
+
+4. `M-x ei' is fragile
+======================
+Look at the source code of the hydra that `M-x ei' calls:
+
+  (find-eev \"eev-hydras.el\" \"ee-edit-index-hydra\")
+
+Several of the actions are defined with `eek'. For example, the
+action of \"o\" is:
+
+  (\"o\" (eek \"C-x 1 C-x 3 C-x o\"))
+
+This is considered fragile - because it won't work if any of
+these key sequences has been redefined - and a bad programming
+style. I could have used this instead:
+
+  ;; (find-estring (format-kbd-macro (kbd \"C-x 1 C-x 3 C-x o\") 'verbose))
+  (\"o\" (delete-other-windows)
+         (split-window-right)
+         (other-window 1))
+
+but the \"fragile\" style above is usually good enough for quick
+hacks - `M-x ei' is a quick hack -, and it gives the readers the
+feeling that they can write their own hydras as quick hacks, too.
+
+" pos-spec-list)))
+
+;; (find-edit-index-intro)
+
+
 
 
 
