@@ -447,8 +447,8 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 (cl-defun ee-kl-sexp-kla (&key fname c r anchor)
   "<K>ill <l>ink to <a>nchor - make sexp."
   (setq fname  (or fname  (ee-kl-fname))
-	c      (or c      (ee-kl-c))
-	r      (or r      (ee-kl-r))
+	c      (or c      (ee-kl-c :fname fname))
+	r      (or r      (ee-kl-r :fname fname))
 	anchor (or anchor (ee-kl-anchor)))
   (list (ee-kl-find-c       :fname fname :c c)
 	(ee-kl-shorterfname :fname fname :c c :r r)
@@ -457,8 +457,8 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 (cl-defun ee-kl-sexp-klas (&key fname c r anchor region)
   "<K>ill <l>ink to <a>nchor and <s>tring - make sexp."
   (setq fname  (or fname  (ee-kl-fname))
-	c      (or c      (ee-kl-c))
-	r      (or r      (ee-kl-r))
+	c      (or c      (ee-kl-c :fname fname))
+	r      (or r      (ee-kl-r :fname fname))
 	anchor (or anchor (ee-kl-anchor))
 	region (or region (ee-kl-region)))
   (list (ee-kl-find-c       :fname fname :c c)
@@ -469,8 +469,8 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 (cl-defun ee-kl-sexp-klf (&key fname c r)
   "<K>ill <l>ink to <f>ile - make sexp."
   (setq fname (or fname (ee-kl-fname))
-	c     (or c     (ee-kl-c))
-	r     (or r     (ee-kl-r)))
+	c     (or c     (ee-kl-c :fname fname))
+	r     (or r     (ee-kl-r :fname fname)))
   (list (ee-kl-find-cfile :fname fname :c c)
 	(ee-kl-shortfname :fname fname :c c :r r)))
 

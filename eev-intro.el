@@ -1470,6 +1470,11 @@ beginning of the file, as explained here:
 
   (find-escripts-intro)
 
+Another way of moving the index line to the index section is
+described here:
+
+  (find-edit-index-intro)
+
 
 
 
@@ -3722,7 +3727,8 @@ This was split from:
 Pre-requisites:
   (find-here-links-intro)
   (find-refining-intro)
-
+See also:
+  (find-kla-intro)
 
 
 
@@ -14828,6 +14834,20 @@ The keyword arguments for `cl-defun' are explained here:
   (find-clnode \"Argument Lists\" \"cl-defun\")
   (find-clnode \"Argument Lists\" \"&key ((KEYWORD VAR) INITFORM SVAR)\")
   (find-clnode \"Argument Lists\" \"&key c d (e 17)\")
+
+Some functions in eev-kla.el use a trick to make nil arguments be
+ignored. For example, try:
+
+  ;; «aaa»
+  (ee-kl-sexp-klt)
+  (ee-kl-sexp-klt :anchor nil)
+  (ee-kl-sexp-klt :anchor \"bbb\")
+
+The source code for `ee-kl-sexp-klt' is here:
+
+  (find-eev \"eev-kla.el\" \"generate-sexps\")
+  (find-eev \"eev-kla.el\" \"generate-sexps\" \"ee-kl-sexp-klt\")
+
 
 
 

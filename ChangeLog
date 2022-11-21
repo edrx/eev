@@ -1,3 +1,8 @@
+2022-11-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-sexp-kla, ee-kl-sexp-klas, ee-kl-sexp-klf):
+	fixed the missing ":fname" arguments.
+
 2022-11-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hydras.el (eev-index-edit): renamed to `ee-edit-index'.

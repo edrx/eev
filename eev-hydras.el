@@ -128,8 +128,10 @@ Use `_,_'s and `_._'s between the `_i_' and the `_0_' to adjust the `(to ...)'.\
   ("q" nil)
   ;;
   ;; Reindent:
-  ("," (ee-edit-index-replace "\t(to "   "(to "))
-  ("." (ee-edit-index-replace   "(to " "\t(to "))
+  ("<down>" (eek "<down>"))
+  ("<up>"   (eek "<up>"))
+  (","   (ee-edit-index-replace "\t(to "   "(to "))
+  ("."   (ee-edit-index-replace   "(to " "\t(to "))
   ;;
   ;; Next anchor and previous anchor:
   ("n" (re-search-forward  (ee-tag-re)))
@@ -137,8 +139,6 @@ Use `_,_'s and `_._'s between the `_i_' and the `_0_' to adjust the `(to ...)'.\
   ("j" (re-search-forward  (ee-tag-re)))
   ;;
   ;; Other keys:
-  ("<down>" (eek "<down>"))
-  ("<up>"   (eek "<up>"))
   ("<"      (eek "M-<"))
   ("M-<"    (eek "M-<"))
   ("1"      (eek "C-x 1"))
