@@ -1,3 +1,12 @@
+2022-11-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hydras.el (ee-edit-index-hydra): added <right>, <left>, SPC,
+	and DEL.
+
+	* eev-code.el: added a (code-c-d "org" ...).
+
+	* eev-tlinks.el (find-kla-links): new function.
+
 2022-11-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el (ee-kl-sexp-kla, ee-kl-sexp-klas, ee-kl-sexp-klf):

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220512
+;; Version:    20221122
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -355,9 +355,10 @@ Note: the POS-SPEC-LIST arguments are currently not used."
       (format "/usr/share/emacs/%d.%d/leim/"
 	      emacs-major-version emacs-minor-version)))
 
-(code-c-d "e"      ee-emacs-lisp-directory "emacs" :gz) ; (find-enode   "Top")
-(code-c-d "el"     ee-emacs-lisp-directory "elisp" :gz) ; (find-elnode  "Top")
 (code-c-d "eli"    ee-emacs-lisp-directory "eintr" :gz) ; (find-elinode "Top")
+(code-c-d "el"     ee-emacs-lisp-directory "elisp" :gz) ; (find-elnode  "Top")
+(code-c-d "e"      ee-emacs-lisp-directory "emacs" :gz) ; (find-enode   "Top")
+(code-c-d "org"    (ee-locate-library "org") "org" :gz) ; (find-orgnode "Top")
 (code-c-d "cl"     (ee-efile "emacs-lisp/") "cl"   :gz) ; (find-clnode  "Top")
 (code-c-d "eshell" (ee-efile "eshell/") "eshell" :gz) ; (find-eshellnode "Top")
 (code-c-d "eleim"  ee-emacs-leim-directory :gz)

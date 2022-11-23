@@ -135,6 +135,7 @@
 ;; «.find-nov-links»			(to "find-nov-links")
 ;; «.find-telegachat-links»		(to "find-telegachat-links")
 ;; «.find-eejump-links»			(to "find-eejump-links")
+;; «.find-kla-links»			(to "find-kla-links")
 
 
 (require 'eev-env)
@@ -3734,6 +3735,48 @@ N should be either a number or a symbol; SEXP should be a sexp."
      pos-spec-list)))
 
 
+
+;; «find-kla-links»  (to ".find-kla-links")
+;; Skel: (find-find-links-links-new "kla" "fname" "r c d lrcd")
+;; Tests: (find-kla-links)
+;;        (find-kla-links (ee-efile "array.el"))
+;;
+(defun find-kla-links (&optional fname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about eev-kla.el."
+  (interactive)
+  (setq fname (ee-expand (or fname (ee-kl-fname))))
+  (let* ((r (ee-kl-r :fname fname))
+         (c (ee-kl-c :fname fname))
+         (d (ee-kl-d :fname fname))
+         (ee-buffer-name (or ee-buffer-name "*find-kla-links*")))
+    (apply
+     'find-elinks-elisp
+     `((find-kla-links ,fname ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-kla-links)
+       ""
+       ,(ee-template0 "\
+;; See: (find-kla-intro \"3. The components\")
+;;   fname  =>  {(ee-S fname)}
+;;       c  =>  {(ee-S c)}
+;;       d  =>  {(ee-S d)}
+;;       r  =>  {(ee-S r)}
+;;
+;; See: (find-kla-intro \"2. `ee-code-c-d-pairs'\")
+;;   (eek \"<down> M-2 M-e\")
+;;     (find-eppp ee-code-c-d-pairs)
+;;   (eek \"<down> M-3 M-e M-h M-e\")
+;;     (find-fline {(ee-S fname)})
+;;
+;; See: (find-kla-intro \"4. The best `l-r-c-d'\")
+;;   (eek \"<down> M-2 M-e\")
+;;     (find-eppp (ee-kl-lrcds :fname {(ee-S fname)}))
+;;                (ee-kl-lrcd  :fname {(ee-S fname)})
+;;
+;; Source code: (find-eev \"eev-kla.el\")
+")
+       )
+     pos-spec-list)))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220330
+;; Version:    20221122
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hydras.el>
@@ -57,8 +57,8 @@
 
 
 
-;; «.ei»				(to "ei")
-;; «.ee-edit-index-hydra»		(to "ee-edit-index-hydra")
+;; «.ei»			(to "ei")
+;; «.ee-edit-index-hydra»	(to "ee-edit-index-hydra")
 
 ;; See: https://github.com/abo-abo/hydra
 ;;      (find-epackage-links 'hydra "hydra" t)
@@ -128,8 +128,12 @@ Use `_,_'s and `_._'s between the `_i_' and the `_0_' to adjust the `(to ...)'.\
   ("q" nil)
   ;;
   ;; Reindent:
-  ("<down>" (eek "<down>"))
-  ("<up>"   (eek "<up>"))
+  ("<down>"  (eek "<down>"))
+  ("<up>"    (eek "<up>"))
+  ("<right>" (eek "<right>"))
+  ("<left>"  (eek "<left>"))
+  ("SPC"     (eek "SPC"))
+  ("DEL"     (eek "DEL"))
   (","   (ee-edit-index-replace "\t(to "   "(to "))
   ("."   (ee-edit-index-replace   "(to " "\t(to "))
   ;;

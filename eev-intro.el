@@ -14889,7 +14889,16 @@ See: (find-eev \"eev-kla.el\" \"ee-kl-expand\")
 
 10. Aliases
 ===========
-See: (find-eev \"eev-kla.el\" \"aliases\")
+
+;; From: (find-kla-intro \"10. Aliases\")
+(defalias 'kla  'eekla)
+(defalias 'klas 'eeklas)
+(defalias 'klf  'eeklf)
+(defalias 'klfs 'eeklfs)
+(defalias 'klt  'eeklt)
+(defalias 'kli  'ee-kl-insert)
+(defalias 'kla2 'eekla2)
+
 
 
   (find-eev \"eev-kla.el\" \"other-defaults\")

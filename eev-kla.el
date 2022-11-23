@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221119
+;; Version:    20221122
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -280,7 +280,8 @@
 
 (defvar ee-kl-transforms nil
   "Set this if you need to support symlinks in eev-kla.el.
-The value of this variable should be list of (regexp replacement) pairs.")
+The value of this variable should be a list of pairs of this form:
+(regexp replacement).")
 
 
 
