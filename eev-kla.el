@@ -477,10 +477,10 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 
 (cl-defun ee-kl-sexp-klfs (&key fname c r region)
   "<K>ill <l>ink to <f>ile and <s>tring - make sexp."
-  (setq fname  (or fname (ee-kl-fname))
-	c      (or c     (ee-kl-c :fname fname))
-	r      (or r     (ee-kl-r :fname fname))
-	region (or r     (ee-kl-region)))
+  (setq fname  (or fname  (ee-kl-fname))
+	c      (or c      (ee-kl-c :fname fname))
+	r      (or r      (ee-kl-r :fname fname))
+	region (or region (ee-kl-region)))
   (list (ee-kl-find-cfile :fname fname :c c)
 	(ee-kl-shortfname :fname fname :c c :r r)
 	region))

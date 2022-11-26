@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221120
+;; Version:    20221123
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -983,8 +983,8 @@ The arguments are explained here:
 (defun eepitch-tinyscheme () (interactive)
   (eepitch-comint "tinyscheme" "tinyscheme"))
 ;;
+;; Or: (defun eepitch-fennel () (interactive) (eepitch '(fennel-repl fennel-program)))
 (defun eepitch-fennel () (interactive) (eepitch-comint "fennel" "fennel"))
-;; Or: (defun eepitch-fennel () (interactive) (eepitch '(fennel-repl nil)))
 
 
 ;; Haskell, ML, Erlang, Coq:
