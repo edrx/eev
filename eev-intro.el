@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221120
+;; Version:    20221126
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -14481,11 +14481,9 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-
-WARNING:
-  This is being rewritten!
   See: http://angg.twu.net/emacsconf2022-kla.html
-       (find-eev \"eev-kla.el\")
+    (find-eev \"eev-kla.el\")
+    `kla' means \"kill link to anchor\".
   The prerequisites for this tutorial are:
     (find-eev-quick-intro \"8. Anchors\")
     (find-eev-quick-intro \"9.1. `code-c-d'\")
@@ -14896,6 +14894,7 @@ See: (find-eev \"eev-kla.el\" \"ee-kl-expand\")
 (defalias 'klf  'eeklf)
 (defalias 'klfs 'eeklfs)
 (defalias 'klt  'eeklt)
+(defalias 'klts 'eeklts)
 (defalias 'kli  'ee-kl-insert)
 (defalias 'kla2 'eekla2)
 

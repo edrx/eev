@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221122
+;; Version:    20221127
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
@@ -230,8 +230,17 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
      (apply 'ee-find-grep ee-{c}dir grep-command-args pos-spec-list))
    "))
 
+(defun ee-code-c-d-:anchor (c d &rest rest)
+  (concat (ee-template0 "
+   ;; See: (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+   ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
+   (defun find-{c} (str &rest pos-spec-list)
+     (apply 'find-anchor (ee-{c}file str) pos-spec-list))
+   ") (ee-code-c-d-rest c d rest)))
+
 (defun ee-code-c-d-:info (c d info &rest rest)
   (concat (ee-template0 "
+   ;; See: (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
    ;; {(ee-S `(ee-code-c-d-:info ,c ,d ,info ,@rest))}
    (defun find-{c}node (page &rest pos-spec-list)
      (interactive (list \"\"))
@@ -255,13 +264,6 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
      (interactive (list \"\"))
      ;; (ee-use-{c}-tags)
      (apply 'find-fline-gz (ee-{c}file str) pos-spec-list))
-   ") (ee-code-c-d-rest c d rest)))
-
-(defun ee-code-c-d-:anchor (c d &rest rest)
-  (concat (ee-template0 "
-   ;; {(ee-S `(ee-code-c-d-:anchor ,c ,d ,@rest))}
-   (defun find-{c} (str &rest pos-spec-list)
-     (apply 'find-anchor (ee-{c}file str) pos-spec-list))
    ") (ee-code-c-d-rest c d rest)))
 
 (defun ee-code-c-d-:tags (c d &rest rest)
