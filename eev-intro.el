@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221126
+;; Version:    20221128
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -2844,18 +2844,50 @@ besides that, only for:
   `M-e'    (find-eval-intro \"`M-e'\")
   `M-k'    (find-eval-intro \"`M-k'\")
   `M-j'    (find-eejump-intro \"\\neejump\\n\")
-  `M-h'    (find-links-intro \"Elisp hyperlinks buffers\")
   `<f8>'   (find-eepitch-intro \"The main key: <F8>\")
 
-For the full lists of keybindings, see:
+and for several key sequences starting with `M-h'. The two
+simplest ways to list the _main_ keys of eev are:
 
-  (find-eev \"eev-mode.el\" \"eev-mode\")
-  (find-efunctiondescr        'eev-mode)
-  (find-eminormodekeymapdescr 'eev-mode)
-  (find-ekeymapdescr           eev-mode-map)
-  (find-efunctiondescr        'eev-avadj-mode)
-  (find-eminormodekeymapdescr 'eev-avadj-mode)
-  (find-ekeymapdescr           eev-avadj-mode-map)
+  1) click with the middle mouse button on the \"eev\" in the
+     mode line - this is equivalent to:
+
+       (find-efunctiondescr 'eev-mode)
+
+  2) type `M-2 M-j' - this is equivalent to:
+
+       (find-emacs-keys-intro)
+
+These two ways are shown in this screenshot:
+
+  http://angg.twu.net/IMAGES/eev-mode-help-and-M-2-M-j.png
+
+To see _all_ the keybindings, run one of these sexps:
+
+  (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
+  (find-ekeymapdescr       eev-mode-map)
+
+If the keybindings in `eev-mode-map' interfere with other
+keybindings that you use, the simplest solution is to define a
+quick way to turn `eev-mode' on and off. If `M-x eev-mode' is too
+long, you can try:
+
+  (defalias 'em 'eev-mode)
+  (global-set-key (kbd \"s-e\") 'eev-mode)
+
+The `defalias' above makes `M-x em' equivalent to `M-x eev-mode',
+and the `global-set-key' makes the key sequence `<Super>-e' run
+`eev-mode'. If you don't know what is the super key, see:
+
+  (find-enode \"Modifier Keys\")
+  https://en.wikipedia.org/wiki/Super_key_(keyboard_button)
+
+You can also modify `eev-mode-map' to make it define fewer
+keybindings, but this is not so trivial to set up. One way to do
+that is explained here:
+
+  (find-eev \"eev-mode.el\" \"when-not-eev-mode-map\")
+
 
 
 

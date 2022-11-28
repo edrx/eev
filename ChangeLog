@@ -1,3 +1,15 @@
+2022-11-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-eev-intro): rewrote the section about
+	keybinds.
+
+2022-11-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-sexp-klts, eeklts): new functions.
+
+	* eev-code.el (ee-code-c-d-:anchor, ee-code-c-d-:info): added more
+	comments.
+
 2022-11-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kla.el (ee-kl-sexp-klfs): fixed a bug.
