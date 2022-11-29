@@ -33,6 +33,9 @@
 ;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
 ;;                                                (find-eev-quick-intro)
 
+;; «.autoloads»			(to "autoloads")
+;; «.load-the-main-modules»	(to "load-the-main-modules")
+
 ;;; Commentary:
 
 ;; This file loads all the main modules of eev, and people who want to
@@ -45,7 +48,8 @@
 
 
 
-;; «autoloads»
+
+;; «autoloads»  (to ".autoloads")
 ;;
 ;; A NOTE ABOUT AUTOLOADS
 ;; ======================
@@ -83,6 +87,7 @@
 
 
 
+;; «load-the-main-modules»  (to ".load-the-main-modules")
 ;; Load all the main modules of eev:
 ;;
 ;; The "eev quick intro" itself, and many other intros:

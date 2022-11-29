@@ -321,13 +321,11 @@ those, visit this URL:
 Installing eev does NOT activate eev-mode. To activate eev-mode
 and open this tutorial, run `M-x eev-beginner'.
 
-For other ways to install eev see this other tutorial, especially
-its section 5.1:
+\"Installing\" eev doesn't \"load\" eev. The difference between
+installing and loading is explained here:
 
-  http://angg.twu.net/eev-intros/find-eev-install-intro.html#5.1
-  http://angg.twu.net/eev-intros/find-eev-install-intro.html
-  (find-eev-install-intro \"5.1. Using the tarball\")
-  (find-eev-install-intro)
+  (find-eev-install-intro \"0. Loading eev\")
+  (find-eev-install-intro \"0. Loading eev\" \"_load_ eev on startup\")
 
 TIP FOR BEGINNERS: if you are a real beginner with, say, less
 than 10 minutes of experience using Emacs, then you will probably
@@ -2128,11 +2126,69 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Note: this intro contains lots of very technical information!
-If you're a beginner you should skip this - but if you use
-Windows then this page may be relevant to you:
-  http://angg.twu.net/installing-eev-on-windows.html
+0. Loading eev
+==============
+Now - late 2022 - versions of Emacs in which `M-x list-packages'
+works well are trivial to install in all OSs, including Windows,
+and this makes most of the other sections of this intro mostly
+irrelevant...
 
+If you have installed eev with a package manager - either
+`list-packages', that comes with Emacs and is explained here,
+
+  (find-enode \"Packages\")
+
+or alternative ones like use-package or straight.el, then the
+package manager will put the eev directory in your load-path, and
+it will declare `eev-beginner' as an autoload. This means that
+your Emacs will recognize `eev-beginner' as a command, and
+running `M-x eev-beginner' will load all modules of eev and enter
+the main tutorial. Autoloading and the load-path are explained
+here:
+
+  (find-enode \"Lisp Libraries\")
+
+_Installing_ eev with a package manager only does this:
+
+  a. this directory is put in the load-path:
+
+       (find-eevfile \"\")
+
+  b. the function `eev-beginner' is declared as an autoload.
+
+_Loading_ eev does a few things more. They are explained here:
+
+  (find-eev-intro \"1. `eev-mode'\")
+  (find-eev-intro \"1. `eev-mode'\" \"invasive\")
+  (find-eev \"eev-load.el\" \"autoloads\")
+  (find-eev \"eev-load.el\" \"load-the-main-modules\")
+
+If you want to make your Emacs _load_ eev on startup, then the
+best way to do that is to put either this
+
+  ;; See: (find-eev-install-intro \"0. Loading eev\")
+  (require 'eev-load)
+  (eev-mode 1)
+
+or this
+
+  ;; See: (find-eev-install-intro \"0. Loading eev\")
+  (require 'eev-load)
+  ;; (eev-mode 1)
+
+in your init file - see:
+
+  (find-enode \"Init File\")
+
+Use the version with \"(eev-mode 1)\" if you want to turn
+eev-mode on on startup, and the version with \";; (eev-mode 1)\"
+if you prefer to start with eev-mode off.
+
+TODO: rewrite the other sections of this intro!
+They are old and obsolete! =(
+
+
+ 
 
 
 
@@ -2545,6 +2601,7 @@ See:
 
   (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
   (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
+  (find-eev \"eev-intro.el\" \"11.1. Why eev avoids byte-compilation\")
 
 Here is why. Each call to a `code-*' function defines some
 functions dynamically - for example, `(code-c-d \"e\" ...)'
@@ -13778,19 +13835,21 @@ rewrite lots of things.
 
 This is my N-th attempt to rewrite this tutorial.
 
-Version of these instructions: 2022may03.
+Version of these instructions: 2022nov28.
 
 
 
 
 1. Download and install Emacs
 =============================
-Read the README below and then install Emacs using either the
-link to the .exe or the link to the .zip:
+You can install a recent version of Emacs for Windows with the
+\"installer.exe\" below:
 
-https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/
-https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/README-windows-binaries
-https://alpha.gnu.org/gnu/emacs/pretest/windows/emacs-28/emacs-28.0.92-installer.exe
+  https://www.gnu.org/software/emacs/
+  https://www.gnu.org/software/emacs/download.html#windows
+  https://ftp.gnu.org/gnu/emacs/windows/
+  https://ftp.gnu.org/gnu/emacs/windows/emacs-28/
+  https://ftp.gnu.org/gnu/emacs/windows/emacs-28/emacs-28.2-installer.exe
 
 You may need to create a desktop icon or shortcut to
 <emacsdir>/bin/runemacs.exe.
@@ -13799,6 +13858,7 @@ You may need to create a desktop icon or shortcut to
 
 1.1. Using Emacs 27.2 on Windows
 --------------------------------
+Long story short: DON'T DO THAT! =(
 Installing eev - or any other package from ELPA - on Emacs 27.2
 on Windows may be tricky. For details, see:
 
@@ -13806,7 +13866,7 @@ on Windows may be tricky. For details, see:
   (find-eev-install-intro \"5. Ways to download eev\" \"2.\")
   (find-eev-install-intro \"5. Ways to download eev\" \"because of this bug\")
 
-So: please upgrade to Emacs28-pretest if you can!
+So: please upgrade to Emacs28 if you can!
 
 
 
@@ -15944,6 +16004,7 @@ that is very similar to the defun that defined `find-fline'.
 All the source files of eev have a \"no-byte-compile: t\" in
 them. See:
 
+  (find-eev-install-intro \"7.1. Byte-compilation\")
   (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
   (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
   (find-enode \"Specifying File Variables\")
