@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221128
+;; Version:    20221130
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -14589,6 +14589,39 @@ It is meant as both a tutorial and a sandbox.
 
 1. Introduction
 ===============
+When we run this `code-c-d',
+
+  (code-c-d \"foo\" \"/tmp/FOO/\")
+
+it defines several functions; one of them is a function called
+`find-foofile', that points to the directory \"/tmp/FOO/\".
+
+We will refer to the first argument of the `code-c-d', \"foo\" as
+the `code', or the `c', and to the second argument, \"/tmp/FOO/\"
+as the `directory', or the `d'.
+
+Running
+
+  (find-foofile       \"BAR/PLIC/bletch\")
+
+is equivalent to running this:
+
+  (find-file \"/tmp/FOO/BAR/PLIC/bletch\")
+
+Let's consider that the `code' \"foo\" in the middle of the name
+of the function `find-foofile' was expanded, or converted, to the
+`directory' \"/tmp/FOO\". So the function `find-foofile' converts
+a `code' to a `directory', or a `c' to a `d'.
+
+In eev conversions of the from c->d are trivial, but the other
+direction, c<-d, is hard to perform, and the result may be
+ambiguous: there may be several `c's associated to a given `d',
+or there may be none.
+
+
+
+2. The old way
+==============
 In this section of the main tutorial
 
   (find-eev-quick-intro \"10.1. Generating short hyperlinks to files\")
@@ -14607,23 +14640,34 @@ all these links will point to the same file:
   (find-barfile            \"PLIC/bletch\")
   (find-plicfile                \"bletch\")
 
-If we visit the file \"/tmp/FOO/BAR/PLIC/bletch\" and we type
-`M-h M-h' - i.e., `find-here-links' - there, we well get a
-temporary buffer whose \"core\" will be those five hyperlinks
-above... `find-here-links' doesn't know how to choose the
-\"best\" hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\", so it shows
-all the options. Usually at that point we choose the best
-hyperlink ourselves, we refine it with these keys,
+Try to execute the three `code-c-d's above, then visit the file
+\"/tmp/FOO/BAR/PLIC/bletch\", and then type `M-h M-h' - i.e.,
+`find-here-links' - in that file: you will get a temporary buffer
+whose \"core\" will be those five hyperlinks above. The function
+`find-here-links' doesn't know how to choose the \"best\"
+hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\", so it shows all the
+five options. The slogan is:
+
+  The old way shows all options.
+
+Usually to create a hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\" we
+would use `find-here-links' as above, and then we would choose
+the \"best\" of those five hyperlinks ourselves, we would refine
+it with these keys,
 
   (find-emacs-keys-intro \"1. Basic keys (eev)\")
   (find-emacs-keys-intro \"1. Basic keys (eev)\" \"refining hyperlinks\")
 
-and we copy it to our notes.
+and we would copy it to our notes.
 
-This takes many keystrokes. For example, suppose that we have
-anchors in /tmp/FOO/BAR/PLIC/bletch, and we want create a
-hyperlink to the anchor just before point and put that link in
-the kill ring. One sequence of keystrokes that does that is:
+This takes MANY keystrokes. For example, suppose that we have
+anchors in /tmp/FOO/BAR/PLIC/bletch, in this sense,
+
+  (find-eev-quick-intro \"8. Anchors\")
+
+and we want create a hyperlink to the anchor just before point
+and put that link in the kill ring. One sequence of keystrokes
+that does that is:
 
   M-1 M-h M-w    ;; ee-copy-preceding-tag-to-kill-ring
       M-h M-h    ;; find-here-links
@@ -14637,28 +14681,61 @@ the kill ring. One sequence of keystrokes that does that is:
       M-w        ;; kill-ring-save
       M-k        ;; ee-kill-this-buffer
 
-The file eev-kla.el implements a way to do that with fewer
-keystrokes. If we are in /tmp/FOO/BAR/PLIC/bletch and we type
-`M-x eekla' - or `M-x kla', if we have defined certain aliases -
-then this will \"kill link to anchor\", which is a mnemonic for
-\"create the best link to the anchor before point and put in the
-kill ring\".
-
-The algorithm that chooses the \"best link\" sometimes needs some
-tinkering to work correctly, so here in this tutorial I will
-explain in details how it works, and how to replace its pieces
-when needed.
-
-The old way of producing these hyperlinks - the one that uses the
-sequence `M-1 M-h M-w ... M-k' - is explained here:
+The old way is explained here:
 
   (find-saving-links-intro)
   (find-saving-links-intro \"2.3. The base case 3\")
 
+The file eev-kla.el implements another way - a \"new way\" - to
+do something similar to that with fewer keystrokes. The slogan
+is:
+
+  The new way chooses the best link itself.
+
+If we are in the file \"/tmp/FOO/BAR/PLIC/bletch\" and we type
+`M-x kla', then this will \"kill a link to an anchor\", which is
+a mnemonic for \"create the best link to the anchor before point
+and put in the kill ring\". In this case the best link will be:
+
+  (find-plic \"bletch\" \"an-achor\")
+
+The algorithm that chooses the \"best link\":
+
+  1. needs to do several conversions of the form c<-d,
+  2. doesn't always give the result that I wanted,
+  3. is hard to summarize,
+  4. may need tinkering by the user.
+
+So we will see it in detail.
 
 
 
-2. `ee-code-c-d-pairs'
+
+3. Aliases
+==========
+In the examples of this tutorial I will suppose that you have run
+the three `code-c-d's in the section 1 and the `defalias'es
+below:
+
+  ;; From: (find-kla-intro \"2. Aliases\")
+  (defalias 'kla  'eekla)
+  (defalias 'klas 'eeklas)
+  (defalias 'klf  'eeklf)
+  (defalias 'klfs 'eeklfs)
+  (defalias 'klt  'eeklt)
+  (defalias 'klts 'eeklts)
+  (defalias 'kli  'ee-kl-insert)
+  (defalias 'kla2 'eekla2)
+
+To make these aliases permanent, copy them to your ~/.emacs.
+Without these aliases everything in eev-kla.el will still work,
+but you will have to type `M-x eekla' instead of `M-x kla', `M-x
+eeklas' instead of `M-x klas', and so on.
+
+
+
+
+4. `ee-code-c-d-pairs'
 ======================
 A call to
 
@@ -14694,7 +14771,8 @@ were the arguments given to a `code-c-d'.
 
 
 
-3. The components
+
+5. The components
 =================
 In order to convert a filename like
 
@@ -14744,13 +14822,18 @@ eev needs to:
         \\-------/
          find-c
 
-     `shortfname' and `shortfname' will usually be equal to `r',
-     but not always. The differences will be explained in section
-     ___.
+     `shortfname' and `shorterfname' are usually equal to `r'.
+     In my machine I override the function that calculates the
+     `shorterfname' to add support for some \"living fossils\",
+
+        (find-angg-es-links \"living fossil\")
+
+     but very few people will need that.
 
 
 
-4. The best `l-r-c-d'
+
+6. The best `l-r-c-d'
 =====================
 The algorithm that chooses the \"best\" `c-d' is here:
 
@@ -14813,8 +14896,7 @@ nil.
 
 
 
-
-5. `cl-loop'
+7. `cl-loop'
 ============
 The functions that produce the best `l-r-c-d' are implemented
 using `cl-loop'. I didn't explain `cl-loop' in
@@ -14878,7 +14960,7 @@ instead of `collect', like this:
 
 
 
-6. `cl-defun'
+8. `cl-defun'
 =============
 Some functions in eev-kla.el are defined with `cl-defun' to make
 them easy to test. If you execute this `cl-defun',
@@ -14941,7 +15023,7 @@ The source code for `ee-kl-sexp-klt' is here:
 
 
 
-7. The default `c', `d', and `r'
+9. The default `c', `d', and `r'
 ================================
 The functions `ee-kl-c', `ee-kl-d', and `ee-kl-r' are defined here:
 
@@ -14957,38 +15039,100 @@ the ideas in sections 3 and 4, and then they extract the `r', the
 
 
 
-8. The functions that generate sexps
-====================================
-Try these tests:
+
+10. `find-kla-links'
+====================
+One way to explore these data structures - and to debug what's
+going on when the functions in eev-kla.el select `c's and `d's
+that are not the ones that we expected - is to use
+`find-kla-links'. Try this, and explore the sexps in the buffer
+that it generates:
+
+  (find-kla-links \"/tmp/FOO/BAR/PLIC/bletch\")
+
+If you run `M-x find-kla-links' it behaves like this:
+
+  (find-kla-links (ee-expand (ee-kl-fname)))
+
+i.e., it uses the function `(ee-kl-fname)' to determine the
+current file name. \"Intro\"s are shown in temporary buffers with
+no associated files, so running
+
+  (ee-kl-fname)
+
+in this intro returns a directory instead of \"real\" filename,
+and some things in `find-kla-links' may not work.
+
+
+
+
+11. The functions that generate sexps
+=====================================
+Commands like `M-x kla' only work in files in certain
+directories... so, before proceeding, try the tests in:
+
+  (find-eev \"eev-kla.el\" \"a-test\")
+  (find-eev \"eev-kla.el\" \"more-tests\")
+
+`M-x kla' and friends generate a sexp and then \"kill it\". The
+functions that generate sexps can be tested using keyword
+arguments like `:fname', `:anchor', and `:region', but the
+top-level functions like `M-x kla' can't be tested in that way.
+Try:
 
   (ee-kl-lrcd       :fname \"/tmp/FOO/BAR/PLIC/bletch\")
   (ee-kl-c          :fname \"/tmp/FOO/BAR/PLIC/bletch\")
   (ee-kl-r          :fname \"/tmp/FOO/BAR/PLIC/bletch\")
   (ee-kl-find-cfile :fname \"/tmp/FOO/BAR/PLIC/bletch\")
-  (ee-kl-find-cfile :c \"plic\")
+  (ee-kl-find-c     :fname \"/tmp/FOO/BAR/PLIC/bletch\")
   (ee-kl-sexp-klf   :fname \"/tmp/FOO/BAR/PLIC/bletch\")
+  (ee-kl-sexp-klfs  :fname \"/tmp/FOO/BAR/PLIC/bletch\" :region \"rrr\")
+  (ee-kl-sexp-kla   :fname \"/tmp/FOO/BAR/PLIC/bletch\" :anchor \"aaa\")
+  (ee-kl-sexp-klas  :fname \"/tmp/FOO/BAR/PLIC/bletch\" :anchor \"aaa\" :region \"rrr\")
+
+The `ee-kl-sexp-*'s are the \"functions that generate sexps\".
+They are defined here:
+
+  (find-eev \"eev-kla.el\" \"generate-sexps\")
+
+
+
+12. Killing and inserting
+=========================
+Commands like `M-x kla' generate a sexp, and then \"kill\" it
+using `ee-kl-kill'. See:
+
+  (find-eev \"eev-kla.el\" \"kill-sexps\")
+  (find-eev \"eev-kla.el\" \"ee-kl-kill\")
+  (find-eev \"eev-kla.el\" \"ee-kl-kill\" \"message\")
+  (find-eev \"eev-kla.el\" \"ee-kl-kill\" \"append\" \"a newline\")
+
+I usually insert these sexps with `C-y' - i.e., with a plain
+\"yank\" - but sometimes I use `M-x kli', that adds a comment
+prefix; `kli' is an alias for `ee-kl-insert'. See:
+
+  (find-eev \"eev-kla.el\" \"ee-kl-insert\")
+
+Note that `ee-kl-insert' is quite primitive, and it supports just
+a few languages and prefixes... it supposes that the user will
+redefine it to add more features to it.
+
+
+
+13. Bidirectional hyperlinks
+============================
+(TODO: document this! See:)
+
+  (find-eev \"eev-kla.el\" \"eekla2\")
 
 
 
 
-9. Symlinks
-===========
+14. Symlinks
+============
 See: (find-eev \"eev-kla.el\" \"ee-kl-expand\")
 
 
-
-10. Aliases
-===========
-
-;; From: (find-kla-intro \"10. Aliases\")
-(defalias 'kla  'eekla)
-(defalias 'klas 'eeklas)
-(defalias 'klf  'eeklf)
-(defalias 'klfs 'eeklfs)
-(defalias 'klt  'eeklt)
-(defalias 'klts 'eeklts)
-(defalias 'kli  'ee-kl-insert)
-(defalias 'kla2 'eekla2)
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221128
+;; Version:    20221201
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
@@ -67,13 +67,15 @@
 ;;   http://angg.twu.net/eev-intros/find-kla-intro.html
 ;;                                 (find-kla-intro)
 ;;
-;; but some tests can't be run from the intro because they need to
-;; "invert the action of a `code-c-d'". For example,
+;; but some tests can't be run from the intro because they need to be
+;; run from a file "in which the conversion c<-d works"; this is
+;; explained in details in the intro. Let's see an example: this
 ;;
 ;;   (find-eev "eev-kla.el" "tests")
 ;;
-;; is a hyperlink to this file, and to the anchor above. The function
-;; `find-eev' was defined by a call to `code-c-d' like the one below,
+;; is a hyperlink to this file, and to the anchor above - try it! The
+;; function `find-eev' was defined by a call to `code-c-d' like the
+;; one below,
 ;;
 ;;   ;; (find-code-c-d "eev" ee-eev-source-directory :anchor)
 ;;           (code-c-d "eev" ee-eev-source-directory :anchor)
@@ -131,7 +133,7 @@
 ;;;  \___|\___|     |_|\_\_|      \___/_/\_\ .__/ \__,_|_| |_|\__,_|
 ;;;                                        |_|                      
 ;; «ee-kl-expand»  (to ".ee-kl-expand")
-;; See: (find-kla-intro "9. Symlinks")
+;; See: (find-kla-intro "14. Symlinks")
 ;;
 (defvar ee-kl-transforms nil
   "Set this if you need to support symlinks in eev-kla.el.
@@ -162,8 +164,8 @@ This function also runs `ee-kl-transform' on the result, but
 ;;; |____/ \___|_|  \__,_|\__,_|_|\__|  \__,_|_|  \__, |___/
 ;;;                                               |___/     
 ;; «default-args»  (to ".default-args")
-;; See: (find-kla-intro "6. `cl-defun'")
-;;      (find-kla-intro "7. The default `c', `d', and `r'")
+;; See: (find-kla-intro "8. `cl-defun'")
+;;      (find-kla-intro "9. The default `c', `d', and `r'")
 
 (defun ee-kl-fname ()
   (or (buffer-file-name) default-directory))
@@ -187,7 +189,7 @@ This function also runs `ee-kl-transform' on the result, but
 ;; filename, then they choose the best one, and they return it
 ;; converted to an `l-r-c-d'. The ideas and the terminology are
 ;; explained here:
-;;   (find-kla-intro "4. The best `l-r-c-d'")
+;;   (find-kla-intro "6. The best `l-r-c-d'")
 ;;
 ;; Tests: (find-eppp (ee-kl-cds))
 ;;        (find-eppp (ee-kl-lrcds))
@@ -232,7 +234,7 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 ;;; |____/ \___|_|  \__,_|\__,_|_|\__| |_|( )  \___( )  \__,_|
 ;;;                                       |/       |/         
 ;; «ee-kl-r-c-d»  (to ".ee-kl-r-c-d")
-;; See: (find-kla-intro "7. The default `c', `d', and `r'")
+;; See: (find-kla-intro "9. The default `c', `d', and `r'")
 ;; Tests: (ee-kl-r)
 ;;        (ee-kl-c)
 ;;        (ee-kl-d)
@@ -251,6 +253,8 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 
 
 ;; «shorter-fnames»  (to ".shorter-fnames")
+;; See: (find-kla-intro "5. The components")
+;;      (find-kla-intro "5. The components" "living fossils")
 ;;
 (cl-defun ee-kl-shortfname (&key fname c r)
   (setq fname (or fname (ee-kl-fname))
@@ -273,12 +277,14 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 ;;
 ;; «generate-sexps»  (to ".generate-sexps")
 ;; Functions that generate sexps. Tests:
+;;   (ee-kl-find-c)
+;;   (ee-kl-find-cfile)
 ;;   (ee-kl-sexp-kla)
 ;;   (ee-kl-sexp-klas :region "foo")
 ;;   (ee-kl-sexp-klf)
 ;;   (ee-kl-sexp-klfs :region "foo")
-;;   (ee-kl-find-c)
-;;   (ee-kl-c)
+;; See also:
+;;   (find-kla-intro "11. The functions that generate sexps")
 ;;
 (cl-defun ee-kl-find-c (&key fname c)
   "Generate a symbol of the form find-{c}."
@@ -289,7 +295,7 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 (cl-defun ee-kl-find-cfile (&key fname c)
   "Generate a symbol of the form find-{c}file."
   (setq fname  (or fname  (ee-kl-fname))
-	c      (or c      (ee-kl-c)))
+	c      (or c      (ee-kl-c :fname fname)))
   (intern (format "find-%sfile" c)))
 
 (cl-defun ee-kl-sexp-kla (&key fname c r anchor)
@@ -352,6 +358,7 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 ;;;  \___|\___|     |_|\_\_|     |_|\_\_|_|_|
 ;;;                                          
 ;; «ee-kl-kill»  (to ".ee-kl-kill")
+;; See: (find-kla-intro "12. Killing and inserting")
 ;; Tests: (ee-kl-link-to-string "(foo)\n")
 ;;        (ee-kl-link-to-string '(foo))
 
@@ -424,6 +431,7 @@ Put in the kill ring a link to the preceding anchor."
 ;;;  \___|\___|     |_|\_\_|     |_|_| |_|___/\___|_|   \__|
 ;;;                                                         
 ;; «ee-kl-insert»  (to ".ee-kl-insert")
+;; See: (find-kla-intro "12. Killing and inserting")
 ;; Tests: (ee-kl-comment-prefix)
 ;;        (ee-kl-insert "(foo)\n")
 ;;
@@ -456,8 +464,7 @@ Put in the kill ring a link to the preceding anchor."
 ;;;  \___|\___|_|\_\_|\__,_|_____|
 ;;;                               
 ;; «eekla2»  (to ".eekla2")
-;; See: (find-eev "eev-kla.el" "intro" "10. Bidirectional links")
-
+;; See: (find-kla-intro "13. Bidirectional hyperlinks")
 ;; Based on:
 ;;   (find-eev "eev-flash.el" "specs")
 ;;   (find-eev "eev-tlinks.el" "ee-copy-rest" "eeflash-copy")
@@ -504,7 +511,7 @@ When not at BOL, move to the beginning of the next line."
 ;;; /_/   \_\_|_|\__,_|___/\___||___/
 ;;;                                  
 ;; «aliases»  (to ".aliases")
-;; See: (find-kla-intro "10. Aliases")
+;; See: (find-kla-intro "3. Aliases")
 ;; I use these aliases:
 ;; (defalias 'kla  'eekla)
 ;; (defalias 'klas 'eeklas)

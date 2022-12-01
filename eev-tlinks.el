@@ -3765,7 +3765,7 @@ N should be either a number or a symbol; SEXP should be a sexp."
 ;; See: (find-kla-intro \"2. `ee-code-c-d-pairs'\")
 ;;   (eek \"<down> M-2 M-e\")
 ;;     (find-eppp ee-code-c-d-pairs)
-;;   (eek \"<down> M-3 M-e M-h M-e\")
+;;   (eek \"<down> M-3 M-e M-h M-h\")
 ;;     (find-fline {(ee-S fname)})
 ;;
 ;; See: (find-kla-intro \"4. The best `l-r-c-d'\")

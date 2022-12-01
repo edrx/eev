@@ -1,3 +1,11 @@
+2022-12-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-kla-intro): added some sections.
+
+2022-11-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-kl-find-cfile): fixed a typo.
+
 2022-11-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-eev-intro): rewrote the section about
