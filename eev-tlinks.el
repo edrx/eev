@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221029
+;; Version:    20221202
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -136,6 +136,7 @@
 ;; «.find-telegachat-links»		(to "find-telegachat-links")
 ;; «.find-eejump-links»			(to "find-eejump-links")
 ;; «.find-kla-links»			(to "find-kla-links")
+;; «.find-rstdoc-links»			(to "find-rstdoc-links")
 
 
 (require 'eev-env)
@@ -3777,6 +3778,58 @@ N should be either a number or a symbol; SEXP should be a sexp."
 ")
        )
      pos-spec-list)))
+
+
+
+;; «find-rstdoc-links»  (to ".find-rstdoc-links")
+;; Skel: (find-find-links-links-new "rstdoc" "kw" "bweb bhtml brst kil")
+;; Tests: (find-rstdoc-links)
+;;        (find-rstdoc-links :py)
+;;
+(defun find-rstdoc-links (&optional kw &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for rstdoc."
+  (interactive)
+  (setq kw (or kw "{kw}"))
+  (let* ((bweb   (or (ee-rstdoc-getfield0 kw :base-web)
+		     "https://BASE-WEB/"
+		     "{bweb}"))
+         (bhtml  (or (ee-rstdoc-getfield0 kw :base-html)
+		     "file:///BASE-HTML/"
+		     "{bhtml}"))
+         (brst   (or (ee-rstdoc-getfield0 kw :base-rst)
+		     "/BASE-RST/"
+		     "{brst}"))
+	 (bhtml0 (replace-regexp-in-string "^file://" "" bhtml))
+         (kil    (or (ee-rstdoc-getfield0 kw :kill)
+		     "{kil}")))
+    (let ((ee-buffer-name (or ee-buffer-name "*find-rstdoc-links*")))
+      (apply
+       'find-elinks-elisp
+       `((find-rstdoc-links ,kw ,@pos-spec-list)
+	 ;; Convention: the first sexp always regenerates the buffer.
+	 (find-efunction 'find-rstdoc-links)
+	 ""
+	 ,(ee-template0 "\
+;; <ee-rstdoc-{kw}>
+;; Skel: (find-rstdoc-links {kw})
+\(setq ee-rstdoc-{kw}
+      '(:base      \"index\"
+        :base-web  \"{bweb}\"
+        :base-html \"{bhtml}\"
+        :base-rst  \"{brst}\"
+        :rst       \".rst\"
+        :res       (\"#.*$\" \"\\\\?.*$\" \".html$\" \".txt$\" \".rst$\" \"^file://\"
+                    \"^{bweb}\"
+                    \"^{bhtml0}\"
+                    \"^{brst}\")
+        :kill      {kil}
+	))
+
+;; (find-code-rstdoc {kw})
+        (code-rstdoc {kw})
+")
+	 )
+       pos-spec-list))))
 
 
 

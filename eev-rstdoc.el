@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221102
+;; Version:    20221202
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -318,8 +318,12 @@
 ;; (ee-rstdoc-kw  "py")
 ;; (ee-rstdoc-var :py)
 ;; (ee-rstdoc-var "py")
-;; (ee-rstdoc-getfield :py :base-web)
-;; (ee-rstdoc-getfield :py :foo)
+;; (ee-rstdoc-getfield  :py  :base-web)
+;; (ee-rstdoc-getfield  :py  :base-web0)
+;; (ee-rstdoc-getfield  :py0 :base-web0)
+;; (ee-rstdoc-getfield0 :py  :base-web)
+;; (ee-rstdoc-getfield0 :py  :base-web0)
+;; (ee-rstdoc-getfield0 :py0 :base-web0)
 ;; (ee-rstdoc-hashanchor "https://docs.python.org/3/index.html")
 ;; (ee-rstdoc-hashanchor "https://docs.python.org/3/index.html#foo")
 ;; (ee-rstdoc-stem   :py "https://docs.python.org/3/index.html#foo")
@@ -337,6 +341,11 @@
   (let ((result (plist-get (ee-rstdoc-get kw) field)))
     (if (not result) (error "Empty field %S in %S" field (ee-rstdoc-var kw)))
     result))
+
+(defun ee-rstdoc-getfield0 (kw field)
+  (let* ((var (ee-rstdoc-var kw))
+	 (fields (and (boundp var) (symbol-value var))))
+    (and fields (plist-get fields field))))
 
 (defun ee-rstdoc-stem (kw str)
   (dolist (re (ee-rstdoc-getfield kw :res))

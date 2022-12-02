@@ -1,3 +1,9 @@
+2022-12-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rstdoc.el (ee-rstdoc-getfield0): new function.
+
+	* eev-tlinks.el (find-rstdoc-links): new function.
+
 2022-12-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-kla-intro): added some sections.
