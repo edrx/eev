@@ -14647,7 +14647,7 @@ filename, like:
 
                 \"/tmp/FOO/BAR/PLIC/bletch\"
 
-and then convert it to pair made of a `c' and a `d'? In that
+and then convert it to a pair made of a `c' and a `d'? In that
 example we have these three options,
 
        (foo     \"/tmp/FOO/\")

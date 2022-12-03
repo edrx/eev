@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221107
+;; Version:    20221203
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -69,6 +69,7 @@
 ;;   «.find-2022eevwconfigvideo»	(to "find-2022eevwconfigvideo")
 ;;   «.find-2022yttranscriptvideo»	(to "find-2022yttranscriptvideo")
 ;;   «.find-2022tikzvideo»		(to "find-2022tikzvideo")
+;;   «.find-eev2022klavideo»		(to "find-eev2022klavideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -100,6 +101,7 @@
 ;;   «.2022eevwconfig»			(to "2022eevwconfig")
 ;;   «.2022yttranscript»		(to "2022yttranscript")
 ;;   «.2022tikz»			(to "2022tikz")
+;;   «.eev2022kla»			(to "eev2022kla")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -630,6 +632,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "2022tikz" time))
 
+;; «find-eev2022klavideo»  (to ".find-eev2022klavideo")
+;; Info: (find-1stclassvideo-links "eev2022kla")
+;; Play: (find-eev2022klavideo "0:00")
+(defun find-eev2022klavideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"eev2022kla\")"
+  (interactive)
+  (find-1stclassvideo-video "eev2022kla" time))
+
 
 
 
@@ -1027,12 +1039,23 @@ For more info on this particular video, run:
      :mp4   "http://angg.twu.net/eev-videos/2022-eev-tikz.mp4"
      :yt    "http://www.youtube.com/watch?v=d7nIzpXcV6c"
      :page  "http://angg.twu.net/eev-tikz.html"
-     :lang  "portuguese"
      :date    "2022nov02"
      :subs    ".vtt"
      :length  "1:36:27"
      :comment "A way to learn TikZ using examples from the manual.")
     ;;
+    ;; «eev2022kla»  (to ".eev2022kla")
+    ;; Play: (find-eev2022klavideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2022kla")
+    ("eev2022kla"
+     :title "Bidirectional links with eev (@ EmacsConf 2022)"
+     :mp4   "http://angg.twu.net/eev-videos/emacsconf2022-kla.mp4"
+     :yt    "http://www.youtube.com/watch?v=KRobfwXd7Cw"
+     :page  "http://angg.twu.net/emacsconf2022-kla.html"
+     :date    "2022dec03"
+     :subs    ".vtt"
+     :length  "7:57"
+     :comment "A video about eev-kla.el.")
     ))
 
 
