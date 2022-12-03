@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221202
+;; Version:    20221203
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -3802,7 +3802,9 @@ N should be either a number or a symbol; SEXP should be a sexp."
 	 (bhtml0 (replace-regexp-in-string "^file://" "" bhtml))
          (kil    (or (ee-rstdoc-getfield0 kw :kill)
 		     "{kil}")))
-    (let ((ee-buffer-name (or ee-buffer-name "*find-rstdoc-links*")))
+    (let ((ee-buffer-name
+	   (or ee-buffer-name
+	       (format "*(find-rstdoc-links %S)*" kw))))
       (apply
        'find-elinks-elisp
        `((find-rstdoc-links ,kw ,@pos-spec-list)
@@ -3810,7 +3812,7 @@ N should be either a number or a symbol; SEXP should be a sexp."
 	 (find-efunction 'find-rstdoc-links)
 	 ""
 	 ,(ee-template0 "\
-;; See: (find-rstdoc-intro \"5. `find-rstdoc-links'\")
+;; See: (find-rstdoc-intro \"7. `find-rstdoc-links'\")
 
 ;; <ee-rstdoc-{kw}>
 ;; Skel: (find-rstdoc-links {kw})

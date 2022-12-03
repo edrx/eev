@@ -1,5 +1,10 @@
 2022-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-rstdoc-intro): added some sections.
+
+	* eev-tlinks.el (find-rstdoc-links): use another name for the
+	temporary buffer.
+
 	* eev-videolinks.el (find-eev2022klavideo): new function.
 	(ee-1stclassvideos-info): added an entry for "eev2022kla".
 

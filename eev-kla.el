@@ -31,6 +31,7 @@
 ;; «.a-test»			(to "a-test")
 ;; «.more-tests»		(to "more-tests")
 ;; «.test-elsewhere»		(to "test-elsewhere")
+;; «.the-video»			(to "the-video")
 ;;
 ;; «.ee-kl-expand»		(to "ee-kl-expand")
 ;; «.default-args»		(to "default-args")
@@ -146,6 +147,14 @@
 ;;   Copied to the kill ring: (find-efile "comint.el")
 ;;   Copied to the kill ring: (find-efile "comint.el" "build specific")
 
+
+
+;; «the-video»  (to ".the-video")
+;; I recorded a video about this for the EmacsConf2022.
+;; The video is here:
+;;   (find-eev2022klavideo "0:00")
+;; and the page about it is here:
+;;   http://angg.twu.net/emacsconf2022-kla.html
 
 
 

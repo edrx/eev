@@ -262,7 +262,8 @@
         :rst       ".rst.txt"
         :res       ("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
                     "^https://docs.python.org/3/"
-                    "^/usr/share/doc/python[0-9.]*-doc/html/")
+                    "^/usr/share/doc/python[0-9.]*-doc/html/"
+                    "^/usr/share/doc/python[0-9.]*/html/_sources/")
         :kill      pdk
 	)
       "See: (find-code-rstdoc :py)")
