@@ -1,3 +1,8 @@
+2022-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-eev2022klavideo): new function.
+	(ee-1stclassvideos-info): added an entry for "eev2022kla".
+
 2022-12-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-rstdoc.el (ee-code-rstdoc): added `find-{c}dochelp'.
