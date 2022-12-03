@@ -432,21 +432,22 @@
     (ee-template0 "\
 ;; (find-code-rstdoc {kw})
 ;;      (code-rstdoc {kw})
-;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
-;;      (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
-;;      (find-eev \"eev-rstdoc.el\" \"variables\")
-;;      (find-eev \"eev-rstdoc.el\" \"code-rstdoc\")
+;; Source: (find-eev \"eev-rstdoc.el\" \"code-rstdoc\")
+;;    See: (find-rstdoc-intro \"3. `code-rstdoc'\")
+;;         (find-rstdoc-intro \"4. `ee-rstdoc-:py' and friends\")
+;;         (find-evariable '{var})
+;;         (find-eppp       {var})
 ;;
-;; Tests: (find-eppp {var})
-;;        (code-rstdoc {kw})
+;; Tests: (code-rstdoc {kw})
 ;;        (find-{c}doc-expand  \"{base}\")
 ;;        (find-{c}docw-expand \"{base}\")
 ;;        (find-{c}docr-expand \"{base}\")
-;;        (find-{c}doc  \"{base}\")
-;;        (find-{c}docw \"{base}\")
-;;        (find-{c}docr \"{base}\")
+;;        (find-{c}doc         \"{base}\")
+;;        (find-{c}docw        \"{base}\")
+;;        (find-{c}docr        \"{base}\")
 ;;        (find-{c}docrfile \"\")
 ;;        (find-{c}docrsh \"find * | sort\")
+;;        (find-{c}dochelp)
 
 (defun find-{c}doc-expand  (str &rest rest) (ee-rstdoc-html {kw} str))
 (defun find-{c}docw-expand (str &rest rest) (ee-rstdoc-web  {kw} str))
@@ -471,6 +472,11 @@ This function uses the data in `{var}' to transform STR.\"
   (apply 'find-fline (ee-rstdoc-rst {kw} str) rest))
 
 (code-c-d \"{c}docr\" \"{base-rst}\")
+
+(defun find-{c}dochelp (&optional str &rest rest)
+  \"This function runs this: (find-code-rstdoc {kw})\"
+  (interactive)
+  (apply 'find-rstdoc-links {kw} rest))
 
 (defun {kill} ()
   \"Put on the kill ring a sexp hyperlink to the rstdoc at point.

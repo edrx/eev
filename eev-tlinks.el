@@ -3810,6 +3810,8 @@ N should be either a number or a symbol; SEXP should be a sexp."
 	 (find-efunction 'find-rstdoc-links)
 	 ""
 	 ,(ee-template0 "\
+;; See: (find-rstdoc-intro \"5. `find-rstdoc-links'\")
+
 ;; <ee-rstdoc-{kw}>
 ;; Skel: (find-rstdoc-links {kw})
 \(setq ee-rstdoc-{kw}

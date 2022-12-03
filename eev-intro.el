@@ -96,6 +96,7 @@
 ;; «.find-eev-exercises-intro»		(to "find-eev-exercises-intro")
 ;; «.find-kla-intro»			(to "find-kla-intro")
 ;; «.find-edit-index-intro»		(to "find-edit-index-intro")
+;; «.find-rstdoc-intro»			(to "find-rstdoc-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -2820,18 +2821,19 @@ These ones explain advanced features that require extra setup:
 
   31. (find-kla-intro)
   32. (find-edit-index-intro)
-  33. (find-prepared-intro)
-  34. (find-bounded-intro)
-  35. (find-channels-intro)
+  33. (find-rstdoc-intro)
+  34. (find-prepared-intro)
+  35. (find-bounded-intro)
+  36. (find-channels-intro)
 
 This one was used in a video:
 
-  36. (find-three-main-keys-intro)
+  37. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  37. (find-emacs-intro)
-  38. (find-defun-intro)
+  38. (find-emacs-intro)
+  39. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -14611,17 +14613,14 @@ is equivalent to running this:
 Let's consider that the `code' \"foo\" in the middle of the name
 of the function `find-foofile' was expanded, or converted, to the
 `directory' \"/tmp/FOO\". So the function `find-foofile' converts
-a `code' to a `directory', or a `c' to a `d'.
+a `code' to a `directory', or a `c' to a `d'. We can represent
+this as:
 
-In eev conversions of the from c->d are trivial, but the other
-direction, c<-d, is hard to perform, and the result may be
-ambiguous: there may be several `c's associated to a given `d',
-or there may be none.
+  (find-foofile         \"BAR/PLIC/bletch\")
+        foo -> \"/tmp/FOO/\"
 
+  (find-fline  \"/tmp/FOO/BAR/PLIC/bletch\")
 
-
-2. The old way
-==============
 In this section of the main tutorial
 
   (find-eev-quick-intro \"10.1. Generating short hyperlinks to files\")
@@ -14632,7 +14631,49 @@ we saw that after running these three `code-c-d's,
   (code-c-d \"bar\"  \"/tmp/FOO/BAR/\"      :anchor)
   (code-c-d \"plic\" \"/tmp/FOO/BAR/PLIC/\" :anchor)
 
-all these links will point to the same file:
+the three `find-*file's below would point to the same file:
+
+  (find-foofile          \"BAR/PLIC/bletch\")
+  (find-barfile              \"PLIC/bletch\")
+  (find-plicfile                  \"bletch\")
+        foo  -> \"/tmp/FOO/\"
+        bar  -> \"/tmp/FOO/BAR/\"
+        plic -> \"/tmp/FOO/BAR/PLIC/\"
+
+  (find-fline   \"/tmp/FOO/BAR/PLIC/bletch\")
+
+How can we do the opposite? I.e., how do we start with a
+filename, like:
+
+                \"/tmp/FOO/BAR/PLIC/bletch\"
+
+and then convert it to pair made of a `c' and a `d'? In that
+example we have these three options,
+
+       (foo     \"/tmp/FOO/\")
+       (bar     \"/tmp/FOO/BAR/\")
+       (plic    \"/tmp/FOO/BAR/PLIC/\")
+
+that are associated to these three short hyperlinks to that
+filename:
+
+  (find-foofile          \"BAR/PLIC/bletch\")
+  (find-barfile              \"PLIC/bletch\")
+  (find-plicfile                  \"bletch\")
+
+So: in eev conversions of the from c->d are trivial, but
+conversions in the other direction, like c<-d or c,d<-filename,
+are harder to perform... sometimes there will be several possible
+results, and sometimes none.
+
+
+
+
+2. The old way
+==============
+From here onwards I will suppose that you have run the three
+`code-c-d's that are in the middle of the previous section.
+Now all these links will point to the same file:
 
   (find-file  \"/tmp/FOO/BAR/PLIC/bletch\")
   (find-fline \"/tmp/FOO/BAR/PLIC/bletch\")
@@ -14640,34 +14681,41 @@ all these links will point to the same file:
   (find-barfile            \"PLIC/bletch\")
   (find-plicfile                \"bletch\")
 
-Try to execute the three `code-c-d's above, then visit the file
-\"/tmp/FOO/BAR/PLIC/bletch\", and then type `M-h M-h' - i.e.,
-`find-here-links' - in that file: you will get a temporary buffer
-whose \"core\" will be those five hyperlinks above. The function
-`find-here-links' doesn't know how to choose the \"best\"
-hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\", so it shows all the
-five options. The slogan is:
+Run this
 
-  The old way shows all options.
+  (mkdir \"/tmp/FOO/BAR/PLIC/\" 'make-parents)
 
-Usually to create a hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\" we
-would use `find-here-links' as above, and then we would choose
-the \"best\" of those five hyperlinks ourselves, we would refine
-it with these keys,
+to avoid some warning messages, then run one of the `find-*'s
+above to visit the file \"/tmp/FOO/BAR/PLIC/bletch\", and then
+type `M-h M-h' - i.e., `find-here-links' - there. The
+`find-here-links' will detect that \"here\" is a file, and will
+try to create links to that file. It will create a temporary
+buffer whose core will be the five `find-*'s above... 
+
+The function `find-here-links' doesn't know how to choose the
+\"best\" hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\", so it shows
+all the five options. The slogan is:
+
+  \"The old way shows all options\".
+
+The old way to save a hyperlink to \"/tmp/FOO/BAR/PLIC/bletch\"
+is to use `find-here-links' as above, then choose the \"best\" of
+those five hyperlinks, then edit it - or: \"refine\" it - with
+these keys,
 
   (find-emacs-keys-intro \"1. Basic keys (eev)\")
   (find-emacs-keys-intro \"1. Basic keys (eev)\" \"refining hyperlinks\")
 
-and we would copy it to our notes.
+and then copy it to our notes.
 
 This takes MANY keystrokes. For example, suppose that we have
 anchors in /tmp/FOO/BAR/PLIC/bletch, in this sense,
 
   (find-eev-quick-intro \"8. Anchors\")
 
-and we want create a hyperlink to the anchor just before point
-and put that link in the kill ring. One sequence of keystrokes
-that does that is:
+and we want to create a hyperlink to the anchor just before point
+and to put that link in the kill ring. One sequence of keystrokes
+that would do that is this one:
 
   M-1 M-h M-w    ;; ee-copy-preceding-tag-to-kill-ring
       M-h M-h    ;; find-here-links
@@ -14681,28 +14729,46 @@ that does that is:
       M-w        ;; kill-ring-save
       M-k        ;; ee-kill-this-buffer
 
-The old way is explained here:
+That key sequence is explained here:
 
   (find-saving-links-intro)
   (find-saving-links-intro \"2.3. The base case 3\")
 
-The file eev-kla.el implements another way - a \"new way\" - to
-do something similar to that with fewer keystrokes. The slogan
-is:
 
-  The new way chooses the best link itself.
+
+3. The new way
+==============
+The file eev-kla.el implements another way - a \"new way\" - to
+do something similar to that old way, but with fewer keystrokes.
+The slogan is:
+
+  \"The new way chooses the best link itself\".
 
 If we are in the file \"/tmp/FOO/BAR/PLIC/bletch\" and we type
-`M-x kla', then this will \"kill a link to an anchor\", which is
-a mnemonic for \"create the best link to the anchor before point
-and put in the kill ring\". In this case the best link will be:
+`M-x eeklf' or `M-x klf', then this will \"kill a link to a
+file\", which is a mnemonic for \"create the best link to this
+file and put in the kill ring\". In this case the best link will
+be:
 
-  (find-plic \"bletch\" \"an-achor\")
+  (find-plicfile \"bletch\")
+
+Try it - visit that file with either the `find-plicfile' above or
+with this,
+
+  (find-fline \"/tmp/FOO/BAR/PLIC/bletch\")
+
+and then type `M-x eeklf'. You should see this message in the
+echo area:
+
+  Copied to the kill ring: (find-plicfile \"bletch\")
+
+Note that it chose to use `find-plicfile' instead of the other
+options.
 
 The algorithm that chooses the \"best link\":
 
-  1. needs to do several conversions of the form c<-d,
-  2. doesn't always give the result that I wanted,
+  1. needs to do several conversions of the form c,d<-fname,
+  2. doesn't always give the result that _I_ want,
   3. is hard to summarize,
   4. may need tinkering by the user.
 
@@ -14711,11 +14777,10 @@ So we will see it in detail.
 
 
 
-3. Aliases
+4. Aliases
 ==========
-In the examples of this tutorial I will suppose that you have run
-the three `code-c-d's in the section 1 and the `defalias'es
-below:
+In the other examples of this tutorial I will suppose that you
+have run the `defalias'es below:
 
   ;; From: (find-kla-intro \"2. Aliases\")
   (defalias 'kla  'eekla)
@@ -14735,7 +14800,7 @@ eeklas' instead of `M-x klas', and so on.
 
 
 
-4. `ee-code-c-d-pairs'
+5. `ee-code-c-d-pairs'
 ======================
 A call to
 
@@ -14772,7 +14837,7 @@ were the arguments given to a `code-c-d'.
 
 
 
-5. The components
+6. The components
 =================
 In order to convert a filename like
 
@@ -14833,7 +14898,7 @@ eev needs to:
 
 
 
-6. The best `l-r-c-d'
+7. The best `l-r-c-d'
 =====================
 The algorithm that chooses the \"best\" `c-d' is here:
 
@@ -14896,7 +14961,7 @@ nil.
 
 
 
-7. `cl-loop'
+8. `cl-loop'
 ============
 The functions that produce the best `l-r-c-d' are implemented
 using `cl-loop'. I didn't explain `cl-loop' in
@@ -14960,7 +15025,7 @@ instead of `collect', like this:
 
 
 
-8. `cl-defun'
+9. `cl-defun'
 =============
 Some functions in eev-kla.el are defined with `cl-defun' to make
 them easy to test. If you execute this `cl-defun',
@@ -15023,8 +15088,8 @@ The source code for `ee-kl-sexp-klt' is here:
 
 
 
-9. The default `c', `d', and `r'
-================================
+10. The default `c', `d', and `r'
+=================================
 The functions `ee-kl-c', `ee-kl-d', and `ee-kl-r' are defined here:
 
   (find-eev \"eev-kla.el\" \"ee-kl-r-c-d\")
@@ -15040,7 +15105,7 @@ the ideas in sections 3 and 4, and then they extract the `r', the
 
 
 
-10. `find-kla-links'
+11. `find-kla-links'
 ====================
 One way to explore these data structures - and to debug what's
 going on when the functions in eev-kla.el select `c's and `d's
@@ -15066,7 +15131,7 @@ and some things in `find-kla-links' may not work.
 
 
 
-11. The functions that generate sexps
+12. The functions that generate sexps
 =====================================
 Commands like `M-x kla' only work in files in certain
 directories... so, before proceeding, try the tests in:
@@ -15097,7 +15162,7 @@ They are defined here:
 
 
 
-12. Killing and inserting
+13. Killing and inserting
 =========================
 Commands like `M-x kla' generate a sexp, and then \"kill\" it
 using `ee-kl-kill'. See:
@@ -15119,7 +15184,7 @@ redefine it to add more features to it.
 
 
 
-13. Bidirectional hyperlinks
+14. Bidirectional hyperlinks
 ============================
 (TODO: document this! See:)
 
@@ -15128,18 +15193,9 @@ redefine it to add more features to it.
 
 
 
-14. Symlinks
+15. Symlinks
 ============
 See: (find-eev \"eev-kla.el\" \"ee-kl-expand\")
-
-
-
-
-
-  (find-eev \"eev-kla.el\" \"other-defaults\")
-
-  (find-here-links-intro \"8. Debugging\")
-  (find-eevfile \"eev-hlinks.el\" \"Debug mode\")
 
 
 " pos-spec-list)))
@@ -15371,6 +15427,223 @@ feeling that they can write their own hydras as quick hacks, too.
 " pos-spec-list)))
 
 ;; (find-edit-index-intro)
+
+
+
+;;;           _      _            
+;;;  _ __ ___| |_ __| | ___   ___ 
+;;; | '__/ __| __/ _` |/ _ \ / __|
+;;; | |  \__ \ || (_| | (_) | (__ 
+;;; |_|  |___/\__\__,_|\___/ \___|
+;;;                               
+;; «find-rstdoc-intro»  (to ".find-rstdoc-intro")
+;; Skel: (find-intro-links "rstdoc")
+;; Test: (find-rstdoc-intro)
+
+(defun find-rstdoc-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-rstdoc-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-rstdoc-intro)
+Source code:  (find-efunction 'find-rstdoc-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+0. Preparation
+==============
+Many examples in this intro will suppose that you have run this,
+
+  (ee-rstdoc-default-defuns)
+
+that can't be run by default because it defines three functions
+with atypical names: `pdk', `sdk', and `mdk', that will be
+explained in the section 42. So run the sexp above now!
+
+
+
+1. Introduction
+===============
+The eepitch block below contains a small Python program and five
+links that point to Python docs:
+
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+
+# (find-pydoc  \"reference/datamodel#object.__init__\")
+# (find-pydoc  \"reference/datamodel#object.__str__\")
+# (find-pydoc  \"reference/datamodel#emulating-numeric-types\")
+# (find-pydocw \"reference/datamodel#emulating-numeric-types\")
+# (find-pydocr \"reference/datamodel\" \"_numeric-types:\")
+
+class MyVector:
+    def __init__(v, x, y):
+        v.x = x
+        v.y = y
+    def __str__(v):
+        return '(%d,%d)' % (v.x, v.y)
+    def __add__(v, w):
+        return MyVector(v.x+w.x, v.y+w.y)
+
+print(MyVector(20,30))
+print(MyVector(20,30)+MyVector(4,5))
+
+If you are on Debian Stable then all the `find-pydoc*'s above
+should work out of the box. The first three `find-pydoc's will
+open these local URLs using a browser,
+
+  file:///usr/share/doc/python3.9-doc/html/reference/datamodel.html#object.__init__
+  file:///usr/share/doc/python3.9-doc/html/reference/datamodel.html#object.__str__
+  file:///usr/share/doc/python3.9-doc/html/reference/datamodel.html#emulating-numeric-types
+
+the `find-pydocw' will open this URL - the suffix `w' means \"use
+the web instead of the local copies\",
+
+  https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types
+
+and in the last link,
+
+  (find-pydocr \"reference/datamodel\" \"_numeric-types:\")
+
+the suffix `r' means \"open the source in .rst instead of the
+ HTML version\".
+
+
+
+
+2. Expansion
+============
+The functions `find-pydoc', `find-pydocw', and `find-pydocr'
+expand their arguments in different ways. You can see that by
+trying:
+
+  (find-pydoc         \"tutorial/modules#the-module-search-path\")
+  (find-pydocw        \"tutorial/modules#the-module-search-path\")
+  (find-pydocr        \"tutorial/modules#the-module-search-path\")
+  (find-pydoc-expand  \"tutorial/modules#the-module-search-path\")
+  (find-pydocw-expand \"tutorial/modules#the-module-search-path\")
+  (find-pydocr-expand \"tutorial/modules#the-module-search-path\")
+
+The functions that end with `-expand' above simply return a
+string.
+
+
+
+3. `code-rstdoc'
+================
+The six functions of the previous section are all part of the
+same family - they are associated to the the keyword `:py', and
+they were defined by running a function called `code-rstdoc',
+that is similar to `code-c-d' - see:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+
+Remember that `code-c-d' generates some code and executes it, and
+`find-code-c-d' generates the same code and displays it instead
+of executing it. It's the same thing with `code-rstdoc', and we
+can understand how a `code-rstdoc' works by running a
+`find-code-rstdoc'. In the pair of sexps below
+
+  ;; (find-code-rstdoc :py)
+          (code-rstdoc :py)
+
+the six `find-pydoc*' functions were generated by running
+
+          (code-rstdoc :py)
+
+and we can use the
+
+  ;; (find-code-rstdoc :py)
+
+in comments to understand what the `(code-rstdoc ...)' does. Try
+it now - you will see that:
+
+  1. it generates a temporary buffer with lots of comments at the
+     top. Some of these comments are links to docs, and some are
+     tests;
+
+  2. The paths that are used in the expansion - for example, the
+
+       \"file:///usr/share/doc/python3.9-doc/html/\"
+
+     do not appear there... they are defined elsewhere, in a
+     variable called `ee-rstdoc-:py'.
+
+
+
+4. `ee-rstdoc-:py' and friends
+==============================
+The functions `find-pydoc', `find-pydocw', and `find-pydocr' use
+fields of the variable `ee-rstdoc-:py' to determine how they will
+expand their arguments. You can inspect `ee-rstdoc-:py' with:
+
+  (find-eev \"eev-rstdoc.el\" \"ee-rstdoc-:py\")
+  (find-evariable 'ee-rstdoc-:py)
+  (find-eppp       ee-rstdoc-:py)
+  (find-code-rstdoc          :py)
+
+The file eev-rstdoc.el defines three families of `find-*doc*'
+functions: `:py', for Python itself, `:sympy', for SymPy, and
+`:mpl' for MatPlotLib. You can inspect `ee-rstdoc-:sympy' and
+`ee-rstdoc-:mpl' with:
+
+  (find-eev \"eev-rstdoc.el\" \"ee-rstdoc-:sympy\")
+  (find-evariable 'ee-rstdoc-:sympy)
+  (find-eppp       ee-rstdoc-:sympy)
+  (find-code-rstdoc          :sympy)
+
+  (find-eev \"eev-rstdoc.el\" \"ee-rstdoc-:mpl\")
+  (find-evariable 'ee-rstdoc-:mpl)
+  (find-eppp       ee-rstdoc-:mpl)
+  (find-code-rstdoc          :mpl)
+
+
+
+
+
+
+
+If you are on Debian Stable then all the `find-pydoc*'s above should
+work out of the box.
+
+
+
+
+
+
+See: (find-eev \"eev-rstdoc.el\" \"introduction\")
+     (find-eev \"eev-rstdoc.el\" \"default-defuns\")
+     (find-eev \"eev-rstdoc.el\" \"ee-rstdoc-:py\")
+     (find-code-rstdoc :py)
+Try:
+
+  (ee-rstdoc-default-defuns)
+  (find-pydoc  \"tutorial/classes\")
+  (find-pydocw \"tutorial/classes\")
+  (find-pydocr \"tutorial/classes\")
+
+2. Expansion
+============
+
+3. Shrinking
+============
+
+4. `code-rstdoc'
+================
+See: (find-eev \"eev-rstdoc.el\" \"code-rstdoc\")
+
+5. `find-rstdoc-links'
+======================
+Try: (find-rstdoc-links :py)
+
+
+" pos-spec-list)))
+
+;; (find-rstdoc-intro)
 
 
 
