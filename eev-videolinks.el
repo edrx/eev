@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221203
+;; Version:    20221204
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -70,6 +70,7 @@
 ;;   «.find-2022yttranscriptvideo»	(to "find-2022yttranscriptvideo")
 ;;   «.find-2022tikzvideo»		(to "find-2022tikzvideo")
 ;;   «.find-eev2022klavideo»		(to "find-eev2022klavideo")
+;;   «.find-eev2022pyvideo»		(to "find-eev2022pyvideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -102,6 +103,7 @@
 ;;   «.2022yttranscript»		(to "2022yttranscript")
 ;;   «.2022tikz»			(to "2022tikz")
 ;;   «.eev2022kla»			(to "eev2022kla")
+;;   «.eev2022py»			(to "eev2022py")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -642,6 +644,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "eev2022kla" time))
 
+;; «find-eev2022pyvideo»  (to ".find-eev2022pyvideo")
+;; Info: (find-1stclassvideo-links "eev2022py")
+;; Play: (find-eev2022pyvideo "0:00")
+(defun find-eev2022pyvideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"eev2022py\")"
+  (interactive)
+  (find-1stclassvideo-video "eev2022py" time))
+
 
 
 
@@ -1056,6 +1068,19 @@ For more info on this particular video, run:
      :subs    ".vtt"
      :length  "7:57"
      :comment "A video about eev-kla.el.")
+    ;;
+    ;; «eev2022py»  (to ".eev2022py")
+    ;; Play: (find-eev2022pyvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2022py")
+    ("eev2022py"
+     :title "Short hyperlinks to Python docs (eev @ EmacsConf2022)"
+     :mp4   "http://angg.twu.net/eev-videos/emacsconf2022-py.mp4"
+     :yt    "http://www.youtube.com/watch?v=QeqCYQSlz-I"
+     :page  "http://angg.twu.net/emacsconf2022-py.html"
+     :date    "2022dec04"
+     :subs    ".vtt"
+     :length  "14:03"
+     :comment "A video about eev-rstdoc.el.")
     ))
 
 

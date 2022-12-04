@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221202
+;; Version:    20221204
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
@@ -43,6 +43,27 @@
 
 ;; 0. Warning
 ;; ==========
+;; This docs are being rewritten!
+;; At this moment the best docs are in this intro,
+;;
+;;   (find-rstdoc-intro)
+;;
+;; and there's a video about eev-rstdoc.el:
+;;
+;;   Title: Short hyperlinks to Python docs (eev @ EmacsConf2022)
+;;   MP4:   http://angg.twu.net/eev-videos/emacsconf2022-py.mp4
+;;   YT:    http://www.youtube.com/watch?v=QeqCYQSlz-I
+;;   Page:  http://angg.twu.net/emacsconf2022-py.html
+;;   Comment: A video about eev-rstdoc.el.
+;;   Date:    2022dec04
+;;   Length:  14:03
+;;
+;;   Play: (find-eev2022pyvideo "0:00")
+;;   Info: (find-1stclassvideo-links "eev2022py")
+;;
+;; Old docs:
+
+
 ;; This is an experimental feature.
 ;; I'm still cleaning it up, and I'll give a presentation
 ;; about it in the EmacsConf2022:
