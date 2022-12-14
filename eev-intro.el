@@ -861,6 +861,7 @@ For more details see:
 [Video links:]
   (find-eevnavvideo \"10:36\" \"if I type <f8> six times here\")
   (find-eevnavvideo \"10:50\" \"a shell running inside Emacs\")
+  (find-eev2021video \"0:14\" \"and if we type f8 several times here\")
   (find-eev2019video \"15:11\" \"Demo: the eepitch block (in red star lines)\")
   (find-eev2019video \"15:48\" \"Demo: eepitch on non-red star lines\")
   (find-eev2019video \"15:56\" \"Demo: eepitch in action\")

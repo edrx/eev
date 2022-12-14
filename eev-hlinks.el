@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221023
+;; Version:    20221214
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -435,6 +435,13 @@ This is the standard high-level way to call `ee-fhl-run'."
   "Do the inverse of `custom-unlispify-tag-name'."
   (intern (downcase (replace-regexp-in-string " " "-" str))))
 
+(defun ee-underlinewsp-re (&rest components)
+  "Convert each \"_\" in COMPONENTS into a \"[ \\t\\n]\".
+This is a quick hack that builds a regexp from COMPONENTS.
+Each underline in COMPONENTS is replaced by a regexp that matches
+a single whitespace character, and the results are `concat'-ed."
+  (replace-regexp-in-string "_" "[ \t\n]" (apply 'concat components)))
+
 
 
 ;;;  _____         _                         _   _ _       _        
@@ -479,8 +486,14 @@ This is the standard high-level way to call `ee-fhl-run'."
 (defun ee-custom-v-bufferp () (ee-buffer-re ee-custom-v-re))
 
 ;; By buffer name (when it is "*Help*")
+;;
+;; (defvar ee-efunctiondescr-re
+;;   "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\|special form\\)")
 (defvar ee-efunctiondescr-re
-  "^\\([^ \t\n]+\\) is a[^\t\n]*\\(function\\|Lisp macro\\|special form\\)")
+  (ee-underlinewsp-re
+   "^\\([^ \t\n]+\\)_is_an?"
+   "\\(_autoloaded\\|_interactive\\|_compiled\\|_byte-compiled\\)*"
+   "\\(_Lisp_function\\|_macro\\|_special_form\\)"))
 (defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
 (defun  ee-find-efunctiondescr-links ()
   (let ((f (ee-efunctiondescr-bufferp)))

@@ -1,3 +1,8 @@
+2022-12-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-underlinewsp-re): new function.
+	(ee-efunctiondescr-re): use `ee-underlinewsp-re'.
+
 2022-12-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-eev2022pyvideo): new function.
