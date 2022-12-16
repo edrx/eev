@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221215
+;; Version:    20221216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -48,6 +48,7 @@
 ;; «.find-fline»		(to "find-fline")
 ;; «.find-wottb»		(to "find-wottb")
 ;; «.find-dbsw»			(to "find-dbsw")
+;; «.find-epackages»		(to "find-epackages")
 ;; «.find-efaces»		(to "find-efaces")
 ;; «.find-eregionpp»		(to "find-eregionpp")
 ;; «.find-eoverlayspp»		(to "find-eoverlayspp")
@@ -375,8 +376,10 @@ then go to the position specified by POS-SPEC-LIST.\n
 ;; Tests: (find-epackages nil "\n  0x0 ")
 ;;        (find-epackages t   "\n  0x0 ")
 ;;
-(defun find-epackages (&optional no-fetch &rest pos-spec-list)
-  "Hyperlink to the output of `list-packages'."
+(defun find-epackages0 (&optional no-fetch &rest pos-spec-list)
+  "Hyperlink to the output of `list-packages'.
+This is similar to `find-epackages', but it is much simpler and
+far less convenient. The suffix `0' means \"low-level\"."
   (interactive "P")
   (apply 'find-wottb-call '(list-packages no-fetch)
 	 "*Packages*" pos-spec-list))
@@ -425,6 +428,60 @@ change soon."
   (let ((display-buffer-overriding-action '(display-buffer-same-window)))
     (eval sexp))
   (apply 'ee-goto-position pos-spec-list))
+
+
+
+;;;   __ _           _                             _                         
+;;;  / _(_)_ __   __| |       ___ _ __   __ _  ___| | ____ _  __ _  ___  ___ 
+;;; | |_| | '_ \ / _` |_____ / _ \ '_ \ / _` |/ __| |/ / _` |/ _` |/ _ \/ __|
+;;; |  _| | | | | (_| |_____|  __/ |_) | (_| | (__|   < (_| | (_| |  __/\__ \
+;;; |_| |_|_| |_|\__,_|      \___| .__/ \__,_|\___|_|\_\__,_|\__, |\___||___/
+;;;                              |_|                         |___/           
+;;
+;; «find-epackages»  (to ".find-epackages")
+;; Tests: (find-epackages)
+;;        (find-epackages 'eev)
+
+(defun find-epackages (&rest pos-spec-list)
+  "Hyperlink to the output of `list-packages'.
+This is similar to `find-epackages0', but uses these three hacks:
+  1. if a buffer called \"*Packages*\" exists, just switch to it,
+  2. if it doesn't exist, create it with (list-packages 'no-fetch),
+  3. use `ee-goto-position-package' instead of `ee-goto-position'."
+  (interactive "P")
+  (if (get-buffer "*Packages*")
+      (find-ebuffer "*Packages*")
+    (find-wottb-call
+     '(list-packages 'no-fetch)
+     "*Packages*"))
+  (apply 'ee-goto-position-package pos-spec-list))
+
+(defun ee-goto-position-package (&optional pkgsymbol &rest rest)
+  "Like `ee-goto-position', but treats PKGSYMBOL as a package name.
+This is an internal function used by `find-epackages'."
+  (if (and pkgsymbol (symbolp pkgsymbol))
+      (let ((nline (ee-packages-nline-for pkgsymbol)))
+	(if (not nline) (error "Package not found"))
+	(apply 'ee-goto-position nline rest))
+    (apply 'ee-goto-position pkgsymbol rest)))
+
+(defun ee-packages-nline-for (pkgsymbol &optional nns)
+  "This is an internal function that only works in the *Packages* buffer."
+  (car (reverse (ee-packages-nlines-for pkgsymbol nns))))
+
+(defun ee-packages-nlines-for (pkgsymbol &optional nns)
+  "This is an internal function that only works in the *Packages* buffer."
+  (setq nns (or nns (ee-packages-nlines-and-names)))
+  (cl-loop for (nline name) in nns
+	   if (eq name pkgsymbol)
+	   collect nline))
+
+(defun ee-packages-nlines-and-names (&optional tles)
+  "This is an internal function that only works in the *Packages* buffer."
+  (cl-loop for nline from 1
+	   for cols in (or tles tabulated-list-entries)
+	   collect (list nline (package-desc-name (car cols)))))
+
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221214
+;; Version:    20221216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -582,12 +582,23 @@ a single whitespace character, and the results are `concat'-ed."
     ""
     ,@(ee-find-file-links)))
 
+(defun ee-packages-package-here ()
+  (intern (car (aref (tabulated-list-get-entry) 0))))
+
+(defun ee-find-epackages-links ()
+  (let ((pkgsymbol (ee-packages-package-here)))
+    `((find-epackages)
+      (find-epackages ',pkgsymbol)
+      (find-epackage ',pkgsymbol)
+      )))
+
 (defun ee-find-efaces-links    () `((find-efaces)))
 (defun ee-find-ecolors-links   () `((find-ecolors)))
-(defun ee-find-epackages-links () `((find-epackages)))
 (defun ee-find-pdftext-links   () (ee-pdflike-page-links))
 (defun ee-find-eww-links       () `((find-eww ,(plist-get eww-data :url))))
 (defun ee-find-w3m-links       () `((find-w3m ,w3m-current-url)))
+
+
 
 
 

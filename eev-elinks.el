@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221117
+;; Version:    20221216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1276,7 +1276,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
 	 (findelpafiles (mapconcat 'ee-HS findelpafiles1 "\n"))
 	 )
     (ee-template0 "\
-# (find-epackages {(ee-S spkg)})
+# (find-epackages '{pkg})
 # (find-epackage-links '{pkg})
 # (find-epackage '{pkg})
 {findelpafiles}

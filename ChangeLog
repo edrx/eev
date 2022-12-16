@@ -1,3 +1,24 @@
+2022-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-epackages): renamed to `find-epackages0'.
+	(find-epackages): new function.
+	(ee-goto-position-package, ee-packages-nline-for)
+	(ee-packages-nlines-for, ee-packages-nlines-and-names): new
+	functions.
+
+	* eev-elinks.el (ee-find-epackage-links0): use the new
+	`find-epackages', that has the same name as the old one but
+	different arguments.
+
+	* eev-hlinks.el (ee-packages-package-here): new function.
+	(ee-find-epackages-links): use `ee-packages-package-here' and the
+	new `find-epackages'.
+
+2022-12-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-struct-to-triples, find-estructt): new
+	functions.
+
 2022-12-14  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hlinks.el (ee-underlinewsp-re): new function.
