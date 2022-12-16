@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221028
+;; Version:    20221215
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -939,6 +939,25 @@ fieldname value\", like this:
 
 (defun find-estruct (stro &rest pos-spec-list)
   (apply 'find-estring (ee-struct-to-string stro) pos-spec-list))
+
+
+;; Added in 2022dec15.
+;; TODO: refactor and write better docstrings!
+;;
+(defun ee-struct-to-triples (stro)
+  "Like `ee-struct-to-string', but returns a list of triples."
+  (let* ((ns (number-sequence 0 (length stro)))
+	 (fieldnames (ee-struct-slot-names+ stro))
+	 (triples (cl-mapcar
+		   (lambda (n name o) (list n name o))
+		   ns fieldnames stro)))
+    triples))
+
+(defun find-estructt (stro &rest pos-spec-list)
+  "Like `find-estructt', but pretty-prints a list of triples."
+  (apply 'find-epp (ee-struct-to-triples stro) pos-spec-list))
+
+
 
 
 
