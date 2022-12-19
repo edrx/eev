@@ -1,3 +1,8 @@
+2022-12-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-libera-bufferp, ee-find-libera-links)
+	(ee-fhl-main-program): added an `(:if (ee-libera-bufferp) ...)'.
+
 2022-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-epackages): renamed to `find-epackages0'.

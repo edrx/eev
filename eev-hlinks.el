@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221216
+;; Version:    20221218
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -302,6 +302,7 @@ which kind \"here\" the current buffer is."
    (:if (ee-epackage-bufferp)       (ee-find-epackage-links))
    ;;
    ;; Other cases:
+   (:if (ee-libera-bufferp)      (ee-find-libera-links))
    (:if (ee-file-bufferp)        (ee-find-file-links))
    (:if t                        '("" "Not implemented!" "See:"
 				   (find-efunction 'ee-find-here-links)))
@@ -598,6 +599,21 @@ a single whitespace character, and the results are `concat'-ed."
 (defun ee-find-eww-links       () `((find-eww ,(plist-get eww-data :url))))
 (defun ee-find-w3m-links       () `((find-w3m ,w3m-current-url)))
 
+;; Experimental, 2022dec18
+;; See: (find-eev "eev-rcirc.el" "find-libera")
+;;
+(defun ee-libera-bufferp ()
+  (and (boundp 'rcirc-server-buffer)
+       rcirc-server-buffer
+       (equal (with-rcirc-server-buffer rcirc-server)
+	      "irc.libera.chat")))
+
+(defun ee-find-libera-links ()
+  `((find-libera ,rcirc-target)
+    (find-libera-2a ,rcirc-target)
+    (find-libera-3a ,rcirc-target)
+    ,(if buffer-file-name
+	 `(find-fline ,(ee-shorten-file-name buffer-file-name)))))
 
 
 
