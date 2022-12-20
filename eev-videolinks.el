@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221204
+;; Version:    20221219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -927,7 +927,8 @@ For more info on this particular video, run:
      :yt    "http://www.youtube.com/watch?v=Eh5Wz9Vh_XM"
      :page  "http://angg.twu.net/2021-org-for-non-users.html"
      :date    "2021dec11"
-     :length  "10:08"
+     :length  "16:36"
+     :subs    ".vtt"
      :comment "On why Org and eev follow opposite principles.")
     ;;
     ;; «2021ffll»  (to ".2021ffll")

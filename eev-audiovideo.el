@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220608
+;; Version:    20221219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
@@ -470,6 +470,7 @@ See: (find-audiovideo-intro \"`eev-avadj-mode'\")"
 ;;;           |_|                                      
 ;;
 ;; «find-mpv-video»  (to ".find-mpv-video")
+;; See: (find-eev "eev-tlinks.el" "find-mpv-links")
 ;;
 (defvar ee-mpv-program "mpv")
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221203
+;; Version:    20221219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -137,6 +137,7 @@
 ;; «.find-eejump-links»			(to "find-eejump-links")
 ;; «.find-kla-links»			(to "find-kla-links")
 ;; «.find-rstdoc-links»			(to "find-rstdoc-links")
+;; «.find-mpv-links»			(to "find-mpv-links")
 
 
 (require 'eev-env)
@@ -1353,6 +1354,7 @@ echo {e} '{url}' >> ~/.psne.log
 # (find-psne-intro \"1. Local copies of files from the internet\")
 # (find-video-links-intro \"5. Local copies\")
 # (find-video-links-intro \"5.1. Subtitles\")
+# http://angg.twu.net/eev-videos.html
 
  (sh-mode)
  (eepitch-shell2)
@@ -3217,6 +3219,9 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
 
+
+;;-- Some super-technical things:
+
 ;; Setup (as a 2nd-class video):
  ' (find-ssr-links     \"{c}\" \"{mp4stem}\" \"{hash}\")
  ' (code-eevvideo      \"{c}\" \"{mp4stem}\" \"{hash}\")
@@ -3274,7 +3279,8 @@ For more info on this particular video, run:
 	 (template11 ";;
 ;; You have a local copy of this video.
 ;; The upstream copy of this video has subtitles.
-;; If you don't have a local copy of its subtitles, run this:
+;; If you don't have a local copy of its subtitles, or if you
+;; want to update the local copy of the subtitles, run this:
 ;;        (find-psne-1stclassvideo-links \"{c}\")
 ;;    or: (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")\n"))
     (if mp4found
@@ -3834,6 +3840,49 @@ N should be either a number or a symbol; SEXP should be a sexp."
 ")
 	 )
        pos-spec-list))))
+
+
+;; «find-mpv-links»  (to ".find-mpv-links")
+;; Skel: (find-find-links-links-new "mpv" "" "")
+;; Test: (find-mpv-links)
+;; See: https://lists.gnu.org/archive/html/eev/2022-12/msg00019.html
+;;
+(defun find-mpv-links (&rest pos-spec-list)
+"Visit a temporary buffer containing code for configuring mpv."
+  (interactive)
+  (apply
+   'find-elinks-elisp
+   `((find-mpv-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-mpv-links)
+     ""
+     ,(ee-template0 "\
+;; See:  (find-evariable 'ee-mpv-video-options)
+;;       (find-evardescr 'ee-mpv-video-options)
+;; Idea: use commands like `M-x mf' and `M-x ms', defined below,
+;;       to change, or (sort of) toggle, how eev calls mpv.
+;;       To use this, copy the block below to your init file,
+;;       modifying it to adjust the options and their values.
+
+;; From: (find-mpv-links)
+;; See:  http://angg.twu.net/eev-videos.html#mpv-keys
+
+(defun mf ()
+  \"Make mpv use (real) full screen.\"
+  (interactive)
+  (setq ee-mpv-video-options '(\"--fs\" \"--osd-level=2\")))
+
+(defun ms ()
+  \"Make mpv use a \\\"smaller full screen\\\".\"
+  (interactive)
+  (setq ee-mpv-video-options
+	'(\"--fs\" \"--osd-level=2\"
+	  \"--video-margin-ratio-bottom=0.15\"
+	  \"--sub-font-size=35\")))
+")
+     )
+   pos-spec-list))
+
 
 
 
