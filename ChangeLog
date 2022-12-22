@@ -1,3 +1,8 @@
+2022-12-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "eev2019" (now) has subtitles.
+
 2022-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-mpv-links): new function.

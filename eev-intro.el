@@ -10414,6 +10414,18 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+In my presentation at the EmacsConf2019
+I mentioned very briefly in this slide -
+
+  http://angg.twu.net/LATEX/2019emacsconf.pdf#page=4
+
+that `M-x eev' was a \"very primitive way to send the region to a
+shell\". This intro gives a few more details about that, but it
+is very incomplete...
+
+
+
+
 1. Prepared shells
 ==================
 Long before eepitch had been created, eev had another way -
@@ -10455,9 +10467,11 @@ Now run this script:
  (eepitch-bash)
  (eepitch-kill)
  (eepitch-bash)
-export PS1='$PWD# '
-function ee () { set -v; . ~/.eev/ee.sh; set +v; }
-ee
+  export PS1='$PWD# '
+  function ee () { set -v; . ~/.eev/ee.sh; set +v; }
+  ee
+
+The `ee' will execute the rm/mkdir/cd in a 
 
 
 

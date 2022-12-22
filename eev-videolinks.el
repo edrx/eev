@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221219
+;; Version:    20221222
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -117,10 +117,18 @@
 ;;   http://angg.twu.net/2021-video-links.html
 ;;   (find-1stclassvideo-links "eevvlinks")
 ;;
-;; but the innards of that implementation were ugly, and I've changed
-;; them several times since then. Now each one of the "first-class
-;; videos" has a lot of information associated to it, and the best way
-;; to access this information is by running:
+;; ...but the innards of that first implementation were very ugly, and
+;; I changed them several times.
+;;
+;; In dec/2022 I created this page,
+;;
+;;   http://angg.twu.net/eev-videos.html
+;;
+;; that explains in a much better way how these "[Video links:]" work,
+;; with screenshots, and focusing on the idea of "First-class videos".
+;; Each one of the "first-class videos" has a lot of information
+;; associated to it, and the best way to access this information is by
+;; running this:
 ;;
 ;;   (find-1stclassvideos)
 ;;
@@ -695,6 +703,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/emacsconf2019.html"
      :date    "2019nov02"
      :length  "19:21"
+     :subs    ".vtt"
      :comment "A good non-technical introduction to eev.")
     ;;
     ;; «eev2020»  (to ".eev2020")
