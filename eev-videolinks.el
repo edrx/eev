@@ -974,6 +974,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/eev-find-angg.html"
      :date    "2022jan16"
      :length  "17:59"
+     :subs    ".vtt"
      :comment "A very good video on a very useful trick.")
     ;;
     ;; «2022findelispintro»  (to ".2022findelispintro")
