@@ -1,3 +1,8 @@
+2022-12-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "eevnav" (now) has subtitles.
+
 2022-12-24  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication

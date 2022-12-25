@@ -754,6 +754,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2020-list-packages-eev-nav.html"
      :date    "2020oct04"
      :length  "12:41"
+     :subs    ".vtt"
      :comment "If you are learning Emacs start by this video!")
     ;;
     ;; «eevtempl»  (to ".eevtempl")
