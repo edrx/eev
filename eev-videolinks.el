@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221222
+;; Version:    20221224
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -716,6 +716,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/emacsconf2020.html"
      :date    "2020nov28"
      :length  "47:08"
+     :subs    ".vtt"
      :comment "A good technical introduction to eev.")
     ;;
     ;; «eev2021»  (to ".eev2021")

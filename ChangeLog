@@ -1,4 +1,11 @@
+2022-12-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "eev2020" (now) has subtitles.
+
 2022-12-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-sh-at-dir): use `ee-expand'.
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
 	that the video "2022findeevangg" (now) has subtitles.

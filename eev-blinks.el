@@ -1065,7 +1065,7 @@ COMMAND in the echo area."
 This is like `find-sh' but sets the buffer's default-directory to DIR."
   (let ((fullcmd (format "cd %s\n%s" dir command)))
     (prog1 (apply 'find-sh fullcmd pos-spec-list)
-           (setq default-directory dir))))
+           (setq default-directory (ee-expand dir)))))
 
 (defun find-sh-man-fontify (command &rest pos-spec-list)
   "Like `find-sh', but runs `Man-fontify-manpage' on the output."
