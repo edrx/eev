@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221224
+;; Version:    20221227
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -767,6 +767,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2020-some-template-based.html"
      :date    "2020dec24"
      :length  "33:11"
+     :subs    ".vtt"
      :comment "")
     ;;
     ;; «eevfherel»  (to ".eevfherel")

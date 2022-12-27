@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221219
+;; Version:    20221227
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -3865,7 +3865,7 @@ N should be either a number or a symbol; SEXP should be a sexp."
 ;;       modifying it to adjust the options and their values.
 
 ;; From: (find-mpv-links)
-;; See:  http://angg.twu.net/eev-videos.html#mpv-keys
+;; See:  http://angg.twu.net/eev-videos.html#smaller-fullscreen
 
 (defun mf ()
   \"Make mpv use (real) full screen.\"
