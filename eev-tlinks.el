@@ -65,6 +65,17 @@
 ;; to be rewritten. Also, some functions here are very old, and I
 ;; haven't used or tested them in ages; they deserve to be deleted.
 
+;; Note that all the `find-*-links' functions in this file have very
+;; small docstrings. This is intentional: when a function doesn't have
+;; a docstring, or has a docstring that is insufficient, this always
+;; means "look at the source", and the `find-*-links' functions do
+;; very little besides generating a temporary buffer from a
+;; template...
+;;
+;; So: the best way to understand what the `find-*-links' functions do
+;; is by looking at their source code, and by executing the sexps in
+;; comments - both the "See:"s and the "Test:"s.
+
 
 
 

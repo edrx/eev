@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221227
+;; Version:    20221229
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -739,9 +739,10 @@ For more info on this particular video, run:
      :title "Test blocks in Dednat6"
      :mp4   "http://angg.twu.net/eev-videos/emacsconf2021-dednat6.mp4"
      :yt    "http://www.youtube.com/watch?v=QUMo7vgkHJI"
-     :page  "http://angg.twu.net/emacsconf2021.html"
+     :page  "http://angg.twu.net/emacsconf2021.html#real-world-example"
      :date    "2021nov28"
      :length  "8:11"
+     :subs    ".vtt"
      :comment "How I use test blocks (see above) in real life.")
     ;;
     ;; «eevnav»  (to ".eevnav")
@@ -868,7 +869,8 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec01"
      :length  "2:26"
-     :comment "Very bad - don't watch!!!")
+     :subs    ".vtt"
+     :comment "The first video about (find-saving-links-intro).")
     ;;
     ;; «2021workshop2»  (to ".2021workshop2")
     ;; Play: (find-2021workshop2video "0:00")
@@ -880,7 +882,8 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec01"
      :length  "3:39"
-     :comment "Very bad - don't watch!!!")
+     :subs    ".vtt"
+     :comment "The second video about (find-saving-links-intro).")
     ;;
     ;; «2021workshop3»  (to ".2021workshop3")
     ;; Play: (find-2021workshop3video "0:00")
@@ -904,7 +907,8 @@ For more info on this particular video, run:
      :page "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "5:42"
-     :comment "Very bad - don't watch!!!")
+     :subs    ".vtt"
+     :comment "The second video about (find-saving-links-intro).")
     ;;
     ;; «2021workshop5»  (to ".2021workshop5")
     ;; Play: (find-2021workshop5video "0:00")

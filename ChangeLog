@@ -1,3 +1,14 @@
+2022-12-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "eev2021b" (now) has subtitles.
+	(ee-1stclassvideos-info): added an indication that the video
+	"2021workshop1" (now) has subtitles.
+	(ee-1stclassvideos-info): added an indication that the video
+	"2021workshop2" (now) has subtitles.
+	(ee-1stclassvideos-info): added an indication that the video
+	"2021workshop4" (now) has subtitles.
+
 2022-12-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (find-slyprocess-reuse, find-slyprocess-create): new

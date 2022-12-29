@@ -2186,6 +2186,14 @@ Use the version with \"(eev-mode 1)\" if you want to turn
 eev-mode on on startup, and the version with \";; (eev-mode 1)\"
 if you prefer to start with eev-mode off.
 
+_Activating_ eev means \"turning eev-mode on\". Activating eev
+does very little - see:
+
+  (find-eev-intro \"1. `eev-mode'\" \"Turning on eev-mode\")
+
+Note that \"installing\", \"loading\", and \"activating\" eev are
+different things, and each one does less than the next one.
+
 TODO: rewrite the other sections of this intro!
 They are old and obsolete! =(
 
@@ -2603,7 +2611,7 @@ See:
 
   (find-eevgrep \"grep --color -nH -e no-byte-compile: *.el\")
   (find-elnode \"Byte Compilation\" \"no-byte-compile: t\")
-  (find-eev \"eev-intro.el\" \"11.1. Why eev avoids byte-compilation\")
+  (find-elisp-intro \"11.1. Why eev avoids byte-compilation\")
 
 Here is why. Each call to a `code-*' function defines some
 functions dynamically - for example, `(code-c-d \"e\" ...)'
@@ -16723,6 +16731,8 @@ will give you information about the current definition.
 12. Some advanced topics
 ========================
 See: (find-lexical-intro)
+     (find-kla-intro \"8. `cl-loop'\")
+     (find-kla-intro \"9. `cl-defun'\")
 
 
 
