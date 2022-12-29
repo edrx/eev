@@ -1,3 +1,10 @@
+2022-12-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (find-slyprocess-reuse, find-slyprocess-create): new
+	functions.
+	(find-slyprocess): use `find-slyprocess-reuse' and
+	`find-slyprocess-create'.
+
 2022-12-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication

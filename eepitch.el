@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221123
+;; Version:    20221228
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -904,19 +904,32 @@ The arguments are explained here:
 ;; «eepitch-sly»  (to ".eepitch-sly")
 ;; This is a prototype. See:
 ;; https://github.com/joaotavora/sly/issues/527
+;; https://github.com/joaotavora/sly/issues/550
 ;;
+(defun find-slyprocess-reuse ()
+  "Go to a Sly REPL buffer (when we want to reuse an old one).
+This is an internal function used by `find-slyprocess'."
+  (find-ebuffer (sly-mrepl--find-buffer) :end))
+
+(defun find-slyprocess-create ()
+  "Go to a Sly REPL buffer (when we want to create a new one).
+This is an internal function used by `find-slyprocess'."
+  (let ((sly-command-switch-to-existing-lisp 'never)
+	(sly-auto-select-connection 'never)
+	(sly-lisp-implementations '((sbcl ("sbcl"))))
+	(sly-default-lisp 'sbcl))
+    (save-window-excursion (sly))	; TODO: fix this
+    (find-slyprocess-reuse)))
+
 (defun find-slyprocess ()
   "Go to a Sly REPL buffer, This function is used by `eepitch-sly'."
+  (interactive)
   (require 'sly)
   (sly-setup)
   (if (and (sly-current-connection)
 	   (sly-mrepl--find-buffer))
-      (find-ebuffer (sly-mrepl--find-buffer) :end)
-    (let ((sly-command-switch-to-existing-lisp 'never)
-	  (sly-auto-select-connection 'never)
-	  (sly-lisp-implementations '((sbcl ("sbcl"))))
-	  (sly-default-lisp 'sbcl))
-      (sly))))
+      (find-slyprocess-reuse)
+    (find-slyprocess-create)))
 
 (defun eepitch-sly () (interactive)
   (eepitch '(find-slyprocess)))

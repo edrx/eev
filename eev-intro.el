@@ -10407,7 +10407,7 @@ Etc:
 \(Re)generate: (find-prepared-intro)
 Source code:  (find-eev \"eev-intro.el\" \"find-prepared-intro\")
 More intros:  (find-eev-quick-intro)
-              (find-eval-intro)
+              (find-eev-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
