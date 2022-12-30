@@ -1,3 +1,12 @@
+2022-12-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (ee-wait-status): new variable.
+	(ee-wait-repl-started, ee-wait, find-slyprocess-reuse)
+	(find-slyprocess-create00, find-slyprocess-create0)
+	(find-slyprocess-create, find-slyprocess, eepitch-sly): new
+	functions. Some of the `find-sly*' functions are complete rewrites
+	of older experimental functions with the same names.
+
 2022-12-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication

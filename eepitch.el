@@ -48,6 +48,8 @@
 ;; «.other-terms»		(to "other-terms")
 ;;   «.eepitch-ansiterm»	(to "eepitch-ansiterm")
 ;;   «.eepitch-vterm»		(to "eepitch-vterm")
+;; «.wait-for-hooks»		(to "wait-for-hooks")
+;;   «.ee-wait»			(to "ee-wait")
 ;;   «.eepitch-sly»		(to "eepitch-sly")
 ;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
@@ -901,25 +903,94 @@ The arguments are explained here:
   (prog1 (eepitch `(find-vtermprocess ,program ,name0))
     (setq eepitch-line 'eepitch-line-vterm)))
 
+
+
+;;; __        __    _ _      __              _                 _        
+;;; \ \      / /_ _(_) |_   / _| ___  _ __  | |__   ___   ___ | | _____ 
+;;;  \ \ /\ / / _` | | __| | |_ / _ \| '__| | '_ \ / _ \ / _ \| |/ / __|
+;;;   \ V  V / (_| | | |_  |  _| (_) | |    | | | | (_) | (_) |   <\__ \
+;;;    \_/\_/ \__,_|_|\__| |_|  \___/|_|    |_| |_|\___/ \___/|_|\_\___/
+;;;                                                                     
+;; «wait-for-hooks»  (to ".wait-for-hooks")
+;; Some eepitch targets, like `eepitch-sly' and `eepitch-geiser',
+;; are hard to write because things like this
+;;
+;;   (save-window-excursion (sly))
+;;
+;; don't work - the (sly) above returns too soon, but Sly keeps
+;; running and doing things in the background... including things that
+;; change the window configuration, and these things are done outside
+;; the `save-window-excursion'.
+;;
+;; In august and december/2022 I sent these "issues" to the Sly
+;; developers,
+;;
+;;   https://github.com/joaotavora/sly/issues/527
+;;   https://github.com/joaotavora/sly/issues/550
+;;
+;; and then in 2022dec30 I finally found a way to create a "shell-like
+;; function" that opens a Sly REPL in the current window, reusing an
+;; existing one if possible. The main idea is to replace the `(sly)'
+;; above by something that only returns wither when a certain hook -
+;; `sly-mrepl-hook' - is run, or when a timeout occurs.
+;;
+;; THE CODE BELOW IS EXPERIMENTAL & VERY IMMATURE.
+
+;; «ee-wait»  (to ".ee-wait")
+;; Test: (setq ee-wait-status nil)
+;;       (run-at-time 2 nil 'ee-wait-repl-started)
+;;       (ee-wait 10 0.5)
+;;       ee-wait-status
+;;
+(defvar ee-wait-status nil)
+(defun  ee-wait-repl-started ()
+  (setq ee-wait-status 'repl-started))
+
+(defun ee-wait (ntimes time)
+  "Run NTIMES (sit-for TIME); aborts in some conditions."
+  (catch 'stop
+    (dotimes (i ntimes)
+      (if (not (sit-for time))
+	  (throw 'stop 'got-input))
+      (if ee-wait-status
+	  (throw 'stop 'ee-wait-status-not-nil)))
+    'timeout))
+
 ;; «eepitch-sly»  (to ".eepitch-sly")
-;; This is a prototype. See:
-;; https://github.com/joaotavora/sly/issues/527
-;; https://github.com/joaotavora/sly/issues/550
+;; THIS IS A PROTOTYPE!!!
 ;;
 (defun find-slyprocess-reuse ()
   "Go to a Sly REPL buffer (when we want to reuse an old one).
 This is an internal function used by `find-slyprocess'."
   (find-ebuffer (sly-mrepl--find-buffer) :end))
 
-(defun find-slyprocess-create ()
+(defun find-slyprocess-create00 ()
   "Go to a Sly REPL buffer (when we want to create a new one).
-This is an internal function used by `find-slyprocess'."
+This is an internal function used by `find-slyprocess-create0'."
   (let ((sly-command-switch-to-existing-lisp 'never)
 	(sly-auto-select-connection 'never)
 	(sly-lisp-implementations '((sbcl ("sbcl"))))
 	(sly-default-lisp 'sbcl))
-    (save-window-excursion (sly))	; TODO: fix this
-    (find-slyprocess-reuse)))
+    (sly)))
+
+(defun find-slyprocess-create0 ()
+  "Like `find-slyprocess-create0', but only returns when the mrepl starts.
+If the mrepl doesn't start in 30 seconds this function yields an error."
+  (interactive)
+  (unwind-protect
+      (progn
+	(setq ee-wait-status nil)
+	(add-hook 'sly-mrepl-hook 'ee-wait-repl-started)
+	(find-slyprocess-create00)
+	(ee-wait 60 0.5))
+    (remove-hook 'sly-mrepl-hook 'ee-wait-repl-started))
+  (if (eq ee-wait-status 'repl-started)
+      "Repl started!"
+    (error "ee-sly: Sly timed out")))
+
+(defun find-slyprocess-create ()
+  (save-window-excursion (find-slyprocess-create0))
+  (find-slyprocess-reuse))
 
 (defun find-slyprocess ()
   "Go to a Sly REPL buffer, This function is used by `eepitch-sly'."
