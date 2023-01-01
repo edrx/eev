@@ -1,3 +1,15 @@
+2023-01-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "2022yttranscript" (now) has subtitles.
+
+2022-12-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "2021workshop6" (now) has subtitles.
+	(ee-1stclassvideos-info): added an indication that the video
+	"2022eevmake0" (now) has subtitles.
+
 2022-12-30  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (ee-wait-status): new variable.

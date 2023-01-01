@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221229
+;; Version:    20230101
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -932,7 +932,8 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "10:08"
-     :comment "Very bad - don't watch!!!")
+     :subs    ".vtt"
+     :comment "Some exercises on how to use `M-h M-e'.")
     ;;
     ;; «2021orgfornonusers»  (to ".2021orgfornonusers")
     ;; Play: (find-2021orgfornonusersvideo "0:00")
@@ -969,6 +970,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/eev-make.html"
      :date    "2022jan04"
      :length  "6:43"
+     :subs    ".vtt"
      :comment "How to use test blocks in weird places. Unrehearsed.")
     ;;
     ;; «2022findeevangg»  (to ".2022findeevangg")
@@ -1059,6 +1061,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/find-yttranscript-links.html"
      :date    "2022oct20"
      :length  "28:28"
+     :subs    ".vtt"
      :comment "A video about `find-yttranscript-links'.")
     ;;
     ;; «2022tikz»  (to ".2022tikz")
