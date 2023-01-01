@@ -1066,6 +1066,8 @@ See: (find-pdf-like-intro)
 ;;;        |___/|_|                                 |_|                        
 ;;
 ;; «ee-hyperlink-prefix» (to ".ee-hyperlink-prefix")
+;; Tests: (ee-hyperlink-prefix)
+;;         ee-hyperlink-prefix
 
 (defun ee-hyperlink-prefix ()
   "A lispish interface for customizing the variable `ee-hyperlink-prefix'.

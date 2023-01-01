@@ -895,7 +895,8 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec03"
      :length  "18:22"
-     :comment "Very bad - don't watch!!!")
+     :subs    ".vtt"
+     :comment "A video on \"saving links to everything interesting\".")
     ;;
     ;; «2021workshop4»  (to ".2021workshop4")
     ;; Play: (find-2021workshop4video "0:00")
