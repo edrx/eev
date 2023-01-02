@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230101
+;; Version:    20230102
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -870,7 +870,7 @@ For more info on this particular video, run:
      :date    "2021dec01"
      :length  "2:26"
      :subs    ".vtt"
-     :comment "The first video about (find-saving-links-intro).")
+     :comment "An advanced video about (find-saving-links-intro).")
     ;;
     ;; «2021workshop2»  (to ".2021workshop2")
     ;; Play: (find-2021workshop2video "0:00")
@@ -883,7 +883,7 @@ For more info on this particular video, run:
      :date    "2021dec01"
      :length  "3:39"
      :subs    ".vtt"
-     :comment "The second video about (find-saving-links-intro).")
+     :comment "Another advanced video about (find-saving-links-intro).")
     ;;
     ;; «2021workshop3»  (to ".2021workshop3")
     ;; Play: (find-2021workshop3video "0:00")
@@ -909,7 +909,7 @@ For more info on this particular video, run:
      :date    "2021dec04"
      :length  "5:42"
      :subs    ".vtt"
-     :comment "The second video about (find-saving-links-intro).")
+     :comment "How to create links to sections of intros.")
     ;;
     ;; «2021workshop5»  (to ".2021workshop5")
     ;; Play: (find-2021workshop5video "0:00")
@@ -921,7 +921,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "8:50"
-     :comment "Very bad - don't watch!!!")
+     :comment "This video explains how to read some diagrams.")
     ;;
     ;; «2021workshop6»  (to ".2021workshop6")
     ;; Play: (find-2021workshop6video "0:00")
