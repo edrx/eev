@@ -1,3 +1,8 @@
+2023-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-1stclassvideolsubs): new function.
+	(ee-1stclassvideos-dlsubs): use `find-1stclassvideolsubs'.
+
 2023-01-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
