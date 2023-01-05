@@ -1,6 +1,6 @@
 ;;; eev-videolinks.el --- support for [Video links:] blocks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2021-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2021-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230102
+;; Version:    20230104
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
@@ -921,6 +921,7 @@ For more info on this particular video, run:
      :page  "http://angg.twu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "8:50"
+     :subs    ".vtt"
      :comment "This video explains how to read some diagrams.")
     ;;
     ;; «2021workshop6»  (to ".2021workshop6")

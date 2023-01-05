@@ -1,5 +1,8 @@
 2023-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "2021workshop5" (now) has subtitles.
+
 	* eev-tlinks.el (find-1stclassvideolsubs): new function.
 	(ee-1stclassvideos-dlsubs): use `find-1stclassvideolsubs'.
 
