@@ -1,3 +1,15 @@
+2023-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-saving-links-intro): reordered the intro.
+
+	* eev-elinks.el (ee-color-choose-tk): use `write-region' instead
+	of `ee-write-string'.
+
+2023-01-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-saving-links-intro): added a list of the
+	videos.
+
 2023-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication

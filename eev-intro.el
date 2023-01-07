@@ -1,6 +1,6 @@
 ;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2013-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221130
+;; Version:    20230107
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
@@ -3812,28 +3812,134 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-\"Taking executable notes\" consists mainly on:
-  a. recording commands sent to shell-like programs,
-  b. saving elisp hyperlinks to everything interesting
-     that we find.
-\"(Generating and) saving links\" is the harder half.
-This intro is about how to do that fluently.
-It is based on ideas that I tested in this workshop:
+Note: this intro is being rewritten!
+I wrote it originally for this workshop:
   http://angg.twu.net/2021-workshop.html
-
-THIS IS A WORK IN PROGRESS AND IS CURRENTLY A MESS.
-This was split from:
-  (find-eev-exercises-intro)
-Pre-requisites:
-  (find-here-links-intro)
-  (find-refining-intro)
-See also:
-  (find-kla-intro)
+  http://angg.twu.net/2021-eev-exercises.html
+and I also recorded six videos for workshop.
+Very few people came, and I didn't like the videos.
+In dec/2022 I subtitled the videos and then I realized that
+_with subtitles_ the videos are very good.
 
 
 
-1. Reading diagrams aloud
-=========================
+1. Saving interesting links
+===========================
+Start by this video:
+
+  Title: Material on `M-3 M-e'
+  Info:  (find-1stclassvideo-links \"2021workshop3\")
+  Play:  (find-2021workshop3video \"0:00\")
+         (find-2021workshop3video \"4:56\" \"The demo\")
+  LSubs: (find-1stclassvideolsubs \"2021workshop3\")
+         (find-1stclassvideolsubs \"2021workshop3\" \"The demo\" \"4:56\")
+
+it shows a demo of how I \"create elisp hyperlinks to everything
+interesting that I find\". The cheat sheet that I show in the
+video contains this:
+
+            (eek \"M-j\")
+       (find-eek \"M-j\")
+
+       (find-eev-quick-intro \"2. Evaluating Lisp\")
+       (find-eev-quick-intro \"2. Evaluating Lisp\" \"M-0 M-e\")
+       (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+       (eek \"M-h M-k  M-e\")
+       (eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\")
+  (find-eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\")
+  (find-eek \"M-h M-k  M-e  ;; ee-eval-sexp-eol\" \"(find-efunction ')\")
+             (find-efunction 'ee-eval-sexp-eol)
+             (find-efunction 'ee-eval-sexp-eol \"3:\")
+             (eek \"2*<up> M-3 M-e\")
+             (find-efunction 'ee-eval-last-sexp)
+             (find-efunction 'ee-eval-last-sexp-3)
+             (find-efunction 'ee-eval-last-sexp-3 \"find-wset\")
+             (find-efunction 'find-wset)
+
+  (find-emacs-keys-intro \"6. Windows\")
+  (find-emacs-keys-intro \"6. Windows\" \"L|R\")
+
+  (find-eev-intro)
+  (find-eev-intro \"M-5 M-0 M-j\")
+  (find-eev-intro \"(find-multiwindow-intro)\")
+  (find-multiwindow-intro)
+
+  (find-wset \"13o_2o2o23oo33ooo\"  '(find-ebuffer \"B\"))
+  (find-wset \"13o_2o2o23oo33ooo+\" '(find-ebuffer \"B\"))
+  (find-2a nil '(find-efunction 'ee-eval-sexp-eol))
+  (find-2b nil '(find-efunction 'ee-eval-sexp-eol))
+
+That video doesn't have any exercises. This because in its demo I
+use some techniques that are only explained in the section 6 below.
+
+  Title:   Material on `M-3 M-e', or:
+           What does it mean to \"save links to everything
+                                 that is interesting?\"
+  Comment: In this video I show an example of how I
+           \"save links to everything that I find\" by
+           \"alternating between task and notes\" very
+           quickly. It is just a demonstration without
+           exercises, and in it I use some techniques for
+           using a single window that are only taught in
+           the video \"2021workshop2\" - the last video
+           of the series.
+  See:     (find-here-links-intro \"1. Alternating between\")
+  Info:    (find-1stclassvideo-links \"2021workshop3\")
+  LSubs:   (find-1stclassvideolsubs  \"2021workshop3\")
+
+
+
+
+
+
+2. Copy from left to right
+==========================
+This video:
+
+  Title: Copy from left to right
+  Info:  (find-1stclassvideo-links \"2021workshop5\")
+  Play:  (find-2021workshop5video \"0:00\")
+  LSubs: (find-1stclassvideolsubs \"2021workshop5\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"2. Names of buffers\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"3. Frames\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"4. Notation for copy and paste\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"5. M-21j\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"6. M-K*\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"Exercise 1\")
+         (find-1stclassvideolsubs \"2021workshop5\" \"Exercise 2\")
+
+[Was: 3.1. Two basic exercises]
+
+In the diagrams below the names of the buffers are abbreviated:
+
+  [EX] - (find-eev-exercises-intro)
+   [J] - (find-eejumps)
+   [N] - notes, i.e., (find-fline \"~/TODO\")
+  [EK] - (find-emacs-keys-intro)
+
+   ________         _______          ______________               ________
+  |        |       |       |        |       |      |             |        |
+  |  [EX]  | M-j   |  [J]  | M-21j  |  [J]  |  [N] | C-x 1 M-K*  |  [EX]  |
+  |        | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
+  |________|       |_______|        |_______|______|             |________|
+
+   ________         _______          ______________               ________
+  |        |       |       |        |       |      |             |        |
+  |  [EX]  | M-2j  |  [EK] | M-21j  |  [EK] |  [N] | C-x 1 M-K*  |  [EX]  |
+  |        | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
+  |________|       |_______|        |_______|______|             |________|
+
+`M-21j' is `M-2 M-1 M-j' written in an abbreviated form -
+        mnemonic: \"hold the meta key, type 21j, lift meta\" - and
+ `M-K*' means \"type M-K as many times as needed\".
+
+Watch this video and try to reproduce what happens in it:
+
+  (find-2021workshop5video \"0:00\")
+
+
+2.1. Reading diagrams aloud
+---------------------------
 I will use 2D diagrams to represent sequences of actions. In
 beginning of this tutorial these diagrams will have lots of
 details, but they will become progressively more and more
@@ -3841,7 +3947,7 @@ streamlined; in the last exercises of this intro we will work
 with diagrams in which only the details that are very hard to
 infer are written down explicitly.
 
-1.1. Key sequences
+2.2. Key sequences
 ------------------
 I will suppose that you are familiar with the first few sequences
 of keys below, and that you are trying to become familiar with
@@ -3892,7 +3998,7 @@ show in practice how those key sequences work - do these exercises.
 
 
 
-1.2. Windows and buffer names
+2.3. Windows and buffer names
 -----------------------------
 We will use two ways to explain what our abbreviations for buffer
 names, like [EX], [EH], and [N], mean: pronounciations and sexps.
@@ -3922,7 +4028,7 @@ configuration with a single window displaying [EX].
 
 
 
-1.3. Adding keys
+2.4. Adding keys
 ----------------
 Look at this diagram:
 
@@ -3971,10 +4077,142 @@ doesn't say where.
 
 
 
-
-
-2. The base cases
+3. Invisible text
 =================
+This video
+
+  Title: Invisible text
+  Info:  (find-1stclassvideo-links \"2021workshop4\")
+  Play:  (find-2021workshop4video \"0:00\")
+         (find-2021workshop4video \"4:46\" \"The demo - fix this\")
+  LSubs: (find-1stclassvideolsubs \"2021workshop4\")
+         (find-1stclassvideolsubs \"2021workshop4\" \"The demo\" \"4:46 - fix this\")
+
+explains how to create links to sections of intros. This is easy
+and incredibly useful, but it has a trick...
+
+Run this sexp:
+
+  (eek \"3*<up> C-a C-SPC C-e\")
+
+and then use `M-w' to copy the region to the kill ring and `M-hy'
+to yank it into this sexp:
+
+  (insert \"\\n\")
+
+Instead of getting the first sexp below you will get the second
+one:
+
+  (insert \"\\n\" \"2.3. Invisible text\")
+  (insert \"\\n\" \"2.3. Invisible text\\n-------------------\")
+
+That's because the title line contains some invisible text, and
+the `M-hy' clears all the properties of the text that it inserts,
+including the invisibility property. Invisible text is explained
+here:
+
+  (find-elnode \"Invisible Text\")
+
+When you type `C-e' on the title of a section of an \"intro\" the
+`C-e' takes you to the right of the line _after_ the invisible
+text. If you type `<left> <right>' there this moves the point to
+a position before the invisible text. So, if you want to copy the
+title of a section of an intro to use in a refinement, use
+
+  C-a C-SPC C-e <left> <right> M-w
+
+instead of:
+
+  C-a C-SPC C-e M-w
+
+Exercise: create a pair of elisp hyperlinks, the first one
+pointing to this intro and the second pointing to this section,
+and copy the pair to your notes. You'll have to watch the video
+to understand some tricky points and you will have to follow the
+diagram below.
+
+   ________         _______          _______________               ________
+  |        |       |       |        |        |      |             |        |
+  |  [EX]  | M-hh  |  [EH] | M-21j  |  [EH]  |  [N] | C-x 1 M-K*  |  [EX]  |
+  |  M-w   | ----> |       | -----> |  M-h2 ::> C-y | ----------> |        |
+  |        |       |       |        |  M-hy  |      |             |        |
+  |________|       |_______|        |________|______|             |________|
+
+[Video links:]
+  (find-2021workshop4video \"0:00\")
+
+  Title:   Invisible text, or:
+           How to create links to sections of intros
+  Comment: This video is about one exercise - one that
+           is rasonably simple and incredibly useful.
+  Info:    (find-1stclassvideo-links \"2021workshop4\")
+  LSubs:   (find-1stclassvideolsubs  \"2021workshop4\")
+
+
+
+
+
+4. `find-extra-file-links'
+==========================
+This video
+
+  Title: `find-extra-file-links'
+  Info:  (find-1stclassvideo-links \"2021workshop6\")
+  Play:  (find-2021workshop6video \"0:00\")
+         (find-2021workshop6video \"4:56\" \"The demo - fix this\")
+  LSubs: (find-1stclassvideolsubs \"2021workshop6\")
+         (find-1stclassvideolsubs \"2021workshop6\" \"The demo\" \"4:66 - fix this\")
+
+(...)
+
+Here you will need to understand `code-c-d' and
+`find-extra-file-links'. See:
+
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
+
+The diagram will be this one:
+
+   ________       _______	  _______          ______________               ________
+  |        |     |       |	 |       |        |       |      |             |        |
+  |  [EX]  |     |  [D]  | M-he  |  [EH] | M-21j  |  [EH] |  [N] | C-x 1 M-K*  |  [EX]  |
+  |        | --> |       | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
+  |________|     |_______|       |_______|        |_______|______|             |________|
+
+Where [D] is a dired buffer. Watch this video and try to
+reproduce what happens in it:
+
+  (find-2021workshop6video \"0:00\")
+
+Do this twice. In the first time you should create elisp
+hyperlinks pointing to this directory and this file,
+
+  (find-efile \"play/\")
+  (find-efile \"play/\" \"life.el\")
+
+and in the second time you should create elisp hyperlinks to a
+directory and a file that you find interesting.
+
+  Title:   `find-extra-file-links' (`M-h M-e')
+  Comment: This video explains an easy way to create both
+           \"links\" and \"short links\" to (text) files,
+           directories, PDF files, and videos.
+  Info:    (find-1stclassvideo-links \"2021workshop6\")
+  LSubs:   (find-1stclassvideolsubs  \"2021workshop6\")
+
+
+
+
+5. The base cases 1 and 2
+=========================
+
+  Title:   The base cases 1 and 2
+  Comment: This is a more advanced video that explains a
+           basic workflow for refining hyperlinks.
+  Info:    (find-1stclassvideo-links \"2021workshop1\")
+  LSubs:   (find-1stclassvideolsubs  \"2021workshop1\")
+
 All the methods to create and save elisp hyperlinks that we will
 see can be regarded as variants of the base cases 1, 2, and 3.
 The base cases 1, 2, and 3 all follow this pattern:
@@ -4023,7 +4261,7 @@ exercise for each one.
 
 
 
-2.1. The base case 1
+5.1. The base case 1
 --------------------
 The base case 1 is just this:
 
@@ -4130,7 +4368,7 @@ Exercise 2.1b:
 
 
 
-2.2. The base case 2
+5.2. The base case 2
 --------------------
 The base case 2 is similar to the base case 1 but here we
 duplicate and refine the hyperlink. Its diagram is:
@@ -4197,8 +4435,10 @@ Exercise 2.2b:
 
 
 
-2.3. The base case 3
---------------------
+5.3. The base case 3
+====================
+(Is this explained in the videos?)
+
 In the base case 2 we edited the hyperlink by doing duplicate and
 refine; in the base case 3 we will will edit it by doing
 duplicate, refine, _and shrink_.
@@ -4291,9 +4531,40 @@ Exercise 2.3b:
 
 
 
-The rest will be rewritten
+
+6. Using a 2-window setting
+===========================
+
+  Title:   Creating a link to a file using a 2-window setting
+  Comment: A more advanced exercise that prepares people to
+           generate hyperlinks, refine them, and copy them to
+           the notes using a single window, using the second
+           window just as a kind of a cheat sheet - like in
+           the most basic video, \"2021workshop3\", 
+  Info:    (find-1stclassvideo-links \"2021workshop2\")
+  LSubs:   (find-1stclassvideolsubs  \"2021workshop2\")
 
 
+
+\"Taking executable notes\" consists mainly on:
+  a. recording commands sent to shell-like programs,
+  b. saving elisp hyperlinks to everything interesting
+     that we find.
+\"(Generating and) saving links\" is the harder half.
+This intro is about how to do that fluently.
+
+This intro was split from:
+  (find-eev-exercises-intro)
+Pre-requisites:
+  (find-here-links-intro)
+  (find-refining-intro)
+See also:
+  (find-kla-intro)
+
+
+
+
+[Delete everything below this point?]
 
 [Video links:]
   (find-2021workshop1video \"0:22\" \"The base case 1 is described here\")
@@ -4304,127 +4575,7 @@ Exercise 2.3b:
   (find-2021workshop1video \"1:39\" \"What I need to do is slightly\")
   (find-2021workshop1video \"1:55\" \"This is not yet the link that I want\")
 
-3. Copy from left to right
-==========================
 
-3.1. Two basic exercises
-------------------------
-In the diagrams below the names of the buffers are abbreviated:
-
-  [EX] - (find-eev-exercises-intro)
-   [J] - (find-eejumps)
-   [N] - notes, i.e., (find-fline \"~/TODO\")
-  [EK] - (find-emacs-keys-intro)
-
-   ________         _______          ______________               ________
-  |        |       |       |        |       |      |             |        |
-  |  [EX]  | M-j   |  [J]  | M-21j  |  [J]  |  [N] | C-x 1 M-K*  |  [EX]  |
-  |        | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
-  |________|       |_______|        |_______|______|             |________|
-
-   ________         _______          ______________               ________
-  |        |       |       |        |       |      |             |        |
-  |  [EX]  | M-2j  |  [EK] | M-21j  |  [EK] |  [N] | C-x 1 M-K*  |  [EX]  |
-  |        | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
-  |________|       |_______|        |_______|______|             |________|
-
-`M-21j' is `M-2 M-1 M-j' written in an abbreviated form -
-        mnemonic: \"hold the meta key, type 21j, lift meta\" - and
- `M-K*' means \"type M-K as many times as needed\".
-
-Watch this video and try to reproduce what happens in it:
-
-  (find-2021workshop5video \"0:00\")
-
-
-
-
-3.2. `find-extra-file-links'
-----------------------------
-Here you will need to understand `code-c-d' and
-`find-extra-file-links'. See:
-
-  (find-eev-quick-intro \"9. Shorter hyperlinks\")
-  (find-eev-quick-intro \"9.1. `code-c-d'\")
-  (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
-
-The diagram will be this one:
-
-   ________       _______	  _______          ______________               ________
-  |        |     |       |	 |       |        |       |      |             |        |
-  |  [EX]  |     |  [D]  | M-he  |  [EH] | M-21j  |  [EH] |  [N] | C-x 1 M-K*  |  [EX]  |
-  |        | --> |       | ----> |       | -----> |  M-w ::> C-y | ----------> |        |
-  |________|     |_______|       |_______|        |_______|______|             |________|
-
-Where [D] is a dired buffer. Watch this video and try to
-reproduce what happens in it:
-
-  (find-2021workshop6video \"0:00\")
-
-Do this twice. In the first time you should create elisp
-hyperlinks pointing to this directory and this file,
-
-  (find-efile \"play/\")
-  (find-efile \"play/\" \"life.el\")
-
-and in the second time you should create elisp hyperlinks to a
-directory and a file that you find interesting.
-
-
-
-
-
-3.3. Invisible text
--------------------
-Run this sexp:
-
-  (eek \"3*<up> C-a C-SPC C-e\")
-
-and then use `M-w' to copy the region to the kill ring and `M-hy'
-to yank it into this sexp:
-
-  (insert \"\\n\")
-
-Instead of getting the first sexp below you will get the second
-one:
-
-  (insert \"\\n\" \"2.3. Invisible text\")
-  (insert \"\\n\" \"2.3. Invisible text\\n-------------------\")
-
-That's because the title line contains some invisible text, and
-the `M-hy' clears all the properties of the text that it inserts,
-including the invisibility property. Invisible text is explained
-here:
-
-  (find-elnode \"Invisible Text\")
-
-When you type `C-e' on the title of a section of an \"intro\" the
-`C-e' takes you to the right of the line _after_ the invisible
-text. If you type `<left> <right>' there this moves the point to
-a position before the invisible text. So, if you want to copy the
-title of a section of an intro to use in a refinement, use
-
-  C-a C-SPC C-e <left> <right> M-w
-
-instead of:
-
-  C-a C-SPC C-e M-w
-
-Exercise: create a pair of elisp hyperlinks, the first one
-pointing to this intro and the second pointing to this section,
-and copy the pair to your notes. You'll have to watch the video
-to understand some tricky points and you will have to follow the
-diagram below.
-
-   ________         _______          _______________               ________
-  |        |       |       |        |        |      |             |        |
-  |  [EX]  | M-hh  |  [EH] | M-21j  |  [EH]  |  [N] | C-x 1 M-K*  |  [EX]  |
-  |  M-w   | ----> |       | -----> |  M-h2 ::> C-y | ----------> |        |
-  |        |       |       |        |  M-hy  |      |             |        |
-  |________|       |_______|        |________|______|             |________|
-
-[Video links:]
-  (find-2021workshop4video \"0:00\")
 
 
 
@@ -4529,17 +4680,8 @@ to your notes.
 
 
 
-1. Saving interesting links
-===========================
-The documentation of eev says at several places that people
-should \"save all interesting links to their notes\". It is
-easier to learn that if we split it into these tasks:
 
-  a. save links to your notes
-  b. test these links
-  c. mark the links that you don't understand
-  d. undestand what each link does (with M-h M-f)
-  e. recognize which links are interesting
+
 
 
 " pos-spec-list)))

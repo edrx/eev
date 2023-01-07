@@ -1,6 +1,6 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221216
+;; Version:    20230107
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1229,7 +1229,8 @@ Don't use this in multi-user machines."
   (let ((ee-file-tcl "/tmp/ee.tcl")
 	(tclcode (format "puts [tk_chooseColor -initialcolor %s]; exit\n"
 			 (or initialcolor "gray"))))
-    (ee-write-string tclcode ee-file-tcl)
+    ;; (ee-write-string tclcode ee-file-tcl)
+    (write-region tclcode nil ee-file-tcl)
     (find-sh0 (format "wish %s" ee-file-tcl))))
 
 
