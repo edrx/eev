@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230104
+;; Version:    20230110
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -150,6 +150,7 @@
 ;; «.find-kla-links»			(to "find-kla-links")
 ;; «.find-rstdoc-links»			(to "find-rstdoc-links")
 ;; «.find-mpv-links»			(to "find-mpv-links")
+;; «.find-try-sly-links»		(to "find-try-sly-links")
 
 
 (require 'eev-env)
@@ -3906,6 +3907,83 @@ N should be either a number or a symbol; SEXP should be a sexp."
      )
    pos-spec-list))
 
+
+
+;; «find-try-sly-links»  (to ".find-try-sly-links")
+;; Skel: (find-find-links-links-new "try-sly" "" "")
+;; Test: (find-try-sly-links)
+;;
+(defun find-try-sly-links (&rest pos-spec-list)
+"Visit a temporary buffer containing a script for trying Sly."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-try-sly-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-try-sly-links)
+     ""
+     ,(ee-template0 (ee-adjust-red-stars "\
+ This script is incomplete!!!
+
+ Make sure that sbcl is installed.
+ Note: this block only works on Debian.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo apt-get install sbcl
+
+ Install sly. Use low-level sexps instead of `M-x list-packages'.
+ Note that some of the sexps below take several seconds to run.
+
+ (package-initialize)
+ (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))
+ (package-refresh-contents)
+ (package-install 'sly)
+
+ Download quicklisp.lisp.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+mkdir -p $S/https/beta.quicklisp.org/
+cd       $S/https/beta.quicklisp.org/
+ls -lAF
+rm -fv quicklisp.lisp
+rm -fv quicklisp.lisp.asc
+wget -nc 'https://beta.quicklisp.org/quicklisp.lisp'
+wget -nc 'https://beta.quicklisp.org/quicklisp.lisp.asc'
+# (find-fline \"$S/https/beta.quicklisp.org/\")
+# (find-fline \"$S/https/beta.quicklisp.org/quicklisp.lisp\")
+
+ Run quicklisp.lisp.
+ Ask it to install slynk and to change ~/.sbclrc.
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd       $S/https/beta.quicklisp.org/
+sbcl --load quicklisp.lisp
+  (quicklisp-quickstart:help)
+  (quicklisp-quickstart:install)
+  (ql:quickload :slynk)
+  (ql:add-to-init-file)
+
+  ;; Inspect the changes in ~/.sbclrc:
+  ;; (find-fline \"~/.sbclrc\")
+  ;; (find-fline \"~/.sbclrc\" \"added by ql:add-to-init-file:\")
+
+ Start Sly.
+ One of its messages will (should?) be:
+ [sly] Connecting to Slynk on port 45477.
+
+ (eepitch-sly)
+ (eepitch-kill)
+ (eepitch-sly)
+
+"))
+     )
+   pos-spec-list))
 
 
 

@@ -1,3 +1,7 @@
+2023-01-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-try-sly-links): new function.
+
 2023-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-saving-links-intro): reordered the intro.
