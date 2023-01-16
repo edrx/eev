@@ -930,6 +930,7 @@ newlines, as \"big strings\". This is a bit childish, I know..."
 ;; Test:
 ;;
 ;;   (find-epp (macroexpand ' (cl-defstruct mypoint x y) ))
+;;   (find-eppm             ' (cl-defstruct mypoint x y) )
 ;;  
 ;;   (cl-defstruct mypoint x y)
 ;;   (cl-defstruct (mypoint-colored (:include point)) color)

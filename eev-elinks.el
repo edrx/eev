@@ -524,8 +524,8 @@ This is an internal function used by `find-ekey-links' and
 ;; (find-eev "eev-mode.el" "eev-mode-map-set" "\\M-h\\M-i")
 ;;
 ;; See:
-;; (find-eev "eev-hlinks.el" "ee-fhl-main-program")
-;; (find-eev "eev-hlinks.el" "ee-fhl-main-program" "(ee-find-info-links)")
+;; (find-eev "eev-hlinks.el" "hprog")
+;; (find-eev "eev-hlinks.el" "hprog" "(ee-find-info-links)")
 ;; (find-eev-quick-intro "10.2. Generating short hyperlinks to info nodes")
 
 (defvar ee-info-file "")

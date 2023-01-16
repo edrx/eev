@@ -3925,23 +3925,32 @@ N should be either a number or a symbol; SEXP should be a sexp."
      ,(ee-template0 (ee-adjust-red-stars "\
  This script is incomplete!!!
 
- Make sure that sbcl is installed.
- Note: this block only works on Debian.
+ 1. Install some Debian packages
+ ===============================
+ Note that the package \"hyperspec\" will install
+ a local copy of the Common Lisp Hyperspec here:
+   (find-fline \"/usr/share/doc/hyperspec/\")
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-sudo apt-get install sbcl
+sudo apt-get install sbcl hyperspec maxima
 
- Install sly. Use low-level sexps instead of `M-x list-packages'.
+
+ 2. Install some elisp packages
+ ==============================
+ Here we use low-level sexps instead of `M-x list-packages'.
  Note that some of the sexps below take several seconds to run.
 
  (package-initialize)
  (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))
  (package-refresh-contents)
  (package-install 'sly)
+ (package-install 'clhs)
 
- Download quicklisp.lisp.
+
+ 3. Download quicklisp.lisp
+ ==========================
 
  (eepitch-shell)
  (eepitch-kill)
@@ -3950,13 +3959,13 @@ mkdir -p $S/https/beta.quicklisp.org/
 cd       $S/https/beta.quicklisp.org/
 ls -lAF
 rm -fv quicklisp.lisp
-rm -fv quicklisp.lisp.asc
-wget -nc 'https://beta.quicklisp.org/quicklisp.lisp'
-wget -nc 'https://beta.quicklisp.org/quicklisp.lisp.asc'
+wget -nc https://beta.quicklisp.org/quicklisp.lisp
 # (find-fline \"$S/https/beta.quicklisp.org/\")
 # (find-fline \"$S/https/beta.quicklisp.org/quicklisp.lisp\")
 
- Run quicklisp.lisp.
+
+ 4. Run quicklisp.lisp
+ =====================
  Ask it to install slynk and to change ~/.sbclrc.
 
  (eepitch-shell)
@@ -3970,16 +3979,129 @@ sbcl --load quicklisp.lisp
   (ql:add-to-init-file)
 
   ;; Inspect the changes in ~/.sbclrc:
-  ;; (find-fline \"~/.sbclrc\")
-  ;; (find-fline \"~/.sbclrc\" \"added by ql:add-to-init-file:\")
+  ;;   (find-fline \"~/.sbclrc\")
+  ;;   (find-fline \"~/.sbclrc\" \"added by ql:add-to-init-file:\")
+  ;; Inspect the ~/quicklisp/ directory:
+  ;;   (code-c-d \"ql\" \"~/quicklisp/\")
+  ;;   (find-qlfile \"\")
+  ;;   (find-qlsh \"find * | sort\")
 
- Start Sly.
+
+
+ 5. Change your ~/.emacs
+ =======================
+ Copy the block below to your ~/.emacs:
+
+;; From: (find-try-sly-links)
+;; Skel: (find-rstdoc-links :clhs)
+(setq ee-rstdoc-:clhs
+      '(:base      \"Front/Contents\"
+        :base-web  \"http://clhs.lisp.se/\"
+	           ;; \"http://www.lispworks.com/documentation/HyperSpec/\"
+        :base-html \"file:///usr/share/doc/hyperspec/\"
+        :base-rst  \"/BASE-RST/\"
+        :rst       \".rst\"
+        :htm       \".htm\"
+        :res       (\"#.*$\" \"\\\\?.*$\" \".html?$\" \".txt$\" \".rst$\" \"^file://\"
+		    \"http://clhs.lisp.se/\"
+		    \"http://www.lispworks.com/documentation/HyperSpec/\"
+		    \"http://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/html/hyperspec/HyperSpec/\"
+		    \"http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/\"
+		    \"/usr/share/doc/hyperspec/\")
+        :kill      clk
+	))
+
+;; (find-code-rstdoc :clhs)
+        (code-rstdoc :clhs)
+
+;; See:   (find-status   \"hyperspec\")
+;;        (find-vldifile \"hyperspec.list\")
+;;        (find-udfile   \"hyperspec/\")
+;;        (find-evardescr 'clhs-root)
+;;        (find-evariable 'clhs-root)
+;;        (find-ehashtable clhs-symbols)
+;; Tests: (find-clhsdoc)
+;;        (find-clhsdoc \"Body/m_loop\")
+;;        (find-clhsdoci        \"loop\")
+;;        (ee-clhs-lookup-index \"loop\")
+;;
+(setq clhs-root \"file:///usr/share/doc/hyperspec/\")
+
+(defun ee-clhs-lookup-index (name)
+  (require 'clhs)
+  (gethash (upcase name) (clhs-symbols)))
+
+(defun find-clhsdoci (name &rest rest)
+  (let* ((str0 (ee-clhs-lookup-index name))
+	 (str (replace-regexp-in-string \"\\\\.html?$\" \"\" str0)))
+    (find-clhsdoc str)))
+
+(code-c-d \"sbcl\" \"/usr/share/sbcl-source/\" \"sbcl\")
+(code-c-d \"ql\" \"~/quicklisp/\")
+;; (find-qlfile \"\")
+;; (find-qlsh \"find * | sort\")
+
+
+
+ 6. Test Sly
+ ===========
  One of its messages will (should?) be:
  [sly] Connecting to Slynk on port 45477.
 
  (eepitch-sly)
  (eepitch-kill)
  (eepitch-sly)
+;; From: (find-es \"lisp\" \"sharpsign-P\")
+(apropos \"PATHNAME\")
+(make-pathname :name \"FOO\")
+(inspect (make-pathname :name \"FOO\"))
+(macroexpand '(defstruct mypoint x y))
+
+(defvar o)
+(setq o (macroexpand '(defstruct mypoint x y)))
+ (eepitch-eval-at-target-window '(sly-inspect \"o\"))
+
+
+
+ 7. Tell Maxima how to load Sly
+ ==============================
+ Run this,
+   (mkdir \"~/.maxima/\" t)
+ and then copy the block below to:
+   (find-fline \"~/.maxima/startsly.lisp\")
+ Note that it contains a \"test block\". See:
+   http://angg.twu.net/eepitch.html#test-blocks
+
+;; From: (find-try-sly-links)
+;; Based on: (find-angg \".maxima/startsly.lisp\")
+;;
+(load #P\"~/quicklisp/setup.lisp\")
+(ql:quickload :slynk)
+(slynk:create-server :port 56789 :dont-close t)
+
+#|
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+(load #P\"~/quicklisp/setup.lisp\")
+(ql:quickload :slynk)
+
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+load(\"startsly\");
+ (sly-connect \"localhost\" 56789)
+ (eepitch-sly)
+
+|#
+
+
+ See:
+ https://gigamonkeys.com/book/lather-rinse-repeat-a-tour-of-the-repl.html
+
+
+
+
 
 "))
      )

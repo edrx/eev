@@ -1,6 +1,6 @@
 ;;; eev-hlinks.el --- `find-here-links' and variants.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2020-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2020-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221218
+;; Version:    20230116
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hlinks.el>
@@ -111,9 +111,10 @@
 ;; «.find-here-links»		(to "find-here-links")
 ;; «.ee-find-here-links»	(to "ee-find-here-links")
 ;; «.ee-find-here-debug-links»	(to "ee-find-here-debug-links")
-;; «.ee-find-here-links-tests»	(to "ee-find-here-links-tests")
-;; «.ee-fhl-main-program»	(to "ee-fhl-main-program")
-;; «.ee-fhl-run»		(to "ee-fhl-run")
+;; «.hprog»			(to "hprog")
+;; «.ee-hprog-find-here-links»	(to "ee-hprog-find-here-links")
+;; «.hlang»			(to "hlang")
+;; «.ee-hlang-run»		(to "ee-hlang-run")
 ;;
 ;; «.ee-find-here-links-old»	(to "ee-find-here-links-old")
 ;;
@@ -176,15 +177,15 @@ See: (find-here-links-intro)"
 (defun ee-find-here-links (&optional arg)
   "Generate the non-header part of the \"*(find-here-links)*\" buffer.
 This function runs `(ee-fhl-run ee-fhl-main-program)', that runs
-the program in `ee-fhl-main-program' with `ee-fhl-run' until an
-expression like this in it
+the program in `ee-hprog-find-here-links' with `ee-hlang-run'
+until an expression like this in it
 
   (:if SEXP1 SEXP2)
 
 succeeds. When the successful `(:if ___ ___)' is found its SEXP1
-is stored in the global variable `ee-fhl-sexp1' and its SEXP2 is
-stored in the global variable `ee-fhl-sexp2'. Their values will
-be things like:
+is stored in the global variable `ee-hlang-sexp1' and its SEXP2
+is stored in the global variable `ee-hlang-sexp2'. Their values
+will be things like:
 
   SEXP1  =>  (ee-<kind>-bufferp)
   SEXP2  =>  (ee-find-<kind>-links)
@@ -203,7 +204,7 @@ which kind \"here\" the current buffer is."
   (ee-detect-here)
   (if arg
       (cons "" (ee-find-here-debug-links))
-    (cons "" (eval ee-fhl-sexp2))))
+    (cons "" (eval ee-hlang-sexp2))))
 
 ;; «ee-find-here-debug-links»  (to ".ee-find-here-debug-links")
 ;; See: (find-eevfile "eev-hlinks.el" "Debug mode")
@@ -213,62 +214,56 @@ which kind \"here\" the current buffer is."
   `("# The last call to"
     "#     '(find-here-links ARG)"
     "#  -> '(ee-detect-here)"
-    "#  -> '(ee-fhl-run ee-fhl-main-program)"
+    "#  -> '(ee-hlang-run ee-hprog-find-here-links)"
     "# produced this:"
-    ,(format "#   ee-fhl-sexp1  =>  %s" (ee-S ee-fhl-sexp1))
-    ,(format "#   ee-fhl-sexp2  =>  %s" (ee-S ee-fhl-sexp2))
+    ,(format "#   ee-hlang-sexp1  =>  %s" (ee-S ee-hlang-sexp1))
+    ,(format "#   ee-hlang-sexp2  =>  %s" (ee-S ee-hlang-sexp2))
     "# See:"
-    "#   ee-fhl-sexp1"
-    "#   ee-fhl-sexp2"
-    ,(format "#   (find-efunction '%s)" (car ee-fhl-sexp1))
-    ,(format "#   (find-efunction '%s)" (car ee-fhl-sexp2))
+    "#   ee-hlang-sexp1"
+    "#   ee-hlang-sexp2"
+    ,(format "#   (find-efunction '%s)" (car ee-hlang-sexp1))
+    ,(format "#   (find-efunction '%s)" (car ee-hlang-sexp2))
     "#   (find-eev \"eev-hlinks.el\" \"find-here-links\")"
     "#   (find-eev \"eev-hlinks.el\" \"find-here-links\" \"If ARG\")"
     "#   (find-eev \"eev-hlinks.el\" \"ee-find-here-links\")"
     "#   (find-eev \"eev-hlinks.el\" \"ee-find-here-debug-links\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-fhl-run\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-fhl-run\" \"ee-detect-here\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-fhl-main-program\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\" \"ee-detect-here\")"
+    "#   (find-eev \"eev-hlinks.el\" \"ee-hprog-find-here-links\")"
     ))
 
 
+;; 2023jan16: removed all the functions and variables with "fhl" in
+;; their names, and replaced them with "hprog"s and "hlang"s.
+;; An old comment:
+;; 
+;; ;; Note the _AT THIS MOMENT_ the easiest way to add support for a new
+;; ;; kind of "here" in `ee-fhl-main-program' is to override this
+;; ;; variable by setq-ing it in your init file... this is just because
+;; ;; I've been lazy and I haven't implemented YET a way to make
+;; ;; `ee-fhl-main-program' call "subprograms". If you need to extend
+;; ;; this please get in touch with me and I'll implement the missing
+;; ;; parts!!!
 
-;; «ee-find-here-links-tests»  (to ".ee-find-here-links-tests")
-;; Low-level tests (old, written before `ee-find-here-debug-links'):
+
+
+
+;;;  _                           
+;;; | |__  _ __  _ __ ___   __ _ 
+;;; | '_ \| '_ \| '__/ _ \ / _` |
+;;; | | | | |_) | | | (_) | (_| |
+;;; |_| |_| .__/|_|  \___/ \__, |
+;;;       |_|              |___/ 
 ;;
-;;   (find-2a nil                 '(find-here-links))
-;;   (find-2a nil '(find-elinks (ee-find-here-links)))
-;;           (ee-fhl-run ee-fhl-main-program)
-;;                 (list ee-fhl-sexp1 ee-fhl-sexp2)
-;;                                    ee-fhl-sexp2
-;;   (find-2a nil '(find-elinks (eval ee-fhl-sexp2)))
+;; «hprog»  (to ".hprog")
+;; An "hprogram" is a program that identifies what we have "here" and
+;; decides how to handle that. My main example of an "hprogram" is the
+;; one that is used by `find-here-links' to produce a temporary buffer
+;; with hyperlinks to "here". It is here, and my _current_ interpreter
+;; for the "hlanguage" in which "hprograms" are written is below.
 
-
-
-
-
-;;;                  _                                                   
-;;;  _ __ ___   __ _(_)_ __    _ __  _ __ ___   __ _ _ __ __ _ _ __ ___  
-;;; | '_ ` _ \ / _` | | '_ \  | '_ \| '__/ _ \ / _` | '__/ _` | '_ ` _ \ 
-;;; | | | | | | (_| | | | | | | |_) | | | (_) | (_| | | | (_| | | | | | |
-;;; |_| |_| |_|\__,_|_|_| |_| | .__/|_|  \___/ \__, |_|  \__,_|_| |_| |_|
-;;;                           |_|              |___/                     
-;;
-;; «ee-fhl-main-program»  (to ".ee-fhl-main-program")
-;; `ee-find-here-links' runs this "program" with `ee-fhl-run'.
-;;
-;; Try: (find-eppp ee-fhl-main-program)
-;;     (ee-fhl-run ee-fhl-main-program)
-;;
-;; Note the _AT THIS MOMENT_ the easiest way to add support for a new
-;; kind of "here" in `ee-fhl-main-program' is to override this
-;; variable by setq-ing it in your init file... this is just because
-;; I've been lazy and I haven't implemented YET a way to make
-;; `ee-fhl-main-program' call "subprograms". If you need to extend
-;; this please get in touch with me and I'll implement the missing
-;; parts!!!
-
-(defvar ee-fhl-main-program
+;; «ee-hprog-find-here-links»  (to ".ee-hprog-find-here-links")
+(defvar ee-hprog-find-here-links
  '(:or
    ;; By major mode:
    (:if (ee-info-bufferp)       (ee-find-info-links))
@@ -309,71 +304,104 @@ which kind \"here\" the current buffer is."
    )
  "See `ee-find-here-links'.")
 
+;; Two e-mails about using an hprogram to detect the thing at point:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2023-01/msg00027.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2023-01/msg00047.html
 
-;;;  ____  ____  _     
-;;; |  _ \/ ___|| |    
-;;; | | | \___ \| |    
-;;; | |_| |___) | |___ 
-;;; |____/|____/|_____|
-;;;                    
-;; «ee-fhl-run»  (to ".ee-fhl-run")
-;; Here we define the interpreter for the DSL that is used in
-;; `ee-fhl-main-program'.
-;; TODO: implement (:subprogram-in VARNAME).
 
-(defvar ee-fhl-sexp1 nil
-  "When `ee-fhl-run' finds an (ee-fhl-:if SEXP1 SEXP2)
-   that succeeds it stores the SEXP1 in this variable.")
 
-(defvar ee-fhl-sexp2 nil
-  "When `ee-fhl-run' finds an (ee-fhl-:if SEXP1 SEXP2)
-   that succeeds it stores the SEXP2 in this variable.")
 
-(defun ee-fhl-run (fhl-program)
-  "See `ee-fhl-main-program'."
-  (setq ee-fhl-sexp1 nil)
-  (setq ee-fhl-sexp2 nil)
-  (ee-fhl-eval fhl-program)
-  (list ee-fhl-sexp1 ee-fhl-sexp2))
-
-;; Tests:
-;; (ee-fhl-eval  '(:eval (+ 20 3)))
-;; (ee-fhl-eval  '(:if (< 1 2) (list 3 4)))
-;; (ee-fhl-:eval '(+ 1 2) '(+ 3 4))
-;; (ee-fhl-:if   '(< 1 2) '(list 3 4))
-;; (ee-fhl-:if   '(> 1 2) '(list 3 4))
-;; (ee-fhl-:or   '(:eval nil) '(:eval nil) '(:eval 42) '(:eval 99))
+;;;  _     _                   
+;;; | |__ | | __ _ _ __   __ _ 
+;;; | '_ \| |/ _` | '_ \ / _` |
+;;; | | | | | (_| | | | | (_| |
+;;; |_| |_|_|\__,_|_| |_|\__, |
+;;;                      |___/ 
 ;;
-(defun ee-fhl-eval (fhl-sexp)
-  (let* ((f (ee-intern "ee-fhl-%s" (car fhl-sexp)))
-	 (rest (cdr fhl-sexp)))
-    (apply f rest)))
+;; «hlang»  (to ".hlang")
+;; An interpreter for the "hlanguage" in which "hprograms" are
+;; written. This interpreter treats "hsexps" of the form (:if ...) in
+;; a very atypical way to make everything easy to debug - see the
+;; docstrings of the functions `ee-hlang-:if' and `ee-hlang-run'.
+;;
+;; Tests:
+;; (ee-hlang-:lisp '(+ 20 3) '(+ 40 5))
+;; (ee-hlang-:or   '(:lisp nil) '(:lisp nil) '(:lisp 42) '(:lisp 99))
+;; (ee-hlang-:if   '(< 1 2) '(list 'lt))
+;; (ee-hlang-:if   '(> 1 2) '(list 'gt))
+;;
+;; (ee-hlang-eval  '(:lisp (+ 20 3) (+ 40 5)))
+;; (ee-hlang-eval  '(:or (:lisp nil) (:lisp nil) (:lisp 42) (:lisp 99)))
+;; (ee-hlang-eval  '(:if (< 1 2) (list 'lt)))
+;; (ee-hlang-eval  '(:if (> 1 2) (list 'gt)))
+;; (ee-hlang-eval  '(:or (:if (< 1 2) (list 'lt)) (:if (> 1 2) (list 'gt))))
+;; (ee-hlang-eval  '(:or (:if (> 1 2) (list 'gt)) (:if (< 1 2) (list 'lt))))
 
-(defun ee-fhl-:eval (&rest sexps)
+;; The Three Variables.
+(defvar ee-hlang-sexp1-result nil "See `ee-hlang-:if'.")
+(defvar ee-hlang-sexp1        nil "See `ee-hlang-:if'.")
+(defvar ee-hlang-sexp2        nil "See `ee-hlang-:if'.")
+
+(defun ee-hlang-eval (hsexp)
+  "If HSEXP is (:foo bar plic ploc), run (ee-hlang-:foo bar plic ploc)."
+  (let* ((kw   (car hsexp))
+	 (args (cdr hsexp))
+	 (f    (ee-intern "ee-hlang-%s" kw)))
+    (apply f args)))
+
+(defun ee-hlang-:lisp (&rest sexps)
+  "Eval (progn . SEXPS) and return the result. This is mainly for tests."
   (eval (cons 'progn sexps)))
 
-(defun ee-fhl-:if (sexp1 sexp2)
-  (when (eval sexp1)
-    (setq ee-fhl-sexp1 sexp1)
-    (setq ee-fhl-sexp2 sexp2)
-    sexp2))
+(defun ee-hlang-:or (&rest hsexps)
+  "Run `ee-hlang-eval' on each hsexp in HSEXPS until on succeeds.
+On success return the result of that hsexp. On failure return nil."
+  (cl-loop for hsexp in hsexps
+	   for hresult = (ee-hlang-eval hsexp)
+	   until hresult
+           finally return hresult))
 
-(defun ee-fhl-:or (&rest fhl-sexps)
-  (cl-loop for fhl-sexp in fhl-sexps
-	   for fhl-result = (ee-fhl-eval fhl-sexp)
-	   until fhl-result
-           finally return fhl-result))
+(defun ee-hlang-:if (sexp1 sexp2)
+  "If (eval SEXP1) is true, return (list SEXP1 SEXP2).
+Note that on success:
+  a) we save the result of SEXP1 into `ee-hlang-sexp1-result',
+  b) we save SEXP1 into `ee-hlang-sexp1',
+  c) we save SEXP2 into `ee-hlang-sexp2',
+  d) we DO NOT evaluate SEXP2,
+  e) we return (list SEXP1 SEXP2) instead of (eval SEXP2).
+This semantics is weird but it makes debugging of hprograms very easy."
+  (let ((result (eval sexp1)))
+    (when result
+      (setq ee-hlang-sexp1-result result)
+      (setq ee-hlang-sexp1 sexp1)
+      (setq ee-hlang-sexp2 sexp2)
+      (list sexp1 sexp2))))
+
+;; «ee-hlang-run»  (to ".ee-hlang-run")
+(defun ee-hlang-run (hprogram)
+  "Clear the Three Variables and run (ee-hlang-eval HPROGRAM).
+HPROGRAM is usually an hsexp of the form (:or hsexp1 ... hsexpn).
+This is my preferred way of running an hprogram: the first (:if
+sexp1 sexp2) in the hprogram that succeeds will have its sexp1,
+sexp2 and the result of sexp1 stored in the Three Variables, and
+it will make the hprogram abort. If no (:if)s in the hprogram
+succeed then the Three Variables will be nil, and this returns
+nil."
+  (setq ee-hlang-sexp1-result nil)
+  (setq ee-hlang-sexp1 nil)
+  (setq ee-hlang-sexp2 nil)
+  (ee-hlang-eval hprogram))
 
 (defun ee-detect-here ()
   "To understand this, run `find-here-links' with a prefix argument.
-This is the standard high-level way to call `ee-fhl-run'."
-  (ee-fhl-run ee-fhl-main-program))
+This is the standard high-level way to call `ee-hlang-run'."
+  (ee-hlang-run ee-hprog-find-here-links))
 
 
 
 
 ;; «ee-find-here-links-old»  (to ".ee-find-here-links-old")
-;; Old version:
+;; Old version - hard to debug:
 ;; (defun ee-find-here-links ()
 ;;   (cond ;; by major mode
 ;;         ((ee-info-bufferp)      (cons "" (ee-find-info-links)))      ; M-h M-i
@@ -493,8 +521,8 @@ a single whitespace character, and the results are `concat'-ed."
 (defvar ee-efunctiondescr-re
   (ee-underlinewsp-re
    "^\\([^ \t\n]+\\)_is_an?"
-   "\\(_autoloaded\\|_interactive\\|_compiled\\|_byte-compiled\\)*"
-   "\\(_Lisp_function\\|_macro\\|_special_form\\)"))
+   "\\(_autoloaded\\|_interactive\\|_compiled\\|_byte-compiled\\|_built-in\\)*"
+   "\\(_Lisp_function\\|_function\\|_macro\\|_special_form\\)"))
 (defun  ee-efunctiondescr-bufferp () (ee-buffer-help ee-efunctiondescr-re 1))
 (defun  ee-find-efunctiondescr-links ()
   (let ((f (ee-efunctiondescr-bufferp)))

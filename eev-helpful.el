@@ -1,6 +1,6 @@
 ;;; eev-helpful.el -- eev support for helpful.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2022 Free Software Foundation, Inc.
+;; Copyright (C) 2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220318
+;; Version:    20230116
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-helpful.el>
@@ -47,8 +47,8 @@
 ;; Note that `find-here-links' calls functions from this file
 ;; when the major mode is `helpful-mode' - see:
 ;;
-;;   (find-eev "eev-hlinks.el" "ee-fhl-main-program")
-;;   (find-eev "eev-hlinks.el" "ee-fhl-main-program" "helpful")
+;;   (find-eev "eev-hlinks.el" "hprog")
+;;   (find-eev "eev-hlinks.el" "hprog" "helpful")
 ;;
 ;; Also, `find-efunction-links' and `find-evariable-links' now include
 ;; links with `find-hfunction' and `find-hvariable' in the temporary
