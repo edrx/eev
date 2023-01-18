@@ -2,7 +2,7 @@
 ;; The basic hyperlinks are the ones that do not depend on templates,
 ;; and that are not created by `code-c-d' and friends.
 
-;; Copyright (C) 1999-2022 Free Software Foundation, Inc.
+;; Copyright (C) 1999-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221216
+;; Version:    20230117
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
@@ -613,6 +613,14 @@ properties to omit."
 	   for pairs = (cl-loop for (x y) on props by 'cddr
 				collect (list x y))
 	   collect (cons s (ee-sort-pairs pairs))))
+
+(defun ee-symbol< (symbol1 symbol2)
+  (string< (symbol-name symbol1) (symbol-name symbol2)))
+
+;; Tests: (find-eppp global-minor-modes)
+;;        (find-eppp (ee-sort-symbols global-minor-modes))
+(defun ee-sort-symbols (symbols)
+  (sort symbols 'ee-symbol<))
 
 (defun ee-sort-pairs (pairs)
   "Sort a list of PAIRS of the the form (symbol value)."

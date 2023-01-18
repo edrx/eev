@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230110
+;; Version:    20230118
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
@@ -3923,8 +3923,6 @@ N should be either a number or a symbol; SEXP should be a sexp."
      (find-efunction 'find-try-sly-links)
      ""
      ,(ee-template0 (ee-adjust-red-stars "\
- This script is incomplete!!!
-
  1. Install some Debian packages
  ===============================
  Note that the package \"hyperspec\" will install
@@ -3993,27 +3991,10 @@ sbcl --load quicklisp.lisp
  Copy the block below to your ~/.emacs:
 
 ;; From: (find-try-sly-links)
-;; Skel: (find-rstdoc-links :clhs)
-(setq ee-rstdoc-:clhs
-      '(:base      \"Front/Contents\"
-        :base-web  \"http://clhs.lisp.se/\"
-	           ;; \"http://www.lispworks.com/documentation/HyperSpec/\"
-        :base-html \"file:///usr/share/doc/hyperspec/\"
-        :base-rst  \"/BASE-RST/\"
-        :rst       \".rst\"
-        :htm       \".htm\"
-        :res       (\"#.*$\" \"\\\\?.*$\" \".html?$\" \".txt$\" \".rst$\" \"^file://\"
-		    \"http://clhs.lisp.se/\"
-		    \"http://www.lispworks.com/documentation/HyperSpec/\"
-		    \"http://www.cs.cmu.edu/afs/cs/project/ai-repository/ai/html/hyperspec/HyperSpec/\"
-		    \"http://www.ai.mit.edu/projects/iiip/doc/CommonLISP/HyperSpec/\"
-		    \"/usr/share/doc/hyperspec/\")
-        :kill      clk
-	))
-
+;; The `code-rstdoc' below defines `find-clhsdoc':
 ;; (find-code-rstdoc :clhs)
         (code-rstdoc :clhs)
-
+;;
 ;; See:   (find-status   \"hyperspec\")
 ;;        (find-vldifile \"hyperspec.list\")
 ;;        (find-udfile   \"hyperspec/\")
@@ -4059,6 +4040,13 @@ sbcl --load quicklisp.lisp
 
 (defvar o)
 (setq o (macroexpand '(defstruct mypoint x y)))
+
+ Now try `M-.' on a symbol name, and `M-,' to go back.
+ Then try `C-c I <sexp>' - for example, `C-c I (list 2 3)'.
+ These key sequences are explained in these pages:
+   (find-node \"(sly)Finding definitions\" \"M-.\" \"sly-edit-definition\")
+   (find-node \"(sly)Inspector\" \"C-c I\" \"sly-inspect\")
+ Try also this low-level way to run the inspector:
  (eepitch-eval-at-target-window '(sly-inspect \"o\"))
 
 
@@ -4069,8 +4057,6 @@ sbcl --load quicklisp.lisp
    (mkdir \"~/.maxima/\" t)
  and then copy the block below to:
    (find-fline \"~/.maxima/startsly.lisp\")
- Note that it contains a \"test block\". See:
-   http://angg.twu.net/eepitch.html#test-blocks
 
 ;; From: (find-try-sly-links)
 ;; Based on: (find-angg \".maxima/startsly.lisp\")
@@ -4079,28 +4065,23 @@ sbcl --load quicklisp.lisp
 (ql:quickload :slynk)
 (slynk:create-server :port 56789 :dont-close t)
 
-#|
- (eepitch-sbcl)
- (eepitch-kill)
- (eepitch-sbcl)
-(load #P\"~/quicklisp/setup.lisp\")
-(ql:quickload :slynk)
 
+
+ 8. Inspect Maxima with Sly
+ ==========================
+ Note that here we have two eepitch targets,
+ and we alternate between them...
+
  (eepitch-maxima)
  (eepitch-kill)
  (eepitch-maxima)
 load(\"startsly\");
  (sly-connect \"localhost\" 56789)
  (eepitch-sly)
-
-|#
-
-
- See:
- https://gigamonkeys.com/book/lather-rinse-repeat-a-tour-of-the-repl.html
-
-
-
+(describe '$changevar)
+
+ Now go to the sly-mrepl buffer, put the point
+ on the \"MAXIMA::$CHANGEVAR\", and type `M-.'.
 
 
 "))

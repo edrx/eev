@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230107
+;; Version:    20230118
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1531,6 +1531,7 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
      (find-efunction-links ',mode)
      (find-efunctiondescr  ',mode)
      (find-efunction       ',mode)
+     (find-hvariable ,(concat mode "-map"))
      ""
      (find-estring (documentation ',mode))
      (find-estring (documentation ',mode t))
@@ -1563,6 +1564,8 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
      (find-eppp (--filter (and (boundp it) (symbol-value it)) minor-mode-list))
      (find-elinks (--map `(find-efunctiondescr ',it) minor-mode-list))
      (find-elinks (--map `(find-efunction ',it) minor-mode-list))
+     (find-node "(dash)")
+     (find-node "(dash)Index")
      ""
      (find-elnode "Active Keymaps")
      (find-elnode "Standard Keymaps")
@@ -1572,6 +1575,7 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
      (find-elnode "Controlling Active Maps" "minor-mode-key-binding")
      (find-eppp (current-minor-mode-maps))
      (find-eppp minor-mode-map-alist)
+     (find-eppp (mapcar 'car minor-mode-map-alist))
      (find-eppp (-map 'car minor-mode-map-alist))
      ""
      (find-efunctiondescr 'define-minor-mode)

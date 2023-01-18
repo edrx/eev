@@ -1,3 +1,12 @@
+2023-01-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-try-sly-links): rewrote several parts.
+
+2023-01-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-symbol<): new function.
+	(ee-sort-symbols): new function.
+
 2023-01-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-hlinks.el (ee-efunctiondescr-re): recognize built-in
