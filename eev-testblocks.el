@@ -1,6 +1,6 @@
 ;;; eev-testblocks.el - create "test blocks" using multiline comments.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2019-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221101
+;; Version:    20230121
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-testblocks.el>
@@ -308,6 +308,22 @@ exec(open(\"%s\").read(), globals())
 
 |#
 " (buffer-name)))))
+
+(defun ee-insert-test-raku-mode ()
+  (interactive)
+  (let ((libname
+	 (replace-regexp-in-string
+	  "\\.rakumod$" "" (buffer-name))))
+    (insert (ee-adjust-red-stars (format "
+#`(
+ (eepitch-raku)
+ (eepitch-kill)
+ (eepitch-raku)
+use lib '.'
+use %s
+
+)
+" libname)))))
 
 (defun ee-insert-test-ruby-mode ()
   (interactive)

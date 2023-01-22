@@ -1,3 +1,9 @@
+2023-01-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-raku): new function.
+
+	* eev-testblocks.el (ee-insert-test-raku-mode): new function.
+
 2023-01-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-try-sly-links): rewrote several parts.

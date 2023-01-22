@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012,2015,2018-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221228
+;; Version:    20230121
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
@@ -1044,6 +1044,7 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 (defun eepitch-python3 () (interactive) (eepitch-comint "python3" "python3"))
 (defun eepitch-python  () (interactive) (eepitch-comint "python3" "python3"))
 (defun eepitch-perl () (interactive) (eepitch-comint "perl" "perl -d -e 42"))
+(defun eepitch-raku    () (interactive) (eepitch-comint "raku" "raku"))
 (defun eepitch-php     () (interactive) (eepitch-comint "php -a" "php -a"))
 (defun eepitch-ruby    () (interactive) (eepitch-ansiterm "irb" "irb"))
 (defun eepitch-irb     () (interactive) (eepitch-ansiterm "irb" "irb"))
