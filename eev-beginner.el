@@ -1,6 +1,6 @@
 ;;; eev-beginner.el -- load eev, turn eev-mode on, open a tutorial.
 
-;; Copyright (C) 2019-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2021,2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210506
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-beginner.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-load.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
-;;                                                (find-eev-quick-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-beginner.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-load.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-quick-intro.html>
+;;                                               (find-eev-quick-intro)
 
 ;; «.load-path-hack»	(to "load-path-hack")
 

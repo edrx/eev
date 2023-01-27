@@ -1,6 +1,6 @@
 ;;; eejump.el -- jump quickly to predefined places.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,18 +19,18 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211026
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eejump.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eejump.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-eejump-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-eev-quick-intro)
-;;                                                (find-eejump-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eejump.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eejump.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-quick-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-eejump-intro.html>
+;;                                               (find-eev-intro)
+;;                                               (find-eev-quick-intro)
+;;                                               (find-eejump-intro)
 
 ;;; Commentary:
 

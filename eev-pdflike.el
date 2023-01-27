@@ -1,6 +1,6 @@
 ;;; eev-pdflike.el -- hyperlinks to documents made of pages.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221029
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-pdflike.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-pdflike.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-pdf-like-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-pdflike.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-pdflike.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-pdf-like-intro.html>
 ;;                                                (find-eev-intro)
 ;;                                                (find-pdf-like-intro)
 
@@ -741,7 +741,7 @@ We define it just to make this work: (find-efunction 'find-pdftotext-page)"
 ;;   http://www.tug.org/texworks/
 ;;   https://tug.org/pipermail/tex-live/2019-March/043227.html
 ;;   https://tug.org/pipermail/tex-live/2019-March/043229.html
-;;   http://angg.twu.net/find-pdf-page.html
+;;   http://anggtwu.net/find-pdf-page.html
 
 (defvar ee-texworks-program "texworks")
 

@@ -1,6 +1,6 @@
 ;;; eev-rcirc.el -- rcirc-related elisp hyperlinks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20211024
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-rcirc.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-rcirc.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-rcirc-intro.html>
-;;                                                (find-rcirc-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-rcirc.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-rcirc.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-rcirc-intro.html>
+;;                                               (find-rcirc-intro)
 
 ;; «.low-level»			(to "low-level")
 ;; «.find-rcirc-buffer»		(to "find-rcirc-buffer")

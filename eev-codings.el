@@ -1,6 +1,6 @@
 ;;; eev-codings.el -- tricks to support both the UTF8 coding system and unibyte  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2018-2019 Free Software Foundation, Inc.
+;; Copyright (C) 2018-2019,2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,13 +19,13 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190304
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-coding.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-coding.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-coding.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-coding.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
 
 ;;; Commentary:
 
@@ -49,15 +49,15 @@
 ;;   (find-es "emacs" "unibyte-2019-search")
 ;;   (find-es "emacs" "creating-utf8-files")
 ;;   (find-es "emacs" "ee-re-to")
-;;   http://angg.twu.net/e/emacs.e.html#unibyte-2019
-;;   http://angg.twu.net/e/emacs.e.html#unibyte-2019-search
-;;   http://angg.twu.net/e/emacs.e.html#creating-utf8-files
-;;   http://angg.twu.net/e/emacs.e.html#ee-re-to
+;;   http://anggtwu.net/e/emacs.e.html#unibyte-2019
+;;   http://anggtwu.net/e/emacs.e.html#unibyte-2019-search
+;;   http://anggtwu.net/e/emacs.e.html#creating-utf8-files
+;;   http://anggtwu.net/e/emacs.e.html#ee-re-to
 ;;
 ;;
 ;; NOTE 2: Sorry for taking so long!! Here's what happened. This page
 ;;
-;;   http://angg.twu.net/glyphs.html
+;;   http://anggtwu.net/glyphs.html
 ;;
 ;; tells a bit about the hacked 256-char fonts that I created many
 ;; years before UTF-8 became standard, and that I used for ages in

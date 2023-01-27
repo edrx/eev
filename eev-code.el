@@ -1,6 +1,6 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221127
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-code.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-code.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-code-c-d-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-code.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-code.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-code-c-d-intro.html>
 ;;                                                (find-eev-intro)
 ;;                                                (find-code-c-d-intro)
 
@@ -368,7 +368,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (code-c-d "eetc"   data-directory :gz)
 
 (code-c-d "eev"    ee-eev-source-directory :anchor)       ; (find-eev "")
-(code-c-d "eevvideos" "$S/http/angg.twu.net/eev-videos/") ; (find-eevvideos "")
+(code-c-d "eevvideos" "$S/http/anggtwu.net/eev-videos/") ; (find-eevvideos "")
 
 
 ;; (find-efile "")

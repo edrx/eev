@@ -1,6 +1,6 @@
 ;;; eev-env.el -- set some environment variables.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2021,2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,18 +19,18 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210810
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-env.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-env.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-psne-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-prepared-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-psne-intro)
-;;                                                (find-prepared-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-env.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-env.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-psne-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-prepared-intro.html>
+;;                                               (find-eev-intro)
+;;                                               (find-psne-intro)
+;;                                               (find-prepared-intro)
 
 ;;; Commentary:
 

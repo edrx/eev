@@ -1,6 +1,6 @@
 ;;; eev-wrap.el --- wrap the current line into a hyperlink  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2013,2016,2017,2019,2020 Free Software Foundation, Inc.
+;; Copyright (C) 2013,2016,2017,2019,2020,2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,16 +19,16 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20201206
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-wrap.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-wrap.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-wrap-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-wrap-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-wrap.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-wrap.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-wrap-intro.html>
+;;                                               (find-eev-intro)
+;;                                               (find-wrap-intro)
 
 ;;; Commentary:
 

@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230116
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-helpful.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-helpful.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-helpful.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-helpful.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                                               (find-eev-intro)
 
 
 ;; «.find-helpful-links»	(to "find-helpful-links")

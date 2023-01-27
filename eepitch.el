@@ -19,16 +19,16 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230121
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eepitch.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eepitch.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-quick-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-eepitch-intro.html>
-;;                                                (find-eev-quick-intro)
-;;                                                (find-eepitch-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eepitch.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-quick-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-eepitch-intro.html>
+;;                                               (find-eev-quick-intro)
+;;                                               (find-eepitch-intro)
 
 
 ;; «.eepitch»			(to "eepitch")
@@ -70,13 +70,13 @@
 ;;
 ;;   (find-eev-quick-intro "6. Controlling shell-like programs")
 ;;   (find-eepitch-intro)
-;;   http://angg.twu.net/eev-intros/find-eev-quick-intro.html#6
-;;   http://angg.twu.net/eev-intros/find-eepitch-intro.html
+;;   http://anggtwu.net/eev-intros/find-eev-quick-intro.html#6
+;;   http://anggtwu.net/eev-intros/find-eepitch-intro.html
 ;;
 ;; For videos, see:
 ;;
 ;;   https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
-;;   http://angg.twu.net/#eev
+;;   http://anggtwu.net/#eev
 ;;
 ;;
 ;;
@@ -126,7 +126,7 @@
 ;; preliminary hacker's guide!), let's make some definitions and
 ;; follow a low-level example. I will suppose that you have read
 ;; enough of
-;;   <http://angg.twu.net/eev-current/eepitch.readme.html>
+;;   <http://anggtwu.net/eev-current/eepitch.readme.html>
 ;; to understand how to use eepitch in the most basic cases.
 ;;
 ;; Some sexps, like `(shell)', always switch to a buffer with a
@@ -636,9 +636,9 @@ it replace the red stars by bullets, see:
 ;; See: (find-eev-quick-intro "6.4. Red stars")
 ;;      (find-eev "eev-anchors.el" "glyphs")
 ;; More on glyphs:
-;;   http://angg.twu.net/glyphs.html
+;;   http://anggtwu.net/glyphs.html
 ;; The `(<= 128 pos)' below is explained at:
-;;   http://angg.twu.net/glyphs.html#bug-report
+;;   http://anggtwu.net/glyphs.html#bug-report
 
 (defface eepitch-star-face
   '((t (:foreground "red")))

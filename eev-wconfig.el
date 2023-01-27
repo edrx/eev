@@ -1,6 +1,6 @@
 ;;; eev-wconfig.el -- configure eev on M$ Windows.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2022 Free Software Foundation, Inc.
+;; Copyright (C) 2022-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220605
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-wconfig.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-wconfig.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-psne-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-wconfig.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-wconfig.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-psne-intro.html>
 ;;                                                (find-eev-intro)
 ;;                                                (find-psne-intro)
 
@@ -83,7 +83,7 @@
 ;;
 ;; In dec/2021 I recorded a video, called "Org for Non-Users",
 ;;
-;;   http://angg.twu.net/2021-org-for-non-users.html
+;;   http://anggtwu.net/2021-org-for-non-users.html
 ;;   (find-1stclassvideo-links "2021orgfornonusers")
 ;;   (find-1stclassvideoindex  "2021orgfornonusers")
 ;;
@@ -113,7 +113,7 @@
 ;; Over the years I have experimented with several alternatives to
 ;; customize that "use less magic". This page,
 ;;
-;;   http://angg.twu.net/eev-customize.html
+;;   http://anggtwu.net/eev-customize.html
 ;;
 ;; from april/2022, describe some of my experiments.
 ;;
@@ -137,8 +137,8 @@
 ;; The `(find-wconfig-links)' will create a temporary buffer with
 ;; instructions. For more info, see the video:
 ;;
-;;   http://angg.twu.net/eev-wconfig.html
-;;   http://angg.twu.net/.emacs.videos.html#2022eevwconfig
+;;   http://anggtwu.net/eev-wconfig.html
+;;   http://anggtwu.net/.emacs.videos.html#2022eevwconfig
 ;;   (find-1stclassvideo-links "2022eevwconfig")
 ;;   (find-1stclassvideoindex  "2022eevwconfig")
 
@@ -370,7 +370,7 @@
 ;;      (find-eev-quick-intro \"2. Evaluating Lisp\" \"M-0 M-e\")
 ;;
 ;; The sexps below will download a wget.exe from:
-;;   http://angg.twu.net/eev-wconfig/
+;;   http://anggtwu.net/eev-wconfig/
 ;; And put it in:
 ;;   (find-fline \"~/eev-wconfig/\")
 
@@ -380,7 +380,7 @@
 
 (mkdir       \"~/eev-wconfig/\" t)
 (delete-file \"~/eev-wconfig/wget.exe\")
-(ee-download-with-eww \"http://angg.twu.net/eev-wconfig/wget.exe\"
+(ee-download-with-eww \"http://anggtwu.net/eev-wconfig/wget.exe\"
              \"~/eev-wconfig/\")
 
 
@@ -403,14 +403,14 @@ rm -fv   ~/eev-wconfig/lua53.dll
 rm -fv   ~/eev-wconfig/lua54.exe
 rm -fv   ~/eev-wconfig/lua54.dll
 cd       ~/eev-wconfig/
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/README-wconfig.el
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/pdftotext.exe
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua52.exe
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua52.dll
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua53.exe
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua53.dll
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua54.exe
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/lua54.dll
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/README-wconfig.el
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/pdftotext.exe
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/lua52.exe
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/lua52.dll
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/lua53.exe
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/lua53.dll
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/lua54.exe
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/lua54.dll
 
 # (find-callprocess0 '(\"~/eev-wconfig/wget.exe\"      \"--help\"))
 # (find-callprocess0 '(\"~/eev-wconfig/pdftotext.exe\" \"--help\"))
@@ -422,8 +422,8 @@ mkdir -p ~/eev-wconfig/
 rm -fv   ~/eev-wconfig/Coetzee99.pdf
 rm -fv   ~/eev-wconfig/2022dragABC.mp4
 cd       ~/eev-wconfig/
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/Coetzee99.pdf
-~/eev-wconfig/wget.exe http://angg.twu.net/eev-wconfig/2022dragABC.mp4
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/Coetzee99.pdf
+~/eev-wconfig/wget.exe http://anggtwu.net/eev-wconfig/2022dragABC.mp4
 
 
 
@@ -970,8 +970,8 @@ See the variable `ee-wconfig-magic-code'."
        ""
        ,(ee-template0 "\
 ;; Exercise: learn Org!
-;; See: http://angg.twu.net/eev-wconfig.html
-;;      http://angg.twu.net/eev-wconfig.html#learn-org
+;; See: http://anggtwu.net/eev-wconfig.html
+;;      http://anggtwu.net/eev-wconfig.html#learn-org
 
 
 ;; 1. Understand `code-c-d'
@@ -983,7 +983,7 @@ See the variable `ee-wconfig-magic-code'."
 ;; 2. Download the .zip
 ;; ====================
 ;; From:
-;;   http://angg.twu.net/eev-wconfig.html#learn-org
+;;   http://anggtwu.net/eev-wconfig.html#learn-org
 ;; and unpack it.
 
 ;; 3. Create a link to the directory

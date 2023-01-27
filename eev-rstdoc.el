@@ -19,13 +19,13 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230111
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-rstdoc.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-rstdoc.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-rstdoc.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-rstdoc.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
 ;; «.introduction»		(to "introduction")
@@ -53,9 +53,9 @@
 ;; and there's a video about eev-rstdoc.el:
 ;;
 ;;   Title: Short hyperlinks to Python docs (eev @ EmacsConf2022)
-;;   MP4:   http://angg.twu.net/eev-videos/emacsconf2022-py.mp4
+;;   MP4:   http://anggtwu.net/eev-videos/emacsconf2022-py.mp4
 ;;   YT:    http://www.youtube.com/watch?v=QeqCYQSlz-I
-;;   Page:  http://angg.twu.net/emacsconf2022-py.html
+;;   Page:  http://anggtwu.net/emacsconf2022-py.html
 ;;   Comment: A video about eev-rstdoc.el.
 ;;   Date:    2022dec04
 ;;   Length:  14:03
@@ -70,7 +70,7 @@
 ;; I'm still cleaning it up, and I'll give a presentation
 ;; about it in the EmacsConf2022:
 ;;
-;;   http://angg.twu.net/emacsconf2022-py.html
+;;   http://anggtwu.net/emacsconf2022-py.html
 ;;
 ;; See also these posts in the mailing list:
 ;;
@@ -163,9 +163,9 @@
 ;;
 ;;   (find-es "python" "tut-strings")
 ;;   (find-es "sympy" "tutorial")
-;;   http://angg.twu.net/e/python.e.html#tut-strings
-;;   http://angg.twu.net/e/sympy.e.html#tutorial
-;;   http://angg.twu.net/eepitch.html#tutorials
+;;   http://anggtwu.net/e/python.e.html#tut-strings
+;;   http://anggtwu.net/e/sympy.e.html#tutorial
+;;   http://anggtwu.net/eepitch.html#tutorials
 ;;
 ;;
 ;; 3. How this works

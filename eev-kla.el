@@ -1,6 +1,6 @@
 ;;; eev-kla.el -- kill link to anchor and friends.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2022 Free Software Foundation, Inc.
+;; Copyright (C) 2022-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,13 +19,13 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221203
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-kla.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-kla.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-kla.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-kla.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
 ;; «.a-test»			(to "a-test")
@@ -66,8 +66,8 @@
 ;;
 ;; Most of the docs about eev-kla.el are in this intro:
 ;;
-;;   http://angg.twu.net/eev-intros/find-kla-intro.html
-;;                                 (find-kla-intro)
+;;   http://anggtwu.net/eev-intros/find-kla-intro.html
+;;                                (find-kla-intro)
 ;;
 ;; but some tests can't be run from the intro because they need to be
 ;; run from a file "in which the conversion c,d<-filename works"; this
@@ -154,7 +154,7 @@
 ;; The video is here:
 ;;   (find-eev2022klavideo "0:00")
 ;; and the page about it is here:
-;;   http://angg.twu.net/emacsconf2022-kla.html
+;;   http://anggtwu.net/emacsconf2022-kla.html
 
 
 
