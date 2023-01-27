@@ -1,5 +1,7 @@
 2023-01-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el: changed angg.twu.net to anggtwu.net.
+
 	* eev-blinks.el: changed angg.twu.net to anggtwu.net.
 
 	* eev-elinks.el: changed angg.twu.net to anggtwu.net.

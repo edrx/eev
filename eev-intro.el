@@ -22,10 +22,10 @@
 ;; Version:    20230107
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-intro.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-intro.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-intro.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
 ;;; Commentary:
@@ -292,7 +292,7 @@ This is a tutorial for real beginners.
 It supposes that you have Emacs installed.
 For more material on eev, see:
 
-  http://angg.twu.net/#eev
+  http://anggtwu.net/#eev
 
 
 
@@ -302,8 +302,8 @@ For more material on eev, see:
 The easiest way to install eev is with `M-x list-packages', as
 explained in this video:
 
-  http://angg.twu.net/2020-list-packages-eev-nav.html
-  http://angg.twu.net/eev-videos/M-x-list-packages-eev-nav.mp4
+  http://anggtwu.net/2020-list-packages-eev-nav.html
+  http://anggtwu.net/eev-videos/M-x-list-packages-eev-nav.mp4
   http://www.youtube.com/watch?v=kxBjiUo88_U
 
 The three links in the \"Video links:\" block below
@@ -316,7 +316,7 @@ The three links in the \"Video links:\" block below
 point to positions in that video; to learn how to use links like
 those, visit this URL:
 
-  http://angg.twu.net/eev-intros/find-video-links-intro.html
+  http://anggtwu.net/eev-intros/find-video-links-intro.html
                                 (find-video-links-intro)
 
 Installing eev does NOT activate eev-mode. To activate eev-mode
@@ -572,7 +572,7 @@ buffer. For example, typing `M-h M-h' here generates:
   |# (find-emacs-keys-intro \"1. Basic keys (eev)\" \"M-h M-h\")          |
   |# (find-here-links-intro \"4. `find-here-links-3'\")                 |
   |                                                                   |
-  |# http://angg.twu.net/eev-intros/find-eev-quick-intro.html         |
+  |# http://anggtwu.net/eev-intros/find-eev-quick-intro.html          |
   |# (find-eev-quick-intro)                                           |
   |                                                                   |
   |                                                                   |
@@ -2340,10 +2340,10 @@ These are the current ways to download and install eev:
   1. as an Emacs package, with `M-x list-packages'. See this
      video for _very detailed_ instructions:
 
-       http://angg.twu.net/2020-list-packages-eev-nav.html
+       http://anggtwu.net/2020-list-packages-eev-nav.html
 
   2. as an Emacs package, by downloading a file named
-     eev-YYYYMMDD.tar from either ELPA or angg.twu.net using
+     eev-YYYYMMDD.tar from either ELPA or anggtwu.net using
      links like these ones - but you'll have to correct the date:
 
        https://elpa.gnu.org/packages/eev.html
@@ -2366,7 +2366,7 @@ These are the current ways to download and install eev:
   3. by using the script in section 5.1 below, that downloads a
      .tgz from
 
-       http://angg.twu.net/eev-current/eev2.tgz ,
+       http://anggtwu.net/eev-current/eev2.tgz ,
 
      unpacks it in the directory ~/eev2/ and creates a script
      called \"~/eev\" that starts Emacs loading eev and opening
@@ -2407,7 +2407,7 @@ block of shell commands below into a terminal,
   mkdir  ~/eev2/
   cd     ~/eev2/
   rm -fv eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
+  wget http://anggtwu.net/eev-current/eev2.tgz
   tar -xvzf eev2.tgz
   {
     echo '#!/bin/sh'
@@ -2419,11 +2419,11 @@ block of shell commands below into a terminal,
 and then execute the commands in it. This is explained in this
 outdated video (from 2016!):
 
-  http://angg.twu.net/eev-videos/video-eev-quick-0.mp4
+  http://anggtwu.net/eev-videos/video-eev-quick-0.mp4
 
 In short: you will have to open this URL in a browser,
 
-  http://angg.twu.net/eev-intros/find-eev-install-intro.html#5.1
+  http://anggtwu.net/eev-intros/find-eev-install-intro.html#5.1
 
 in a browser, and open a terminal running a shell; then mark the
 multi-line \"{ ... }\" block above, copy it to the clipboard with
@@ -2536,7 +2536,7 @@ them, but it SEEMS that this is a good recipe for using eev with
   :straight (:host github :repo \"edrx/eev\")
   :config (progn
            ;; See: (find-eev \"eev-load.el\" \"autoloads\")
-           ;; http://angg.twu.net/eev-current/eev-load.el.html#autoloads
+           ;; http://anggtwu.net/eev-current/eev-load.el.html#autoloads
            (require 'eev-load)
            ;; (eev-mode 1)     ; optional
            ;; (eev-beginner)   ; optional
@@ -2686,7 +2686,7 @@ Here is an excerpt of one of my e-mails to Stefan:
     different from, say, the one that a Python user feels today
     because he has huge libraries at his fingertips.\"
 
-    (From: <http://angg.twu.net/miniforth-article.html>)
+    (From: <http://anggtwu.net/miniforth-article.html>)
 
 
 
@@ -2928,7 +2928,7 @@ simplest ways to list the _main_ keys of eev are:
 
 These two ways are shown in this screenshot:
 
-  http://angg.twu.net/IMAGES/eev-mode-help-and-M-2-M-j.png
+  http://anggtwu.net/IMAGES/eev-mode-help-and-M-2-M-j.png
 
 To see _all_ the keybindings, run one of these sexps:
 
@@ -3814,8 +3814,8 @@ It is meant as both a tutorial and a sandbox.
 
 Note: this intro is being rewritten!
 I wrote it originally for this workshop:
-  http://angg.twu.net/2021-workshop.html
-  http://angg.twu.net/2021-eev-exercises.html
+  http://anggtwu.net/2021-workshop.html
+  http://anggtwu.net/2021-eev-exercises.html
 and I also recorded six videos for workshop.
 Very few people came, and I didn't like the videos.
 In dec/2022 I subtitled the videos and then I realized that
@@ -4707,7 +4707,7 @@ to your notes.
 ;; Skel: (find-intro-links "eval")
 ;; (find-TH "eev-article" "hyperlinks")
 ;; (find-TH "eev-article" "forward-and-back")
-;;      http://angg.twu.net/eev-article.html#hyperlinks
+;;      http://anggtwu.net/eev-article.html#hyperlinks
 ;;   file:///home/edrx/TH/L/eev-article.html#hyperlinks
 ;; (find-efunction 'ee-eval-last-sexp)
 
@@ -6036,11 +6036,11 @@ It is meant as both a tutorial (for eepitch) and a sandbox.
 This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
 For a good visual introduction to eepitch, see this page:
-  http://angg.twu.net/eepitch.html
+  http://anggtwu.net/eepitch.html
 
 My video for the EmacsConf2019 has a simple demo of eepitch:
   https://www.youtube.com/watch?v=86yiRG8YJD0&t=956
-  http://angg.twu.net/emacsconf2019.html
+  http://anggtwu.net/emacsconf2019.html
 
 This (old) video shows a demo like the one in section 1.3:
   https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
@@ -6467,9 +6467,9 @@ for examples:
 My presentation at the EmacsConf2021 was about test blocks.
 Links:
 
-  Pages:  http://angg.twu.net/emacsconf2021.html
+  Pages:  http://anggtwu.net/emacsconf2021.html
           https://emacsconf.org/2021/talks/test/
-  Slides: http://angg.twu.net/LATEX/2021emacsconf.pdf
+  Slides: http://anggtwu.net/LATEX/2021emacsconf.pdf
   Video:  https://emacsconf.org/2021/talks/test/
           (find-eev2021video \"0:00\")
 
@@ -6530,7 +6530,7 @@ are hyperlinks, and the ones in \"\"-lines are not.
   rm -Rv /tmp/dednat6/
   mkdir  /tmp/dednat6/
   cd     /tmp/dednat6/
-  wget http://angg.twu.net/dednat6-minimal.zip
+  wget http://anggtwu.net/dednat6-minimal.zip
   unzip dednat6-minimal.zip
 
  (code-c-d \"dn6lua\" \"/tmp/dednat6/dednat6/\" :anchor)
@@ -6626,7 +6626,7 @@ or
 disables the hack. A similar technique for using test blocks in
 makefiles is explained here:
 
-  http://angg.twu.net/eev-make.html
+  http://anggtwu.net/eev-make.html
   (find-2022eevmake0video)
 
 Running `M-x eeit' in a makefile runs
@@ -7117,7 +7117,7 @@ kinds of scripts.
 ;; (find-elnode "Defining Commands")
 ;; (find-enode "Arguments")
 ;;              (find-TH "emacs"    "eejump")
-;;    http://angg.twu.net/emacs.html#eejump
+;;    http://anggtwu.net/emacs.html#eejump
 ;; file:///home/edrx/TH/L/emacs.html#eejump
 ;; «find-eejump-intro»  (to ".find-eejump-intro")
 
@@ -9161,10 +9161,10 @@ that you have mpv installed, and run this escript block:
  (eepitch-kill)
  (eepitch-shell)
   # http://www.youtube.com/watch?v=K6LmZ0A1s9U
-  # http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+  # http://anggtwu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
   mkdir ~/eev-videos/
   cd    ~/eev-videos/
-  wget -nc http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
+  wget -nc http://anggtwu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4
 
 It will download a copy of a video from youtube; I prepared the
 .mp4 by running \"youtube-dl -f 18\" on the youtube URL and
@@ -9526,7 +9526,7 @@ If we execute these two sexps
 
   (code-psnevideo
    \"punchandjudy\"
-   \"http://angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\"
+   \"http://anggtwu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\"
    \"K6LmZ0A1s9U\")
 
   (find-punchandjudyvideo \"1:27\")
@@ -9539,7 +9539,7 @@ the second line is a low-level sexp like this, but in a single
 line,
 
   (find-video
-   \"$S/http/angg.twu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\"
+   \"$S/http/anggtwu.net/eev-videos/Punch_and_Judy_Mark_Poulton-K6LmZ0A1s9U.mp4\"
    \"1:27\")
 
 that will play the local copy of the video starting from 1:27;
@@ -9583,13 +9583,13 @@ shorter sexps. If we call this,
 
   (code-eevvideo \"eevnav\" \"M-x-list-packages-eev-nav\")
 
-it will add \"http://angg.twu.net/eev-videos/\" and \".mp4\" to
+it will add \"http://anggtwu.net/eev-videos/\" and \".mp4\" to
 the string \"M-x-list-packages-eev-nav\" and then call
 `code-psnevideo'. As the third argument was omitted it will be
 set to \"{youtubeid}\". I am using `code-eevvideo' as an
 experiment: when I need to send a short screencast to someone who
 uses eev I record the video, upload it to
-http://angg.twu.net/eev-videos/ - not to youtube - and send to
+http://anggtwu.net/eev-videos/ - not to youtube - and send to
 the person a pair of sexps like these:
 
   (code-eevvideo \"eevnav\" \"M-x-list-packages-eev-nav\" \"kxBjiUo88_U\")
@@ -9612,16 +9612,16 @@ generates a temporary buffer whose first line follows the
 convention that \"the first line regenerates the buffer\", and
 its second line is a link like
 
-  (find-video \"$S/http/angg.twu.net/eev-videos/emacsconf2020.mp4\")
+  (find-video \"$S/http/anggtwu.net/eev-videos/emacsconf2020.mp4\")
 
 that plays the local copy of the video (if it exists). That
 temporary buffer also contains several \"help sexps\" that point
 to parts of this intro, and also a part like
 
   # URL, local file, and a link to the directory of the local file:
-  #               http://angg.twu.net/eev-videos/emacsconf2020.mp4
-  #              $S/http/angg.twu.net/eev-videos/emacsconf2020.mp4
-  # (find-fline \"$S/http/angg.twu.net/eev-videos/\")
+  #               http://anggtwu.net/eev-videos/emacsconf2020.mp4
+  #              $S/http/anggtwu.net/eev-videos/emacsconf2020.mp4
+  # (find-fline \"$S/http/anggtwu.net/eev-videos/\")
 
   # Youtube:
   # (kill-new \"http://www.youtube.com/watch?v=hOAqBc42Gg8\")
@@ -9636,7 +9636,7 @@ download the .mp4 file, and a help sexp that explains that.
 
 That temporary buffer also contains a pair of sexps like
 
-  (code-video \"eev2020video\" \"$S/http/angg.twu.net/eev-videos/emacsconf2020.mp4\")
+  (code-video \"eev2020video\" \"$S/http/anggtwu.net/eev-videos/emacsconf2020.mp4\")
   (find-eev2020video)
 
 that are easy to understand - the first one defines
@@ -9680,7 +9680,7 @@ that generates a temporary buffer with all the stuff described
 above, instead of playing the video file right away - to play the
 video file you have to execute the sexp
 
-  (find-video \"$S/http/angg.twu.net/eev-videos/emacsconf2020.mp4\" \"17:20\")
+  (find-video \"$S/http/anggtwu.net/eev-videos/emacsconf2020.mp4\" \"17:20\")
 
 in the second line of the temporary buffer.
 
@@ -10462,14 +10462,14 @@ ALL my `find-*-links' started as quick hacks.
 SOME of them were useful enough to deserve being cleaned up.
 A FEW of them ended up in:
 
-  http://angg.twu.net/eev-current/eev-elinks.el.html
-  http://angg.twu.net/eev-current/eev-tlinks.el.html
+  http://anggtwu.net/eev-current/eev-elinks.el.html
+  http://anggtwu.net/eev-current/eev-tlinks.el.html
   (find-eev \"eev-elinks.el\")
   (find-eev \"eev-tlinks.el\")
 
 ...but there are lots of other `find-*-links' functions in:
 
-  http://angg.twu.net/.emacs.templates.html
+  http://anggtwu.net/.emacs.templates.html
 
 They are trivial to write. I start with a skeleton that I obtain by
 running `M-x find-find-links-links', and then I modify the first line
@@ -10520,7 +10520,7 @@ and start adding things to the string in (ee-template0 \"...\").
 I will try to update this intro in the next days:
 
   (find-templates-intro)
-  http://angg.twu.net/eev-intros/find-templates-intro.html
+  http://anggtwu.net/eev-intros/find-templates-intro.html
 
 
 
@@ -10567,7 +10567,7 @@ It is meant as both a tutorial and a sandbox.
 In my presentation at the EmacsConf2019
 I mentioned very briefly in this slide -
 
-  http://angg.twu.net/LATEX/2019emacsconf.pdf#page=4
+  http://anggtwu.net/LATEX/2019emacsconf.pdf#page=4
 
 that `M-x eev' was a \"very primitive way to send the region to a
 shell\". This intro gives a few more details about that, but it
@@ -10632,7 +10632,7 @@ be programmed to accept an `ee' command to execute temporary
 scripts...]
 
   See (obs: this is very old!):
-  http://angg.twu.net/eev-article.html#making-progs-receive-cmds
+  http://anggtwu.net/eev-article.html#making-progs-receive-cmds
 
   (find-eev \"eev-langs.el\")
   (find-eev \"eev-bounded.el\")
@@ -10825,7 +10825,7 @@ format... =\\ So this is just a bunch of notes!
 Source code:           \(find-eev \"eev-bounded.el\")
 Obsolete related code: \(find-eev \"eev-langs.el\")
 Old mentions to this:  \(find-TH \"eev-article\" \"delimited-regions\")
-                 http://angg.twu.net/eev-article.html#delimited-regions
+                 http://anggtwu.net/eev-article.html#delimited-regions
 
 
 
@@ -10965,7 +10965,7 @@ sudo apt-get install expect
 echo     $EEVDIR
 cd       $EEVDIR
 pwd
-wget -nc http://angg.twu.net/eev-current/eegchannel
+wget -nc http://anggtwu.net/eev-current/eegchannel
 chmod 755 eegchannel
 ls -lAF  $EEVDIR/eegchannel
 expect -v
@@ -11068,7 +11068,7 @@ you... =(
   (find-eev \"eegchannel\")
   (find-eev \"anim/\")
   (find-eev \"anim/channels.anim\")
-  http://angg.twu.net/eev-current/eegchannel.html
+  http://anggtwu.net/eev-current/eegchannel.html
 
 
 
@@ -11230,8 +11230,8 @@ it executable:
  (eepitch-kill)
  (eepitch-shell)
 cd ~/bin/
-# See:  http://angg.twu.net/bin/eechannel.html
-wget -n http://angg.twu.net/bin/eechannel
+# See:  http://anggtwu.net/bin/eechannel.html
+wget -n http://anggtwu.net/bin/eechannel
 chmod 755 eechannel
 
 Now let's test - from Emacs - if a local copy of \"eechannel\"
@@ -11313,7 +11313,7 @@ If that worked, we're done. =)
 
 6. Several xterms
 =================
-http://angg.twu.net/eev-current/anim/channels.anim.html
+http://anggtwu.net/eev-current/anim/channels.anim.html
 
  (eexterm \"A\")
  (eexterm \"B\")
@@ -11378,8 +11378,8 @@ programs running in dedicated xterms. You can see an animation
 demonstrating it - and an explanation of what each line does -
 here:
 
-  http://angg.twu.net/eev-current/anim/channels.anim.html
-  http://angg.twu.net/eev-current/doc/shot-f9.png
+  http://anggtwu.net/eev-current/anim/channels.anim.html
+  http://anggtwu.net/eev-current/doc/shot-f9.png
 
 
 
@@ -11451,54 +11451,54 @@ At this moment I have these eight videos about eev (I am
 deliberately ignoring the ones that I consider obsolete!):
 
   1. \"How to record executable notes with eev - and how to play them back\":
-     http://angg.twu.net/emacsconf2019.html
-     http://angg.twu.net/emacsconf2019.html#code-video
-     http://angg.twu.net/eev-videos/emacsconf2019.mp4
+     http://anggtwu.net/emacsconf2019.html
+     http://anggtwu.net/emacsconf2019.html#code-video
+     http://anggtwu.net/eev-videos/emacsconf2019.mp4
      http://www.youtube.com/watch?v=86yiRG8YJD0
      (find-eev2019video)
 
   2. \"On why most of the best features in eev look like 5-minute hacks\":
-     http://angg.twu.net/emacsconf2020.html
-     http://angg.twu.net/emacsconf2020.html#code-video
-     http://angg.twu.net/eev-videos/emacsconf2020.mp4
+     http://anggtwu.net/emacsconf2020.html
+     http://anggtwu.net/emacsconf2020.html#code-video
+     http://anggtwu.net/eev-videos/emacsconf2020.mp4
      http://www.youtube.com/watch?v=hOAqBc42Gg8
      (find-eev2020video)
 
   3. \"How to install eev with M-x list-packages and how to navigate its tutorials\":
-     http://angg.twu.net/2020-list-packages-eev-nav.html
-     http://angg.twu.net/2020-list-packages-eev-nav.html#code-video
-     http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4
+     http://anggtwu.net/2020-list-packages-eev-nav.html
+     http://anggtwu.net/2020-list-packages-eev-nav.html#code-video
+     http://anggtwu.net/eev-videos/2020-list-packages-eev-nav.mp4
      http://www.youtube.com/watch?v=kxBjiUo88_U
      (find-eevnavvideo)
 
   4. \"Some template-based functions of eev that are not five-minute hacks\":
-     http://angg.twu.net/2020-some-template-based.html
-     http://angg.twu.net/2020-some-template-based.html#code-video
-     http://angg.twu.net/eev-videos/2020-some-template-based.mp4
+     http://anggtwu.net/2020-some-template-based.html
+     http://anggtwu.net/2020-some-template-based.html#code-video
+     http://anggtwu.net/eev-videos/2020-some-template-based.mp4
      http://www.youtube.com/watch?v=91-9YfRPsuk
      (find-eevtemplvideo)
 
   5. \"How to create hyperlinks to \"here\" with `find-here-links'\":
-     http://angg.twu.net/2020-find-here-links.html
-     http://angg.twu.net/2020-find-here-links.html#code-video
-     http://angg.twu.net/eev-videos/2020-find-here-links.mp4
+     http://anggtwu.net/2020-find-here-links.html
+     http://anggtwu.net/2020-find-here-links.html#code-video
+     http://anggtwu.net/eev-videos/2020-find-here-links.mp4
      http://www.youtube.com/watch?v=8jtiBlaDor4
      (find-eevfherelvideo)
 
   6. \"Using test blocks in eev\":
-     http://angg.twu.net/2021-test-blocks.html
-     http://angg.twu.net/eev-videos/2021-test-blocks.mp4
+     http://anggtwu.net/2021-test-blocks.html
+     http://anggtwu.net/eev-videos/2021-test-blocks.mp4
      http://www.youtube.com/watch?v=fpsF_M55W4o
      (find-eevtestblsvideo)
 
   7. \"Short videos about workflows - and how to upload them\":
-     http://angg.twu.net/2021-ssr.html
-     http://angg.twu.net/eev-videos/2021-ssr.mp4
+     http://anggtwu.net/2021-ssr.html
+     http://anggtwu.net/eev-videos/2021-ssr.mp4
      http://www.youtube.com/watch?v=_0_NLXTVhBk
 
   8. \"How to use the `[Video links:]' blocks in the `intro's of eev\"
-     http://angg.twu.net/2021-video-links.html
-     http://angg.twu.net/eev-videos/2021-video-links.mp4
+     http://anggtwu.net/2021-video-links.html
+     http://anggtwu.net/eev-videos/2021-video-links.mp4
      http://www.youtube.com/watch?v=xQqWufQgzVY
      (find-eevvlinksvideo \"0:00\")
 
@@ -11508,7 +11508,7 @@ well-rehearsed, the other ones are not.
 
 The links with #code-video, like
 
-  http://angg.twu.net/emacsconf2019.html#code-video
+  http://anggtwu.net/emacsconf2019.html#code-video
 
 point to indexes of the videos made with sexp hyperlinks.
 
@@ -11529,7 +11529,7 @@ to use from the _htmlized_ versions of the intros; they are not
 so trivial from Emacs. If you open the htmlized version of this
 section in a browser - its URL is:
 
-  http://angg.twu.net/eev-intros/find-videos-intro.html#2
+  http://anggtwu.net/eev-intros/find-videos-intro.html#2
 
 you will notice that links like
 
@@ -11549,31 +11549,31 @@ At this moment only these `find-eev*video' function are htmlized
 in this way:
 
   1. \"How to record executable notes with eev - and how to play them back\"
-     http://angg.twu.net/emacsconf2019.html
+     http://anggtwu.net/emacsconf2019.html
      (find-eev2019video \"0:00\")
 
   2. \"On why most of the best features in eev look like 5-minute hacks\"
-     http://angg.twu.net/emacsconf2020.html
+     http://anggtwu.net/emacsconf2020.html
      (find-eev2020video \"0:00\")
 
   3. \"How to install eev with M-x list-packages and how to navigate its tutorials\"
-     http://angg.twu.net/2020-list-packages-eev-nav.html
+     http://anggtwu.net/2020-list-packages-eev-nav.html
      (find-eevnavvideo \"0:00\")
 
   4. \"Some template-based functions of eev that are not five-minute hacks\"
-     http://angg.twu.net/2020-some-template-based.html
+     http://anggtwu.net/2020-some-template-based.html
      (find-eevtemplvideo \"0:00\")
 
   5. \"How to create hyperlinks to \"here\" with `find-here-links'\"
-     http://angg.twu.net/2020-find-here-links.html
+     http://anggtwu.net/2020-find-here-links.html
      (find-eevfherelvideo \"0:00\")
 
   6. \"Using test blocks in eev\":
-     http://angg.twu.net/2021-test-blocks.html
+     http://anggtwu.net/2021-test-blocks.html
      (find-eevtestblocksvideo \"0:00\")
 
   7. \"How to use the `[Video links:]' blocks in the `intro's of eev\"
-     http://angg.twu.net/2021-video-links.html
+     http://anggtwu.net/2021-video-links.html
      (find-eevvlinksvideo \"0:00\")
 
 If you follow these `find-eev*video' sexp hyperlinks in Emacs you
@@ -11582,7 +11582,7 @@ see the next section.
 
 ...or for an explanation in video, see:
 
-  http://angg.twu.net/2021-video-links.html
+  http://anggtwu.net/2021-video-links.html
   (find-eevvlinksvideo \"0:00\")
   http://www.youtube.com/watch?v=xQqWufQgzVY
 
@@ -11623,7 +11623,7 @@ these `find-eevvideo-links' sexps:
 
 They are htmlized in a nice way - see:
 
-  http://angg.twu.net/eev-intros/find-videos-intro.html#3
+  http://anggtwu.net/eev-intros/find-videos-intro.html#3
 
 The function `find-eevvideo-links' is explained here:
 
@@ -11700,7 +11700,7 @@ names of the functions correspond to the argument \"c\" of
 The \"intros\" of eev can be read both from Emacs and from a
 browser. For example, the HTMLized version of this intro is at:
 
-  http://angg.twu.net/eev-intros/find-video-links-intro.html
+  http://anggtwu.net/eev-intros/find-video-links-intro.html
 
 In the HTMLized version each \"short link to a video tutorial\"
 has two hyperlinks, like this:
@@ -11805,7 +11805,7 @@ In some situations - see section 7 - a sexp like
 will try to play a local copy of the video file. In the case of
 `find-eev2020video' this means a local copy of this file,
 
-  http://angg.twu.net/eev-videos/emacsconf2020.mp4
+  http://anggtwu.net/eev-videos/emacsconf2020.mp4
 
 downloaded by `psne'-ing, as explained here:
 
@@ -11813,7 +11813,7 @@ downloaded by `psne'-ing, as explained here:
 
 The local copy will be played with Mpv, with:
 
-  (find-mpv-video \"$S/http/angg.twu.net/eev-videos/emacsconf2020.mp4\" \"6:25\")
+  (find-mpv-video \"$S/http/anggtwu.net/eev-videos/emacsconf2020.mp4\" \"6:25\")
 
 
 
@@ -11822,7 +11822,7 @@ The local copy will be played with Mpv, with:
 --------------
 Some of the videos in
 
-  http://angg.twu.net/eev-videos/
+  http://anggtwu.net/eev-videos/
 
 have subtitles in separate files. If a video called
 NAMEOFTHEVIDEO(.mp4) has subtitles in two formats, .srt and .srt,
@@ -11832,11 +11832,11 @@ would be with this eepitch block:
  (eepitch-shell2)
  (eepitch-kill)
  (eepitch-shell2)
-  mkdir -p $S/http/angg.twu.net/eev-videos/
-  cd       $S/http/angg.twu.net/eev-videos/
-  wget -nc  http://angg.twu.net/eev-videos/NAMEOFTHEVIDEO.mp4
-  wget -N   http://angg.twu.net/eev-videos/NAMEOFTHEVIDEO.srt
-  wget -N   http://angg.twu.net/eev-videos/NAMEOFTHEVIDEO.vtt
+  mkdir -p $S/http/anggtwu.net/eev-videos/
+  cd       $S/http/anggtwu.net/eev-videos/
+  wget -nc  http://anggtwu.net/eev-videos/NAMEOFTHEVIDEO.mp4
+  wget -N   http://anggtwu.net/eev-videos/NAMEOFTHEVIDEO.srt
+  wget -N   http://anggtwu.net/eev-videos/NAMEOFTHEVIDEO.vtt
 
 The eepitch block above follows all the conventions that are
 explained here,
@@ -11854,14 +11854,14 @@ explains \"-nc\" and \"-N\" as:
   -N,  --timestamping      don't re-retrieve files unless newer than
                              local
 
-The \".mp4\"s at angg.twu.net are never updated, so if we already
+The \".mp4\"s at anggtwu.net are never updated, so if we already
 have a local copy of the .mp4 then wget shouldn't try to download
 it again. In contrast, subtitle files are revised occasionally,
-so if the subtitle files on angg.twu.net are newer than the local
+so if the subtitle files on anggtwu.net are newer than the local
 copy then wget should download the newer version, and overwrite
 the local subtitle files with their newer versions.
 
-The _medium-level way_ to download videos from angg.twu.net, with
+The _medium-level way_ to download videos from anggtwu.net, with
 or without subtitles, is by running sexps like these ones:
 
   (find-psne-eevvideo-links \"NAMEOFTHEVIDEO\" \"\")
@@ -11974,7 +11974,7 @@ that runs one of these sexps, depending on the current settings:
 
 The one with `find-eevlocal-video' plays the local copy of
 
-  http://angg.twu.net/eev-videos/emacsconf2020.mp4
+  http://anggtwu.net/eev-videos/emacsconf2020.mp4
 
 if it has already been downloaded, and if the local copy is not
 found it displays a temporary buffer with links and an e-script
@@ -12017,12 +12017,12 @@ this workshop:
 
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00037.html
   https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00045.html
-  http://angg.twu.net/2021-oficina.html (<- in Portuguese)
+  http://anggtwu.net/2021-oficina.html (<- in Portuguese)
 
 My original implementation - from may/2021 - was the one
 described here:
 
-  http://angg.twu.net/2021-video-links.html
+  http://anggtwu.net/2021-video-links.html
 
 I'm trying to making the short links to video tutorials work from
 Emacs _in a way that is convenient for both long-time users and
@@ -12043,7 +12043,7 @@ to call a given external program - and then follow this one:
 =====================
 I store videos of several kinds in:
 
-  http://angg.twu.net/eev-videos/
+  http://anggtwu.net/eev-videos/
 
 The presentations and tutorials on eev are the \"first-class
 citizens\" of that directory - mainly in the sense that a lot of
@@ -12077,7 +12077,7 @@ That function displays a temporary buffer with a list of all
 first-class videos, with a `find-1stclassvideo-links' sexp for
 each one. Here is a screenshot:
 
-  http://angg.twu.net/IMAGES/2022find-1stclassvideos.png
+  http://anggtwu.net/IMAGES/2022find-1stclassvideos.png
 
 
 
@@ -12087,7 +12087,7 @@ each one. Here is a screenshot:
 =======================
 I will refer to the videos in
 
-  http://angg.twu.net/eev-videos/
+  http://anggtwu.net/eev-videos/
 
 that are not \"first-class citizens\" as - ta-da! - \"second
 class citizens\". When I want to show something in one of those
@@ -12126,10 +12126,10 @@ Practically all the functions defined above have `eev' in their
 names, and they all convert the \"{stem}\" of a video to a URL
 like this:
 
-  http://angg.twu.net/eev-videos/{stem}.mp4
+  http://anggtwu.net/eev-videos/{stem}.mp4
 
 The conversion from \"{stem}\" to
-\"http://angg.twu.net/eev-videos/{stem}.mp4\" is hardcoded in
+\"http://anggtwu.net/eev-videos/{stem}.mp4\" is hardcoded in
 these functions, and AT THIS MOMENT there isn't an easy way to
 implement other similar conversions - pointing to other
 repositories of videos - without changing a lot of code by hand.
@@ -12597,7 +12597,7 @@ Note: I wrote this after giving a presentation about eev in the
 EmacsConf 2019 and getting some help from Org users there (mainly
 Amin Bandali). Link:
 
-  http://angg.twu.net/emacsconf2019.html
+  http://anggtwu.net/emacsconf2019.html
 
 
 
@@ -12643,7 +12643,7 @@ mark as comments the more eev-ish parts in it, like this...
  (eepitch-shell)
 cd /tmp/
 rm -fv org.e
-wget http://angg.twu.net/e/org.e
+wget http://anggtwu.net/e/org.e
 
 #+END_COMMENT
 
@@ -12656,7 +12656,7 @@ The code in comments in the previous section downloads a local
 copy of my executable notes (i.e., my \"e-scripts\") on Org. Run
 it, and compare:
 
-# http://angg.twu.net/e/org.e.html#git
+# http://anggtwu.net/e/org.e.html#git
 # (find-anchor \"/tmp/org.e\" \"git\")
 
 The URL above points to my notes on downloading Org from git and
@@ -12842,7 +12842,7 @@ these commands to a shell; most of my own files contain lots of
 elisp hyperlinks, and some of them even contain eepitch blocks
 inside multi-line comments - for example, this Lua library:
 
-  http://angg.twu.net/LATEX/dednat6/eoo.lua.html#Vector
+  http://anggtwu.net/LATEX/dednat6/eoo.lua.html#Vector
 
 Some of my files are \"pure e-scripts\": they are mostly made of
 \"e-script blocks\" like the ones described here:
@@ -12851,8 +12851,8 @@ Some of my files are \"pure e-scripts\": they are mostly made of
 
 Here are two examples structured like this:
 
-  http://angg.twu.net/e/emacs.e.html
-  http://angg.twu.net/e/lua5.e.html
+  http://anggtwu.net/e/emacs.e.html
+  http://anggtwu.net/e/lua5.e.html
 
 Each of these \"e-script blocks\" is an \"executable log\" of
 something that I was trying to understand, or trying to do.
@@ -12864,7 +12864,7 @@ something that I was trying to understand, or trying to do.
 ==========
 One of my first public texts about eev was the \"Eev Manifesto\":
 
-  http://angg.twu.net/eev-manifesto.html
+  http://anggtwu.net/eev-manifesto.html
 
 Here are its main parts.
 
@@ -13003,15 +13003,15 @@ reviewed in the subsections below.
   #####
 
   # «lua-tutorial» (to \".lua-tutorial\")
-  # http://angg.twu.net/e/lua-intro.e.html
-  # http://angg.twu.net/e/lua-intro.e
+  # http://anggtwu.net/e/lua-intro.e.html
+  # http://anggtwu.net/e/lua-intro.e
 
    (eepitch-shell)
    (eepitch-kill)
    (eepitch-shell)
   cd /tmp/
   rm -v lua-intro.e
-  wget http://angg.twu.net/e/lua-intro.e
+  wget http://anggtwu.net/e/lua-intro.e
 
   # (find-fline \"/tmp/lua-intro.e\")
   # (find-anchor \"/tmp/lua-intro.e\" \"intro:types\")
@@ -13130,18 +13130,18 @@ The \"Eev Manifesto\" in section 3 above has this:
 
 The \"public place\" is here:
 
-  http://angg.twu.net/e/
+  http://anggtwu.net/e/
 
 The links
 
-  # http://angg.twu.net/e/lua-intro.e.html
-  # http://angg.twu.net/e/lua-intro.e
+  # http://anggtwu.net/e/lua-intro.e.html
+  # http://anggtwu.net/e/lua-intro.e
 
 point to one of these e-scripts - one that I use to teach (or
 introduce) Lua to people that already know other programming
 languages. The
 
-  # http://angg.twu.net/e/lua-intro.e.html
+  # http://anggtwu.net/e/lua-intro.e.html
 
 point to an \"htmlized version\" of it, in which many of the
 hyperlinks are converted to something that works in a browser.
@@ -13160,7 +13160,7 @@ When we execute this eepitch block a first time,
    (eepitch-shell)
   cd /tmp/
   rm -v lua-intro.e
-  wget http://angg.twu.net/e/lua-intro.e
+  wget http://anggtwu.net/e/lua-intro.e
 
 the \"rm\" gives an error:
 
@@ -13181,7 +13181,7 @@ when it's run for the first time.
 
 Most e-scripts in
 
-  http://angg.twu.net/e/
+  http://anggtwu.net/e/
 
 follow these conventions:
 
@@ -13301,7 +13301,7 @@ paste.
 
 In the e-script files in
 
-  http://angg.twu.net/e/
+  http://anggtwu.net/e/
 
 I follow another convention - \"e-script blocks\". The title
 above each to-backward line is written like this:
@@ -13480,9 +13480,9 @@ run\" - to tutorials for other languages, too. At this moment the
 only tutorial for another language that I have that is in a
 _reasonably_ organized form is this one,
 
-               http://angg.twu.net/e/lua-intro.e.html
-  (find-wgeta \"http://angg.twu.net/e/lua-intro.e\")
-  (find-wgeta \"http://angg.twu.net/e/lua-intro.e\" \"intro:for\")
+               http://anggtwu.net/e/lua-intro.e.html
+  (find-wgeta \"http://anggtwu.net/e/lua-intro.e\")
+  (find-wgeta \"http://anggtwu.net/e/lua-intro.e\" \"intro:for\")
 
 but parts of it were written in 2004, when these principles were
 not yet very clear to me. I am revising it, and I am also trying
@@ -13758,8 +13758,8 @@ Then run this eepitch block,
   rm -Rfv /tmp/git-test/
   mkdir   /tmp/git-test/
   cd      /tmp/git-test/
-  #    http://angg.twu.net/bin/git-defs.html
-  wget http://angg.twu.net/bin/git-defs
+  #    http://anggtwu.net/bin/git-defs.html
+  wget http://anggtwu.net/bin/git-defs
   cp -v $S/https/github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf .
   cp -v $S/https/github.com/progit/progit2/releases/download/2.1.277/progit.pdf .
 
@@ -13863,7 +13863,7 @@ because when it was created it pointed to the commit with message
 
 Here's a video showing the script above in action:
 
-  http://angg.twu.net/eev-videos/2020-doubt-about-merging.mp4
+  http://anggtwu.net/eev-videos/2020-doubt-about-merging.mp4
           (code-eevvideo \"merg\" \"2020-doubt-about-merging\")
                     (find-mergvideo \"0:00\")
                     (find-mergvideo \"0:20\")
@@ -13946,7 +13946,7 @@ and on the basic steps for learning Emacs and eev after
 installing them. If you're a W$ user you should start by reading
 this tutorial online in a browser, at
 
-  http://angg.twu.net/eev-intros/find-windows-beginner-intro.html
+  http://anggtwu.net/eev-intros/find-windows-beginner-intro.html
 
 while you run Emacs in another window (see section 1). After
 getting eev installed on your machine (see section 3) you will be
@@ -13955,7 +13955,7 @@ able to access this tutorial from Emacs by typing `M-3 M-j'.
 The main tutorial on eev is this one,
 
   (find-eev-quick-intro)
-  http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+  http://anggtwu.net/eev-intros/find-eev-quick-intro.html
 
 The sections from 5.6 onwards were written in nov/2021 and they
 cover how to install some external programs to make almost all
@@ -13973,8 +13973,8 @@ My favorite exposition of what eev is is this presentation,
 called \"How to record executable notes with eev - and how to
 play them back\":
 
-  http://angg.twu.net/emacsconf2019.html
-  http://angg.twu.net/LATEX/2019emacsconf.pdf (slides)
+  http://anggtwu.net/emacsconf2019.html
+  http://anggtwu.net/LATEX/2019emacsconf.pdf (slides)
   http://www.youtube.com/watch?v=86yiRG8YJD0  (video)
 
 The video ends with a demo that shows a non-trivial example of
@@ -13986,7 +13986,7 @@ harder to explain:
 
   http://www.youtube.com/watch?v=86yiRG8YJD0#t=15m11s
   (find-eev2019video \"15:11\" \"Demo: the eepitch block\")
-  http://angg.twu.net/.emacs.videos.html#eev2019
+  http://anggtwu.net/.emacs.videos.html#eev2019
 
 I don't have easy access to Windows machines, so I have to rely
 on friends to test some things for me. I also don't have easy
@@ -14117,9 +14117,9 @@ The tutorial looks like this:
 There's a video about these basic steps here:
 
   \"How to install eev with M-x list-packages and how to navigate its tutorials\"
-  http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4
-             http://angg.twu.net/2020-list-packages-eev-nav.html
-             http://angg.twu.net/.emacs.videos.html#eevnav
+  http://anggtwu.net/eev-videos/2020-list-packages-eev-nav.mp4
+             http://anggtwu.net/2020-list-packages-eev-nav.html
+             http://anggtwu.net/.emacs.videos.html#eevnav
              http://www.youtube.com/watch?v=kxBjiUo88_U
 
 
@@ -14449,7 +14449,7 @@ Lua, Mpv. The best way to understand how to use these
 sub-wconfigs is by watching the video about eev-wconfig, that is
 here:
 
-  Page:  http://angg.twu.net/eev-wconfig.html
+  Page:  http://anggtwu.net/eev-wconfig.html
   Index: (find-1stclassvideoindex  \"2022eevwconfig\")
   Info:  (find-1stclassvideo-links \"2022eevwconfig\")
   Play:  (find-2022eevwconfigvideo   \"0:00\")
@@ -14467,7 +14467,7 @@ only be able to use the `find-2022eevwconfigvideo' links _to play
 local copies of the videos_ after configuring mpv... so it's
 better to start by accessing this section in a browser, at:
 
-  http://angg.twu.net/eev-intros/find-windows-beginner-intro.html#7
+  http://anggtwu.net/eev-intros/find-windows-beginner-intro.html#7
 
 
 
@@ -14513,8 +14513,8 @@ local copy of the \"eevtestbls\" video, by running this:
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-  rm -fv $S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4
-  ls -l  $S/http/angg.twu.net/eev-videos/2021-test-blocks.mp4
+  rm -fv $S/http/anggtwu.net/eev-videos/2021-test-blocks.mp4
+  ls -l  $S/http/anggtwu.net/eev-videos/2021-test-blocks.mp4
 
 Then run these sexps:
 
@@ -14604,7 +14604,7 @@ but you will need to run this:
 
 
 This is part of the material the I prepared for this workshop:
-  http://angg.twu.net/2021-workshop.html
+  http://anggtwu.net/2021-workshop.html
 The rest was moved to:
   (find-saving-links-intro)
 
@@ -14672,7 +14672,7 @@ I will suppose:
      using a browser by opening the HTMLized version of this
      intro using this URL,
 
-       http://angg.twu.net/eev-intros/find-eev-exercises-intro.html
+       http://anggtwu.net/eev-intros/find-eev-exercises-intro.html
 
      locating the link to the video there, and clicking on the
      link in its timestamp.
@@ -14704,7 +14704,7 @@ that I gave required installing external programs, but this one
 will not be like that. For more info on that previous workshop,
 see:
 
-  http://angg.twu.net/2021-workshop.html#november
+  http://anggtwu.net/2021-workshop.html#november
 
 
 
@@ -14740,7 +14740,7 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-  See: http://angg.twu.net/emacsconf2022-kla.html
+  See: http://anggtwu.net/emacsconf2022-kla.html
     (find-eev \"eev-kla.el\")
     `kla' means \"kill link to anchor\".
   The prerequisites for this tutorial are:
@@ -15981,7 +15981,7 @@ TODO: explain how to use `find-rstdoc-links'!
 ;; (find-three-main-keys-intro)
 
 ;; Used in this video:
-;; http://angg.twu.net/index.html#eev-three-main-keys
+;; http://anggtwu.net/index.html#eev-three-main-keys
 ;; A version in English in coming soon!
 
 (defun find-three-main-keys-intro (&rest pos-spec-list) (interactive)
@@ -15993,8 +15993,8 @@ TODO: explain how to use `find-rstdoc-links'!
   The three basic keys of eev:
   A mini tutorial
     Eduardo Ochs
-    http://angg.twu.net/#eev
-    http://angg.twu.net/#eev-three-main-keys
+    http://anggtwu.net/#eev
+    http://anggtwu.net/#eev-three-main-keys
     (Version: 2019aug09)
 
   Eev's central idea is that you can keep \"executable logs\" of
@@ -16237,13 +16237,13 @@ See:
 
 
 Btw, the videos that I produced using this \"script\" are here:
-  http://angg.twu.net/#eev-three-main-keys
+  http://anggtwu.net/#eev-three-main-keys
   Version in English:
     http://www.youtube.com/watch?v=s0_48wzWFbU
-    http://angg.twu.net/eev-videos/three-keys-2.mp4
+    http://anggtwu.net/eev-videos/three-keys-2.mp4
   Version in Portuguese:
     http://www.youtube.com/watch?v=GUuCpmLItTs
-    http://angg.twu.net/eev-videos/three-keys-1-pt.mp4
+    http://anggtwu.net/eev-videos/three-keys-1-pt.mp4
 
 " pos-spec-list)))
 
@@ -16285,7 +16285,7 @@ Many people love the eintr, but I don't: (find-node \"(eintr)Top\")
 This tutorial here is what I would have liked to have had access to
 when I started learning Emacs Lisp.
 The ideas behind the style of this tutorial are explained here:
-  http://angg.twu.net/find-elisp-intro.html
+  http://anggtwu.net/find-elisp-intro.html
   (find-1stclassvideo-links \"2022findelispintro\")
 
 TODO: integrate this with these older intros:
