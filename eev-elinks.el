@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230118
+;; Version:    20230125
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
@@ -1281,6 +1281,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
     (ee-template0 "\
 # (find-epackages '{pkg})
 # (find-epackage-links '{pkg})
+# (find-epackages '{pkg})
 # (find-epackage '{pkg})
 {findelpafiles}
 
@@ -1301,6 +1302,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
 # (package-delete (ee-package-desc '{pkg}))
 
 # (find-epackage-links '{pkg} \"{c}\" t)
+# (find-epackages      '{pkg})
 # (find-epackage       '{pkg})
 # (code-c-d \"{c}\" \"{d}\")
 # (find-{c}file \"\")

@@ -1,3 +1,12 @@
+2023-01-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-raku-mode): also use
+	eepitch-shell.
+
+2023-01-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-find-epackage-links0): use `find-epackages'.
+
 2023-01-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-raku): new function.

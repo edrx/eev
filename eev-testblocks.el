@@ -316,6 +316,11 @@ exec(open(\"%s\").read(), globals())
 	  "\\.rakumod$" "" (buffer-name))))
     (insert (ee-adjust-red-stars (format "
 #`(
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+raku %s
+
  (eepitch-raku)
  (eepitch-kill)
  (eepitch-raku)
@@ -323,7 +328,7 @@ use lib '.'
 use %s
 
 )
-" libname)))))
+" (buffer-name) libname)))))
 
 (defun ee-insert-test-ruby-mode ()
   (interactive)

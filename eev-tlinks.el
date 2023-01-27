@@ -1561,6 +1561,7 @@ git log --oneline --graph --all -20
 # (find-sh \"fossil help pull\")
 # (find-sh \"fossil help all\")
 # (find-sh \"fossil help open\")
+# (find-es \"fossil\")
 
  (eepitch-shell)
  (eepitch-kill)
