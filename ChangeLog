@@ -1,5 +1,15 @@
 2023-01-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-blinks.el: changed angg.twu.net to anggtwu.net.
+
+	* eev-elinks.el: changed angg.twu.net to anggtwu.net.
+
+	* eev-hlinks.el: changed angg.twu.net to anggtwu.net.
+
+	* eev-plinks.el: changed angg.twu.net to anggtwu.net.
+
+	* eev-tlinks.el: changed angg.twu.net to anggtwu.net.
+
 	* eev-testblocks.el (ee-insert-test-raku-mode): also use
 	eepitch-shell.
 

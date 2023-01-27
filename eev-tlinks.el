@@ -19,16 +19,16 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230118
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-tlinks.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-tlinks.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-links-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-links-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-tlinks.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-links-intro.html>
+;;                                               (find-eev-intro)
+;;                                               (find-links-intro)
 
 ;;; Commentary:
 
@@ -606,11 +606,11 @@ Hello
 ;; Version:    {date}
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/{stem-el}>
-;;       htmlized: <http://angg.twu.net/eev-current/{stem-el}.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-readme.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;; Latest version: <http://anggtwu.net/eev-current/{stem-el}>
+;;       htmlized: <http://anggtwu.net/eev-current/{stem-el}.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-readme.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                                               (find-eev-intro)
 
 ;;; Commentary:
 
@@ -854,7 +854,7 @@ sudo dpkg -i *.deb
   mkdir  {dir}
   cd     {dir}
   rm -fv eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
+  wget http://anggtwu.net/eev-current/eev2.tgz
   tar -xvzf eev2.tgz
   {<}
     echo '#!/bin/sh'
@@ -936,7 +936,7 @@ sudo dpkg -i *.deb
   mkdir  {dir}
   cd     {dir}
   rm -v eev2.tgz
-  wget http://angg.twu.net/eev-current/eev2.tgz
+  wget http://anggtwu.net/eev-current/eev2.tgz
   tar -xvzf eev2.tgz
   {
     echo '#!/bin/sh'
@@ -959,7 +959,7 @@ sudo dpkg -i *.deb
 mkdir   {dir}
 cd      {dir}
 rm -v eev2.tgz
-wget http://angg.twu.net/eev-current/eev2.tgz
+wget http://anggtwu.net/eev-current/eev2.tgz
 tar -xvzf eev2.tgz
 
 # Tests:
@@ -1178,8 +1178,8 @@ Files that look like subtitle files are ignored."
 ;;
 ;; and put a copy of this fake youtube-dl script
 ;;
-;;   http://angg.twu.net/bin/youtube-dl.html
-;;   http://angg.twu.net/bin/youtube-dl
+;;   http://anggtwu.net/bin/youtube-dl.html
+;;   http://anggtwu.net/bin/youtube-dl
 ;;
 ;; somewhere in your PATH, and use this:
 ;;
@@ -1355,8 +1355,8 @@ echo {e} '{url}' >> ~/.psne.log
 ;;
 (defun ee-psne-eevvideo-core (stem exts time)
   "An internal function used by `find-psne-eevvideo-links'."
-  (let* ((dir         "$S/http/angg.twu.net/eev-videos/")
-         (url- (concat "http://angg.twu.net/eev-videos/" stem))
+  (let* ((dir         "$S/http/anggtwu.net/eev-videos/")
+         (url- (concat "http://anggtwu.net/eev-videos/" stem))
 	 (eo (format "%-3s" (ee-find-psne-echo-options)))
          (wf (lambda (ext) (format "wget -N   %s%s\n" url- ext)))
          (ef (lambda (ext) (format "echo %s  %s%s >> ~/.psne.log\n" eo url- ext)))
@@ -1367,7 +1367,7 @@ echo {e} '{url}' >> ~/.psne.log
 # (find-psne-intro \"1. Local copies of files from the internet\")
 # (find-video-links-intro \"5. Local copies\")
 # (find-video-links-intro \"5.1. Subtitles\")
-# http://angg.twu.net/eev-videos.html
+# http://anggtwu.net/eev-videos.html
 
  (sh-mode)
  (eepitch-shell2)
@@ -1713,7 +1713,7 @@ netcat -l -p {tgtport}
   (setq stem (or stem "{stem}"))
   (setq youtubeid (or youtubeid "{youtubeid}"))
   (setq time (or time "{time}"))
-  (let* ((url (format "http://angg.twu.net/eev-videos/%s.mp4" stem)))
+  (let* ((url (format "http://anggtwu.net/eev-videos/%s.mp4" stem)))
     (apply
      'find-elinks
      `((find-eevvideo-links ,c ,stem ,youtubeid ,time ,@pos-spec-list)
@@ -1957,9 +1957,9 @@ echo     '{url}' >> ~/.psne.log
 ;; ;; (find-code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
 ;; ;;      (code-eevvideo-local \"{c}\" \"{stem}\" \"{youtubeid}\")
 ;; ;;
-;; ;;                    (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"{stem}\")
-;; ;; (find-code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
-;;         (code-video \"{c}video\" \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+;; ;;                    (find-fline \"$S/http/anggtwu.net/eev-videos/\" \"{stem}\")
+;; ;; (find-code-video \"{c}video\" \"$S/http/anggtwu.net/eev-videos/{stem}.mp4\")
+;;         (code-video \"{c}video\" \"$S/http/anggtwu.net/eev-videos/{stem}.mp4\")
 ;; ;;             (find-{c}video \"0:00\")
 ;; "))
 
@@ -1968,7 +1968,7 @@ echo     '{url}' >> ~/.psne.log
 ;; «hardcoded-paths»  (to ".hardcoded-paths")
 ;;
 ;; The definitions of `find-eevvideo-links' and `code-eevvideo' above
-;; have strings like "eev" and "http://angg.twu.net/eev-videos/"
+;; have strings like "eev" and "http://anggtwu.net/eev-videos/"
 ;; hardcoded in several places... it is easy, but not entirely
 ;; trivial, to create variants of them that point to other sites that
 ;; stores video tutorials and presentations in ways that are easy to
@@ -2012,15 +2012,15 @@ Warning: the last one is in Portuguese..."
  (eepitch-shell2)
  (eepitch-kill)
  (eepitch-shell2)
-mkdir -p $S/http/angg.twu.net/eev-videos/
-cd       $S/http/angg.twu.net/eev-videos/
-wget -nc 'http://angg.twu.net/eev-videos/{anggstem}.mp4'
-echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
+mkdir -p $S/http/anggtwu.net/eev-videos/
+cd       $S/http/anggtwu.net/eev-videos/
+wget -nc 'http://anggtwu.net/eev-videos/{anggstem}.mp4'
+echo     'http://anggtwu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 
 # Test:
-# (find-fline  {s}  \"$S/http/angg.twu.net/eev-videos/\")
-# (find-video  {s}  \"$S/http/angg.twu.net/eev-videos/{anggstem}.mp4\")
-# (code-video \"{c}\" \"$S/http/angg.twu.net/eev-videos/{anggstem}.mp4\")
+# (find-fline  {s}  \"$S/http/anggtwu.net/eev-videos/\")
+# (find-video  {s}  \"$S/http/anggtwu.net/eev-videos/{anggstem}.mp4\")
+# (code-video \"{c}\" \"$S/http/anggtwu.net/eev-videos/{anggstem}.mp4\")
 # (find-{c})
 # Error messages:
 # (find-ebuffer \"*Messages*\")
@@ -2070,15 +2070,15 @@ echo     'http://angg.twu.net/eev-videos/{anggstem}.mp4' >> ~/.psne.log
 
 ;; Skel: (find-eevshortvideo-links \"{c}\" \"{stem}\" \"{youtubeid}\")
 ;;  See: (find-videos-intro \"1. Some videos\" \"{stem}\")
-;; Index: http://angg.twu.net/.emacs.videos.html#{c}
+;; Index: http://anggtwu.net/.emacs.videos.html#{c}
 ;;  Test: (find-{c}video \"0:00\")
 (defun find-{c}video (&optional time &rest rest)
   \"Play one of the video tutorials of eev starting at TIME.
 See: (find-videos-intro \\\"1. Some videos\\\" \\\"{stem}\\\")
-     http://angg.twu.net/{stem}.html
+     http://anggtwu.net/{stem}.html
      for more info on this particular video,
 and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
- or: http://angg.twu.net/eev-intros/find-video-links-intro.html#7
+ or: http://anggtwu.net/eev-intros/find-video-links-intro.html#7
      for more info on these video tutorials.\"
   (interactive)
   (find-eev-video \"{stem}\" \"{youtubeid}\" time))
@@ -2104,13 +2104,13 @@ and: (find-video-links-intro \\\"7. `find-eev-video'\\\")
 The script downloads an eev video and it subtitles. For example,
 if STEM is \"emacsconf2021\" and EXTS is \".vtt .srt\" then the
 main part of the script will be:\n
-  mkdir -p $S/http/angg.twu.net/eev-videos/
-  cd       $S/http/angg.twu.net/eev-videos/
-  wget -nc  http://angg.twu.net/eev-videos/emacsconf2021.mp4
-  wget -N   http://angg.twu.net/eev-videos/emacsconf2021.vtt
-  wget -N   http://angg.twu.net/eev-videos/emacsconf2021.srt\n
+  mkdir -p $S/http/anggtwu.net/eev-videos/
+  cd       $S/http/anggtwu.net/eev-videos/
+  wget -nc  http://anggtwu.net/eev-videos/emacsconf2021.mp4
+  wget -N   http://anggtwu.net/eev-videos/emacsconf2021.vtt
+  wget -N   http://anggtwu.net/eev-videos/emacsconf2021.srt\n
 The subtitles are downloaded again if the ones in
-http://angg.twu.net/ are newer than the local copy."
+http://anggtwu.net/ are newer than the local copy."
   (interactive)
   (setq stem (or stem "{stem}"))
   (setq exts (or exts "{exts}"))
@@ -2127,16 +2127,16 @@ http://angg.twu.net/ are newer than the local copy."
  (eepitch-kill)
  (eepitch-shell2)
 {cmds}
-# (find-fline \"$S/http/angg.twu.net/eev-videos/\" \"{stem}.mp4\")
-# (find-video \"$S/http/angg.twu.net/eev-videos/{stem}.mp4\")
+# (find-fline \"$S/http/anggtwu.net/eev-videos/\" \"{stem}.mp4\")
+# (find-video \"$S/http/anggtwu.net/eev-videos/{stem}.mp4\")
 ")
        )
      pos-spec-list)))
 
 (defun ee-wgeteevsubtitles-cmds (stem exts)
   "An internal function used by `find-wgeteevsubtitles-links'."
-  (let* ((dir         "$S/http/angg.twu.net/eev-videos/")
-         (url- (concat "http://angg.twu.net/eev-videos/" stem))
+  (let* ((dir         "$S/http/anggtwu.net/eev-videos/")
+         (url- (concat "http://anggtwu.net/eev-videos/" stem))
          (f (lambda (ext) (format "wget -N   %s%s\n" url- ext)))
          (wgets (mapconcat f (split-string exts))))
     (ee-template0 "\
@@ -2739,7 +2739,7 @@ sudo ./install-tl -select-repository
 
 
 ;; Tests:
-;; (find-{browser} \"http://angg.twu.net/#eev\")
+;; (find-{browser} \"http://anggtwu.net/#eev\")
 ;; (find-{browser}-page \"~/Coetzee99.pdf\")
 ;; (find-{browser}-page \"~/Coetzee99.pdf\" 3)
 ;; (find-pdf-page \"~/Coetzee99.pdf\" 3)
@@ -2753,7 +2753,7 @@ sudo ./install-tl -select-repository
 ;; Skel: (find-find-links-links-new "newbrowser" "shrt longname binary" "")
 ;; Test: (find-newbrowser-links)
 ;;       (find-newbrowser-links "g" "googlechrome" "google-chrome")
-;; See:  http://angg.twu.net/eev-customize.html
+;; See:  http://anggtwu.net/eev-customize.html
 ;;
 (defun find-newbrowser-links (&optional shrt longname binary &rest pos-spec-list)
 "Visit a temporary buffer containing a script to set up an atypical browser."
@@ -3076,7 +3076,7 @@ This function is used by `ee-0x0-upload-region'."
 ;; «find-angg-es-links»  (to ".find-angg-es-links")
 ;; Skel: (find-find-links-links-new "angg-es" "" "")
 ;; Test: (find-angg-es-links)
-;;  See: http://angg.twu.net/eev-find-angg.html
+;;  See: http://anggtwu.net/eev-find-angg.html
 ;;
 (defun find-angg-es-links (&rest pos-spec-list)
 "Show an e-script for configuring `find-angg' and `find-es'."
@@ -3122,14 +3122,14 @@ This function is used by `ee-0x0-upload-region'."
 
 ;; The `progn' below defines versions of `find-angg' and
 ;; `find-es' that use `find-wget' to access the
-;; public copies of my files at angg.twu.net:
+;; public copies of my files at anggtwu.net:
 ;;
 (progn
 
   (defun find-angg (fname &rest rest)
-    (apply 'find-wgeta (format \"http://angg.twu.net/%s\" fname) rest))
+    (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
   (defun find-es (fname &rest rest)
-    (apply 'find-wgeta (format \"http://angg.twu.net/e/%s.e\" fname) rest))
+    (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
 
 )
 
@@ -3223,7 +3223,7 @@ This function is used by `ee-0x0-upload-region'."
 ;;            (find-1stclassvideo-links \"{c}\")
 ;;
 ;; Index: (find-1stclassvideoindex              \"{c}\")
-;;        http://angg.twu.net/.emacs.videos.html#{c}
+;;        http://anggtwu.net/.emacs.videos.html#{c}
 ;;        (find-angg         \".emacs.videos\"    \"{c}\")
 ;;        (find-angg-es-links)
 {dlsubs}\
@@ -3358,7 +3358,7 @@ For more info on this particular video, run:
 ;; Skel: (find-find-links-links-new "advicebefore" "fun" "")
 ;; Test: (find-advicebefore-links)
 ;;       (find-advicebefore-links "FOO")
-;; Screenshot: http://angg.twu.net/IMAGES/find-advicebefore-links.png
+;; Screenshot: http://anggtwu.net/IMAGES/find-advicebefore-links.png
 ;;
 ;; I wrote this when I was trying to learn edebug and I was failing
 ;; miserably.
@@ -3379,9 +3379,9 @@ how this works."
      ";;"
      ,(ee-template0 "\
 ;; See: (find-elnode \"Advice Combinators\")
-;; Demo: http://angg.twu.net/elisp/find-advicebefore-links.el.html
-;;       http://angg.twu.net/elisp/find-advicebefore-links.el
-;; (find-wget-elisp \"http://angg.twu.net/elisp/find-advicebefore-links.el\")
+;; Demo: http://anggtwu.net/elisp/find-advicebefore-links.el.html
+;;       http://anggtwu.net/elisp/find-advicebefore-links.el
+;; (find-wget-elisp \"http://anggtwu.net/elisp/find-advicebefore-links.el\")
 
 (setq  ee-log nil)
 (defun ee-log (f r) (setq ee-log (cons (cons f r) ee-log)))
@@ -3447,7 +3447,7 @@ how this works."
 ;; «find-pip3-links»  (to ".find-pip3-links")
 ;; Skel: (find-find-links-links-new "pip3" "pkg" "pkg_")
 ;; Test: (find-pip3-links "youtube-transcript-downloader")
-;; See:  http://angg.twu.net/find-yttranscript-links.html
+;; See:  http://anggtwu.net/find-yttranscript-links.html
 ;;
 (defun find-pip3-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing a script for pip3."
@@ -3492,7 +3492,7 @@ pip3 install {pkg}
 ;; Skel: (find-find-links-links-new "yttranscript" "c hash" "")
 ;; Test: (find-yttranscript-links)
 ;;       (find-yttranscript-links "acmetour" "dP1xVpMPn8M")
-;; See:  http://angg.twu.net/find-yttranscript-links.html
+;; See:  http://anggtwu.net/find-yttranscript-links.html
 ;;
 (defun find-yttranscript-links (&optional c hash &rest pos-spec-list)
 "Display a temporary script that downloads a transcript from youtube."
@@ -3532,7 +3532,7 @@ print(trits1)
 ;; Skel: (find-find-links-links-new "importlib" "pkg" "pkg_")
 ;; Tests: (find-importlib-links)
 ;;        (find-importlib-links "requests")
-;; See:   http://angg.twu.net/find-yttranscript-links.html
+;; See:   http://anggtwu.net/find-yttranscript-links.html
 ;;
 (defun find-importlib-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for importlib."
@@ -3575,7 +3575,7 @@ md['Home-Page']
 ;; Skel: (find-find-links-links-new "pypi" "pkg" "pkg_")
 ;; Test: (find-pypi-links)
 ;;       (find-pypi-links "requests")
-;; See:  http://angg.twu.net/find-yttranscript-links.html
+;; See:  http://anggtwu.net/find-yttranscript-links.html
 ;;
 (defun find-pypi-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for pypi."
@@ -3890,7 +3890,7 @@ N should be either a number or a symbol; SEXP should be a sexp."
 ;;       modifying it to adjust the options and their values.
 
 ;; From: (find-mpv-links)
-;; See:  http://angg.twu.net/eev-videos.html#smaller-fullscreen
+;; See:  http://anggtwu.net/eev-videos.html#smaller-fullscreen
 
 (defun mf ()
   \"Make mpv use (real) full screen.\"

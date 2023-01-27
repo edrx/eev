@@ -21,13 +21,13 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230117
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-blinks.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-blinks.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-blinks.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
 ;;                                                (find-eev-intro)
 
 ;;; Commentary:
@@ -1222,8 +1222,8 @@ it doesn't convert relative filenames into urls. See
 
 
 ;; «find-eww»  (to ".find-eww")
-;; Tests: (find-eww "http://angg.twu.net/")
-;;        (find-eww "http://angg.twu.net/" "Welcome")
+;; Tests: (find-eww "http://anggtwu.net/")
+;;        (find-eww "http://anggtwu.net/" "Welcome")
 ;;        (find-eww "/tmp/")
 ;;
 (defvar ee-find-eww-search-yes nil)

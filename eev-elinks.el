@@ -19,16 +19,16 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230125
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-elinks.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-elinks.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-links-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-links-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-elinks.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-links-intro.html>
+;;                                               (find-eev-intro)
+;;                                               (find-links-intro)
 
 ;;; Commentary:
 
@@ -632,7 +632,7 @@ This can be used to test if the current buffer is an intro buffer."
 (defun ee-find-intro-links (&optional stem)
   (setq stem (or stem (ee-intro-stem)))
   (let ((find-xxx-intro (ee-intern "find-%s-intro" stem))
-	(url (format "http://angg.twu.net/eev-intros/find-%s-intro.html" stem)))
+	(url (format "http://anggtwu.net/eev-intros/find-%s-intro.html" stem)))
     `(,(ee-H url)
       (,find-xxx-intro)
       )))
@@ -1908,8 +1908,8 @@ You can use this to understand how the mode line works."
 ;; [To do: explain M-h M-y. There's an example in `eesteps' format in
 ;; the NEWS file.]
 
-;; See: <http://angg.twu.net/eev-current/README.html>
-;; and: <http://angg.twu.net/eev-current/NEWS.html>
+;; See: <http://anggtwu.net/eev-current/README.html>
+;; and: <http://anggtwu.net/eev-current/NEWS.html>
 
 ;; The second part of this file contains some older functions that
 ;; insert Elisp hyperlinks at the current buffer -- like `inn', that

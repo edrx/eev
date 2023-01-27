@@ -1,6 +1,6 @@
 ;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221023
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-plinks.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-plinks.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-links-intro.html>
+;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-plinks.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-links-intro.html>
 ;;                                                (find-eev-intro)
 ;;                                                (find-links-intro)
 
@@ -262,14 +262,14 @@
 ;;;  \__,_|_|  |_|     |_|  \___|\__|_|  |_|\___| \_/ \___|
 ;;;                                                        
 ;; «find-urlretrieve»  (to ".find-urlretrieve")
-;; See: http://angg.twu.net/elisp/url-retrieve-test.el
-;;              (find-angg "elisp/url-retrieve-test.el")
+;; See: http://anggtwu.net/elisp/url-retrieve-test.el
+;;             (find-angg "elisp/url-retrieve-test.el")
 ;; Tests:
 ;;   (find-urlretrieve00 "http://foo/bar")
-;;   (find-urlretrieve00 "http://angg.twu.net/")
-;;   (find-urlretrieve00 "http://angg.twu.net/doesnotexist")
-;;   (find-estring (ee-urlretrieve0 "http://angg.twu.net/"))
-;;   (find-estring (ee-urlretrieve0 "http://angg.twu.net/doesnotexist"))
+;;   (find-urlretrieve00 "http://anggtwu.net/")
+;;   (find-urlretrieve00 "http://anggtwu.net/doesnotexist")
+;;   (find-estring (ee-urlretrieve0 "http://anggtwu.net/"))
+;;   (find-estring (ee-urlretrieve0 "http://anggtwu.net/doesnotexist"))
 ;;
 (defvar ee-urlretrieve-headers ""
   "The HTTP headers returned by the last call to `find-urlretrieve'.")
@@ -411,12 +411,12 @@ If wget can't download URL then this function runs `error'."
   (apply 'ee-goto-anchor pos-spec-list))
 
 ;; Tests:
-;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el")
-;; (find-wget  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
-;; (find-wgeta "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
-;; (find-wget  "http://angg.twu.net/eev-current/DOESNOTEXIST")
-;; (find-wget-elisp  "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
-;; (find-wgeta-elisp "http://angg.twu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wget  "http://anggtwu.net/eev-current/eev-plinks.el")
+;; (find-wget  "http://anggtwu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wgeta "http://anggtwu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wget  "http://anggtwu.net/eev-current/DOESNOTEXIST")
+;; (find-wget-elisp  "http://anggtwu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wgeta-elisp "http://anggtwu.net/eev-current/eev-plinks.el" "find-wget")
 ;;
 ;; «find-anggwget»   (to ".find-anggwget")
 ;; «find-anggwgeta»  (to ".find-anggwgeta")
@@ -426,19 +426,19 @@ If wget can't download URL then this function runs `error'."
 
 (defun find-anggwget (fname &rest pos-spec-list)
   "See `find-wget' and this: (find-angg-es-links)"
-  (apply 'find-wget (concat "http://angg.twu.net/" fname) pos-spec-list))
+  (apply 'find-wget (concat "http://anggtwu.net/" fname) pos-spec-list))
 
 (defun find-anggwgeta (fname &rest pos-spec-list)
   "See `find-wgeta' and this: (find-angg-es-links)"
-  (apply 'find-wgeta (concat "http://angg.twu.net/" fname) pos-spec-list))
+  (apply 'find-wgeta (concat "http://anggtwu.net/" fname) pos-spec-list))
 
 (defun find-anggwget-elisp (fname &rest pos-spec-list)
   "See `find-wget-elisp' and this: (find-angg-es-links)"
-  (apply 'find-wget-elisp (concat "http://angg.twu.net/" fname) pos-spec-list))
+  (apply 'find-wget-elisp (concat "http://anggtwu.net/" fname) pos-spec-list))
 
 (defun find-anggwgeta-elisp (fname &rest pos-spec-list)
   "See `find-wgeta-elisp' and this: (find-angg-es-links)"
-  (apply 'find-wgeta-elisp (concat "http://angg.twu.net/" fname) pos-spec-list))
+  (apply 'find-wgeta-elisp (concat "http://anggtwu.net/" fname) pos-spec-list))
 
 
 
