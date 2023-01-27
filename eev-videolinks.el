@@ -19,16 +19,16 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230104
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-videolinks.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-videolinks.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-links-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-links-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-videolinks.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-links-intro.html>
+;;                                               (find-eev-intro)
+;;                                               (find-links-intro)
 
 ;; (load "eev-videolinks.el")
 
@@ -114,7 +114,7 @@
 ;; In may/2021 I implemented the "[Video links:]" blocks in the
 ;; tutorials of eev, and I explained everything here:
 ;;
-;;   http://angg.twu.net/2021-video-links.html
+;;   http://anggtwu.net/2021-video-links.html
 ;;   (find-1stclassvideo-links "eevvlinks")
 ;;
 ;; ...but the innards of that first implementation were very ugly, and
@@ -122,7 +122,7 @@
 ;;
 ;; In dec/2022 I created this page,
 ;;
-;;   http://angg.twu.net/eev-videos.html
+;;   http://anggtwu.net/eev-videos.html
 ;;
 ;; that explains in a much better way how these "[Video links:]" work,
 ;; with screenshots, and focusing on the idea of "First-class videos".
@@ -165,7 +165,7 @@
   (find-youtube-video hash time))
 
 (defun find-eevlocal-video (mp4stem hash &optional time &rest rest)
-  (let* ((url (format "http://angg.twu.net/eev-videos/%s.mp4" mp4stem))
+  (let* ((url (format "http://anggtwu.net/eev-videos/%s.mp4" mp4stem))
 	 (fname (ee-shorten-file-name (ee-url-to-fname url))))
     (if (ee-psne-downloaded-p url)
 	(find-mpv-video fname time)
@@ -223,7 +223,7 @@
 
 (defun ee-eevlocal-body (stem hash time)
   "An internal function used by `find-eevlocal-links'."
-  (let* ((url (format "http://angg.twu.net/eev-videos/%s.mp4" stem))
+  (let* ((url (format "http://anggtwu.net/eev-videos/%s.mp4" stem))
 	 (youtube-comment (ee-eevlocal-youtube-comment hash time))
 	 (psne-comment    (ee-psne-url-comment         url))
 	 (psne            (ee-eevlocal-psne            stem time)))
@@ -256,14 +256,14 @@
 ;;
 (defun ee-eevlocal-psne (stem time)
   "An internal function used by `find-eevlocal-links'."
-  (let* ((url (format "http://angg.twu.net/eev-videos/%s.mp4" stem)))
+  (let* ((url (format "http://anggtwu.net/eev-videos/%s.mp4" stem)))
     (concat (ee-psne-if-needed url)
 	    (if (not (ee-psne-downloaded-p url))
 		(concat "\n" (ee-eevlocal-findmpvvideo stem time))))))
 
 (defun ee-eevlocal-findmpvvideo (stem time)
   "An internal function used by `find-eevlocal-links'."
-  (let* ((url     (format "http://angg.twu.net/eev-videos/%s.mp4" stem))
+  (let* ((url     (format "http://anggtwu.net/eev-videos/%s.mp4" stem))
 	 (fname   (ee-shorten-file-name (ee-url-to-fname url)))
 	 (timearg (ee-time-to-arg time))) 
     (ee-template0 "\
@@ -698,9 +698,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eev2019")
     ("eev2019"
      :title "How to record executable notes with eev - and how to play them back"
-     :mp4   "http://angg.twu.net/eev-videos/emacsconf2019.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2019.mp4"
      :yt    "http://www.youtube.com/watch?v=86yiRG8YJD0"
-     :page  "http://angg.twu.net/emacsconf2019.html"
+     :page  "http://anggtwu.net/emacsconf2019.html"
      :date    "2019nov02"
      :length  "19:21"
      :subs    ".vtt"
@@ -711,9 +711,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eev2020")
     ("eev2020"
      :title "On why most of the best features in eev look like 5-minute hacks"
-     :mp4   "http://angg.twu.net/eev-videos/emacsconf2020.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2020.mp4"
      :yt    "http://www.youtube.com/watch?v=hOAqBc42Gg8"
-     :page  "http://angg.twu.net/emacsconf2020.html"
+     :page  "http://anggtwu.net/emacsconf2020.html"
      :date    "2020nov28"
      :length  "47:08"
      :subs    ".vtt"
@@ -724,9 +724,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eev2021")
     ("eev2021"
      :title "Test blocks"
-     :mp4   "http://angg.twu.net/eev-videos/emacsconf2021.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2021.mp4"
      :yt    "http://www.youtube.com/watch?v=qM0Luz78qGw"
-     :page  "http://angg.twu.net/emacsconf2021.html"
+     :page  "http://anggtwu.net/emacsconf2021.html"
      :date    "2021nov21"
      :length  "6:04"
      :subs    ".vtt"
@@ -737,9 +737,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eev2021b")
     ("eev2021b"
      :title "Test blocks in Dednat6"
-     :mp4   "http://angg.twu.net/eev-videos/emacsconf2021-dednat6.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2021-dednat6.mp4"
      :yt    "http://www.youtube.com/watch?v=QUMo7vgkHJI"
-     :page  "http://angg.twu.net/emacsconf2021.html#real-world-example"
+     :page  "http://anggtwu.net/emacsconf2021.html#real-world-example"
      :date    "2021nov28"
      :length  "8:11"
      :subs    ".vtt"
@@ -750,9 +750,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eevnav")
     ("eevnav"
      :title "How to install eev with M-x list-packages and how to navigate its tutorials"
-     :mp4   "http://angg.twu.net/eev-videos/2020-list-packages-eev-nav.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2020-list-packages-eev-nav.mp4"
      :yt    "http://www.youtube.com/watch?v=kxBjiUo88_U"
-     :page  "http://angg.twu.net/2020-list-packages-eev-nav.html"
+     :page  "http://anggtwu.net/2020-list-packages-eev-nav.html"
      :date    "2020oct04"
      :length  "12:41"
      :subs    ".vtt"
@@ -763,9 +763,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eevtempl")
     ("eevtempl"
      :title "Some template-based functions of eev that are not five-minute hacks"
-     :mp4   "http://angg.twu.net/eev-videos/2020-some-template-based.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2020-some-template-based.mp4"
      :yt    "http://www.youtube.com/watch?v=91-9YfRPsuk"
-     :page  "http://angg.twu.net/2020-some-template-based.html"
+     :page  "http://anggtwu.net/2020-some-template-based.html"
      :date    "2020dec24"
      :length  "33:11"
      :subs    ".vtt"
@@ -776,9 +776,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eevfherel")
     ("eevfherel"
      :title "How to create hyperlinks to \"here\" with `find-here-links'"
-     :mp4   "http://angg.twu.net/eev-videos/2020-find-here-links.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2020-find-here-links.mp4"
      :yt    "http://www.youtube.com/watch?v=8jtiBlaDor4"
-     :page  "http://angg.twu.net/2020-find-here-links.html"
+     :page  "http://anggtwu.net/2020-find-here-links.html"
      :date    "2020dec26"
      :length  "24:08"
      :comment "A badly-rehearsed tutorial on an advanced feature.")
@@ -788,9 +788,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eevtestbls")
     ("eevtestbls"
      :title "Using test blocks in eev (jan/2021)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-test-blocks.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-test-blocks.mp4"
      :yt    "http://www.youtube.com/watch?v=fpsF_M55W4o"
-     :page  "http://angg.twu.net/2021-test-blocks.html"
+     :page  "http://anggtwu.net/2021-test-blocks.html"
      :date    "2021jan24"
      :length  "4:45"
      :comment "My first video on test blocks. Watch the video `eev2021' instead.")
@@ -800,9 +800,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eevvlinks")
     ("eevvlinks"
      :title "How to use the `[Video links:]' blocks in the `intro's of eev"
-     :mp4   "http://angg.twu.net/eev-videos/2021-video-links.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-video-links.mp4"
      :yt    "http://www.youtube.com/watch?v=xQqWufQgzVY"
-     :page  "http://angg.twu.net/2021-video-links.html"
+     :page  "http://anggtwu.net/2021-video-links.html"
      :date    "2021may10"
      :length  "14:56"
      :comment "A very good tutorial on how the `(find-*video)' links work.")
@@ -812,9 +812,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "oficina20210")
     ("oficina20210"
      :title "Introdução ao Software Livre: Python, Shell, Lua, Emacs, eev"
-     :mp4   "http://angg.twu.net/eev-videos/2021projeto-de-ensino.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021projeto-de-ensino.mp4"
      :yt    "http://www.youtube.com/watch?v=OW6WRnSQwc0"
-     :page  "http://angg.twu.net/2021-oficina.html"
+     :page  "http://anggtwu.net/2021-oficina.html"
      :lang  "portuguese"
      :date    "2021sep05"
      :length  "1:27:01"
@@ -825,9 +825,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "oficina2021a")
     ("oficina2021a"
      :title "Como instalar o eev no Emacs"
-     :mp4   "http://angg.twu.net/eev-videos/2021-oficina-1.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-oficina-1.mp4"
      :yt    "http://www.youtube.com/watch?v=acFPMuZ5Jf4"
-     :page  "http://angg.twu.net/2021-oficina.html"
+     :page  "http://anggtwu.net/2021-oficina.html"
      :lang  "portuguese"
      :subs   ".vtt"
      :date    "2021nov05"
@@ -839,9 +839,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "oficina2021b")
     ("oficina2021b"
      :title "Exercícios de criar e guardar links (1)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-oficina-2.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-oficina-2.mp4"
      :yt    "https://www.youtube.com/watch?v=XbuDnkfizYs"
-     :page  "http://angg.twu.net/2021-oficina.html"
+     :page  "http://anggtwu.net/2021-oficina.html"
      :lang  "portuguese"
      :date    "2021nov09"
      :length  "14:10"
@@ -852,9 +852,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021ssr")
     ("2021ssr"
      :title "Short videos about workflows - and how to upload them"
-     :mp4  "http://angg.twu.net/eev-videos/2021-ssr.mp4"
+     :mp4  "http://anggtwu.net/eev-videos/2021-ssr.mp4"
      :yt   "http://www.youtube.com/watch?v=_0_NLXTVhBk"
-     :page "http://angg.twu.net/2021-ssr.html"
+     :page "http://anggtwu.net/2021-ssr.html"
      :date    "2021jan04"
      :length  "4:52"
      :comment "A bad video about a question that I sent to the Org mailing list.")
@@ -864,9 +864,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021workshop1")
     ("2021workshop1"
      :title "The base cases 1 and 2 (workshop 2021-dec-04)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-workshop-1.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-workshop-1.mp4"
      :yt    "https://www.youtube.com/watch?v=HuqJFPD871E"
-     :page  "http://angg.twu.net/2021-workshop.html"
+     :page  "http://anggtwu.net/2021-workshop.html"
      :date    "2021dec01"
      :length  "2:26"
      :subs    ".vtt"
@@ -877,9 +877,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021workshop2")
     ("2021workshop2"
      :title "Creating a link to a file with a 2-window setting (workshop 2021-dec-04)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-workshop-2.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-workshop-2.mp4"
      :yt    "http://www.youtube.com/watch?v=hqqIlZBXNhk"
-     :page  "http://angg.twu.net/2021-workshop.html"
+     :page  "http://anggtwu.net/2021-workshop.html"
      :date    "2021dec01"
      :length  "3:39"
      :subs    ".vtt"
@@ -890,9 +890,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021workshop3")
     ("2021workshop3"
      :title "Material on `M-3 M-e' (workshop 2021-dec-04)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-workshop-3.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-workshop-3.mp4"
      :yt    "http://www.youtube.com/watch?v=r83inf9s8zo"
-     :page  "http://angg.twu.net/2021-workshop.html"
+     :page  "http://anggtwu.net/2021-workshop.html"
      :date    "2021dec03"
      :length  "18:22"
      :subs    ".vtt"
@@ -903,9 +903,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021workshop4")
     ("2021workshop4"
      :title "Invisible text (workshop 2021-dec-04)"
-     :mp4  "http://angg.twu.net/eev-videos/2021-workshop-4.mp4"
+     :mp4  "http://anggtwu.net/eev-videos/2021-workshop-4.mp4"
      :yt   "http://www.youtube.com/watch?v=lhpHHjBUxv8"
-     :page "http://angg.twu.net/2021-workshop.html"
+     :page "http://anggtwu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "5:42"
      :subs    ".vtt"
@@ -916,9 +916,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021workshop5")
     ("2021workshop5"
      :title "Copy from left to right (workshop 2021-dec-04)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-workshop-5.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-workshop-5.mp4"
      :yt    "http://www.youtube.com/watch?v=VzRsterVSXs"
-     :page  "http://angg.twu.net/2021-workshop.html"
+     :page  "http://anggtwu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "8:50"
      :subs    ".vtt"
@@ -929,9 +929,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021workshop6")
     ("2021workshop6"
      :title "`find-extra-file-links' (workshop 2021-dec-04)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-workshop-6.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-workshop-6.mp4"
      :yt    "http://www.youtube.com/watch?v=-gi15-liGaU"
-     :page  "http://angg.twu.net/2021-workshop.html"
+     :page  "http://anggtwu.net/2021-workshop.html"
      :date    "2021dec04"
      :length  "10:08"
      :subs    ".vtt"
@@ -942,9 +942,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021orgfornonusers")
     ("2021orgfornonusers"
      :title "Org for Non-Users (2021)"
-     :mp4   "http://angg.twu.net/eev-videos/2021-org-for-non-users.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-org-for-non-users.mp4"
      :yt    "http://www.youtube.com/watch?v=Eh5Wz9Vh_XM"
-     :page  "http://angg.twu.net/2021-org-for-non-users.html"
+     :page  "http://anggtwu.net/2021-org-for-non-users.html"
      :date    "2021dec11"
      :length  "16:36"
      :subs    ".vtt"
@@ -955,9 +955,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2021ffll")
     ("2021ffll"
      :title "How I write 5-minute hacks in eev using `M-x find-find-links-links-new'"
-     :mp4   "http://angg.twu.net/eev-videos/2021-ffll.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2021-ffll.mp4"
      :yt    "http://www.youtube.com/watch?v=h1CEL2fmkyc"
-     :page  "http://angg.twu.net/2021-ffll.html"
+     :page  "http://anggtwu.net/2021-ffll.html"
      :date    "2021dec25"
      :length  "1:15:46"
      :comment "A tutorial on a very advanced feature.")
@@ -967,9 +967,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022eevmake0")
     ("2022eevmake0"
      :title "Using eev to test make(files)"
-     :mp4   "http://angg.twu.net/eev-videos/2022-eev-make-0.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-eev-make-0.mp4"
      :yt    "http://www.youtube.com/watch?v=Iql5C-yQk5c"
-     :page  "http://angg.twu.net/eev-make.html"
+     :page  "http://anggtwu.net/eev-make.html"
      :date    "2022jan04"
      :length  "6:43"
      :subs    ".vtt"
@@ -980,9 +980,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022findeevangg")
     ("2022findeevangg"
      :title "Running executable notes from http://angg.twu.net/ with find-angg and find-wget"
-     :mp4   "http://angg.twu.net/eev-videos/2022-find-eev-angg.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-find-eev-angg.mp4"
      :yt    "http://www.youtube.com/watch?v=FoAzpGzFCSE"
-     :page  "http://angg.twu.net/eev-find-angg.html"
+     :page  "http://anggtwu.net/eev-find-angg.html"
      :date    "2022jan16"
      :length  "17:59"
      :subs    ".vtt"
@@ -993,9 +993,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022findelispintro")
     ("2022findelispintro"
      :title "Why eev has a weird elisp tutorial and how to use it"
-     :mp4   "http://angg.twu.net/eev-videos/2022-find-elisp-intro.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-find-elisp-intro.mp4"
      :yt    "http://www.youtube.com/watch?v=WowDSciGs1A"
-     :page  "http://angg.twu.net/find-elisp-intro.html"
+     :page  "http://anggtwu.net/find-elisp-intro.html"
      :date    "2022jan23"
      :length  "21:12"
      :subs    ".vtt"
@@ -1006,9 +1006,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022pict2elua")
     ("2022pict2elua"
      :title "Pict2e-lua: a library for diagrams that is being developed with eev and test blocks"
-     :mp4   "http://angg.twu.net/eev-videos/2022-pict2e-lua.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-pict2e-lua.mp4"
      :yt    "http://www.youtube.com/watch?v=hiHsUhGVLGM"
-     :page  "http://angg.twu.net/pict2e-lua.html"
+     :page  "http://anggtwu.net/pict2e-lua.html"
      :date    "2022apr18"
      :length  "8:13"
      :subs    ".vtt"
@@ -1019,9 +1019,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022eevwconfigpt1")
     ("2022eevwconfigpt1"
      :title "Configuração sem mágica: um experimento com o eev (versão em Português)"
-     :mp4   "http://angg.twu.net/eev-videos/2022-eev-wconfig-pt-1.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-eev-wconfig-pt-1.mp4"
      :yt    "http://www.youtube.com/watch?v=bdLbocmo3r8"
-     :page  "http://angg.twu.net/eev-wconfig.html"
+     :page  "http://anggtwu.net/eev-wconfig.html"
      :lang  "portuguese"
      :date    "2022may02"
      :length  "29:20"
@@ -1032,9 +1032,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022eevwconfigpt2")
     ("2022eevwconfigpt2"
      :title "Configuração sem mágica: um experimento com o eev (versão em Português, parte 2)"
-     :mp4   "http://angg.twu.net/eev-videos/2022-eev-wconfig-pt-2.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-eev-wconfig-pt-2.mp4"
      :yt    "http://www.youtube.com/watch?v=ZAAxrJX-Am8"
-     :page  "http://angg.twu.net/eev-wconfig.html"
+     :page  "http://anggtwu.net/eev-wconfig.html"
      :lang  "portuguese"
      :date    "2022may02"
      :length  "46:00"
@@ -1045,9 +1045,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022eevwconfig")
     ("2022eevwconfig"
      :title "Eev-config.el: a way without \"magic\" to configure eev on M$ Windows"
-     :mp4   "http://angg.twu.net/eev-videos/2022-eev-wconfig.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-eev-wconfig.mp4"
      :yt    "http://www.youtube.com/watch?v=Rm29XSdGCXw"
-     :page  "http://angg.twu.net/eev-wconfig.html"
+     :page  "http://anggtwu.net/eev-wconfig.html"
      :date    "2022may15"
      :length  "1:15:48"
      :subs    ".vtt"
@@ -1058,9 +1058,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022yttranscript")
     ("2022yttranscript"
      :title "find-yttranscript-links: downloading transcripts of Youtube videos, in eev style"
-     :mp4   "http://angg.twu.net/eev-videos/2022-yttranscript.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-yttranscript.mp4"
      :yt    "http://www.youtube.com/watch?v=SW3Tx-lHX3o"
-     :page  "http://angg.twu.net/find-yttranscript-links.html"
+     :page  "http://anggtwu.net/find-yttranscript-links.html"
      :date    "2022oct20"
      :length  "28:28"
      :subs    ".vtt"
@@ -1071,9 +1071,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "2022tikz")
     ("2022tikz"
      :title "Eev and TikZ, or: how to learn TikZ using a REPL"
-     :mp4   "http://angg.twu.net/eev-videos/2022-eev-tikz.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/2022-eev-tikz.mp4"
      :yt    "http://www.youtube.com/watch?v=d7nIzpXcV6c"
-     :page  "http://angg.twu.net/eev-tikz.html"
+     :page  "http://anggtwu.net/eev-tikz.html"
      :date    "2022nov02"
      :subs    ".vtt"
      :length  "1:36:27"
@@ -1084,9 +1084,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eev2022kla")
     ("eev2022kla"
      :title "Bidirectional links with eev (@ EmacsConf 2022)"
-     :mp4   "http://angg.twu.net/eev-videos/emacsconf2022-kla.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2022-kla.mp4"
      :yt    "http://www.youtube.com/watch?v=KRobfwXd7Cw"
-     :page  "http://angg.twu.net/emacsconf2022-kla.html"
+     :page  "http://anggtwu.net/emacsconf2022-kla.html"
      :date    "2022dec03"
      :subs    ".vtt"
      :length  "7:57"
@@ -1097,9 +1097,9 @@ For more info on this particular video, run:
     ;; Index: (find-1stclassvideoindex "eev2022py")
     ("eev2022py"
      :title "Short hyperlinks to Python docs (eev @ EmacsConf2022)"
-     :mp4   "http://angg.twu.net/eev-videos/emacsconf2022-py.mp4"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2022-py.mp4"
      :yt    "http://www.youtube.com/watch?v=QeqCYQSlz-I"
-     :page  "http://angg.twu.net/emacsconf2022-py.html"
+     :page  "http://anggtwu.net/emacsconf2022-py.html"
      :date    "2022dec04"
      :subs    ".vtt"
      :length  "14:03"
@@ -1157,7 +1157,7 @@ For more info on this particular video, run:
 ;; «code-eevvideo»  (to ".code-eevvideo")
 ;; I store lots of videos in:
 ;;
-;;   http://angg.twu.net/eev-videos/
+;;   http://anggtwu.net/eev-videos/
 ;;
 ;; besides the official video tutorials for eev. The functions to
 ;; access the official video tutorials are defined in the next

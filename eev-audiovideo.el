@@ -1,6 +1,6 @@
 ;;; eev-audiovideo.el -- elisp hyperlinks to audio and video files.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2013-2021 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2021,2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,15 +19,15 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221219
+;; Version:    20230127
 ;; Keywords:   e-scripts
 ;;
-;; Latest version: <http://angg.twu.net/eev-current/eev-audiovideo.el>
-;;       htmlized: <http://angg.twu.net/eev-current/eev-audiovideo.el.html>
-;;       See also: <http://angg.twu.net/eev-current/eev-beginner.el.html>
-;;                 <http://angg.twu.net/eev-intros/find-eev-intro.html>
-;;                 <http://angg.twu.net/eev-intros/find-audiovideo-intro.html>
-;;                                                (find-audiovideo-intro)
+;; Latest version: <http://anggtwu.net/eev-current/eev-audiovideo.el>
+;;       htmlized: <http://anggtwu.net/eev-current/eev-audiovideo.el.html>
+;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
+;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
+;;                 <http://anggtwu.net/eev-intros/find-audiovideo-intro.html>
+;;                                               (find-audiovideo-intro)
 
 ;;; Commentary:
 
@@ -70,7 +70,7 @@
 ;; later a friend - Rafael Duarte Pinheiro - helped me to create a way
 ;; to play my indexed audios in a browser. Here is an example:
 ;;
-;;   http://angg.twu.net/audios/2011dec13-ict.html
+;;   http://anggtwu.net/audios/2011dec13-ict.html
 ;;
 ;; I used these indexed audios to show what was happening in the
 ;; banana meetings of the Banana Institute of Science and Technology
@@ -80,7 +80,7 @@
 ;; My tools for indexed audios later became one third of my "tools for
 ;; activists", that are documented here:
 ;;
-;;   http://angg.twu.net/ferramentas-para-ativistas.html#audios-introducao
+;;   http://anggtwu.net/ferramentas-para-ativistas.html#audios-introducao
 ;;
 ;; but everything there is in Portuguese.
 ;;

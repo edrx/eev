@@ -1,9 +1,9 @@
 # This file:
 #   https://github.com/edrx/eev/
-#       http://angg.twu.net/eev-current/README.org.html
-#       http://angg.twu.net/eev-current/README.org
-#               (find-angg "eev-current/README.org")
-#               (find-angg "eev-current/")
+#       http://anggtwu.net/eev-current/README.org.html
+#       http://anggtwu.net/eev-current/README.org
+#              (find-angg "eev-current/README.org")
+#              (find-angg "eev-current/")
 # Author: Eduardo Ochs <eduardoochs@gmail.com>
 # 
 # Some eev-isms:
@@ -20,21 +20,21 @@
 
 I used to call eev a "tool for automating almost everything" and "my
 project to save the world with Free Software". In more concrete terms,
-eev is a library for Emacs that lets us create [[http://angg.twu.net/eev-intros/find-here-links-intro.html#1][executable logs]] of
+eev is a library for Emacs that lets us create [[http://anggtwu.net/eev-intros/find-here-links-intro.html#1][executable logs]] of
 what we do in a format that is reasonably easy to read and to modify,
 and that lets us "play back" those logs step by step in any order.
 
 The best introductions to eev are:
 
-- "[[http://angg.twu.net/emacsconf2019.html][How to record executable notes with eev - and how to play them
+- "[[http://anggtwu.net/emacsconf2019.html][How to record executable notes with eev - and how to play them
   back]]": my talk at the EmacsConf 2019. Executable notes are mostly
-  made of [[http://angg.twu.net/eev-intros/find-eev-quick-intro.html#3][sexp hyperlinks]] and [[http://angg.twu.net/eev-intros/find-eev-quick-intro.html#6][eepitch blocks]]. This talk has a quick
-  explanation of sexp hyperlinks at [[http://angg.twu.net/LATEX/2019emacsconf.pdf#page=5][slides 5 and 6]], a mention in [[http://angg.twu.net/LATEX/2019emacsconf.pdf#page=8][slide
-  8]] of my 20+ years of executable notes in [[http://angg.twu.net/e/]], and
+  made of [[http://anggtwu.net/eev-intros/find-eev-quick-intro.html#3][sexp hyperlinks]] and [[http://anggtwu.net/eev-intros/find-eev-quick-intro.html#6][eepitch blocks]]. This talk has a quick
+  explanation of sexp hyperlinks at [[http://anggtwu.net/LATEX/2019emacsconf.pdf#page=5][slides 5 and 6]], a mention in [[http://anggtwu.net/LATEX/2019emacsconf.pdf#page=8][slide
+  8]] of my 20+ years of executable notes in [[http://anggtwu.net/e/]], and
   a very nice demo of playing back non-trivial executable notes in the
   video starting at [[http://www.youtube.com/watch?v=86yiRG8YJD0#t=13m10s][13:10]]; the demo of eepitch starts at [[http://www.youtube.com/watch?v=86yiRG8YJD0#t=15m11s][15:11]],
 
-- "[[http://angg.twu.net/emacsconf2020.html][On why most of the best features in eev look like 5-minute hacks]]":
+- "[[http://anggtwu.net/emacsconf2020.html][On why most of the best features in eev look like 5-minute hacks]]":
   my talk at the EmacsConf 2020. It is mostly about design decisions;
   for example, starting at [[http://www.youtube.com/watch?v=hOAqBc42Gg8#t=30m40s][30:40]] it explains why eev implements a
   variant of [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Key-Help.html][M-x describe-key]] that it much more hacker-friendly than
@@ -44,15 +44,15 @@ The best introductions to eev are:
 
 - "[[http://www.youtube.com/watch?v=kxBjiUo88_U][How to install eev with M-x list-packages and how to navigate its
   tutorials]]". This is a video tutorial accessible to total beginners -
-  with an approach that is the exact opposite of "[[http://angg.twu.net/LATEX/2019emacsconf.pdf#page=10][users should not be
+  with an approach that is the exact opposite of "[[http://anggtwu.net/LATEX/2019emacsconf.pdf#page=10][users should not be
   forced to see Lisp]]".
 
-- its [[http://angg.twu.net/eev-intros/find-eev-intro.html][sandboxed tutorials]],
+- its [[http://anggtwu.net/eev-intros/find-eev-intro.html][sandboxed tutorials]],
 
-- its homepage: [[http://angg.twu.net/#eev]] .
+- its homepage: [[http://anggtwu.net/#eev]] .
 
 The "[Video links:]" blocks in the sandboxed tutorials are explained
-[[http://angg.twu.net/eev-intros/find-video-links-intro.html#2][here]]; that link also has a list of the videos. See also [[https://lists.gnu.org/archive/html/emacs-devel/2021-05/msg00527.html][this
+[[http://anggtwu.net/eev-intros/find-video-links-intro.html#2][here]]; that link also has a list of the videos. See also [[https://lists.gnu.org/archive/html/emacs-devel/2021-05/msg00527.html][this
 announcement]] on emacs-devel.
 
 # (find-eev-quick-intro "3. Elisp hyperlinks")
@@ -65,7 +65,7 @@ announcement]] on emacs-devel.
 # (ecop 8 "prehistory-7" "several megabytes")
 # (eco    "prehistory-7" "several megabytes")
 
-# http://angg.twu.net/eev-intros/find-videos-intro.html#2
+# http://anggtwu.net/eev-intros/find-videos-intro.html#2
 # (find-videos-intro "2. Short links to eev video tutorials")
 
 # (ecop 10 "prehistory-9" "users should not be forced to see Lisp")
@@ -75,31 +75,31 @@ announcement]] on emacs-devel.
 
 The recommended way to try eev it to install it with M-x list-packages
 and then run M-x eev-beginner; this will load all the modules of eev,
-turn eev-mode on, and open the [[http://angg.twu.net/eev-intros/find-eev-quick-intro.html][main tutorial]]. I tried to make eev as
+turn eev-mode on, and open the [[http://anggtwu.net/eev-intros/find-eev-quick-intro.html][main tutorial]]. I tried to make eev as
 friendly as possible both to:
 
 - beginners, who at first know only the most obvious keybindings, like
   the arrow keys, and no Lisp at all, and:
 
-- experts, who want a very [[http://angg.twu.net/eev-intros/find-eev-intro.html#1][non-invasive]] package, with a mode that they
+- experts, who want a very [[http://anggtwu.net/eev-intros/find-eev-intro.html#1][non-invasive]] package, with a mode that they
   can turn on and off easily (hint: M-x eev-mode), and that they can
   learn by playing with it just 5 minutes per week. The "expert setup"
-  is explained [[http://angg.twu.net/eev-intros/find-eev-install-intro.html#1][here]]. The source code for M-x eev-beginner is [[http://angg.twu.net/eev-current/eev-beginner.el.html][here]].
+  is explained [[http://anggtwu.net/eev-intros/find-eev-install-intro.html#1][here]]. The source code for M-x eev-beginner is [[http://anggtwu.net/eev-current/eev-beginner.el.html][here]].
 
 # (find-eev-install-intro "1. Beginners and experts")
-# http://angg.twu.net/eev-intros/find-eev-install-intro.html#1
+# http://anggtwu.net/eev-intros/find-eev-install-intro.html#1
 
 # (find-eev-quick-intro)
-# http://angg.twu.net/eev-intros/find-eev-quick-intro.html
+# http://anggtwu.net/eev-intros/find-eev-quick-intro.html
 
 # (find-eev "eev-beginner.el")
-# http://angg.twu.net/eev-current/eev-beginner.el.html
+# http://anggtwu.net/eev-current/eev-beginner.el.html
 
 # (find-eev-quick-intro "1. Installing eev")
-# http://angg.twu.net/eev-intros/find-eev-quick-intro.html#1
+# http://anggtwu.net/eev-intros/find-eev-quick-intro.html#1
 
 # (find-eev-intro "1. `eev-mode'")
-# http://angg.twu.net/eev-intros/find-eev-intro.html#1
+# http://anggtwu.net/eev-intros/find-eev-intro.html#1
 
 # https://orgmode.org/ prose
 
@@ -107,11 +107,11 @@ friendly as possible both to:
 # (eco    "prehistory-4")
 
 # (find-here-links-intro "1. Alternating between \"task\" and \"notes\"")
-# http://angg.twu.net/eev-intros/find-here-links-intro.html#1
+# http://anggtwu.net/eev-intros/find-here-links-intro.html#1
 
-# http://angg.twu.net/LATEX/2019emacsconf.pdf
-# http://angg.twu.net/LATEX/2019emacsconf.pdf#page=8
-# http://angg.twu.net/LATEX/2019emacsconf.pdf#page=13
+# http://anggtwu.net/LATEX/2019emacsconf.pdf
+# http://anggtwu.net/LATEX/2019emacsconf.pdf#page=8
+# http://anggtwu.net/LATEX/2019emacsconf.pdf#page=13
 
 # Local Variables:
 # modes: (org-mode fundamental-mode)

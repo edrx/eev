@@ -5,8 +5,8 @@
 ;; Author: Eduardo Ochs <eduardoochs@gmail.com>
 ;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: lisp e-scripts
-;; URL: http://angg.twu.net/#eev
-;; Version: 20230102
+;; URL: http://anggtwu.net/#eev
+;; Version: 20230127
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,12 +30,12 @@
 ;; to modify, and that lets us "play back" those logs step by step in
 ;; any order.
 ;;
-;; See the file README.org - or <http://angg.twu.net/#eev>, or
+;; See the file README.org - or <http://anggtwu.net/#eev>, or
 ;; <https://github.com/edrx/eev#introduction> - for more information
 ;; and lots of links.
 ;;
 ;; See eev-beginner.el for how to load and start eev:
-;; <http://angg.twu.net/eev-current/eev-beginner.el.html>
+;; <http://anggtwu.net/eev-current/eev-beginner.el.html>
 
 ;;; Code:
 
