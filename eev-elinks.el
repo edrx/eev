@@ -1524,21 +1524,25 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
 "Visit a temporary buffer containing hyperlinks about the major mode."
   (interactive (list major-mode))
   (setq mode (or mode "{mode}"))
-  (apply
-   'find-elinks
-   `((find-emajormode-links ,mode ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-emajormode-links)
-     ""
-     (find-efunction-links ',mode)
-     (find-efunctiondescr  ',mode)
-     (find-efunction       ',mode)
-     (find-hvariable ,(concat mode "-map"))
-     ""
-     (find-estring (documentation ',mode))
-     (find-estring (documentation ',mode t))
-     )
-   pos-spec-list))
+  (if (symbolp mode) (setq mode (symbol-name mode)))
+  (let ((ee-buffer-name (or ee-buffer-name "*find-emajormode-links*")))
+    (apply
+     'find-elinks
+     `((find-emajormode-links ,mode ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-emajormode-links)
+       ""
+       ,(ee-template0 "\
+# (find-efunction-links '{mode})
+# (find-efunctiondescr  '{mode})
+# (find-efunction       '{mode})
+# (find-hvariable '{mode}-map)
+#
+# (find-estring (documentation '{mode}))
+# (find-estring (documentation '{mode} t))
+")
+       )
+     pos-spec-list)))
 
 
 

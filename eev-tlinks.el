@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230128
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -151,6 +151,7 @@
 ;; «.find-rstdoc-links»			(to "find-rstdoc-links")
 ;; «.find-mpv-links»			(to "find-mpv-links")
 ;; «.find-try-sly-links»		(to "find-try-sly-links")
+;; «.find-emacsclient-links»		(to "find-emacsclient-links")
 
 
 (require 'eev-env)
@@ -3222,9 +3223,9 @@ This function is used by `ee-0x0-upload-region'."
 ;;        (find-eev \"eev-videolinks.el\" \"{c}\")
 ;;            (find-1stclassvideo-links \"{c}\")
 ;;
-;; Index: (find-1stclassvideoindex              \"{c}\")
+;; Index: (find-1stclassvideoindex             \"{c}\")
 ;;        http://anggtwu.net/.emacs.videos.html#{c}
-;;        (find-angg         \".emacs.videos\"    \"{c}\")
+;;        (find-angg         \".emacs.videos\"   \"{c}\")
 ;;        (find-angg-es-links)
 {dlsubs}\
 
@@ -4088,6 +4089,45 @@ load(\"startsly\");
 "))
      )
    pos-spec-list))
+
+
+
+;; «find-emacsclient-links»  (to ".find-emacsclient-links")
+;; Skel: (find-find-links-links-new "emacsclient" "" "")
+;; Test: (find-emacsclient-links)
+;;
+(defun find-emacsclient-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for emacsclient."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-emacsclient-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-emacsclient-links)
+     ""
+     (find-enode "Emacs Server")
+     (find-enode "Invoking emacsclient")
+     (find-enode "emacsclient Options" "--eval")
+     (find-pdf-like-intro "7. Shorter hyperlinks to PDF files")
+     (find-pdf-like-intro "code-pdf-page")
+     ""
+     ,(ee-template0 "\
+ (require 'server)
+ (server-stop)
+ (server-start)
+ (list-processes)
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-livesofanimalspage 3)
+emacsclient --eval '(+ 1 2)'
+emacsclient --eval '(find-livesofanimalspage 3)'
+
+")
+     )
+   pos-spec-list))
+
 
 
 

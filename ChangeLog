@@ -1,3 +1,20 @@
+2023-04-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-find-eww-preprocess-url): new function.
+	(find-eww): use `ee-find-eww-preprocess-url'.
+
+2023-02-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tla.el (ee-code-tla): small changes.
+
+2023-01-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-emajormode-links): fixed a bug.
+
+	* eev-kla.el (ee-kl-sexp-kla0, eekla0): new functions.
+
+	* eev-tlinks.el (find-emacsclient-links): new function.
+
 2023-01-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el: changed angg.twu.net to anggtwu.net.

@@ -14950,6 +14950,7 @@ have run the `defalias'es below:
 
   ;; From: (find-kla-intro \"2. Aliases\")
   (defalias 'kla  'eekla)
+  (defalias 'kla0 'eekla0)
   (defalias 'klas 'eeklas)
   (defalias 'klf  'eeklf)
   (defalias 'klfs 'eeklfs)

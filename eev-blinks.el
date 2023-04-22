@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230421
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1242,7 +1242,7 @@ this function saves the POS-SPEC-LIST in the variable
 `ee-find-eww-search' processes these two variables."
   (setq ee-find-eww-search-for pos-spec-list)
   (setq ee-find-eww-search-yes t)
-  (eww (replace-regexp-in-string "^/" "file:///" (ee-expand url))))
+  (eww (ee-find-eww-preprocess-url url)))
 
 (defun ee-find-eww-search ()
   "This function is run after eww finishes rendering a page.
@@ -1254,6 +1254,23 @@ false. These variables are set by `find-eww'."
     (apply 'ee-goto-position ee-find-eww-search-for)))
 
 (add-hook 'eww-after-render-hook 'ee-find-eww-search)
+
+;; Tests: (ee-find-eww-preprocess-url "/")
+;;        (ee-find-eww-preprocess-url "/foo")
+;;        (ee-find-eww-preprocess-url "C:/Users/")
+;;        (ee-find-eww-preprocess-url "C:\\Users\\")
+;; See:   (find-efunction 'ee-fname-to-url)
+;;        (find-psne-intro "find-eww")
+;;
+(defun ee-find-eww-preprocess-url (url)
+  "An internal function used by `find-eww'."
+  (setq url (ee-expand url))
+  (setq url (replace-regexp-in-string "\\\\" "/" url))
+  (if (string-match "^/" url)
+      (concat "file://" url)
+    (if (string-match "^[A-Za-z]:/" url) ; experimental, for Windows
+	(concat "file:///" url)
+      url)))
 
 ;; (code-c-d "eww" (ee-elfile "net/") "eww" :gz)
 ;; (find-ewwfile "" "eww.el")

@@ -128,12 +128,13 @@ Use `_,_'s and `_._'s between the `_i_' and the `_0_' to adjust the `(to ...)'.\
   ("q" nil)
   ;;
   ;; Reindent:
-  ("<down>"  (eek "<down>"))
-  ("<up>"    (eek "<up>"))
-  ("<right>" (eek "<right>"))
-  ("<left>"  (eek "<left>"))
-  ("SPC"     (eek "SPC"))
-  ("DEL"     (eek "DEL"))
+  ("<down>"   (eek "<down>"))
+  ("<up>"     (eek "<up>"))
+  ("<right>"  (eek "<right>"))
+  ("<left>"   (eek "<left>"))
+  ("<delete>" (eek "<delete>"))
+  ("SPC"      (eek "SPC"))
+  ("DEL"      (eek "DEL"))
   (","   (ee-edit-index-replace "\t(to "   "(to "))
   ("."   (ee-edit-index-replace   "(to " "\t(to "))
   ;;

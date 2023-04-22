@@ -1,6 +1,6 @@
 ;;; eev-tla.el --- eev links based on TLAs, i.e., three-letter acronyms.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2021 Free Software Foundation, Inc.
+;; Copyright (C) 2021-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20210618
+;; Version:    20230214
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-tla.el>
@@ -220,9 +220,15 @@
      (ee-template0 "\
 ;; (find-code-tla \"{tla}\" \"{fname}\")
 ;;      (code-tla \"{tla}\" \"{fname}\")
+;; (find-eev \"eev-tla.el\" \"code-tla\")
 
+;; See: (find-eev \"eev-tla.el\" \"hash-table\")
+;;      (find-ehashtable ee-tla-table)
+;;      (find-ehashtable ee-tla-table \"{fname}\")
 (ee-tla-set '{tla} \"{fname}\")
 
+;; Tests: ({tla})
+;;        ({tla}a \"index\")
 (defun {tla} (&rest pos-spec-list)
   (interactive)
   (apply 'find-fline \"{fname}\" pos-spec-list))
@@ -231,6 +237,9 @@
 ")
      (if haspdf
 	 (ee-template0 "
+;; Tests: (ee-tla-tex-to-pdf \"{fname}\")
+;;        ({tla}p 1)
+;;        ({tla}t 1)
 (defun {tla}p (&optional page &rest rest)
   (interactive)
   (find-pdf-page \"{fnamepdf}\" page))

@@ -1044,7 +1044,7 @@ For more info on this particular video, run:
     ;; Play: (find-2022eevwconfigvideo "0:00")
     ;; Index: (find-1stclassvideoindex "2022eevwconfig")
     ("2022eevwconfig"
-     :title "Eev-config.el: a way without \"magic\" to configure eev on M$ Windows"
+     :title "Eev-wconfig.el: a way without \"magic\" to configure eev on M$ Windows"
      :mp4   "http://anggtwu.net/eev-videos/2022-eev-wconfig.mp4"
      :yt    "http://www.youtube.com/watch?v=Rm29XSdGCXw"
      :page  "http://anggtwu.net/eev-wconfig.html"

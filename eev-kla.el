@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230128
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kla.el>
@@ -340,6 +340,14 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
 	(ee-kl-shorterfname :fname fname :c c :r r)
 	anchor))
 
+(cl-defun ee-kl-sexp-kla0 (&key fname c r anchor)
+  "<K>ill <l>ink to <a>nchor, without the anchor - make sexp."
+  (setq fname  (or fname  (ee-kl-fname))
+	c      (or c      (ee-kl-c :fname fname))
+	r      (or r      (ee-kl-r :fname fname)))
+  (list (ee-kl-find-c       :fname fname :c c)
+	(ee-kl-shorterfname :fname fname :c c :r r)))
+
 (cl-defun ee-kl-sexp-klas (&key fname c r anchor region)
   "<K>ill <l>ink to <a>nchor and <s>tring - make sexp."
   (setq fname  (or fname  (ee-kl-fname))
@@ -427,6 +435,12 @@ a newline to it."
 Put in the kill ring a link to the preceding anchor."
   (interactive)
   (ee-kl-kill (ee-kl-sexp-kla)))
+
+(defun eekla0 ()
+  "<K>ill <L>ink to <A>nchor, without the anchor.
+Put in the kill ring a shortened link to the file."
+  (interactive)
+  (ee-kl-kill (ee-kl-sexp-kla0)))
 
 (defun eeklas ()
   "<K>ill <L>ink to <A>nchor and <S>tring.
@@ -543,9 +557,10 @@ When not at BOL, move to the beginning of the next line."
 ;;; /_/   \_\_|_|\__,_|___/\___||___/
 ;;;                                  
 ;; «aliases»  (to ".aliases")
-;; See: (find-kla-intro "3. Aliases")
+;; See: (find-kla-intro "4. Aliases")
 ;; I use these aliases:
 ;; (defalias 'kla  'eekla)
+;; (defalias 'kla0 'eekla0)
 ;; (defalias 'klas 'eeklas)
 ;; (defalias 'klf  'eeklf)
 ;; (defalias 'klfs 'eeklfs)
