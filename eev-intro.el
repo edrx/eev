@@ -14751,7 +14751,9 @@ It is meant as both a tutorial and a sandbox.
     (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
     (find-eev-quick-intro \"4.1. `find-here-links'\")
 
-  Video: (find-eev2022klavideo \"0:00\")
+  Video: (find-1stclassvideo-links \"eev2022kla\")
+         (find-1stclassvideolsubs \"eev2022kla\")
+         (find-eev2022klavideo \"0:00\")
 
 
 
@@ -14764,7 +14766,7 @@ When we run this `code-c-d',
 it defines several functions; one of them is a function called
 `find-foofile', that points to the directory \"/tmp/FOO/\".
 
-We will refer to the first argument of the `code-c-d', \"foo\" as
+I will refer to the first argument of the `code-c-d', \"foo\" as
 the `code', or the `c', and to the second argument, \"/tmp/FOO/\"
 as the `directory', or the `d'.
 
@@ -14898,7 +14900,7 @@ that would do that is this one:
 That key sequence is explained here:
 
   (find-saving-links-intro)
-  (find-saving-links-intro \"2.3. The base case 3\")
+  (find-saving-links-intro \"5.3. The base case 3\")
 
 
 
@@ -14948,7 +14950,7 @@ So we will see it in detail.
 In the other examples of this tutorial I will suppose that you
 have run the `defalias'es below:
 
-  ;; From: (find-kla-intro \"2. Aliases\")
+  ;; From: (find-kla-intro \"4. Aliases\")
   (defalias 'kla  'eekla)
   (defalias 'kla0 'eekla0)
   (defalias 'klas 'eeklas)
@@ -15356,6 +15358,7 @@ redefine it to add more features to it.
 (TODO: document this! See:)
 
   (find-eev \"eev-kla.el\" \"eekla2\")
+  (find-eev2022klavideo \"06:07\")
 
 
 

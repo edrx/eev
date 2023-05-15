@@ -19,14 +19,14 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230128
+;; Version:    20230513
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kla.el>
 ;;       htmlized: <http://anggtwu.net/eev-current/eev-kla.el.html>
 ;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
-;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;;                 <http://anggtwu.net/eev-intros/find-kla-intro.html>
+;;                                               (find-kla-intro)
 
 ;; «.a-test»			(to "a-test")
 ;; «.more-tests»		(to "more-tests")
@@ -511,6 +511,7 @@ Put in the kill ring a link to the preceding anchor."
 ;;;                               
 ;; «eekla2»  (to ".eekla2")
 ;; See: (find-kla-intro "14. Bidirectional hyperlinks")
+;;      (find-eev2022klavideo "06:07")
 ;; Based on:
 ;;   (find-eev "eev-flash.el" "specs")
 ;;   (find-eev "eev-tlinks.el" "ee-copy-rest" "eeflash-copy")

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230128
+;; Version:    20230422
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -151,7 +151,9 @@
 ;; «.find-rstdoc-links»			(to "find-rstdoc-links")
 ;; «.find-mpv-links»			(to "find-mpv-links")
 ;; «.find-try-sly-links»		(to "find-try-sly-links")
+;; «.find-melpa-links»			(to "find-melpa-links")
 ;; «.find-emacsclient-links»		(to "find-emacsclient-links")
+;; «.code-etv2»				(to "code-etv2")
 
 
 (require 'eev-env)
@@ -3225,7 +3227,7 @@ This function is used by `ee-0x0-upload-region'."
 ;;
 ;; Index: (find-1stclassvideoindex             \"{c}\")
 ;;        http://anggtwu.net/.emacs.videos.html#{c}
-;;        (find-angg         \".emacs.videos\"   \"{c}\")
+;;        (find-angg        \".emacs.videos\"    \"{c}\")
 ;;        (find-angg-es-links)
 {dlsubs}\
 
@@ -4092,6 +4094,42 @@ load(\"startsly\");
 
 
 
+
+;; «find-melpa-links»  (to ".find-melpa-links")
+;; Skel: (find-find-links-links-new "melpa" "" "")
+;; Test: (find-melpa-links)
+;;
+(defun find-melpa-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for melpa."
+  (interactive)
+  (apply
+   'find-elinks-elisp
+   `((find-melpa-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-melpa-links)
+     ""
+     ,(ee-template0 "\
+;; See:
+;; https://melpa.org/#/getting-started
+;; https://www.emacswiki.org/emacs/MELPA
+;; (find-eev \"eev-tlinks.el\" \"find-try-sly-links\")
+
+;; From: (find-melpa-links)
+(require 'package)
+(add-to-list 'package-archives
+  '(\"melpa\" . \"https://melpa.org/packages/\"))
+
+;; Test:
+;; (package-initialize)
+;; (package-refresh-contents)
+;; (find-epackages)
+")
+     )
+   pos-spec-list))
+
+
+
+
 ;; «find-emacsclient-links»  (to ".find-emacsclient-links")
 ;; Skel: (find-find-links-links-new "emacsclient" "" "")
 ;; Test: (find-emacsclient-links)
@@ -4128,6 +4166,42 @@ emacsclient --eval '(find-livesofanimalspage 3)'
      )
    pos-spec-list))
 
+
+
+;; «code-etv2»  (to ".code-etv2")
+;; Skel: (find-code-xxx-links "etv2" "envvar dir outer" "")
+;; Test: (find-code-etv2 "SHOW2DIR" "~/LUA/" "Show2-outer")
+;;       (find-code-etv2)
+;;  See: http://anggtwu.net/Show2.html
+;;       (find-angg "LUA/Show2.lua" "Show")
+;;       (find-angg "LUA/Show2.lua" "Show" "dir =")
+;; These functions will change soon!!!
+;;
+(defun      code-etv2 (&optional    envvar dir outer)
+  (eval (ee-read      (ee-code-etv2 envvar dir outer))))
+(defun find-code-etv2 (&optional    envvar dir outer)
+  (find-estring-elisp (ee-code-etv2 envvar dir outer)))
+(defun   ee-code-etv2 (&optional    envvar dir outer)
+  (setq envvar (or envvar "{envvar}"))
+  (setq dir    (or dir    "{dir}"))
+  (setq outer  (or outer  "{outer}"))
+  (ee-template0 "\
+;; (find-code-etv2 \"{envvar}\" \"{dir}\" \"{outer}\")
+;;      (code-etv2 \"{envvar}\" \"{dir}\" \"{outer}\")
+;; (find-efunction 'find-code-etv2)
+;;
+;; See: http://anggtwu.net/Show2.html
+;;      http://anggtwu.net/LUA/Show2.lua.html
+;;             (find-angg \"LUA/Show2.lua\")
+;; Try: (find-code-etv2 \"SHOW2DIR\" \"/tmp/\" \"Show2\")
+;;      (find-code-etv2 \"ELPEGDIR\" \"~/LUA/\" \"Show2-outer2\")
+;;      (find-code-etv2)
+;;
+(defun tb  () (interactive) (find-ebuffer (eepitch-target-buffer)))
+(defun v   () (interactive) (find-pdftools-page \"{dir}{outer}.pdf\"))
+(defun etv () (interactive) (find-wset \"13o2_o_o\" '(tb) '(v)))
+(setenv \"{envvar}\" (ee-expand \"{dir}\"))
+"))
 
 
 

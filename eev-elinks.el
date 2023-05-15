@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230513
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -1306,6 +1306,8 @@ If D is t then try to use `ee-package-dir' to get the directory."
 # (find-epackage       '{pkg})
 # (code-c-d \"{c}\" \"{d}\")
 # (find-{c}file \"\")
+
+# (find-melpa-links)
 
 # http://elpa.gnu.org/packages/{pkg}.html
 # http://elpa.nongnu.org/nongnu/{pkg}.html

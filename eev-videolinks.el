@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230422
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -1118,6 +1118,7 @@ For more info on this particular video, run:
 ;; (ee-1stclassvideos-field    "eev2021" :mp4)
 ;; (ee-1stclassvideos-field    "eev2021" :yt)
 ;; (ee-1stclassvideos-mp4stem  "eev2021")
+;; (ee-1stclassvideos-pagestem "eev2022py")
 ;; (ee-1stclassvideos-localmp4 "eev2021")
 ;; (ee-1stclassvideos-mp4found "eev2021")
 ;; (ee-1stclassvideos-hash     "eev2021")
@@ -1129,6 +1130,10 @@ For more info on this particular video, run:
 (defun ee-1stclassvideos-mp4stem (c)
   (let ((mp4 (ee-1stclassvideos-field c :mp4)))
      (replace-regexp-in-string "^.*/\\([^/]*\\)\\.mp4$" "\\1" mp4)))
+
+(defun ee-1stclassvideos-pagestem (c)
+  (let ((url (ee-1stclassvideos-field c :page)))
+     (replace-regexp-in-string "^.*/\\([^/]*\\)\\.html$" "\\1" url)))
 
 (defun ee-1stclassvideos-hash (c)
   (let ((yt (ee-1stclassvideos-field c :yt)))

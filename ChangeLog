@@ -1,3 +1,16 @@
+2023-05-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-melpa-links): New function.
+
+	* eev-elinks.el (ee-find-epackage-links0): use `find-melpa-links'.
+
+2023-04-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (code-etv2, find-code-etv2, ee-code-etv2): new
+	functions.
+
+	* eev-videolinks.el (ee-1stclassvideos-pagestem): new function.
+
 2023-04-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (ee-find-eww-preprocess-url): new function.
