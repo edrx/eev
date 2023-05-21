@@ -1,3 +1,9 @@
+2023-05-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (code-etv2, find-code-etv2, ee-code-etv2):
+	deleted.
+	(code-show2, find-code-show2, ee-code-show2): new functions.
+
 2023-05-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-melpa-links): New function.

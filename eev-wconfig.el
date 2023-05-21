@@ -226,6 +226,8 @@
 ;; «find-wconfig-browser-links»  (to ".find-wconfig-browser-links")
 ;; Skel: (find-find-links-links-new "wconfig-browser" "" "")
 ;; Test: (find-wconfig-browser-links)
+;; See:  (find-newbrowser-links)
+;;       (find-efunction 'find-newbrowser-links)
 ;;
 (defun find-wconfig-browser-links (&rest pos-spec-list)
 "Visit a temporary buffer containing a script for configuring the browser."

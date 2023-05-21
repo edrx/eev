@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230422
+;; Version:    20230521
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -153,7 +153,7 @@
 ;; «.find-try-sly-links»		(to "find-try-sly-links")
 ;; «.find-melpa-links»			(to "find-melpa-links")
 ;; «.find-emacsclient-links»		(to "find-emacsclient-links")
-;; «.code-etv2»				(to "code-etv2")
+;; «.code-show2»			(to "code-show2")
 
 
 (require 'eev-env)
@@ -2695,6 +2695,8 @@ sudo ./install-tl -select-repository
 ;; «find-newbrowser-links»  (to ".find-newbrowser-links")
 ;; Skel: (find-find-links-links-new "newbrowser" "browser binary b" "")
 ;; Test: (find-newbrowser-links "g" "googlechrome" "google-chrome")
+;; See:  (find-wconfig-browser-links)
+;;       (find-efunction 'find-wconfig-browser-links)
 ;;
 (defun find-newbrowser-links (&optional browser binary b &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for newbrowser."
@@ -4168,40 +4170,56 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 
 
 
-;; «code-etv2»  (to ".code-etv2")
-;; Skel: (find-code-xxx-links "etv2" "envvar dir outer" "")
-;; Test: (find-code-etv2 "SHOW2DIR" "~/LUA/" "Show2-outer")
-;;       (find-code-etv2)
-;;  See: http://anggtwu.net/Show2.html
-;;       (find-angg "LUA/Show2.lua" "Show")
-;;       (find-angg "LUA/Show2.lua" "Show" "dir =")
-;; These functions will change soon!!!
+;; «code-show2»  (to ".code-show2")
+;; Skel:  (find-code-xxx-links "show2" "fname" "")
+;; Tests: (find-code-show2)
+;;        (find-code-show2 "./foo")
+;;        (find-code-show2 "./foo.tex")
+;; See:   (find-angg "LUA/Show2.lua")
+;;        (find-angg "LUA/Show2.lua" "Show")
 ;;
-(defun      code-etv2 (&optional    envvar dir outer)
-  (eval (ee-read      (ee-code-etv2 envvar dir outer))))
-(defun find-code-etv2 (&optional    envvar dir outer)
-  (find-estring-elisp (ee-code-etv2 envvar dir outer)))
-(defun   ee-code-etv2 (&optional    envvar dir outer)
-  (setq envvar (or envvar "{envvar}"))
-  (setq dir    (or dir    "{dir}"))
-  (setq outer  (or outer  "{outer}"))
-  (ee-template0 "\
-;; (find-code-etv2 \"{envvar}\" \"{dir}\" \"{outer}\")
-;;      (code-etv2 \"{envvar}\" \"{dir}\" \"{outer}\")
-;; (find-efunction 'find-code-etv2)
+(defun      code-show2 (&optional fname)
+  (eval (ee-read      (ee-code-show2 fname))))
+(defun find-code-show2 (&optional fname)
+  (find-estring-elisp (ee-code-show2 fname)))
+(defun   ee-code-show2 (&optional fname)
+  (setq fname (or fname "/tmp/Show2.tex"))
+  (setq fname (ee-expand fname))
+  (let* ((dir  (file-name-directory fname))
+	 (stem (file-name-nondirectory
+		(file-name-sans-extension fname)))
+	 (tex (concat stem ".tex"))
+	 (pdf (concat stem ".pdf"))
+	 (cmd (format "cd %s && lualatex %s.tex < /dev/null" dir stem)))
+    (ee-template0 "\
+;; (find-code-show2 \"{fname}\")
+;;      (code-show2 \"{fname}\")
+;; (find-efunction 'ee-code-show2)
 ;;
-;; See: http://anggtwu.net/Show2.html
-;;      http://anggtwu.net/LUA/Show2.lua.html
+;; See: http://anggtwu.net/LUA/Show2.lua.html
 ;;             (find-angg \"LUA/Show2.lua\")
-;; Try: (find-code-etv2 \"SHOW2DIR\" \"/tmp/\" \"Show2\")
-;;      (find-code-etv2 \"ELPEGDIR\" \"~/LUA/\" \"Show2-outer2\")
-;;      (find-code-etv2)
+;;             (find-angg \"LUA/Show2.lua\" \"Show\")
+;;
+;; Show2.lua will save the TeX code in:
+;;                {dir}{stem}.tex
+;;   (find-fline \"{dir}{stem}.tex\")
+;; and will run this command to compile that .tex:
+;;   {cmd}
+;; Show2.lua uses the environment vars SHOW2DIR and SHOW2STEM
+;; to determine with directory and which file to use. When these
+;; environment variables are both nil it uses /tmp/Show2.lua.
+;;
+(setenv \"SHOW2DIR\"  \"{dir}\")
+(setenv \"SHOW2STEM\" \"{stem}\")
+;;
+;; The elisp functions `v' and `etv' will display this PDF:
+;;   {dir}{stem}.pdf
 ;;
 (defun tb  () (interactive) (find-ebuffer (eepitch-target-buffer)))
-(defun v   () (interactive) (find-pdftools-page \"{dir}{outer}.pdf\"))
+(defun v   () (interactive) (find-pdftools-page \"{dir}{stem}.pdf\"))
 (defun etv () (interactive) (find-wset \"13o2_o_o\" '(tb) '(v)))
-(setenv \"{envvar}\" (ee-expand \"{dir}\"))
-"))
+")))
+
 
 
 
