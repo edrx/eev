@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230719
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-brxxx.el>
@@ -192,7 +192,9 @@ This should be made smarter - file:// urls should be returned unchanged."
 (defun ee-dired-to-fname (&optional no-error-if-not-filep)
   "Convert the file name at point (in dired mode) to an absolute file name."
   (if (eq major-mode 'dired-mode)
-      (file-name-sans-versions (dired-get-filename nil no-error-if-not-filep) t)
+      (file-name-unquote
+       (file-name-sans-versions
+	(dired-get-filename nil no-error-if-not-filep) t))
     (error "Not in dired mode")))
 
 (defun ee-dired-to-url (&optional no-error-if-not-filep)

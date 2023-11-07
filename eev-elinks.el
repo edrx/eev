@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230513
+;; Version:    20231106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -947,6 +947,8 @@ when this is true remove the prefix D from FNAME, and put the sexp
   "An internal function used by `find-grep-links'."
   (let ((dir (ee-shorten-file-name default-directory)))
     (list (ee-template0 "
+# (ee-find-grep {(ee-S dir)} {(ee-S (car grep-history))})
+
 (let ((default-directory {(ee-S dir)}))
   (grep {(ee-S (car grep-history))})
   )

@@ -317,7 +317,7 @@ point to positions in that video; to learn how to use links like
 those, visit this URL:
 
   http://anggtwu.net/eev-intros/find-video-links-intro.html
-                                (find-video-links-intro)
+                               (find-video-links-intro)
 
 Installing eev does NOT activate eev-mode. To activate eev-mode
 and open this tutorial, run `M-x eev-beginner'.

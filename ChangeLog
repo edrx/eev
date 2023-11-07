@@ -1,3 +1,25 @@
+2023-11-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-code-show2): rewritten.
+
+	* eev-elinks.el (ee-find-grep-links1): added an `ee-find-grep'.
+
+	* eev-blinks.el (find-node): use `ee-goto-rest' instead of
+	`ee-goto-position' (for `find-maximanode').
+
+2023-07-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-brxxx.el (ee-dired-to-fname): added a `file-name-unquote'.
+
+2023-07-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-mbe-links, ee-grim): new functions.
+	(find-wgetrecursive-links): new function.
+
+	* eev-plinks.el (find-callprocessregion): the argument "input" was
+	missing; fixed.
+	(ee-callprocessregion): new function.
+
 2023-05-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (code-etv2, find-code-etv2, ee-code-etv2):

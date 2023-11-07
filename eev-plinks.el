@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20230717
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -227,6 +227,7 @@
 ;; To do: write examples and test cases for this.
 ;; See: (find-efunctiondescr 'call-process-region)
 ;;      (find-elnode "Synchronous Processes" "Function: call-process-region")
+;; Test: (find-callprocessregion "grep a" "a \n b \n aa \n c \n aaa")
 ;;
 (defun find-callprocessregion-ne (program-and-args input)
   (let ((argv (ee-split program-and-args)))
@@ -238,7 +239,14 @@
       (buffer-substring (point-min) (point-max)))))
 
 (defun find-callprocessregion (program-and-args input)
-  (find-callprocessregion-ne (ee-split-and-expand program-and-args)))
+  (find-callprocessregion-ne (ee-split-and-expand program-and-args) input))
+
+(defun ee-callprocessregion (cmd)
+  (interactive "sShell command: ")
+  "Run CMD on the region and display the output in a temporary buffer.
+This is similar to `shell-command-on-region'."
+  (find-estring (find-callprocessregion cmd (ee-region))))
+
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230521
+;; Version:    20231106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -151,6 +151,8 @@
 ;; «.find-rstdoc-links»			(to "find-rstdoc-links")
 ;; «.find-mpv-links»			(to "find-mpv-links")
 ;; «.find-try-sly-links»		(to "find-try-sly-links")
+;; «.find-wgetrecursive-links»		(to "find-wgetrecursive-links")
+;; «.find-mbe-links»			(to "find-mbe-links")
 ;; «.find-melpa-links»			(to "find-melpa-links")
 ;; «.find-emacsclient-links»		(to "find-emacsclient-links")
 ;; «.code-show2»			(to "code-show2")
@@ -3741,11 +3743,12 @@ N should be either a number or a symbol; SEXP should be a sexp."
          (def     (ee-wrap-eejump strn strsexp)))
     (apply
      'find-elinks-elisp
-     `((find-eejump-links ,n ,sexp ,@pos-spec-list)
-       (find-eejump-links 999 '(find-elnode ""))
-       (find-eejump-links 'el '(find-elisp-intro))
+     `((find-eejump-links ,(ee-add-quote n) ,(ee-add-quote sexp) ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-eejump-links)
+       ""
+       ";; Try: (find-eejump-links 999 '(find-elnode \"\"))"
+       ";;      (find-eejump-links 'el '(find-elisp-intro))"
        ""
        ";; See:"
        (find-eev-quick-intro "7. Quick access to one-liners")
@@ -4097,6 +4100,118 @@ load(\"startsly\");
 
 
 
+;; «find-wgetrecursive-links»  (to ".find-wgetrecursive-links")
+;; Skel:  (find-find-links-links-new "wgetrecursive" "url" "lurl")
+;; Tests: (find-wgetrecursive-links)
+;;        (find-wgetrecursive-links "https://home.csulb.edu/~woollett/")
+;;
+(defun find-wgetrecursive-links (&optional url &rest pos-spec-list)
+"Visit a temporary buffer containing a script for using wget --recursive."
+  (interactive)
+  (setq url (or url "{url}"))
+  (let* ((lurl (ee-url-to-fname0 url)))
+    (apply
+     'find-elinks
+     `((find-wgetrecursive-links ,url ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-wgetrecursive-links)
+       ""
+       (find-node "(wget)Recursive Download")
+       (find-node "(wget)Directory-Based Limits" "--no-parent")
+       (find-node "(wget)Recursive Retrieval Options" "--recursive")
+       (find-sh "wget --help" "--recursive")
+       (find-sh "wget --help" "--no-parent")
+       (find-es "wget" "recursive")
+       ""
+       ,(ee-H url)
+       (find-fline ,lurl)
+       ""
+       ,(ee-template0 "\
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+rm -Rv /tmp/wget-recursive.tar
+rm -Rv /tmp/wget-recursive/
+mkdir  /tmp/wget-recursive/
+cd     /tmp/wget-recursive/
+
+wget --recursive --no-parent \\
+  {url}
+find | sort
+du -c
+du -ch
+
+# (find-fline     \"/tmp/wget-recursive/\")
+# (find-sh-at-dir \"/tmp/wget-recursive/\" \"find * | sort\")
+
+cd     /tmp/wget-recursive/
+tar              -cvf /tmp/wget-recursive.tar .
+tar -C $S/https/ -xvf /tmp/wget-recursive.tar
+
+# (find-fline \"{lurl}\")
+")
+       )
+     pos-spec-list)))
+
+
+
+
+;; «find-mbe-links»  (to ".find-mbe-links")
+;; Skel: (find-find-links-links-new "mbe" "ch page pos-spec" "nch")
+;; Test: (find-mbe-links)
+;;       (find-mbe-links 1)
+;;       (find-mbe-links 1 35 "1.8.11 Taylor and Laurent")
+;;
+(defun find-mbe-links (&optional ch page pos-spec &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for Maxima by Example."
+  (interactive)
+  (setq ch (or ch "{ch}"))
+  (setq page (or page "{page}"))
+  (setq pos-spec (or pos-spec "{pos-spec}"))
+  (let* ((nch (if (numberp ch) (format "%02d" ch) "{nch}")))
+    (apply
+     'find-elinks
+     `((find-mbe-links ,ch ,page ,pos-spec ,@pos-spec-list)
+       ,(ee-template0 "# (find-mbe{nch}page   {page} {(ee-S pos-spec)})")
+       ,(ee-template0 "# (find-mbe{nch}text   {page} {(ee-S pos-spec)})")
+       ,(ee-template0 "# (find-mbefile \"\" \"mbe{nch}\")")
+       ,(ee-template0 "# (find-mbefile \"\" \"mbe{ch}\")")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-mbe-links)
+       ""
+       ,(ee-H "https://home.csulb.edu/~woollett/mbe.html")
+       (find-es "maxima" "maxima-by-example-eev")
+       (find-es "mbe")
+       ""
+       (find-angg ".emacs.papers" "maxima-by-example")
+       (find-mbetext 1 ,pos-spec)
+       ""
+       (find-eepitch-intro "3.3. `eepitch-preprocess-line'")
+       (setq eepitch-preprocess-regexp "^ *(%i[0-9]+) ?")
+       (defalias 'grim 'ee-grim)
+       ""
+       ,(ee-template0 "\
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+")
+       )
+     pos-spec-list)))
+
+;; See the explanation here:
+;;   (find-es "mbe" "grim")
+(defun ee-grim ()
+  "<GR>ep the <I>nput lines in <M>axima code.
+This greps the lines containing strings like (%i1), (%i2), etc in
+the region and displays the output in a temporary buffer."
+  (interactive)
+  (ee-callprocessregion '("grep" "(%i")))
+
+
+
+
+
+
 ;; «find-melpa-links»  (to ".find-melpa-links")
 ;; Skel: (find-find-links-links-new "melpa" "" "")
 ;; Test: (find-melpa-links)
@@ -4171,21 +4286,21 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 
 
 ;; «code-show2»  (to ".code-show2")
-;; Skel:  (find-code-xxx-links "show2" "fname" "")
+;; Skel:  (find-code-xxx-links "show2" "fname0" "")
 ;; Tests: (find-code-show2)
 ;;        (find-code-show2 "./foo")
 ;;        (find-code-show2 "./foo.tex")
 ;; See:   (find-angg "LUA/Show2.lua")
 ;;        (find-angg "LUA/Show2.lua" "Show")
 ;;
-(defun      code-show2 (&optional fname)
-  (eval (ee-read      (ee-code-show2 fname))))
-(defun find-code-show2 (&optional fname)
-  (find-estring-elisp (ee-code-show2 fname)))
-(defun   ee-code-show2 (&optional fname)
-  (setq fname (or fname "/tmp/Show2.tex"))
-  (setq fname (ee-expand fname))
-  (let* ((dir  (file-name-directory fname))
+(defun      code-show2 (&optional fname0)
+  (eval (ee-read      (ee-code-show2 fname0))))
+(defun find-code-show2 (&optional fname0)
+  (interactive)
+  (find-estring-elisp (ee-code-show2 fname0)))
+(defun   ee-code-show2 (&optional fname0)
+  (let* ((fname (ee-expand (or fname0 "/tmp/Show2.tex")))
+	 (dir  (file-name-directory fname))
 	 (stem (file-name-nondirectory
 		(file-name-sans-extension fname)))
 	 (tex (concat stem ".tex"))
@@ -4194,29 +4309,75 @@ emacsclient --eval '(find-livesofanimalspage 3)'
     (ee-template0 "\
 ;; (find-code-show2 \"{fname}\")
 ;;      (code-show2 \"{fname}\")
-;; (find-efunction 'ee-code-show2)
+;;  (find-efunction 'code-show2)
 ;;
-;; See: http://anggtwu.net/LUA/Show2.lua.html
-;;             (find-angg \"LUA/Show2.lua\")
-;;             (find-angg \"LUA/Show2.lua\" \"Show\")
 ;;
-;; Show2.lua will save the TeX code in:
-;;                {dir}{stem}.tex
-;;   (find-fline \"{dir}{stem}.tex\")
-;; and will run this command to compile that .tex:
-;;   {cmd}
-;; Show2.lua uses the environment vars SHOW2DIR and SHOW2STEM
-;; to determine with directory and which file to use. When these
-;; environment variables are both nil it uses /tmp/Show2.lua.
+;; Part 1: Lua
+;; ===========
+;; With the arguments above `code-show2' will set the
+;; environment variables SHOW2DIR and SHOW2STEM to:
 ;;
 (setenv \"SHOW2DIR\"  \"{dir}\")
 (setenv \"SHOW2STEM\" \"{stem}\")
 ;;
-;; The elisp functions `v' and `etv' will display this PDF:
+;; These variables will be used by Show2.lua to determine which
+;; directory and which file to work on. The values above mean
+;; that Show2.lua will save the TeX code in this file,
+;;
+;;                {dir}{stem}.tex
+;;   (find-fline \"{dir}{stem}.tex\")
+;;
+;; and will run this command to compile that .tex:
+;;
+;;   {cmd}
+;;
+;; When both SHOW2DIR and SHOW2STEM are undefined Show2.lua
+;; will use /tmp/ and /tmp/Show2.lua.
+;;
+;; To understand how the argument to `code-show2' works, try:
+;;        (find-code-show2)
+;;        (find-code-show2 \"DIR/STEM.ext\")
+;;        (find-code-show2 \"/tmp/Show2.pdf\")
+;;        (find-code-show2 \"/tmp/Show2.tex\")
+;;        (find-code-show2 \"~/LATEX/Foo.tex\")
+;; Arg1:  fname0 -> {(ee-S fname0)}
+;; Vars:   fname -> {(ee-S fname)}
+;;           dir -> {(ee-S dir)}
+;;          stem -> {(ee-S stem)}
+;;           tex -> {(ee-S tex)}
+;;           pdf -> {(ee-S pdf)}
+;;           cmd -> {(ee-S cmd)}
+;;
+;; The logic is here:
+;;   (find-efunction    'code-show2)
+;;   (find-efunction 'ee-code-show2)
+;;   (find-angg \"LUA/Show2.lua\" \"Show\")
+;;   (find-angg \"LUA/Show2.lua\" \"texbody\")
+;;   (find-angg \"LUA/Show2.lua\" \"Dang\")
+;;
+;;
+;; Part 2: Emacs
+;; =============
+;; Eepitch-ing a line like this one
+;;
+;;    (etv)
+;;
+;; should create a 3-window setting like this:
+;;   _________________
+;;  |        |        |
+;;  |        | target |
+;;  |  edit  |________|
+;;  |        |        |
+;;  |        |  view  |
+;;  |________|________|
+;;
+;; The defuns below configure `v', `D' and `etv' to make them
+;; display the PDF produced by Show2.lua, that will be here:
 ;;   {dir}{stem}.pdf
 ;;
 (defun tb  () (interactive) (find-ebuffer (eepitch-target-buffer)))
 (defun v   () (interactive) (find-pdftools-page \"{dir}{stem}.pdf\"))
+(defun D   () (interactive) (find-pdf-page \"{dir}{stem}.pdf\"))
 (defun etv () (interactive) (find-wset \"13o2_o_o\" '(tb) '(v)))
 ")))
 

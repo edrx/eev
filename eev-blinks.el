@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230421
+;; Version:    20231106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -263,7 +263,7 @@ Examples:\n
   (info \"(emacs)Lisp Eval\")
   (find-node \"(emacs)Lisp Eval\" \"C-x C-e\")"
   (info nodestr)
-  (apply 'ee-goto-position pos-spec-list))
+  (ee-goto-rest pos-spec-list))
 
 
 
