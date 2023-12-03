@@ -1,3 +1,14 @@
+2023-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-eev2023replsvideo): new function.
+	(ee-1stclassvideos-info): added an entry for "eev2023repls".
+
+2023-12-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kla.el (ee-find-einfo-link, ee-find-eintro-link)
+	(ee-kl-sexp-klin, eeklin, eeklins): new functions.
+	(klin, klins): new aliases - suggested but commented out.
+
 2023-11-06  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-code-show2): rewritten.

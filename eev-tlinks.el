@@ -4148,7 +4148,10 @@ cd     /tmp/wget-recursive/
 tar              -cvf /tmp/wget-recursive.tar .
 tar -C $S/https/ -xvf /tmp/wget-recursive.tar
 
-# (find-fline \"{lurl}\")
+# (find-fline     \"{lurl}\")
+# (find-sh-at-dir \"{lurl}\" \"find * | sort\")
+# (find-sh \"find /tmp/wget-recursive/ | sort\")
+# (find-sh \"find {lurl} | sort\")
 ")
        )
      pos-spec-list)))

@@ -14951,15 +14951,17 @@ In the other examples of this tutorial I will suppose that you
 have run the `defalias'es below:
 
   ;; From: (find-kla-intro \"4. Aliases\")
-  (defalias 'kla  'eekla)
-  (defalias 'kla0 'eekla0)
-  (defalias 'klas 'eeklas)
-  (defalias 'klf  'eeklf)
-  (defalias 'klfs 'eeklfs)
-  (defalias 'klt  'eeklt)
-  (defalias 'klts 'eeklts)
-  (defalias 'kli  'ee-kl-insert)
-  (defalias 'kla2 'eekla2)
+  (defalias 'kla   'eekla)
+  (defalias 'kla0  'eekla0)
+  (defalias 'klas  'eeklas)
+  (defalias 'klf   'eeklf)
+  (defalias 'klfs  'eeklfs)
+  (defalias 'klt   'eeklt)
+  (defalias 'klts  'eeklts)
+  (defalias 'klin  'eeklin)
+  (defalias 'klins 'eeklins)
+  (defalias 'kli   'ee-kl-insert)
+  (defalias 'kla2  'eekla2)
 
 To make these aliases permanent, copy them to your ~/.emacs.
 Without these aliases everything in eev-kla.el will still work,
@@ -16332,7 +16334,7 @@ Elisp objects include:
   lists, like (6 20), (* 2 3), and (+ (* 2 3) (* 4 5)).
 
 The ones listed above are the only ones that we will treat in this
-introduction. For more on the other types of list objects, see:
+introduction. For more on the other types of lisp objects, see:
 
   (find-elnode \"Lisp Data Types\")
   (find-elnode \"Programming Types\")

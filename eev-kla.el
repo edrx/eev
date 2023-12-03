@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230513
+;; Version:    20231202
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kla.el>
@@ -39,6 +39,7 @@
 ;; «.ee-kl-r-c-d»		(to "ee-kl-r-c-d")
 ;; «.shorter-fnames»		(to "shorter-fnames")
 ;; «.generate-sexps»		(to "generate-sexps")
+;; «.generate-sexps-klin»	(to "generate-sexps-klin")
 ;; «.ee-kl-kill»		(to "ee-kl-kill")
 ;; «.kill-sexps»		(to "kill-sexps")
 ;; «.ee-kl-insert»		(to "ee-kl-insert")
@@ -390,6 +391,33 @@ If (ee-kl-lrcds FNAME) doesn't return any matching `lrcd's, return nil."
   (list 'to anchor region))
 
 
+;; «generate-sexps-klin»  (to ".generate-sexps-klin")
+;; See: (find-eev "eev-hlinks.el" "hprog")
+;;      (find-efunction 'ee-find-info-links)
+;;      (find-efunction 'ee-find-intro-links)
+;;
+(defun ee-find-einfo-link (str)
+  "An internal function used by `ee-kl-sexp-klin'."
+  (let ((pos-spec-list (if str (list str))))
+    (if (ee-info-shortp)
+	`(,(ee-info-shortf) ,(ee-info-node) ,@pos-spec-list)
+      `(find-node ,(ee-info-fullnode),@pos-spec-list))))
+
+(defun ee-find-eintro-link (str)
+  "An internal function used by `ee-kl-sexp-klin'."
+  (let* ((stem (ee-intro-stem))
+	 (find-xxx-intro (ee-intern "find-%s-intro" stem))
+	 (pos-spec-list (if str (list str))))
+    `(,find-xxx-intro ,@pos-spec-list)))
+
+(defun ee-kl-sexp-klin (&optional str)
+  "<K>ill <l>ink to a <in>fo or <in>tro - make sexp."
+  (cond ((ee-info-bufferp)  (ee-find-einfo-link  str))
+	((ee-intro-bufferp) (ee-find-eintro-link str))
+	(t (error "Not in info or in an intro!"))))
+
+
+
 
 ;;;                  _    _       _    _ _ _ 
 ;;;   ___  ___      | | _| |     | | _(_) | |
@@ -467,6 +495,17 @@ Put in the kill ring a link to the preceding anchor."
   "<K>ill <L>ink to a (<T>o ... ...)."
   (interactive)
   (ee-kl-kill (ee-kl-sexp-klts)))
+
+(defun eeklin ()
+  "<K>ill <l>ink to <in>fo or <in>tro."
+  (interactive)
+  (ee-kl-kill (ee-kl-sexp-klin nil)))
+
+(defun eeklins ()
+  "<K>ill <l>ink to <in>fo or <in>tro and a <s>tring."
+  (interactive)
+  (ee-kl-kill (ee-kl-sexp-klin (ee-kl-region))))
+
 
 
 
@@ -560,15 +599,17 @@ When not at BOL, move to the beginning of the next line."
 ;; «aliases»  (to ".aliases")
 ;; See: (find-kla-intro "4. Aliases")
 ;; I use these aliases:
-;; (defalias 'kla  'eekla)
-;; (defalias 'kla0 'eekla0)
-;; (defalias 'klas 'eeklas)
-;; (defalias 'klf  'eeklf)
-;; (defalias 'klfs 'eeklfs)
-;; (defalias 'klt  'eeklt)
-;; (defalias 'klts 'eeklts)
-;; (defalias 'kli  'ee-kl-insert)
-;; (defalias 'kla2 'eekla2)
+;; (defalias 'kla   'eekla)
+;; (defalias 'kla0  'eekla0)
+;; (defalias 'klas  'eeklas)
+;; (defalias 'klf   'eeklf)
+;; (defalias 'klfs  'eeklfs)
+;; (defalias 'klt   'eeklt)
+;; (defalias 'klts  'eeklts)
+;; (defalias 'klin  'eeklin)
+;; (defalias 'klins 'eeklins)
+;; (defalias 'kli   'ee-kl-insert)
+;; (defalias 'kla2  'eekla2)
 
 (provide 'eev-kla)
 

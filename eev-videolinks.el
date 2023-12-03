@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230422
+;; Version:    20231203
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -71,6 +71,7 @@
 ;;   «.find-2022tikzvideo»		(to "find-2022tikzvideo")
 ;;   «.find-eev2022klavideo»		(to "find-eev2022klavideo")
 ;;   «.find-eev2022pyvideo»		(to "find-eev2022pyvideo")
+;;   «.find-eev2023replsvideo»		(to "find-eev2023replsvideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -104,6 +105,7 @@
 ;;   «.2022tikz»			(to "2022tikz")
 ;;   «.eev2022kla»			(to "eev2022kla")
 ;;   «.eev2022py»			(to "eev2022py")
+;;   «.eev2023repls»			(to "eev2023repls")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -662,6 +664,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "eev2022py" time))
 
+;; «find-eev2023replsvideo»  (to ".find-eev2023replsvideo")
+;; Info: (find-1stclassvideo-links "eev2023repls")
+;; Play: (find-eev2023replsvideo "0:00")
+(defun find-eev2023replsvideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"eev2023repls\")"
+  (interactive)
+  (find-1stclassvideo-video "eev2023repls" time))
+
 
 
 
@@ -1104,6 +1116,18 @@ For more info on this particular video, run:
      :subs    ".vtt"
      :length  "14:03"
      :comment "A video about eev-rstdoc.el.")
+    ;;
+    ;; «eev2023repls»  (to ".eev2023repls")
+    ;; Play: (find-eev2023replsvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "eev2023repls")
+    ("eev2023repls"
+     :title "REPLs in strange places: Lua, LaTeX, LPeg, LPegRex, TikZ (@ EmacsConf 2023)"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2023-repls.mp4"
+     :yt    "http://www.youtube.com/watch?v=IDBQo_YYfA8"
+     :page  "http://anggtwu.net/emacsconf2023.html"
+     :date    "2023dec02"
+     :length  "59:11"
+     :comment "My presentation at the EmacsConf2023.")
     ))
 
 
