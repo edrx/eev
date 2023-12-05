@@ -6039,6 +6039,7 @@ For a good visual introduction to eepitch, see this page:
   http://anggtwu.net/eepitch.html
 
 My video for the EmacsConf2019 has a simple demo of eepitch:
+  (find-eev2019video \"15:56\")
   https://www.youtube.com/watch?v=86yiRG8YJD0&t=956
   http://anggtwu.net/emacsconf2019.html
 

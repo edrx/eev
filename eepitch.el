@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20231205
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
@@ -54,6 +54,9 @@
 ;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
 ;; «.eepitch-langs-vterm»	(to "eepitch-langs-vterm")
+;;
+;; «.debug»			(to "debug")
+;; «.find-eepitch-debug-links»	(to "find-eepitch-debug-links")
 
 ;;; Commentary:
 
@@ -404,22 +407,24 @@ This is a low-level function used by `eepitch-this-line'."
 	     (insert line)                               ; "type" the line
 	     (call-interactively (key-binding "\r")))))) ; then do a RET
 
-(defun eepitch-this-line ()
+(defun eepitch-this-line (&optional debug)
 "Pitch this line to the target buffer, or eval it as lisp if it starts with `'.
 Also, if it starts with `', skip it.
 See: (find-eepitch-intro)
 and: `eepitch', `eepitch-regexp', `eepitch-comment-regexp'."
-  (interactive)
-  (let ((line (buffer-substring (ee-bol) (ee-eol))))  ; get line contents
-    (setq line (eepitch-preprocess-line line))        ;   and preprocess it
-    (cond ((string-match eepitch-comment-regexp line) ; comment lines
-	   (message "Comment: %s" line))              ;  are message'd,
-	  ((string-match eepitch-regexp line)         ; red star lines
-	   (ee-eval-string-print		      ;  are eval'ed and the
-	    (match-string 1 line)))	              ;  result is printed,
-	  (t (eepitch-prepare)			      ; normal lines
-	     (eepitch-line line))))		      ;  are sent
-  (ee-next-line 1))
+  (interactive "P")
+  (if debug
+      (find-eepitch-debug-links)
+    (let ((line (buffer-substring (ee-bol) (ee-eol))))  ; get line contents
+      (setq line (eepitch-preprocess-line line))        ;   and preprocess it
+      (cond ((string-match eepitch-comment-regexp line) ; comment lines
+             (message "Comment: %s" line))              ;  are message'd,
+            ((string-match eepitch-regexp line)         ; red star lines
+             (ee-eval-string-print                      ;  are eval'ed and the
+              (match-string 1 line)))                   ;  result is printed,
+            (t (eepitch-prepare)                        ; normal lines
+               (eepitch-line line))))                   ;  are sent
+    (ee-next-line 1)))
 
 ;; See:
 ;; (find-eepitch-intro "3.3. `eepitch-preprocess-line'")
@@ -1161,6 +1166,79 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 ;; (defun eepitch-julia  () (interactive) (eepitch-vterm "julia" "julia"))
 ;; (defun eepitch-nodejs () (interactive) (eepitch-vterm "nodejs" "nodejs"))
 
+
+
+;;;  ____       _                 
+;;; |  _ \  ___| |__  _   _  __ _ 
+;;; | | | |/ _ \ '_ \| | | |/ _` |
+;;; | |_| |  __/ |_) | |_| | (_| |
+;;; |____/ \___|_.__/ \__,_|\__, |
+;;;                         |___/ 
+;;
+;; «debug»  (to ".debug")
+;; This was inspired by the support for a prefix argument in
+;; `find-here-links':
+;;
+;;   1. If we run just `M-h M-h' we get a temporary buffer with some
+;;      "here links" preceded by a header with help, but if we run
+;;      `M-1 M-h M-h' we get a "debug buffer for `find-here-links'".
+;;      Try it:
+;;
+;;        (eek "M-1 M-h M-h")
+;;
+;;   2. Similarly, `<f8>' runs `eepitch-this-line', but `M-1 <f8>'
+;;      shows a "debug buffer for eepitch". Try it:
+;;
+;;        (eek "M-1 <f8>")
+;;
+;; «find-eepitch-debug-links»  (to ".find-eepitch-debug-links")
+;; Skel: (find-find-links-links-new "eepitch-debug" "" "")
+;; Test: (find-eepitch-debug-links)
+;;
+(defun find-eepitch-debug-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eepitch."
+  (interactive)
+  (apply
+   'find-elinks-elisp
+   `((find-eepitch-debug-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eepitch-debug-links)
+     ""
+     ,(ee-template0 "\
+;; Basic docs:
+;;   (find-eev-quick-intro \"6. Controlling shell-like programs\")
+;;   (find-eev-quick-intro \"6.1. The main key: <F8>\")
+;;   (find-eev-quick-intro \"6.2. Other targets\")
+;;   (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+;;   (find-eepitch-intro)
+;;   (find-eepitch-intro \"2.2. `(eepitch-kill)'\")
+;;   (find-eepitch-intro \"2.3. `eepitch'\")
+;; Basic functions:
+;;   (find-elongkey-links \"<f8>  ;; eepitch-this-line\")
+;;   (find-efunction 'eepitch)
+;;   (find-efunction 'eepitch-kill)
+;;   (find-efunction 'eepitch-this-line)
+;;     (find-efunction 'eepitch-prepare)
+;;     (find-efunction 'eepitch-line)
+
+;; Current settings (variables):
+;;   eepitch-code            => {(ee-S eepitch-code)}
+;;   eepitch-buffer-name     => {(ee-S eepitch-buffer-name)}
+;;   eepitch-comment-regexp  => {(ee-S eepitch-comment-regexp)}
+;;   eepitch-regexp          => {(ee-S eepitch-regexp)}
+;;   eepitch-line            => {(ee-S eepitch-line)}
+;;   eepitch-kill            => {(ee-S eepitch-kill)}
+;;   eepitch-window-show     => {(ee-S eepitch-window-show)}
+
+;; Settings for the preprocessor - check if the function
+;; `eepitch-preprocess-line' has been redefined:
+;;   (find-efunction   'eepitch-preprocess-line)
+;;   (find-efunctionpp 'eepitch-preprocess-line)
+;; See:
+;;   (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+")
+     )
+   pos-spec-list))
 
 
 (provide 'eepitch)

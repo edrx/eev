@@ -1,3 +1,8 @@
+2023-12-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-this-line): added the argument `debug'.
+	(find-eepitch-debug-links): new function.
+
 2023-12-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (find-eev2023replsvideo): new function.

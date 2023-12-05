@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231106
+;; Version:    20231205
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -156,6 +156,8 @@
 ;; «.find-melpa-links»			(to "find-melpa-links")
 ;; «.find-emacsclient-links»		(to "find-emacsclient-links")
 ;; «.code-show2»			(to "code-show2")
+;; «.find-maximamsg-links»		(to "find-maximamsg-links")
+;; «.find-maximamsg»			(to "find-maximamsg")
 
 
 (require 'eev-env)
@@ -4288,6 +4290,19 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 
 
 
+
+;;;  ____  _                   ____  
+;;; / ___|| |__   _____      _|___ \ 
+;;; \___ \| '_ \ / _ \ \ /\ / / __) |
+;;;  ___) | | | | (_) \ V  V / / __/ 
+;;; |____/|_| |_|\___/ \_/\_/ |_____|
+;;;                                  
+;; Show2.lua is used by several of the small programs that I mentioned
+;; in my talk at the EmacsConf2023 - and these functions are what we
+;; use to tell Show2.lua which files and directories it should use.
+;;   (find-1stclassvideo-links "eev2023repls")
+;;   (find-1stclassvideodef    "eev2023repls")
+;;
 ;; «code-show2»  (to ".code-show2")
 ;; Skel:  (find-code-xxx-links "show2" "fname0" "")
 ;; Tests: (find-code-show2)
@@ -4383,6 +4398,74 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 (defun D   () (interactive) (find-pdf-page \"{dir}{stem}.pdf\"))
 (defun etv () (interactive) (find-wset \"13o2_o_o\" '(tb) '(v)))
 ")))
+
+
+
+;;;  __  __            _                 __  __           
+;;; |  \/  | __ ___  _(_)_ __ ___   __ _|  \/  |___  __ _ 
+;;; | |\/| |/ _` \ \/ / | '_ ` _ \ / _` | |\/| / __|/ _` |
+;;; | |  | | (_| |>  <| | | | | | | (_| | |  | \__ \ (_| |
+;;; |_|  |_|\__,_/_/\_\_|_| |_| |_|\__,_|_|  |_|___/\__, |
+;;;                                                 |___/ 
+;;
+;; «find-maximamsg-links»  (to ".find-maximamsg-links")
+;; Skel:  (find-find-links-links-new "maximamsg" "n yyyymm day" "")
+;; Tests: (find-maximamsg-links)
+;;        (find-maximamsg "37675653 202207  1" "Stavros: structural equality")
+;;
+(defun find-maximamsg-links (&optional n yyyymm day &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks to a Maxima message.
+A \"Maxima message\" is a message in the Maxima mailing list."
+  (interactive)
+  (setq n (or n 999999))
+  ;; (setq yyyymm (or yyyymm "{yyyymm}"))
+  ;; (setq day (or day "{day}"))
+  (apply
+   'find-elinks
+   `((find-maximamsg-links ,n ,yyyymm ,day ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-maximamsg-links)
+     (find-efunction 'find-maximamsg)
+     ""
+     ,@(ee-find-maximamsg-links n yyyymm day)
+     )
+   pos-spec-list))
+
+(defun ee-find-maximamsg-links (&optional n yyyymm day &rest pos-spec-list)
+  (setq yyyymm (or yyyymm (format-time-string "%Y%m")))
+  (setq day    (or day    (format-time-string "%d")))
+  (setq n      (or n      99999))
+  (list (ee-template0 "\
+# (find-es \"maxima\" \"mailing-lists\")
+# (setq last-kbd-macro (kbd \"C-x 1 M-3 M-e M-> M-e M-o\"))
+# (find-maximamsg \"{n} {yyyymm} {day}\" \"\")
+# https://sourceforge.net/p/maxima/mailman/message/{n}/
+# https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}
+# https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&viewday={day}
+# https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&viewday={day}&style=threaded
+# https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&style=threaded&limit=250
+# (find-esgrep \"grep --color=auto -nH --null -e find-maximamsg maxima.e\")
+# (find-esgrep \"grep --color=auto -nH --null -e maxima-discuss maxima.e\")
+# (find-esgrep \"grep --color=auto -nH --null -e maxima/mailman maxima.e\")
+# (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&viewday={day}\" \"Showing\")
+# (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&viewday={day}&style=threaded\" \"Showing\")
+# (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&style=threaded&limit=250\" \"Showing\")
+
+# (find-lynx \"https://sourceforge.net/p/maxima/mailman/message/{n}/\" 75)
+")))
+
+;; «find-maximamsg»  (to ".find-maximamsg")
+;; Tests: (find-maximamsg-links)
+;;        (find-maximamsg "37675653 202207  1" "Stavros: structural equality")
+;;
+(defun find-maximamsg (&optional str &rest rest)
+  (interactive (let ((n (ee-stuff-around-point "[0-9]")))
+		 (if (not (equal n ""))
+		     (list n))))
+  (cl-destructuring-bind
+      (&optional n yyyymm day &rest rest) 
+      (ee-split (or str "999999"))
+    (find-maximamsg-links n yyyymm day)))
 
 
 
