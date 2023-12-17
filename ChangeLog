@@ -1,3 +1,12 @@
+2023-12-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-all-cs-with-subs, code-lsubs)
+	(find-code-lsubs, ee-code-lsubs, code-all-lsubs)
+	(find-code-all-lsubs, ee-code-all-lsubs): new functions.
+
+	* eev-tlinks.el (find-angg-es-links): added a definition for
+	`find-anggfile'.
+
 2023-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: bumped the version.

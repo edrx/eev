@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231216
+;; Version:    20231217
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -110,6 +110,8 @@
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
 ;;   «.code-youtubevideo»		(to "code-youtubevideo")
+;; «.code-lsubs»			(to "code-lsubs")
+;;   «.code-all-lsubs»			(to "code-all-lsubs")
 
 ;;; Commentary:
 
@@ -1286,6 +1288,55 @@ For more info on this particular video, run:
 "))
 
 
+
+;;;                _            _           _         
+;;;   ___ ___   __| | ___      | |___ _   _| |__  ___ 
+;;;  / __/ _ \ / _` |/ _ \_____| / __| | | | '_ \/ __|
+;;; | (_| (_) | (_| |  __/_____| \__ \ |_| | |_) \__ \
+;;;  \___\___/ \__,_|\___|     |_|___/\__,_|_.__/|___/
+;;;                                                   
+;; «code-lsubs»  (to ".code-lsubs")
+;; Tests: (find-eppp (ee-all-cs-with-subs))
+;;        (find-code-lsubs "eev2023repls")
+;;        (find-code-all-lsubs '("eev2019" "eevnav"))
+;;        (find-code-all-lsubs)
+;;
+(defun ee-all-cs-with-subs ()
+  (cl-loop for entry in ee-1stclassvideos-info
+           if (ee-1stclassvideos-field (car entry) :subs)
+	   collect (car entry)))
+
+;; Skels: (find-code-xxx-links "lsubs" "c" "")
+;;        (find-code-xxx-links "all-lsubs" "cs" "")
+;;    
+(defun      code-lsubs (c)
+  (eval (ee-read      (ee-code-lsubs c))))
+(defun find-code-lsubs (c)
+  (find-estring-elisp (ee-code-lsubs c)))
+(defun   ee-code-lsubs (c)
+  (ee-template0 "\
+;; (find-code-lsubs \"{c}\")
+;;      (code-lsubs \"{c}\")
+;;
+;; Tests: (find-{c}lsubs)
+;;        (find-{c}lsubs \"00:00\")
+;;        (find-1stclassvideo-links \"{c}\")
+;;
+(defun find-{c}lsubs (&rest pos-spec-list)
+  (apply 'find-1stclassvideolsubs \"{c}\" pos-spec-list))
+"))
+
+(defun      code-all-lsubs (&optional cs)
+  (eval (ee-read      (ee-code-all-lsubs cs))))
+(defun find-code-all-lsubs (&optional cs)
+  (find-estring-elisp (ee-code-all-lsubs cs)))
+(defun   ee-code-all-lsubs (&optional cs)
+  (mapconcat 'ee-code-lsubs (or cs (ee-all-cs-with-subs)) "\n\n"))
+
+;; «code-all-lsubs»  (to ".code-all-lsubs")
+;; This defines lots of functions with names like `find-<c>lsubs'.
+;; Try: (find-code-all-lsubs)
+             (code-all-lsubs)
 
 
 

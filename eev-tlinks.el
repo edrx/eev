@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231216
+;; Version:    20231217
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3108,9 +3108,9 @@ This function is used by `ee-0x0-upload-region'."
      ,(ee-template0 "\
 
 
-;; The `progn' below is how I (edrx) define `find-angg' and
-;; `find-es' in my machine to point to local files. Note that the
-;; sexps
+;; The `progn' below is how I (edrx) define `find-angg',
+;; `find-anggfile' and `find-es' in my machine to point to local
+;; files. Note that the sexps
 ;;
 ;;   (find-angg \"foo\" \"anchor\")
 ;;   (find-es   \"foo\" \"anchor\")
@@ -3133,14 +3133,16 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
-;; The `progn' below defines versions of `find-angg' and
-;; `find-es' that use `find-wget' to access the
-;; public copies of my files at anggtwu.net:
+;; The `progn' below defines versions of `find-angg',
+;; `find-anggfile' and `find-es' that use `find-wget' to access
+;; the public copies of my files at anggtwu.net:
 ;;
 (progn
 
   (defun find-angg (fname &rest rest)
     (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
+  (defun find-anggfile (fname &rest rest)
+    (apply 'find-wget  (format \"http://anggtwu.net/%s\" fname) rest))
   (defun find-es (fname &rest rest)
     (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
 
@@ -4424,7 +4426,7 @@ printmeaning \"@oddfoot\"
 ;;   {cmd}
 ;;
 ;; When both SHOW2DIR and SHOW2STEM are undefined Show2.lua
-;; will use /tmp/ and /tmp/Show2.lua.
+;; will use /tmp/ and /tmp/Show2.tex.
 ;;
 ;; To understand how the argument to `code-show2' works, try:
 ;;        (find-code-show2)

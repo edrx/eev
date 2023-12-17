@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231216
+;; Version:    20231217
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -15998,8 +15998,9 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Introduction
-============
+
+1. Introduction
+===============
 My presentation at the EmacsConf2023 was titled \"REPLs in
 strange places: Lua, LaTeX, LPeg, LPegRex, TikZ\". My page about
 it is here,
@@ -16010,7 +16011,7 @@ and its video is here:
 
   Info: (find-1stclassvideo-links \"eev2023repls\")
   Play: (find-eev2023replsvideo \"0:00\")
-  Subs: (find-1stclassvideolsubs \"eev2023repls\")
+  Subs: (find-eev2023replslsubs \"0:00\")
         http://anggtwu.net/emacsconf2023-repls.html
 
 The presentation was about a family of small Lua programs that
@@ -16053,15 +16054,26 @@ that are displayed in a format like this one:
                                   |              |     |     |
                                   0              y     +     1
 
-Installation (on Debian)
-========================
 
+
+2. Installation (on Debian)
+===========================
+
+ Make sure that you have pdf-tools installed in Emacs.
+ Note: some of the sexps below take a long time - many seconds!
+ (find-epackage-links 'pdf-tools)
+  (package-initialize)
+  (package-refresh-contents)
+  (package-install 'pdf-tools)
+ (find-epackage   'pdf-tools)
+
+ Make sure that we have the Debian packages that we need
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-sudo apt-get install lua5.1 lua5.1-doc lua5.2 lua5.2-doc 
+sudo apt-get install lua5.1 lua5.1-doc lua5.1-dev
+sudo apt-get install lua5.2 lua5.2-doc lua5.2-dev
 sudo apt-get install lua-lpeg lua-lpeg-dev
-sudo apt-get install luarocks
 sudo apt-get install texlive-latex-extra
 
  Clone the git repository
@@ -16071,7 +16083,8 @@ cd      /tmp/show2-elpeg1/
 git clone https://github.com/edrx/show2-elpeg1 .
  (code-c-d \"show2\" \"/tmp/show2-elpeg1/\" :anchor)
  Test: (find-show2file \"\")
-       (find-show2\"\")
+       (find-show2 \"\")
+       (find-show2 \"README.org\")
 
  Links to some manuals
  (code-brappend \"lua51manual\"  \"file:///usr/share/doc/lua5.1-doc/doc/manual.html\")
@@ -16134,19 +16147,144 @@ PPC(lpegrex)
 
 
 
-Environment variables
-=====================
-;; (find-code-show2 \"/tmp/Show2.tex\")
+3. Show2.lua
+============
+Remember that Show2.lua uses a 3-window setting like this:
+   ___________________________
+  |           |               |
+  |           |  [t]arget     |
+  | the file  |   buffer      |
+  |   being   |_______________|
+  | [e]dited  |               |
+  | (a .lua)  |  [v]iew the   |
+  |           | resulting PDF |
+  |___________|_______________|
+
+Let's see how that works in practice.
 
 
 
-(show2)
-(show2 \"$SHOW2LATEXDIR/Show2.lua\")
-# (find-luarocks-links \"lpegrex\")
+3.1. A minimal example
+----------------------
+This is a minimal example of how to use Show2.lua:
+
+ (code-show2 \"/tmp/Show2.tex\")
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+loadshow2()
+body = [[ HELLO ]]
+= body:show()
+ (etv)
+
+The `(code-show2 ...)' in the beginning makes Emacs and Show2.lua
+use the directory \"/tmp/\" and the files \"/tmp/Show2.tex\" and
+\"/tmp/Show2.pdf\"; the
+
+  = body:show()
+
+runs lualatex on \"/tmp/Show2.tex\" and then prints either
+
+  Show: /tmp/Show2.tex => ?
+
+or:
+
+  Show: /tmp/Show2.tex => Success!
+
+and the \" (etv)\" at the end displays the resulting PDF in the
+lower right window. To keep the code simple the `(etv)' doesn't
+wait for the PDF to be produced; after typing an <f8> in the line
+with the
+
+  = body:show()
+
+you will have to wait until it prints a result -
+\"...Success!!!\" or \"...?\" - and only then type an <f8> on the
+line with the \" (etv)\".
+
+Try to run the \"minimal example\" at the beginning of this
+section with <f8>s. Don't forget to wait after the \":show()\"!
 
 
-(show2)
-=======
+
+
+3.2. An example with extra lines
+--------------------------------
+Try to run the example below with <f8>s - and don't forget to
+wait a bit after the \":show()\":
+
+ (find-code-show2 \"/tmp/Show2.tex\")
+       (code-show2 \"/tmp/Show2.tex\")
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+loadshow2()
+body = [[ \\HELLO ]]
+body = [[  HELLO ]]
+= body:show00 {scale=4}
+= body:show0  {scale=4}
+= body:show   {scale=4}
+ (etv)
+= Show.log
+= Show.bigstr
+
+The \"\" in the first line makes the <f8> treat it as comment,
+but if you execute it with `M-e' you will get a temporary buffer
+with a detailed explanation of what the `(code-show2 ...)' does.
+
+The two \"body = ...\" lines let you choose between \"HELLO\",
+that is valid LaTeX code, and \"\\HELLO\", that will yield an
+error. Choosing is explained here:
+
+  (find-elisp-intro \"5. Variables\")
+  (find-elisp-intro \"5. Variables\" \"choosing the right order\")
+
+The \"{scale=4}\" is a Lua table with options for \":show\". The
+lines with \":show00\" and \":show0\" can be used to inspect the
+first steps of what the \":show\" would do: the \":show00\" just
+applies the options in the \"{scale=4}\" on the \"body\", and the
+\":show0\" does that and returns the contents of (what would be)
+the full .tex file.
+
+The \":show\" saves the log of running lualatex in Show.log and
+saves the contexts of the .tex file in Show.bigstr. Try to run
+the block above again, but now run the
+
+  body = [[ \\HELLO ]]
+
+and skip the:
+
+  body = [[  HELLO ]]
+
+Now the \":show\" will return a \"?\" indicating an error, and
+the \" (etv)\" will fail. You can use the \"= Show.log\" and the
+\"= Show.bigstr\" to see the exact error message and the LaTeX
+code that caused it.
+
+
+
+3.3. ParseTree2.lua
+-------------------
+Now try to run the example in this test block:
+
+  (find-show2 \"LUA/ParseTree2.lua\" \"ParseTree-tests\")
+
+You should get something very similar to example that I used at
+the beginning and at the end of my presentation at the
+EmacsConf2023:
+
+  (find-eev2023replsvideo \"0:00\")
+  (find-eev2023replslsubs \"0:00\")
+  (find-eev2023replsvideo \"56:58\")
+  (find-eev2023replslsubs \"56:58\")
+
+
+
+4. ELpeg1.lua
+=============
+To be written! See:
+
+  (find-show2 \"LUA/ELpeg1.lua\")
 
 
 
