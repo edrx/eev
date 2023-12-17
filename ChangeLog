@@ -1,4 +1,33 @@
+2023-12-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev.el: bumped the version.
+
+	* eev-tlinks.el (find-luatb0, find-luatb): new functions.
+
+	* eev-intro.el (find-show2-intro): new function.
+	(find-eev-intro): added an entry for `(find-show2-intro)'.
+
+	* eev-tlinks.el (code-brappend, find-code-brappend)
+	(ee-code-brappend): new functions.
+
+2023-12-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
+	that the video "eev2023repls" (now) has subtitles.
+
+2023-12-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-makefile-gmake-mode)
+	(ee-insert-test-makefile-mode): change the "^#T " to "^#T ?".
+
+2023-12-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-show2-links, show2): new functions.
+
 2023-12-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-maximamsg-links, ee-find-maximamsg-links)
+	(find-maximamsg): new functions.
 
 	* eepitch.el (eepitch-this-line): added the argument `debug'.
 	(find-eepitch-debug-links): new function.

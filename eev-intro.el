@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230107
+;; Version:    20231216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -97,6 +97,7 @@
 ;; «.find-kla-intro»			(to "find-kla-intro")
 ;; «.find-edit-index-intro»		(to "find-edit-index-intro")
 ;; «.find-rstdoc-intro»			(to "find-rstdoc-intro")
+;; «.find-show2-intro»			(to "find-show2-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -2831,18 +2832,19 @@ These ones explain advanced features that require extra setup:
   31. (find-kla-intro)
   32. (find-edit-index-intro)
   33. (find-rstdoc-intro)
-  34. (find-prepared-intro)
-  35. (find-bounded-intro)
-  36. (find-channels-intro)
+  34. (find-show2-intro)
+  35. (find-prepared-intro)
+  36. (find-bounded-intro)
+  37. (find-channels-intro)
 
 This one was used in a video:
 
-  37. (find-three-main-keys-intro)
+  38. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  38. (find-emacs-intro)
-  39. (find-defun-intro)
+  39. (find-emacs-intro)
+  40. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -15970,6 +15972,187 @@ TODO: explain how to use `find-rstdoc-links'!
 
 ;; (find-rstdoc-intro)
 
+
+
+
+;;;  ____  _                   ____  
+;;; / ___|| |__   _____      _|___ \ 
+;;; \___ \| '_ \ / _ \ \ /\ / / __) |
+;;;  ___) | | | | (_) \ V  V / / __/ 
+;;; |____/|_| |_|\___/ \_/\_/ |_____|
+;;;                                  
+;; «find-show2-intro»  (to ".find-show2-intro")
+;; Skel: (find-intro-links "show2")
+;; Test: (find-show2-intro)
+
+(defun find-show2-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-show2-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-show2-intro)
+Source code:  (find-efunction 'find-show2-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+Introduction
+============
+My presentation at the EmacsConf2023 was titled \"REPLs in
+strange places: Lua, LaTeX, LPeg, LPegRex, TikZ\". My page about
+it is here,
+
+  http://anggtwu.net/emacsconf2023.html
+
+and its video is here:
+
+  Info: (find-1stclassvideo-links \"eev2023repls\")
+  Play: (find-eev2023replsvideo \"0:00\")
+  Subs: (find-1stclassvideolsubs \"eev2023repls\")
+        http://anggtwu.net/emacsconf2023-repls.html
+
+The presentation was about a family of small Lua programs that
+were all built on top of these two libraries:
+
+  http://anggtwu.net/LUA/Show2.lua.html
+  http://anggtwu.net/LUA/ELpeg1.lua.html
+         (find-angg \"LUA/Show2.lua\")
+         (find-angg \"LUA/ELpeg1.lua\")
+
+where Show2.lua is the module that lets us generate LaTeX code
+from REPLs and that displays the resulting PDFs using a 3-window
+setting like this one,
+
+   ___________________________
+  |           |               |
+  |           |  [t]arget     |
+  | the file  |   buffer      |
+  |   being   |_______________|
+  | [e]dited  |               |
+  | (a .lua)  |  [v]iew the   |
+  |           | resulting PDF |
+  |___________|_______________|
+
+and ELpeg1 is the module that lets us create parsers in REPLs. In
+most cases these parsers return abstract syntax trees (ASTs),
+that are displayed in a format like this one:
+
+  Stmt__.________________.
+  |     |                |
+  if    Expr__._____.    Stmt
+        |     |     |    |
+        Id    Optr  Num  StmtList_______.
+        |     |     |    |              |
+        x     >     9    Stmt__.__.     Stmt__.__.
+                         |     |  |     |     |  |
+                         Id    =  Expr  Id    =  Expr__._____.
+                         |        |     |        |     |     |
+                         x        Num   y        Id    Optr  Num
+                                  |              |     |     |
+                                  0              y     +     1
+
+Installation (on Debian)
+========================
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo apt-get install lua5.1 lua5.1-doc lua5.2 lua5.2-doc 
+sudo apt-get install lua-lpeg lua-lpeg-dev
+sudo apt-get install luarocks
+sudo apt-get install texlive-latex-extra
+
+ Clone the git repository
+rm -Rfv /tmp/show2-elpeg1/
+mkdir   /tmp/show2-elpeg1/
+cd      /tmp/show2-elpeg1/
+git clone https://github.com/edrx/show2-elpeg1 .
+ (code-c-d \"show2\" \"/tmp/show2-elpeg1/\" :anchor)
+ Test: (find-show2file \"\")
+       (find-show2\"\")
+
+ Links to some manuals
+ (code-brappend \"lua51manual\"  \"file:///usr/share/doc/lua5.1-doc/doc/manual.html\")
+ (code-brappend \"lua52manual\"  \"file:///usr/share/doc/lua5.2-doc/manual.html\")
+ (code-brappend \"lpegmanual\"   \"file:///usr/share/doc/lua-lpeg-dev/lpeg.html\")
+ (code-brappend \"lpegremanual\" \"file:///usr/share/doc/lua-lpeg-dev/re.html\")
+ Test: (find-lua51manual)
+       (find-lua52manual)
+       (find-lpegmanual)
+       (find-lpegremanual)
+
+ Download and compile lpegrex and lpeglabel.
+ I couldn't make their rocks work, so...
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+rm -Rfv /tmp/show2-elpeg1/lpeglabel
+rm -Rfv /tmp/show2-elpeg1/lpegrex
+cd      /tmp/show2-elpeg1/
+git clone https://github.com/sqmedeiros/lpeglabel
+git clone https://github.com/edubart/lpegrex
+cd      /tmp/show2-elpeg1/lpeglabel/
+make LUADIR=/usr/include/lua5.2      2>&1 | tee om
+
+ Make some ennvironment variables point to /tmp/show2-elpeg1/
+ (setenv \"SHOW2LUADIR\"   \"/tmp/show2-elpeg1/LUA\")
+ (setenv \"SHOW2LATEXDIR\" \"/tmp/show2-elpeg1/LATEX\")
+ (setenv \"LUA_INIT\"     \"@/tmp/show2-elpeg1/LUA/lua50init.lua\")
+ (setenv \"LUA_PATH\"      \"/tmp/show2-elpeg1/LUA/?.lua;;\")
+
+ Test:
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+PP({10,20,\"30\",d=40})
+require \"Tos2\"
+PPC(Tos.__index)
+
+ Test lpegrex: first test
+ (eepitch-lua52)
+ (eepitch-kill)
+ (eepitch-lua52)
+Path.prepend(\"path\",  \"/tmp/show2-elpeg1/lpeglabel/?.lua\")
+Path.prepend(\"cpath\", \"/tmp/show2-elpeg1/lpeglabel/?.so\")
+Path.prepend(\"path\",  \"/tmp/show2-elpeg1/lpegrex/?.lua\")
+require \"lpegrex\"
+require \"tests/csv-test\"
+arg =  {\"/home/edrx/usrc/lpegrex/examples/lua-ast.lua\"}
+require \"examples/lua-ast\"
+
+ Test lpegrex: second test
+ (eepitch-lua52)
+ (eepitch-kill)
+ (eepitch-lua52)
+loadlpegrex \"/tmp/show2-elpeg1\"
+Path.addLUAtopath()
+require \"Tos2\"
+PPC(lpegrex)
+
+
+
+
+Environment variables
+=====================
+;; (find-code-show2 \"/tmp/Show2.tex\")
+
+
+
+(show2)
+(show2 \"$SHOW2LATEXDIR/Show2.lua\")
+# (find-luarocks-links \"lpegrex\")
+
+
+(show2)
+=======
+
+
+
+" pos-spec-list)))
+
+;; (find-show2-intro)
 
 
 

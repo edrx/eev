@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231205
+;; Version:    20231216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -155,7 +155,11 @@
 ;; «.find-mbe-links»			(to "find-mbe-links")
 ;; «.find-melpa-links»			(to "find-melpa-links")
 ;; «.find-emacsclient-links»		(to "find-emacsclient-links")
-;; «.code-show2»			(to "code-show2")
+;; «.find-show2-links»			(to "find-show2-links")
+;;   «.show2»				(to "show2")
+;;   «.code-show2»			(to "code-show2")
+;;   «.find-luatb»			(to "find-luatb")
+;; «.code-brappend»			(to "code-brappend")
 ;; «.find-maximamsg-links»		(to "find-maximamsg-links")
 ;; «.find-maximamsg»			(to "find-maximamsg")
 
@@ -4303,10 +4307,79 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 ;;   (find-1stclassvideo-links "eev2023repls")
 ;;   (find-1stclassvideodef    "eev2023repls")
 ;;
+;; «find-show2-links»  (to ".find-show2-links")
+;; Skel: (find-find-links-links-new "show2" "texfile" "texdir texfile0")
+;; Test: (find-show2-links)
+;;
+(defun find-show2-links (&optional texfile &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for show2."
+  (interactive)
+  (setq texfile (or texfile "/tmp/Show2.tex"))
+  (let* ((texdir   (file-name-directory    texfile))
+         (texfile0 (file-name-nondirectory texfile)))
+    (apply
+     'find-elinks
+     `((find-show2-links ,texfile ,@pos-spec-list)
+       (find-show2-links "/tmp/Show2.tex" ,@pos-spec-list)
+       (find-show2-links "~/LATEX/Show2.tex" ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-show2-links)
+       (find-efunction 'show2)
+       ""
+       ,(ee-template0 "\
+ (find-angg \"LUA/Show2.lua\" \"texbody\")
+ (find-code-show2 \"{texfile}\")
+       (code-show2 \"{texfile}\")
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+loadshow2()
+
+defs.repl = true
+usepackages.lipsum = [=[ \\usepackage{<}lipsum{>} ]=]
+
+body = [[
+  \\section{<}SA{>} \\lipsum[1-4]
+  \\section{<}SB{>} \\lipsum[5-8]
+  \\section{<}SC{>} \\lipsum[9-12]
+  \\condrepl
+]]
+= body:show0()
+= body:show()
+ (etv)
+= Show.log
+= Show.bigstr
+
+texbody = Dang.from \"Bla\\n<<body>>\"
+= show0()
+= show()
+ (etv)
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd {texdir} && REPL=1 lualatex {texfile0}
+printmeaning \"newpage\"
+printmeaning \"@oddfoot\"
+")
+       )
+     pos-spec-list)
+    ))
+
+
+;; «show2»  (to ".show2")
+;; (find-eev "eev-tlinks.el" "code-show2")
+;; (find-es "show2")
+(defun show2 (&optional fname0)
+  (interactive)
+  (find-2a nil '(find-show2-links fname0)))
+
+
 ;; «code-show2»  (to ".code-show2")
 ;; Skel:  (find-code-xxx-links "show2" "fname0" "")
 ;; Tests: (find-code-show2)
 ;;        (find-code-show2 "./foo")
+;;        (find-code-show2 "/tmp/")
 ;;        (find-code-show2 "./foo.tex")
 ;; See:   (find-angg "LUA/Show2.lua")
 ;;        (find-angg "LUA/Show2.lua" "Show")
@@ -4318,12 +4391,13 @@ emacsclient --eval '(find-livesofanimalspage 3)'
   (find-estring-elisp (ee-code-show2 fname0)))
 (defun   ee-code-show2 (&optional fname0)
   (let* ((fname (ee-expand (or fname0 "/tmp/Show2.tex")))
-	 (dir  (file-name-directory fname))
-	 (stem (file-name-nondirectory
-		(file-name-sans-extension fname)))
-	 (tex (concat stem ".tex"))
-	 (pdf (concat stem ".pdf"))
-	 (cmd (format "cd %s && lualatex %s.tex < /dev/null" dir stem)))
+	 (dir   (file-name-directory fname))
+	 (stem0 (file-name-nondirectory
+		 (file-name-sans-extension fname)))
+	 (stem  (if (equal stem0 "") "Show2" stem0))
+	 (tex   (concat stem ".tex"))
+	 (pdf   (concat stem ".pdf"))
+	 (cmd   (format "cd %s && lualatex %s.tex < /dev/null" dir stem)))
     (ee-template0 "\
 ;; (find-code-show2 \"{fname}\")
 ;;      (code-show2 \"{fname}\")
@@ -4361,6 +4435,7 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 ;; Arg1:  fname0 -> {(ee-S fname0)}
 ;; Vars:   fname -> {(ee-S fname)}
 ;;           dir -> {(ee-S dir)}
+;;         stem0 -> {(ee-S stem0)}
 ;;          stem -> {(ee-S stem)}
 ;;           tex -> {(ee-S tex)}
 ;;           pdf -> {(ee-S pdf)}
@@ -4398,6 +4473,64 @@ emacsclient --eval '(find-livesofanimalspage 3)'
 (defun D   () (interactive) (find-pdf-page \"{dir}{stem}.pdf\"))
 (defun etv () (interactive) (find-wset \"13o2_o_o\" '(tb) '(v)))
 ")))
+
+
+
+;;;   __ _           _       _             _   _     
+;;;  / _(_)_ __   __| |     | |_   _  __ _| |_| |__  
+;;; | |_| | '_ \ / _` |_____| | | | |/ _` | __| '_ \ 
+;;; |  _| | | | | (_| |_____| | |_| | (_| | |_| |_) |
+;;; |_| |_|_| |_|\__,_|     |_|\__,_|\__,_|\__|_.__/ 
+;;;                                                  
+;; «find-luatb»  (to ".find-luatb")
+;; See: (find-angg "LUA/PrintFunction1.lua")
+;; Tests: (find-luatb "~/LUA/lua50init.lua 1072 1075  ")
+;;        (find-luatb "~/LUA/lua50init.lua 914 915 field atlevel")
+;;
+(defun find-luatb0 (&optional fname linedef linenow &rest rest)
+  "An internal function used by `find-luatb'."
+  (find-fline fname)
+  (let* ((ld (and (stringp linedef) (string-to-number linedef)))
+         (ln (and (stringp linenow) (string-to-number linenow)))
+         (ldpos (progn (ee-goto-position ld) (ee-bol)))
+         (pos   (progn (ee-goto-position ln) (ee-eol)))
+         (lnpos (progn (ee-goto-position (+ ln 1)) (ee-bol))))
+    (eeflash ldpos lnpos ee-highlight-spec)
+    (goto-char pos)))
+
+(defun find-luatb (str &rest rest)
+  "See: (find-show2-intro)
+Some of the Lua modules in (find-show2-intro) use `find-luatb'."
+  (find-2a nil `(apply 'find-luatb0 (ee-split ,str))))
+
+
+
+;;;  _                                          _ 
+;;; | |__  _ __ __ _ _ __  _ __   ___ _ __   __| |
+;;; | '_ \| '__/ _` | '_ \| '_ \ / _ \ '_ \ / _` |
+;;; | |_) | | | (_| | |_) | |_) |  __/ | | | (_| |
+;;; |_.__/|_|  \__,_| .__/| .__/ \___|_| |_|\__,_|
+;;;                 |_|   |_|                     
+;;
+;; «code-brappend»  (to ".code-brappend")
+;; Skel: (find-code-xxx-links "brappend" "c url f" "")
+
+(defun      code-brappend (c url &optional f)
+  (eval (ee-read      (ee-code-brappend c url f))))
+(defun find-code-brappend (c url &optional f)
+  (find-estring-elisp (ee-code-brappend c url f)))
+(defun   ee-code-brappend (c url &optional f)
+  (setq f (or f 'brg))
+  (ee-template0 "\
+;; (find-code-brappend \"{<}c{>}\" \"{<}url{>}\")
+;; (find-code-brappend \"{<}c{>}\" \"{<}url{>}\" 'brgl)
+;;
+(defun find-{c} (&optional anchor &rest rest)
+  (interactive)
+  ({f} (concat \"{url}\"
+               (or anchor \"\"))))
+"))
+
 
 
 

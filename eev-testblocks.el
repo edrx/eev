@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20231214
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -224,7 +224,7 @@ dofile \"%s\"
   (insert (ee-adjust-red-stars (format "
 # See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
 # (setq eepitch-preprocess-regexp \"^\")
-# (setq eepitch-preprocess-regexp \"^#T \")
+# (setq eepitch-preprocess-regexp \"^#T ?\")
 #
 #T  (eepitch-shell)
 #T  (eepitch-kill)
@@ -238,7 +238,7 @@ dofile \"%s\"
   (insert (ee-adjust-red-stars (format "
 # See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
 # (setq eepitch-preprocess-regexp \"^\")
-# (setq eepitch-preprocess-regexp \"^#T \")
+# (setq eepitch-preprocess-regexp \"^#T ?\")
 #
 #T  (eepitch-shell)
 #T  (eepitch-kill)

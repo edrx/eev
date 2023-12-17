@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231203
+;; Version:    20231216
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -1126,6 +1126,7 @@ For more info on this particular video, run:
      :yt    "http://www.youtube.com/watch?v=IDBQo_YYfA8"
      :page  "http://anggtwu.net/emacsconf2023.html"
      :date    "2023dec02"
+     :subs    ".vtt"
      :length  "59:11"
      :comment "My presentation at the EmacsConf2023.")
     ))

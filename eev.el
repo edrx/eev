@@ -6,7 +6,7 @@
 ;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: lisp e-scripts
 ;; URL: http://anggtwu.net/#eev
-;; Version: 20230127
+;; Version: 20231216
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
