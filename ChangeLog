@@ -1,5 +1,10 @@
 2023-12-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-tlinks.el (show2-use, find-show2-use)
+	(ee-show2-do-with-fname0, ee-show2-use): new functions.
+
+	* eev-intro.el (find-show2-intro): added more sections.
+
 	* eev-videolinks.el (ee-all-cs-with-subs, code-lsubs)
 	(find-code-lsubs, ee-code-lsubs, code-all-lsubs)
 	(find-code-all-lsubs, ee-code-all-lsubs): new functions.

@@ -16063,6 +16063,7 @@ that are displayed in a format like this one:
  Note: some of the sexps below take a long time - many seconds!
  (find-epackage-links 'pdf-tools)
   (package-initialize)
+  (add-to-list 'package-archives (\"melpa\" . \"https://melpa.org/packages/\"))
   (package-refresh-contents)
   (package-install 'pdf-tools)
  (find-epackage   'pdf-tools)
@@ -16071,12 +16072,17 @@ that are displayed in a format like this one:
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
+sudo apt-get install build-essential
 sudo apt-get install lua5.1 lua5.1-doc lua5.1-dev
 sudo apt-get install lua5.2 lua5.2-doc lua5.2-dev
 sudo apt-get install lua-lpeg lua-lpeg-dev
 sudo apt-get install texlive-latex-extra
 
  Clone the git repository
+ See: https://github.com/edrx/show2-elpeg1#introduction
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
 rm -Rfv /tmp/show2-elpeg1/
 mkdir   /tmp/show2-elpeg1/
 cd      /tmp/show2-elpeg1/
@@ -16160,6 +16166,23 @@ Remember that Show2.lua uses a 3-window setting like this:
   |           | resulting PDF |
   |___________|_______________|
 
+Both Show2.lua and Emacs need to configured to use the same PDF
+file. This is done by running lines like these ones with <f8>s:
+
+ (show2-use \"{dir}/{stem}.{ext}\")
+ (show2-use \"/tmp/show2-elpeg1/LATEX/Show2.tex\")
+ (show2-use \"$SHOW2LATEXDIR/Show2.tex\")
+ (show2-use \"$SHOW2LATEXDIR/\")
+ (show2-use \"/tmp/Show2.tex\")
+ (show2-use \"/tmp/\")
+
+`show2-use' displays all the details of what it does in the
+window at the right, and when we run a `show2-use' in a red star
+line it also displays some information in the echo area. The
+communication with Lua is done by setting two environment
+variables - SHOW2DIR and SHOW2STEM - but the details are not
+important now.
+
 Let's see how that works in practice.
 
 
@@ -16168,7 +16191,7 @@ Let's see how that works in practice.
 ----------------------
 This is a minimal example of how to use Show2.lua:
 
- (code-show2 \"/tmp/Show2.tex\")
+ (show2-use \"/tmp/Show2.tex\")
  (eepitch-lua51)
  (eepitch-kill)
  (eepitch-lua51)
@@ -16177,9 +16200,10 @@ body = [[ HELLO ]]
 = body:show()
  (etv)
 
-The `(code-show2 ...)' in the beginning makes Emacs and Show2.lua
+The `(show2-use ...)' in the beginning makes Show2.lua and Emacs
 use the directory \"/tmp/\" and the files \"/tmp/Show2.tex\" and
-\"/tmp/Show2.pdf\"; the
+\"/tmp/Show2.pdf\"; it also displays some explanations in the
+right window. The
 
   = body:show()
 
@@ -16213,8 +16237,7 @@ section with <f8>s. Don't forget to wait after the \":show()\"!
 Try to run the example below with <f8>s - and don't forget to
 wait a bit after the \":show()\":
 
- (find-code-show2 \"/tmp/Show2.tex\")
-       (code-show2 \"/tmp/Show2.tex\")
+ (show2-use \"/tmp/Show2.tex\")
  (eepitch-lua51)
  (eepitch-kill)
  (eepitch-lua51)

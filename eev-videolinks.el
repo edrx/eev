@@ -1130,7 +1130,7 @@ For more info on this particular video, run:
      :date    "2023dec02"
      :subs    ".vtt"
      :length  "59:11"
-     :comment "My presentation at the EmacsConf2023.")
+     :comment "My presentation at the EmacsConf2023. See: (find-show2-intro)")
     ))
 
 
