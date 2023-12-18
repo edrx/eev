@@ -157,7 +157,6 @@
 ;; «.find-emacsclient-links»		(to "find-emacsclient-links")
 ;; «.find-show2-links»			(to "find-show2-links")
 ;;   «.show2»				(to "show2")
-;;   «.code-show2»			(to "code-show2")
 ;; «.show2-use»				(to "show2-use")
 ;;   «.find-luatb»			(to "find-luatb")
 ;; «.code-brappend»			(to "code-brappend")
@@ -4332,8 +4331,7 @@ emacsclient --eval '(find-livesofanimalspage 3)'
        ""
        ,(ee-template0 "\
  (find-angg \"LUA/Show2.lua\" \"texbody\")
- (find-code-show2 \"{texfile}\")
-       (code-show2 \"{texfile}\")
+ (show2-use \"{texfile}\")
  (eepitch-lua51)
  (eepitch-kill)
  (eepitch-lua51)
@@ -4378,105 +4376,6 @@ printmeaning \"@oddfoot\"
   (interactive)
   (find-2a nil '(find-show2-links fname0)))
 
-
-;; «code-show2»  (to ".code-show2")
-;; Skel:  (find-code-xxx-links "show2" "fname0" "")
-;; Tests: (find-code-show2)
-;;        (find-code-show2 "./foo")
-;;        (find-code-show2 "/tmp/")
-;;        (find-code-show2 "./foo.tex")
-;; See:   (find-angg "LUA/Show2.lua")
-;;        (find-angg "LUA/Show2.lua" "Show")
-;;
-(defun      code-show2 (&optional fname0)
-  (eval (ee-read      (ee-code-show2 fname0))))
-(defun find-code-show2 (&optional fname0)
-  (interactive)
-  (find-estring-elisp (ee-code-show2 fname0)))
-(defun   ee-code-show2 (&optional fname0)
-  (let* ((fname (ee-expand (or fname0 "/tmp/Show2.tex")))
-	 (dir   (file-name-directory fname))
-	 (stem0 (file-name-nondirectory
-		 (file-name-sans-extension fname)))
-	 (stem  (if (equal stem0 "") "Show2" stem0))
-	 (tex   (concat stem ".tex"))
-	 (pdf   (concat stem ".pdf"))
-	 (cmd   (format "cd %s && lualatex %s.tex < /dev/null" dir stem)))
-    (ee-template0 "\
-;; (find-code-show2 \"{fname}\")
-;;      (code-show2 \"{fname}\")
-;;  (find-efunction 'code-show2)
-;;
-;;
-;; Part 1: Lua
-;; ===========
-;; With the arguments above `code-show2' will set the
-;; environment variables SHOW2DIR and SHOW2STEM to:
-;;
-(setenv \"SHOW2DIR\"  \"{dir}\")
-(setenv \"SHOW2STEM\" \"{stem}\")
-;;
-;; These variables will be used by Show2.lua to determine which
-;; directory and which file to work on. The values above mean
-;; that Show2.lua will save the TeX code in this file,
-;;
-;;                {dir}{stem}.tex
-;;   (find-fline \"{dir}{stem}.tex\")
-;;
-;; and will run this command to compile that .tex:
-;;
-;;   {cmd}
-;;
-;; When both SHOW2DIR and SHOW2STEM are undefined Show2.lua
-;; will use /tmp/ and /tmp/Show2.tex.
-;;
-;; To understand how the argument to `code-show2' works, try:
-;;        (find-code-show2)
-;;        (find-code-show2 \"DIR/STEM.ext\")
-;;        (find-code-show2 \"/tmp/Show2.pdf\")
-;;        (find-code-show2 \"/tmp/Show2.tex\")
-;;        (find-code-show2 \"~/LATEX/Foo.tex\")
-;; Arg1:  fname0 -> {(ee-S fname0)}
-;; Vars:   fname -> {(ee-S fname)}
-;;           dir -> {(ee-S dir)}
-;;         stem0 -> {(ee-S stem0)}
-;;          stem -> {(ee-S stem)}
-;;           tex -> {(ee-S tex)}
-;;           pdf -> {(ee-S pdf)}
-;;           cmd -> {(ee-S cmd)}
-;;
-;; The logic is here:
-;;   (find-efunction    'code-show2)
-;;   (find-efunction 'ee-code-show2)
-;;   (find-angg \"LUA/Show2.lua\" \"Show\")
-;;   (find-angg \"LUA/Show2.lua\" \"texbody\")
-;;   (find-angg \"LUA/Show2.lua\" \"Dang\")
-;;
-;;
-;; Part 2: Emacs
-;; =============
-;; Eepitch-ing a line like this one
-;;
-;;    (etv)
-;;
-;; should create a 3-window setting like this:
-;;   _________________
-;;  |        |        |
-;;  |        | target |
-;;  |  edit  |________|
-;;  |        |        |
-;;  |        |  view  |
-;;  |________|________|
-;;
-;; The defuns below configure `v', `D' and `etv' to make them
-;; display the PDF produced by Show2.lua, that will be here:
-;;   {dir}{stem}.pdf
-;;
-(defun tb  () (interactive) (find-ebuffer (eepitch-target-buffer)))
-(defun v   () (interactive) (find-pdftools-page \"{dir}{stem}.pdf\"))
-(defun D   () (interactive) (find-pdf-page \"{dir}{stem}.pdf\"))
-(defun etv () (interactive) (find-wset \"13o2_o_o\" '(tb) '(v)))
-")))
 
 
 ;;;      _                   ____                      
