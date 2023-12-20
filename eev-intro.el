@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231218
+;; Version:    20231219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -16087,7 +16087,32 @@ sudo apt-get install texlive-latex-extra
         (find-lpegremanual)
 
 
-2.2. MacOS
+2.2. Arch Linux
+---------------
+ Make sure that we have the Pacman packages that we need.
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo pacman -S base-devel
+sudo pacman -S lua51 lua51-lpeg
+sudo pacman -S lua52 lua52-lpeg
+sudo pacman -S texlive-latexextra
+
+ This will be used to build lpeglabel
+ (setenv \"LUA52DIR\" \"/usr/include/lua5.2\")
+
+ Define links to some manuals
+ (code-brappend \"lua51manual\"  \"file:///usr/share/doc/lua51/manual.html\")
+ (code-brappend \"lua52manual\"  \"https://www.lua.org/manual/5.2/manual.html\")
+ (code-brappend \"lpegmanual\"   \"http://www.inf.puc-rio.br/~roberto/lpeg/lpeg.html\")
+ (code-brappend \"lpegremanual\" \"http://www.inf.puc-rio.br/~roberto/lpeg/re.html\")
+ Tests: (find-lua51manual)
+        (find-lua52manual)
+        (find-lpegmanual)
+        (find-lpegremanual)
+
+
+2.3. MacOS
 ----------
  Make sure that we have the Homebrew packages that we need.
  (eepitch-shell)

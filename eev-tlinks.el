@@ -89,6 +89,7 @@
 ;; «.find-eev-header-links»		(to "find-eev-header-links")
 ;;
 ;; «.find-debpkg-links»			(to "find-debpkg-links")
+;; «.find-pacman-links»			(to "find-pacman-links")
 ;; «.find-homebrew-links»		(to "find-homebrew-links")
 ;; «.find-eev-install-links»		(to "find-eev-install-links")
 ;; «.find-eev-update-links»		(to "find-eev-update-links")
@@ -737,6 +738,37 @@ apt-file search {pkgname}
 dpkg-query --search {pkgname}
 ")
       ) rest)))
+
+
+
+;; «find-pacman-links»  (to ".find-pacman-links")
+;; Skel: (find-find-links-links-new "pacman" "pkg" "")
+;; Test: (find-pacman-links)
+;;
+(defun find-pacman-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for pacman."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (apply
+   'find-elinks
+   `((find-pacman-links ,pkg ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-pacman-links)
+     ""
+     ,(ee-template0 "\
+# https://archlinux.org/packages/?sort=&q={pkg}&maintainer=&flagged=
+# https://archlinux.org/packages/extra/x86_64/{pkg}/
+# https://archlinux.org/packages/extra/x86_64/{pkg}/files/
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo pacman -S {pkg}
+
+")
+     )
+   pos-spec-list))
+
 
 
 

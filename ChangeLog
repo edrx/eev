@@ -1,5 +1,9 @@
 2023-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-show2-intro): added a section for Arch Linux.
+
+	* eev-tlinks.el (find-pacman-links): new function.
+
 	* eev-plinks.el (find-telegachat-msgc, ee-telegachat-msg0)
 	(ee-telegachat-msgc): new functions.
 	(find-telegachatm): new alias.
