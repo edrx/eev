@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230717
+;; Version:    20231219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -111,16 +111,17 @@
 ;; (find-eev "eev-brxxx.el")
 
 
-;; «.find-urlretrieve»	(to "find-urlretrieve")
-;; «.find-wget»		(to "find-wget")
-;; «.find-anggwget»	(to "find-anggwget")
-;; «.find-anggwgeta»	(to "find-anggwgeta")
-;; «.find-gitk»		(to "find-gitk")
-;; «.find-tkdiff»	(to "find-tkdiff")
-;; «.find-osm»		(to "find-osm")
-;; «.find-telegachat»	(to "find-telegachat")
-;; «.find-firefox»	(to "find-firefox")
-;; «.find-googlechrome»	(to "find-googlechrome")
+;; «.find-urlretrieve»		(to "find-urlretrieve")
+;; «.find-wget»			(to "find-wget")
+;; «.find-anggwget»		(to "find-anggwget")
+;; «.find-anggwgeta»		(to "find-anggwgeta")
+;; «.find-gitk»			(to "find-gitk")
+;; «.find-tkdiff»		(to "find-tkdiff")
+;; «.find-osm»			(to "find-osm")
+;; «.find-telegachat»		(to "find-telegachat")
+;; «.find-telegachat-msgc»	(to "find-telegachat-msgc")
+;; «.find-firefox»		(to "find-firefox")
+;; «.find-googlechrome»		(to "find-googlechrome")
 
 
 
@@ -488,9 +489,39 @@ viewer - installed for this to work, and Emacs 28 or later."
 ;;        (find-telegachat "@emacs_posts" "Emacs News and Posts")
 ;; See:   (find-eev "eev-tlinks.el" "find-telegachat-links")
 ;;
-(defun find-telegachat (name &rest rest)
-  (let ((url (format "tg:telega:%s" name)))
+(defun find-telegachat (idn &rest rest)
+  "Go to a Telega buffer or to a message in a Telega buffer.
+When IDN is just the name of the numeric id of a Telegram
+channel, like \"@emacs_telega\", just go to the buffer of that
+channel, starting Telega and opening that channel if needed; when
+IDN also has a message number, like in \"@emacs_telega#43590\",
+also go to that message and highlight it."
+  (let ((url (format "tg:telega:%s" idn)))
     (find-dbsw-call `(telega-tme-open-tg ,url))))
+
+;; «find-telegachat-msgc»  (to ".find-telegachat-msgc")
+;; Tests:             (find-telegachat      "@emacs_telega#43594")
+;;                    (find-telegachat-msgc "@emacs_telega#43594")
+;;        (find-eppp    (ee-telegachat-msg0 "@emacs_telega#43594"))
+;;        (find-estring (ee-telegachat-msgc "@emacs_telega#43594"))
+;;
+(defun find-telegachat-msgc (idn &rest rest)
+  "Like `find-telegachat', but shows the contents of the message."
+  (apply 'find-estring (ee-telegachat-msgc idn) rest))
+
+(defalias 'find-telegachatm 'find-telegachat-msgc)
+
+(defun ee-telegachat-msg0 (idn)
+  "An internal function used by `find-telegachat-msgc'."
+  (save-window-excursion
+    (find-telegachat idn)
+    (telega-msg-at (point))))
+
+(defun ee-telegachat-msgc (idn)
+  "An internal function used by `find-telegachat-msgc'."
+  (telega-msg-content-text (ee-telegachat-msg0 idn)))
+
+
 
 
 ;; «find-firefox»       (to ".find-firefox")

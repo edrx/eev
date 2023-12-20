@@ -1,7 +1,19 @@
+2023-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-telegachat-msgc, ee-telegachat-msg0)
+	(ee-telegachat-msgc): new functions.
+	(find-telegachatm): new alias.
+
+2023-12-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-homebrew-links): new function.
+	(ee-find-telegachat-links): added several entries.
+
 2023-12-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (show2-use, find-show2-use)
 	(ee-show2-do-with-fname0, ee-show2-use): new functions.
+	(code-show2, find-code-show2, ee-code-show2): deleted.
 
 	* eev-intro.el (find-show2-intro): added more sections.
 

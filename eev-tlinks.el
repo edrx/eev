@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231217
+;; Version:    20231219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -89,6 +89,7 @@
 ;; «.find-eev-header-links»		(to "find-eev-header-links")
 ;;
 ;; «.find-debpkg-links»			(to "find-debpkg-links")
+;; «.find-homebrew-links»		(to "find-homebrew-links")
 ;; «.find-eev-install-links»		(to "find-eev-install-links")
 ;; «.find-eev-update-links»		(to "find-eev-update-links")
 ;; «.find-youtubedl-links»		(to "find-youtubedl-links")
@@ -739,6 +740,52 @@ dpkg-query --search {pkgname}
 
 
 
+;;;  _   _                      _                       
+;;; | | | | ___  _ __ ___   ___| |__  _ __ _____      __
+;;; | |_| |/ _ \| '_ ` _ \ / _ \ '_ \| '__/ _ \ \ /\ / /
+;;; |  _  | (_) | | | | | |  __/ |_) | | |  __/\ V  V / 
+;;; |_| |_|\___/|_| |_| |_|\___|_.__/|_|  \___| \_/\_/  
+;;;                                                     
+;; «find-homebrew-links»  (to ".find-homebrew-links")
+;; Skel:  (find-find-links-links-new "homebrew" "pkg" "")
+;; Tests: (find-homebrew-links)
+;;        (find-homebrew-links "lpeg")
+;;
+(defun find-homebrew-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for homebrew."
+  (interactive)
+  (setq pkg (or pkg "{pkg}"))
+  (apply
+   'find-elinks
+   `((find-homebrew-links ,pkg ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-homebrew-links)
+     ""
+     ,(ee-template0 "\
+# (find-sh \"port contents {pkg}\")
+# (find-sh \"find /opt/local | grep {pkg} | sort\")
+# (find-sh \"port echo all | grep {pkg} | sort\")
+# (find-sh \"port echo installed\")
+# (find-sh \"port help echo\")
+# (find-sh \"port help contents\")
+# (find-sh \"port help provides\")
+# (find-sh \"port provides /opt/local/an/existing/file\")
+# (find-man \"1 port\")
+# https://formulae.brew.sh/formula/{pkg}
+# https://formulae.brew.sh/formula/lua@5.1#default
+# https://ports.macports.org/port/{pkg}/
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo port install {pkg}
+sudo brew install {pkg}
+")
+     )
+   pos-spec-list))
+
+
+
 ;;;   __ _           _           _          _           _ _     _ 
 ;;;  / _(_)_ __   __| |       __| |___  ___| |__  _   _(_) | __| |
 ;;; | |_| | '_ \ / _` |_____ / _` / __|/ __| '_ \| | | | | |/ _` |
@@ -773,6 +820,9 @@ dpkg-query --search {pkgname}
 	 (downcase (format-time-string "%Y%b%d"))
 	 (ee-dsc-url-split dsc-url)))
 
+;; Note: this is VERY OLD - it uses bounded regions,
+;; that I haven't used in ages... see:
+;; (find-bounded-intro)
 (defun ee-links-for-dscbuild0 (date prot dir/ xxx vvv -sv)
   (ee-template
    '(date prot dir/ xxx vvv -sv) "\
@@ -3712,19 +3762,26 @@ This doesn't support pos-spec lists yet."
       (find-telegachat ,atusername ,title)
       (find-telegachat ,atusernamen)
       (find-telegachat ,atusernamen ,title)
+      (find-telegachatm ,atusernamen)
       (find-telegachat ,id)
       (find-telegachat ,id ,title)
       (find-telegachat ,idn)
       (find-telegachat ,idn ,title)
+      (find-telegachatm ,idn)
       ""
       (find-ebuffer ,bufname)
       (setq tcbuf ,bufname)
       (setq tcchat (with-current-buffer tcbuf telega-chatbuf--chat))
+      (setq tcmsg (with-current-buffer tcbuf (telega-msg-at (point))))
+      (setq tcmsgc (plist-get (plist-get (plist-get tcmsg :content) :text) :text))
+      (setq tcmsgc (ee-no-properties (telega-msg-content-text tcmsg)))
       (telega-tme-internal-link-to tcchat)
       (find-eppp tcchat)
       (plist-get tcchat :chat_id)
       (plist-get tcchat :title)
       (plist-get tcchat :id)
+      (find-eppp tcmsg)
+      (find-estring tcmsgc)
       )))
 
 (defun ee-telega-msgn (&optional msg)
@@ -4523,6 +4580,8 @@ Some of the Lua modules in (find-show2-intro) use `find-luatb'."
 ;;
 ;; «code-brappend»  (to ".code-brappend")
 ;; Skel: (find-code-xxx-links "brappend" "c url f" "")
+;; Test: (code-brappend "foomanual" "file:///tmp/foobarmanual.html" 'list)
+;;       (find-foomanual "#section-2" "bla")
 
 (defun      code-brappend (c url &optional f)
   (eval (ee-read      (ee-code-brappend c url f))))

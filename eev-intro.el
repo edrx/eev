@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231217
+;; Version:    20231218
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -16055,8 +16055,63 @@ that are displayed in a format like this one:
                                   0              y     +     1
 
 
+2. Dependencies
+===============
+Here we install some system-wide packages.
+This part is different for each OS and distro.
 
-2. Installation (on Debian)
+
+2.1. Debian
+-----------
+ Make sure that we have the Debian packages that we need.
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo apt-get install build-essential
+sudo apt-get install lua5.1 lua5.1-doc lua5.1-dev
+sudo apt-get install lua5.2 lua5.2-doc lua5.2-dev
+sudo apt-get install lua-lpeg lua-lpeg-dev
+sudo apt-get install texlive-latex-extra
+
+ This will be used to build lpeglabel
+ (setenv \"LUA52DIR\" \"/usr/include/lua5.2\")
+
+ Define links to some manuals
+ (code-brappend \"lua51manual\"  \"file:///usr/share/doc/lua5.1-doc/doc/manual.html\")
+ (code-brappend \"lua52manual\"  \"file:///usr/share/doc/lua5.2-doc/manual.html\")
+ (code-brappend \"lpegmanual\"   \"file:///usr/share/doc/lua-lpeg-dev/lpeg.html\")
+ (code-brappend \"lpegremanual\" \"file:///usr/share/doc/lua-lpeg-dev/re.html\")
+ Tests: (find-lua51manual)
+        (find-lua52manual)
+        (find-lpegmanual)
+        (find-lpegremanual)
+
+
+2.2. MacOS
+----------
+ Make sure that we have the Homebrew packages that we need.
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo port install lua-lpeg lua51-lpeg lua52-lpeg
+
+ This will be used to build lpeglabel
+ (setenv \"LUA52DIR\" \"/opt/local/include/lua5.2\")
+
+ Define links to some manuals
+ (code-brappend \"lua51manual\" \"file:///opt/local/share/doc/lua51/html/manual.html\")
+ (code-brappend \"lua52manual\" \"file:///opt/local/share/doc/lua52/html/manual.html\")
+ (code-brappend \"lpegmanual\"   \"http://www.inf.puc-rio.br/~roberto/lpeg/lpeg.html\")
+ (code-brappend \"lpegremanual\" \"http://www.inf.puc-rio.br/~roberto/lpeg/re.html\")
+ Tests: (find-lua51manual)
+        (find-lua52manual)
+        (find-lpegmanual)
+        (find-lpegremanual)
+
+
+
+
+3. Installation (on Debian)
 ===========================
 
  Make sure that you have pdf-tools installed in Emacs.
@@ -16068,17 +16123,7 @@ that are displayed in a format like this one:
   (package-install 'pdf-tools)
  (find-epackage   'pdf-tools)
 
- Make sure that we have the Debian packages that we need
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-sudo apt-get install build-essential
-sudo apt-get install lua5.1 lua5.1-doc lua5.1-dev
-sudo apt-get install lua5.2 lua5.2-doc lua5.2-dev
-sudo apt-get install lua-lpeg lua-lpeg-dev
-sudo apt-get install texlive-latex-extra
-
- Clone the git repository
+ Clone the git repository with Show2.lua and friends.
  See: https://github.com/edrx/show2-elpeg1#introduction
  (eepitch-shell)
  (eepitch-kill)
@@ -16087,26 +16132,14 @@ rm -Rfv /tmp/show2-elpeg1/
 mkdir   /tmp/show2-elpeg1/
 cd      /tmp/show2-elpeg1/
 git clone https://github.com/edrx/show2-elpeg1 .
- (code-c-d \"show2\" \"/tmp/show2-elpeg1/\" :anchor)
- Test: (find-show2file \"\")
-       (find-show2 \"\")
-       (find-show2 \"README.org\")
 
- Links to some manuals
- (code-brappend \"lua51manual\"  \"file:///usr/share/doc/lua5.1-doc/doc/manual.html\")
- (code-brappend \"lua52manual\"  \"file:///usr/share/doc/lua5.2-doc/manual.html\")
- (code-brappend \"lpegmanual\"   \"file:///usr/share/doc/lua-lpeg-dev/lpeg.html\")
- (code-brappend \"lpegremanual\" \"file:///usr/share/doc/lua-lpeg-dev/re.html\")
- Test: (find-lua51manual)
-       (find-lua52manual)
-       (find-lpegmanual)
-       (find-lpegremanual)
-
- Download and compile lpegrex and lpeglabel.
- I couldn't make their rocks work, so...
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
+ Clone the git repositories of lpegrex and lpeglabel
+ inside /tmp/show2-elpeg1/. Notes:
+   1) lpegrex depends on lpeglabel
+   2) lpeglabel needs to be compiled
+   3) lpeglabel doesn't work on Lua5.1, so we use Lua5.2
+   4) the (lua)rocks for lpegrex and lpeglabel don't work
+   5) I only use lpegrex in a few examples, and for comparisons
 rm -Rfv /tmp/show2-elpeg1/lpeglabel
 rm -Rfv /tmp/show2-elpeg1/lpegrex
 cd      /tmp/show2-elpeg1/
@@ -16115,21 +16148,43 @@ git clone https://github.com/edubart/lpegrex
 cd      /tmp/show2-elpeg1/lpeglabel/
 make LUADIR=/usr/include/lua5.2      2>&1 | tee om
 
+ Define links to some directories and manuals
+ (code-c-d \"show2\" \"/tmp/show2-elpeg1/\" :anchor)
+ (code-brappend \"lua51manual\"  \"file:///usr/share/doc/lua5.1-doc/doc/manual.html\")
+ (code-brappend \"lua52manual\"  \"file:///usr/share/doc/lua5.2-doc/manual.html\")
+ (code-brappend \"lpegmanual\"   \"file:///usr/share/doc/lua-lpeg-dev/lpeg.html\")
+ (code-brappend \"lpegremanual\" \"file:///usr/share/doc/lua-lpeg-dev/re.html\")
+ Tests: (find-show2file \"\")
+        (find-show2 \"LUA/\")
+        (find-show2 \"LUA/Show2.lua\" \"introduction\")
+        (find-show2 \"LUA/lua50init.lua\")
+        (find-lua51manual)
+        (find-lua52manual)
+        (find-lpegmanual)
+        (find-lpegremanual)
+
  Make some ennvironment variables point to /tmp/show2-elpeg1/
  (setenv \"SHOW2LUADIR\"   \"/tmp/show2-elpeg1/LUA\")
  (setenv \"SHOW2LATEXDIR\" \"/tmp/show2-elpeg1/LATEX\")
  (setenv \"LUA_INIT\"     \"@/tmp/show2-elpeg1/LUA/lua50init.lua\")
  (setenv \"LUA_PATH\"      \"/tmp/show2-elpeg1/LUA/?.lua;;\")
 
- Test:
+ In show2-elpeg1 the Path.addLUAtopath() below is defined as a no-op.
+ See: (find-show2 \"LUA/lua50init.lua\" \"Path.addLUAtopath\")
+
+ Test if the init file and \"require\" both work.
+ See: (find-show2 \"LUA/Tos2.lua\")
  (eepitch-lua51)
  (eepitch-kill)
  (eepitch-lua51)
 PP({10,20,\"30\",d=40})
+Path.addLUAtopath()
+= Path.from \"path\"
 require \"Tos2\"
 PPC(Tos.__index)
 
- Test lpegrex: first test
+ Test lpegrex: first test (boring).
+ Hint: no errors good, errors bad.
  (eepitch-lua52)
  (eepitch-kill)
  (eepitch-lua52)
@@ -16141,7 +16196,7 @@ require \"tests/csv-test\"
 arg =  {\"/home/edrx/usrc/lpegrex/examples/lua-ast.lua\"}
 require \"examples/lua-ast\"
 
- Test lpegrex: second test
+ Test lpegrex: check if loadlpegrex works
  (eepitch-lua52)
  (eepitch-kill)
  (eepitch-lua52)
@@ -16251,10 +16306,6 @@ body = [[  HELLO ]]
 = Show.log
 = Show.bigstr
 
-The \"\" in the first line makes the <f8> treat it as comment,
-but if you execute it with `M-e' you will get a temporary buffer
-with a detailed explanation of what the `(code-show2 ...)' does.
-
 The two \"body = ...\" lines let you choose between \"HELLO\",
 that is valid LaTeX code, and \"\\HELLO\", that will yield an
 error. Choosing is explained here:
@@ -16300,6 +16351,36 @@ EmacsConf2023:
   (find-eev2023replslsubs \"0:00\")
   (find-eev2023replsvideo \"56:58\")
   (find-eev2023replslsubs \"56:58\")
+
+
+
+3.4. Dednat6
+------------
+Some of the test blocks in this directory
+
+  (find-show2 \"LUA/\")
+
+need to save their .tex files in a specific directory - this one,
+
+  (find-show2 \"LATEX/\")
+  (find-fline \"$SHOW2LATEXDIR/\")
+
+because their .tex files need to load files that are there. Try
+to run this test block:
+
+  (find-show2 \"LUA/Verbatim3.lua\" \"dednat6-tests\")
+
+The line with the \":show0()\" in the test block shows the
+contents of the .tex file. You will see that it contains several
+lines that start with \"\\input\" and some lines that load
+Dednat6, that is explained here:
+
+  (find-eev2023replsvideo \"20:52\")
+  (find-eev2023replslsubs \"20:52\")
+  http://anggtwu.net/dednat6/tug-slides.pdf
+
+
+
 
 
 
