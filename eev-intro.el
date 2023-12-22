@@ -16291,9 +16291,9 @@ sudo pacman -S texlive-latexextra
         (find-lpegremanual)
 
 
-2.3. MacOS
-----------
- Make sure that we have the Homebrew packages that we need.
+2.3. MacOS (MacPorts)
+---------------------
+ Make sure that we have the MacPorts packages that we need.
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
@@ -16311,6 +16311,7 @@ sudo port install lua-lpeg lua51-lpeg lua52-lpeg
         (find-lua52manual)
         (find-lpegmanual)
         (find-lpegremanual)
+
 
 
 

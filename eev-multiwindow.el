@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20231221
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-multiwindow.el>
@@ -135,8 +135,10 @@ that. This is mainly for `find-wset'."
 ;; and "E" is more aggressive than "e" (it yells at you).
 (defun find-wset-e () (ee-here       (car sexps)) (setq sexps (cdr sexps)))
 (defun find-wset-E () (ee-here-reset (car sexps)) (setq sexps (cdr sexps)))
-(defun find-3ee (b c) (find-wset "13o2eoeo" b c))
-(defun find-3EE (b c) (find-wset "13o2EoEo" b c))
+(defun find-3ee  (b c)   (find-wset "13o2eoeo"     b c))
+(defun find-3EE  (b c)   (find-wset "13o2EoEo"     b c))
+(defun find-4eee (b c d) (find-wset "13o2eo2+eoeo" b c d))
+(defun find-4EEE (b c d) (find-wset "13o2Eo2+EoEo" b c d))
 
 ;; When I invented this I used "=" and "!" instead of "e" and "E" -
 ;; but I think that "e" and "E" are better.
