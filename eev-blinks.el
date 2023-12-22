@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231106
+;; Version:    20231220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -73,6 +73,7 @@
 ;; «.find-eunicode»		(to "find-eunicode")
 ;; «.find-eejumps»		(to "find-eejumps")
 ;; «.find-eeshortdefs»		(to "find-eeshortdefs")
+;; «.find-eaproposf»		(to "find-eaproposf")
 
 
 
@@ -1678,6 +1679,37 @@ Hint: install the Debian package \"unicode-data\".")
 	   (concat (ee-find-eeshortdefs-header)
 		   (ee-find-eeshortdefs-body))
 	   pos-spec-list)))
+
+
+
+;;;   __ _           _                                                   __ 
+;;;  / _(_)_ __   __| |       ___  __ _ _ __  _ __ ___  _ __   ___  ___ / _|
+;;; | |_| | '_ \ / _` |_____ / _ \/ _` | '_ \| '__/ _ \| '_ \ / _ \/ __| |_ 
+;;; |  _| | | | | (_| |_____|  __/ (_| | |_) | | | (_) | |_) | (_) \__ \  _|
+;;; |_| |_|_| |_|\__,_|      \___|\__,_| .__/|_|  \___/| .__/ \___/|___/_|  
+;;;                                    |_|             |_|                  
+;;
+;; «find-eaproposf»  (to ".find-eaproposf")
+;; Tests: (find-eaproposf "^find-.*-links$")
+;;        (find-estring (ee-eaproposf0 "^find-.*-links$" 'fboundp ": %s\n"))
+
+(defun find-eaproposf (regexp &rest rest)
+  "Go to a temporary buffer listing all functions whose names match REGEXP."
+  (apply 'find-elinks-elisp
+	 `(,(ee-template0 "\
+;; (find-eaproposf {(ee-S regexp)})
+;; (find-eapropos  {(ee-S regexp)})
+")
+	   ,(ee-eaproposf0 regexp 'fboundp "(find-efunction '%s)\n"))
+	 rest))
+
+(defun ee-eaproposf0 (regexp predicate fmt)
+  "An internal function used by `find-eaproposf'."
+  (mapconcat (lambda (sym) (format fmt sym))
+	     (apropos-internal regexp predicate)
+	     ""))
+
+
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231219
+;; Version:    20231221
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -10286,15 +10286,237 @@ It is meant as both a tutorial and a sandbox.
 
 
 This intro is being rewritten!
-The prerequisites for understand this are:
+You will need a lot of knowledge of elisp to understand this.
+See:
   (find-elisp-intro)
-  (find-links-conv-intro \"3. Classification\")
 
 
 
 
 1. Introduction
 ===============
+The functions of eev that are meant to be used as hyperlinks can
+be classified in this way - look at the class (c):
+
+  (find-links-conv-intro \"3. Classification\")
+  (find-links-conv-intro \"3. Classification\" \"c)\")
+
+I will refer to these functions are \"`find-*-links' functions\".
+You can see a list of `find-*-links' functions by running:
+
+  (find-eaproposf \"^find-.*-links$\")
+  (find-eev \"eev-tlinks.el\" \".find-debpkg-links\")
+
+Most of them were written as \"5-minute hacks\". I explained the
+main ideas in this part of my presentation at the EmacsConf2020:
+
+  (find-eev2020video \"43:49\" \"(find-emacs-tangents-links)\")
+  (find-eev2020lsubs \"43:49\" \"(find-emacs-tangents-links)\")
+
+The final definition of `find-emacs-tangents-links' is here:
+
+  (find-eev \"eev-tlinks.el\" \"find-emacs-tangents-links\")
+
+Creating a new `find-*-links' function involves four steps:
+
+  1. generate a bare skeleton
+  2. generate an adjusted skeleton
+  3. add meat
+  4. debug the meat
+
+
+
+
+2. Skeletons
+============
+To generate a bare skeleton we run `find-find-links-links-new'.
+Try:
+
+  (eek \"M-x find-find-links-links-new\")
+
+To adjust the skeleton we edit the first line in that buffer and
+run it again \"to regenerate the buffer\". Remember this slogan:
+
+  (find-links-intro \"5. The first line regenerates the buffer\")
+
+This sexp generates (an example of) an \"adjusted skeleton\",
+
+  (find-find-links-links-new \"yttranscript\" \"c hash\" \"\")
+
+in which we have adjusted the name of the function -
+`find-yttranscript-links' - and its arguments, \"c\" and
+\"hash\".
+
+Look at the comments before the definition of
+`find-yttranscript-links':
+
+  (find-eev \"eev-tlinks.el\" \"find-yttranscript-links\")
+
+it has this line,
+
+;; Skel: (find-find-links-links-new \"yttranscript\" \"c hash\" \"\")
+
+that recreates the adjusted skeleton in a temporary buffer. Check
+these other \"Skel:\" lines:
+
+  (find-eevgrep \"grep --color=auto -nH --null -e Skel: eev-tlinks.el\")
+
+
+
+
+
+3. Meat
+=======
+Most of the \"meat\" in a `find-*-links' function is in the
+argument to `ee-template0'. See:
+
+  (find-eev \"eev-tlinks.el\" \"find-yttranscript-links\")
+  (find-eev \"eev-tlinks.el\" \"find-yttranscript-links\" \"ee-template0\")
+
+The docstrings of `ee-template0' and `ee-template00' have some
+examples of how they expand substrings of the form \"{expr}\":
+
+  (find-efunctiondescr 'ee-template0)
+  (find-efunctiondescr 'ee-template00)
+
+Here are some other examples with comments indicating how each
+substitution works:
+
+  (ee-template0 \"_{(+ 2 3)}_\")
+                  \\-------/
+                       5
+
+  (let ((hello \"Hi! \")
+        (a 2)
+        (b 3))
+     (ee-template0 \"{hello}{a}+{b}={(+ a b)}\"))
+                    \\-----/\\-/ \\-/ \\-------/
+                     \"Hi! \" 2   3      5
+
+The first example returns \"_5_\" - note that the (+ 2 3) returns
+a number, but its result gets converted to a string - and the
+second example returns \"Hi! 2+3=5\".
+
+In the second example the `ee-template0' only has access to the
+values variables `hello', `a' and `b' if it is run in dynamic
+binding. Try to execute it again, now both with `M-e', that uses
+dynamic binding, and with `M-1 M-1 M-e', that uses lexical
+biding; with `M-11e' you will get an error. The gory details are
+explained here,
+
+  (find-lexical-intro)
+
+...and this one of the reasons why I use dynamic binding in all
+the files of eev.
+
+Note that `ee-template0' expands \"{<}\"s to \"{\"s and \"{>}\"s
+to \"}\"s. Try:
+
+  (ee-template0 \"{<}bla{>}\")
+                 \\-/   \\-/
+                 \"{\"   \"}\"
+
+This trick is explained here:
+
+  (find-efunctiondescr 'ee-template0)
+  (find-efunction      'ee-template0)
+
+Some functions in eev need use `{(ee-S expr)}' instead of
+`{expr}'. Here are some links to examples and to the explanation
+of what `ee-S' does:
+
+  (find-eev \"eepitch.el\" \"find-eepitch-debug-links\")
+  (find-eev \"eepitch.el\" \"find-eepitch-debug-links\" \"ee-S\")
+  (find-eev \"eev-tlinks.el\" \"find-extra-file-links\")
+  (find-eev \"eev-tlinks.el\" \"find-extra-file-links\" \"ee-S\")
+  (find-eev \"eev-wrap.el\" \"ee-S\")
+
+
+
+
+4. Adding meat
+==============
+(TODO: explain how to quote certain characters)
+
+
+
+
+5. Debugging the meat
+=====================
+TODO: explain `M-x tt' and `M-x tt0',
+and explain which parts this video they replace:
+
+  (find-1stclassvideo-links \"2021ffll\")
+
+
+
+
+6. The `let*' block
+===================
+The third argument to `find-find-links-links-new' is a list of
+local variables in a `let*'. Compare the temporary buffers
+generated by:
+
+  (find-find-links-links-new \"mytaskC\" \"foo bar\" \"\")
+  (find-find-links-links-new \"mytaskC\" \"foo bar\" \"plic\")
+  (find-find-links-links-new \"mytaskC\" \"foo bar\" \"plic bletch\")
+
+In the second and the third cases the `(apply ...)' of the first
+case get wrapped in `(let* ...)'s, like this:
+  
+  (apply ...
+   pos-spec-list)
+
+  (let* ((plic \"{plic}\"))
+    (apply ...
+     pos-spec-list))
+
+  (let* ((plic \"{plic}\")
+         (bletch \"{bletch}\"))
+    (apply ...
+     pos-spec-list))
+
+The \"{plic}\" and the \"{bletch}\" are placeholders, and in real
+`find-*-links' functions they are replaced by non-trivial
+expressions - that are a second kind of meat that needs to be
+added to the `defun's by hand. For examples, see:
+
+  (find-eevgrep \"grep --color=auto -nH --null -e 'let\\\\*' eev-tlinks.el\")
+
+
+
+
+
+
+Garbage (to be recycled)
+========================
+
+  (find-eev \"eev-tlinks.el\" \".find-debpkg-links\")
+  (find-eev-quick-intro \"8.3. Creating index/section anchor pairs\")
+
+In the beginning I wrote the code of all those functions by hand.
+Then some patterns start to emerge, and I wrote some functions to
+help me to write those functions. The basic idea is explained in
+this part of my talk at the EmacsConf2020, in which I presented
+an example of a \"5-minute hack\":
+
+Its comments have these two lines:
+
+;; Skel: (find-find-links-links-new \"emacs-tangents\" \"yyyy mm dd msg txtstem\" \"\")
+;; Test: (find-emacs-tangents-links \"2022\" \"06\" \"06\")
+
+The \"Skel:\" line indicates that the code of
+`find-emacs-tangents-links' was written using
+`find-find-links-links-new', in several steps:
+
+In 2021 I recorded a video, called
+
+  How I write 5-minute hacks in eev using `M-x find-find-links-links-new'
+
+  (find-1stclassvideo-links \"2021ffll\")
+
+1. Introduction
+---------------
 In dec/2019 I sent this e-mail to the eev mailing list:
 
   https://lists.gnu.org/archive/html/eev/2019-12/msg00001.html
@@ -10330,36 +10552,8 @@ To learn how to write your own templated functions you need to:
 
   3) learn how to use `find-find-links-links-new'.
 
-
-
-
-
-2. `ee-template0'
-=================
-See:
-
-  (find-efunction 'ee-template0)
-  (find-eev \"eev-template0.el\")
-
-Try:
-
-  (ee-template00 \"a{(+ 2 3)}b\")
-
-  (let ((hi \"Here: \")
-        (a 22)
-        (b 33))
-    (ee-template00 \"{hi}{a}+{b}={(+ a b)}\"))
-
-  (defun foo (a b) (ee-template00 \"{a}+{b}={(+ a b)}\"))
-  (foo 22 33)
-
-  (ee-template0 \"{<} a{(+ 2 3)} {>}\")
-
-
-
-
 3. `find-elinks'
-================
+----------------
 See:
 
   (find-efunction 'find-elinks)
@@ -10433,10 +10627,8 @@ LIST that are sexps are converted to strings using `ee-HS'. See:
 
   (find-eev \"eev-wrap.el\" \"ee-S\")
 
-
-
 4. Skels
-========
+--------
 Many functions in eev have comments that start with \";; Skel:\",
 like this:
 
@@ -10452,13 +10644,9 @@ Try:
   (find-eev \"eev-tlinks.el\" \"find-fossil-links\")
   (find-eevgrep \"grep --color -nH --null -e Skel: *.el\")
 
-
-
-
-
 5. `find-find-links-links'
 ==========================
-(Note: `find-find-links-links' is obsolete, and is superseded by
+(Note: `find-find-links-links' is obsolete, and was superseded by
 `find-find-links-links-new')
 
 ALL my `find-*-links' started as quick hacks.
@@ -10485,9 +10673,6 @@ they generate:
   (find-find-links-links \"\\\\M-u\" \"macports\" \"{args}\")
   (find-find-links-links \"\\\\M-u\" \"macports\" \"pkgname\")
   (find-find-links-links \"\\\\M-u\" \"macports\" \"pkgname anotherarg\")
-
-
-
 
 So: start by running something like
 
@@ -10525,14 +10710,8 @@ I will try to update this intro in the next days:
   (find-templates-intro)
   http://anggtwu.net/eev-intros/find-templates-intro.html
 
-
-
-
-
 Etc:
 
-  (find-links-conv-intro)
-  (find-links-conv-intro \"3. Classification\")
   (find-eev \"eev-tlinks.el\" \"find-find-links-links\")
   (find-eev \"eev-tlinks.el\" \"find-intro-links\")
   (find-eev \"eev-wrap.el\" \"find-eewrap-links\")

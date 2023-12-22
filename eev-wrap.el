@@ -62,12 +62,12 @@ The best way to change this variable interactively is by running
 ;;;  \___|\___|    |____/ 
 ;;;                       
 ;;; «ee-S» (to ".ee-S")
-;; ee-S and ee-HS, for pretty-printing of sexps (mainly for use in
-;; ee-template0).
+;; `ee-S' and `ee-HS', for pretty-printing of sexps (mainly for use in
+;; `ee-template0').
 ;; Tests:
 ;;   (find-estring (ee-S  '(foo   "bar\nplic")))
 ;;   (find-estring (ee-HS '(foo   "bar\nplic")))
-;;   (find-estring (ee-H  "Some string")
+;;   (find-estring (ee-H  "Some string"))
 ;;         `(setq a ,(ee-add-quote "foo"))
 ;;         `(setq a ,(ee-add-quote '(+ 1 2)))
 ;;   (ee-S `(setq a ,(ee-add-quote '(+ 1 2))))

@@ -1,3 +1,14 @@
+2023-12-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-templates-intro): rewrote many sections.
+
+2023-12-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eaproposf, ee-eaproposf0): new functions.
+
+	* eev-tlinks.el (ee-ffll-deftest): new function.
+	(find-find-links-links-new): use `ee-ffll-deftest'.
+
 2023-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-show2-intro): added a section for Arch Linux.

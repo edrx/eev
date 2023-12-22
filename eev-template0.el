@@ -130,8 +130,8 @@ Examples:\n
   (ee-template00 \"a{(+ 2 3)}b\")
     -->  \"a5b\"\n
   (let ((hi \"Here:\") (a 22) (b 33))
-    (ee-template00 \"{hi} {a} + {b} = {(+ a b)}\"))  
-    -->  \"22 + 33 = 55\""
+    (ee-template00 \"{hi} {a} + {b} = {(+ a b)}\"))
+    -->  \"Here: 22 + 33 = 55\""
   (save-match-data
     (replace-regexp-in-string
      ee-template00-re

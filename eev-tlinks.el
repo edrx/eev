@@ -408,7 +408,9 @@ This is an internal function used by `find-{stem}-links'.\"
      ,(concat       ";; Skel: " (ee-S `(find-find-links-links-new ,stem ,args ,vars)))
      ,(ee-template0 ";; Test: (find-{stem}-links)")
      ";;"
-     ,(ee-ffll-defun stem args vars)
+     ,(ee-ffll-defun   stem args vars)
+     ""
+     ,(ee-ffll-deftest stem args vars)
      )
    pos-spec-list))
 
@@ -505,6 +507,20 @@ This is an internal function used by `find-{stem}-links'.\"
   (if (equal vars "") (setq vars nil))
   (if vars (ee-ffll-defun-with-lets stem args vars)
      (ee-ffll-defun-without-lets stem args)))
+
+(defun ee-ffll-deftest (stem args &optional vars)
+  (ee-template0 "\
+;; A function to test changes in the template of `find-{stem}-links'.
+;; To use it type `M-x tt' inside the `(defun find-{stem}-links ...)'.
+;; See: (find-enode \"Lisp Eval\" \"eval-defun\" \"C-M-x\" \"containing\")
+;;
+(defun ee-template-test (&rest args)
+  (let ((ee-buffer-name \"*ee-template-test*\"))
+    (find-2a nil `(find-{stem}-links ,@args))))
+
+(defun tt0 () (interactive) (eek \"C-M-x\") (ee-template-test))
+(defun tt  () (interactive) (eek \"C-M-x\") (ee-template-test \"A\" \"B\"))
+"))
 
 
 
