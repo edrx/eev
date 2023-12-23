@@ -10437,13 +10437,20 @@ of what `ee-S' does:
 4. Adding meat
 ==============
 The tricky part of adding stuff to the string in the
-`ee-template0' is that some characters need to quoted. See this
-file for an interactive function that will quote them in the
-right way:
+`(ee-template0 \"...\")' is that some characters need to quoted.
+See this file for an interactive function - `M-x qrl', where the
+\"qrl\" means \"query-replace-list\" - that will quote them in
+the right way:
 
-  http://anggtwu.net/elisp/query-replace-list-1.el.html
-  http://anggtwu.net/elisp/query-replace-list-1.el
-         (find-angg \"elisp/query-replace-list-1.el\")
+  (find-eev \"eev-qrl.el\")
+
+That file is not loaded by default. To make Emacs always load it,
+add these lines to your ~/.emacs:
+
+;; From: (find-templates-intro \"4. Adding meat\")
+(require 'eev-qrl)     ; (find-eev \"eev-qrl.el\")
+
+
 
 
 
@@ -16244,10 +16251,25 @@ that are displayed in a format like this one:
 2. Dependencies
 ===============
 Here we install some system-wide packages.
-This part is different for each OS and distro.
+The first part - pdf-tools - should work everywhere.
+The other part is different for each OS and distro.
 
 
-2.1. Debian
+2.1. Pdf-tools
+--------------
+ Make sure that you have pdf-tools installed in Emacs.
+ This part should work in all OSs (except Windows).
+ Note: some of the sexps below take a long time - many seconds!
+
+ (find-epackage-links 'pdf-tools)
+  (package-initialize)
+  (add-to-list 'package-archives (\"melpa\" . \"https://melpa.org/packages/\"))
+  (package-refresh-contents)
+  (package-install 'pdf-tools)
+ (find-epackage   'pdf-tools)
+
+
+2.2. Debian
 -----------
  Make sure that we have the Debian packages that we need.
  (eepitch-shell)
@@ -16273,7 +16295,7 @@ sudo apt-get install texlive-latex-extra
         (find-lpegremanual)
 
 
-2.2. Arch Linux
+2.3. Arch Linux
 ---------------
  Make sure that we have the Pacman packages that we need.
  (eepitch-shell)
@@ -16298,7 +16320,7 @@ sudo pacman -S texlive-latexextra
         (find-lpegremanual)
 
 
-2.3. MacOS (MacPorts)
+2.4. MacOS (MacPorts)
 ---------------------
  Make sure that we have the MacPorts packages that we need.
  (eepitch-shell)
@@ -16323,17 +16345,8 @@ sudo port install lua-lpeg lua51-lpeg lua52-lpeg
 
 
 
-3. Installation (on Debian)
+3. Installation (on /tmp/)
 ===========================
-
- Make sure that you have pdf-tools installed in Emacs.
- Note: some of the sexps below take a long time - many seconds!
- (find-epackage-links 'pdf-tools)
-  (package-initialize)
-  (add-to-list 'package-archives (\"melpa\" . \"https://melpa.org/packages/\"))
-  (package-refresh-contents)
-  (package-install 'pdf-tools)
- (find-epackage   'pdf-tools)
 
  Clone the git repository with Show2.lua and friends.
  See: https://github.com/edrx/show2-elpeg1#introduction

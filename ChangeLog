@@ -1,3 +1,9 @@
+2023-12-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-qrl.el: new file.
+
+	* eev-intro.el (find-templates-intro): mention eev-qrl.el.
+
 2023-12-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kl-here.el: new file.
