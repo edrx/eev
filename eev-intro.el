@@ -10436,7 +10436,14 @@ of what `ee-S' does:
 
 4. Adding meat
 ==============
-(TODO: explain how to quote certain characters)
+The tricky part of adding stuff to the string in the
+`ee-template0' is that some characters need to quoted. See this
+file for an interactive function that will quote them in the
+right way:
+
+  http://anggtwu.net/elisp/query-replace-list-1.el.html
+  http://anggtwu.net/elisp/query-replace-list-1.el
+         (find-angg \"elisp/query-replace-list-1.el\")
 
 
 
