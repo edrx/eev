@@ -1,3 +1,24 @@
+2023-12-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kl-here.el: added a provide.
+
+	* eev-qrl.el:  added a provide.
+
+	* eev-intro.el (find-templates-intro): rewrote the section "5.
+	Debugging the meat".
+
+	* eev-qrl.el: new file.
+
+	* eev-intro.el (find-templates-intro): mention eev-qrl.el.
+
+2023-12-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kl-here.el: new file.
+	(ee-find-einfo-link, ee-find-eintro-link, ee-kl-sexp-klin)
+	(eeklin, eeklins): moved from "eev-kla.el" to "eev-kl-here.el".
+
+	* eev-load.el (eev-kl-here): added a (require 'eev-kl-here).
+
 2023-12-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-macports-links): new function.

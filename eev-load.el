@@ -1,7 +1,7 @@
 ;;; eev-load.el -- load all the main modules of eev.  -*- lexical-binding: nil; -*-
 ;;; This can also be used as an index to the main source files.
 
-;; Copyright (C) 2019-2022 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2023 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20220827
+;; Version:    20231223
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -148,8 +148,10 @@
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
 (require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
 (require 'eev-kla)             ; (find-eev "eev-kla.el")
+(require 'eev-kl-here)         ; (find-eev "eev-kl-here.el")
 (require 'eev-helpful)         ; (find-eev "eev-helpful.el")
 (require 'eev-rstdoc)          ; (find-eev "eev-rstdoc.el")
+' (require 'eev-qrl)           ; (find-eev "eev-qrl.el")
 ;;
 ;; Configuration on M$ Windows.
 (require 'eev-wconfig)         ; (find-eev "eev-wconfig.el")

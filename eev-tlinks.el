@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231221
+;; Version:    20231223
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -511,9 +511,9 @@ This is an internal function used by `find-{stem}-links'.\"
 
 (defun ee-ffll-deftest (stem args &optional vars)
   (ee-template0 "\
-;; A function to test changes in the template of `find-{stem}-links'.
-;; To use it type `M-x tt' inside the `(defun find-{stem}-links ...)'.
-;; See: (find-enode \"Lisp Eval\" \"eval-defun\" \"C-M-x\" \"containing\")
+;; Functions to test changes in the template of `find-{stem}-links'.
+;; To use them type `M-x tt' inside the `(defun find-{stem}-links ...)'.
+;; See: (find-templates-intro \"5. Debugging the meat\")
 ;;
 (defun ee-template-test (&rest args)
   (let ((ee-buffer-name \"*ee-template-test*\"))
