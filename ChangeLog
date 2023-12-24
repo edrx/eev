@@ -1,5 +1,9 @@
 2023-12-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-kl-here.el: added a provide.
+
+	* eev-qrl.el:  added a provide.
+
 	* eev-intro.el (find-templates-intro): rewrote the section "5.
 	Debugging the meat".
 

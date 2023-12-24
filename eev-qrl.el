@@ -100,7 +100,7 @@
 (defalias 'qrl  'ee-qrl)
 
 
-
+(provide 'eev-qrl)
 
 ;; Local Variables:
 ;; coding:            utf-8-unix
