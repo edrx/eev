@@ -1,5 +1,8 @@
 2023-12-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-templates-intro): rewrote the section "5.
+	Debugging the meat".
+
 	* eev-qrl.el: new file.
 
 	* eev-intro.el (find-templates-intro): mention eev-qrl.el.
