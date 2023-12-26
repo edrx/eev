@@ -16280,12 +16280,16 @@ it is here,
 
   http://anggtwu.net/emacsconf2023.html
 
-and its video is here:
+and its two videos are here:
 
   Info: (find-1stclassvideo-links \"eev2023repls\")
-  Play: (find-eev2023replsvideo \"0:00\")
-  Subs: (find-eev2023replslsubs \"0:00\")
+        (find-1stclassvideo-links \"eev2023replsb\")
+  Play: (find-eev2023replsvideo  \"0:00\")
+        (find-eev2023replsbvideo \"0:00\")
+  Subs: (find-eev2023replslsubs  \"0:00\")
+        (find-eev2023replsblsubs \"0:00\")
         http://anggtwu.net/emacsconf2023-repls.html
+        http://anggtwu.net/emacsconf2023-repls-b.html
 
 The presentation was about a family of small Lua programs that
 were all built on top of these two libraries:
@@ -16341,9 +16345,11 @@ The other part is different for each OS and distro.
  This part should work in all OSs (except Windows).
  Note: some of the sexps below take a long time - many seconds!
 
- (find-epackage-links 'pdf-tools)
+ See: (find-melpa-links)
+      (find-epackage-links 'pdf-tools)
+
   (package-initialize)
-  (add-to-list 'package-archives (\"melpa\" . \"https://melpa.org/packages/\"))
+  (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\"))
   (package-refresh-contents)
   (package-install 'pdf-tools)
  (find-epackage   'pdf-tools)
@@ -16426,7 +16432,7 @@ sudo port install lua-lpeg lua51-lpeg lua52-lpeg
 
 
 3. Installation (on /tmp/)
-===========================
+==========================
 
  Clone the git repository with Show2.lua and friends.
  See: https://github.com/edrx/show2-elpeg1#introduction
