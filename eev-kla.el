@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231222
+;; Version:    20231228
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kla.el>
@@ -207,6 +207,18 @@ This function also runs `ee-kl-transform' on the result, but
 
 (defun ee-kl-region ()
   (buffer-substring-no-properties (point) (mark)))
+
+;; Used in: (find-eev "eev-kl-here.el" "kl")
+;;    Test: (ee-kl-line)
+(defun ee-kl-line ()
+  (interactive "P")
+  (let* ((start (ee-bol))
+	 (end   (ee-eol))
+	 (str0  (buffer-substring start end))
+	 (str   (ee-no-properties str0)))
+    (eeflash+ start end eeflash-copy)
+    str))
+
 
 
 ;;;  ____            _     _                               _ 

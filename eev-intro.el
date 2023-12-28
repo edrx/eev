@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231223
+;; Version:    20231227
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -3333,9 +3333,149 @@ The next steps are to learn how:
 8. Debugging
 ============
 The best way to understand the innards of `find-here-links' is to
-call it in \"debug mode\". This is explained here:
+call it in \"debug mode\" - or, more precisely, to call it with a
+prefix argument. When we run `find-here-links' _without_ a prefix
+argument it displays a header and then the links to \"here\";
+_with_ a prefix argument it displays the header and then a lot of
+internal information about \"here\". For example, if you run
 
-  (find-eevfile \"eev-hlinks.el\" \"Debug mode\")
+  (eek \"M-h M-h  ;; find-here-links\")
+
+then \"here\" is this intro, and `find-here-links' displays a
+header and then a \"body\" that is the result of running
+(ee-find-intro-links). You can inspect the header and the body
+separately with:
+
+  (find-elinks (ee-find-here-links-header))
+  (find-elinks (ee-find-here-links))
+  (find-elinks (ee-find-intro-links))
+
+If you run `find-here-links' with a prefix argument, as in this
+`eek' sexp,
+
+  (eek \"M-0 M-h M-h  ;; M-0 find-here-links\")
+
+then `find-here-links' will display the same header as before and
+then a lot of information on how `(ee-find-here-links)' decided
+that \"here\" was an intro - this one - and then
+selected `(ee-find-intro-links)' as the right lower-level
+function to use to generate the body. You can inspect the header
+and the body of that buffer separately with:
+
+  (find-elinks (ee-find-here-links-header))
+  (ee-detect-here)
+  (find-elinks (ee-find-here-debug-links))
+
+
+
+9. The hlang
+============
+The original implementation of `find-here-links' was simple but
+was hard to debug - its core used a big `cond' and it didn't keep
+a lot of information on how it detected the kind of \"here\".
+See:
+
+  (find-eev \"eev-hlinks.el\" \"ee-find-here-links-old\")
+
+Then in 2021-2023 I rewrote it several times, and now
+`ee-detect-here' runs a program that looks like this:
+
+  (find-eev \"eev-hlinks.el\" \"hprog\")
+  (find-eev \"eev-hlinks.el\" \"ee-hprog-find-here-links\")
+
+The variable `ee-hprog-find-here-links' contains an \"hprogram\",
+that is a program written in the \"hlang\", that is a little
+language that is used mostly for deciding what is \"here\" and
+keeping track of some information on how that decision was made.
+
+The hlang is defined in the link below. To understand how it
+works read its docstrings,
+
+  (find-eev \"eev-hlinks.el\" \"hlang\")
+
+and try these examples:
+
+  (ee-hlang-:lisp '(+ 20 3) '(+ 40 5))
+  (ee-hlang-:or   '(:lisp nil) '(:lisp nil) '(:lisp 42) '(:lisp 99))
+  (ee-hlang-:if   '(< 1 2) '(list 'lt))
+  (ee-hlang-:if   '(> 1 2) '(list 'gt))
+
+  (ee-hlang-eval  '(:lisp (+ 20 3) (+ 40 5)))
+  (ee-hlang-eval  '(:or (:lisp nil) (:lisp nil) (:lisp 42) (:lisp 99)))
+  (ee-hlang-eval  '(:if (< 1 2) (list 'lt)))
+  (ee-hlang-eval  '(:if (> 1 2) (list 'gt)))
+  (ee-hlang-eval  '(:or (:if (< 1 2) (list 'lt)) (:if (> 1 2) (list 'gt))))
+  (ee-hlang-eval  '(:or (:if (> 1 2) (list 'gt)) (:if (< 1 2) (list 'lt))))
+
+Note this:
+
+  (find-efunction 'ee-hlang-:if)
+  (find-efunction 'ee-hlang-:if \"d) we DO NOT evaluate SEXP2\")
+  (find-efunction 'ee-find-here-links)
+  (find-efunction 'ee-find-here-links \"(eval ee-hlang-sexp2)\")
+
+When we are in debug mode we don't eval the \"then\" part of
+an (:if ...)! Check this low-level example to understand the
+details:
+
+  (ee-hlang-eval  '(:or (:if nil (error 1))
+                        (:if t   (error 2))
+                        (:if t   (error 3))
+                        (:if nil (error 4))))
+
+  (eval ee-hlang-sexp2)
+
+
+
+9.1. A historical note
+----------------------
+My main motivation for the hlang was my frustration with Org and
+Hyperbole. They are infinitely more popular then eev, probably
+because they look very user-friendly, but when I tried to learn
+them I stumbled on their hacker-unfriendliness...
+
+Both Org and Hyperbole have cases in which they have to inspect
+what we have \"here\", \"around point\", or \"in a link\", and
+then they have to classify what they found into several different
+cases, and act in a different way for each different case. Let me
+call the function that classifies and acts accordingly a
+\"dispatcher\".
+
+I tried to add new hyperlink types to Org ages ago, when the way
+to do that was not as well-documented as it is now. The current
+way is explained here:
+
+  (find-orgnode \"External Links\")
+  (find-orgnode \"Adding Hyperlink Types\")
+
+and when I tried to understand how Org's code blocks \"really
+work\" my experience was so painful that I made a video about it:
+
+  Page: http://anggtwu.net/2021-org-for-non-users.html
+  Info: (find-1stclassvideo-links \"2021orgfornonusers\")
+  Play: (find-2021orgfornonusersvideo \"00:00\")
+  Subs: (find-2021orgfornonuserslsubs \"00:00\")
+
+...but that was nothing in comparison with Hyperbole! I spent a
+lot of time trying to build a bridge between eev and Hyperbole
+that would make them easy to use together, but each one of my
+questions about the innards of Hyperbole - for example, my
+questions about the dispatchers for button types - was treated as
+The Wrong Question... and in the end Hyperbole got my Eternal
+Hate. See:
+
+  (find-es \"hyperbole\")
+
+Then I decided that ok, I will never be able to make eev look as
+user-friendly as Org or as Hyperbole, but at least I can make eev
+more hacker-friendly than them... and if tinkering with the
+innards of Org and Hyperbole is so unfun then I can make the
+innards of eev more fun to play with - and then I rewrote
+`find-here-links', that at that point was the part of eev whose
+code was worst.
+
+
+
 " pos-spec-list)))
 
 ;; (find-here-links-intro)

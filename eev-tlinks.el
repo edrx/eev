@@ -165,6 +165,7 @@
 ;; «.code-brappend»			(to "code-brappend")
 ;; «.find-maximamsg-links»		(to "find-maximamsg-links")
 ;; «.find-maximamsg»			(to "find-maximamsg")
+;; «.find-linki-links»			(to "find-linki-links")
 
 
 (require 'eev-env)
@@ -4751,6 +4752,48 @@ A \"Maxima message\" is a message in the Maxima mailing list."
       (&optional n yyyymm day &rest rest) 
       (ee-split (or str "999999"))
     (find-maximamsg-links n yyyymm day)))
+
+
+
+
+;; «find-linki-links»  (to ".find-linki-links")
+;; Used in: (find-eev "eev-kl-here.el" "ee-find-linkis")
+;;    Skel: (find-find-links-links-new "linki" "stem" "")
+;;    Test: (find-linki-links "intro")
+;;
+(defun find-linki-links (&optional stem &rest pos-spec-list)
+"See: (find-eev \"eev-kl-here.el\" \"ee-find-linkis\")"
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (apply
+   'find-elinks-elisp
+   `((find-linki-links ,stem ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-linki-links)
+     ""
+     ,(ee-template0 "\
+;; (find-eev \"eev-htests.el\" \"tests\" \"ee-find-{stem}-links\")
+;; (find-eev \"eev-htests.el\" \"tests\" \"ee-find-{stem}-linki\")
+;; Tests:
+;;   (find-tlhs '(?)     '(ee-find-{stem}-links))
+;;   (find-tlh1 '(?)     '(ee-find-{stem}-linki))
+
+;; (find-eev \"eev-hlinks.el\"  \"hprog\")
+;; (find-eev \"eev-hlinks.el\"  \"hprog\" \"ee-find-{stem}-links\")
+;; (find-eev \"eev-kl-here.el\" \"hprog\")
+;;   (:if (ee-{stem}-bufferp)  (ee-find-{stem}-linki))
+
+;; (find-efunction 'ee-find-{stem}-links)
+;; (find-efunction 'ee-find-{stem}-linki)
+;; (find-eev \"eev-kl-here.el\" \"ee-find-linkis\")
+
+;; Skel: (find-linki-links \"{stem}\")
+(defun ee-find-{stem}-linki ()
+  )
+")
+     )
+   pos-spec-list))
+
 
 
 

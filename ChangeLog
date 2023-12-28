@@ -1,3 +1,25 @@
+2023-12-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kl-here.el: rewritten completely.
+
+	* eev-tlinks.el (find-linki-links): new function.
+
+	* eev-kla.el (ee-kl-line): new function.
+
+	* eev-htests.el: new file.
+	(find-tlhs, find-tlhi): new functions.
+
+2023-12-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-hlinks.el (ee-find-here-debug-links): rewritten.
+
+	* eev-intro.el (find-here-links-intro): rewrote the section "8.
+	Debugging"; wrote the sections "9. The hlang" and "9.1. A
+	historical note".
+
+	* eev-hlinks.el (ee-find-here-links0): renamed to
+	`ee-find-here-links-header'.
+
 2023-12-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): added an indication
@@ -5,7 +27,7 @@
 
 2023-12-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
-	* eev-videolinks.el (ee-1stclassvideos-info): added an extry for
+	* eev-videolinks.el (ee-1stclassvideos-info): added an entry for
 	"eev2023replsb".
 	(find-eev2023replsbvideo): new function.
 
@@ -13,7 +35,7 @@
 
 	* eev-kl-here.el: added a provide.
 
-	* eev-qrl.el:  added a provide.
+	* eev-qrl.el: added a provide.
 
 	* eev-intro.el (find-templates-intro): rewrote the section "5.
 	Debugging the meat".
