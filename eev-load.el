@@ -111,6 +111,7 @@
 (require 'eev-elinks)	       ; (find-eev "eev-elinks.el")
 (require 'eev-tlinks)	       ; (find-eev "eev-tlinks.el")
 (require 'eev-hlinks)	       ; (find-eev "eev-hlinks.el")
+(require 'eev-htests)          ; (find-eev "eev-htests.el")
 ;;
 ;; The `brxxx' functions. See:
 ;;   (find-eev-quick-intro "3.1. Non-elisp hyperlinks")
@@ -148,9 +149,9 @@
 (require 'eev-edit)            ; (find-eev "eev-edit.el")
 (require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
 (require 'eev-kla)             ; (find-eev "eev-kla.el")
-(require 'eev-kl-here)         ; (find-eev "eev-kl-here.el")
 (require 'eev-helpful)         ; (find-eev "eev-helpful.el")
 (require 'eev-rstdoc)          ; (find-eev "eev-rstdoc.el")
+' (require 'eev-kl-here)       ; (find-eev "eev-kl-here.el")
 ' (require 'eev-qrl)           ; (find-eev "eev-qrl.el")
 ;;
 ;; Configuration on M$ Windows.

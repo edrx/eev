@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20231227
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-hlinks.el>
@@ -64,35 +64,8 @@
 ;;
 ;; Debug mode
 ;; ==========
-;; The best way to understand how this works is to run
-;; `find-here-links' with a prefix argument. When we run
-;; `find-here-links' _without_ a prefix argument it displays a header
-;; and then the links to "here"; _with_ a prefix argument it displays
-;; the header and then a lot of internal information about "here". For
-;; example, if you run
-;;
-;;   (eek "M-h M-h  ;; find-here-links")
-;;
-;; then "here" is a file, and `find-here-links' displays a header and
-;; then the result of:
-;;
-;;   (ee-find-file-links)
-;;
-;; If you run, say,
-;;
-;;   (eek "M-0 M-h M-h  ;; M-0 find-here-links")
-;;
-;; then `find-here-links' will detect which kind of "here" is "here",
-;; and will display the header and then the result of
-;; `(ee-find-here-debug-links)'. Most of that will be static text, but
-;; that output will also contain lines like these ones,
-;;
-;;   (find-efunction 'ee-file-bufferp)
-;;   (find-efunction 'ee-find-file-links)
-;;
-;; that display information about the results that were generated and
-;; saved in the last time that the function `ee-detect-here' was
-;; called.
+;; See:
+;;   (find-here-links-intro "8. Debugging")
 
 
 ;; TODO
@@ -159,12 +132,12 @@ See: (find-here-links-intro)"
      `(;; The first line of a find-here-links buffer DOES NOT
        ;; regenerates the buffer - instead the first lines point to
        ;; help pages.
-       ,@(ee-find-here-links0)
-       ,@(ee-find-here-links arg)
+       ,@(ee-find-here-links-header)
+       ,@(ee-find-here-links arg)	; note the arg
        )
      pos-spec-list)))
 
-(defun ee-find-here-links0 ()
+(defun ee-find-here-links-header ()
   "The header used by `find-here-links'."
   `(,(ee-H "See: ")
     (find-eev-quick-intro "4.1. `find-here-links'")
@@ -173,6 +146,8 @@ See: (find-here-links-intro)"
     ))
 
 ;; «ee-find-here-links»  (to ".ee-find-here-links")
+;; Tests: (find-elinks (ee-find-here-links))
+;;        (find-elinks (ee-find-here-links 'debug))
 ;;
 (defun ee-find-here-links (&optional arg)
   "Generate the non-header part of the \"*(find-here-links)*\" buffer.
@@ -207,30 +182,33 @@ which kind \"here\" the current buffer is."
     (cons "" (eval ee-hlang-sexp2))))
 
 ;; «ee-find-here-debug-links»  (to ".ee-find-here-debug-links")
-;; See: (find-eevfile "eev-hlinks.el" "Debug mode")
-;;      (find-eev     "eev-hlinks.el" "find-here-links" "If ARG")
+;; See: (find-here-links-intro "8. Debugging")
+;;      (find-eev "eev-hlinks.el" "find-here-links" "If ARG")
 ;;
 (defun ee-find-here-debug-links ()
-  `("# The last call to"
-    "#     '(find-here-links ARG)"
-    "#  -> '(ee-detect-here)"
-    "#  -> '(ee-hlang-run ee-hprog-find-here-links)"
-    "# produced this:"
-    ,(format "#   ee-hlang-sexp1  =>  %s" (ee-S ee-hlang-sexp1))
-    ,(format "#   ee-hlang-sexp2  =>  %s" (ee-S ee-hlang-sexp2))
-    "# See:"
-    "#   ee-hlang-sexp1"
-    "#   ee-hlang-sexp2"
-    ,(format "#   (find-efunction '%s)" (car ee-hlang-sexp1))
-    ,(format "#   (find-efunction '%s)" (car ee-hlang-sexp2))
-    "#   (find-eev \"eev-hlinks.el\" \"find-here-links\")"
-    "#   (find-eev \"eev-hlinks.el\" \"find-here-links\" \"If ARG\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-find-here-links\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-find-here-debug-links\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\" \"ee-detect-here\")"
-    "#   (find-eev \"eev-hlinks.el\" \"ee-hprog-find-here-links\")"
-    ))
+  (list (ee-template0 "\
+# (find-here-links-intro \"8. Debugging\")
+
+# The last call to
+#     '(find-here-links ARG)
+#  -> '(ee-detect-here)
+#  -> '(ee-hlang-run ee-hprog-find-here-links)
+# produced this:
+#   ee-hlang-sexp1  =>  {(ee-S ee-hlang-sexp1)}
+#   ee-hlang-sexp2  =>  {(ee-S ee-hlang-sexp2)}
+# See:
+#   ee-hlang-sexp1
+#   ee-hlang-sexp2
+#   (find-efunction '{(car ee-hlang-sexp1)})
+#   (find-efunction '{(car ee-hlang-sexp2)})
+#   (find-eev \"eev-hlinks.el\" \"find-here-links\")
+#   (find-eev \"eev-hlinks.el\" \"find-here-links\" \"If ARG\")
+#   (find-eev \"eev-hlinks.el\" \"ee-find-here-links\")
+#   (find-eev \"eev-hlinks.el\" \"ee-find-here-debug-links\")
+#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\")
+#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\" \"ee-detect-here\")
+#   (find-eev \"eev-hlinks.el\" \"ee-hprog-find-here-links\")")))
+
 
 
 ;; 2023jan16: removed all the functions and variables with "fhl" in
@@ -336,6 +314,9 @@ which kind \"here\" the current buffer is."
 ;; (ee-hlang-eval  '(:if (> 1 2) (list 'gt)))
 ;; (ee-hlang-eval  '(:or (:if (< 1 2) (list 'lt)) (:if (> 1 2) (list 'gt))))
 ;; (ee-hlang-eval  '(:or (:if (> 1 2) (list 'gt)) (:if (< 1 2) (list 'lt))))
+;;
+;; For better tests, with explanations, see:
+;;   (find-here-links-intro "9. The hlang")
 
 ;; The Three Variables.
 (defvar ee-hlang-sexp1-result nil "See `ee-hlang-:if'.")
