@@ -1,6 +1,7 @@
 2024-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-kl-here-intro): new function.
+	(find-git-intro): rewrote completely.
 
 2023-12-29  Eduardo Ochs  <eduardoochs@gmail.com>
 

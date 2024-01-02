@@ -14110,7 +14110,10 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-Prerequisites: to run this you will need bash, git, and gitk.
+Prerequisites: to run this you need bash, git, and gitk,
+and you need to understand these topics well:
+  1. test blocks: http://anggtwu.net/eepitch.html
+  2. (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
 
 
 
@@ -14132,23 +14135,21 @@ then this index should work:
   (code-pdf-text \"gitfbu\" \"$S/http/ftp.newartisans.com/pub/git.from.bottom.up.pdf\")
   ;; (find-gitfbupage)
   ;; (find-gitfbutext)
-  ;; (find-gitfbupage 2 \"1. License\")
-  ;; (find-gitfbupage 3 \"2. Introduction\")
-  ;; (find-gitfbupage 5 \"3. Repository: Directory content tracking\")
-  ;; (find-gitfbupage 6 \"Introducing the blob\")
-  ;; (find-gitfbupage 7 \"Blobs are stored in trees\")
-  ;; (find-gitfbupage 8 \"How trees are made\")
-  ;; (find-gitfbupage 10 \"e beauty of commits\")
-  ;; (find-gitfbupage 12 \"A commit by any other name...\")
-  ;; (find-gitfbupage 15 \"Branching and the power of rebase\")
-  ;; (find-gitfbupage 15   \"show-branch\")
-  ;; (find-gitfbutext 15   \"show-branch\")
+  ;; (find-gitfbupage  2 \"1. License\")
+  ;; (find-gitfbupage  3 \"2. Introduction\")
+  ;; (find-gitfbupage  5 \"3. Repository: Directory content tracking\")
+  ;; (find-gitfbupage  6   \"Introducing the blob\")
+  ;; (find-gitfbupage  7   \"Blobs are stored in trees\")
+  ;; (find-gitfbupage  8   \"How trees are made\")
+  ;; (find-gitfbupage 10   \"The beauty of commits\")
+  ;; (find-gitfbupage 12   \"A commit by any other name...\")
+  ;; (find-gitfbupage 15   \"Branching and the power of rebase\")
   ;; (find-gitfbupage 20 \"4. The Index: Meet the middle man\")
-  ;; (find-gitfbupage 22 \"Taking the index farther\")
+  ;; (find-gitfbupage 22   \"Taking the index farther\")
   ;; (find-gitfbupage 24 \"5. To reset, or not to reset\")
-  ;; (find-gitfbupage 24 \"Doing a mixed reset\")
-  ;; (find-gitfbupage 24 \"Doing a soft reset\")
-  ;; (find-gitfbupage 25 \"Doing a hard reset\")
+  ;; (find-gitfbupage 24   \"Doing a mixed reset\")
+  ;; (find-gitfbupage 24   \"Doing a soft reset\")
+  ;; (find-gitfbupage 25   \"Doing a hard reset\")
   ;; (find-gitfbupage 27 \"6. Last links in the chain: Stashing and the reflog\")
   ;; (find-gitfbupage 30 \"7. Conclusion\")
   ;; (find-gitfbupage 31 \"8. Further reading\")
@@ -14240,7 +14241,7 @@ Run this:
 
 This will create a git repository whose tree of commits is
 exactly the Loeliger diagram of the introduction, and then
-display it in three ways. Diagram uses this,
+display it in three ways. \"Diagram\" uses this,
 
   git log --oneline --graph --decorate --all --date-order
 
@@ -14258,253 +14259,146 @@ this program:
 
   (find-angg \"LUA/Loeliger1.lua\")
 
+Note that the eepitch block above is similar to the one in this
+test block:
+
+  (find-anchor \"/tmp/eevgitlib1.sh\" \"MakeTree1-test\")
 
 
 
 
+3. Timelines
+============
+Now try this test block:
 
-0. Introduction
-===============
-Git is extremely popular, and I've heard that the two packages
-that attract most new users to Emacs are Org and Magit:
+  (find-anchor \"/tmp/eevgitlib1.sh\" \"Time-tests\")
 
-  https://github.com/magit/magit
-  https://melpa.org/#/magit
-  (find-epackage 'magit)
+It runs the same git commands as the test in the previous
+section, except that it has lots of commands like \"T C3\"
+interspersed with the rest, and it has these commands at the end:
 
-At this moment eev offers only a trivial hack to help people
-download git repositories. If you put the point on the github url
-above and type `M-h g' or `M-x find-git-links' you will get the
-same effect as running the sexp below:
+  Timeline
+  Timeline | tee /tmp/all
 
-  (find-git-links \"https://github.com/magit/magit\" \"magit\")
+Each \"T C3\" acts as a timestamp. It declares that we're at time
+C3, and it \"saves a low-resolution picture\" of the git
+repository into the file /tmp/eevgit_C3; then \"Timeline\"
+combines all these low-resolution pictures into a single file.
+Run the test block, then try:
 
-You will get a temporary buffer with an e-script for downloading
-(\"cloning\") that git repository and inspecting it in a handful
-of ways.
-
-I found git VERY hard to learn. To test most concepts you need a
-repository with tags and branches and a second repository that
-\"pulls\" from it, and no books or tutorials that I know of come
-with a sequence of commands that set that up in a way that makes
-the tests easy to reproduce. To make things worse, when I was
-trying to set up a git repository for eev on github for the first
-time I did some things wrong on the github side of the repository
-that I did not know how to undo... after spending some days
-trying to fix that I gave up, deleted that repository, created a
-new one, and decided that I would always do LOTS of local tests
-before messing up my public repository again.
-
-This intro is about doing these local tests - but it is in a VERY
-early draft.
+  (find-fline \"/tmp/\" \"eevgit_C3\")
+  (find-fline \"/tmp/eevgit_C3\")
+  (find-fline \"/tmp/all\" \"Time: C3\")
 
 
 
 
-1. Preparation
-==============
-Download the second URL below with `M-x brep',
+4. Magit
+========
+This eepitch block
 
-  https://github.com/pluralsight/git-internals-pdf/
-  https://github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf
-
-and do the same for the fourth URL below here:
-
-  https://git-scm.com/book/en/v2
-  https://github.com/progit/progit2
-  https://github.com/progit/progit2/releases
-  https://github.com/progit/progit2/releases/download/2.1.277/progit.pdf
-
-Then run this eepitch block,
-
- (eepitch-shell)
+ (eepitch-bash)
  (eepitch-kill)
- (eepitch-shell)
-  rm -Rfv /tmp/git-test/
-  mkdir   /tmp/git-test/
-  cd      /tmp/git-test/
-  #    http://anggtwu.net/bin/git-defs.html
-  wget http://anggtwu.net/bin/git-defs
-  cp -v $S/https/github.com/pluralsight/git-internals-pdf/releases/download/v2.0/peepcode-git.pdf .
-  cp -v $S/https/github.com/progit/progit2/releases/download/2.1.277/progit.pdf .
-
-and this prog1:
-
-  (prog1
-    (code-pdf-page \"gitinternals\" \"/tmp/git-test/peepcode-git.pdf\")
-    (code-pdf-text \"gitinternals\" \"/tmp/git-test/peepcode-git.pdf\")
-    (code-pdf-page \"progit\" \"/tmp/git-test/progit.pdf\")
-    (code-pdf-text \"progit\" \"/tmp/git-test/progit.pdf\")
-    (code-c-d \"gitdoc\" \"/usr/share/doc/git-doc/\")
-    )
-
-If can test if everything works by running the six sexps below:
-
-  (find-fline \"/tmp/git-test/git-defs\")
-  (find-gitinternalspage)
-  (find-gitinternalstext)
-  (find-progitpage)
-  (find-progittext)
-  (find-gitdocfile \"\")
-
-
-
-
-2. A first repository
-=====================
-The manpage of git-revisions
-
-  (find-man \"7 git-revisions\")
-  (find-man \"7 git-revisions\" \"Here is an illustration\")
-  (find-gitdocfile \"revisions.txt\" \"illustration, by Jon Loeliger\")
-
-has this example, in which the commits have this structure:
-
-  G   H   I   J
-   \\ /     \\ /
-    D   E   F
-     \\  |  / \\
-      \\ | /   |
-       \\|/    |
-        B     C
-         \\   /
-          \\ /
-           A
-
-Here is an e-script that creates it:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-  rm -Rfv /tmp/git-test/repo1/
-  mkdir   /tmp/git-test/repo1/
-  cd      /tmp/git-test/repo1/
-  .       /tmp/git-test/git-defs
-  # (find-fline \"/tmp/git-test/git-defs\")
+ (eepitch-bash)
+  rm -Rfv /tmp/eevgit-test2/
+  mkdir   /tmp/eevgit-test2/
+  cd      /tmp/eevgit-test2/
+  cp -av $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
+  .       /tmp/eevgitlib1.sh
 
   git init
-  Modify file1; Modify file2; git add file1 file2
-                Commit A; git branch brAC
-  Modify file1; Commit B; git branch brBDG
-  git checkout brAC
-  Modify file1; Commit C
-  git checkout brBDG
-  Modify file1; Commit D
-  git checkout HEAD^ -b brE
-  Modify file1; Commit E
-  git checkout HEAD^
-  git merge -s ours brAC -m F
-  git branch brFI
-  git checkout brBDG
-  Modify file1; Commit G
-  git checkout HEAD^ -b brH
-  Modify file1; Commit H
-  git checkout brFI
-  Modify file1; Commit I
-  git checkout HEAD^ -b brJ
-  Modify file1; Commit J
+  Modify file1; Dump; git add file1; Commit A
+  Modify file1; Dump;                Commit B
+  Modify file1; Dump
+  cat file1
   Diagram
+  # (find-gitk \"/tmp/eevgit-test2/\")
 
-  # (find-gitk \"/tmp/git-test/repo1/\")
+produces a simple git repository with an uncommited change - the
+line \"3\" in the file \"file1\", that was added after the
+\"Commit B\". If you've never used magit before, you can install
+it by running the right sexps in the temporary buffer generated
+by this,
 
-Actually it creates the structure below - where, for example, the
-node \"G,brBDG\" is a commit with message \"G\" and a branch
-called \"brBDG\" pointing to it; I call that branch \"brBDG\"
-because when it was created it pointed to the commit with message
-\"B\", then it moved to the commit \"D\", then to \"G\".
+  (find-epackage-links 'magit)
 
-                 I,brFI  J,brJ
-                    |   /
-  G,brBDG   H,brH   |  /
-         \\ /        | /
-          D  E,brE  F
-           \\   |   / \\
-            \\  |  /   |
-             \\ | /    |
-               B    C,brAC
-                \\    /
-                 \\  /
-                  A
+and then you can run this,
 
-Here's a video showing the script above in action:
+  (magit-status \"/tmp/eevgit-test2/\")
+
+and learn the keys for staging changes and for creating a new
+commit. Hints:
+
+  (code-c-d \"magit\" (ee-locate-library \"magit\") \"magit\" :gz)
+  (find-magitnode \"Staging and Unstaging\" \"S\" \"magit-stage-modified\")
+  (find-magitnode \"Initiating a Commit\" \"c\" \"magit-commit\")
+
+
+
+
+5. Why this?
+============
+I found git and magit both VERY hard to learn. To test most
+concepts we would need a repository with tags and branches and a
+second repository that \"pulls\" from it - and even with that
+most tests would be very hard to undo and to reproduce...
+
+When I was trying to set up a git repository for eev on github
+for the first time I did several things wrong on the github side
+of the repository that I did not know how to undo - and after
+spending some days trying to fix that I gave up, deleted that
+repository, created a new one, and decided that I would always do
+LOTS of local tests before messing up my public repository again.
+
+This is the n-th version of my tools for \"doing lots of local
+tests\" with git and magit. If you like this approach, please get
+in contact! =)
+
+
+
+
+5. Pushing, pulling, merging
+============================
+Apparently this could be a test for pushing:
+
+ (eepitch-bash)
+ (eepitch-kill)
+ (eepitch-bash)
+  cp -av $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
+  .       /tmp/eevgitlib1.sh
+
+  rm -Rfv /tmp/eevgit-test2/
+  mkdir   /tmp/eevgit-test2/
+  cd      /tmp/eevgit-test2/
+
+  git init
+  Modify file1; git add file1; Commit A
+  Modify file1;                Commit B
+
+  rm -Rfv /tmp/eevgit-test3/
+  mkdir   /tmp/eevgit-test3/
+  cd      /tmp/eevgit-test3/
+  git clone /tmp/eevgit-test2/ .
+
+  Modify file1
+  Commit C
+  git push
+  # (find-gitk \"/tmp/eevgit-test3/\")
+
+...but the \"git push\" at the end yields an error.
+I'll try to fix that soon!
+
+
+
+
+6. A historical note
+====================
+This was one of my previous attempts:
 
   http://anggtwu.net/eev-videos/2020-doubt-about-merging.mp4
           (code-eevvideo \"merg\" \"2020-doubt-about-merging\")
                     (find-mergvideo \"0:00\")
                     (find-mergvideo \"0:20\")
-
-NEXT STEPS: explain how to use git merge both from the command
-line and from magit; explain HEAD, master, and tags. Point to man
-pages in man and text format and to sections in Scott Chacon's
-book. I NEED LOTS OF HELP HERE.
-
-  (find-man \"git-merge\")
-  (find-gitinternalspage)
-  (find-gitinternalstext)
-
-
-
-
-
-3. A second repository
-======================
-HELP PLEEEASEEEE
-
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-  rm -Rfv /tmp/git-test/repo2/
-  mkdir   /tmp/git-test/repo2/
-  cd      /tmp/git-test/repo2/
-  .       /tmp/git-test/git-defs
-  # (find-fline \"/tmp/git-test/git-defs\")
-
-  git clone /tmp/git-test/repo1/ .
-  ls -lAF
-
-  # (find-gitk  \"/tmp/git-test/repo2/\")
-  # (find-fline \"/tmp/git-test/repo2/\")
-  # (find-fline \"/tmp/git-test/repo2/.git/\")
-  # (find-fline \"/tmp/git-test/repo2/.git/config\")
-
-  # (find-man \"1 git-remote\")
-  # (find-progitpage (+ 24  36) \"Adding Remote Repositories\")
-  # (find-progittext (+ 24  36) \"Adding Remote Repositories\")
-
-
-
-4. New things
-=============
-#   http://anggtwu.net/bin/eevgitlib1.sh.html
-#   http://anggtwu.net/bin/eevgitlib1.sh
-#          (find-angg \"bin/eevgitlib1.sh\")
-# (find-sh \"wget --help\" \"-N\" \"unless newer\")
-# (find-psne-links \"http://anggtwu.net/bin/eevgitlib1.sh\" \"-N\")
-
-Preparation:
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-mkdir -p $S/http/anggtwu.net/bin/
-cd       $S/http/anggtwu.net/bin/
-wget -N  'http://anggtwu.net/bin/eevgitlib1.sh'
-echo     'http://anggtwu.net/bin/eevgitlib1.sh' >> ~/.psne.log
-chmod 775                        eevgitlib1.sh
-cp -v    $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
-
- (eepitch-shell)
- (eepitch-kill)
- (eepitch-shell)
-. /tmp/eevgitlib1.sh;     # (find-fline \"/tmp/eevgitlib1.sh\")
-rm -Rfv /tmp/git-test1/
-mkdir   /tmp/git-test1/
-cd      /tmp/git-test1/
-MakeTree1;                # (find-anchor \"/tmp/eevgitlib1.sh\" \"MakeTree1\")
-Diagram
-# (find-gitk \"/tmp/git-test1/\")
-
 
 " pos-spec-list)))
 
