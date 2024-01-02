@@ -454,7 +454,8 @@ If wget can't download URL then this function runs `error'."
 
 
 ;; «find-gitk» (to ".find-gitk")
-;; Example: (find-eev-install-intro "find-gitk")
+;; Tests: (find-git-intro "2. A first test")
+;;        (find-eev-install-intro "find-gitk")
 ;;
 (defun find-gitk (dir)
   "Run gitk in the directory DIR."

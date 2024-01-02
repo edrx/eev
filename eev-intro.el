@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231227
+;; Version:    20240102
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -95,6 +95,7 @@
 ;; «.find-windows-beginner-intro»	(to "find-windows-beginner-intro")
 ;; «.find-eev-exercises-intro»		(to "find-eev-exercises-intro")
 ;; «.find-kla-intro»			(to "find-kla-intro")
+;; «.find-kl-here-intro»		(to "find-kl-here-intro")
 ;; «.find-edit-index-intro»		(to "find-edit-index-intro")
 ;; «.find-rstdoc-intro»			(to "find-rstdoc-intro")
 ;; «.find-show2-intro»			(to "find-show2-intro")
@@ -2830,21 +2831,22 @@ These are etcs:
 These ones explain advanced features that require extra setup:
 
   31. (find-kla-intro)
-  32. (find-edit-index-intro)
-  33. (find-rstdoc-intro)
-  34. (find-show2-intro)
-  35. (find-prepared-intro)
-  36. (find-bounded-intro)
-  37. (find-channels-intro)
+  32. (find-kl-here-intro)
+  33. (find-edit-index-intro)
+  34. (find-rstdoc-intro)
+  35. (find-show2-intro)
+  36. (find-prepared-intro)
+  37. (find-bounded-intro)
+  38. (find-channels-intro)
 
 This one was used in a video:
 
-  38. (find-three-main-keys-intro)
+  39. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  39. (find-emacs-intro)
-  40. (find-defun-intro)
+  40. (find-emacs-intro)
+  41. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -14108,8 +14110,155 @@ It is meant as both a tutorial and a sandbox.
 
 
 
-At this moment this is a call for help -
-not an intro.
+Prerequisites: to run this you will need bash, git, and gitk.
+
+
+
+
+0. Introduction
+===============
+This is a tutorial on Git with a free license:
+
+  John Wiegley: \"Git from Bottom Up\" (2009)
+  http://ftp.newartisans.com/pub/git.from.bottom.up.pdf
+
+If you download it with `M-x brep',
+
+  (find-psne-intro \"3. The new way: `M-x brep'\")
+
+then this index should work:
+
+  (code-pdf-page \"gitfbu\" \"$S/http/ftp.newartisans.com/pub/git.from.bottom.up.pdf\")
+  (code-pdf-text \"gitfbu\" \"$S/http/ftp.newartisans.com/pub/git.from.bottom.up.pdf\")
+  ;; (find-gitfbupage)
+  ;; (find-gitfbutext)
+  ;; (find-gitfbupage 2 \"1. License\")
+  ;; (find-gitfbupage 3 \"2. Introduction\")
+  ;; (find-gitfbupage 5 \"3. Repository: Directory content tracking\")
+  ;; (find-gitfbupage 6 \"Introducing the blob\")
+  ;; (find-gitfbupage 7 \"Blobs are stored in trees\")
+  ;; (find-gitfbupage 8 \"How trees are made\")
+  ;; (find-gitfbupage 10 \"e beauty of commits\")
+  ;; (find-gitfbupage 12 \"A commit by any other name...\")
+  ;; (find-gitfbupage 15 \"Branching and the power of rebase\")
+  ;; (find-gitfbupage 15   \"show-branch\")
+  ;; (find-gitfbutext 15   \"show-branch\")
+  ;; (find-gitfbupage 20 \"4. The Index: Meet the middle man\")
+  ;; (find-gitfbupage 22 \"Taking the index farther\")
+  ;; (find-gitfbupage 24 \"5. To reset, or not to reset\")
+  ;; (find-gitfbupage 24 \"Doing a mixed reset\")
+  ;; (find-gitfbupage 24 \"Doing a soft reset\")
+  ;; (find-gitfbupage 25 \"Doing a hard reset\")
+  ;; (find-gitfbupage 27 \"6. Last links in the chain: Stashing and the reflog\")
+  ;; (find-gitfbupage 30 \"7. Conclusion\")
+  ;; (find-gitfbupage 31 \"8. Further reading\")
+
+And this is a document that comes with Git:
+
+  (find-man \"7 gitrevisions\" \"illustration, by Jon Loeliger\")
+  (find-gitdocfile \"revisions.txt\" \"illustration, by Jon Loeliger\")
+  https://git-scm.com/docs/gitrevisions
+
+it has this figure:
+
+  G   H   I   J
+   \\ /     \\ /
+    D   E   F
+     \\  |  / \\
+      \\ | /   |
+       \\|/    |
+        B     C
+         \\   /
+          \\ /
+           A
+
+I will refer to it as \"the Loeliger digram\", and I will call
+other figures like that \"Loeliger diagrams\".
+
+All the texts on Git that I know use several different kinds of
+diagrams - some very detailed, some less so - to explain the data
+structures behind git repositories...
+
+...and I don't know a single text on Git that contains precise
+instructions for creating git repositories that correspond to
+their diagrams! For example, how do we create a git repository
+whose graph of commits has exactly the shape of the Loeliger
+diagram above?
+
+This intro will explain a way to create a git repository
+corresponding to the Loelinger diagram above - and a lot more.
+
+
+
+
+1. Preparation
+==============
+Check that you have bash, git and gitk installed. Then run this:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  mkdir -p $S/http/anggtwu.net/LATEX/
+  cd       $S/http/anggtwu.net/LATEX/
+  wget -N  'http://anggtwu.net/LATEX/2023loeliger.pdf'
+  echo     'http://anggtwu.net/LATEX/2023loeliger.pdf' >> ~/.psne.log
+  mkdir -p $S/http/anggtwu.net/bin/
+  cd       $S/http/anggtwu.net/bin/
+  wget -N  'http://anggtwu.net/bin/eevgitlib1.sh'
+  echo     'http://anggtwu.net/bin/eevgitlib1.sh' >> ~/.psne.log
+  cp -v    $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
+
+This will download local copies of this flipbook animation,
+
+  (code-pdf-page \"loeliger\" \"$S/http/anggtwu.net/LATEX/2023loeliger.pdf\")
+  (code-pdf-text \"loeliger\" \"$S/http/anggtwu.net/LATEX/2023loeliger.pdf\")
+  ;; (find-loeligerpage)
+  ;; (find-loeligertext)
+
+and of eevgitlib1.sh, that is a library of bash functions with
+test blocks. The \"-N\" tells wget to update the local copy if
+the upstream one is never, and the cp at the end copies
+eevgitlib1.sh to /tmp/.
+
+
+
+2. A first test
+===============
+Run this:
+
+ (eepitch-bash)
+ (eepitch-kill)
+ (eepitch-bash)
+  rm -Rfv /tmp/eevgit-test1/
+  mkdir   /tmp/eevgit-test1/
+  cd      /tmp/eevgit-test1/
+  .       /tmp/eevgitlib1.sh
+  MakeTree1
+  Diagram
+  # (find-gitk \"/tmp/eevgit-test1/\")
+  # (find-loeligerpage 30)
+
+This will create a git repository whose tree of commits is
+exactly the Loeliger diagram of the introduction, and then
+display it in three ways. Diagram uses this,
+
+  git log --oneline --graph --decorate --all --date-order
+
+and is defined here:
+
+  (find-anchor \"/tmp/eevgitlib1.sh\" \"basic\")
+  (find-anchor \"/tmp/eevgitlib1.sh\" \"basic\" \"Diagram\")
+
+`find-gitk' uses gitk, and is defined here:
+
+  (find-eev \"eev-plinks.el\" \"find-gitk\")
+
+and `find-loeligerpage' uses a diagram that was generated with
+this program:
+
+  (find-angg \"LUA/Loeliger1.lua\")
+
+
 
 
 
@@ -14322,6 +14471,40 @@ HELP PLEEEASEEEE
   # (find-man \"1 git-remote\")
   # (find-progitpage (+ 24  36) \"Adding Remote Repositories\")
   # (find-progittext (+ 24  36) \"Adding Remote Repositories\")
+
+
+
+4. New things
+=============
+#   http://anggtwu.net/bin/eevgitlib1.sh.html
+#   http://anggtwu.net/bin/eevgitlib1.sh
+#          (find-angg \"bin/eevgitlib1.sh\")
+# (find-sh \"wget --help\" \"-N\" \"unless newer\")
+# (find-psne-links \"http://anggtwu.net/bin/eevgitlib1.sh\" \"-N\")
+
+Preparation:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+mkdir -p $S/http/anggtwu.net/bin/
+cd       $S/http/anggtwu.net/bin/
+wget -N  'http://anggtwu.net/bin/eevgitlib1.sh'
+echo     'http://anggtwu.net/bin/eevgitlib1.sh' >> ~/.psne.log
+chmod 775                        eevgitlib1.sh
+cp -v    $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+. /tmp/eevgitlib1.sh;     # (find-fline \"/tmp/eevgitlib1.sh\")
+rm -Rfv /tmp/git-test1/
+mkdir   /tmp/git-test1/
+cd      /tmp/git-test1/
+MakeTree1;                # (find-anchor \"/tmp/eevgitlib1.sh\" \"MakeTree1\")
+Diagram
+# (find-gitk \"/tmp/git-test1/\")
+
 
 " pos-spec-list)))
 
@@ -15789,6 +15972,170 @@ See: (find-eev \"eev-kla.el\" \"ee-kl-expand\")
 " pos-spec-list)))
 
 ;; (find-kla-intro)
+
+
+
+
+;;;  _    _       _                   
+;;; | | _| |     | |__   ___ _ __ ___ 
+;;; | |/ / |_____| '_ \ / _ \ '__/ _ \
+;;; |   <| |_____| | | |  __/ | |  __/
+;;; |_|\_\_|     |_| |_|\___|_|  \___|
+;;;                                   
+;; «find-kl-here-intro»  (to ".find-kl-here-intro")
+;; Skel: (find-intro-links "kl-here")
+;; Test: (find-kl-here-intro)
+
+(defun find-kl-here-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-kl-here-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-kl-here-intro)
+Source code:  (find-efunction 'find-kl-here-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+This into describes features that are not loaded by default.
+To load them, run this:
+
+  ;; See: (find-kl-here-intro)
+  ;;      (find-eev \"eev-kl-here.el\")
+  (require 'eev-kl-here)
+
+
+
+
+1. Introduction
+===============
+The central idea of eev is that it lets you create \"executable
+logs\" of what you do. Usually half of these logs will be made of
+eepitch blocks - see:
+
+  http://anggtwu.net/eepitch.html
+
+and the other half will be made of \"elisp hyperlinks to
+everything interesting that you find\". This is explained here,
+
+  (find-here-links-intro)
+  (find-here-links-intro \"2. \\\"Here\\\"\")
+  (find-here-links-intro \"3. `find-here-links'\")
+
+but very few people used that second half - creating elisp
+hyperlinks - because until 2022/2023 creating each elisp
+hyperlink took lots of keystrokes... we had to create a temporary
+buffer with lots of elisp hyperlinks to \"here\", select the best
+one, edit it a bit, and copy it to our notes.
+
+Let me call that \"the old way\". See:
+
+  (find-kla-intro \"2. The old way\")
+  (find-kla-intro \"2. The old way\" \"The old way shows all options\")
+
+In 2022 I started to work on an alternative to that \"old way\".
+It became one of my presentations at the EmacsConf2022 - see:
+
+  (find-kla-intro \"3. The new way\")
+
+  Title: Bidirectional links with eev (@ EmacsConf 2022)
+  Info:  (find-1stclassvideo-links \"eev2022kla\")
+  Play:  (find-eev2022klavideo \"00:00\")
+  LSubs: (find-eev2022klalsubs \"00:00\")
+
+And in 2023 I found a way - implemented in the functions `kl',
+`kll', and `kls' - to extend that \"new way\" to more kinds of
+\"here\"s. `M-x kla' and its friends can only kill links to
+files, but `kl', `kll', and `kls' support all these kinds of
+\"here\"s:
+
+  (find-eev \"eev-kl-here.el\" \"hprog\")
+
+
+
+2. Try it!
+==========
+Type `M-x kl'. This will \"kill a link to kere\"; it will detect
+that we are in an \"intro\", and you will see this message in the
+echo area:
+
+  Copied to the kill ring: (find-kl-here-intro)
+
+Now go to the line with the title of this section, and type `M-x
+kll'. This will \"kill a link to kere\", where \"here\" is this
+intro, and refine it to make it point to the current line. You
+will see one of these two messages in the echo area:
+
+  Copied to the kill ring: (find-kl-here-intro \"2. Try it!\")
+  Copied to the kill ring: (find-kl-here-intro \"==========\")
+
+If you got the second one it's because the point was at the end
+of the line and Emacs considered that the \"current line\" was a
+line that contained just \"==========\" and indicated that the
+line above was to be underlined, and that was made invisible. The
+hyperlink with the \"==========\" is not very useful - try again
+with the point on another position of the title line...
+
+...then go to the buffer with your notes with `M-1 M-j', paste
+the killed link there - remember:
+
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+
+and follow the link with `M-e'. It should take you back to the
+beginning of this section.
+
+
+
+
+3. Info
+=======
+Now try to do something similar to create links to info buffers.
+Run this:
+
+  (find-2b nil '(find-enode \"Buffers\"))
+
+It will create a window setting like this one:
+
+   _____________________
+  |         |           |
+  |  this   |  *info*   |
+  |  intro  |  (emacs)  |
+  |         |  Buffers  |
+  |_________|___________|
+
+Type `M-x kl' on the window at the right. You will get this
+message:
+
+  Copied to the kill ring: (find-enode \"Buffers\")
+
+Go to your buffer with notes with `M-1 M-j', paste the link
+there, and check that following that link with `M-e' takes you
+back to that info page.
+
+Now do something similar with:
+
+  (find-2b nil '(find-emacs-keys-intro \"3. Cutting & pasting\"))
+
+That section has several `find-enode' links. Follow one, use `M-x
+kl' to kill a link to that info page, paste that link to your
+notes, and check that following it with `M-e' takes you back to
+that info page.
+
+
+
+
+4. `M-x kls'
+============
+
+
+
+
+" pos-spec-list)))
+
+;; (find-kl-here-intro)
+
+
 
 
 

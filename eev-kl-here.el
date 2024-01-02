@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231228
+;; Version:    20231229
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kl-here.el>
@@ -57,6 +57,8 @@
 ;; «.ee-find-linkis»		(to "ee-find-linkis")
 ;; «.hprog»			(to "hprog")
 ;; «.kl»			(to "kl")
+;; «.find-kl-debug-links»	(to "find-kl-debug-links")
+;; «.aliases»			(to "aliases")
 
 (require 'eev-kla)		; (find-eev "eev-kla.el")
 (require 'eev-hlinks)		; (find-eev "eev-hlinks.el")
@@ -238,25 +240,93 @@
 ;;   (find-eev "eev-kla.el" "kill-sexps")
 ;;   (find-eev "eev-kla.el" "aliases")
 
-(defun kl ()
+(defun kl (&optional arg)
   "<K>ill <L>ink to here. Tries to be smart."
-  (interactive)
+  (interactive "P")
   (ee-detect-linki)
-  (ee-kl-kill (ee-get-linki)))
+  (if arg
+      (find-kl-debug-links 'kl)
+    (ee-kl-kill (ee-get-linki))))
 
-(defun kll ()
+(defun kll (&optional arg)
   "<K>ill <L>ink to here; add a <L>ine. Tries to be smart."
-  (interactive)
+  (interactive "P")
   (ee-detect-linki)
-  (ee-kl-kill (append (ee-get-linki) (list (ee-kl-line)))))
+  (if arg
+      (find-kl-debug-links 'kl)
+    (ee-kl-kill (append (ee-get-linki) (list (ee-kl-line))))))
 
-(defun kls ()
+(defun kls (&optional arg)
   "<K>ill <L>ink to here; add a <S>tring. Tries to be smart."
-  (interactive)
+  (interactive "P")
   (ee-detect-linki)
-  (ee-kl-kill (append (ee-get-linki) (list (ee-kl-region)))))
+  (if arg
+      (find-kl-debug-links 'kl)
+    (ee-kl-kill (append (ee-get-linki) (list (ee-kl-region))))))
 
 
+
+;;;  ____       _                 
+;;; |  _ \  ___| |__  _   _  __ _ 
+;;; | | | |/ _ \ '_ \| | | |/ _` |
+;;; | |_| |  __/ |_) | |_| | (_| |
+;;; |____/ \___|_.__/ \__,_|\__, |
+;;;                         |___/ 
+;;
+;; «find-kl-debug-links»  (to ".find-kl-debug-links")
+;; Skel: (find-find-links-links-new "kl-debug" "symbol" "")
+;; Test: (find-kl-debug-links 'KL)
+;;
+(defun find-kl-debug-links (&optional symbol &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for kl-debug."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-kl-debug-links ',symbol ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-kl-debug-links)
+     ""
+     ,(ee-template0 "\
+# The last call to
+#     '({symbol} ARG)
+#  -> '(ee-detect-linki)
+#  -> '(ee-hlang-run ee-hprog-for-linki)
+# produced this:
+#   ee-hlang-sexp1  =>  {(ee-S ee-hlang-sexp1)}
+#   ee-hlang-sexp2  =>  {(ee-S ee-hlang-sexp2)}
+# See:
+#   ee-hlang-sexp1
+#   ee-hlang-sexp2
+#   (find-efunction '{(car ee-hlang-sexp1)})
+#   (find-efunction '{(car ee-hlang-sexp2)})
+# And:
+#   (find-here-links-intro \"8. Debugging\")
+#   (find-eev \"eev-kl-here.el\" \"hprog\")
+#   (find-eev \"eev-kl-here.el\" \"kl\")
+")
+     )
+   pos-spec-list))
+
+
+
+;;;        _ _                     
+;;;   __ _| (_) __ _ ___  ___  ___ 
+;;;  / _` | | |/ _` / __|/ _ \/ __|
+;;; | (_| | | | (_| \__ \  __/\__ \
+;;;  \__,_|_|_|\__,_|___/\___||___/
+;;;                                
+;; «aliases»  (to ".aliases")
+;; See: (find-kla-intro "4. Aliases")
+;; This is temporary!
+(defalias 'kla   'eekla)
+(defalias 'kla0  'eekla0)
+(defalias 'klas  'eeklas)
+(defalias 'klf   'eeklf)
+(defalias 'klfs  'eeklfs)
+(defalias 'klt   'eeklt)
+(defalias 'klts  'eeklts)
+(defalias 'kli   'ee-kl-insert)
+(defalias 'kla2  'eekla2)
 
 
 
