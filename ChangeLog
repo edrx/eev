@@ -1,3 +1,14 @@
+2024-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (ee-bol-skip-invisible, ee-eol-skip-invisible): new
+	functions.
+
+	* eev-edit.el (ee-copy-this-line-to-kill-ring): use
+	`ee-bol-skip-invisible' and `ee-eol-skip-invisible'.
+
+	* eev-kla.el (ee-kl-line): use `ee-bol-skip-invisible' and
+	`ee-eol-skip-invisible'.
+
 2024-01-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-kl-here-intro): new function.

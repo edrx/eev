@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240103
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-edit.el>
@@ -135,8 +135,8 @@ and you copy that hyperlink to a more permanent place."
 With a prefix argument run `ee-copy-preceding-tag-to-kill-ring' instead."
   (interactive "P")
   (if arg (ee-copy-preceding-tag-to-kill-ring)
-    (let* ((start (ee-bol))
-	   (end   (save-excursion (next-line) (ee-bol)))
+    (let* ((start (ee-bol-skip-invisible))
+	   (end   (ee-bol-skip-invisible))
 	   (str   (buffer-substring start end))
 	   (msg   "Copied the current line to the kill ring - use C-y to paste"))
       (eeflash+ start end eeflash-copy)
