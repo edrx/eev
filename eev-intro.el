@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240103
+;; Version:    20240104
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -281,10 +281,10 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 ;; «skip-invisible»  (to ".skip-invisible")
 
 (defun ee-bol-skip-invisible ()
-  (save-excursion (move-beginning-of-line) (point)))
+  (save-excursion (move-beginning-of-line 1) (point)))
 
 (defun ee-eol-skip-invisible ()
-  (save-excursion (move-beginning-of-line) (move-end-of-line) (point)))
+  (save-excursion (move-beginning-of-line 1) (ee-eol)))
 
 
 
