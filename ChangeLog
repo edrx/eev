@@ -2,6 +2,7 @@
 
 	* eev-intro.el (ee-bol-skip-invisible, ee-eol-skip-invisible):
 	fixed some typos.
+	(find-git-intro): several changes.
 
 2024-01-03  Eduardo Ochs  <eduardoochs@gmail.com>
 

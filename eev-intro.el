@@ -628,6 +628,14 @@ explained here:
   (find-refining-intro \"2. Refining hyperlinks\")
 
 
+  UPDATE
+  See this:
+    (find-kl-here-intro)
+  for a way of generating \"hyperlinks to here\" that is usually
+  much more practical than `find-here-links'. NOTE: it was
+  implemented in dec/2023 and is still experimental!
+
+
 
 
 4.2. `find-ekey-links' and friends
@@ -3981,6 +3989,7 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
+
 Note: this intro is being rewritten!
 I wrote it originally for this workshop:
   http://anggtwu.net/2021-workshop.html
@@ -3989,6 +3998,12 @@ and I also recorded six videos for workshop.
 Very few people came, and I didn't like the videos.
 In dec/2022 I subtitled the videos and then I realized that
 _with subtitles_ the videos are very good.
+
+
+
+UPDATE (jan/2024):
+Please start by this:
+  (find-kl-here-intro)
 
 
 
@@ -14228,11 +14243,11 @@ Check that you have bash, git and gitk installed. Then run this:
   cd       $S/http/anggtwu.net/LATEX/
   wget -N  'http://anggtwu.net/LATEX/2023loeliger.pdf'
   echo     'http://anggtwu.net/LATEX/2023loeliger.pdf' >> ~/.psne.log
-  mkdir -p $S/http/anggtwu.net/bin/
-  cd       $S/http/anggtwu.net/bin/
-  wget -N  'http://anggtwu.net/bin/eevgitlib1.sh'
-  echo     'http://anggtwu.net/bin/eevgitlib1.sh' >> ~/.psne.log
-  cp -v    $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
+  mkdir -p $S/http/anggtwu.net/GIT/
+  cd       $S/http/anggtwu.net/GIT/
+  wget -N  'http://anggtwu.net/GIT/eevgitlib1.sh'
+  echo     'http://anggtwu.net/GIT/eevgitlib1.sh' >> ~/.psne.log
+  cp -v    $S/http/anggtwu.net/GIT/eevgitlib1.sh /tmp/
 
 This will download local copies of this flipbook animation,
 
@@ -14245,6 +14260,14 @@ and of eevgitlib1.sh, that is a library of bash functions with
 test blocks. The \"-N\" tells wget to update the local copy if
 the upstream one is never, and the cp at the end copies
 eevgitlib1.sh to /tmp/.
+
+We also need a way to point to anchors in eevgitlib1.sh using
+short hyperlinks. Run this:
+
+  (code-c-d \"eevgit\" \"$S/http/anggtwu.net/GIT/\" :anchor)
+  ;; (find-eevgitfile \"eevgitlib1.sh\")
+
+
 
 
 
@@ -14287,7 +14310,7 @@ this program:
 Note that the eepitch block above is similar to the one in this
 test block:
 
-  (find-anchor \"/tmp/eevgitlib1.sh\" \"MakeTree1-test\")
+  (find-eevgit \"eevgitlib1.sh\" \"MakeTree1-test\")
 
 
 
@@ -14296,7 +14319,7 @@ test block:
 ============
 Now try this test block:
 
-  (find-anchor \"/tmp/eevgitlib1.sh\" \"Time-tests\")
+  (find-eevgit \"eevgitlib1.sh\" \"Time-tests\")
 
 It runs the same git commands as the test in the previous
 section, except that it has lots of commands like \"T C3\"
@@ -14328,7 +14351,7 @@ This eepitch block
   rm -Rfv /tmp/eevgit-test2/
   mkdir   /tmp/eevgit-test2/
   cd      /tmp/eevgit-test2/
-  cp -av $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
+  cp -av $S/http/anggtwu.net/GIT/eevgitlib1.sh /tmp/
   .       /tmp/eevgitlib1.sh
 
   git init
@@ -14382,36 +14405,61 @@ in contact! =)
 
 
 
-5. Pushing, pulling, merging
-============================
-Apparently this could be a test for pushing:
+6. Pushing and pulling
+======================
+A typical use case for git is like this: there is a \"shared\"
+git repository in a \"server\", and there are several
+\"developers\", each on a different machine, who are working on
+copies of the \"shared\" repository, and who are trying to
+somehow synchronize their work. The eepitch block below simulates
+that in a single machine:
 
  (eepitch-bash)
  (eepitch-kill)
  (eepitch-bash)
-  cp -av $S/http/anggtwu.net/bin/eevgitlib1.sh /tmp/
-  .       /tmp/eevgitlib1.sh
 
-  rm -Rfv /tmp/eevgit-test2/
-  mkdir   /tmp/eevgit-test2/
-  cd      /tmp/eevgit-test2/
+  # Load the functions in eevgitlib1.sh
+  cp -av $S/http/anggtwu.net/GIT/eevgitlib1.sh /tmp/
+  .         /tmp/eevgitlib1.sh
 
-  git init
+  # Create a \"shared\" repository in /tmp/eevgit-repo-s/
+  rm -Rfv   /tmp/eevgit-repo-s/
+  mkdir     /tmp/eevgit-repo-s/
+  cd        /tmp/eevgit-repo-s/
+  git init --bare
+
+  # Create a first \"developer\" repository in /tmp/eevgit-repo-1/
+  rm -Rfv   /tmp/eevgit-repo-1/
+  mkdir     /tmp/eevgit-repo-1/
+  cd        /tmp/eevgit-repo-1/
+  git clone /tmp/eevgit-repo-s/ .
+
+  # The developer 1 creates the commits A and B and pushes them
   Modify file1; git add file1; Commit A
   Modify file1;                Commit B
-
-  rm -Rfv /tmp/eevgit-test3/
-  mkdir   /tmp/eevgit-test3/
-  cd      /tmp/eevgit-test3/
-  git clone /tmp/eevgit-test2/ .
-
-  Modify file1
-  Commit C
   git push
-  # (find-gitk \"/tmp/eevgit-test3/\")
 
-...but the \"git push\" at the end yields an error.
-I'll try to fix that soon!
+  # Create a second \"developer\" repository in /tmp/eevgit-repo-2/
+  rm -Rfv   /tmp/eevgit-repo-2/
+  mkdir     /tmp/eevgit-repo-2/
+  cd        /tmp/eevgit-repo-2/
+  git clone /tmp/eevgit-repo-s/ .
+
+  # The developer 2 creates the commit C and pushes it
+  Modify file1;                Commit C
+  git push
+
+  # The developer 1 pulls the commit C
+  cd        /tmp/eevgit-repo-1/
+  git pull
+
+TODO: explain how to do some of the operations above with magit
+instead of with low-level git commands!
+
+  # (find-gitk \"/tmp/eevgit-repo1/\")
+  # (find-gitk \"/tmp/eevgit-repo2/\")
+  # (find-gitk \"/tmp/eevgit-repo3/\")
+
 
 
 
