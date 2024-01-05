@@ -1,6 +1,6 @@
 ;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2013-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -26,7 +26,7 @@
 ;;       htmlized: <http://anggtwu.net/eev-current/eev-intro.el.html>
 ;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
 ;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;;                                               (find-eev-intro)
 
 ;;; Commentary:
 ;;
@@ -14456,23 +14456,33 @@ that in a single machine:
 TODO: explain how to do some of the operations above with magit
 instead of with low-level git commands!
 
-  # (find-gitk \"/tmp/eevgit-repo1/\")
-  # (find-gitk \"/tmp/eevgit-repo2/\")
-  # (find-gitk \"/tmp/eevgit-repo3/\")
+TODO: explain how to use `find-gitdoc-links' to point to the docs
+that come with git! Example (Debian-centric):
+  (find-gitdoc-links \"push\")
+
+  # (find-gitk \"/tmp/eevgit-repo-s/\")
+  # (find-gitk \"/tmp/eevgit-repo-1/\")
+  # (find-gitk \"/tmp/eevgit-repo-2/\")
 
 
 
 
 
-6. A historical note
+7. A historical note
 ====================
-This was one of my previous attempts:
+The video below shows one of my previous attempts to create
+reproducible tests for git. The interesting part starts at 0:20:
 
   http://anggtwu.net/eev-videos/2020-doubt-about-merging.mp4
           (code-eevvideo \"merg\" \"2020-doubt-about-merging\")
                     (find-mergvideo \"0:00\")
-                    (find-mergvideo \"0:20\")
+                    (find-mergvideo \"0:20\" \"interesting part\")
 
+Note that the code is much harder to read than this,
+
+  (find-eevgit \"eevgitlib1.sh\" \"Time-tests\")
+
+...that is arranged in columns and has timestamps.
 " pos-spec-list)))
 
 ;; (find-git-intro)

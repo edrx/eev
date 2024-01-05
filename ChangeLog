@@ -1,3 +1,7 @@
+2024-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-gitdoc-links): new function.
+
 2024-01-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (ee-bol-skip-invisible, ee-eol-skip-invisible):
