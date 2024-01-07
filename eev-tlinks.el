@@ -3368,7 +3368,10 @@ This function is used by `ee-0x0-upload-region'."
   "An internal function used by `find-1stclassvideo-links'."
   (ee-find-1stclassvideo-do-with-c
    c
-   (let* ((dlsubs   (ee-1stclassvideos-dlsubs c))
+   (let* ((lsubs    (if hassubs
+			(ee-template0 ";; LSubs: (find-{c}lsubs \"00:00\")\n")
+		      ""))
+	  (dlsubs   (ee-1stclassvideos-dlsubs c))
 	  (defun    (ee-find-1stclassvideo-defun c mp4stem hash)))
      (ee-template0 "\
 ;; Title: {title}
@@ -3379,7 +3382,8 @@ This function is used by `ee-0x0-upload-region'."
 ;; Date:    {date}
 ;; Length:  {length}
 ;;
-;; Play:  (find-{c}video \"0:00\")
+;; Play:  (find-{c}video \"00:00\")
+{lsubs}\
 ;; Info:  (find-1stclassvideodef        \"{c}\")
 ;;        (find-eev \"eev-videolinks.el\" \"{c}\")
 ;;            (find-1stclassvideo-links \"{c}\")

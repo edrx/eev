@@ -1,3 +1,8 @@
+2024-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-find-1stclassvideo-links): added an "LSubs:"
+	line after "Play:".
+
 2024-01-06  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-find-1stclassvideo-do-with-c): new macro.
