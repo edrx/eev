@@ -1,5 +1,9 @@
 2024-01-06  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-tlinks.el (ee-find-1stclassvideo-do-with-c): new macro.
+	(ee-find-1stclassvideo-links, ee-1stclassvideos-dlsubs): use
+	`ee-find-1stclassvideo-do-with-c'.
+
 	* eev-videolinks.el (find-2024gitvideo): new function.
 	(ee-1stclassvideos-info): added an entry for "2024git".
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240105
+;; Version:    20240106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3341,25 +3341,36 @@ This function is used by `ee-0x0-upload-region'."
        )
      pos-spec-list)))
 
+;; Test: (ee-find-1stclassvideo-do-with-c "eev2021" title)
+(defmacro ee-find-1stclassvideo-do-with-c (c &rest code)
+  "An internal function used by `find-1stclassvideo-links'."
+  `(let* ((c        ,c)
+	  (title    (ee-1stclassvideos-field c :title))
+	  (mp4      (ee-1stclassvideos-field c :mp4))
+	  (yt       (ee-1stclassvideos-field c :yt))
+	  (page     (ee-1stclassvideos-field c :page))
+	  (date     (ee-1stclassvideos-field c :date))
+	  (length   (ee-1stclassvideos-field c :length))
+	  (comment  (ee-1stclassvideos-field c :comment))
+	  (lang     (ee-1stclassvideos-field c :lang))
+	  (exts     (ee-1stclassvideos-field c :subs))
+	  (mp4stem  (ee-1stclassvideos-mp4stem c))
+          (mp4found (ee-1stclassvideos-mp4found c))
+	  (hash     (ee-1stclassvideos-hash c))
+	  (hassubs  exts)
+	  )
+     ,@code))
+
 ;; Test:
 ;; (find-estring-elisp (ee-find-1stclassvideo-links "eev2021"))
 ;;
 (defun ee-find-1stclassvideo-links (c)
   "An internal function used by `find-1stclassvideo-links'."
-  (let* ((title    (ee-1stclassvideos-field c :title))
-	 (mp4      (ee-1stclassvideos-field c :mp4))
-	 (yt       (ee-1stclassvideos-field c :yt))
-	 (page     (ee-1stclassvideos-field c :page))
-	 (date     (ee-1stclassvideos-field c :date))
-	 (length   (ee-1stclassvideos-field c :length))
-	 (comment  (ee-1stclassvideos-field c :comment))
-	 (lang     (ee-1stclassvideos-field c :lang))
-	 (mp4stem  (ee-1stclassvideos-mp4stem c))
-         (mp4found (ee-1stclassvideos-mp4found c))
-	 (hash     (ee-1stclassvideos-hash c))
-	 (dlsubs   (ee-1stclassvideos-dlsubs c))
-	 (defun    (ee-find-1stclassvideo-defun c mp4stem hash)))
-    (ee-template0 "\
+  (ee-find-1stclassvideo-do-with-c
+   c
+   (let* ((dlsubs   (ee-1stclassvideos-dlsubs c))
+	  (defun    (ee-find-1stclassvideo-defun c mp4stem hash)))
+     (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
 ;; YT:    {yt}
@@ -3398,7 +3409,9 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
 ;;               (find-efunction 'find-{c}video)
 
-{defun}")))
+{defun}"))))
+
+
 
 ;; Test:
 ;; (find-estring-elisp (ee-find-1stclassvideo-defun "C" "M" "H"))
@@ -3416,6 +3429,7 @@ For more info on this particular video, run:
   (find-1stclassvideo-video \"{c}\" time))
 "))
 
+
 ;; Tests: (ee-1stclassvideos-dlsubs "2022pict2elua")
 ;;        (find-1stclassvideo-links "2022pict2elua")
 ;;        (ee-1stclassvideos-dlsubs "2021workshop6")
@@ -3424,24 +3438,22 @@ For more info on this particular video, run:
 ;;
 (defun ee-1stclassvideos-dlsubs (c)
   "An internal function used by `find-1stclassvideo-links'."
-  (let* ((mp4stem  (ee-1stclassvideos-mp4stem c))
-         (mp4found (ee-1stclassvideos-mp4found c))
-	 (exts     (ee-1stclassvideos-field c :subs))
-	 (hassubs  exts)
-	 (template00 ";;
+  (ee-find-1stclassvideo-do-with-c
+   c
+   (let* ((template00 ";;
 ;; You don't have a local copy of this video.
 ;; To download a local copy, run this:
 ;;       (find-psne-1stclassvideo-links \"{c}\")
 ;; This video doesn't have subtitles.\n")
-	 (template01 ";;
+	  (template01 ";;
 ;; You don't have a local copy of this video.
 ;; To download a local copy of the video with subtitles, run:
 ;;       (find-psne-1stclassvideo-links \"{c}\")
 ;;   or: (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")\n")
-	 (template10 ";;
+	  (template10 ";;
 ;; We have a local copy of this video.
 ;; This video doesn't have subtitles.\n")
-	 (template11 ";;
+	  (template11 ";;
 ;; You have a local copy of this video.
 ;; The upstream copy of this video has subtitles.
 ;; If you don't have a local copy of its subtitles, or if you
@@ -3451,13 +3463,15 @@ For more info on this particular video, run:
 ;;
 ;; LSubs: (find-{c}lsubs \"00:00\")
 ;;        (find-1stclassvideolsubs \"{c}\")\n"))
-    (if mp4found
-	(if hassubs
-	    (ee-template0 template11)
-	  (ee-template0 template10))
-      (if hassubs
-	  (ee-template0 template01)
-	(ee-template0 template00)))))
+     (if mp4found
+	 (if hassubs
+	     (ee-template0 template11)
+	   (ee-template0 template10))
+       (if hassubs
+	   (ee-template0 template01)
+	 (ee-template0 template00))))))
+
+
 
 
 
