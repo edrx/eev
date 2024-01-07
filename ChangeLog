@@ -1,3 +1,8 @@
+2024-01-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (find-2024gitvideo): new function.
+	(ee-1stclassvideos-info): added an entry for "2024git".
+
 2024-01-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-gitdoc-links): new function.

@@ -1,6 +1,6 @@
 ;;; eev-videolinks.el --- support for [Video links:] blocks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2021-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2021-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231226
+;; Version:    20240106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -73,6 +73,7 @@
 ;;   «.find-eev2022pyvideo»		(to "find-eev2022pyvideo")
 ;;   «.find-eev2023replsvideo»		(to "find-eev2023replsvideo")
 ;;   «.find-eev2023replsbvideo»		(to "find-eev2023replsbvideo")
+;;   «.find-2024gitvideo»		(to "find-2024gitvideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -108,6 +109,7 @@
 ;;   «.eev2022py»			(to "eev2022py")
 ;;   «.eev2023repls»			(to "eev2023repls")
 ;;   «.eev2023replsb»			(to "eev2023replsb")
+;;   «.2024git»				(to "2024git")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -688,6 +690,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "eev2023replsb" time))
 
+;; «find-2024gitvideo»  (to ".find-2024gitvideo")
+;; Info: (find-1stclassvideo-links "2024git")
+;; Play: (find-2024gitvideo "0:00")
+(defun find-2024gitvideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2024git\")"
+  (interactive)
+  (find-1stclassvideo-video "2024git" time))
+
 
 
 
@@ -1156,6 +1168,19 @@ For more info on this particular video, run:
      :subs    ".vtt"
      :length  "20:52"
      :comment "How to run the demos here: (find-show2-intro)")
+    ;;
+    ;; «2024git»  (to ".2024git")
+    ;; Play: (find-2024gitvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2024git")
+    ("2024git"
+     :title "Learning git with \"try it!\"s (and eev)"
+     :mp4   "http://anggtwu.net/eev-videos/2024-eev-git.mp4"
+     :yt    "http://www.youtube.com/watch?v=lsVvokjqMY0"
+     :page  "http://anggtwu.net/2023-eev-git.html"
+     :date    "2024jan06"
+     :length  "33:25"
+     :subs    ".vtt"
+     :comment "A video about (find-git-intro). Very accessible.")
     ))
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240104
+;; Version:    20240106
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -14154,6 +14154,10 @@ Prerequisites: to run this you need bash, git, and gitk,
 and you need to understand these topics well:
   1. test blocks: http://anggtwu.net/eepitch.html
   2. (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
+The video is here:
+  Info:  (find-1stclassvideo-links \"2024git\")
+  Play:  (find-2024gitvideo \"00:00\")
+  LSubs: (find-2024gitlsubs \"00:00\")
 
 
 
@@ -14295,8 +14299,8 @@ display it in three ways. \"Diagram\" uses this,
 
 and is defined here:
 
-  (find-anchor \"/tmp/eevgitlib1.sh\" \"basic\")
-  (find-anchor \"/tmp/eevgitlib1.sh\" \"basic\" \"Diagram\")
+  (find-eevgit \"eevgitlib1.sh\" \"basic\")
+  (find-eevgit \"eevgitlib1.sh\" \"basic\" \"Diagram\")
 
 `find-gitk' uses gitk, and is defined here:
 
