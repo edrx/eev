@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240106
+;; Version:    20240112
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -84,6 +84,7 @@
 ;; «.find-find-links-links»		(to "find-find-links-links")
 ;; «.find-find-links-links-new»		(to "find-find-links-links-new")
 ;;   «.ee-ffll-functions»		(to "ee-ffll-functions")
+;;   «.find-let*-macro-links»		(to "find-let*-macro-links")
 ;;
 ;; «.find-intro-links»			(to "find-intro-links")
 ;; «.find-eev-header-links»		(to "find-eev-header-links")
@@ -526,6 +527,38 @@ This is an internal function used by `find-{stem}-links'.\"
 "))
 
 
+
+;; «find-let*-macro-links»  (to ".find-let*-macro-links")
+;; Skel: (find-find-links-links-new "let*-macro" "stem args defs" "sep part1 part2")
+;; Test: (find-let*-macro-links "foo" "a b c" "d e f")
+;;  See: (find-templates-intro "7. let* macros")
+;;
+(defun find-let*-macro-links (&optional stem args defs &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for let*-macro."
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (setq args (or args "{args}"))
+  (setq defs (or defs "{defs}"))
+  (let* ((sep "\n          ")
+	 (part1 (mapconcat (lambda (v) (format "(%s ,%s)" v v))
+			   (ee-split args) sep))
+	 (part2 (mapconcat (lambda (v) (format "(%s nil)" v v))
+			   (ee-split defs) sep)))
+    (apply
+     'find-elinks-elisp
+     `((find-let*-macro-links ,stem ,args ,defs ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-let*-macro-links)
+       ""
+       ,(ee-template0 "\
+;; Skel: (find-let*-macro-links \"{stem}\" \"{args}\" \"{defs}\")
+(defmacro ee-let*-macro-{stem} ({args} &rest code)
+  \"An internal function used by `find-{stem}-links'.\"
+  `(let* ({part1}{sep}{part2})
+     ,@code))
+")
+       )
+     pos-spec-list)))
 
 
 
@@ -3341,10 +3374,11 @@ This function is used by `ee-0x0-upload-region'."
        )
      pos-spec-list)))
 
-;; Test: (ee-find-1stclassvideo-do-with-c "eev2021" title)
-(defmacro ee-find-1stclassvideo-do-with-c (c &rest code)
+;; Skel: (find-let*-macro-links "1stclassvideo-c" "c" "title mp4")
+;; Test: (ee-let*-macro-1stclassvideo-c "eev2021" title)
+(defmacro ee-let*-macro-1stclassvideo-c (c &rest code)
   "An internal function used by `find-1stclassvideo-links'."
-  `(let* ((c        ,c)
+  `(let* ((c ,c)
 	  (title    (ee-1stclassvideos-field c :title))
 	  (mp4      (ee-1stclassvideos-field c :mp4))
 	  (yt       (ee-1stclassvideos-field c :yt))
@@ -3357,8 +3391,7 @@ This function is used by `ee-0x0-upload-region'."
 	  (mp4stem  (ee-1stclassvideos-mp4stem c))
           (mp4found (ee-1stclassvideos-mp4found c))
 	  (hash     (ee-1stclassvideos-hash c))
-	  (hassubs  exts)
-	  )
+	  (hassubs  exts))
      ,@code))
 
 ;; Test:
@@ -3366,7 +3399,7 @@ This function is used by `ee-0x0-upload-region'."
 ;;
 (defun ee-find-1stclassvideo-links (c)
   "An internal function used by `find-1stclassvideo-links'."
-  (ee-find-1stclassvideo-do-with-c
+  (ee-let*-macro-1stclassvideo-c
    c
    (let* ((lsubs    (if hassubs
 			(ee-template0 ";; LSubs: (find-{c}lsubs \"00:00\")\n")
@@ -3442,7 +3475,7 @@ For more info on this particular video, run:
 ;;
 (defun ee-1stclassvideos-dlsubs (c)
   "An internal function used by `find-1stclassvideo-links'."
-  (ee-find-1stclassvideo-do-with-c
+  (ee-let*-macro-1stclassvideo-c
    c
    (let* ((template00 ";;
 ;; You don't have a local copy of this video.
@@ -4564,8 +4597,9 @@ printmeaning \"@oddfoot\"
 	 (ee-show2-use fname0)
 	 pos-spec-list))
 
-(defmacro ee-show2-do-with-fname0 (fname0 &rest code)
-  "An internal function used by `show2-use'."
+;; Skel: (find-let*-macro-links "show2-use" "fname0" "fname dir stem0 stem tex pdf cmd")
+(defmacro ee-let*-macro-show2-use (fname0 &rest code)
+  "An internal function used by `find-show2-use'."
   `(let* ((fname0 ,fname0)
 	  (fname (ee-expand (or fname0 "/tmp/Show2.tex")))
 	  (dir   (file-name-directory fname))
@@ -4579,7 +4613,7 @@ printmeaning \"@oddfoot\"
 
 (defun ee-show2-use (&optional fname0)
   "An internal function used by `show2-use'."
-  (ee-show2-do-with-fname0
+  (ee-let*-macro-show2-use
    fname0
    (ee-template0 "\
 ;; (find-show2-use {(ee-S fname0)})

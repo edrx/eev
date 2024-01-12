@@ -1,3 +1,25 @@
+2024-01-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-templates-intro): new section: "7. let*
+	macros".
+	(find-intro-intro): replace the `(cadr (ee-intro-sexp-here))' by
+	an `(eval-defun nil)'.
+	(find-intro-dual): replace the `(eval (ee-intro-sexp-here))' by an
+	`(eval-defun nil)'.
+	(ee-sexp-at, ee-intro-sexp-end-re, ee-intro-sexp-here): commented
+	out.
+	(ee-this-line0): deleted.
+	(ee-this-line): use `ee-kl-line'.
+
+	* eev-tlinks.el (ee-show2-do-with-fname0): renamed to
+	`ee-let*-macro-show2-use'.
+
+2024-01-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-let*-macro-links): new function.
+	(ee-find-1stclassvideo-do-with-c): renamed to
+	`ee-let*-macro-1stclassvideo-c'.
+
 2024-01-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-find-1stclassvideo-links): added an "LSubs:"

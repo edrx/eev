@@ -91,6 +91,7 @@
       (apply 'ee-qrl0 plist))))
 
 (defun ee-qrl (&rest plist)
+  "`query-replace-list'. See: (find-templates-intro \"4. Adding meat\")"
   (interactive)
   (if (region-active-p)			; if the region as active
       (apply 'ee-qrl-narrow plist)	; then narrow to the region
