@@ -236,10 +236,10 @@ See the source code for examples and tests."
     (cons 'concat (delete "" (nreverse exprs)))))
 
 ;; Tests:
-;;               (ee-template0-lex "{<} a{(+ 2 3)} {>}")
-;; (macroexpand '(ee-template0-lex "{<} a{(+ 2 3)} {>}"))
-;;              (ee-template00-lex "{<} a{(+ 2 3)} {>}")
-;;             (ee-template000-lex "{<} a{(+ 2 3)} {>}")
+;;             (ee-template0-lex "{<} a{(+ 2 3)} {>}")
+;; (find-eppm '(ee-template0-lex "{<} a{(+ 2 3)} {>}"))
+;;            (ee-template00-lex "{<} a{(+ 2 3)} {>}")
+;;           (ee-template000-lex "{<} a{(+ 2 3)} {>}")
 ;;
 ' (let ((hi "Here:") (a 22) (b 33))
     (ee-template0-lex "{hi} {a} + {b} = {(+ a b)}"))

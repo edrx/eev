@@ -1,5 +1,10 @@
 2024-01-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-lua-tutorial-intro): new function.
+
+	* eev-tlinks.el (find-luainit-links, find-luaso-links): new
+	functions.
+
 	* eev-intro.el (find-templates-intro): new section: "7. let*
 	macros".
 	(find-intro-intro): replace the `(cadr (ee-intro-sexp-here))' by

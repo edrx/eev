@@ -168,6 +168,8 @@
 ;; «.find-maximamsg»			(to "find-maximamsg")
 ;; «.find-linki-links»			(to "find-linki-links")
 ;; «.find-gitdoc-links»			(to "find-gitdoc-links")
+;; «.find-luainit-links»		(to "find-luainit-links")
+;; «.find-luaso-links»			(to "find-luaso-links")
 
 
 (require 'eev-env)
@@ -4889,6 +4891,143 @@ A \"Maxima message\" is a message in the Maxima mailing list."
      )
    pos-spec-list))
 
+
+
+;; «find-luainit-links»  (to ".find-luainit-links")
+;; Skel: (find-find-links-links-new "luainit" "dir" "dir0")
+;; Test: (find-luainit-links)
+;;
+(defun find-luainit-links (&optional dir &rest pos-spec-list)
+"Visit a temporary buffer containing a script for testing lua50init.lua."
+  (interactive)
+  (setq dir (or dir "{dir}"))
+  (let* ((dir0 (ee-expand dir)))
+    (apply
+     'find-elinks
+     `((find-luainit-links ,dir ,@pos-spec-list)
+       (find-luainit-links "/tmp/")
+       (find-luainit-links "~/LUA/")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-luainit-links)
+       ""
+       ,(ee-template0 "\
+ Download/update
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+rm  -fv {dir}lua50init.lua
+wget -P {dir} -N http://anggtwu.net/LUA/lua50init.lua
+ls -lAF {dir}lua50init.lua
+
+ Test
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+export LUA_INIT=
+lua5.1
+  PP({20,\"30\"})   -- should fail
+  os.exit()
+
+export LUA_INIT=@{dir0}lua50init.lua
+lua5.1
+  PP({20,\"30\"})   -- should work
+  os.exit()
+
+ (setenv \"LUA_INIT\" nil)
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+  PP({20,\"30\"})   -- should fail
+
+ (setenv \"LUA_INIT\" \"@{dir0}lua50init.lua\")
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+  PP({20,\"30\"})   -- should work
+")
+       )
+     pos-spec-list)))
+
+
+
+;; «find-luaso-links»  (to ".find-luaso-links")
+;; Skel: (find-find-links-links-new "luaso" "fname funname" "fname0 fname00 stem dir")
+;; Test: (find-luaso-links "/tmp/dummy2.c" "foo")
+;;  See: (find-angg "CLUA/foo.c")
+;;       (find-angg "LUA/CLua1.lua")
+;;       (find-es "lua5" "CLua1.lua")
+;;
+(defun find-luaso-links (&optional fname funname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for luaso."
+  (interactive)
+  (setq fname (or fname "{fname}"))
+  (setq funname (or funname "{funname}"))
+  (let* ((fname0  (ee-shorten-file-name fname))
+         (fname00 (ee-replace-prefix "~/" "" fname0))
+         (stem    (file-name-base fname))
+         (dir     (file-name-directory fname)))
+    (apply
+     'find-elinks
+     `((find-luaso-links ,fname ,funname ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-luaso-links)
+       ""
+       ,(ee-template0 "\
+// (c-mode)
+// All lines with \"angg\" are angg-isms!
+//   (kill-new \"  {fname00}\")
+//   (find-blogme3 \"anggmake.lua\" \"anggtranslate\")
+//   (find-blogme3 \"anggmake.lua\" \"anggtranslate\" \"LUA/\")
+// (ee-copy-rest 2 '(find-fline \"{fname}\"))
+
+
+// This file:
+//   http://anggtwu.net/{fname00}.html
+//   http://anggtwu.net/{fname00}
+//          (find-angg \"{fname00}\")
+//    Skel: (find-luaso-links \"{fname}\" \"{funname}\")
+//  Author: Eduardo Ochs <eduardoochs@gmail.com>
+//
+// (defun e () (interactive) (find-angg \"{fname00}\"))
+
+#include \"lauxlib.h\"
+#include <stdio.h>
+
+static int my_{funname}(lua_State* L) {<}
+  lua_pushnumber(L, 33);
+  lua_pushnumber(L, 333);
+  return 2;
+{>}
+
+static const struct luaL_reg {stem}_lib[] = {<}
+  {<}\"{funname}\", my_{funname}{>},
+  {<}NULL,  NULL{>}
+{>};
+
+LUALIB_API int luaopen_{stem}(lua_State *L) {<}
+  lua_pushvalue(L, LUA_GLOBALSINDEX);
+  luaL_openlib(L, NULL, {stem}_lib, 0);
+  return 0;
+{>}
+
+/*
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+gcc -g -Wall -shared -I/usr/include/lua5.1 -o {stem}.so {stem}.c
+ls -lAF {stem}*
+
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+Path.prependtocpath \"{dir}?.so\"
+require \"{stem}\"
+print({funname}(42))
+
+*/\
+")
+       )
+     pos-spec-list)))
 
 
 
