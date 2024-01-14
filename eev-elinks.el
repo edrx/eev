@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231106
+;; Version:    20240113
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -60,6 +60,7 @@
 ;; «.around-point»		(to "around-point")
 ;; «.find-elinks»		(to "find-elinks")
 ;; «.find-efunction-links»	(to "find-efunction-links")
+;; «.find-eloadhistory-links»	(to "find-eloadhistory-links")
 ;; «.find-evariable-links»	(to "find-evariable-links")
 ;; «.find-ekey-links»		(to "find-ekey-links")
 ;; «.find-elongkey-links»	(to "find-elongkey-links")
@@ -306,15 +307,56 @@ This is an internal function used by `find-efunction-links' and
     (where-is ',f)
     (symbol-file ',f 'defun)
     (find-fline (symbol-file ',f 'defun))
-    (find-epp (assoc (symbol-file ',f 'defun) load-history))
-    (find-epp (assoc ,(symbol-file f 'defun) load-history))
+    (find-eppp (assoc (symbol-file ',f 'defun) load-history))
+    (find-eppp (assoc ,(symbol-file f 'defun) load-history))
     (find-eppp (mapcar 'car load-history))
     (find-estring (mapconcat 'identity (mapcar 'car load-history) "\n"))
+    (find-estring-elisp (ee-eloadhistory-find-flines))
     (find-estring (documentation ',f))
     (find-estring (documentation ',f t))
     (describe-function ',f)
     ;; (find-eCfunction ',f)		; obsolete
     ))
+
+
+
+;; «find-eloadhistory-links»  (to ".find-eloadhistory-links")
+;; Skel: (find-find-links-links-new "eloadhistory" "" "")
+;; Test: (find-eloadhistory-links)
+;;
+(defun find-eloadhistory-links (&rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eloadhistory."
+  (interactive)
+  (apply
+   'find-elinks
+   `((find-eloadhistory-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eloadhistory-links)
+     ""
+     (find-estring-elisp (ee-eloadhistory-find-flines))
+     (find-estring-elisp (ee-eloadhistory-fors))
+     )
+   pos-spec-list))
+
+;; Tests: (ee-shorten-elc (symbol-file 'next-line 'defun))
+;;        (find-estring-elisp (ee-eloadhistory-fors))
+;;
+(defun ee-eloadhistory-find-flines ()
+  "An internal function used by `find-eloadhistory-links'."
+  (mapconcat
+   (lambda (fname) (format "%S\n" `(find-fline ,(ee-shorten-elc fname))))
+   (mapcar 'car load-history)))
+
+(defun ee-eloadhistory-fors ()
+  "An internal function used by `find-eloadhistory-links'."
+  (mapconcat
+   (lambda (fname) (format "%S\n" `(find-eloadhistory-for ,fname)))
+   (mapcar 'car load-history)))
+
+(defun ee-shorten-elc (fname)
+  "An internal function used by `ee-eloadhistory-find-flines'."
+  (ee-shorten-file-name (replace-regexp-in-string ".elc$" ".el" fname)))
+
 
 
 

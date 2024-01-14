@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231220
+;; Version:    20240113
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1708,6 +1708,22 @@ Hint: install the Debian package \"unicode-data\".")
   (mapconcat (lambda (sym) (format fmt sym))
 	     (apropos-internal regexp predicate)
 	     ""))
+
+
+
+;; Tests: (find-eloadhistory-for 'eekla)
+;;        (find-eloadhistory-for (symbol-file 'eekla 'defun))
+;;
+(defun find-eloadhistory-for (f &rest pos-spec-list)
+  "Show the result of `(assoc F load-history)' in a temporary buffer.
+If F is a symbol it is converted to a filename with (symbol-file F 'defun)."
+  (let* ((fname (if (symbolp f) (symbol-file f 'defun) f))
+	 (sexp `(find-eloadhistory-for ,(ee-add-quote f)))
+	 (ee-buffer-name (format "*%S*" sexp))
+	 (body (ee-ppp0 (assoc fname load-history)))
+	 (header (format ";; %S\n;; (find-eloadhistory-links)\n\n" sexp)))
+    (apply 'find-estring-elisp (concat header body) pos-spec-list)))
+
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240113
+;; Version:    20240114
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -17419,7 +17419,79 @@ test its function `foo'.
 
 
 
-4. TODO
+
+4. CLua1.lua
+============
+This file
+
+  http://anggtwu.net/LUA/CLua1.lua.html
+  http://anggtwu.net/LUA/CLua1.lua
+         (find-angg \"LUA/CLua1.lua\")
+
+implements a way to do something similar to the elisp function
+`find-luaso-links' of the last section, but using Lua to generate
+all strings from templates. Here's how to test it:
+
+ Download it into /tmp/CLua1/:
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rfv /tmp/CLua1/
+  mkdir   /tmp/CLua1/
+  cd      /tmp/CLua1/
+  wget http://anggtwu.net/LUA/lua50init.lua
+  wget http://anggtwu.net/LUA/Dang1.lua
+  wget http://anggtwu.net/LUA/CLua1.lua
+
+ Make `find-clua' and LUA_{<}INIT,PATH{>} point to /tmp/CLua1/:
+ (code-c-d \"clua\"    \"/tmp/CLua1/\" :anchor)
+ (setenv \"LUA_INIT\" \"@/tmp/CLua1/lua50init.lua\")
+ (setenv \"LUA_PATH\"  \"/tmp/CLua1/?.lua;;\")
+
+ Now run these test blocks:
+ (find-clua \"CLua1.lua\" \"CLua-tests\")
+ (find-clua \"CLua1.lua\" \"buildandload-tests\")
+
+
+
+
+5. CLua1.lua from the outside
+=============================
+In the previous section you ran the tests in two test blocks that
+were _inside_ CLua1.lua; it is also possible to run the functions
+in CLua1.lua \"from the outside\". Try this:
+
+ (eepitch-lua51)
+ (eepitch-kill)
+ (eepitch-lua51)
+  require \"CLua1\"   -- (find-clua \"CLua1.lua\")
+
+  -- Choose one:
+  CLua.__index.compile = CLua.__index.mac
+  CLua.__index.compile = CLua.__index.debian
+
+  CLua.rm()
+
+  buildandload('minusdiv', [=[
+    lua_pushnumber(L, lua_tonumber(L, 1) - lua_tonumber(L, 2));
+    lua_pushnumber(L, lua_tonumber(L, 1) / lua_tonumber(L, 2));
+    return 2;
+  ]=])
+  print(minusdiv(20, 2))                  --> 18 10
+  print(minusdiv(20, 2, 42, 99, 300, 3))  --> 18 10
+
+  buildandload('minusdiv', [=[
+    lua_pushnumber(L, lua_tonumber(L, -2) - lua_tonumber(L, -1));
+    lua_pushnumber(L, lua_tonumber(L, -3) / lua_tonumber(L, -2));
+    return 2;
+  ]=])
+  print(minusdiv(20, 2))                  --> 18 10
+  print(minusdiv(20, 2, 42, 99, 300, 3))  --> 297 100
+
+
+
+
+6. TODO
 =======
 I have an old eev-based tutorial for Lua here:
 

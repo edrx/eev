@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240112
+;; Version:    20240113
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -4944,6 +4944,18 @@ lua5.1
  (eepitch-kill)
  (eepitch-lua51)
   PP({20,\"30\"})   -- should work
+
+
+ If you want to use an init file that loads my
+ lua50init.lua and then does something else, use this:
+
+ (setenv \"LUA_INIT\" \"@{dir0}lua50init_my.lua\")
+ (ee-copy-rest 2 '(find-fline \"{dir0}lua50init_my.lua\"))
+
+-- See: (find-luainit-links \"{dir0}\")
+--      (find-fline \"{dir}lua50init.lua\")
+dofile \"{dir0}lua50init.lua\"
+-- Put your something elses here
 ")
        )
      pos-spec-list)))
@@ -5011,10 +5023,19 @@ LUALIB_API int luaopen_{stem}(lua_State *L) {<}
 {>}
 
 /*
- (eepitch-shell)
+ (eepitch-bash)
  (eepitch-kill)
- (eepitch-shell)
-gcc -g -Wall -shared -I/usr/include/lua5.1 -o {stem}.so {stem}.c
+ (eepitch-bash)
+# MacOS with MacPorts:
+CFLAGS=\"-g -Wall -shared -undefined dynamic_lookup\"
+LUADIR=/opt/local/include/lua5.1
+
+# Debian:
+CFLAGS=\"-g -Wall -shared\"
+LUADIR=/usr/include/lua5.1
+
+echo gcc $CFLAGS -I$LUADIR -o {stem}.so {stem}.c
+     gcc $CFLAGS -I$LUADIR -o {stem}.so {stem}.c
 ls -lAF {stem}*
 
  (eepitch-lua51)

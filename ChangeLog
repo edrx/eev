@@ -1,3 +1,20 @@
+2024-01-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-lua-tutorial-intro): Added two sections about
+	CLua1.lua.
+
+2024-01-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-eloadhistory-links): new function.
+
+	* eev-blinks.el (find-eloadhistory-for): new function.
+
+	* eev-elinks.el (ee-find-efunction-links): use `find-eppp' instead
+	of `find-epp' in more places.
+	(ee-shorten-elc, ee-eloadhistory-fors)
+	(ee-eloadhistory-find-flines): new functions.
+	(ee-find-efunction-links): use `ee-eloadhistory-find-flines'.
+
 2024-01-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-lua-tutorial-intro): new function.
