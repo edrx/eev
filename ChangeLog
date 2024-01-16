@@ -1,4 +1,13 @@
+2024-01-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev.el: bumped the version.
+
+	* eev-plinks.el (find-wget0): new function.
+	(find-wget): this is now a wrapper around `find-wget0'.
+
 2024-01-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eaproposv): new function.
 
 	* eev-intro.el (find-lua-tutorial-intro): Added two sections about
 	CLua1.lua.

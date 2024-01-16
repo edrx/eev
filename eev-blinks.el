@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240113
+;; Version:    20240114
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1691,6 +1691,7 @@ Hint: install the Debian package \"unicode-data\".")
 ;;
 ;; «find-eaproposf»  (to ".find-eaproposf")
 ;; Tests: (find-eaproposf "^find-.*-links$")
+;;        (find-eaproposv "process")
 ;;        (find-estring (ee-eaproposf0 "^find-.*-links$" 'fboundp ": %s\n"))
 
 (defun find-eaproposf (regexp &rest rest)
@@ -1698,9 +1699,21 @@ Hint: install the Debian package \"unicode-data\".")
   (apply 'find-elinks-elisp
 	 `(,(ee-template0 "\
 ;; (find-eaproposf {(ee-S regexp)})
+;; (find-eaproposv {(ee-S regexp)})
 ;; (find-eapropos  {(ee-S regexp)})
 ")
 	   ,(ee-eaproposf0 regexp 'fboundp "(find-efunction '%s)\n"))
+	 rest))
+
+(defun find-eaproposv (regexp &rest rest)
+  "Go to a temporary buffer listing all variables whose names match REGEXP."
+  (apply 'find-elinks-elisp
+	 `(,(ee-template0 "\
+;; (find-eaproposv {(ee-S regexp)})
+;; (find-eaproposf {(ee-S regexp)})
+;; (find-eapropos  {(ee-S regexp)})
+")
+	   ,(ee-eaproposf0 regexp 'boundp "(find-evardescr '%s)\n"))
 	 rest))
 
 (defun ee-eaproposf0 (regexp predicate fmt)

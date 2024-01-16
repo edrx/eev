@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231219
+;; Version:    20240115
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -372,13 +372,16 @@ headers in case of error. This is a quick hack."
 ;;;                                 |___/          
 ;;
 ;; «find-wget» (to ".find-wget")
-;;
+;; See this thread:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-01/msg00033.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-01/threads.html#00033
+
 (defvar ee-wget-program "wget")
 
 (defun find-wget00 (url)
   (find-callprocess00 `(,ee-wget-program "-q" "-O" "-" ,url)))
 
-(defun find-wget (url &rest pos-spec-list)
+(defun find-wget0 (url &rest pos-spec-list)
   "Download URL with \"wget -q -O - URL\" and display the output.
 If a buffer named \"*wget: URL*\" already exists then this
 function visits it instead of running wget again.
@@ -401,6 +404,18 @@ If wget can't download URL then this function runs `error'."
 	(insert wgetoutput)
 	(goto-char (point-min))
 	(apply 'ee-goto-position pos-spec-list)))))
+
+(defun find-wget (url &rest pos-spec-list)
+  "Download URL with \"wget -q -O - URL\" and display the output.
+If a buffer named \"*wget: URL*\" already exists then this
+function visits it instead of running wget again.
+If wget can't download URL then this function runs `error'.
+
+The default definition for `find-wget' simply calls `find-wget0'.
+If you need to adjust how `find-wget0' handles encodings,
+redefine `find-wget' to make it call `find-wget0' inside a `let*'
+block."
+  (apply 'find-wget0 url pos-spec-list))
 
 (defun find-wget-elisp (url &rest pos-spec-list)
   "Like `find-wget', but puts the output buffer in emacs-lisp-mode."
