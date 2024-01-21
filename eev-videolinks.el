@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240106
+;; Version:    20240116
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -74,6 +74,7 @@
 ;;   «.find-eev2023replsvideo»		(to "find-eev2023replsvideo")
 ;;   «.find-eev2023replsbvideo»		(to "find-eev2023replsbvideo")
 ;;   «.find-2024gitvideo»		(to "find-2024gitvideo")
+;;   «.find-2024luasovideo»		(to "find-2024luasovideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -110,6 +111,7 @@
 ;;   «.eev2023repls»			(to "eev2023repls")
 ;;   «.eev2023replsb»			(to "eev2023replsb")
 ;;   «.2024git»				(to "2024git")
+;;   «.2024luaso»			(to "2024luaso")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -700,6 +702,16 @@ For more info on this particular video, run:
   (interactive)
   (find-1stclassvideo-video "2024git" time))
 
+;; «find-2024luasovideo»  (to ".find-2024luasovideo")
+;; Info: (find-1stclassvideo-links "2024luaso")
+;; Play: (find-2024luasovideo "0:00")
+(defun find-2024luasovideo (&optional time &rest rest)
+  "Play one of the first-class videos of eev starting at TIME.
+For more info on this particular video, run:
+  (find-1stclassvideo-links \"2024luaso\")"
+  (interactive)
+  (find-1stclassvideo-video "2024luaso" time))
+
 
 
 
@@ -1181,6 +1193,19 @@ For more info on this particular video, run:
      :length  "33:25"
      :subs    ".vtt"
      :comment "A video about (find-git-intro). Very accessible.")
+    ;;
+    ;; «2024luaso»  (to ".2024luaso")
+    ;; Play: (find-2024luasovideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2024luaso")
+    ("2024luaso"
+     :title "Two ways of creating \".so\"s for Lua, one very fast, both using Emacs and eev"
+     :mp4   "http://anggtwu.net/eev-videos/2024-find-luaso-links.mp4"
+     :yt    "http://www.youtube.com/watch?v=zUW-6atPvUQ"
+     :page  "http://anggtwu.net/find-luaso-links.html"
+     :date    "2024jan16"
+     :length  "14:16"
+     :subs    ".vtt"
+     :comment "See: (find-lua-tutorial-intro)")
     ))
 
 

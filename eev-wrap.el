@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240120
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-wrap.el>
@@ -40,7 +40,23 @@
 ;; «.ee-template0»		(to "ee-template0")
 ;; «.ee-S»			(to "ee-S")
 ;; «.ee-this-line-wrapn»	(to "ee-this-line-wrapn")
+;; «.eewrap-anchor»		(to "eewrap-anchor")
+;; «.eewrap-escript-block»	(to "eewrap-escript-block")
+;; «.eewrap-code-c-d»		(to "eewrap-code-c-d")
+;; «.eewrap-debian»		(to "eewrap-debian")
+;; «.eewrap-find-fline»		(to "eewrap-find-fline")
+;; «.eewrap-eejump»		(to "eewrap-eejump")
+;; «.eewrap-man»		(to "eewrap-man")
+;; «.eewrap-pdflike»		(to "eewrap-pdflike")
+;; «.eewrap-rm/mkdir/cd»	(to "eewrap-rm/mkdir/cd")
+;; «.eewrap-sh»			(to "eewrap-sh")
+;; «.eepitch»			(to "eepitch")
+;; «.eewrap-audiovideo»		(to "eewrap-audiovideo")
+;; «.eewrap-zsh»		(to "eewrap-zsh")
+;; «.eewrap-two-eepitches»	(to "eewrap-two-eepitches")
+;; «.ee-wrap-eewrap»		(to "ee-wrap-eewrap")
 ;; «.find-eewrap-links»		(to "find-eewrap-links")
+;; «.find-eewraptest-links»	(to "find-eewraptest-links")
 
 
 (require 'eev-template0)      ; (find-eev "eev-template0.el")
@@ -160,9 +176,11 @@ have to run an \"undo\"."
 ;;; | |  | |_____/ ___ \ _  | (_| | | | | (__| | | | (_) | |   
 ;;; |_|  |_|    /_/   \_(_)  \__,_|_| |_|\___|_| |_|\___/|_|   
 ;;;                                                            
-;; See: (find-eev-quick-intro "8.3. Creating index/section anchor pairs")
-;;      (find-anchors-intro "Creating index/section anchor pairs")
-;; (define-key eev-mode-map "\M-A" 'eewrap-anchor)
+;; «eewrap-anchor»  (to ".eewrap-anchor")
+;; See:  (find-eev-quick-intro "8.3. Creating index/section anchor pairs")
+;;       (find-anchors-intro "Creating index/section anchor pairs")
+;; Skel: (find-eewrap-links "A" "anchor" "prefix anchor")
+;; Test: (find-eewraptest-links "anchor" "# <foo>")
 
 (defun  eewrap-anchor () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-anchor))
@@ -186,8 +204,12 @@ have to run an \"undo\"."
 ;;; | |  | |_____| |_) |  |  __/\__ \ (__| |  | | |_) | |_  | |_) | |   < 
 ;;; |_|  |_|     |_.__(_)  \___||___/\___|_|  |_| .__/ \__| |_.__/|_|_|\_\
 ;;;                                             |_|                       
-;;
-;; See: (find-eev-quick-intro "8.4. Creating e-script blocks")
+;; «eewrap-escript-block»  (to ".eewrap-escript-block")
+;; See:   (find-eev-quick-intro "8.4. Creating e-script blocks")
+;; Skel:  (find-eewrap-links "B" "escript-block" "anchor title")
+;; Tests: (find-eewraptest-links "escript-block" "ANCHOR")
+;;        (find-eewraptest-links "escript-block" "ANCHOR Some title")
+
 ;; (define-key eev-mode-map "\M-B" 'eewrap-escript-block)
 
 (defun  eewrap-escript-block () (interactive)
@@ -217,8 +239,10 @@ have to run an \"undo\"."
 ;;; | |  | |_____| |___ _  | (_| (_) | (_| |  __/_____| (_|_____| (_| |
 ;;; |_|  |_|      \____(_)  \___\___/ \__,_|\___|      \___|     \__,_|
 ;;;                                                                    
-;; See: (find-code-c-d-intro)
-;; (define-key eev-mode-map "\M-C" 'eewrap-code-c-d)
+;; «eewrap-code-c-d»  (to ".eewrap-code-c-d")
+;; See:  (find-eev-quick-intro "`M-C'")
+;; Skel: (find-eewrap-links "C" "code-c-d" "c d")
+;; Test: (find-eewraptest-links "code-c-d" "CCC /DIR/")
 
 (defun  eewrap-code-c-d () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-code-c-d))
@@ -235,7 +259,10 @@ have to run an \"undo\"."
 ;;; | |  | |_____| |_| |_  | (_| |  __/ |_) | | (_| | | | |
 ;;; |_|  |_|     |____/(_)  \__,_|\___|_.__/|_|\__,_|_| |_|
 ;;;                                                        
-;; (define-key eev-mode-map "\M-D" 'eewrap-debian)
+;; «eewrap-debian»  (to ".eewrap-debian")
+;; See:  (find-wrap-intro "M-D")
+;; Skel: (find-eewrap-links "D" "debian" "stem")
+;; Test: (find-eewraptest-links "debian" "bash")
 
 (defun  eewrap-debian () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-debian))
@@ -252,8 +279,10 @@ have to run an \"undo\"."
 ;;; | |  | |_____|  _| _  |  _| | |  __/
 ;;; |_|  |_|     |_|  (_) |_| |_|_|\___|
 ;;;                                     
+;; «eewrap-find-fline»  (to ".eewrap-find-fline")
 ;; See: (find-wrap-intro "<M-F>")
-;; (define-key eev-mode-map "\M-F" 'eewrap-find-fline)
+;; Skel: (find-eewrap-links "F" "find-fline" "fname")
+;; Test: (find-eewraptest-links "find-fline" "/tmp/foo")
 
 (defun  eewrap-find-fline () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-find-fline))
@@ -269,10 +298,13 @@ have to run an \"undo\"."
 ;;; |_|  |_|      \___/(_)  \___|\___|/ |\__,_|_| |_| |_| .__/ 
 ;;;                                 |__/                |_|    
 ;;
+;; «eewrap-eejump»  (to ".eewrap-eejump")
 ;; See: (find-eev-quick-intro "7.1. `eejump'")
 ;;      (find-eev-quick-intro "7.1. `eejump'" "meta-uppercase-j")
 ;; Old: (find-eejump-intro "Producing `eejump-nnn's and `eejump-nnn*'s")
-;; (define-key eev-mode-map "\M-J" 'eewrap-eejump)
+;; Skel:  (find-eewrap-links "J" "eejump" "n sexp")
+;; Tests: (find-eewraptest-links "eejump" "42   (find-fline \"~/TODO\")")
+;;        (find-eewraptest-links "eejump" "todo (find-fline \"~/TODO\")")
 
 (defun  eewrap-eejump () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-eejump))
@@ -283,13 +315,6 @@ have to run an \"undo\"."
         (ee-template0 "(defun eejump-{n}* () (find-efunction 'eejump-{n}*))")
       (ee-template0   "(defun eejump-{n} () {sexp})"))
     (ee-template0     "(defun {n} () (interactive) {sexp})")))
-;;
-;; Old:
-;; (defun ee-wrap-eejump (n sexp)
-;;   "An internal function used by `eewrap-eejump'."
-;;   (if (equal sexp "")
-;;       (ee-template0 "(defun eejump-{n}* () (find-efunction 'eejump-{n}*))")
-;;     (ee-template0   "(defun eejump-{n} () {sexp})")))
 
 
 
@@ -299,8 +324,10 @@ have to run an \"undo\"."
 ;;; | |  | |_____| |  | |_  | | | | | | (_| | | | |
 ;;; |_|  |_|     |_|  |_(_) |_| |_| |_|\__,_|_| |_|
 ;;;                                                
-;; See: (find-wrap-intro "<M-M>")
-;; (define-key eev-mode-map "\M-M" 'eewrap-man)
+;; «eewrap-man»  (to ".eewrap-man")
+;; See:  (find-wrap-intro "<M-M>")
+;; Skel: (find-eewrap-links "M" "man" "str")
+;; Test: (find-eewraptest-links "man" "1 tac")
 
 (defun  eewrap-man () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-man))
@@ -317,8 +344,11 @@ have to run an \"undo\"."
 ;;; |_|  |_|     |_|   (_) | .__/ \__,_|_| |_|_|_|\_\___|
 ;;;                        |_|                           
 ;;
-;; See: (find-pdf-like-intro)
-;; (define-key eev-mode-map "\M-P" 'eewrap-pdflike)
+;; «eewrap-pdflike»  (to ".eewrap-pdflike")
+;; See:  (find-pdf-like-intro)
+;;       (find-pdf-like-intro "`M-P'")
+;; Skel: (find-eewrap-links "P" "pdflike" "stem fname")
+;; Test: (find-eewraptest-links "pdflike" "o /tmp/o.pdf")
 
 (defun  eewrap-pdflike () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-pdflike))
@@ -367,7 +397,10 @@ have to run an \"undo\"."
 ;;; | |  | |_____|  _ < _  | |  | | | | | |/ /| | | | | |   < (_| | | |   
 ;;; |_|  |_|     |_| \_(_) |_|  |_| |_| |_/_/ |_| |_| |_|_|\_\__,_|_|_|   
 ;;;                                                                       
-;; (define-key eev-mode-map "\M-R" 'eewrap-rm/mkdir/cd)
+;; «eewrap-rm/mkdir/cd»  (to ".eewrap-rm/mkdir/cd")
+;; See:  (find-escripts-intro "`M-R'")
+;; Skel: (find-eewrap-links "R" "rm/mkdir/cd" "dir")
+;; Test: (find-eewraptest-links "rm/mkdir/cd" "/tmp/foo/")
 
 (defun  eewrap-rm/mkdir/cd () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-rm/mkdir/cd))
@@ -386,8 +419,10 @@ cd     {dir}"))
 ;;; | |  | |_____|__) |  |  _| | | | | (_| |_____\__ \ | | |
 ;;; |_|  |_|    |____(_) |_| |_|_| |_|\__,_|     |___/_| |_|
 ;;;                                                         
+;; «eewrap-sh»  (to ".eewrap-sh")
 ;; See: (find-wrap-intro "<M-S>")
-;; (define-key eev-mode-map "\M-S" 'eewrap-sh)
+;; Skel: (find-eewrap-links "R" "sh" "str")
+;; Test: (find-eewraptest-links "sh" "dict smop")
 
 (defun  eewrap-sh () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-sh))
@@ -408,8 +443,9 @@ cd     {dir}"))
 ;;; | |  | |_____| | _  |  __/  __/ |_) | | || (__| | | |
 ;;; |_|  |_|     |_|(_)  \___|\___| .__/|_|\__\___|_| |_|
 ;;;                               |_|                    
-;; (define-key eev-mode-map "\M-T" 'eewrap-eepitch)
-;; (find-eev "eepitch.el" "eepitch-wrap")
+;;
+;; «eepitch»  (to ".eepitch")
+;; Moved to: (find-eev "eepitch.el" "eewrap-eepitch")
 
 
 
@@ -419,8 +455,10 @@ cd     {dir}"))
 ;;; | |  | |_____\ V / _  | (_| | |_| | (_| | | (_) \ V /| | (_| |  __/ (_) |
 ;;; |_|  |_|      \_/ (_)  \__,_|\__,_|\__,_|_|\___/ \_/ |_|\__,_|\___|\___/ 
 ;;;                                                                          
+;; «eewrap-audiovideo»  (to ".eewrap-audiovideo")
 ;; See: (find-audiovideo-intro)
-;; (define-key eev-mode-map "\M-V" 'eewrap-audiovideo)
+;; Skel: (find-eewrap-links "V" "audiovideo" "stem fname")
+;; Test: (find-eewraptest-links "audiovideo" "ovideo /tmp/o.mp4")
 
 (defun  eewrap-audiovideo () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-audiovideo))
@@ -430,12 +468,12 @@ cd     {dir}"))
 ;; (find-fline {(ee-S (file-name-directory fname))})
 ;; (find-audio \"{fname}\")
 ;; (find-video \"{fname}\")
-\(code-audio \"{stem}\" \"{fname}\")
-\(code-video \"{stem}\" \"{fname}\")
-;; \(find-{stem})
-;; \(find-{stem} \"0:00\")
-;; \(find-{stem} t)
-;; \(eev-avadj-mode 1)
+(code-audio \"{stem}\" \"{fname}\")
+(code-video \"{stem}\" \"{fname}\")
+;; (find-{stem})
+;; (find-{stem} \"0:00\")
+;; (find-{stem} t)
+;; (eev-avadj-mode 1)
 "))
 
 
@@ -446,7 +484,10 @@ cd     {dir}"))
 ;;; | |  | |_____/ /_ _  |  _| | | | | (_| |_____/ /\__ \ | | |
 ;;; |_|  |_|    /____(_) |_| |_|_| |_|\__,_|    /___|___/_| |_|
 ;;;                                                            
+;; «eewrap-zsh»  (to ".eewrap-zsh")
 ;; (define-key eev-mode-map "\M-Z" 'eewrap-zsh)
+;; Skel: (find-eewrap-links "Z" "zsh" "str")
+;; Test: (find-eewraptest-links "zsh" "echo $SHELL")
 
 (defun  eewrap-zsh () (interactive)
   (ee-this-line-wrapn 1 'ee-wrap-zsh))
@@ -462,10 +503,12 @@ cd     {dir}"))
 ;;; | |  | |_____|_      _|_   / __/  |  __/  __/ |_) | | || (__| | | |  __/\__ \
 ;;; |_|  |_|       |_||_| (_) |_____|  \___|\___| .__/|_|\__\___|_| |_|\___||___/
 ;;;                                             |_|                              
-;; See: (find-multiwindow-intro "Several eepitch targets")
-;; (find-eewrap-links "#" "two-eepitches" "b c")
-;; M-#: two-eepitches
-;; (define-key eev-mode-map "\M-#" 'eewrap-two-eepitches)
+;;
+;; «eewrap-two-eepitches»  (to ".eewrap-two-eepitches")
+;; See: (find-multiwindow-intro "4. Several eepitch targets")
+;;      (find-multiwindow-intro "7. Eepitch blocks for two targets")
+;; Skel: (find-eewrap-links "#" "two-eepitches" "b c")
+;; Test: (find-eewraptest-links "two-eepitches" "shell python")
 
 (defun  eewrap-two-eepitches () (interactive)
   (ee-this-line-wrapn 2 'ee-wrap-two-eepitches))
@@ -490,22 +533,35 @@ cd     {dir}"))
 ;;;  \___|\___| \_/\_/ |_|  \__,_| .__/  |_____|
 ;;;                              |_|            
 ;;
-;; See: (find-eev "eev-tlinks.el" "find-find-links-links")
+;; «ee-wrap-eewrap»  (to ".ee-wrap-eewrap")
+;; See: (find-eev "eev-tlinks.el" "find-find-links-links-new")
 ;;      (find-wrap-intro "eewrap-eewrap")
 ;; This is somewhat similar to `find-find-links-links',
 ;; but it is MUCH more primitive - consider it a demo!
 
 (defun  eewrap-eewrap () (interactive)
+  "Obsolete! Superseded by `find-eewrap-links'!"
   (ee-this-line-wrapn 3 'ee-wrap-eewrap))
+
 (defun ee-wrap-eewrap (C stem args)
+  "An internal function used by `find-eewrap-links'."
   (let ((n (length (ee-split args))))
     (ee-template0 "
-;; M-{C}: {stem}
-\(define-key eev-mode-map \"\\M-{C}\" 'eewrap-{stem})
+;; (find-efunction 'eewrap-{stem})
 
-\(defun  eewrap-{stem} () (interactive)
+;; M-{C}: {stem}
+;; (find-eev \"eev-mode.el\" \"eev-mode-map-set\")
+;; (find-eev \"eev-mode.el\" \"eev-mode-map-set\" \"M-{C}\")
+;; (find-eev \"eev-mode.el\" \"eev-mode-map-set\" \"M-{C}\" \"eewrap-{stem}\")
+;; (define-key eev-mode-map \"\\M-{C}\" 'eewrap-{stem})
+
+;; <eewrap-{stem}>
+;; Skel: (find-eewrap-links \"{C}\" \"{stem}\" \"{args}\")
+;; Test: (find-eewraptest-links \"{stem}\" \"{args}\")
+
+(defun  eewrap-{stem} () (interactive)
   (ee-this-line-wrapn {n} 'ee-wrap-{stem}))
-\(defun ee-wrap-{stem} ({args})
+(defun ee-wrap-{stem} ({args})
   \"An internal function used by `eewrap-{stem}'.\"
   (ee-template0 \"\\
 {<}(ee-HS `(find-{stem} ,{args})){>}\"))\n")))
@@ -513,15 +569,17 @@ cd     {dir}"))
 
 ;; «find-eewrap-links» (to ".find-eewrap-links")
 ;; A more standard way to create `eewrap-*' functions.
-;; (find-find-links-links "<none>" "eewrap" "C stem args")
+;; Skel: (find-find-links-links-new "eewrap" "C stem args" "n")
+;; Test: (find-eewrap-links)
 ;;
 (defun find-eewrap-links (&optional C stem args &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for foo."
+  "Visit a temporary buffer containing hyperlinks for eewrap."
   (interactive)
   (setq C    (or C    "{C}"))
   (setq stem (or stem "{stem}"))
   (setq args (or args "{args}"))
-  (apply 'find-elinks-elisp
+  (apply
+   'find-elinks-elisp
    `((find-eewrap-links ,C ,stem ,args ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-eewrap-links)
@@ -529,8 +587,30 @@ cd     {dir}"))
      )
    pos-spec-list))
 
-;; Test: (find-eewrap-links)
 
+;; «find-eewraptest-links»  (to ".find-eewraptest-links")
+;; Skel:  (find-find-links-links-new "eewraptest" "stem line" "")
+;; Tests: (find-eewraptest-links "eejump" "42   (find-fline \"~/TODO\")")
+;;        (find-eewraptest-links "eejump" "todo (find-fline \"~/TODO\")")
+;;
+(defun find-eewraptest-links (&optional stem line &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eewraptest."
+  (interactive)
+  (setq stem (or stem "{stem}"))
+  (setq line (or line "{line}"))
+  (apply
+   'find-elinks-elisp
+   `((find-eewraptest-links ,stem ,line ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eewraptest-links)
+     ""
+     ,(ee-template0 "\
+;; (eek \"2*<down> <<eewrap-{stem}>>\")
+;; (find-efunction 'eewrap-{stem})
+{line}
+")
+     )
+   pos-spec-list))
 
 
 

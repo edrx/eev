@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240114
+;; Version:    20240120
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1696,6 +1696,7 @@ Hint: install the Debian package \"unicode-data\".")
 
 (defun find-eaproposf (regexp &rest rest)
   "Go to a temporary buffer listing all functions whose names match REGEXP."
+  (interactive "sApropos function (regexp): ")
   (apply 'find-elinks-elisp
 	 `(,(ee-template0 "\
 ;; (find-eaproposf {(ee-S regexp)})
@@ -1707,6 +1708,7 @@ Hint: install the Debian package \"unicode-data\".")
 
 (defun find-eaproposv (regexp &rest rest)
   "Go to a temporary buffer listing all variables whose names match REGEXP."
+  (interactive "sApropos variable (regexp): ")
   (apply 'find-elinks-elisp
 	 `(,(ee-template0 "\
 ;; (find-eaproposv {(ee-S regexp)})

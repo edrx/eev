@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240113
+;; Version:    20240117
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -268,15 +268,39 @@
     (eval code)
     msg))
 
+(defun ee-search-forward-before (str)
+  "An internal function used by `ee-copy-rest0'."
+  (save-excursion
+    (search-forward str)
+    (search-backward str)
+    (point)))
+
 (defun ee-copy-rest0 (skip code)
   "Copy the rest of this buffer to the kill ring and execute CODE.
 The rest of this buffer is everything from the beginning of the next line -
-optionally moving down SKIP lines - to the end of the buffer."
-  (ee-copy-rest00 skip '(point-max) code))
+optionally moving down SKIP lines - to the end of the buffer.
 
-(defun ee-copy-rest  (skip code)
+If SKIP is a list like (2 \"--snip--snip--\") then use another
+notion of \"the rest of this buffer\": it will be everything from
+2 lines from here downwards to the first occurrence of the string
+\"--snip--snip--\" after the point."
+  (if (numberp skip)
+      (ee-copy-rest00 skip '(point-max) code)
+    (let* ((nlines  (nth 0 skip))
+	   (str     (nth 1 skip))
+	   (gotoend `(ee-search-forward-before ,str)))
+      (ee-copy-rest00 nlines gotoend code))))
+
+(defun ee-copy-rest (skip code)
   "Copy the rest of this buffer to the kill ring and execute CODE.
-See: (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")"
+The rest of this buffer is everything from the beginning of the next line -
+optionally moving down SKIP lines - to the end of the buffer.
+See: (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")
+
+If SKIP is a list like (2 \"--snip--snip--\") then use another
+notion of \"the rest of this buffer\": it will be everything from
+2 lines from here downwards to the first occurrence of the string
+\"--snip--snip--\" after the point."
   (ee-copy-rest0 skip `(find-2a nil ',code)))
 
 
@@ -4963,10 +4987,10 @@ dofile \"{dir0}lua50init.lua\"
 
 
 ;; «find-luaso-links»  (to ".find-luaso-links")
-;; Skel: (find-find-links-links-new "luaso" "fname funname" "fname0 fname00 stem dir")
+;; Skel: (find-find-links-links-new "luaso" "fname funname" "fnameshort fnameangg fnamebase dir edir")
 ;; Test: (find-luaso-links "/tmp/dummy2.c" "foo")
-;;  See: (find-angg "CLUA/foo.c")
-;;       (find-angg "LUA/CLua1.lua")
+;;  See: (find-angg "LUA/CLua1.lua")
+;;       (find-angg "CLUA/foo.c")
 ;;       (find-es "lua5" "CLua1.lua")
 ;;
 (defun find-luaso-links (&optional fname funname &rest pos-spec-list)
@@ -4974,10 +4998,11 @@ dofile \"{dir0}lua50init.lua\"
   (interactive)
   (setq fname (or fname "{fname}"))
   (setq funname (or funname "{funname}"))
-  (let* ((fname0  (ee-shorten-file-name fname))
-         (fname00 (ee-replace-prefix "~/" "" fname0))
-         (stem    (file-name-base fname))
-         (dir     (file-name-directory fname)))
+  (let* ((fnameshort (ee-shorten-file-name fname))
+         (fnameangg  (ee-replace-prefix "~/" "" fnameshort))
+         (fnamebase  (file-name-base fname))
+         (dir        (or (file-name-directory fname) ""))
+         (edir       (ee-expand dir)))
     (apply
      'find-elinks
      `((find-luaso-links ,fname ,funname ,@pos-spec-list)
@@ -4986,21 +5011,22 @@ dofile \"{dir0}lua50init.lua\"
        ""
        ,(ee-template0 "\
 // (c-mode)
+// See: (find-lua-tutorial-intro \"3. The C API\")
 // All lines with \"angg\" are angg-isms!
-//   (kill-new \"  {fname00}\")
+//   (kill-new \"  {fnameangg}\")
 //   (find-blogme3 \"anggmake.lua\" \"anggtranslate\")
 //   (find-blogme3 \"anggmake.lua\" \"anggtranslate\" \"LUA/\")
 // (ee-copy-rest 2 '(find-fline \"{fname}\"))
 
 
 // This file:
-//   http://anggtwu.net/{fname00}.html
-//   http://anggtwu.net/{fname00}
-//          (find-angg \"{fname00}\")
+//   http://anggtwu.net/{fnameangg}.html
+//   http://anggtwu.net/{fnameangg}
+//          (find-angg \"{fnameangg}\")
 //    Skel: (find-luaso-links \"{fname}\" \"{funname}\")
 //  Author: Eduardo Ochs <eduardoochs@gmail.com>
 //
-// (defun e () (interactive) (find-angg \"{fname00}\"))
+// (defun e () (interactive) (find-angg \"{fnameangg}\"))
 
 #include \"lauxlib.h\"
 #include <stdio.h>
@@ -5011,14 +5037,14 @@ static int my_{funname}(lua_State* L) {<}
   return 2;
 {>}
 
-static const struct luaL_reg {stem}_lib[] = {<}
+static const struct luaL_reg {fnamebase}_lib[] = {<}
   {<}\"{funname}\", my_{funname}{>},
   {<}NULL,  NULL{>}
 {>};
 
-LUALIB_API int luaopen_{stem}(lua_State *L) {<}
+LUALIB_API int luaopen_{fnamebase}(lua_State *L) {<}
   lua_pushvalue(L, LUA_GLOBALSINDEX);
-  luaL_openlib(L, NULL, {stem}_lib, 0);
+  luaL_openlib(L, NULL, {fnamebase}_lib, 0);
   return 0;
 {>}
 
@@ -5034,15 +5060,14 @@ LUADIR=/opt/local/include/lua5.1
 CFLAGS=\"-g -Wall -shared\"
 LUADIR=/usr/include/lua5.1
 
-echo gcc $CFLAGS -I$LUADIR -o {stem}.so {stem}.c
-     gcc $CFLAGS -I$LUADIR -o {stem}.so {stem}.c
-ls -lAF {stem}*
+echo gcc $CFLAGS -I$LUADIR -o {fnamebase}.so {fnamebase}.c
+     gcc $CFLAGS -I$LUADIR -o {fnamebase}.so {fnamebase}.c
+ls -lAF {fnamebase}*
 
  (eepitch-lua51)
  (eepitch-kill)
  (eepitch-lua51)
-Path.prependtocpath \"{dir}?.so\"
-require \"{stem}\"
+package.loadlib(\"{edir}{fnamebase}.so\", \"luaopen_{fnamebase}\")()
 print({funname}(42))
 
 */\

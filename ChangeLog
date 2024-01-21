@@ -1,3 +1,30 @@
+2024-01-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-wrap-intro): rewrote the section "6. All
+	wrapping functions".
+
+2024-01-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el (ee-wrap-eewrap): small changes.
+	(find-eewraptest-links): new function.
+
+	* eev-blinks.el (find-eaproposf, find-eaproposv): make
+	interactive.
+
+2024-01-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-copy-rest0): added support for "skip"s that
+	are lists made of a number of lines and a string to search for.
+	(ee-search-forward-before): new function.
+
+	* eev-intro.el (find-dot-emacs-intro): new intro.
+
+2024-01-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added an entry for
+	"2024luaso".
+	(find-2024gitvideo): new function.
+
 2024-01-15  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: bumped the version.

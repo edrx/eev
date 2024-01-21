@@ -600,6 +600,8 @@ See: (find-eepitch-intro)"
 ;;      (find-wrap-intro)
 ;;      (find-eev "eev-mode.el" "eev-mode-map-set" "M-T" "eewrap-eepitch")
 ;;      (find-eepitch-bullet-links)
+;; Skel: (find-eewrap-links "T" "eepitch" "str")
+;; Test: (find-eewraptest-links "eepitch" "shell")
 
 (defun eewrap-eepitch () (interactive)
   "Convert the current into an eepitch block (three lines long)."

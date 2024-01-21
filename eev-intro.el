@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240114
+;; Version:    20240121
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -101,6 +101,7 @@
 ;; «.find-rstdoc-intro»			(to "find-rstdoc-intro")
 ;; «.find-show2-intro»			(to "find-show2-intro")
 ;; «.find-lua-tutorial-intro»		(to "find-lua-tutorial-intro")
+;; «.find-dot-emacs-intro»		(to "find-dot-emacs-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -2830,57 +2831,58 @@ recommended reading order. These are the basic ones:
   11. (find-psne-intro)
   12. (find-rcirc-intro)
   13. (find-elisp-intro)
-  14. (find-lexical-intro)
-  15. (find-multiwindow-intro)
-  16. (find-eev-install-intro)
+  14. (find-dot-emacs-intro)
+  15. (find-lexical-intro)
+  16. (find-multiwindow-intro)
+  17. (find-eev-install-intro)
 
 These are things that I am using in workshops:
 
-  17. (find-windows-beginner-intro)
-  18. (find-eev-exercises-intro)
+  18. (find-windows-beginner-intro)
+  19. (find-eev-exercises-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  19. (find-escripts-intro)
-  20. (find-links-conv-intro)
+  20. (find-escripts-intro)
+  21. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  21. (find-eval-intro)
-  22. (find-links-intro)
-  23. (find-brxxx-intro)
-  24. (find-wrap-intro)
-  25. (find-eejump-intro)
-  26. (find-anchors-intro)
-  27. (find-code-c-d-intro)
+  22. (find-eval-intro)
+  23. (find-links-intro)
+  24. (find-brxxx-intro)
+  25. (find-wrap-intro)
+  26. (find-eejump-intro)
+  27. (find-anchors-intro)
+  28. (find-code-c-d-intro)
 
 These are etcs:
 
-  28. (find-templates-intro)
-  29. (find-org-intro)
-  30. (find-git-intro)
+  29. (find-templates-intro)
+  30. (find-org-intro)
+  31. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  31. (find-kla-intro)
-  32. (find-kl-here-intro)
-  33. (find-edit-index-intro)
-  34. (find-rstdoc-intro)
-  35. (find-show2-intro)
-  36. (find-lua-tutorial-intro)
-  37. (find-prepared-intro)
-  38. (find-bounded-intro)
-  39. (find-channels-intro)
+  32. (find-kla-intro)
+  33. (find-kl-here-intro)
+  34. (find-edit-index-intro)
+  35. (find-rstdoc-intro)
+  36. (find-show2-intro)
+  37. (find-lua-tutorial-intro)
+  38. (find-prepared-intro)
+  39. (find-bounded-intro)
+  40. (find-channels-intro)
 
 This one was used in a video:
 
-  40. (find-three-main-keys-intro)
+  41. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  41. (find-emacs-intro)
-  42. (find-defun-intro)
+  42. (find-emacs-intro)
+  43. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -7207,64 +7209,105 @@ Try <M-M> here:
 
 6. All wrapping functions
 =========================
-Below is a list of all wrapping functions, with tests and
-hyperlinks:
+Try this:
 
-  (eek \"2*<down> M-A <down> ;;; Test eewrap-anchor\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-anchor\")
-;; <anchor>
+  (find-eaproposf \"eewrap\")
 
-  (eek \"2*<down> M-C <down> ;;; Test eewrap-code-c-d\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-code-c-d\")
-foo /tmp/foobar/
+It will show a temporary buffer with hyperlinks like this one,
 
-  (eek \"2*<down> M-D <down> ;;; Test eewrap-debian\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-debian\")
-bash
+  (find-efunction 'eewrap-find-fline)
 
-  (eek \"2*<down> M-F <down> ;;; Test eewrap-find-fline\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-find-fline\")
-/tmp/foobar/
+that points to the definition of `eewrap-find-fline'. Each
+definition of an `eewrap-*' function is preceded by a header that
+contains two lines like these ones:
 
-  (eek \"2*<down> M-J <down> ;;; Test eewrap-eejump\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eejump\")
-422 (find-eev-intro \"find-wrap-intro\")
+  ;; Skel: (find-eewrap-links \"F\" \"find-fline\" \"fname\")
+  ;; Test: (find-eewraptest-links \"find-fline\" \"/tmp/foo\")
 
-  (eek \"2*<down> M-J <down> ;;; Test eewrap-eejump\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eejump\")
-42
+The `find-eewraptest-links' goes to a temporary buffer that
+contains a test like this one,
 
-  (eek \"2*<down> M-M <down> ;;; Test eewrap-man\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-man\")
-1 tac
+  ;; (eek \"<down> <<eewrap-find-fline>>\")
+  /tmp/foo
 
-  (eek \"2*<down> M-P <down> ;;; Test eewrap-pdflike\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-pdflike\")
-foopdf $S/http/foo.org/bar.pdf
+that demonstrates a typical use of that `eewrap-*' function.
+Here are all the tests copied to a single place:
 
-  (eek \"2*<down> M-R <down> ;;; Test eewrap-rm/mkdir/cd\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-rm/mkdir/cd\")
-/tmp/foo/
+  ;; M-A:  (find-efunction 'eewrap-anchor)
+  ;; Test: (find-eewraptest-links \"anchor\" \"# <foo>\")
+  ;;       (eek \"<down> <<eewrap-anchor>>\")
+  # <foo>
 
-  (eek \"2*<down> M-S <down> ;;; Test eewrap-sh\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-sh\")
-seq 1 20
+  ;; M-C:  (find-efunction 'eewrap-code-c-d)
+  ;; Test: (find-eewraptest-links \"code-c-d\" \"CCC /DIR/\")
+  ;;       (eek \"<down> <<eewrap-code-c-d>>\")
+  CCC /DIR/
 
-  (eek \"2*<down> M-T <down> ;;; Test eewrap-eepitch\")
-   Source:  (find-eev \"eepitch.el\"  \"eewrap-eepitch\")
-python
+  ;; M-D:  (find-efunction 'eewrap-debian)
+  ;; Test: (find-eewraptest-links \"debian\" \"bash\")
+  ;;       (eek \"<down> <<eewrap-debian>>\")
+  bash
 
-  (eek \"2*<down> M-V <down> ;;; Test eewrap-audiovideo\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-audiovideo\")
-slimetutorial /tmp/slime-tutorial.mp4
+  ;; M-J:    (find-efunction 'eewrap-eejump)
+  ;; Test 1: (find-eewraptest-links \"eejump\" \"42   (find-fline \\\"~/TODO\\\")\")
+  ;;         (eek \"<down> <<eewrap-eejump>>\")
+  42   (find-fline \"~/TODO\")
 
-  (eek \"2*<down> M-Z <down> ;;; Test eewrap-zsh\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-zsh\")
-echo $SHELL
+  ;; M-J:    (find-efunction 'eewrap-eejump)
+  ;; Test 2: (find-eewraptest-links \"eejump\" \"todo (find-fline \\\"~/TODO\\\")\")
+  ;;         (eek \"<down> <<eewrap-eejump>>\")
+  todo (find-fline \"~/TODO\")
 
-  (eek \"2*<down> <<eewrap-eewrap>> <down> ;;; Test eewrap-eewrap\")
-   Source:  (find-eev \"eev-wrap.el\" \"eewrap-eewrap\")
-U user-defined a b c
+  ;; M-F:  (find-efunction 'eewrap-find-fline)
+  ;; Test: (find-eewraptest-links \"find-fline\" \"/tmp/foo\")
+  ;;       (eek \"<down> <<eewrap-find-fline>>\")
+  /tmp/foo
+
+  ;; M-M:  (find-efunction 'eewrap-man)
+  ;; Test: (find-eewraptest-links \"man\" \"1 tac\")
+  ;;       (eek \"<down> <<eewrap-man>>\")
+  1 tac
+
+  ;; M-P:  (find-efunction 'eewrap-pdflike)
+  ;; Test: (find-eewraptest-links \"pdflike\" \"o /tmp/o.pdf\")
+  ;;       (eek \"<down> <<eewrap-pdflike>>\")
+  o /tmp/o.pdf
+
+  ;; M-R:  (find-efunction 'eewrap-rm/mkdir/cd)
+  ;; Test: (find-eewraptest-links \"rm/mkdir/cd\" \"/tmp/foo/\")
+  ;;       (eek \"<down> <<eewrap-rm/mkdir/cd>>\")
+  /tmp/foo/
+
+  ;; M-S:  (find-efunction 'eewrap-sh)
+  ;; Test: (find-eewraptest-links \"sh\" \"dict smop\")
+  ;;       (eek \"<down> <<eewrap-sh>>\")
+  dict smop
+
+  ;; M-T:  (find-efunction 'eewrap-eepitch)
+  ;; Test: (find-eewraptest-links \"eepitch\" \"shell\")
+  ;;       (eek \"<down> <<eewrap-eepitch>>\")
+  shell
+
+  ;; M-V:  (find-efunction 'eewrap-audiovideo)
+  ;; Test: (find-eewraptest-links \"audiovideo\" \"ovideo /tmp/o.mp4\")
+  ;;       (eek \"<down> <<eewrap-audiovideo>>\")
+  ovideo /tmp/o.mp4
+
+  ;; M-Z:  (find-efunction 'eewrap-zsh)
+  ;; Test: (find-eewraptest-links \"zsh\" \"echo $SHELL\")
+  ;;       (eek \"<down> <<eewrap-zsh>>\")
+  echo $SHELL
+
+  ;; M-#:  (find-efunction 'eewrap-two-eepitches)
+  ;; Test: (find-eewraptest-links \"two-eepitches\" \"shell python\")
+  ;;       (eek \"<down> <<eewrap-two-eepitches>>\")
+  shell python
+
+The bindings for `M-Z' and `M-#' are not active by default. See:
+
+  (find-eev \"eev-mode.el\" \"eev-mode-map-set\" \"M-Z\" \"eewrap-zsh\")
+  (find-eev \"eev-mode.el\" \"eev-mode-map-set\" \"M-#\" \"eewrap-two-eepitches\")
+
 
 
 
@@ -15435,6 +15478,11 @@ It is meant as both a tutorial and a sandbox.
          (find-1stclassvideolsubs \"eev2022kla\")
          (find-eev2022klavideo \"0:00\")
 
+Update:
+ Read this first:
+ (find-kl-here-intro)
+
+
 
 
 1. Introduction
@@ -17299,16 +17347,24 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-This is a work in progress that
-is in a very early stage!
+This intro is a work in progress -
+that is in a very early stage!!!
+At this moment it only covers the material
+that is in this video:
+  Page:  http://anggtwu.net/find-luaso-links.html
+  Play:  (find-2024luasovideo \"00:00\")
+  LSubs: (find-2024luasolsubs \"00:00\")
+  Info:  (find-1stclassvideodef \"2024luaso\")
 
-This intro
+Note that this intro
 
   (find-show2-intro)
 
 explains how to install Lua and how to test the programs that I
 presented in the EmacsConf2023, but it doesn't say where someone
 who would like to learn Lua can learn the basics...
+
+
 
 
 
@@ -17443,7 +17499,7 @@ all strings from templates. Here's how to test it:
   wget http://anggtwu.net/LUA/Dang1.lua
   wget http://anggtwu.net/LUA/CLua1.lua
 
- Make `find-clua' and LUA_{<}INIT,PATH{>} point to /tmp/CLua1/:
+ Make `find-clua' and LUA_{INIT,PATH} point to /tmp/CLua1/:
  (code-c-d \"clua\"    \"/tmp/CLua1/\" :anchor)
  (setenv \"LUA_INIT\" \"@/tmp/CLua1/lua50init.lua\")
  (setenv \"LUA_PATH\"  \"/tmp/CLua1/?.lua;;\")
@@ -17505,6 +17561,125 @@ I need to clean it up and explain how to use it...
 " pos-spec-list)))
 
 ;; (find-lua-tutorial-intro)
+
+
+
+
+
+;;;                                    
+;;;       ___ _ __ ___   __ _  ___ ___ 
+;;;      / _ \ '_ ` _ \ / _` |/ __/ __|
+;;;  _  |  __/ | | | | | (_| | (__\__ \
+;;; (_)  \___|_| |_| |_|\__,_|\___|___/
+;;;                                    
+;; «find-dot-emacs-intro»  (to ".find-dot-emacs-intro")
+;; Skel: (find-intro-links "dot-emacs")
+;; Test: (find-dot-emacs-intro)
+
+(defun find-dot-emacs-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-dot-emacs-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-dot-emacs-intro)
+Source code:  (find-efunction 'find-dot-emacs-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+Note:
+THIS IS A VERY EARLY DRAFT!
+THIS IS A MESS!!!
+
+
+
+0. Pre-requisites
+=================
+This intro supposes that you know:
+  1. how to do cut and paste in Emacs,
+  2. how and why to put messy notes at the end of your ~/TODO, 
+  3. several ways to go to ~/TODO, 
+  4. a bit of elisp.
+
+Here you will learn how (and why) to put messy notes _in elisp_
+at the end of your ~/.emacs. Note that this is a style that many
+people
+
+
+1. Cutting and pasting
+======================
+Make sure that you understand the basics of cutting and pasting,
+from:
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+  (find-emacs-keys-intro \"3. Cutting & pasting\")
+
+Emacs also has ways to put things in the kill ring directly. Try:
+
+  (kill-new \"foo\")
+
+and try to understand what this does, and how to use it to paste
+two lines to your ~/TODO:
+
+;;-- (ee-copy-rest '(0 \";;--snip--\") '(find-fline \"~/TODO\"))
+FOO
+BAR
+;;--snip--
+
+Hint:
+  (find-eev-quick-intro \"7.5. `find-latex-links'\")
+  (find-efunctiondescr 'ee-copy-rest)
+  (find-efunctiondescr 'ee-copy-rest0)
+
+
+
+2. Lisp with hyperlinks in comments
+===================================
+
+
+  (find-eev-quick-intro \"7.1. `eejump'\")
+  (find-eev-quick-intro \"7.1. `eejump'\" \"~/TODO\")
+  (find-enode \"Major Modes\")
+
+
+
+3. emacs-lisp-mode
+==================
+# (find-evardescr 'auto-mode-alist)
+# (find-evariable 'auto-mode-alist)
+# (find-eppp auto-mode-alist)
+# (find-hvariable 'auto-mode-alist)
+
+# (find-elnode \"Index\" \"* auto-mode-alist:\")
+
+
+second scratch, like ~/TODO
+M-15j
+stops at the first error
+add links in comments
+rewrite ee-copy-rest
+major mode: emacs-lisp
+
+
+;;-- (ee-copy-rest '(0 \";;--snip--\") '(find-fline \"~/.emacs\"))
+;; See: (find-eev \"eev-load.el\")
+;;      (find-eev-install-intro \"_Activating_\")
+(require 'eev-load)
+(eev-mode 1)
+;;
+;; See: (find-kl-here-intro)
+;;      (find-eev \"eev-kl-here.el\")
+(require 'eev-kl-here)
+;;--snip--
+
+auto-mode-alist
+
+
+
+" pos-spec-list)))
+
+;; (find-dot-emacs-intro)
 
 
 
@@ -18751,6 +18926,9 @@ And here are (elisp hyper)links to them with descriptions:
 " pos-spec-list)))
 
 ;; (find-lexical-intro)
+
+
+
 
 
 
