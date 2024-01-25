@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240125
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-pdflike.el>
@@ -178,6 +178,7 @@
 ;;
 ;; «.find-xpdf-page»			(to "find-xpdf-page")
 ;; «.find-pdftotext-text»		(to "find-pdftotext-text")
+;; «.find-pdftotext8-text»		(to "find-pdftotext8-text")
 ;; «.find-texworkspdf-page»		(to "find-texworkspdf-page")
 ;; «.find-pdftools-page»		(to "find-pdftools-page")
 ;; «.find-pdftoolsr-page»		(to "find-pdftoolsr-page")
@@ -729,6 +730,58 @@ We define it just to make this work: (find-efunction 'find-pdftotext-page)"
 
 
 
+;;;            _  __ _        _            _   ___  
+;;;  _ __   __| |/ _| |_ ___ | |_ _____  _| |_( _ ) 
+;;; | '_ \ / _` | |_| __/ _ \| __/ _ \ \/ / __/ _ \ 
+;;; | |_) | (_| |  _| || (_) | ||  __/>  <| || (_) |
+;;; | .__/ \__,_|_|  \__\___/ \__\___/_/\_\\__\___/ 
+;;; |_|                                             
+;;
+;; Some PDFs are encoded in a way that confuses pdftotext, and none of
+;; these ways of calling pdftotext work very well:
+;;
+;;   pdftotext -layout -enc Latin1 foo.pdf -
+;;   pdftotext -layout             foo.pdf -
+;;
+;; Then we can use a block like this,
+;;
+;;   http://angg.twu.net/acker/acker__ga_livro1_2019.pdf
+;;   (code-pdf-page  "ackerGA1" "$S/http/angg.twu.net/acker/acker__ga_livro1_2019.pdf")
+;;   (code-pdf-text  "ackerGA1" "$S/http/angg.twu.net/acker/acker__ga_livro1_2019.pdf" 16)
+;;   (code-pdf-text8 "ackerGA1" "$S/http/angg.twu.net/acker/acker__ga_livro1_2019.pdf" 16)
+;;   (find-ackerGA1page)
+;;   (find-ackerGA1page 3 "Sumário")
+;;   (find-ackerGA1text 3 "Sumário")
+;;
+;; that lets us switch between `code-pdf-text', that uses "pdftotext
+;; -layout -enc Latin1", and `code-pdf-text8', that uses "pdftotext
+;; -layout".
+;;
+;; «find-pdftotext8-text»  (to ".find-pdftotext8-text")
+(defun ee-find-pdftotext8-text (fname &rest rest)
+  `(,ee-pdftotext-program "-layout" ,(ee-expand fname) "-"))
+(defun ee-find-pdf-text8       (fname &rest rest)
+  `(,ee-pdftotext-program "-layout" ,(ee-expand fname) "-"))
+
+(defun find-pdftotext8-text (fname &optional page &rest rest)
+  "This defun will be overridden by the `code-pdftextbackend' below.
+We define it just to make this work: (find-efunction 'find-pdftotext-page)"
+  (apply 'find-sh-page (ee-find-pdftotext8-text fname) page rest))
+
+(defun find-pdf-text8       (fname &optional page &rest rest)
+  "This defun will be overridden by the `code-pdftextbackend' below.
+We define it just to make this work: (find-efunction 'find-pdftotext-page)"
+  (apply 'find-sh-page (ee-find-pdf-text8       fname) page rest))
+
+;; (find-code-pdftextbackend "pdftotext8-text")
+        (code-pdftextbackend "pdftotext8-text")
+;; (find-code-pdftextbackend "pdf-text8")
+        (code-pdftextbackend "pdf-text8")
+
+
+
+
+
 ;;;  _____   __  __                   _        
 ;;; |_   _|__\ \/ /_      _____  _ __| | _____ 
 ;;;   | |/ _ \\  /\ \ /\ / / _ \| '__| |/ / __|
@@ -1121,6 +1174,8 @@ If PAGE is non-nil append a \"#page=nnn\" to the result."
         (code-brfile 'find-pdf-page    :local 'brpdfl      :dired 'brpdfd)
 ;; (find-code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
         (code-brfile 'find-pdf-text    :local 'brpdftextl  :dired 'brpdftextd)
+;; (find-code-brfile 'find-pdf-text8   :local 'brpdftxt8l  :dired 'brpdftxt8d)
+        (code-brfile 'find-pdf-text8   :local 'brpdftxt8l  :dired 'brpdftxt8d)
 
 ;; (find-code-brfile 'find-djvu-page   :local 'brdjvul     :dired 'brdjvud)
         (code-brfile 'find-djvu-page   :local 'brdjvul     :dired 'brdjvud)

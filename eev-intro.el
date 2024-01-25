@@ -2164,6 +2164,10 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+This intro is being rewritten!
+
+
+
 0. Loading eev
 ==============
 Now - late 2022 - versions of Emacs in which `M-x list-packages'
@@ -2186,6 +2190,9 @@ here:
 
   (find-enode \"Lisp Libraries\")
 
+
+0.1. Installing
+---------------
 _Installing_ eev with a package manager only does this:
 
   a. this directory is put in the load-path:
@@ -2194,6 +2201,9 @@ _Installing_ eev with a package manager only does this:
 
   b. the function `eev-beginner' is declared as an autoload.
 
+
+0.2. Loading
+------------
 _Loading_ eev does a few things more. They are explained here:
 
   (find-eev-intro \"1. `eev-mode'\")
@@ -2222,6 +2232,9 @@ Use the version with \"(eev-mode 1)\" if you want to turn
 eev-mode on on startup, and the version with \";; (eev-mode 1)\"
 if you prefer to start with eev-mode off.
 
+
+0.3. Activating
+---------------
 _Activating_ eev means \"turning eev-mode on\". Activating eev
 does very little - see:
 
@@ -2373,114 +2386,85 @@ See:
 =======================
 These are the current ways to download and install eev:
 
-  1. as an Emacs package, with `M-x list-packages'. See this
-     video for _very detailed_ instructions:
 
-       http://anggtwu.net/2020-list-packages-eev-nav.html
+5.1. With `M-x list-packages'
+-----------------------------
+This way install the version of eev that is in ELPA. See this
+video for _very detailed_ instructions:
 
-  2. as an Emacs package, by downloading a file named
-     eev-YYYYMMDD.tar from either ELPA or anggtwu.net using
-     links like these ones - but you'll have to correct the date:
+  http://anggtwu.net/2020-list-packages-eev-nav.html
+  http://anggtwu.net/2020-list-packages-eev-nav.html#00:01
 
-       https://elpa.gnu.org/packages/eev.html
-       https://elpa.gnu.org/packages/eev-20211205.tar
+The second link goes to the subtitles of the video.
 
-     and then running `M-x package-install-file'.
 
-     If you're on M$ Windows and using Emacs 27.2 then you will
-     probably need this method, because of this bug:
 
-       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00482.html
-       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00530.html
-       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00556.html
-       https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg02148.html
+5.2. With `package-install'
+---------------------------
+This is equivalent to the previous way, but it uses sexps.
+You need to copy and paste these lines to an Emacs buffer,
+and then execute each one with `C-e C-x C-e':
 
-     There is a link to download Emacs28-pretest here:
+  (package-initialize)
+  (package-refresh-contents)
+  (package-install 'eev)
+  (eev-beginner)
 
-       (find-windows-beginner-intro \"1. Download and install Emacs\")
 
-  3. by using the script in section 5.1 below, that downloads a
-     .tgz from
 
-       http://anggtwu.net/eev-current/eev2.tgz ,
 
-     unpacks it in the directory ~/eev2/ and creates a script
-     called \"~/eev\" that starts Emacs loading eev and opening
-     the main tutorial,
+5.2. With `package-vc-install'
+------------------------------
+This installs the version of eev that is in the git repository.
+Copy and paste these lines to an Emacs buffer, and then execute
+each one with `C-e C-x C-e':
 
-  4. by downloading the .tgz above and unpacking it, and then
-     running these lines yourself:
+  (package-vc-install \"https://github.com/edrx/eev\")
+  (eev-beginner)
 
-       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
-       (require 'eev-load)
-       (eev-mode 1)               ; optional
+This will install eev in \"~/.emacs.d/elpa/eev/\". Try:
 
-  5. by downloading the git repo from
+  (find-fline \"~/.emacs.d/elpa/eev/\")
+  (find-fline \"~/.emacs.d/elpa/eev/ChangeLog\")
+  (find-eevfile \"\")
+  (find-eevfile \"ChangeLog\")
+  (find-eevfile \"VERSION\")
 
-       https://github.com/edrx/eev.git
 
-     and then running this:
 
-       (add-to-list 'load-path \"~/path-to-the-eev-source/\")
-       (require 'eev-load)
-       (eev-mode 1)               ; optional
+
+5.3. From the tarball in ELPA
+-----------------------------
+[This section is very old! TODO: rewrite it!]
+
+...as an Emacs package, by downloading a file named
+eev-YYYYMMDD.tar from either ELPA or anggtwu.net using
+links like these ones - but you'll have to correct the date:
+
+  https://elpa.gnu.org/packages/eev.html
+  https://elpa.gnu.org/packages/eev-20211205.tar
+
+and then running `M-x package-install-file'.
+
+If you're on M$ Windows and using Emacs 27.2 then you will
+probably need this method, because of this bug:
+
+  https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00482.html
+  https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00530.html
+  https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg00556.html
+  https://lists.gnu.org/archive/html/bug-gnu-emacs/2021-10/msg02148.html
+
+There is a link to download Emacs28-pretest here:
+
+  (find-windows-beginner-intro \"1. Download and install Emacs\")
+
 
 
 
 
 5.1. Using the tarball
 ----------------------
-This way of installing eev is recommended for people who can't or
-who don't want to use Emacs's `M-x list-packages' (from
-`package.el') and who are on a *NIX-based system.
-
-To install eev using this method, you should copy and paste the
-block of shell commands below into a terminal,
-
-{
-  rm -Rv ~/eev
-  rm -Rv ~/eev2/
-  mkdir  ~/eev2/
-  cd     ~/eev2/
-  rm -fv eev2.tgz
-  wget http://anggtwu.net/eev-current/eev2.tgz
-  tar -xvzf eev2.tgz
-  {
-    echo '#!/bin/sh'
-    echo 'cd ~/eev2/ && emacs -l eev-beginner.el --eval=\"(find-eev-quick-intro)\" $*'
-  } > ~/eev
-  chmod 755 ~/eev
-}
-
-and then execute the commands in it. This is explained in this
-outdated video (from 2016!):
-
-  http://anggtwu.net/eev-videos/video-eev-quick-0.mp4
-
-In short: you will have to open this URL in a browser,
-
-  http://anggtwu.net/eev-intros/find-eev-install-intro.html#5.1
-
-in a browser, and open a terminal running a shell; then mark the
-multi-line \"{ ... }\" block above, copy it to the clipboard with
-ctrl-C, and paste it into the shell to run its commands.
-
-You will now have a shell script that you can invoke with
-
-  ~/eev
-
-that starts Emacs, loads eev, and opens the main tutorial - i.e.,
-runs `M-x eev-beginner'. Note that if you install eev using this
-method then all the files related to eev will be in the directory
-~/eev2/, except for the script in ~/eev; if you start Emacs in
-the default way then it will not know that it has to look for
-stuff in ~/eev2/, and commands like `M-x eev-beginner' or sexps
-like
-
-  (require 'eev-load)
-  (load \"eev-beginner\")
-
-will not work.
+[Obsolete, deleted, except for this last paragraph:]
 
 Every time that Emacs gets stuck into something that you don't know
 how to leave, or how to undo, you should kill the Emacs window and
@@ -3404,6 +3388,29 @@ and the body of that buffer separately with:
   (ee-detect-here)
   (find-elinks (ee-find-here-debug-links))
 
+You can also try these tests:
+
+  (find-eev \"eev-htests.el\" \"tests\")
+
+Each test tests a kind of \"here\", and generates a 3-window
+setting of one of these two forms:
+
+   ______________________       ______________________ 
+  |         |            |     |         |            |
+  |         |  One kind  |     |         |  One kind  |
+  |         |   of here  |     |         |   of here  |
+  |  Tests  |____________|     |  Tests  |____________|
+  |         |            |     |         |            |
+  |         |  links to  |     |         |  one link  |
+  |         |    here    |     |         |   to here  |
+  |_________|____________|     |_________|____________|
+
+They are explained in:
+
+  (find-eev \"eev-htests.el\" \"find-tlh\")
+
+
+
 
 
 9. The hlang
@@ -4056,8 +4063,9 @@ video contains this:
   (find-2a nil '(find-efunction 'ee-eval-sexp-eol))
   (find-2b nil '(find-efunction 'ee-eval-sexp-eol))
 
-That video doesn't have any exercises. This because in its demo I
-use some techniques that are only explained in the section 6 below.
+That video doesn't have any exercises - it is just a demo that
+uses some techniques that are only explained in the section 6
+below.
 
   Title:   Material on `M-3 M-e', or:
            What does it mean to \"save links to everything
@@ -7228,7 +7236,7 @@ The `find-eewraptest-links' goes to a temporary buffer that
 contains a test like this one,
 
   ;; (eek \"<down> <<eewrap-find-fline>>\")
-  /tmp/foo
+/tmp/foo
 
 that demonstrates a typical use of that `eewrap-*' function.
 Here are all the tests copied to a single place:
@@ -7246,7 +7254,7 @@ Here are all the tests copied to a single place:
   ;; M-D:  (find-efunction 'eewrap-debian)
   ;; Test: (find-eewraptest-links \"debian\" \"bash\")
   ;;       (eek \"<down> <<eewrap-debian>>\")
-  bash
+bash
 
   ;; M-J:    (find-efunction 'eewrap-eejump)
   ;; Test 1: (find-eewraptest-links \"eejump\" \"42   (find-fline \\\"~/TODO\\\")\")
@@ -7266,7 +7274,7 @@ Here are all the tests copied to a single place:
   ;; M-M:  (find-efunction 'eewrap-man)
   ;; Test: (find-eewraptest-links \"man\" \"1 tac\")
   ;;       (eek \"<down> <<eewrap-man>>\")
-  1 tac
+1 tac
 
   ;; M-P:  (find-efunction 'eewrap-pdflike)
   ;; Test: (find-eewraptest-links \"pdflike\" \"o /tmp/o.pdf\")
@@ -7276,17 +7284,17 @@ Here are all the tests copied to a single place:
   ;; M-R:  (find-efunction 'eewrap-rm/mkdir/cd)
   ;; Test: (find-eewraptest-links \"rm/mkdir/cd\" \"/tmp/foo/\")
   ;;       (eek \"<down> <<eewrap-rm/mkdir/cd>>\")
-  /tmp/foo/
+/tmp/foo/
 
   ;; M-S:  (find-efunction 'eewrap-sh)
   ;; Test: (find-eewraptest-links \"sh\" \"dict smop\")
   ;;       (eek \"<down> <<eewrap-sh>>\")
-  dict smop
+dict smop
 
   ;; M-T:  (find-efunction 'eewrap-eepitch)
   ;; Test: (find-eewraptest-links \"eepitch\" \"shell\")
   ;;       (eek \"<down> <<eewrap-eepitch>>\")
-  shell
+shell
 
   ;; M-V:  (find-efunction 'eewrap-audiovideo)
   ;; Test: (find-eewraptest-links \"audiovideo\" \"ovideo /tmp/o.mp4\")
@@ -7296,7 +7304,7 @@ Here are all the tests copied to a single place:
   ;; M-Z:  (find-efunction 'eewrap-zsh)
   ;; Test: (find-eewraptest-links \"zsh\" \"echo $SHELL\")
   ;;       (eek \"<down> <<eewrap-zsh>>\")
-  echo $SHELL
+echo $SHELL
 
   ;; M-#:  (find-efunction 'eewrap-two-eepitches)
   ;; Test: (find-eewraptest-links \"two-eepitches\" \"shell python\")
@@ -14301,6 +14309,8 @@ The video is here:
   Info:  (find-1stclassvideo-links \"2024git\")
   Play:  (find-2024gitvideo \"00:00\")
   LSubs: (find-2024gitlsubs \"00:00\")
+  Subs:  http://anggtwu.net/2024-eev-git.html
+  Page:  http://anggtwu.net/2023-eev-git.html
 
 
 
@@ -16194,17 +16204,9 @@ echo area:
 Now go to the line with the title of this section, and type `M-x
 kll'. This will \"kill a link to here\", where \"here\" is this
 intro, and refine it to make it point to the current line. You
-will see one of these two messages in the echo area:
+will see this message in the echo area:
 
   Copied to the kill ring: (find-kl-here-intro \"2. Try it!\")
-  Copied to the kill ring: (find-kl-here-intro \"==========\")
-
-If you got the second one it's because the point was at the end
-of the line and Emacs considered that the \"current line\" was a
-line that contained just \"==========\" and indicated that the
-line above was to be underlined, and that was made invisible. The
-hyperlink with the \"==========\" is not very useful - try again
-with the point on another position of the title line...
 
 ...then go to the buffer with your notes with `M-1 M-j', paste
 the killed link there - remember:
@@ -16256,9 +16258,36 @@ that info page.
 
 4. `M-x kls'
 ============
+`M-x kls' \"Kills a Link to here and refines it with a String\".
+`M-x kls' it is similar to `M-x kll', but it uses the current
+region instead of the current line.
+
+Try it in the last line of the previous paragraph - mark the work
+\"region\" and type `M-x kls'. You should get this message,
+
+  Copied to the kill ring: (find-kl-here-intro \"region\")
+
+and if you yank the link with `C-y' you will get this,
+
+  (find-kl-here-intro \"region\")
+
+that is a link that points to the last line of the first
+paragraph of this section.
 
 
 
+5. The innards
+==============
+If you run `M-x kl', `M-x kll' or `M-x kls' with a prefix
+argument they will show a buffer with debugging information
+instead of killing a link. The last lines of that buffer will be
+these links, that explain everything:
+
+  # And:
+  #   (find-here-links-intro \"8. Debugging\")
+  #   (find-here-links-intro \"8. Debugging\" \"Each test tests\")
+  #   (find-eev \"eev-kl-here.el\" \"hprog\")
+  #   (find-eev \"eev-kl-here.el\" \"kl\")
 
 " pos-spec-list)))
 

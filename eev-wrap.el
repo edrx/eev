@@ -589,6 +589,7 @@ cd     {dir}"))
 
 
 ;; «find-eewraptest-links»  (to ".find-eewraptest-links")
+;; See:   (find-wrap-intro "6. All wrapping functions")
 ;; Skel:  (find-find-links-links-new "eewraptest" "stem line" "")
 ;; Tests: (find-eewraptest-links "eejump" "42   (find-fline \"~/TODO\")")
 ;;        (find-eewraptest-links "eejump" "todo (find-fline \"~/TODO\")")

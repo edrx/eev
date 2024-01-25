@@ -301,6 +301,7 @@
 #   (find-efunction '{(car ee-hlang-sexp2)})
 # And:
 #   (find-here-links-intro \"8. Debugging\")
+#   (find-here-links-intro \"8. Debugging\" \"Each test tests\")
 #   (find-eev \"eev-kl-here.el\" \"hprog\")
 #   (find-eev \"eev-kl-here.el\" \"kl\")
 ")
