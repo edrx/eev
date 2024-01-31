@@ -296,6 +296,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   (ee-template0 "\
 ;; (find-code-pdfbackend \"{pdfbackend}\")
 ;;      (code-pdfbackend \"{pdfbackend}\")
+;; (find-efunction 'find-code-pdfbackend)
 ;;
 ;; This is similar to a `code-c-d' - see:
 ;;   (find-eev-quick-intro \"9.1. `code-c-d'\")
@@ -313,7 +314,7 @@ newline are spurious - and replaces them by \"(ff)\"."
 ;;                      find-code-{pdfbackend}
 ;;
 ;; The function `find-{pdfbackend}' calls `ee-find-{pdfbackend}',
-;; that need to be defined externally.
+;; that needs to be defined externally.
 ;;
 ;; See:
 ;; (find-eev \"eev-pdflike.el\" \"code-pdfbackend\")

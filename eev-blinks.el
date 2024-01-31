@@ -2,7 +2,7 @@
 ;; The basic hyperlinks are the ones that do not depend on templates,
 ;; and that are not created by `code-c-d' and friends.
 
-;; Copyright (C) 1999-2023 Free Software Foundation, Inc.
+;; Copyright (C) 1999-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -1727,17 +1727,22 @@ Hint: install the Debian package \"unicode-data\".")
 
 
 ;; Tests: (find-eloadhistory-for 'eekla)
+;;        (find-eloadhistory-for 'next-line)
 ;;        (find-eloadhistory-for (symbol-file 'eekla 'defun))
 ;;
-(defun find-eloadhistory-for (f &rest pos-spec-list)
+(defun find-eloadhistory-for (f &rest rest)
   "Show the result of `(assoc F load-history)' in a temporary buffer.
 If F is a symbol it is converted to a filename with (symbol-file F 'defun)."
-  (let* ((fname (if (symbolp f) (symbol-file f 'defun) f))
-	 (sexp `(find-eloadhistory-for ,(ee-add-quote f)))
-	 (ee-buffer-name (format "*%S*" sexp))
-	 (body (ee-ppp0 (assoc fname load-history)))
-	 (header (format ";; %S\n;; (find-eloadhistory-links)\n\n" sexp)))
-    (apply 'find-estring-elisp (concat header body) pos-spec-list)))
+  (let* ((fname      (if (symbolp f) (symbol-file f 'defun) f))
+	 (fnameel    (replace-regexp-in-string ".elc$" ".el" fname))
+	 (sexp1     `(find-eloadhistory-for ,(ee-add-quote f) ,@rest))
+	 (sexp2     `(find-fline ,fnameel))
+	 (ee-buffer-name (format "*%S*" sexp1))
+	 (header     (format
+		      ";; %S\n;; (find-eloadhistory-links)\n;; %S\n\n"
+		      sexp1 sexp2))
+	 (body       (ee-ppp0 (assoc fname load-history))))
+    (apply 'find-estring-elisp (concat header body) rest)))
 
 
 

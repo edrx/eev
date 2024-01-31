@@ -1,6 +1,6 @@
 ;;; eev-elinks.el --- `find-efunction-links' and other `find-e*-links'  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -305,13 +305,16 @@ This is an internal function used by `find-efunction-links' and
     (find-elnode "Index" ,(format "* %S:" f))
     ""
     (where-is ',f)
+    ""
+    (find-eloadhistory-for ',f)
+    (find-estring-elisp (ee-eloadhistory-find-flines))
     (symbol-file ',f 'defun)
     (find-fline (symbol-file ',f 'defun))
     (find-eppp (assoc (symbol-file ',f 'defun) load-history))
     (find-eppp (assoc ,(symbol-file f 'defun) load-history))
     (find-eppp (mapcar 'car load-history))
     (find-estring (mapconcat 'identity (mapcar 'car load-history) "\n"))
-    (find-estring-elisp (ee-eloadhistory-find-flines))
+    ""
     (find-estring (documentation ',f))
     (find-estring (documentation ',f t))
     (describe-function ',f)

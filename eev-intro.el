@@ -61,6 +61,7 @@
 ;; «.find-eev-quick-intro»		(to "find-eev-quick-intro")
 ;; «.find-emacs-keys-intro»		(to "find-emacs-keys-intro")
 ;; «.find-eev-install-intro»		(to "find-eev-install-intro")
+;; «.find-eev-levels-intro»		(to "find-eev-levels-intro")
 ;; «.find-eev-intro»			(to "find-eev-intro")
 ;; «.find-here-links-intro»		(to "find-here-links-intro")
 ;; «.find-refining-intro»		(to "find-refining-intro")
@@ -2165,6 +2166,7 @@ It is meant as both a tutorial and a sandbox.
 
 
 This intro is being rewritten!
+See: (find-eev-levels-intro)
 
 
 
@@ -2766,6 +2768,94 @@ See:
 ;; (find-eev "eev-tlinks.el" "find-eev-update-links")
 ;; (find-eev "eev-tlinks.el" "find-eev-install-links")
 ;; (find-eev-update-links)
+
+
+
+;;;  _                _     
+;;; | | _____   _____| |___ 
+;;; | |/ _ \ \ / / _ \ / __|
+;;; | |  __/\ V /  __/ \__ \
+;;; |_|\___| \_/ \___|_|___/
+;;;                         
+;; «find-eev-levels-intro»  (to ".find-eev-levels-intro")
+;; Skel: (find-intro-links "eev-levels")
+;; Test: (find-eev-levels-intro)
+
+(defun find-eev-levels-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-eev-levels-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-eev-levels-intro)
+Source code:  (find-efunction 'find-eev-levels-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+
+See: (find-eev-install-intro)
+
+
+
+1. Installing
+=============
+_Installing_ eev with a package manager only does this:
+
+  a. this directory is put in the load-path:
+
+       (find-eevfile \"\")
+
+  b. the function `eev-beginner' is declared as an autoload.
+
+
+2. Loading
+==========
+_Loading_ eev does a few things more. They are explained here:
+
+  (find-eev-intro \"1. `eev-mode'\")
+  (find-eev-intro \"1. `eev-mode'\" \"invasive\")
+  (find-eev \"eev-load.el\" \"autoloads\")
+  (find-eev \"eev-load.el\" \"load-the-main-modules\")
+
+If you want to make your Emacs _load_ eev on startup, then the
+best way to do that is to put either this
+
+  ;; See: (find-eev-install-intro \"0. Loading eev\")
+  (require 'eev-load)
+  (eev-mode 1)
+
+or this
+
+  ;; See: (find-eev-install-intro \"0. Loading eev\")
+  (require 'eev-load)
+  ;; (eev-mode 1)
+
+in your init file - see:
+
+  (find-enode \"Init File\")
+
+Use the version with \"(eev-mode 1)\" if you want to turn
+eev-mode on on startup, and the version with \";; (eev-mode 1)\"
+if you prefer to start with eev-mode off.
+
+
+
+3. Activating
+=============
+_Activating_ eev means \"turning eev-mode on\". Activating eev
+does very little - see:
+
+  (find-eev-intro \"1. `eev-mode'\" \"Turning on eev-mode\")
+
+Note that \"installing\", \"loading\", and \"activating\" eev are
+different things, and each one does less than the next one.
+
+
+" pos-spec-list)))
+
+;; (find-eev-levels-intro)
+
 
 
 

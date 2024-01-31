@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231228
+;; Version:    20240128
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-htests.el>
@@ -106,6 +106,8 @@ running SEXP1 in the buffer A, and C is the result of running
 ;;   (find-tlhi '(find-eev-quick-intro)     '(ee-find-intro-linki))
 ;;   (find-tlhs '(find-man "1 cat")         '(ee-find-man-links))
 ;;   (find-tlhi '(find-man "1 cat")         '(ee-find-man-linki))
+;;   (find-tlhs '(find-epackage 'magit)     '(ee-find-epackage-links))
+;;   (find-tlhi '(find-epackage 'magit)     '(ee-find-epackage-linki))
 ;;   (find-tlhs '(find-epackages 'abs-mode) '(ee-find-epackages-links))
 ;;   (find-tlhi '(find-epackages 'abs-mode) '(ee-find-epackages-linki))
 ;;   (find-tlhs '(find-customizegroup 'editing) '(ee-find-custom-links))
