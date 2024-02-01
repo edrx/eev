@@ -572,7 +572,10 @@ The argument F is usually a symbol; it is converted to a filename
 by:
   (symbol-file f-or-fname 'defun)
 then if the filename ends in .elc, convert it to the
-corresponding .el."
+corresponding .el.
+
+This function is used by `find-lgreps'."
+  (grep-compute-defaults)
   (find-dbsw-call (ee-find-lgrep f re)))
 
 (defun ee-find-lgrep (f re)

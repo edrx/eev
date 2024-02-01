@@ -2,9 +2,11 @@
 
 	* eev-blinks.el (find-eloadhistory-for): use `find-elinks-elisp'
 	and `ee-file-name-elc-to-el'.
+	(find-lgreps): new function.
 
 	* eev-plinks.el (find-lgrep, ee-find-lgrep)
 	(ee-file-name-elc-to-el): new functions.
+	(find-lgrep): Added the missing `(grep-compute-defaults)'.
 
 2024-01-30  Eduardo Ochs  <eduardoochs@gmail.com>
 
