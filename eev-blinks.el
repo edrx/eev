@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240120
+;; Version:    20240201
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -68,6 +68,8 @@
 ;; «.find-epp»			(to "find-epp")
 ;; «.find-efunctionpp»		(to "find-efunctionpp")
 ;; «.find-eloadhistory»		(to "find-eloadhistory")
+;; «.find-eloadhistory-for»	(to "find-eloadhistory-for")
+;; «.find-lgreps»		(to "find-lgreps")
 ;; «.find-einternals»		(to "find-einternals")
 ;; «.find-einsert»		(to "find-einsert")
 ;; «.find-eunicode»		(to "find-eunicode")
@@ -1429,6 +1431,82 @@ LIBRARY is converted to an absolute file name using `locate-library'."
 	 pos-spec-list))
 
 
+;; «find-eloadhistory-for»  (to ".find-eloadhistory-for")
+;; Tests: (find-eloadhistory-for 'eekla)
+;;        (find-eloadhistory-for 'next-line)
+;;        (find-eloadhistory-for (symbol-file 'eekla 'defun))
+;;
+(defun find-eloadhistory-for (f &rest rest)
+  "Show the result of `(assoc F load-history)' in a temporary buffer.
+If F is a symbol it is converted to a filename with (symbol-file F 'defun)."
+  (let* ((fname      (if (symbolp f) (symbol-file f 'defun) f))
+	 (fnameel    (ee-file-name-elc-to-el fname))
+	 (ee-buffer-name (format "*%S*" `(find-eloadhistory-for ',f))))
+    (apply
+     'find-elinks-elisp
+     `((find-eloadhistory-for ,(ee-add-quote f) ,@rest)
+       (find-eloadhistory-links)
+       (find-fline ,fnameel)
+       ""
+       ,(ee-ppp0 (assoc fname load-history)))
+     rest)))
+
+
+
+;;;   __ _           _       _                          
+;;;  / _(_)_ __   __| |     | | __ _ _ __ ___ _ __  ___ 
+;;; | |_| | '_ \ / _` |_____| |/ _` | '__/ _ \ '_ \/ __|
+;;; |  _| | | | | (_| |_____| | (_| | | |  __/ |_) \__ \
+;;; |_| |_|_| |_|\__,_|     |_|\__, |_|  \___| .__/|___/
+;;;                            |___/         |_|        
+;;
+;; `find-lgreps' is a trick for finding the source code of some
+;; functions that were defined by certain macros or by `code-c-d' and
+;; friends. For example, these sexps generate temporary buffers with
+;; lots `find-efunction's that don't work:
+;;
+;;   (find-eaproposf "macro")
+;;   (find-eaproposf "code-pdf")
+;;   (find-eaproposf "^find-.*file")
+;;   (find-eaproposf "^br")
+;;
+;; But compare:
+;;
+;;   (find-efunction 'brff)
+;;   (find-lgreps    'brff)
+;;   (find-efunction 'find-efile)
+;;   (find-lpgreps   'find-efile "e")
+;;   (find-efunction 'cl-struct-p--cmacro)
+;;   (find-lgreps    'cl-struct-p--cmacro "cl-struct-p")
+;;
+;; «find-lgreps»  (to ".find-lgreps")
+
+(defun find-lgreps (f &optional stem)
+  "Go to a temporary buffer with links for finding the source code of F."
+  (interactive (find-function-read))
+  (setq stem (or stem (format "%s" f)))
+  (let* ((fname0 (symbol-file f 'defun))
+	 (fname  (ee-shorten-file-name (ee-file-name-elc-to-el fname0)))
+	 (stem1  (format "\"%s\"" stem))
+	 (stem2  (format "[( ']%s$" stem))
+	 (stem3  (format "[( ']%s[ )]" stem)))
+    (find-estring-elisp
+     `(ee-template0 "\
+;; (find-lgreps '{f} \"{stem}\")
+;; (find-eloadhistory-for '{f})
+;; (find-eloadhistory-for '{f} 2 \" {f})\")
+;; (find-efunction 'find-lgreps)
+
+(find-efunctionpp '{f})
+{(ee-S `(find-lgrep ',f ,stem1))}
+{(ee-S `(find-lgrep ',f ,stem2))}
+{(ee-S `(find-lgrep ',f ,stem3))}
+{(ee-S `(find-lgrep ,fname ,stem1))}
+{(ee-S `(find-lgrep ,fname ,stem2))}
+{(ee-S `(find-lgrep ,fname ,stem3))}
+{(ee-S `(find-fline ,fname))}
+"))))
+
 
 
 ;;;                                   _       _                        _     
@@ -1723,27 +1801,6 @@ Hint: install the Debian package \"unicode-data\".")
   (mapconcat (lambda (sym) (format fmt sym))
 	     (apropos-internal regexp predicate)
 	     ""))
-
-
-
-;; Tests: (find-eloadhistory-for 'eekla)
-;;        (find-eloadhistory-for 'next-line)
-;;        (find-eloadhistory-for (symbol-file 'eekla 'defun))
-;;
-(defun find-eloadhistory-for (f &rest rest)
-  "Show the result of `(assoc F load-history)' in a temporary buffer.
-If F is a symbol it is converted to a filename with (symbol-file F 'defun)."
-  (let* ((fname      (if (symbolp f) (symbol-file f 'defun) f))
-	 (fnameel    (replace-regexp-in-string ".elc$" ".el" fname))
-	 (sexp1     `(find-eloadhistory-for ,(ee-add-quote f) ,@rest))
-	 (sexp2     `(find-fline ,fnameel))
-	 (ee-buffer-name (format "*%S*" sexp1))
-	 (header     (format
-		      ";; %S\n;; (find-eloadhistory-links)\n;; %S\n\n"
-		      sexp1 sexp2))
-	 (body       (ee-ppp0 (assoc fname load-history))))
-    (apply 'find-estring-elisp (concat header body) rest)))
-
 
 
 

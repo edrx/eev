@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240115
+;; Version:    20240201
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -27,8 +27,8 @@
 ;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
 ;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
 ;;                 <http://anggtwu.net/eev-intros/find-links-intro.html>
-;;                                                (find-eev-intro)
-;;                                                (find-links-intro)
+;;                                               (find-eev-intro)
+;;                                               (find-links-intro)
 
 ;;; Commentary:
 
@@ -122,6 +122,7 @@
 ;; «.find-telegachat-msgc»	(to "find-telegachat-msgc")
 ;; «.find-firefox»		(to "find-firefox")
 ;; «.find-googlechrome»		(to "find-googlechrome")
+;; «.find-lgrep»		(to "find-lgrep")
 
 
 
@@ -547,6 +548,50 @@ also go to that message and highlight it."
 (defvar ee-googlechrome-program "google-chrome")
 (defun find-firefox      (url) (find-bgprocess `(,ee-firefox-program      ,url)))
 (defun find-googlechrome (url) (find-bgprocess `(,ee-googlechrome-program ,url)))
+
+
+
+
+;;;   __ _           _       _                      
+;;;  / _(_)_ __   __| |     | | __ _ _ __ ___ _ __  
+;;; | |_| | '_ \ / _` |_____| |/ _` | '__/ _ \ '_ \ 
+;;; |  _| | | | | (_| |_____| | (_| | | |  __/ |_) |
+;;; |_| |_|_| |_|\__,_|     |_|\__, |_|  \___| .__/ 
+;;;                            |___/         |_|    
+;;
+;; «find-lgrep»  (to ".find-lgrep")
+;; Tests: (find-lgrep 'brg "[ ']brg[ )]")
+;;        (find-lgrep 'find-efile  "\"e\"")
+;;     (ee-find-lgrep "/tmp/a.elc" "\"e\"")
+;;
+;; Used by: (find-eev "eev-blinks.el" "find-lgreps")
+;;
+(defun find-lgrep (f re)
+  "Use lgrep to search for all occurrences of RE in a file.
+The argument F is usually a symbol; it is converted to a filename
+by:
+  (symbol-file f-or-fname 'defun)
+then if the filename ends in .elc, convert it to the
+corresponding .el."
+  (find-dbsw-call (ee-find-lgrep f re)))
+
+(defun ee-find-lgrep (f re)
+  "An internal function used by `find-lgrep'."
+  (let* ((fname0  (if (symbolp f) (symbol-file f 'defun) f))
+	 (fname   (ee-file-name-elc-to-el fname0))
+         (dir     (file-name-directory    fname))
+         (fname   (file-name-nondirectory fname)))
+    `(lgrep ,re ,fname ,dir)))
+
+(defun ee-file-name-elc-to-el (fname)
+  "If FNAME ends with .elc, return the corresponding .el.
+Return FNAME unchanged in the other cases.
+
+Note: THIS IS CURRENTLY A PROTOTYPE! It doesn't work in the cases
+in which the \".el\" and the corresponding \".elc\" are in
+different directories... and so it doesn't work in packages
+installed by straight.el."
+  (replace-regexp-in-string ".elc$" ".el" fname))
 
 
 
