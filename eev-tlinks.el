@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240117
+;; Version:    20240205
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -138,6 +138,7 @@
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
 ;; «.find-1stclassvideo-links»		(to "find-1stclassvideo-links")
 ;; «.find-1stclassvideoindex»		(to "find-1stclassvideoindex")
+;; «.find-1stclassvideohsubs»		(to "find-1stclassvideohsubs")
 ;; «.find-1stclassvideolsubs»		(to "find-1stclassvideolsubs")
 ;; «.find-1stclassvideodef»		(to "find-1stclassvideodef")
 ;; «.find-1stclassvideos»		(to "find-1stclassvideos")
@@ -1620,6 +1621,8 @@ wget -nc  {url-}.mp4
        ,(ee-psne-1stclassvideo-play c time)
        )
      pos-spec-list)))
+
+(defalias 'find-1stclassvideo-psne 'find-psne-1stclassvideo-links)
 
 ;; Test:
 ;; (find-estring (ee-psne-1stclassvideo-play "eev2021" "1:23"))
@@ -3405,19 +3408,21 @@ This function is used by `ee-0x0-upload-region'."
 (defmacro ee-let*-macro-1stclassvideo-c (c &rest code)
   "An internal function used by `find-1stclassvideo-links'."
   `(let* ((c ,c)
-	  (title    (ee-1stclassvideos-field c :title))
-	  (mp4      (ee-1stclassvideos-field c :mp4))
-	  (yt       (ee-1stclassvideos-field c :yt))
-	  (page     (ee-1stclassvideos-field c :page))
-	  (date     (ee-1stclassvideos-field c :date))
-	  (length   (ee-1stclassvideos-field c :length))
-	  (comment  (ee-1stclassvideos-field c :comment))
-	  (lang     (ee-1stclassvideos-field c :lang))
-	  (exts     (ee-1stclassvideos-field c :subs))
-	  (mp4stem  (ee-1stclassvideos-mp4stem c))
-          (mp4found (ee-1stclassvideos-mp4found c))
-	  (hash     (ee-1stclassvideos-hash c))
-	  (hassubs  exts))
+	  (title     (ee-1stclassvideos-field c :title))
+	  (mp4       (ee-1stclassvideos-field c :mp4))
+	  (yt        (ee-1stclassvideos-field c :yt))
+	  (page      (ee-1stclassvideos-field c :page))
+	  (hsubs     (ee-1stclassvideos-field c :hsubs))
+	  (date      (ee-1stclassvideos-field c :date))
+	  (length    (ee-1stclassvideos-field c :length))
+	  (comment   (ee-1stclassvideos-field c :comment))
+	  (lang      (ee-1stclassvideos-field c :lang))
+	  (exts      (ee-1stclassvideos-field c :subs))
+	  (mp4stem   (ee-1stclassvideos-mp4stem c))
+          (mp4found  (ee-1stclassvideos-mp4found c))
+	  (hash      (ee-1stclassvideos-hash c))
+	  (hassubs   exts)
+	  (hsubsinit (and hsubs (replace-regexp-in-string "^.*#" "" hsubs))))
      ,@code))
 
 ;; Test:
@@ -3427,25 +3432,30 @@ This function is used by `ee-0x0-upload-region'."
   "An internal function used by `find-1stclassvideo-links'."
   (ee-let*-macro-1stclassvideo-c
    c
-   (let* ((lsubs    (if hassubs
+   (let* ((hsubsurl (if hsubs (ee-template0 ";; HSubs: {hsubs}\n") ""))
+	  (lsubs    (if hassubs
 			(ee-template0 ";; LSubs: (find-{c}lsubs \"00:00\")\n")
 		      ""))
+	  (hsubs    (if hsubs
+			(ee-template0 ";; HSubs: (find-{c}hsubs \"{hsubsinit}\")\n")
+		      ""))
 	  (dlsubs   (ee-1stclassvideos-dlsubs c))
-	  (defun    (ee-find-1stclassvideo-defun c mp4stem hash)))
+	  )
      (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
 ;; YT:    {yt}
 ;; Page:  {page}
+{hsubsurl}\
 ;; Comment: {comment}
 ;; Date:    {date}
 ;; Length:  {length}
 ;;
 ;; Play:  (find-{c}video \"00:00\")
+{hsubs}\
 {lsubs}\
-;; Info:  (find-1stclassvideodef        \"{c}\")
-;;        (find-eev \"eev-videolinks.el\" \"{c}\")
-;;            (find-1stclassvideo-links \"{c}\")
+;; Info:  (find-1stclassvideo-links \"{c}\")
+;;        (find-1stclassvideo-def   \"{c}\")
 ;;
 ;; Index: (find-1stclassvideoindex             \"{c}\")
 ;;        http://anggtwu.net/.emacs.videos.html#{c}
@@ -3457,22 +3467,7 @@ This function is used by `ee-0x0-upload-region'."
 ;; (find-video-links-intro \"9. First-class videos\")
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
-
-
-;;-- Some super-technical things:
-
-;; Setup (as a 2nd-class video):
- ' (find-ssr-links     \"{c}\" \"{mp4stem}\" \"{hash}\")
- ' (code-eevvideo      \"{c}\" \"{mp4stem}\" \"{hash}\")
- ' (code-eevlinksvideo \"{c}\" \"{mp4stem}\" \"{hash}\")
-;; (find-{c}video \"0:00\")
-
-;; Definition of the function:
-;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
-;; (find-eev \"eev-videolinks.el\" \"find-{c}video\")
-;;               (find-efunction 'find-{c}video)
-
-{defun}"))))
+"))))
 
 
 
@@ -3506,13 +3501,12 @@ For more info on this particular video, run:
    (let* ((template00 ";;
 ;; You don't have a local copy of this video.
 ;; To download a local copy, run this:
-;;       (find-psne-1stclassvideo-links \"{c}\")
+;;       (find-1stclassvideo-psne \"{c}\")
 ;; This video doesn't have subtitles.\n")
 	  (template01 ";;
 ;; You don't have a local copy of this video.
 ;; To download a local copy of the video with subtitles, run:
-;;       (find-psne-1stclassvideo-links \"{c}\")
-;;   or: (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")\n")
+;;       (find-1stclassvideo-psne \"{c}\")\n")
 	  (template10 ";;
 ;; We have a local copy of this video.
 ;; This video doesn't have subtitles.\n")
@@ -3521,11 +3515,7 @@ For more info on this particular video, run:
 ;; The upstream copy of this video has subtitles.
 ;; If you don't have a local copy of its subtitles, or if you
 ;; want to update the local copy of the subtitles, run this:
-;;        (find-psne-1stclassvideo-links \"{c}\")
-;;    or: (find-psne-eevvideo-links \"{mp4stem}\" \"{exts}\")
-;;
-;; LSubs: (find-{c}lsubs \"00:00\")
-;;        (find-1stclassvideolsubs \"{c}\")\n"))
+;;        (find-1stclassvideo-psne \"{c}\")\n"))
      (if mp4found
 	 (if hassubs
 	     (ee-template0 template11)
@@ -3540,10 +3530,15 @@ For more info on this particular video, run:
 
 
 ;; «find-1stclassvideoindex»  (to ".find-1stclassvideoindex")
+;; «find-1stclassvideohsubs»  (to ".find-1stclassvideohsubs")
 ;; «find-1stclassvideolsubs»  (to ".find-1stclassvideolsubs")
 ;; «find-1stclassvideodef»    (to ".find-1stclassvideodef")
 ;; Tests: (find-1stclassvideoindex "2022findeevangg")
 ;;        (find-1stclassvideoindex "2022findelispintro")
+;;        (find-1stclassvideohsubs "2022findeevangg")
+;;        (find-1stclassvideohsubs "2022findeevangg" "15:14")
+;;        (find-1stclassvideolsubs "2022findeevangg")
+;;        (find-1stclassvideolsubs "2022findeevangg" "15:14")
 ;;        (find-1stclassvideolsubs "2022findeevangg" "nice -")
 ;;        (find-1stclassvideodef   "2022findelispintro")
 ;;
@@ -3557,9 +3552,22 @@ For more info on this particular video, run:
     (apply 'find-anggwget-elisp (format "SUBTITLES/%s.lua" mp4stem)
 	   pos-spec-list)))
 
+(defun find-1stclassvideohsubs (c &optional pos &rest pos-spec-list)
+  (interactive (list (ee-1stclassvideo-around-point-ask)))
+  (let* ((url0    (ee-1stclassvideos-field c :hsubs))
+         (baseurl (replace-regexp-in-string "#.*$" "" url0))
+	 (url1    (if pos (format "%s#%s" baseurl pos) url0)))
+    (find-googlechrome url1)))
+
 (defun find-1stclassvideodef (c &rest pos-spec-list)
   (interactive (list (ee-1stclassvideo-around-point-ask)))
   (apply 'find-eev "eev-videolinks.el" c pos-spec-list))
+
+(defalias 'find-1stclassvideo-index 'find-1stclassvideoindex)
+(defalias 'find-1stclassvideo-lsubs 'find-1stclassvideolsubs)
+(defalias 'find-1stclassvideo-hsubs 'find-1stclassvideohsubs)
+(defalias 'find-1stclassvideo-def   'find-1stclassvideodef)
+
 
 
 ;; «find-1stclassvideos»  (to ".find-1stclassvideos")
@@ -3577,8 +3585,9 @@ For more info on this particular video, run:
 	   rest)))
 
 ;; «1c»  (to ".1c")
-;; Suggestion: put the alias below in your init file.
-;; (defalias '1c 'find-1stclassvideos)
+;; Suggestion: put the aliases below in your init file.
+;; (defalias '1c  'find-1stclassvideos)
+;; (defalias '1cl 'find-1stclassvideo-links)
 
 
 

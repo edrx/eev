@@ -25,14 +25,14 @@
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kl-here.el>
 ;;       htmlized: <http://anggtwu.net/eev-current/eev-kl-here.el.html>
 ;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
-;;                 <http://anggtwu.net/eev-intros/find-kla-intro.html>
-;;                                               (find-kla-intro)
+;;                 <http://anggtwu.net/eev-intros/find-kl-here-intro.html>
+;;                                               (find-kl-here-intro)
 
 ;;; Commentary:
 
 ;; This file implements an experimental variant of `find-here-links',
-;; but in which we only generate a single \"link to here\", and we
-;; push that into the kill ring. It is a cross between this,
+;; in which we only generate a single "link to here", and we push that
+;; into the kill ring. It is a cross between this,
 ;;
 ;;   (find-here-links-intro "3. `find-here-links'")
 ;;   (find-here-links-intro "9. The hlang")

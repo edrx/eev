@@ -1,3 +1,25 @@
+2024-02-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-find-1stclassvideo-links): removed the "super
+	technical things".
+	(ee-let*-macro-1stclassvideo-c): added `hsubsinit'.
+
+2024-02-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-1stclassvideo-index)
+	(find-1stclassvideo-lsubs, find-1stclassvideo-hsubs)
+	(find-1stclassvideo-def, find-1stclassvideo-psne): new aliases.
+	(ee-1stclassvideos-dlsubs): small changes.
+
+	* eev-videolinks.el (ee-code-lsubs): added hsubs.
+
+	* eev-tlinks.el (find-1stclassvideohsubs): new function.
+	(ee-let*-macro-1stclassvideo-c): added hsubs.
+	(ee-find-1stclassvideo-links): added hsubs.
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added ":hsubs"
+	entries to many videos.
+
 2024-02-01  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-eloadhistory-for): use `find-elinks-elisp'

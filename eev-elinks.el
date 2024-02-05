@@ -336,6 +336,7 @@ This is an internal function used by `find-efunction-links' and
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-eloadhistory-links)
      ""
+     (find-elnode "Where Defined" "load-history")
      (find-estring-elisp (ee-eloadhistory-find-flines))
      (find-estring-elisp (ee-eloadhistory-fors))
      )

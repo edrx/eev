@@ -1446,6 +1446,7 @@ If F is a symbol it is converted to a filename with (symbol-file F 'defun)."
      'find-elinks-elisp
      `((find-eloadhistory-for ,(ee-add-quote f) ,@rest)
        (find-eloadhistory-links)
+       ,(if (symbolp f) `(find-lgreps ',f))
        (find-fline ,fnameel)
        ""
        ,(ee-ppp0 (assoc fname load-history)))

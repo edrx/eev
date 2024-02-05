@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240116
+;; Version:    20240204
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -751,6 +751,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2019.mp4"
      :yt    "http://www.youtube.com/watch?v=86yiRG8YJD0"
      :page  "http://anggtwu.net/emacsconf2019.html"
+     :hsubs "http://anggtwu.net/emacsconf2019-subtitles.html#00:00"
      :date    "2019nov02"
      :length  "19:21"
      :subs    ".vtt"
@@ -764,6 +765,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2020.mp4"
      :yt    "http://www.youtube.com/watch?v=hOAqBc42Gg8"
      :page  "http://anggtwu.net/emacsconf2020.html"
+     :hsubs "http://anggtwu.net/emacsconf2020.html#00:00"
      :date    "2020nov28"
      :length  "47:08"
      :subs    ".vtt"
@@ -777,6 +779,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2021.mp4"
      :yt    "http://www.youtube.com/watch?v=qM0Luz78qGw"
      :page  "http://anggtwu.net/emacsconf2021.html"
+     :hsubs "http://anggtwu.net/emacsconf2021.html#00:00"
      :date    "2021nov21"
      :length  "6:04"
      :subs    ".vtt"
@@ -790,6 +793,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2021-dednat6.mp4"
      :yt    "http://www.youtube.com/watch?v=QUMo7vgkHJI"
      :page  "http://anggtwu.net/emacsconf2021.html#real-world-example"
+     :hsubs "http://anggtwu.net/emacsconf2021-dednat6.html#00:00"
      :date    "2021nov28"
      :length  "8:11"
      :subs    ".vtt"
@@ -803,6 +807,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2020-list-packages-eev-nav.mp4"
      :yt    "http://www.youtube.com/watch?v=kxBjiUo88_U"
      :page  "http://anggtwu.net/2020-list-packages-eev-nav.html"
+     :hsubs "http://anggtwu.net/2020-list-packages-eev-nav.html#00:01"
      :date    "2020oct04"
      :length  "12:41"
      :subs    ".vtt"
@@ -816,6 +821,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2020-some-template-based.mp4"
      :yt    "http://www.youtube.com/watch?v=91-9YfRPsuk"
      :page  "http://anggtwu.net/2020-some-template-based.html"
+     :hsubs "http://anggtwu.net/2020-some-template-based.html#00:00"
      :date    "2020dec24"
      :length  "33:11"
      :subs    ".vtt"
@@ -878,6 +884,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2021-oficina-1.mp4"
      :yt    "http://www.youtube.com/watch?v=acFPMuZ5Jf4"
      :page  "http://anggtwu.net/2021-oficina.html"
+     :hsubs "http://anggtwu.net/2021-oficina-1.html#00:00"
      :lang  "portuguese"
      :subs   ".vtt"
      :date    "2021nov05"
@@ -995,6 +1002,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2021-org-for-non-users.mp4"
      :yt    "http://www.youtube.com/watch?v=Eh5Wz9Vh_XM"
      :page  "http://anggtwu.net/2021-org-for-non-users.html"
+     :hsubs "http://anggtwu.net/2021-org-for-non-users.html#00:00"
      :date    "2021dec11"
      :length  "16:36"
      :subs    ".vtt"
@@ -1020,6 +1028,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-eev-make-0.mp4"
      :yt    "http://www.youtube.com/watch?v=Iql5C-yQk5c"
      :page  "http://anggtwu.net/eev-make.html"
+     :hsubs "http://anggtwu.net/2022-eev-make-0.html#00:00"
      :date    "2022jan04"
      :length  "6:43"
      :subs    ".vtt"
@@ -1033,6 +1042,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-find-eev-angg.mp4"
      :yt    "http://www.youtube.com/watch?v=FoAzpGzFCSE"
      :page  "http://anggtwu.net/eev-find-angg.html"
+     :hsubs "http://anggtwu.net/2022-find-eev-angg.html#00:00"
      :date    "2022jan16"
      :length  "17:59"
      :subs    ".vtt"
@@ -1046,6 +1056,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-find-elisp-intro.mp4"
      :yt    "http://www.youtube.com/watch?v=WowDSciGs1A"
      :page  "http://anggtwu.net/find-elisp-intro.html"
+     :hsubs "http://anggtwu.net/2022-find-elisp-intro.html#00:00"
      :date    "2022jan23"
      :length  "21:12"
      :subs    ".vtt"
@@ -1059,6 +1070,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-pict2e-lua.mp4"
      :yt    "http://www.youtube.com/watch?v=hiHsUhGVLGM"
      :page  "http://anggtwu.net/pict2e-lua.html"
+     :hsubs "http://anggtwu.net/2022-pict2e-lua.html#00:01"
      :date    "2022apr18"
      :length  "8:13"
      :subs    ".vtt"
@@ -1098,6 +1110,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-eev-wconfig.mp4"
      :yt    "http://www.youtube.com/watch?v=Rm29XSdGCXw"
      :page  "http://anggtwu.net/eev-wconfig.html"
+     :hsubs "http://anggtwu.net/2022-eev-wconfig.html#00:01"
      :date    "2022may15"
      :length  "1:15:48"
      :subs    ".vtt"
@@ -1111,6 +1124,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-yttranscript.mp4"
      :yt    "http://www.youtube.com/watch?v=SW3Tx-lHX3o"
      :page  "http://anggtwu.net/find-yttranscript-links.html"
+     :hsubs "http://anggtwu.net/2022-yttranscript.html#00:01"
      :date    "2022oct20"
      :length  "28:28"
      :subs    ".vtt"
@@ -1124,6 +1138,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2022-eev-tikz.mp4"
      :yt    "http://www.youtube.com/watch?v=d7nIzpXcV6c"
      :page  "http://anggtwu.net/eev-tikz.html"
+     :hsubs "http://anggtwu.net/2022-eev-tikz.html#00:01"
      :date    "2022nov02"
      :subs    ".vtt"
      :length  "1:36:27"
@@ -1137,6 +1152,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2022-kla.mp4"
      :yt    "http://www.youtube.com/watch?v=KRobfwXd7Cw"
      :page  "http://anggtwu.net/emacsconf2022-kla.html"
+     :hsubs "http://anggtwu.net/emacsconf2022-kla.html#00:00"
      :date    "2022dec03"
      :subs    ".vtt"
      :length  "7:57"
@@ -1150,6 +1166,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2022-py.mp4"
      :yt    "http://www.youtube.com/watch?v=QeqCYQSlz-I"
      :page  "http://anggtwu.net/emacsconf2022-py.html"
+     :hsubs "http://anggtwu.net/emacsconf2022-py.html#00:00"
      :date    "2022dec04"
      :subs    ".vtt"
      :length  "14:03"
@@ -1163,6 +1180,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2023-repls.mp4"
      :yt    "http://www.youtube.com/watch?v=IDBQo_YYfA8"
      :page  "http://anggtwu.net/emacsconf2023.html"
+     :hsubs "http://anggtwu.net/emacsconf2023-repls.html#00:00"
      :date    "2023dec02"
      :subs    ".vtt"
      :length  "59:11"
@@ -1176,6 +1194,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/emacsconf2023-repls-b.mp4"
      :yt    "http://www.youtube.com/watch?v=s3enXsuXyNg"
      :page  "http://anggtwu.net/emacsconf2023.html"
+     :hsubs "http://anggtwu.net/emacsconf2023-repls-b.html#00:00"
      :date    "2023dec25"
      :subs    ".vtt"
      :length  "20:52"
@@ -1189,6 +1208,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2024-eev-git.mp4"
      :yt    "http://www.youtube.com/watch?v=lsVvokjqMY0"
      :page  "http://anggtwu.net/2023-eev-git.html"
+     :hsubs "http://anggtwu.net/2024-eev-git.html#00:00"
      :date    "2024jan06"
      :length  "33:25"
      :subs    ".vtt"
@@ -1202,6 +1222,7 @@ For more info on this particular video, run:
      :mp4   "http://anggtwu.net/eev-videos/2024-find-luaso-links.mp4"
      :yt    "http://www.youtube.com/watch?v=zUW-6atPvUQ"
      :page  "http://anggtwu.net/find-luaso-links.html"
+     :hsubs "http://anggtwu.net/2024-find-luaso-links.html#00:00"
      :date    "2024jan16"
      :length  "14:16"
      :subs    ".vtt"
@@ -1393,12 +1414,15 @@ For more info on this particular video, run:
 ;; (find-code-lsubs \"{c}\")
 ;;      (code-lsubs \"{c}\")
 ;;
-;; Tests: (find-{c}lsubs)
+;; Tests: (find-{c}hsubs)
+;;        (find-{c}lsubs)
 ;;        (find-{c}lsubs \"00:00\")
 ;;        (find-1stclassvideo-links \"{c}\")
 ;;
 (defun find-{c}lsubs (&rest pos-spec-list)
   (apply 'find-1stclassvideolsubs \"{c}\" pos-spec-list))
+(defun find-{c}hsubs (&rest pos-spec-list)
+  (apply 'find-1stclassvideohsubs \"{c}\" pos-spec-list))
 "))
 
 (defun      code-all-lsubs (&optional cs)
@@ -1409,7 +1433,8 @@ For more info on this particular video, run:
   (mapconcat 'ee-code-lsubs (or cs (ee-all-cs-with-subs)) "\n\n"))
 
 ;; «code-all-lsubs»  (to ".code-all-lsubs")
-;; This defines lots of functions with names like `find-<c>lsubs'.
+;; This defines lots of functions with names like `find-<c>lsubs' and
+;; `find-<c>hsubs'.
 ;; Try: (find-code-all-lsubs)
              (code-all-lsubs)
 
