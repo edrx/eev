@@ -3,6 +3,11 @@
 	* eev-tlinks.el (ee-find-1stclassvideo-links): removed the "super
 	technical things".
 	(ee-let*-macro-1stclassvideo-c): added `hsubsinit'.
+	(ee-let*-macro-1stclassvideo-c, ee-find-1stclassvideo-links):
+	added `hasindex' and links to the index.
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added ':index t' to
+	several entries.
 
 2024-02-04  Eduardo Ochs  <eduardoochs@gmail.com>
 

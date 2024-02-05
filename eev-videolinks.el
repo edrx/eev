@@ -755,6 +755,7 @@ For more info on this particular video, run:
      :date    "2019nov02"
      :length  "19:21"
      :subs    ".vtt"
+     :index   t
      :comment "A good non-technical introduction to eev.")
     ;;
     ;; «eev2020»  (to ".eev2020")
@@ -769,6 +770,7 @@ For more info on this particular video, run:
      :date    "2020nov28"
      :length  "47:08"
      :subs    ".vtt"
+     :index   t
      :comment "A good technical introduction to eev.")
     ;;
     ;; «eev2021»  (to ".eev2021")
@@ -783,6 +785,7 @@ For more info on this particular video, run:
      :date    "2021nov21"
      :length  "6:04"
      :subs    ".vtt"
+     :index   t
      :comment "START BY THIS VIDEO!!!")
     ;;
     ;; «eev2021b»  (to ".eev2021b")
@@ -797,6 +800,7 @@ For more info on this particular video, run:
      :date    "2021nov28"
      :length  "8:11"
      :subs    ".vtt"
+     :index   t
      :comment "How I use test blocks (see above) in real life.")
     ;;
     ;; «eevnav»  (to ".eevnav")
@@ -811,6 +815,7 @@ For more info on this particular video, run:
      :date    "2020oct04"
      :length  "12:41"
      :subs    ".vtt"
+     :index   t
      :comment "If you are learning Emacs start by this video!")
     ;;
     ;; «eevtempl»  (to ".eevtempl")
@@ -825,7 +830,8 @@ For more info on this particular video, run:
      :date    "2020dec24"
      :length  "33:11"
      :subs    ".vtt"
-     :comment "")
+     :index   t
+     :comment "This is a follow-up to my presentation at the EmacsConf2020.")
     ;;
     ;; «eevfherel»  (to ".eevfherel")
     ;; Play: (find-eevfherelvideo "0:00")
@@ -837,6 +843,7 @@ For more info on this particular video, run:
      :page  "http://anggtwu.net/2020-find-here-links.html"
      :date    "2020dec26"
      :length  "24:08"
+     :index   t
      :comment "A badly-rehearsed tutorial on an advanced feature.")
     ;;
     ;; «eevtestbls»  (to ".eevtestbls")
@@ -849,6 +856,7 @@ For more info on this particular video, run:
      :page  "http://anggtwu.net/2021-test-blocks.html"
      :date    "2021jan24"
      :length  "4:45"
+     :index   t
      :comment "My first video on test blocks. Watch the video `eev2021' instead.")
     ;;
     ;; «eevvlinks»  (to ".eevvlinks")
@@ -861,6 +869,7 @@ For more info on this particular video, run:
      :page  "http://anggtwu.net/2021-video-links.html"
      :date    "2021may10"
      :length  "14:56"
+     :index   t
      :comment "A very good tutorial on how the `(find-*video)' links work.")
     ;;
     ;; «oficina20210»  (to ".oficina20210")
@@ -874,6 +883,7 @@ For more info on this particular video, run:
      :lang  "portuguese"
      :date    "2021sep05"
      :length  "1:27:01"
+     :index   t
      :comment "A (long) non-technical introduction to Free Software, Emacs, and eev.")
     ;;
     ;; «oficina2021a»  (to ".oficina2021a")
@@ -889,6 +899,7 @@ For more info on this particular video, run:
      :subs   ".vtt"
      :date    "2021nov05"
      :length  "14:58"
+     :index   t
      :comment "A very good introduction in Portuguese for beginners.")
     ;;
     ;; «oficina2021b»  (to ".oficina2021b")
@@ -927,6 +938,7 @@ For more info on this particular video, run:
      :date    "2021dec01"
      :length  "2:26"
      :subs    ".vtt"
+     :index   t
      :comment "An advanced video about (find-saving-links-intro).")
     ;;
     ;; «2021workshop2»  (to ".2021workshop2")
@@ -953,6 +965,7 @@ For more info on this particular video, run:
      :date    "2021dec03"
      :length  "18:22"
      :subs    ".vtt"
+     :index   t
      :comment "A video on \"saving links to everything interesting\".")
     ;;
     ;; «2021workshop4»  (to ".2021workshop4")
@@ -1018,6 +1031,7 @@ For more info on this particular video, run:
      :page  "http://anggtwu.net/2021-ffll.html"
      :date    "2021dec25"
      :length  "1:15:46"
+     :index   t
      :comment "A tutorial on a very advanced feature.")
     ;;
     ;; «2022eevmake0»  (to ".2022eevmake0")
@@ -1046,6 +1060,7 @@ For more info on this particular video, run:
      :date    "2022jan16"
      :length  "17:59"
      :subs    ".vtt"
+     :index   t
      :comment "A very good video on a very useful trick.")
     ;;
     ;; «2022findelispintro»  (to ".2022findelispintro")
@@ -1060,6 +1075,7 @@ For more info on this particular video, run:
      :date    "2022jan23"
      :length  "21:12"
      :subs    ".vtt"
+     :index   t
      :comment "A very good video on the design decisions behind `(find-elisp-intro)'.")
     ;;
     ;; «2022pict2elua»  (to ".2022pict2elua")
@@ -1074,6 +1090,7 @@ For more info on this particular video, run:
      :date    "2022apr18"
      :length  "8:13"
      :subs    ".vtt"
+     :index   t
      :comment "A very good demo of test blocks.")
     ;;
     ;; «2022eevwconfigpt1»  (to ".2022eevwconfigpt1")
@@ -1114,6 +1131,7 @@ For more info on this particular video, run:
      :date    "2022may15"
      :length  "1:15:48"
      :subs    ".vtt"
+     :index   t
      :comment "This is mainly for beginners who use Windows.")
     ;;
     ;; «2022yttranscript»  (to ".2022yttranscript")
@@ -1128,6 +1146,7 @@ For more info on this particular video, run:
      :date    "2022oct20"
      :length  "28:28"
      :subs    ".vtt"
+     :index   t
      :comment "A video about `find-yttranscript-links'.")
     ;;
     ;; «2022tikz»  (to ".2022tikz")
@@ -1140,8 +1159,9 @@ For more info on this particular video, run:
      :page  "http://anggtwu.net/eev-tikz.html"
      :hsubs "http://anggtwu.net/2022-eev-tikz.html#00:01"
      :date    "2022nov02"
-     :subs    ".vtt"
      :length  "1:36:27"
+     :subs    ".vtt"
+     :index   t
      :comment "A way to learn TikZ using examples from the manual.")
     ;;
     ;; «eev2022kla»  (to ".eev2022kla")

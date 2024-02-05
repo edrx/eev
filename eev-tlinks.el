@@ -3418,6 +3418,7 @@ This function is used by `ee-0x0-upload-region'."
 	  (comment   (ee-1stclassvideos-field c :comment))
 	  (lang      (ee-1stclassvideos-field c :lang))
 	  (exts      (ee-1stclassvideos-field c :subs))
+	  (hasindex  (ee-1stclassvideos-field c :index))
 	  (mp4stem   (ee-1stclassvideos-mp4stem c))
           (mp4found  (ee-1stclassvideos-mp4found c))
 	  (hash      (ee-1stclassvideos-hash c))
@@ -3433,11 +3434,14 @@ This function is used by `ee-0x0-upload-region'."
   (ee-let*-macro-1stclassvideo-c
    c
    (let* ((hsubsurl (if hsubs (ee-template0 ";; HSubs: {hsubs}\n") ""))
+	  (hsubs    (if hsubs
+			(ee-template0 ";; HSubs: (find-{c}hsubs \"{subsinit}\")\n")
+		      ""))
 	  (lsubs    (if hassubs
 			(ee-template0 ";; LSubs: (find-{c}lsubs \"{subsinit}\")\n")
 		      ""))
-	  (hsubs    (if hsubs
-			(ee-template0 ";; HSubs: (find-{c}hsubs \"{subsinit}\")\n")
+	  (index    (if hasindex
+			(ee-template0 ";; Index: (find-1stclassvideo-index \"{c}\")\n")
 		      ""))
 	  (dlsubs   (ee-1stclassvideos-dlsubs c))
 	  )
@@ -3454,13 +3458,9 @@ This function is used by `ee-0x0-upload-region'."
 ;; Play:  (find-{c}video \"00:00\")
 {hsubs}\
 {lsubs}\
+{index}\
 ;; Info:  (find-1stclassvideo-links \"{c}\")
 ;;        (find-1stclassvideo-def   \"{c}\")
-;;
-;; Index: (find-1stclassvideoindex             \"{c}\")
-;;        http://anggtwu.net/.emacs.videos.html#{c}
-;;        (find-angg        \".emacs.videos\"    \"{c}\")
-;;        (find-angg-es-links)
 {dlsubs}\
 
 ;; See:
