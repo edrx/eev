@@ -3422,7 +3422,7 @@ This function is used by `ee-0x0-upload-region'."
           (mp4found  (ee-1stclassvideos-mp4found c))
 	  (hash      (ee-1stclassvideos-hash c))
 	  (hassubs   exts)
-	  (hsubsinit (and hsubs (replace-regexp-in-string "^.*#" "" hsubs))))
+	  (subsinit  (and hsubs (replace-regexp-in-string "^.*#" "" hsubs))))
      ,@code))
 
 ;; Test:
@@ -3434,10 +3434,10 @@ This function is used by `ee-0x0-upload-region'."
    c
    (let* ((hsubsurl (if hsubs (ee-template0 ";; HSubs: {hsubs}\n") ""))
 	  (lsubs    (if hassubs
-			(ee-template0 ";; LSubs: (find-{c}lsubs \"00:00\")\n")
+			(ee-template0 ";; LSubs: (find-{c}lsubs \"{subsinit}\")\n")
 		      ""))
 	  (hsubs    (if hsubs
-			(ee-template0 ";; HSubs: (find-{c}hsubs \"{hsubsinit}\")\n")
+			(ee-template0 ";; HSubs: (find-{c}hsubs \"{subsinit}\")\n")
 		      ""))
 	  (dlsubs   (ee-1stclassvideos-dlsubs c))
 	  )

@@ -3,10 +3,10 @@
 ;; Copyright (C) 2019-2024 Free Software Foundation, Inc.
 
 ;; Author: Eduardo Ochs <eduardoochs@gmail.com>
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "25.1"))
 ;; Keywords: lisp e-scripts
 ;; URL: http://anggtwu.net/#eev
-;; Version: 20240115
+;; Version: 20240205
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
