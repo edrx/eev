@@ -1062,7 +1062,7 @@ git pull
 
 
 (load \"~/.emacs\")
-
+(load \"~/.emacs.d/init.el\")
 ")
      )
    pos-spec-list))
