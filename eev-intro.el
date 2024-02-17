@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240121
+;; Version:    20240206
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -109,6 +109,7 @@
 ;;
 ;; «.find-elisp-intro»			(to "find-elisp-intro")
 ;; «.find-lexical-intro»		(to "find-lexical-intro")
+;; «.find-strange-functions-intro»	(to "find-strange-functions-intro")
 
 
 ;; See: (find-anchors-intro)
@@ -299,7 +300,7 @@ Actually go to: (find-eev \"eev-intro.el\" \"find-foo-intro\" (ee-last-kill))."
 ;;;                          |_|
 ;;
 ;; «find-eev-quick-intro» (to ".find-eev-quick-intro")
-;; (find-intro-links "eev-quick")
+;; Skel: (find-intro-links "eev-quick")
 
 (defun find-eev-quick-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-eev-quick-intro)*"))
@@ -2907,56 +2908,57 @@ recommended reading order. These are the basic ones:
   13. (find-elisp-intro)
   14. (find-dot-emacs-intro)
   15. (find-lexical-intro)
-  16. (find-multiwindow-intro)
-  17. (find-eev-install-intro)
+  16. (find-strange-functions-intro)
+  17. (find-multiwindow-intro)
+  18. (find-eev-install-intro)
 
 These are things that I am using in workshops:
 
-  18. (find-windows-beginner-intro)
-  19. (find-eev-exercises-intro)
+  19. (find-windows-beginner-intro)
+  20. (find-eev-exercises-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  20. (find-escripts-intro)
-  21. (find-links-conv-intro)
+  21. (find-escripts-intro)
+  22. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  22. (find-eval-intro)
-  23. (find-links-intro)
-  24. (find-brxxx-intro)
-  25. (find-wrap-intro)
-  26. (find-eejump-intro)
-  27. (find-anchors-intro)
-  28. (find-code-c-d-intro)
+  23. (find-eval-intro)
+  24. (find-links-intro)
+  25. (find-brxxx-intro)
+  26. (find-wrap-intro)
+  27. (find-eejump-intro)
+  28. (find-anchors-intro)
+  29. (find-code-c-d-intro)
 
 These are etcs:
 
-  29. (find-templates-intro)
-  30. (find-org-intro)
-  31. (find-git-intro)
+  30. (find-templates-intro)
+  31. (find-org-intro)
+  32. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  32. (find-kla-intro)
-  33. (find-kl-here-intro)
-  34. (find-edit-index-intro)
-  35. (find-rstdoc-intro)
-  36. (find-show2-intro)
-  37. (find-lua-tutorial-intro)
-  38. (find-prepared-intro)
-  39. (find-bounded-intro)
-  40. (find-channels-intro)
+  33. (find-kla-intro)
+  34. (find-kl-here-intro)
+  35. (find-edit-index-intro)
+  36. (find-rstdoc-intro)
+  37. (find-show2-intro)
+  38. (find-lua-tutorial-intro)
+  39. (find-prepared-intro)
+  40. (find-bounded-intro)
+  41. (find-channels-intro)
 
 This one was used in a video:
 
-  41. (find-three-main-keys-intro)
+  42. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  42. (find-emacs-intro)
-  43. (find-defun-intro)
+  43. (find-emacs-intro)
+  44. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -17148,6 +17150,7 @@ sudo pacman -S texlive-latexextra
  (eepitch-kill)
  (eepitch-shell)
 sudo port install lua-lpeg lua51-lpeg lua52-lpeg
+sudo port install texlive-latex-extra
 
  This will be used to build lpeglabel
  (setenv \"LUA52DIR\" \"/opt/local/include/lua5.2\")
@@ -19046,6 +19049,176 @@ And here are (elisp hyper)links to them with descriptions:
 
 ;; (find-lexical-intro)
 
+
+
+;;;  ____  _                              
+;;; / ___|| |_ _ __ __ _ _ __   __ _  ___ 
+;;; \___ \| __| '__/ _` | '_ \ / _` |/ _ \
+;;;  ___) | |_| | | (_| | | | | (_| |  __/
+;;; |____/ \__|_|  \__,_|_| |_|\__, |\___|
+;;;                            |___/      
+;;
+;; «find-strange-functions-intro»  (to ".find-strange-functions-intro")
+;; Skel: (find-intro-links "strange-functions")
+;; Test: (find-strange-functions-intro)
+
+(defun find-strange-functions-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-strange-functions-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-strange-functions-intro)
+Source code:  (find-efunction 'find-strange-functions-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+
+Prerequisites:
+  (find-elisp-intro)
+  http://anggtwu.net/2024-find-lgreps.html
+
+Note: this is a work in progress!
+Both this intro and the HTML page above are unfinished!
+
+
+
+
+1. Introduction
+===============
+Sometimes `find-efunction' can't find the place in which a
+function was defined. Try the sexps below:
+
+  (find-efunction         'cl-struct-p)
+  (find-efunction         'cl-struct-p--cmacro)
+  (find-efunctionpp       'cl-struct-p)
+  (find-efunctionpp       'cl-struct-p--cmacro)
+
+  (find-function-noselect 'cl-struct-p)
+          ;; --> (#<buffer cl-preloaded.el> . 14565)
+  (find-function-noselect 'cl-struct-p--cmacro)
+          ;; --> (#<buffer cl-preloaded.el>)
+
+In `cl-struct-p' everything works, but in `cl-struct-p--cmacro'
+`find-efuction' only does half of its expected job: it finds the
+file in which `cl-struct-p--cmacro' was defined, but not its
+\"point of definition\" - and it fails with an obscure error.
+Take a look at the docstrings and the source of `find-efunction'
+and `find-function-noselect':
+
+  (find-efunctiondescr 'find-efunction)
+  (find-efunction      'find-efunction)
+  (find-efunctiondescr 'find-function-noselect)
+  (find-efunction      'find-function-noselect)
+
+The docstring of `find-function-noselect' explains that it:
+
+  Return(s) a pair (BUFFER . POINT) pointing to the definition of FUNCTION.
+
+  Finds the source file containing the definition of FUNCTION
+  in a buffer and the point of the definition.  The buffer is
+  not selected.  If the function definition can't be found in
+  the buffer, returns (BUFFER).
+
+The hard work is done by `find-function-search-for-symbol':
+
+  (find-efunction 'find-function-search-for-symbol)
+
+One of the comments in its source is this one:
+
+  ;; `regexp' matches definitions using known forms like
+  ;; `defun', or `defvar'.  But some functions/variables
+  ;; are defined using special macros (or functions), so
+  ;; if `regexp' can't find the definition, we look for
+  ;; something of the form \"(SOMETHING <symbol> ...)\".
+  ;; This fails to distinguish function definitions from
+  ;; variable declarations (or even uses thereof), but is
+  ;; a good pragmatic fallback.
+
+Sometimes these fallbacks in `find-function-search-for-symbol'
+are not enough - they don't work for some macros, like
+`cl-struct-p--cmacro', and they don't work for functions defined
+by `code-c-d' and its friends. Here's one example:
+
+  (find-efunction   'find-eetcfile)
+  (find-efunctionpp 'find-eetcfile)
+
+But these sexp hyperlinks work,
+
+  (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p)
+  (find-efunctionlgrep 'find-eetcfile 'eetc)
+
+because they first go to the files in which `cl-struct-p--cmacro'
+and `find-eetcfile', and then they search for their stems -
+
+  cl-struct-p--cmacro
+  \\---------/\\------/
+     stem       suffix
+
+    find-eetcfile
+    \\---/\\--/\\--/
+  prefix stem suffix
+
+surrounded by certain delimiter characters.
+
+
+
+
+
+
+
+
+
+
+Compare `cl-struct-p', that is a \"normal\"
+function
+
+
+ - it can find the file in which the function
+was defined,
+
+
+
+
+  (find-efunction 'find-efile)
+  (find-efunction-links  'find-efile)
+  (find-eloadhistory-for 'find-efile)
+  (find-eloadhistory-for 'find-efile 6 \" find-efile)\")
+  (find-lgrep            'find-efile       \"\\\"e\\\"\")
+
+                         (find-eetcfile \"\")
+                         (find-eetcfile \"NEWS\")
+  (find-efunction        'find-eetcfile)
+  (find-efunctionpp      'find-eetcfile)
+  (find-efunction-links  'find-eetcfile)
+  (find-eloadhistory-for 'find-eetcfile)
+  (find-eloadhistory-for 'find-eetcfile 6 \" find-eetcfile)\")
+  (find-lgreps           'find-eetcfile)
+  (find-lgreps           'find-eetcfile    \"find-eetcfile\")
+  (find-lgreps           'find-eetcfile         \"eetc\")
+  (find-lgrep            'find-eetcfile       \"\\\"eetc\\\"\")
+
+  (defun . ee-eetcfile)
+  (defun . find-eetcfile)
+  (defun . find-eetcsh)
+  (defun . find-eetcsh0)
+  (defun . find-eetcsh00)
+  (defun . find-eetcgrep)
+  (defun . find-eetcfile)
+
+       (code-c-d \"eetc\" data-directory :gz)
+  (find-code-c-d \"eetc\" data-directory :gz)
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+
+
+Hello
+=====
+" pos-spec-list)))
+
+;; (find-strange-functions-intro)
 
 
 

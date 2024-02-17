@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240205
+;; Version:    20240217
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -93,6 +93,7 @@
 ;; «.find-pacman-links»			(to "find-pacman-links")
 ;; «.find-macports-links»		(to "find-macports-links")
 ;; «.find-homebrew-links»		(to "find-homebrew-links")
+;; «.find-eev-reload-links»		(to "find-eev-reload-links")
 ;; «.find-eev-install-links»		(to "find-eev-install-links")
 ;; «.find-eev-update-links»		(to "find-eev-update-links")
 ;; «.find-youtubedl-links»		(to "find-youtubedl-links")
@@ -1003,6 +1004,68 @@ sudo dpkg -i *.deb
 #
 # (code-c-d \"{xxx}\" \"~/usrc/{xxx}/{xxx}-{vvv}/\")
 # (find-{xxx}file \"\")"))
+
+
+
+
+;;;                                _                 _ 
+;;;   ___  _____   __     _ __ ___| | ___   __ _  __| |
+;;;  / _ \/ _ \ \ / /____| '__/ _ \ |/ _ \ / _` |/ _` |
+;;; |  __/  __/\ V /_____| | |  __/ | (_) | (_| | (_| |
+;;;  \___|\___| \_/      |_|  \___|_|\___/ \__,_|\__,_|
+;;;                                                    
+;; «find-eev-reload-links»  (to ".find-eev-reload-links")
+;; Skel: (find-find-links-links-new "eev-reload" "dir" "")
+;; Test: (find-eev-reload-links)
+;;
+(defun find-eev-reload-links (&optional dir &rest pos-spec-list)
+"Visit a temporary buffer with a script for reloading eev. Experimental!"
+  (interactive)
+  (setq dir (or dir "{dir}"))
+  (apply
+   'find-elinks-elisp
+   `((find-eev-reload-links ,dir ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-eev-reload-links)
+     ""
+     ,(ee-template0 "\
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+ (find-eevfile \"ChangeLog\")
+cd {ee-eevdir}
+git pull
+ (find-eevfile \"ChangeLog\")
+
+
+;; Based on: (find-eev \"eev-load.el\")
+;;
+(cl-loop for modulename in (ee-split (string-trim \"
+  eev-intro
+  eev-flash eev-multiwindow eev-eval eev-mode eev-anchors eev-template0
+  eev-blinks eev-plinks eev-elinks eev-tlinks eev-hlinks eev-htests
+  eev-brxxx
+  eepitch
+  eev-wrap
+  eejump
+  eev-anchors
+  eev-code eev-pdflike
+  eev-codings eev-env eev-edit eev-testblocks eev-kla eev-helpful eev-rstdoc
+  eev-kl-here
+  eev-qrl
+  eev-wconfig
+  eev-audiovideo
+  eev-videolinks
+  eev-rcirc\"))
+	 do (load modulename))
+
+
+(load \"~/.emacs\")
+
+")
+     )
+   pos-spec-list))
 
 
 
@@ -2900,7 +2963,7 @@ sudo ./install-tl -select-repository
 ;;;                                                            
 ;; «find-newbrowser-links»  (to ".find-newbrowser-links")
 ;; Skel: (find-find-links-links-new "newbrowser" "browser binary b" "")
-;; Test: (find-newbrowser-links "g" "googlechrome" "google-chrome")
+;; Test: (find-newbrowser-links "googlechrome" "google-chrome" "g")
 ;; See:  (find-wconfig-browser-links)
 ;;       (find-efunction 'find-wconfig-browser-links)
 ;;
@@ -2917,20 +2980,30 @@ sudo ./install-tl -select-repository
      (find-efunction 'find-newbrowser-links)
      ""
      ,(ee-template0 "\
-;; This block defines `find-{browser}', `br{b}', `br{b}l', and `br{b}d'.
+;; 1. This block defines `find-{browser}', `br{b}', `br{b}l', and `br{b}d'.
 ;; See: (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+;;      (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"not free\")
+;;      (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"find-googlechrome\")
+;;      (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"M-x brff\")
 ;;      (find-brxxx-intro \"3. The `d' variants\")
 ;;      (find-brxxx-intro \"5. `code-brurl'\")
 ;;      (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
+;;      (find-eev \"eev-plinks.el\" \"find-googlechrome\")
+;; Tests: (find-{browser} \"http://www.lua.org/start.html\")
+;;        (br{b} \"http://www.lua.org/start.html\")
 ;;
 (defun find-{browser} (url) (find-bgprocess `(\"{binary}\" ,url)))
+;;
+;; If you're on a Mac, use this instead:
+;; (defun find-{browser} (url &rest rest)
+;;   (find-bgprocess `(\"open\" \"-a\" \"{binary}\" ,url)))
 ;;
 ;; (find-code-brurl 'find-{browser}  :remote 'br{b}  :local 'br{b}l  :dired 'br{b}d)
         (code-brurl 'find-{browser}  :remote 'br{b}  :local 'br{b}l  :dired 'br{b}d)
 
 
 
-;; This block defines `find-{browser}-page'.
+;; 2a. This block defines `find-{browser}-page'.
 ;; See: (find-eev \"eev-pdflike.el\" \"find-googlechrome-page\")
 ;;
 (defun ee-find-{browser}-page (fname &optional page)
@@ -2939,73 +3012,46 @@ sudo ./install-tl -select-repository
 ;; (find-code-pdfbackend \"{browser}-page\")
         (code-pdfbackend \"{browser}-page\")
 
-
-
 ;; Run the `defalias' below if you want to make
 ;; `find-pdf-page' use `find-{browser}-page'.
 ;; See: (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
 ;;
 (defalias 'find-pdf-page 'find-{browser}-page)
-
-
-
+;;
 ;; Tests:
 ;; (find-{browser} \"http://anggtwu.net/#eev\")
 ;; (find-{browser}-page \"~/Coetzee99.pdf\")
 ;; (find-{browser}-page \"~/Coetzee99.pdf\" 3)
 ;; (find-pdf-page \"~/Coetzee99.pdf\" 3)
-")
-     )
-   pos-spec-list))
 
 
 
-;; «find-newbrowser-links»  (to ".find-newbrowser-links")
-;; Skel: (find-find-links-links-new "newbrowser" "shrt longname binary" "")
-;; Test: (find-newbrowser-links)
-;;       (find-newbrowser-links "g" "googlechrome" "google-chrome")
-;; See:  http://anggtwu.net/eev-customize.html
+;; 2b. Configure `find-pdf-page' to make it use the browser.
+;; Use this when you don't want to set up a standalone PDF viewer.
+;; See:  (find-pdf-like-intro \"2. Preparation\")
+;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
+;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\" \"If you have xpdf\")
+;;       (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
+;;       (find-eev \"eev-pdflike.el\" \"find-firefox-page\")
+;;       (find-code-pdfbackend \"{browser}-page\")
+;; Test: (ee-find-{browser}-page \"~/Coetzee99.pdf\" 3)
+;;          (find-{browser}-page \"~/Coetzee99.pdf\" 3)
+;;                 (find-pdf-page \"~/Coetzee99.pdf\" 3)
 ;;
-(defun find-newbrowser-links (&optional shrt longname binary &rest pos-spec-list)
-"Visit a temporary buffer containing a script to set up an atypical browser."
-  (interactive)
-  (setq shrt (or shrt "{shrt}"))
-  (setq longname (or longname "{longname}"))
-  (setq binary (or binary "{binary}"))
-  (apply
-   'find-elinks-elisp
-   `((find-newbrowser-links ,shrt ,longname ,binary ,@pos-spec-list)
-     (find-newbrowser-links "g" "googlechrome" "google-chrome")
-     (find-newbrowser-links "g" "iceweasel" "iceweasel-uxp")
-     (find-newbrowser-links "v" "vivaldi" "vivaldi")
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-newbrowser-links)
-     ""
-     ,(ee-template0 "\
-;; 0. Basic tests:
-;; (setq ee-nb-prog \"{binary}\")
-;; (setq ee-nb-pdfp \"https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf#page=3\")
-;; (find-bgprocess (list ee-nb-prog \"http://www.lua.org/start.html\"))
-;; (find-bgprocess (list ee-nb-prog ee-nb-pdfp))
-
-
-;; 1. Define `find-{longname}' and `br{shrt}'.
-;; See:  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
-;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"not free\")
-;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"find-googlechrome\")
-;;       (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\" \"M-x brff\")
-;;       (find-eev \"eev-plinks.el\" \"find-googlechrome\")
-;;       (find-eev \"eev-brxxx.el\" \"code-brxxxs\")
-;; Test: (find-{longname} \"http://www.lua.org/start.html\")
-;;       (br{shrt} \"http://www.lua.org/start.html\")
+(defun ee-find-{browser}-page (fname &optional page)
+  `(\"{binary}\" ,(ee-fname-page-to-url fname page)))
+(code-pdfbackend \"{browser}-page\")
+(defalias 'find-pdf-page 'find-{browser}-page)
 ;;
-(defun find-{longname} (url &rest rest)
-  (find-bgprocess `(\"{binary}\" ,url)))
-;;
-(code-brurl 'find-{longname}  :remote 'br{shrt}  :local 'br{shrt}l  :dired 'br{shrt}d)
+;; To configure `find-pdf-page' to make it use a
+;; standalone PDF viewer, run one of the sexps below:
+;;   (defalias 'find-pdf-page 'find-xpdf-page)
+;;   (defalias 'find-pdf-page 'find-mupdf-page)
+;; or see: (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
 
 
-;; 2. Configure `find-youtube-video'.
+
+;; 3. Configure `find-youtube-video'.
 ;; You will need this if you don't want to
 ;; set up a video player like mpv or vlc.
 ;; See:  (find-video-links-intro \"3. `find-youtube-video'\")
@@ -3014,39 +3060,11 @@ sudo ./install-tl -select-repository
 ;; Test: (ee-find-youtube-video \"FoAzpGzFCSE\" \"15:14\" \"nice\")
 ;;          (find-youtube-video \"FoAzpGzFCSE\" \"15:14\")
 ;;                 (find-2022findeevanggvideo \"15:14\")
-(setq ee-find-youtube-video-program 'find-{longname})
-
-
-;; 3. Configure `find-pdf-page' to make it use the browser.
-;; Use this when you don't want to set up a standalone PDF viewer.
-;; See:  (find-pdf-like-intro \"2. Preparation\")
-;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
-;;       (find-pdf-like-intro \"3. Hyperlinks to PDF files\" \"If you have xpdf\")
-;;       (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
-;;       (find-eev \"eev-pdflike.el\" \"find-firefox-page\")
-;;       (find-code-pdfbackend \"{longname}-page\")
-;; Test: (ee-find-{longname}-page \"~/Coetzee99.pdf\" 3)
-;;          (find-{longname}-page \"~/Coetzee99.pdf\" 3)
-;;                 (find-pdf-page \"~/Coetzee99.pdf\" 3)
-;;
-(defun ee-find-{longname}-page (fname &optional page)
-  `(\"{binary}\" ,(ee-fname-page-to-url fname page)))
-(code-pdfbackend \"{longname}-page\")
-(defalias 'find-pdf-page 'find-{longname}-page)
-;;
-;; To configure `find-pdf-page' to make it use a
-;; standalone PDF viewer, run one of the sexps below:
-;;   (defalias 'find-pdf-page 'find-xpdf-page)
-;;   (defalias 'find-pdf-page 'find-mupdf-page)
-;; or see: (find-eev \"eev-pdflike.el\" \"change-default-viewer\")
+(setq ee-find-youtube-video-program 'find-{browser})
 
 ")
      )
    pos-spec-list))
-
-
-
-
 
 
 

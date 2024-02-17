@@ -1,4 +1,27 @@
+2024-02-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eev-reload-links): new function.
+
+2024-02-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newbrowser-links): removed a spurious second
+	definition of the same function.
+
+2024-02-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-strange-functions-intro): added the section
+	"1. Introduction".
+
+	* eev-plinks.el (find-efunctionlgrep, ee-efunctionlgrep-re)
+	(ee-efunctionlgrep-re0): new functions.
+
+	* eev-elinks.el (ee-find-efunction-links): use
+	`find-efunctionlgrep'.
+
 2024-02-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-strange-functions-intro): new function.
+	(find-eev-intro): added `find-strange-functions-intro'.
 
 	* eev-tlinks.el (ee-find-1stclassvideo-links): removed the "super
 	technical things".

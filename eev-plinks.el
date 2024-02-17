@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240201
+;; Version:    20240206
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -123,6 +123,7 @@
 ;; «.find-firefox»		(to "find-firefox")
 ;; «.find-googlechrome»		(to "find-googlechrome")
 ;; «.find-lgrep»		(to "find-lgrep")
+;; «.find-efunctionlgrep»	(to "find-efunctionlgrep")
 
 
 
@@ -595,6 +596,42 @@ in which the \".el\" and the corresponding \".elc\" are in
 different directories... and so it doesn't work in packages
 installed by straight.el."
   (replace-regexp-in-string ".elc$" ".el" fname))
+
+
+
+;; «find-efunctionlgrep»  (to ".find-efunctionlgrep")
+;; Tests: (ee-efunctionlgrep-re0 "foo")
+;;        (ee-efunctionlgrep-re  "foo")
+;;      (find-efunctionlgrep 'find-eetcfile)
+;;      (find-efunctionlgrep 'find-eetcfile 'eetc)
+;;      (find-efunctionlgrep 'find-efile 'e)
+;;      (find-efunctionlgrep 'find-fline)
+;;      (find-efunctionlgrep 'find-fline 'modify)
+;;      (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p)
+;;
+(defun find-efunctionlgrep (f &optional stem)
+  "Use `find-lgrep' to find possible places in which F is defined.
+See: (find-strange-functions-intro)"
+  (interactive (find-function-read))
+  (setq stem (or stem f))
+  (let* ((fname0 (symbol-file f 'defun))
+	 (fname  (ee-file-name-elc-to-el fname0))
+	 (re     (ee-efunctionlgrep-re stem)))
+    (find-lgrep fname re)))
+
+(defun ee-efunctionlgrep-re  (stem)
+  "An internal function used by `find-efunctionlgrep'."
+  (eval (ee-efunctionlgrep-re0 stem)))
+
+(defun ee-efunctionlgrep-re0 (stem)
+  "An internal function used by `find-efunctionlgrep'."
+  (setq stem (format "%s" stem))
+  `(rx (or (and "\"" ,stem "\"")
+	   (and (any "( '")
+		,stem
+		(group (or (any " )") eol))
+		;;     (or (any " )") eol)  ; <- doesn't work
+		))))
 
 
 
