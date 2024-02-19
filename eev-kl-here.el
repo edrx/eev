@@ -1,6 +1,6 @@
 ;;; eev-kl-here.el -- Kill link to here.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2023 Free Software Foundation, Inc.
+;; Copyright (C) 2023-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231229
+;; Version:    20240219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kl-here.el>
@@ -245,7 +245,7 @@
 ;;   (find-eev "eev-kla.el" "kill-sexps")
 ;;   (find-eev "eev-kla.el" "aliases")
 
-(defun kl (&optional arg)
+(defun eekl (&optional arg)
   "<K>ill <L>ink to here. Tries to be smart."
   (interactive "P")
   (ee-detect-linki)
@@ -253,7 +253,7 @@
       (find-kl-debug-links 'kl)
     (ee-kl-kill (ee-get-linki))))
 
-(defun kll (&optional arg)
+(defun eekll (&optional arg)
   "<K>ill <L>ink to here; add a <L>ine. Tries to be smart."
   (interactive "P")
   (ee-detect-linki)
@@ -261,7 +261,7 @@
       (find-kl-debug-links 'kl)
     (ee-kl-kill (append (ee-get-linki) (list (ee-kl-line))))))
 
-(defun kls (&optional arg)
+(defun eekls (&optional arg)
   "<K>ill <L>ink to here; add a <S>tring. Tries to be smart."
   (interactive "P")
   (ee-detect-linki)
@@ -324,6 +324,11 @@
 ;; «aliases»  (to ".aliases")
 ;; See: (find-kla-intro "4. Aliases")
 ;; This is temporary!
+
+(defalias 'kl    'eekl 
+(defalias 'kll	 'eekll
+(defalias 'kls	 'eekls
+
 (defalias 'kla   'eekla)
 (defalias 'kla0  'eekla0)
 (defalias 'klas  'eeklas)

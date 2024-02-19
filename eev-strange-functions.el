@@ -1,6 +1,6 @@
 ;;; eev-strange-functions.el -- Support for functions defined in strange ways.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2022-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -45,12 +45,12 @@
 ;; (ee-Qrest '(:ka (2 3)))
 ;; See: (find-efunction 'ee-S)
 
-(defun ee-Qp (obj)
-  "Return t is OBJ is constant, i.e., if it doesn't need a \"'\"."
-  (or (numberp obj) (stringp obj) (eq obj nil) (eq obj t) (keywordp obj)))
+(defun ee-needs-quote (obj)
+  "Return t when OBJ needs a \"'\"."
+  (not (or (numberp obj) (stringp obj) (eq obj nil) (eq obj t) (keywordp obj))))
 
 (defun ee-Q (obj)
-  (if (ee-Qp obj) (ee-S obj) (format "'%s" (ee-S obj))))
+  (if (ee-needs-quote obj) (format "'%s" (ee-S obj)) (ee-S obj)))
 
 (defun ee-Qrest (rest)
   (mapconcat (lambda (obj) (format " %s" (ee-Q obj))) rest ""))
