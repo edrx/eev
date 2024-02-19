@@ -144,6 +144,7 @@
 ;; «.find-1stclassvideodef»		(to "find-1stclassvideodef")
 ;; «.find-1stclassvideos»		(to "find-1stclassvideos")
 ;;   «.1c»				(to "1c")
+;;   «.aliases»				(to "aliases")
 ;; «.find-advicebefore-links»		(to "find-advicebefore-links")
 ;; «.find-osm-links»			(to "find-osm-links")
 ;; «.find-pip3-links»			(to "find-pip3-links")
@@ -3601,6 +3602,7 @@ For more info on this particular video, run:
 	   rest)))
 
 ;; «1c»  (to ".1c")
+;; «aliases»  (to ".aliases")
 ;; Suggestion: put the aliases below in your init file.
 ;; (defalias '1c  'find-1stclassvideos)
 ;; (defalias '1cl 'find-1stclassvideo-links)

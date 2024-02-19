@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240218
+;; Version:    20240219
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-strange-functions.el>
@@ -31,6 +31,8 @@
 ;;; Comment:
 
 ;; MESSY! EXPERIMENTAL! INCOMPLETE! UNFINISHED!
+
+;; «.aliases»	(to "aliases")
 
 
 (defvar ee-sf-sexp)
@@ -156,7 +158,7 @@
    (:if t (error "Buffer type not supported by ee-hprog-for-sf"))
    ))
 
-(defun sf ()
+(defun eesf ()
   (interactive)
   (setq ee-hlang-sexp2 nil)
   (setq ee-sf-result nil)
@@ -167,7 +169,8 @@
   )
 
 
-
+;; «aliases»  (to ".aliases")
+(defalias 'sf 'eesf)
 
 
 (provide 'eev-strange-functions)

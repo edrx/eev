@@ -62,6 +62,8 @@
 ;; The code below was based on this question:
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2023-12/msg00064.html
 
+;; «aliases»  (to ".aliases")
+
 (defvar ee-qrl-plist0
   '("\"" "\\\""
     "\\" "\\\\"
@@ -97,6 +99,7 @@
       (apply 'ee-qrl-narrow plist)	; then narrow to the region
     (apply 'ee-qrl0 plist)))		; else replace to the end of the buffer
 
+;; «.aliases»	(to "aliases")
 (defalias 'qrl0 'ee-qrl0)
 (defalias 'qrl  'ee-qrl)
 

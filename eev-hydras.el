@@ -58,6 +58,7 @@
 
 
 ;; «.ei»			(to "ei")
+;; «.aliases»			(to "aliases")
 ;; «.ee-edit-index-hydra»	(to "ee-edit-index-hydra")
 
 ;; See: https://github.com/abo-abo/hydra
@@ -81,7 +82,8 @@
 ;;; | |  | |_____>  <  |  __/ |
 ;;; |_|  |_|    /_/\_\  \___|_|
 ;;;                            
-;; «ei»  (to ".ei")
+;; «ei»       (to ".ei")
+;; «aliases»  (to ".aliases")
 ;; This file is not loaded by default, but if you run
 ;;   (require 'eev-hydras)
 ;; this will define `M-x ei' as an alias for `M-x ee-edit-index'.

@@ -325,9 +325,9 @@
 ;; See: (find-kla-intro "4. Aliases")
 ;; This is temporary!
 
-(defalias 'kl    'eekl 
-(defalias 'kll	 'eekll
-(defalias 'kls	 'eekls
+(defalias 'kl    'eekl)
+(defalias 'kll	 'eekll)
+(defalias 'kls	 'eekls)
 
 (defalias 'kla   'eekla)
 (defalias 'kla0  'eekla0)
