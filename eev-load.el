@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231223
+;; Version:    20240218
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -153,6 +153,7 @@
 (require 'eev-rstdoc)          ; (find-eev "eev-rstdoc.el")
 ' (require 'eev-kl-here)       ; (find-eev "eev-kl-here.el")
 ' (require 'eev-qrl)           ; (find-eev "eev-qrl.el")
+' (require 'eev-strange-functions)  ; (find-eev "eev-strange-functions.el")
 ;;
 ;; Configuration on M$ Windows.
 (require 'eev-wconfig)         ; (find-eev "eev-wconfig.el")
