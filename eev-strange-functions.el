@@ -72,8 +72,7 @@
     find-1stclassvideo-links))
 
 (defvar ee-sf-1stclassvideo-re
-  (rx bos "find-" (group (+ any))
-      (or "video" "hsubs" "lsubs") eos))
+  (rx bos "find-" (group (+ any)) (or "video" "hsubs" "lsubs") eos))
 
 (defun ee-sf-1stclassvideo-stem (f)
   (and (symbolp f)
@@ -116,7 +115,7 @@
 	  (hsubs       (if hsubs    (ee-template0 hsubs-t0)    ""))
 	  (lsubs       (if hassubs  (ee-template0 lsubs-t0)    ""))
 	  (index       (if hasindex (ee-template0 index-t0)    ""))
-	  (dlsubs      (ee-1stclassvideos-dlsubs c))
+	  (dlsubs      (ee-1stclassvideo-dlsubs c))
 	  )
      `("foo"
        "bar"

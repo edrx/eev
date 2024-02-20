@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240205
+;; Version:    20240220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -37,44 +37,6 @@
 ;; «.select»				(to "select")
 ;;   «.ee-use-youtube-videos»		(to "ee-use-youtube-videos")
 ;;   «.ee-use-local-videos»		(to "ee-use-local-videos")
-;; «.first-class-videos»		(to "first-class-videos")
-;;  «.video-tutorials»			(to "video-tutorials")
-;;   «.find-eev2019video»		(to "find-eev2019video")
-;;   «.find-eev2020video»		(to "find-eev2020video")
-;;   «.find-eev2021video»		(to "find-eev2021video")
-;;   «.find-eev2021bvideo»		(to "find-eev2021bvideo")
-;;   «.find-eevnavvideo»		(to "find-eevnavvideo")
-;;   «.find-eevtemplvideo»		(to "find-eevtemplvideo")
-;;   «.find-eevfherelvideo»		(to "find-eevfherelvideo")
-;;   «.find-eevtestblsvideo»		(to "find-eevtestblsvideo")
-;;   «.find-eevvlinksvideo»		(to "find-eevvlinksvideo")
-;;   «.find-oficina20210video»		(to "find-oficina20210video")
-;;   «.find-oficina2021avideo»		(to "find-oficina2021avideo")
-;;   «.find-oficina2021bvideo»		(to "find-oficina2021bvideo")
-;;   «.find-2021ssrvideo»		(to "find-2021ssrvideo")
-;;   «.find-2021workshop1video»		(to "find-2021workshop1video")
-;;   «.find-2021workshop2video»		(to "find-2021workshop2video")
-;;   «.find-2021workshop3video»		(to "find-2021workshop3video")
-;;   «.find-2021workshop4video»		(to "find-2021workshop4video")
-;;   «.find-2021workshop5video»		(to "find-2021workshop5video")
-;;   «.find-2021workshop6video»		(to "find-2021workshop6video")
-;;   «.find-2021orgfornonusersvideo»	(to "find-2021orgfornonusersvideo")
-;;   «.find-2021ffllvideo»		(to "find-2021ffllvideo")
-;;   «.find-2022eevmake0video»		(to "find-2022eevmake0video")
-;;   «.find-2022findeevanggvideo»	(to "find-2022findeevanggvideo")
-;;   «.find-2022findelispintrovideo»	(to "find-2022findelispintrovideo")
-;;   «.find-2022pict2eluavideo»		(to "find-2022pict2eluavideo")
-;;   «.find-2022eevwconfigpt1video»	(to "find-2022eevwconfigpt1video")
-;;   «.find-2022eevwconfigpt2video»	(to "find-2022eevwconfigpt2video")
-;;   «.find-2022eevwconfigvideo»	(to "find-2022eevwconfigvideo")
-;;   «.find-2022yttranscriptvideo»	(to "find-2022yttranscriptvideo")
-;;   «.find-2022tikzvideo»		(to "find-2022tikzvideo")
-;;   «.find-eev2022klavideo»		(to "find-eev2022klavideo")
-;;   «.find-eev2022pyvideo»		(to "find-eev2022pyvideo")
-;;   «.find-eev2023replsvideo»		(to "find-eev2023replsvideo")
-;;   «.find-eev2023replsbvideo»		(to "find-eev2023replsbvideo")
-;;   «.find-2024gitvideo»		(to "find-2024gitvideo")
-;;   «.find-2024luasovideo»		(to "find-2024luasovideo")
 ;; «.more-info»				(to "more-info")
 ;; «.ee-1stclassvideos-info»		(to "ee-1stclassvideos-info")
 ;;   «.eev2019»				(to "eev2019")
@@ -116,8 +78,9 @@
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
 ;;   «.code-youtubevideo»		(to "code-youtubevideo")
-;; «.code-lsubs»			(to "code-lsubs")
-;;   «.code-all-lsubs»			(to "code-all-lsubs")
+;; «.first-class-videos»		(to "first-class-videos")
+;;  «.video-tutorials»			(to "video-tutorials")
+;; «.strange-functions»			(to "strange-functions")
 
 ;;; Commentary:
 
@@ -324,393 +287,6 @@ of the videos and play them with mpv. Compare with
 
 
 
-
-
-
-
-;;;      _       __                 
-;;;   __| | ___ / _|_   _ _ __  ___ 
-;;;  / _` |/ _ \ |_| | | | '_ \/ __|
-;;; | (_| |  __/  _| |_| | | | \__ \
-;;;  \__,_|\___|_|  \__,_|_| |_|___/
-;;;                                 
-;; «first-class-videos»  (to ".first-class-videos")
-;; «video-tutorials»     (to ".video-tutorials")
-;;
-;; This section contains one `defun' for each of one of the
-;; first-class videos. See:
-;;
-;;   (find-video-links-intro "9. First-class videos")
-;;   (find-1stclassvideos)
-;;
-;; If we defined them with `code-eevvideo' they wouldn't have
-;; docstrings and `find-efunction' wouldn't be able to find their
-;; definitions. Try:
-;;
-;;   (find-efunctiondescr 'find-eev2019video)
-;;   (find-efunction      'find-eev2019video)
-
-
-
-;; «find-eev2019video»  (to ".find-eev2019video")
-;; Info: (find-1stclassvideo-links "eev2019")
-;; Play: (find-eev2019video "0:00")
-(defun find-eev2019video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2019\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2019" time))
-
-;; «find-eev2020video»  (to ".find-eev2020video")
-;; Info: (find-1stclassvideo-links "eev2020")
-;; Play: (find-eev2020video "0:00")
-(defun find-eev2020video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2020\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2020" time))
-
-;; «find-eev2021video»  (to ".find-eev2021video")
-;; Info: (find-1stclassvideo-links "eev2021")
-;; Play: (find-eev2021video "0:00")
-(defun find-eev2021video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2021\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2021" time))
-
-;; «find-eev2021bvideo»  (to ".find-eev2021bvideo")
-;; Info: (find-1stclassvideo-links "eev2021b")
-;; Play: (find-eev2021bvideo "0:00")
-(defun find-eev2021bvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2021b\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2021b" time))
-
-;; «find-eevnavvideo»  (to ".find-eevnavvideo")
-;; Info: (find-1stclassvideo-links "eevnav")
-;; Play: (find-eevnavvideo "0:00")
-(defun find-eevnavvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eevnav\")"
-  (interactive)
-  (find-1stclassvideo-video "eevnav" time))
-
-;; «find-eevtemplvideo»  (to ".find-eevtemplvideo")
-;; Info: (find-1stclassvideo-links "eevtempl")
-;; Play: (find-eevtemplvideo "0:00")
-(defun find-eevtemplvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eevtempl\")"
-  (interactive)
-  (find-1stclassvideo-video "eevtempl" time))
-
-;; «find-eevfherelvideo»  (to ".find-eevfherelvideo")
-;; Info: (find-1stclassvideo-links "eevfherel")
-;; Play: (find-eevfherelvideo "0:00")
-(defun find-eevfherelvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eevfherel\")"
-  (interactive)
-  (find-1stclassvideo-video "eevfherel" time))
-
-;; «find-eevtestblsvideo»  (to ".find-eevtestblsvideo")
-;; Info: (find-1stclassvideo-links "eevtestbls")
-;; Play: (find-eevtestblsvideo "0:00")
-(defun find-eevtestblsvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eevtestbls\")"
-  (interactive)
-  (find-1stclassvideo-video "eevtestbls" time))
-
-;; «find-eevvlinksvideo»  (to ".find-eevvlinksvideo")
-;; Info: (find-1stclassvideo-links "eevvlinks")
-;; Play: (find-eevvlinksvideo "0:00")
-(defun find-eevvlinksvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eevvlinks\")"
-  (interactive)
-  (find-1stclassvideo-video "eevvlinks" time))
-
-;; «find-oficina20210video»  (to ".find-oficina20210video")
-;; Info: (find-1stclassvideo-links "oficina20210")
-;; Play: (find-oficina20210video "0:00")
-(defun find-oficina20210video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"oficina20210\")"
-  (interactive)
-  (find-1stclassvideo-video "oficina20210" time))
-
-;; «find-oficina2021avideo»  (to ".find-oficina2021avideo")
-;; Info: (find-1stclassvideo-links "oficina2021a")
-;; Play: (find-oficina2021avideo "0:00")
-(defun find-oficina2021avideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"oficina2021a\")"
-  (interactive)
-  (find-1stclassvideo-video "oficina2021a" time))
-
-;; «find-oficina2021bvideo»  (to ".find-oficina2021bvideo")
-;; Info: (find-1stclassvideo-links "oficina2021b")
-;; Play: (find-oficina2021bvideo "0:00")
-(defun find-oficina2021bvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"oficina2021b\")"
-  (interactive)
-  (find-1stclassvideo-video "oficina2021b" time))
-
-;; «find-2021ssrvideo»  (to ".find-2021ssrvideo")
-;; Info: (find-1stclassvideo-links "2021ssr")
-;; Play: (find-2021ssrvideo "0:00")
-(defun find-2021ssrvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021ssr\")"
-  (interactive)
-  (find-1stclassvideo-video "2021ssr" time))
-
-;; «find-2021workshop1video»  (to ".find-2021workshop1video")
-;; Info: (find-1stclassvideo-links "2021workshop1")
-;; Play: (find-2021workshop1video "0:00")
-(defun find-2021workshop1video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021workshop1\")"
-  (interactive)
-  (find-1stclassvideo-video "2021workshop1" time))
-
-;; «find-2021workshop2video»  (to ".find-2021workshop2video")
-;; Info: (find-1stclassvideo-links "2021workshop2")
-;; Play: (find-2021workshop2video "0:00")
-(defun find-2021workshop2video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021workshop2\")"
-  (interactive)
-  (find-1stclassvideo-video "2021workshop2" time))
-
-;; «find-2021workshop3video»  (to ".find-2021workshop3video")
-;; Info: (find-1stclassvideo-links "2021workshop3")
-;; Play: (find-2021workshop3video "0:00")
-(defun find-2021workshop3video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021workshop3\")"
-  (interactive)
-  (find-1stclassvideo-video "2021workshop3" time))
-
-;; «find-2021workshop4video»  (to ".find-2021workshop4video")
-;; Info: (find-1stclassvideo-links "2021workshop4")
-;; Play: (find-2021workshop4video "0:00")
-(defun find-2021workshop4video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021workshop4\")"
-  (interactive)
-  (find-1stclassvideo-video "2021workshop4" time))
-
-;; «find-2021workshop5video»  (to ".find-2021workshop5video")
-;; Info: (find-1stclassvideo-links "2021workshop5")
-;; Play: (find-2021workshop5video "0:00")
-(defun find-2021workshop5video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021workshop5\")"
-  (interactive)
-  (find-1stclassvideo-video "2021workshop5" time))
-
-;; «find-2021workshop6video»  (to ".find-2021workshop6video")
-;; Info: (find-1stclassvideo-links "2021workshop6")
-;; Play: (find-2021workshop6video "0:00")
-(defun find-2021workshop6video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021workshop6\")"
-  (interactive)
-  (find-1stclassvideo-video "2021workshop6" time))
-
-;; «find-2021orgfornonusersvideo»  (to ".find-2021orgfornonusersvideo")
-;; Info: (find-1stclassvideo-links "2021orgfornonusers")
-;; Play: (find-2021orgfornonusersvideo "0:00")
-(defun find-2021orgfornonusersvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021orgfornonusers\")"
-  (interactive)
-  (find-1stclassvideo-video "2021orgfornonusers" time))
-
-;; «find-2021ffllvideo»  (to ".find-2021ffllvideo")
-;; Info: (find-1stclassvideo-links "2021ffll")
-;; Play: (find-2021ffllvideo "0:00")
-(defun find-2021ffllvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2021ffll\")"
-  (interactive)
-  (find-1stclassvideo-video "2021ffll" time))
-
-;; «find-2022eevmake0video»  (to ".find-2022eevmake0video")
-;; Info: (find-1stclassvideo-links "2022eevmake0")
-;; Play: (find-2022eevmake0video "0:00")
-(defun find-2022eevmake0video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022eevmake0\")"
-  (interactive)
-  (find-1stclassvideo-video "2022eevmake0" time))
-
-;; «find-2022findeevanggvideo»  (to ".find-2022findeevanggvideo")
-;; Info: (find-1stclassvideo-links "2022findeevangg")
-;; Play: (find-2022findeevanggvideo "0:00")
-(defun find-2022findeevanggvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022findeevangg\")"
-  (interactive)
-  (find-1stclassvideo-video "2022findeevangg" time))
-
-;; «find-2022findelispintrovideo»  (to ".find-2022findelispintrovideo")
-;; Info: (find-1stclassvideo-links "2022findelispintro")
-;; Play: (find-2022findelispintrovideo "0:00")
-(defun find-2022findelispintrovideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022findelispintro\")"
-  (interactive)
-  (find-1stclassvideo-video "2022findelispintro" time))
-
-;; «find-2022pict2eluavideo»  (to ".find-2022pict2eluavideo")
-;; Info: (find-1stclassvideo-links "2022pict2elua")
-;; Play: (find-2022pict2eluavideo "0:00")
-(defun find-2022pict2eluavideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022pict2elua\")"
-  (interactive)
-  (find-1stclassvideo-video "2022pict2elua" time))
-
-;; «find-2022eevwconfigpt1video»  (to ".find-2022eevwconfigpt1video")
-;; Info: (find-1stclassvideo-links "2022eevwconfigpt1")
-;; Play: (find-2022eevwconfigpt1video "0:00")
-(defun find-2022eevwconfigpt1video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022eevwconfigpt1\")"
-  (interactive)
-  (find-1stclassvideo-video "2022eevwconfigpt1" time))
-
-;; «find-2022eevwconfigpt2video»  (to ".find-2022eevwconfigpt2video")
-;; Info: (find-1stclassvideo-links "2022eevwconfigpt2")
-;; Play: (find-2022eevwconfigpt2video "0:00")
-(defun find-2022eevwconfigpt2video (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022eevwconfigpt2\")"
-  (interactive)
-  (find-1stclassvideo-video "2022eevwconfigpt2" time))
-
-;; «find-2022eevwconfigvideo»  (to ".find-2022eevwconfigvideo")
-;; Info: (find-1stclassvideo-links "2022eevwconfig")
-;; Play: (find-2022eevwconfigvideo "0:00")
-(defun find-2022eevwconfigvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022eevwconfig\")"
-  (interactive)
-  (find-1stclassvideo-video "2022eevwconfig" time))
-
-;; «find-2022yttranscriptvideo»  (to ".find-2022yttranscriptvideo")
-;; Info: (find-1stclassvideo-links "2022yttranscript")
-;; Play: (find-2022yttranscriptvideo "0:00")
-(defun find-2022yttranscriptvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022yttranscript\")"
-  (interactive)
-  (find-1stclassvideo-video "2022yttranscript" time))
-
-;; «find-2022tikzvideo»  (to ".find-2022tikzvideo")
-;; Info: (find-1stclassvideo-links "2022tikz")
-;; Play: (find-2022tikzvideo "0:00")
-(defun find-2022tikzvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2022tikz\")"
-  (interactive)
-  (find-1stclassvideo-video "2022tikz" time))
-
-;; «find-eev2022klavideo»  (to ".find-eev2022klavideo")
-;; Info: (find-1stclassvideo-links "eev2022kla")
-;; Play: (find-eev2022klavideo "0:00")
-(defun find-eev2022klavideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2022kla\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2022kla" time))
-
-;; «find-eev2022pyvideo»  (to ".find-eev2022pyvideo")
-;; Info: (find-1stclassvideo-links "eev2022py")
-;; Play: (find-eev2022pyvideo "0:00")
-(defun find-eev2022pyvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2022py\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2022py" time))
-
-;; «find-eev2023replsvideo»  (to ".find-eev2023replsvideo")
-;; Info: (find-1stclassvideo-links "eev2023repls")
-;; Play: (find-eev2023replsvideo "0:00")
-(defun find-eev2023replsvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2023repls\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2023repls" time))
-
-;; «find-eev2023replsbvideo»  (to ".find-eev2023replsbvideo")
-;; Info: (find-1stclassvideo-links "eev2023replsb")
-;; Play: (find-eev2023replsbvideo "0:00")
-(defun find-eev2023replsbvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"eev2023replsb\")"
-  (interactive)
-  (find-1stclassvideo-video "eev2023replsb" time))
-
-;; «find-2024gitvideo»  (to ".find-2024gitvideo")
-;; Info: (find-1stclassvideo-links "2024git")
-;; Play: (find-2024gitvideo "0:00")
-(defun find-2024gitvideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2024git\")"
-  (interactive)
-  (find-1stclassvideo-video "2024git" time))
-
-;; «find-2024luasovideo»  (to ".find-2024luasovideo")
-;; Info: (find-1stclassvideo-links "2024luaso")
-;; Play: (find-2024luasovideo "0:00")
-(defun find-2024luasovideo (&optional time &rest rest)
-  "Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \"2024luaso\")"
-  (interactive)
-  (find-1stclassvideo-video "2024luaso" time))
 
 
 
@@ -1293,8 +869,6 @@ For more info on this particular video, run:
 
 
 
-
-
 ;;;                _                                   _     _            
 ;;;   ___ ___   __| | ___        ___  _____   ____   _(_) __| | ___  ___  
 ;;;  / __/ _ \ / _` |/ _ \_____ / _ \/ _ \ \ / /\ \ / / |/ _` |/ _ \/ _ \ 
@@ -1405,58 +979,52 @@ For more info on this particular video, run:
 
 
 
-;;;                _            _           _         
-;;;   ___ ___   __| | ___      | |___ _   _| |__  ___ 
-;;;  / __/ _ \ / _` |/ _ \_____| / __| | | | '_ \/ __|
-;;; | (_| (_) | (_| |  __/_____| \__ \ |_| | |_) \__ \
-;;;  \___\___/ \__,_|\___|     |_|___/\__,_|_.__/|___/
-;;;                                                   
-;; «code-lsubs»  (to ".code-lsubs")
-;; Tests: (find-eppp (ee-all-cs-with-subs))
-;;        (find-code-lsubs "eev2023repls")
-;;        (find-code-all-lsubs '("eev2019" "eevnav"))
-;;        (find-code-all-lsubs)
+;;;      _       __                 
+;;;   __| | ___ / _|_   _ _ __  ___ 
+;;;  / _` |/ _ \ |_| | | | '_ \/ __|
+;;; | (_| |  __/  _| |_| | | | \__ \
+;;;  \__,_|\___|_|  \__,_|_| |_|___/
+;;;                                 
+;; «first-class-videos»  (to ".first-class-videos")
+;; «video-tutorials»     (to ".video-tutorials")
 ;;
-(defun ee-all-cs-with-subs ()
-  (cl-loop for entry in ee-1stclassvideos-info
-           if (ee-1stclassvideos-field (car entry) :subs)
-	   collect (car entry)))
-
-;; Skels: (find-code-xxx-links "lsubs" "c" "")
-;;        (find-code-xxx-links "all-lsubs" "cs" "")
-;;    
-(defun      code-lsubs (c)
-  (eval (ee-read      (ee-code-lsubs c))))
-(defun find-code-lsubs (c)
-  (find-estring-elisp (ee-code-lsubs c)))
-(defun   ee-code-lsubs (c)
-  (ee-template0 "\
-;; (find-code-lsubs \"{c}\")
-;;      (code-lsubs \"{c}\")
+;; This section contains one `defun' for each of one of the
+;; first-class videos. See:
 ;;
-;; Tests: (find-{c}hsubs)
-;;        (find-{c}lsubs)
-;;        (find-{c}lsubs \"00:00\")
-;;        (find-1stclassvideo-links \"{c}\")
+;;   (find-video-links-intro "9. First-class videos")
+;;   (find-1stclassvideos)
 ;;
-(defun find-{c}lsubs (&rest pos-spec-list)
-  (apply 'find-1stclassvideolsubs \"{c}\" pos-spec-list))
-(defun find-{c}hsubs (&rest pos-spec-list)
-  (apply 'find-1stclassvideohsubs \"{c}\" pos-spec-list))
-"))
+;; If we defined them with `code-eevvideo' they wouldn't have
+;; docstrings and `find-efunction' wouldn't be able to find their
+;; definitions. Try:
+;;
+;;   (find-efunctiondescr 'find-eev2019video)
+;;   (find-efunction      'find-eev2019video)
 
-(defun      code-all-lsubs (&optional cs)
-  (eval (ee-read      (ee-code-all-lsubs cs))))
-(defun find-code-all-lsubs (&optional cs)
-  (find-estring-elisp (ee-code-all-lsubs cs)))
-(defun   ee-code-all-lsubs (&optional cs)
-  (mapconcat 'ee-code-lsubs (or cs (ee-all-cs-with-subs)) "\n\n"))
 
-;; «code-all-lsubs»  (to ".code-all-lsubs")
-;; This defines lots of functions with names like `find-<c>lsubs' and
-;; `find-<c>hsubs'.
-;; Try: (find-code-all-lsubs)
-             (code-all-lsubs)
+
+
+
+
+;;;  ____  _                                    
+;;; / ___|| |_ _ __ __ _ _ __   __ _  ___       
+;;; \___ \| __| '__/ _` | '_ \ / _` |/ _ \      
+;;;  ___) | |_| | | (_| | | | | (_| |  __/_ _ _ 
+;;; |____/ \__|_|  \__,_|_| |_|\__, |\___(_|_|_)
+;;;                            |___/            
+;;
+;; «strange-functions»  (to ".strange-functions")
+;; The `(code-1stclassvideos)' below defines lots of "strange
+;; functions" with names like `find-{c}video', `find-{c}hsubs', and
+;; `find-{c}lsubs'. The concept of "strange function" is explained
+;; here:
+;;   (find-strange-functions-intro)
+
+;; See: (find-eev "eev-tlinks.el" "code-1stclassvideos")
+;; (find-code-1stclassvideos)
+        (code-1stclassvideos)
+
+
 
 
 

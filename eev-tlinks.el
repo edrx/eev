@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240217
+;; Version:    20240220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -138,6 +138,12 @@
 ;;   «.ee-use-red-bullets»		(to "ee-use-red-bullets")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
 ;; «.find-1stclassvideo-links»		(to "find-1stclassvideo-links")
+;;   «.ee-1stclassvideo-basicinfo»	(to "ee-1stclassvideo-basicinfo")
+;;   «.ee-1stclassvideo-basicsexps»	(to "ee-1stclassvideo-basicsexps")
+;;   «.ee-1stclassvideo-dlsubs»		(to "ee-1stclassvideo-dlsubs")
+;;   «.ee-1stclassvideo-defuns»		(to "ee-1stclassvideo-defuns")
+;;   «.code-1stclassvideo»		(to "code-1stclassvideo")
+;;   «.code-1stclassvideos»		(to "code-1stclassvideos")
 ;; «.find-1stclassvideoindex»		(to "find-1stclassvideoindex")
 ;; «.find-1stclassvideohsubs»		(to "find-1stclassvideohsubs")
 ;; «.find-1stclassvideolsubs»		(to "find-1stclassvideolsubs")
@@ -3204,7 +3210,12 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
-
+;;;               _       _                      __  _           _ _      _       
+;;;  _ __ ___  __| |  ___| |_ __ _ _ __ ___     / / | |__  _   _| | | ___| |_ ___ 
+;;; | '__/ _ \/ _` | / __| __/ _` | '__/ __|   / /  | '_ \| | | | | |/ _ \ __/ __|
+;;; | | |  __/ (_| | \__ \ || (_| | |  \__ \  / /   | |_) | |_| | | |  __/ |_\__ \
+;;; |_|  \___|\__,_| |___/\__\__,_|_|  |___/ /_/    |_.__/ \__,_|_|_|\___|\__|___/
+;;;                                                                               
 ;; «find-eepitch-bullet-links»  (to ".find-eepitch-bullet-links")
 ;; «find-red-star-links»        (to ".find-red-star-links")
 ;; Skel: (find-find-links-links-new "red-star" "" "")
@@ -3303,7 +3314,13 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
-
+;;;                                          
+;;;   __ _ _ __   __ _  __ _        ___  ___ 
+;;;  / _` | '_ \ / _` |/ _` |_____ / _ \/ __|
+;;; | (_| | | | | (_| | (_| |_____|  __/\__ \
+;;;  \__,_|_| |_|\__, |\__, |      \___||___/
+;;;              |___/ |___/                 
+;;
 ;; «find-angg-es-links»  (to ".find-angg-es-links")
 ;; Skel: (find-find-links-links-new "angg-es" "" "")
 ;; Test: (find-angg-es-links)
@@ -3394,6 +3411,12 @@ This function is used by `ee-0x0-upload-region'."
 
 
 
+;;;  _     _       _                     _     _            
+;;; / |___| |_ ___| | __ _ ___ _____   _(_) __| | ___  ___  
+;;; | / __| __/ __| |/ _` / __/ __\ \ / / |/ _` |/ _ \/ _ \ 
+;;; | \__ \ || (__| | (_| \__ \__ \\ V /| | (_| |  __/ (_) |
+;;; |_|___/\__\___|_|\__,_|___/___/ \_/ |_|\__,_|\___|\___/ 
+;;;                                                         
 ;; «find-1stclassvideo-links»  (to ".find-1stclassvideo-links")
 ;; Skel: (find-find-links-links-new "1stclassvideo" "c" "body")
 ;;  See: (find-eev "eev-videolinks.el" "first-class-videos")
@@ -3448,20 +3471,38 @@ This function is used by `ee-0x0-upload-region'."
 
 ;; Test:
 ;; (find-estring-elisp (ee-find-1stclassvideo-links "eev2021"))
+;; (find-estring-elisp (ee-find-1stclassvideo-links "2021ssr"))
 ;;
 (defun ee-find-1stclassvideo-links (c)
   "An internal function used by `find-1stclassvideo-links'."
+  (let* ((basicinfo   (ee-1stclassvideo-basicinfo c))
+	 (basicsexps  (ee-1stclassvideo-basicsexps c))
+	 (dlsubs      (ee-1stclassvideo-dlsubs c))
+	 (defuns      (ee-1stclassvideo-defuns c)))
+    (ee-template0 "\
+{basicinfo}\
+;;
+{basicsexps}\
+;;
+{dlsubs}\
+
+;; See:
+;; (find-video-links-intro \"9. First-class videos\")
+;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
+;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
+
+{defuns}
+")))
+
+;; «ee-1stclassvideo-basicinfo»  (to ".ee-1stclassvideo-basicinfo")
+;; Tests: (find-estring (ee-1stclassvideo-basicinfo "eev2021"))
+;;        (find-estring (ee-1stclassvideo-basicinfo "2021ssr"))
+;;
+(defun ee-1stclassvideo-basicinfo (c)
   (ee-let*-macro-1stclassvideo-c
    c
    (let* ((hsubsurl-t0 ";; HSubs: {hsubs}\n")
-	  (hsubs-t0    ";; HSubs: (find-{c}hsubs \"{subsinit}\")\n")
-	  (lsubs-t0    ";; LSubs: (find-{c}lsubs \"{subsinit}\")\n")
-	  (index-t0    ";; Index: (find-1stclassvideo-index \"{c}\")\n")
-	  (hsubsurl    (if hsubs    (ee-template0 hsubsurl-t0) ""))
-	  (hsubs       (if hsubs    (ee-template0 hsubs-t0)    ""))
-	  (lsubs       (if hassubs  (ee-template0 lsubs-t0)    ""))
-	  (index       (if hasindex (ee-template0 index-t0)    ""))
-	  (dlsubs      (ee-1stclassvideos-dlsubs c)))
+	  (hsubsurl    (if hsubs (ee-template0 hsubsurl-t0) "")))
      (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
@@ -3471,75 +3512,149 @@ This function is used by `ee-0x0-upload-region'."
 ;; Comment: {comment}
 ;; Date:    {date}
 ;; Length:  {length}
-;;
-;; Play:  (find-{c}video \"00:00\")
-{hsubs}\
-{lsubs}\
-{index}\
-;; Info:  (find-1stclassvideo-links \"{c}\")
-;;        (find-1stclassvideo-def   \"{c}\")
-{dlsubs}\
-
-;; See:
-;; (find-video-links-intro \"9. First-class videos\")
-;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
-;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
 "))))
 
-
-
-;; Test:
-;; (find-estring-elisp (ee-find-1stclassvideo-defun "C" "M" "H"))
+;; «ee-1stclassvideo-basicsexps»  (to ".ee-1stclassvideo-basicsexps")
+;; Tests: (find-estring (ee-1stclassvideo-basicsexps "eev2021"))
+;;        (find-estring (ee-1stclassvideo-basicsexps "2021ssr"))
 ;;
-(defun ee-find-1stclassvideo-defun (c mp4stem hash)
-  (ee-template0 "\
-;; <find-{c}video>
-;; Info: (find-1stclassvideo-links \"{c}\")
-;; Play: (find-{c}video \"0:00\")
-\(defun find-{c}video (&optional time &rest rest)
-  \"Play one of the first-class videos of eev starting at TIME.
-For more info on this particular video, run:
-  (find-1stclassvideo-links \\\"{c}\\\")\"
-  (interactive)
-  (find-1stclassvideo-video \"{c}\" time))
-"))
-
-
-;; Tests: (ee-1stclassvideos-dlsubs "2022pict2elua")
-;;        (find-1stclassvideo-links "2022pict2elua")
-;;        (ee-1stclassvideos-dlsubs "2021workshop6")
-;;        (find-1stclassvideo-links "2021workshop6")
-;; See: (find-eev "eev-videolinks.el" "ee-1stclassvideos-field")
-;;
-(defun ee-1stclassvideos-dlsubs (c)
-  "An internal function used by `find-1stclassvideo-links'."
+(defun ee-1stclassvideo-basicsexps (c &optional pos)
   (ee-let*-macro-1stclassvideo-c
    c
-   (let* ((template00 ";;
+   (let* ((init        (or pos subsinit "00:00"))
+	  (hsubs-t0    ";; HSubs: (find-{c}hsubs \"{init}\")\n")
+	  (lsubs-t0    ";; LSubs: (find-{c}lsubs \"{init}\")\n")
+	  (index-t0    ";; Index: (find-1stclassvideo-index \"{c}\")\n")
+	  (hsubs-sexp  (if hsubs    (ee-template0 hsubs-t0)    ""))
+	  (lsubs-sexp  (if hassubs  (ee-template0 lsubs-t0)    ""))
+	  (index-sexp  (if hasindex (ee-template0 index-t0)    "")))
+     (ee-template0 "\
+;; Play:  (find-{c}video \"00:00\")
+{hsubs-sexp}\
+{lsubs-sexp}\
+{index-sexp}\
+;; Info:  (find-1stclassvideo-links \"{c}\")
+;;        (find-1stclassvideo-def   \"{c}\")
+"))))
+
+;; «ee-1stclassvideo-dlsubs»  (to ".ee-1stclassvideo-dlsubs")
+;; Tests: (find-estring (ee-1stclassvideo-dlsubs0 "eev2021" nil nil))
+;;        (find-estring (ee-1stclassvideo-dlsubs0 "eev2021" nil t))
+;;        (find-estring (ee-1stclassvideo-dlsubs0 "eev2021" t nil))
+;;        (find-estring (ee-1stclassvideo-dlsubs0 "eev2021" t t))
+;;        (find-estring (ee-1stclassvideo-dlsubs  "eev2021"))
+;;        (find-estring (ee-1stclassvideo-dlsubs  "2021ssr"))
+;;
+(defun ee-1stclassvideo-dlsubs (c)
+  (ee-let*-macro-1stclassvideo-c
+   c
+   (ee-1stclassvideo-dlsubs0 c mp4found hassubs)))
+
+(defun ee-1stclassvideo-dlsubs0 (c haslocal hassubs)
+  "An internal function used by `find-1stclassvideo-links'."
+  (let* ((template-nolocal-nosubs "\
 ;; You don't have a local copy of this video.
 ;; To download a local copy, run this:
 ;;       (find-1stclassvideo-psne \"{c}\")
 ;; This video doesn't have subtitles.\n")
-	  (template01 ";;
+	 (template-nolocal-hassubs "\
 ;; You don't have a local copy of this video.
 ;; To download a local copy of the video with subtitles, run:
 ;;       (find-1stclassvideo-psne \"{c}\")\n")
-	  (template10 ";;
+	 (template-haslocal-nosubs "\
 ;; We have a local copy of this video.
 ;; This video doesn't have subtitles.\n")
-	  (template11 ";;
+	 (template-haslocal-hassubs "\
 ;; You have a local copy of this video.
 ;; The upstream copy of this video has subtitles.
 ;; If you don't have a local copy of its subtitles, or if you
 ;; want to update the local copy of the subtitles, run this:
 ;;        (find-1stclassvideo-psne \"{c}\")\n"))
-     (if mp4found
-	 (if hassubs
-	     (ee-template0 template11)
-	   (ee-template0 template10))
-       (if hassubs
-	   (ee-template0 template01)
-	 (ee-template0 template00))))))
+    (if haslocal
+	(if hassubs
+	    (ee-template0 template-haslocal-hassubs)
+	  (ee-template0   template-haslocal-nosubs))
+      (if hassubs
+	  (ee-template0   template-nolocal-hassubs)
+	(ee-template0     template-nolocal-nosubs)))))
+
+;; «ee-1stclassvideo-defuns»  (to ".ee-1stclassvideo-defuns")
+;; Tests: (find-estring-elisp (ee-1stclassvideo-defuns "eev2021"))
+;;        (find-estring-elisp (ee-1stclassvideo-defuns "2021ssr"))
+;; (find-eev "eev-videolinks.el" "code-lsubs")
+;;
+(defun ee-1stclassvideo-defuns (c)
+  (ee-let*-macro-1stclassvideo-c
+   c
+   (if hassubs
+       (ee-template0 "\
+;; From: (find-code-1stclassvideo \"{c}\")
+;;  See: (find-1stclassvideo-links \"{c}\")
+;;
+(defun find-{c}video (&optional time &rest rest)
+  (interactive)
+  (find-1stclassvideo-video \"{c}\" time))
+
+(defun find-{c}lsubs (&optional time &rest rest)
+  (interactive)
+  (apply 'find-1stclassvideo-lsubs \"{c}\" time rest))
+
+(defun find-{c}hsubs (&optional time &rest rest)
+  (interactive)
+  (find-1stclassvideo-hsubs \"{c}\" time))
+")
+     (ee-template0 "\
+;; From: (find-code-1stclassvideo \"{c}\")
+;;  See: (find-1stclassvideo-links \"{c}\")
+;;
+(defun find-{c}video (&optional time &rest rest)
+  (interactive)
+  (find-1stclassvideo-video \"{c}\" time))
+"))))
+
+
+
+;; «code-1stclassvideo»  (to ".code-1stclassvideo")
+;; Skel:  (find-code-xxx-links "1stclassvideo" "c" "")
+;; Tests: (find-code-1stclassvideo "eev2021")
+;;        (ee-1stclassvideo-defuns "2021ssr"))
+;;
+(defun      code-1stclassvideo (c)
+  "Define the \"strange functions\" associated to the video C.
+When C is the identifier of a first-class video with subtitles,
+like \"eev2021\", define three strange functions:
+`find-{c}video', `find-{c}hsubs', and `find-{c}lsubs'. When C is
+the identifier of a first-class video without subtitles, define
+only `find-{c}video'."
+  (eval (ee-read      (ee-code-1stclassvideo c))))
+
+(defun find-code-1stclassvideo (c)
+  (find-estring-elisp (ee-code-1stclassvideo c)))
+(defun   ee-code-1stclassvideo (c)
+  (ee-1stclassvideo-defuns c))
+
+
+
+;; «code-1stclassvideos»  (to ".code-1stclassvideos")
+;; Skel:  (find-code-xxx-links "1stclassvideos" "cs" "")
+;; Tests: (find-code-1stclassvideos '("eev2021" "2021ssr"))
+;;        (find-code-1stclassvideos)
+;; See:   (find-eev "eev-videolinks.el" "strange-functions")
+;;
+(defun      code-1stclassvideos (&optional cs)
+  "Define the \"strange functions\" associated to the videos in CS.
+CS must be a list of identifiers of first-class videos. When CS
+is nil, use the result of (ee-1stclassvideos)."
+  (eval (ee-read      (ee-code-1stclassvideos cs))))
+
+(defun find-code-1stclassvideos (&optional cs)
+  (find-estring-elisp (ee-code-1stclassvideos cs)))
+(defun   ee-code-1stclassvideos (&optional cs)
+  (concat
+   ";; See: (find-eev \"eev-tlinks.el\" \"code-1stclassvideos\")\n\n"
+   (mapconcat 'ee-code-1stclassvideo
+	      (or cs (ee-1stclassvideos))
+	      "\n\n")))
 
 
 
