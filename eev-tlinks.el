@@ -2418,7 +2418,7 @@ http://anggtwu.net/ are newer than the local copy."
   (let* ((dir         "$S/http/anggtwu.net/eev-videos/")
          (url- (concat "http://anggtwu.net/eev-videos/" stem))
          (f (lambda (ext) (format "wget -N   %s%s\n" url- ext)))
-         (wgets (mapconcat f (split-string exts))))
+         (wgets (mapconcat f (split-string exts) "")))
     (ee-template0 "\
 mkdir -p {dir}
 cd       {dir}

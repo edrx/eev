@@ -352,13 +352,15 @@ This is an internal function used by `find-efunction-links' and
   "An internal function used by `find-eloadhistory-links'."
   (mapconcat
    (lambda (fname) (format "%S\n" `(find-fline ,(ee-shorten-elc fname))))
-   (mapcar 'car load-history)))
+   (mapcar 'car load-history)
+   ""))
 
 (defun ee-eloadhistory-fors ()
   "An internal function used by `find-eloadhistory-links'."
   (mapconcat
    (lambda (fname) (format "%S\n" `(find-eloadhistory-for ,fname)))
-   (mapcar 'car load-history)))
+   (mapcar 'car load-history)
+   ""))
 
 (defun ee-shorten-elc (fname)
   "An internal function used by `ee-eloadhistory-find-flines'."
