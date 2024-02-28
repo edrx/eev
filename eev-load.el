@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240219
+;; Version:    20240227
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -87,6 +87,12 @@
 
 
 
+;;;  __  __       _                             _       _           
+;;; |  \/  | __ _(_)_ __    _ __ ___   ___   __| |_   _| | ___  ___ 
+;;; | |\/| |/ _` | | '_ \  | '_ ` _ \ / _ \ / _` | | | | |/ _ \/ __|
+;;; | |  | | (_| | | | | | | | | | | | (_) | (_| | |_| | |  __/\__ \
+;;; |_|  |_|\__,_|_|_| |_| |_| |_| |_|\___/ \__,_|\__,_|_|\___||___/
+;;;                                                                 
 ;; «load-the-main-modules»  (to ".load-the-main-modules")
 ;; Load all the main modules of eev:
 ;;
@@ -140,22 +146,23 @@
 ;;   (find-eev-quick-intro "9. Shorter hyperlinks")
 ;;   (find-code-c-d-intro  "2. Shorter hyperlinks")
 ;;   (find-eev-quick-intro "9.3. Hyperlinks to PDF files")
-(require 'eev-code)	       ; (find-eev "eev-code.el")
-(require 'eev-pdflike)	       ; (find-eev "eev-pdflike.el")
+(require 'eev-code)	          ; (find-eev "eev-code.el")
+(require 'eev-pdflike)	          ; (find-eev "eev-pdflike.el")
 ;;
 ;; Some technical things.
-(require 'eev-codings)	       ; (find-eev "eev-codings.el")
-(require 'eev-env)	       ; (find-eev "eev-env.el")
-(require 'eev-edit)            ; (find-eev "eev-edit.el")
-(require 'eev-testblocks)      ; (find-eev "eev-testblocks.el")
-(require 'eev-kla)             ; (find-eev "eev-kla.el")
-(require 'eev-helpful)         ; (find-eev "eev-helpful.el")
-(require 'eev-rstdoc)          ; (find-eev "eev-rstdoc.el")
-' (require 'eev-kl-here)       ; (find-eev "eev-kl-here.el")
-' (require 'eev-qrl)           ; (find-eev "eev-qrl.el")
-' (require 'eev-strange-functions)  ; (find-eev "eev-strange-functions.el")
-;;
+(require 'eev-codings)	          ; (find-eev "eev-codings.el")
+(require 'eev-env)	          ; (find-eev "eev-env.el")
+(require 'eev-edit)               ; (find-eev "eev-edit.el")
+(require 'eev-testblocks)         ; (find-eev "eev-testblocks.el")
+(require 'eev-kla)                ; (find-eev "eev-kla.el")
+(require 'eev-kl-here)            ; (find-eev "eev-kl-here.el")
+(require 'eev-strange-functions)  ; (find-eev "eev-strange-functions.el")
+(require 'eev-helpful)            ; (find-eev "eev-helpful.el")
+(require 'eev-rstdoc)             ; (find-eev "eev-rstdoc.el")
+(require 'eev-qrl)                ; (find-eev "eev-qrl.el")
+
 ;; Configuration on M$ Windows.
+;; Load this always because it has nice examples.
 (require 'eev-wconfig)         ; (find-eev "eev-wconfig.el")
 ;;
 ;; Hyperlinks to audio, video, and IRC:
@@ -178,7 +185,12 @@
 ;; IMPORTANT: Since 2019mar05 these files are no longer loaded by
 ;; default! Note the "'" at the beginning of each line!
 
+
+
+;; TODO: explain this!
 ' (require 'eev-aliases)        ; (find-eev "eev-aliases.el")
+
+
 
 
 ;; Make `M-x eev-beginner' work in the "expert setups" too.

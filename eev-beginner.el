@@ -29,6 +29,7 @@
 ;;                                               (find-eev-quick-intro)
 
 ;; «.load-path-hack»	(to "load-path-hack")
+;; «.eev-beginner»	(to "eev-beginner")
 
 
 ;;; Commentary:
@@ -174,6 +175,7 @@
 ;; Open the main tutorial.
 (find-eev-quick-intro)
 
+;; «eev-beginner»  (to ".eev-beginner")
 ;; `eev-beginner' is the only autoload of eev at this moment.
 ;; See: (find-elnode "Autoload" "magic autoload comment")
 ;;      (find-eev "eev-load.el" "autoloads")

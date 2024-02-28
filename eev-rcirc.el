@@ -39,9 +39,11 @@
 
 ;;; Commentary:
 
-;; This file - eev-rcirc.el - implements elisp hyperlinks for rcirc in
-;; a way that lets several important actions be expressed as
-;; one-liners.
+;; This file - eev-rcirc.el - implements elisp hyperlinks for rcirc
+;; in a way that lets several important actions be expressed as
+;; one-liners. It is explained in this intro:
+;; 
+;;   (find-rcirc-intro)
 ;; 
 ;; 
 ;; 1. Convention on channels

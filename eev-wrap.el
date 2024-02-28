@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240120
+;; Version:    20240220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-wrap.el>
@@ -103,11 +103,22 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
 
 (defun ee-H (str) (format "%s%s" ee-hyperlink-prefix str))
 
+(defun ee-needs-quote (obj)
+  "Return t when OBJ needs a \"'\"."
+  (not (or (numberp obj) (stringp obj) (eq obj nil) (eq obj t) (keywordp obj))))
+
 (defun ee-add-quote (obj)
   "Return OBJ is OBJ is constant; else return 'OBJ."
-  (if (or (numberp obj) (stringp obj) (eq obj nil) (eq obj t) (keywordp obj))
-      obj
-    (list 'quote obj)))
+  (if (ee-needs-quote obj)
+      (list 'quote obj)
+    obj))
+
+(defun ee-Q (obj)
+  (if (ee-needs-quote obj) (format "'%s" (ee-S obj)) (ee-S obj)))
+
+(defun ee-Qrest (rest)
+  (mapconcat (lambda (obj) (format " %s" (ee-Q obj))) rest ""))
+
 
 (defalias 'ee-pp0 'ee-S)
 

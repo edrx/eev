@@ -62,7 +62,9 @@
 ;; The code below was based on this question:
 ;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2023-12/msg00064.html
 
+;; Index:
 ;; «aliases»  (to ".aliases")
+
 
 (defvar ee-qrl-plist0
   '("\"" "\\\""

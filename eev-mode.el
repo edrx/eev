@@ -1,6 +1,6 @@
 ;;; eev-mode.el -- a minor mode with keybindings for using eev conveniently.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240228
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-mode.el>
@@ -127,6 +127,7 @@ and: (find-eval-intro \"`M-k'\")"
   (define-key eev-mode-map "\M-h\M-k" 'find-ekey-links)
   (define-key eev-mode-map "\M-h\M-n" 'find-eunicodeucs)
   (define-key eev-mode-map "\M-h\M-p" 'find-pdf-links)
+  (define-key eev-mode-map "\M-h\M-s" 'find-strange-function-links)
   (define-key eev-mode-map "\M-h\M-v" 'find-evariable-links)
   (define-key eev-mode-map "\M-hf"    'find-file-links)
   (define-key eev-mode-map "\M-hg"    'find-git-links)
@@ -134,13 +135,14 @@ and: (find-eval-intro \"`M-k'\")"
   ;; (define-key eev-mode-map "\M-h\M-m" 'find-manpage-links)
   ;; (define-key eev-mode-map "\M-hm"    'find-last-manpage-links)
   ;;
+  ;;
   ;; Information about text properties, faces, and chars:
   ;; (define-key eev-mode-map "\M-h\M-s" 'find-efacedescr)
   (define-key eev-mode-map "\M-h\M-c" 'find-echardescr)
-  (define-key eev-mode-map "\M-h\M-s" 'find-eface-links)
   (define-key eev-mode-map "\M-h\M-t" 'find-etpat)
-  (define-key eev-mode-map "\M-ht"    'find-etpat0)
   (define-key eev-mode-map "\M-hc"    'find-ecolor-links)
+  (define-key eev-mode-map "\M-hs"    'find-eface-links)
+  (define-key eev-mode-map "\M-ht"    'find-etpat0)
   ;;
   ;; Keys for refining hyperlinks.
   ;; See: (find-eval-intro "Producing and refining hyperlinks")
@@ -258,10 +260,11 @@ Commands to generate pages with lists of hyperlinks:
       \\[find-efunction-links] -- hyperlinks to an Emacs function
       \\[find-ekey-links] -- hyperlinks to a key sequence
       \\[find-evariable-links] -- hyperlinks to an Emacs variable
-      \\[find-eface-links] -- hyperlinks to a face (default: face at point)
+      \\[find-strange-function-links] -- hyperlinks about a strange function
       \\[find-debpkg-links] -- hyperlinks about a Debian package
       \\[find-here-links] -- hyperlinks to here
       \\[find-here-links-3] -- hyperlinks to here for beginners
+        \\[find-eface-links] -- hyperlinks to a face (default: face at point)
   See: (find-eev-quick-intro \"\\n4.2.\" \"find-ekey-links\")
        (find-here-links-intro  \"4.\"   \"find-here-links-3\")
 Commands to edit hyperlinks:

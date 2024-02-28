@@ -339,9 +339,9 @@ explained in this video:
 The three links in the \"Video links:\" block below
 
   [Video links:]
-    (find-eevnavvideo \"0:31\" \"0.1. M-x package-initialize\")
+    (find-eevnavvideo \"0:30\" \"0.1. M-x package-initialize\")
     (find-eevnavvideo \"0:39\" \"0.2. M-x list-packages\")
-    (find-eevnavvideo \"2:30\" \"0.3. M-x eev-beginner\")
+    (find-eevnavvideo \"2:38\" \"0.3. M-x eev-beginner\")
 
 point to positions in that video; to learn how to use links like
 those, visit this URL:
@@ -2167,7 +2167,8 @@ It is meant as both a tutorial and a sandbox.
 
 
 This intro is being rewritten!
-See: (find-eev-levels-intro)
+Some parts will be moved to:
+  (find-eev-levels-intro)
 
 
 
@@ -2794,25 +2795,60 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-
+I'm rewriting this intro!
 See: (find-eev-install-intro)
 
 
 
 1. Installing
 =============
-_Installing_ eev with a package manager only does this:
+_Installing_ eev only does this:
 
-  a. this directory is put in the load-path:
+  a. The directory with the eev files is put in the load-path. If
+     eev has been \"loaded\" - as explained in the next section -
+     then the functions `find-eev' and `find-eevfile' will be
+     defined, and the sexps below will open that directory with
+     dired:
 
+       (find-eev \"\")
        (find-eevfile \"\")
 
-  b. the function `eev-beginner' is declared as an autoload.
+  b. The function `eev-beginner' is declared as an autoload. It
+     is defined, and explained, here:
+
+       (find-eev \"eev-beginner.el\")
+
+The easiest way to install eev is with `M-x list-packages'. If
+you are totally new to Emacs and you find the interface of
+list-packages confusing, take a look at:
+
+  http://anggtwu.net/2020-list-packages-eev-nav.html#00:30 (English)
+  http://anggtwu.net/2021-oficina-1.html#02:31 (Portuguese)
+
+Installing eev with `M-x list-packages' is equivalent to running
+the three sexps below:
+
+  (package-initialize)
+  (package-refresh-contents)
+  (package-install 'eev)
+
+If you know the basics of Emacs Lisp you can install eev by
+copying and pasting the tree sexps above to an Emacs buffer and
+then executing each one with `C-e C-x C-e'.
+
+If you are prefer to use the version of eev from its git
+repository you can install it with:
+
+  (package-vc-install \"https://github.com/edrx/eev\")
+
+
+
 
 
 2. Loading
 ==========
-_Loading_ eev does a few things more. They are explained here:
+You can have eev installed without \"loading\" it. The details of
+what happens when we \"load\" eev are explained here:
 
   (find-eev-intro \"1. `eev-mode'\")
   (find-eev-intro \"1. `eev-mode'\" \"invasive\")
@@ -2820,15 +2856,15 @@ _Loading_ eev does a few things more. They are explained here:
   (find-eev \"eev-load.el\" \"load-the-main-modules\")
 
 If you want to make your Emacs _load_ eev on startup, then the
-best way to do that is to put either this
+best way to do that is to put either this,
 
-  ;; See: (find-eev-install-intro \"0. Loading eev\")
+  ;; See: (find-eev-levels-intro \"2. Loading\")
   (require 'eev-load)
   (eev-mode 1)
 
-or this
+or this,
 
-  ;; See: (find-eev-install-intro \"0. Loading eev\")
+  ;; See: (find-eev-levels-intro \"2. Loading\")
   (require 'eev-load)
   ;; (eev-mode 1)
 
@@ -2840,6 +2876,10 @@ Use the version with \"(eev-mode 1)\" if you want to turn
 eev-mode on on startup, and the version with \";; (eev-mode 1)\"
 if you prefer to start with eev-mode off.
 
+After loading eev all the elisp hyperlinks in this intro will
+work.
+
+
 
 
 3. Activating
@@ -2850,7 +2890,16 @@ does very little - see:
   (find-eev-intro \"1. `eev-mode'\" \"Turning on eev-mode\")
 
 Note that \"installing\", \"loading\", and \"activating\" eev are
-different things, and each one does less than the next one.
+different things, and each one does more than the previous one.
+
+
+
+4. Aliases
+==========
+TODO: write this!
+See:
+  (find-eev \"eev-aliases.el\")
+
 
 
 " pos-spec-list)))
@@ -16283,6 +16332,11 @@ files, but `kl', `kll', and `kls' support all these kinds of
 
   (find-eev \"eev-kl-here.el\" \"hprog\")
 
+`M-x kl' is much easier to use than both `find-here-links' and
+`kla' and its friends, but its implementation is much more
+complex.
+
+
 
 
 2. Try it!
@@ -19080,6 +19134,217 @@ Prerequisites:
 
 Note: this is a work in progress!
 Both this intro and the HTML page above are unfinished!
+
+
+
+
+1. Introduction
+===============
+We saw in
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+that each call to `code-c-d' defines several functions, and we
+can use `find-code-c-d' to display the code that the
+corresponding `code-c-d' would run.
+
+I will refer to the functions defined by a call to `code-c-d' as
+\"functions defined in strange ways\", or, to abbreviate, as
+\"strange functions\".
+
+Here is an another example. This a sexp whose \"head\" is a
+strange function, and that plays a certain video:
+
+  (find-2024gitvideo \"00:34\")
+
+It was defined by a call to `code-1stclassvideo'. Try the
+`find-code-1stclassvideo' below:
+
+  ;; (find-code-1stclassvideo \"2024git\")
+          (code-1stclassvideo \"2024git\")
+
+It defines three associated functions - `find-2024gitvideo', that
+plays the video, and `find-2024githsubs' and `find-2024gitlsubs',
+that display the subtitles of the video in different formats.
+
+Sometimes we want a quick way to start by one of the sexps below
+and produce one of the other two,
+
+  (find-2024gitvideo \"00:34\")
+  (find-2024githsubs \"00:34\")
+  (find-2024gitlsubs \"00:34\")
+
+and sometimes we want a way to jump to the place in which these
+`find-2024git*' functions were defined... note that the three
+`find-efunctionpp's below do work,
+
+  (find-efunctionpp 'find-2024gitvideo)
+  (find-efunctionpp 'find-2024githsubs)
+  (find-efunctionpp 'find-2024gitlsubs)
+
+  (find-efunction   'find-2024gitvideo)
+  (find-efunction   'find-2024githsubs)
+  (find-efunction   'find-2024gitlsubs)
+
+but the `find-efunction's don't - they open the file in which the
+`find-2024git*'s were defined, but they can't find the exact
+point in which the `code-1stclassvideo' was run.
+
+
+
+
+2. Here
+=======
+This is a sexp that starts with a strange function - or, to
+abbreviate, a \"strange sexp\":
+
+  (find-2024gitvideo \"00:34\")
+
+If you type `M-h M-s' on the line above the `M-h M-s' will
+display a lot of information about the \"strange sexp here\".
+It will run this,
+
+  (find-sf-links '(find-2024gitvideo \"00:34\"))
+
+and that will display a temporary buffer with the variants of
+that sexp, some information about the video \"2024git\", the
+definitions of the (strange) functions `find-2024gitvideo',
+`find-2024gitlsubs', and `find-2024githsubs', and a few other
+things.
+
+At this moment only a few kinds of strange sexps are supported.
+Try:
+
+  (find-sf-links '(find-2024gitvideo \"00:34\"))
+  (find-sf-links '(find-eev \"eev-strange-functions.el\"))
+
+and:
+
+  (code-pdf-page \"livesofanimals\" \"~/Coetzee99.pdf\")
+  (code-pdf-text \"livesofanimals\" \"~/Coetzee99.pdf\" -110)
+  (find-sf-links '(find-livesofanimalspage (+ -110 113) \"LECTURE I.\"))
+  (find-sf-links '(find-livesofanimalstext (+ -110 113) \"LECTURE I.\"))
+
+and try using `M-h M-s' on the two sexps below:
+
+  (find-eev \"eev-strange-functions.el\")
+  (find-livesofanimalspage (+ -110 113) \"LECTURE I.\")
+
+
+
+3. Detection
+============
+
+
+
+
+Remember that we have three families of commands that create
+links to \"here\":
+
+  `M-h M-h': (find-here-links-intro \"2. \\\"Here\\\"\")
+  `M-x kl':  (find-kl-here-intro)
+  `M-x kla': (find-kla-intro)
+
+The first two families use a little language to decide what we
+have \"here\". That little language is explained here:
+
+  (find-here-links-intro \"9. The hlang\")
+
+
+
+
+
+
+The easiest, and most high-level, way to inspect strange
+functions uses a kind of \"here\". If you type `M-h M-s' with the
+point on the line below,
+
+  (find-2024githsubs \"00:34\")
+
+then `M-x sf' will first move the point to the end of the line
+and then it will do some interesting things with the \"sexp
+before point\", just like `M-e'. The \"here\" in that case will
+be that sexp, whose \"head\" is a strange function. So the `sf'
+in `M-x sf' is an abbreviation for:
+
+  do things with the strange function here, or rather,
+  with the \"sexp here\", that starts with a strange function,
+  where the \"sexp here\" is the sexp before the end of line,
+  and a \"strange function\" is a \"function defined in a
+  strange way\".
+
+And \"do things\" means: display in a temporary buffer variants
+of that sexp and lots of other information.
+
+
+
+3. Kinds
+========
+
+4. The load-history
+===================
+
+
+
+
+
+[TODO: rewrite the rest!]
+
+The function `find-eev2021video' is known - try:
+
+  (find-eev2021video \"00:40\")
+  (find-efunctionpp 'find-eev2021video)
+
+but `find-efunction' can't find its definition... try:
+
+  (find-efunction 'find-eev2021video)
+
+it finds the file in which that function was defined, but it
+can't find its \"defun\". That's because `find-eev2021video' is a
+\"function defined in a strange way\", or, to abbreviate, a
+\"strange function\".
+
+_Most_ strange functions defined by eev are defined by calls to
+`code-c-d' and friends - see:
+
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
+
+`find-eev2021' was defined by a call to `code-1stclassvideo',
+like this one,
+
+  ;; (find-code-1stclassvideo \"eev2021\")
+          (code-1stclassvideo \"eev2021\")
+
+that defines `find-eev2021video', that plays a video, and two
+\"variants\" of `find-eev2021video', that access the subtitles of
+that video. Try:
+
+  (find-eev2021video \"00:40\")
+  (find-eev2021hsubs \"00:40\")
+  (find-eev2021lsubs \"00:40\")
+
+Sometimes we want to start with a sexp like the ones above, and
+generate its variants; sometimes we want to start with one of the
+sexps above and display a lot of information about the \"strange
+function\" at the car of its sexp; and sometimes we want to start
+with one of the sexps above and display a lot of information
+about the video that it points to. We can do all that with `M-x
+sf', that:
+
+  does lots of things with the <S>trange <F>unction in the
+  current line.
+
+More precisely, it acts at the sexp at the end of the line, like
+`M-e', but if that sexp starts with a strange function it does
+lots of things with that sexp. Try it on the sexps above!
+
+[Only a few families of strange functions are supported at this
+moment]
+
+[Describe M-x sf - how to load it, how to test it]
+
 
 
 

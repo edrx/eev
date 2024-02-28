@@ -30,25 +30,20 @@
 
 ;;; Commentary:
 
-;; This file implements an experimental variant of `find-here-links',
+;; This file implements the command `M-x kl', that "kills a link to
+;; here", and its variants `M-x kll' and `M-x kls'. The documentation
+;; is in this intro:
+;;
+;;   (find-kl-here-intro)
+;;
+;; 
+
 ;; in which we only generate a single "link to here", and we push that
 ;; into the kill ring. It is a cross between this,
 ;;
 ;;   (find-here-links-intro "3. `find-here-links'")
 ;;   (find-here-links-intro "9. The hlang")
-;;
-;; and the "kill link" functions from:
-;;
 ;;   (find-kla-intro)
-;;
-;; Note that:
-;;
-;;   1. everything here is VERY experimental,
-;;   2. this file is not loaded by default,
-;;   3. the recommended way to use it is to put a line like this in
-;;      your ~/.emacs,
-;;
-;;        (require 'eev-kl-here)    ; (find-eev "eev-kl-here.el")
 ;;
 ;;   4. the current version of this file defines the functions `kl',
 ;;      `kll' and `kls', that don't start with the valid prefixes.

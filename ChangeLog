@@ -1,4 +1,24 @@
+2024-02-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-aliases.el: new file.
+
+	* eev-strange-functions.el: major rewrite.
+
+	* eev-mode.el (eev-mode-map-set): moved `find-efacedescr' from
+	`M-h M-s' to `M-h s'; placed `find-strange-function-links' in `M-h
+	M-s'.
+	(eev-mode-help): updated to mention `find-strange-function-links'.
+
+2024-02-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-pdflike.el (ee-code-pdfbackend, ee-code-pdftextbackend):
+	added `(setq ee-{c}pdf {fname})'.
+
 2024-02-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el (ee-needs-quote): new function.
+	(ee-add-quote): use `ee-needs-quote'.
+	(ee-Q, ee-Qrest): new functions.
 
 	* eev-videolinks.el (find-eev2019video, find-eev2020video)
 	(find-eev2021video, find-eev2021bvideo, find-eevnavvideo)

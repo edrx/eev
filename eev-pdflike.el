@@ -339,11 +339,12 @@ newline are spurious - and replaces them by \"(ff)\"."
   ;;
   ;; See: (find-pdf-like-intro \\\"7. Shorter hyperlinks to PDF files\\\")
   ;;
+  (setq ee-{<}c{>}pdf {<}(ee-S fname){>})
   (setq ee-pdflike-last 'find-{<}c{>}page)
   (defun find-{<}c{>}page (&optional page &rest rest)
     (interactive)
     (setq ee-pdflike-last 'find-{<}c{>}page)
-    (find-{pdfbackend} {<}(ee-pp0 fname){>} page))
+    (find-{pdfbackend} {<}(ee-S fname){>} page))
   \"))
 "))
 
@@ -399,6 +400,7 @@ newline are spurious - and replaces them by \"(ff)\"."
   (setq ee-page-c      {<}(ee-pp0 c){>})
   (setq ee-page-fname  {<}(ee-pp0 fname){>})
   (setq ee-page-offset {<}(ee-pp0 offset){>})
+  (setq ee-{<}c{>}pdf {<}(ee-S fname){>})
   (defun find-{<}c{>}text (&optional page &rest rest)
     (interactive)
     (setq ee-page-c      {<}(ee-pp0 c){>})
