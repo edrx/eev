@@ -1058,9 +1058,8 @@ git pull
   eejump
   eev-anchors
   eev-code eev-pdflike
-  eev-codings eev-env eev-edit eev-testblocks eev-kla eev-helpful eev-rstdoc
-  eev-kl-here
-  eev-qrl
+  eev-codings eev-env eev-edit eev-testblocks
+  eev-kla eev-kl-here eev-strange-functions eev-helpful eev-rstdoc eev-qrl
   eev-wconfig
   eev-audiovideo
   eev-videolinks
