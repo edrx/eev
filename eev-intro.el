@@ -17765,23 +17765,45 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+
+
 Note:
 THIS IS A VERY EARLY DRAFT!
 THIS IS A MESS!!!
+  See:
 
 
 
 0. Pre-requisites
 =================
 This intro supposes that you know:
-  1. how to do cut and paste in Emacs,
+
+  1. how to do cut and paste in Emacs:
+       (find-eev-quick-intro \"5.2. Cutting and pasting\")
+       (find-emacs-keys-intro \"3. Cutting & pasting\")
+
   2. how and why to put messy notes at the end of your ~/TODO, 
-  3. several ways to go to ~/TODO, 
-  4. a bit of elisp.
+       (find-here-links-intro \"4. `find-here-links-3'\")
+       (find-here-links-intro \"4. `find-here-links-3'\" \"~/TODO\")
+       (find-refining-intro \"3. Three buffers\")
+       (find-refining-intro \"3. Three buffers\" \"~/TODO\")
+
+  3. several ways to go to ~/TODO - for example:
+     (find-eejumps \"M-2 M-1 M-j\")
+
+  4. a bit of elisp - the first six sections of:
+       (find-elisp-intro)
+
+  5. what is the \"init file\" of Emacs:
+       (find-enode \"Init File\")
+       (find-enode \"Find Init\")
+     I will always refer to it as \"~/.emacs\".
 
 Here you will learn how (and why) to put messy notes _in elisp_
 at the end of your ~/.emacs. Note that this is a style that many
-people
+people despise...
+
+
 
 
 1. Cutting and pasting

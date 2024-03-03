@@ -1,3 +1,8 @@
+2024-03-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-strange-functions.el (ee-sf-1stclassvideo-links)
+	(ee-sf-codecd-links, ee-sf-pdf-links): small changes.
+
 2024-02-28  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-aliases.el: new file.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240219
+;; Version:    20240303
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-strange-functions.el>
@@ -301,6 +301,11 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; Info about this video:
 {basicinfo}\
 
+;; Source and location in the load-history:
+;; (find-efunctionlgrep 'find-{c}video \"{c}\")
+;; (find-eloadhistory-for 'find-{c}video)
+;; (find-eloadhistory-for 'find-{c}video 2 \" find-{c}video)\")
+
 ;; Defuns:
 {defuns}\
 "))))
@@ -369,6 +374,11 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; (find-{c}sh0  \"pwd\")
 ;; (find-{c}node \"\")
 
+;; Source and location in the load-history:
+;; (find-efunctionlgrep 'find-{c}file '{c})
+;; (find-eloadhistory-for 'find-diagxyfile)
+;; (find-eloadhistory-for 'find-diagxyfile 2 \" ee-diagxyfile)\")
+
 ;; Defuns (incomplete and without the overrides):
 
 {defuns}\
@@ -429,13 +439,25 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; (code-c-d "foo" "bar")
 
 (defun ee-sf-pdf-links (c fname)
-  (let* ((defuns1 (ee-code-pdf-page c fname))
-	 (defuns2 (ee-code-pdf-text c fname)))
+  (let* ((defuns1  (ee-code-pdf-page c fname))
+	 (defuns2  (ee-code-pdf-text c fname))
+	 (page0    (cadr ee-sf-sexp))
+	 (page     (if page0 (format " %s" (ee-S page0)) ""))
+	 (pagerest (format "%s%s" page (ee-Qrest (cddr ee-sf-sexp))))
+	 )
     `(,(ee-template0 "\
 ;; Variants:
 ;; (find-{c}page)
 ;; (find-{c}text)
+;; (find-{c}page{page})
+;; (find-{c}text{page})
+;; (find-{c}page{pagerest})
+;; (find-{c}text{pagerest})
 
+;; Source and location in the load-history:
+;; (find-efunctionlgrep 'find-{c}page \"{c}\")
+;; (find-eloadhistory-for 'find-{c}page)
+;; (find-eloadhistory-for 'find-{c}page 2 \" find-{c}page)\")
 
 ;; Some defuns (recreated - may be wrong):
 
