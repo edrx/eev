@@ -1,3 +1,8 @@
+2024-03-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-strange-functions-intro): wrote several new
+	sections.
+
 2024-03-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-strange-functions.el (ee-sf-1stclassvideo-links)

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240206
+;; Version:    20240304
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -2800,6 +2800,31 @@ See: (find-eev-install-intro)
 
 
 
+0. Introduction
+===============
+If you are learning eev and you have it installed, then I
+recommend that you put these four lines in your init file (obs: I
+will always refer to the Emacs init file as \"~/.emacs\"):
+
+  ;; See: (find-eev-levels-intro)
+  (require 'eev-load)               ; (find-eev \"eev-load.el\")
+  (require 'eev-aliases)            ; (find-eev \"eev-aliases.el\")
+  (eev-mode 1)                      ; (find-eev \"eev-mode.el\")
+
+These lines loads all modules of eev, defines some aliases that
+don't start with the prefixes \"find-\", \"ee\", or \"br\" - for
+example, \"M-x 1c\" becomes an alias for \"M-x
+find-1stclassvideos\" - and the last line turns eev-mode on.
+
+Some people feel that this level of eev-ness in every Emacs
+session is too much for them - they prefer to have eev installed,
+but by default with nothing loaded or turned on... this intro is
+for them.
+
+
+
+
+
 1. Installing
 =============
 _Installing_ eev only does this:
@@ -2960,54 +2985,55 @@ recommended reading order. These are the basic ones:
   16. (find-strange-functions-intro)
   17. (find-multiwindow-intro)
   18. (find-eev-install-intro)
+  19. (find-eev-levels-intro)
 
 These are things that I am using in workshops:
 
-  19. (find-windows-beginner-intro)
-  20. (find-eev-exercises-intro)
+  20. (find-windows-beginner-intro)
+  21. (find-eev-exercises-intro)
 
 These ones explain ideas, conventions, and usage patterns:
 
-  21. (find-escripts-intro)
-  22. (find-links-conv-intro)
+  22. (find-escripts-intro)
+  23. (find-links-conv-intro)
 
 These are older and more technical versions of sections of the
 eev-quick-intro:
 
-  23. (find-eval-intro)
-  24. (find-links-intro)
-  25. (find-brxxx-intro)
-  26. (find-wrap-intro)
-  27. (find-eejump-intro)
-  28. (find-anchors-intro)
-  29. (find-code-c-d-intro)
+  24. (find-eval-intro)
+  25. (find-links-intro)
+  26. (find-brxxx-intro)
+  27. (find-wrap-intro)
+  28. (find-eejump-intro)
+  29. (find-anchors-intro)
+  30. (find-code-c-d-intro)
 
 These are etcs:
 
-  30. (find-templates-intro)
-  31. (find-org-intro)
-  32. (find-git-intro)
+  31. (find-templates-intro)
+  32. (find-org-intro)
+  33. (find-git-intro)
 
 These ones explain advanced features that require extra setup:
 
-  33. (find-kla-intro)
-  34. (find-kl-here-intro)
-  35. (find-edit-index-intro)
-  36. (find-rstdoc-intro)
-  37. (find-show2-intro)
-  38. (find-lua-tutorial-intro)
-  39. (find-prepared-intro)
-  40. (find-bounded-intro)
-  41. (find-channels-intro)
+  34. (find-kla-intro)
+  35. (find-kl-here-intro)
+  36. (find-edit-index-intro)
+  37. (find-rstdoc-intro)
+  38. (find-show2-intro)
+  39. (find-lua-tutorial-intro)
+  40. (find-prepared-intro)
+  41. (find-bounded-intro)
+  42. (find-channels-intro)
 
 This one was used in a video:
 
-  42. (find-three-main-keys-intro)
+  43. (find-three-main-keys-intro)
 
 These ones are obsolete:
 
-  43. (find-emacs-intro)
-  44. (find-defun-intro)
+  44. (find-emacs-intro)
+  45. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -19255,28 +19281,129 @@ and try using `M-h M-s' on the two sexps below:
 
 
 
-3. Detection
+
+3. Debugging
 ============
+Remember that both `M-h M-h' and f8 treat a prefix argument as a
+request to enter a kind of debugging mode:
+
+  (find-here-links-intro \"8. Debugging\")
+  (find-eev \"eepitch.el\" \"debug\")
+
+`M-h M-s' follows the same convention. Try `M-1 M-h M-s' on the
+sexp below:
+
+  (find-2024gitvideo \"00:34\")
+
+You will get the same temporary buffer that you get with:
+
+  (find-sf-debug-links '(find-2024gitvideo \"00:34\"))
+
+It shows the values of several variables and has several links to the
+source code. For example, this one,
+
+  (find-evariable 'ee-hprog-for-sf)
+
+that shows the \"hprogram\" that that `M-h M-s' uses to detect which
+kind of strange sexp we have \"here\".
 
 
 
 
-Remember that we have three families of commands that create
-links to \"here\":
+4. The load-history
+===================
+Try `M-h M-s' on these sexps again:
 
-  `M-h M-h': (find-here-links-intro \"2. \\\"Here\\\"\")
-  `M-x kl':  (find-kl-here-intro)
-  `M-x kla': (find-kla-intro)
+  (find-2024gitvideo \"00:34\")
+  (find-eev \"eev-strange-functions.el\")
 
-The first two families use a little language to decide what we
-have \"here\". That little language is explained here:
+You will see that the temporary buffers have blocks like these ones:
 
-  (find-here-links-intro \"9. The hlang\")
+  ;; Source and location in the load-history:
+  ;; (find-efunctionlgrep 'find-2024gitvideo \"2024git\")
+  ;; (find-eloadhistory-for 'find-2024gitvideo)
+  ;; (find-eloadhistory-for 'find-2024gitvideo 2 \" find-2024gitvideo)\")
+
+  ;; Source and location in the load-history:
+  ;; (find-efunctionlgrep 'find-eevfile 'eev)
+  ;; (find-eloadhistory-for 'find-eevfile)
+  ;; (find-eloadhistory-for 'find-eevfile 2 \" ee-eevfile)\")
+
+Each of the hyperlinks with `find-eloadhistory-for' displays one entry
+in the load-history in a pretty-printed format, and a header with help
+at the top. For example,
+
+  (find-eloadhistory-for 'find-eevfile 2 \" ee-eevfile)\")
+
+shows the entry in the load-history for the file in which `find-eevfile'
+was defined, and it jumps to the the beginning of this block in it:
+
+  (defun . ee-eevfile)
+  (defun . find-eevfile)
+  (defun . find-eevsh)
+  (defun . find-eevsh0)
+  (defun . find-eevsh00)
+  (defun . find-eevgrep)
+  (defun . find-eev)
+
+These are exactly the functions that were defined by this call to
+`code-c-d',
+
+  (code-c-d \"eev\" ee-eev-source-directory :anchor)
+
+that appears here:
+
+  (find-eev \"eev-code.el\" \"code-c-d-s\" \"\\\"eev\\\"\")
+
+We can use that to see which functions and variables were defined just
+before and just after the function that we are looking for.
+
+[TODO: explain this:]
+
+  (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p)
+
+
+
+
+4.1. `find-efunctionlgrep'
+--------------------------
+This hyperlink
+
+  (find-efunctionlgrep 'find-eevfile 'eev)
+
+tries to find the exact point in which the function `find-eevfile' was
+defined using another method: it first converts the stem in the second
+argument, \"eev\", into a regexp that means:
+
+  search for either \"eev\" between double quotes, or for \"eev\"
+  surrounded by certain other characters, like whitespace, a single
+  quote, or parentheses
+
+and then it searches for that regexp, using lgrep, in the file in which
+the function `find-eevfile' was defined. Try it again:
+
+  (find-efunctionlgrep 'find-eevfile 'eev)
+
+it returns four lines that can be the place in which `find-eevfile' was
+defined - and three of them are false positives.
+
+The best way to understand the technical details of
+`find-efunctionlgrep' is to try the tests in the source code:
+
+  (find-eev \"eev-plinks.el\" \"find-efunctionlgrep\")
+
+
+
+
+5. Defuns, recreated
+====================
 
 
 
 
 
+
+[TODO: rewrite the rest!]
 
 The easiest, and most high-level, way to inspect strange
 functions uses a kind of \"here\". If you type `M-h M-s' with the
@@ -19299,19 +19426,8 @@ in `M-x sf' is an abbreviation for:
 And \"do things\" means: display in a temporary buffer variants
 of that sexp and lots of other information.
 
-
-
-3. Kinds
-========
-
 4. The load-history
 ===================
-
-
-
-
-
-[TODO: rewrite the rest!]
 
 The function `find-eev2021video' is known - try:
 

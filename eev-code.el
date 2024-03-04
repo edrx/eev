@@ -367,7 +367,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (code-c-d "equail" (ee-eleimfile "quail/") :gz)
 (code-c-d "eetc"   data-directory :gz)
 
-(code-c-d "eev"    ee-eev-source-directory :anchor)       ; (find-eev "")
+(code-c-d "eev"    ee-eev-source-directory :anchor)      ; (find-eev "")
 (code-c-d "eevvideos" "$S/http/anggtwu.net/eev-videos/") ; (find-eevvideos "")
 
 

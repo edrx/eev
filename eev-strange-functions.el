@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240303
+;; Version:    20240304
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-strange-functions.el>
@@ -94,37 +94,32 @@
   (setq ee-sf-result nil)
   (ee-sf-run-hprog-first-half)
   (find-elinks
-   `("Hello"
-     ,(ee-template0 "\
+   `(,(ee-template0 "\
 # (find-sf-debug-links {(ee-Q sexp)})
+# (find-efunction 'find-sf-debug-links)
+# See: (find-strange-functions-intro \"3. Debugging\")
 
 # The last call to
-#     '(find-here-links ARG)
-#  -> '(ee-detect-here)
-#  -> '(ee-hlang-run ee-hprog-find-here-links)
+#     '(find-strange-function-links ARG)
+#  -> '(ee-sf-run-hprog-first-half)
+#  -> '(ee-hlang-run ee-hprog-for-sf)
 # produced this:
-#   ee-hlang-sexp1  =>  {(ee-S ee-hlang-sexp1)}
-#   ee-hlang-sexp2  =>  {(ee-S ee-hlang-sexp2)}
+#   ee-hlang-sexp1  => {(ee-S ee-hlang-sexp1)}
+#   ee-hlang-sexp2  => {(ee-S ee-hlang-sexp2)}
+#   ee-sf-sexp      => {(ee-S ee-sf-sexp)}
+#   ee-sf-stem      => {(ee-S ee-sf-stem)}
+#   ee-sf-suffix    => {(ee-S ee-sf-suffix)}
+#   ee-sf-result    => {(ee-S ee-sf-result)}
 # See:
 #   ee-hlang-sexp1
 #   ee-hlang-sexp2
 #   (find-efunction '{(car ee-hlang-sexp1)})
 #   (find-efunction '{(car ee-hlang-sexp2)})
-#   (find-eev \"eev-hlinks.el\" \"find-here-links\")
-#   (find-eev \"eev-hlinks.el\" \"find-here-links\" \"If ARG\")
-#   (find-eev \"eev-hlinks.el\" \"ee-find-here-links\")
-#   (find-eev \"eev-hlinks.el\" \"ee-find-here-debug-links\")
-#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\")
-#   (find-eev \"eev-hlinks.el\" \"ee-hlang-run\" \"ee-detect-here\")
-#   (find-eev \"eev-hlinks.el\" \"ee-hprog-find-here-links\")
-
-# ee-sf-sexp:     {(ee-S ee-sf-sexp)}
-# ee-hlang-sexp1: {(ee-S ee-hlang-sexp1)}
-# ee-hlang-sexp2: {(ee-S ee-hlang-sexp2)}
-
-# ee-sf-stem:     {(ee-S ee-sf-stem)}
-# ee-sf-suffix:   {(ee-S ee-sf-suffix)}
-# ee-sf-result:   {(ee-S ee-sf-result)}
+#   (find-evariable 'ee-hprog-for-sf)
+#   (find-efunction 'ee-sf-run-hprog-first-half)
+#   (find-efunction 'ee-sf-run-hprog)
+#   (find-here-links-intro \"9. The hlang\")
+#   (find-eev \"eev-hlinks.el\" \"hprog\")
 ")
      )))
 
@@ -177,7 +172,7 @@ then we return the sexp before point."
 ;; (find-efunction 'ee-kl-sexp-at-eol-p)
 ;; «hprog»  (to ".hprog")
 
-(setq ee-hprog-for-sf
+(defvar ee-hprog-for-sf
  '(:or
    (:if (ee-sf-1stclassvideo-p)     (find-sf-elinks-elisp))
    (:if (ee-sf-codecd-p)            (find-sf-elinks-elisp))
@@ -305,6 +300,8 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; (find-efunctionlgrep 'find-{c}video \"{c}\")
 ;; (find-eloadhistory-for 'find-{c}video)
 ;; (find-eloadhistory-for 'find-{c}video 2 \" find-{c}video)\")
+;; See: (find-strange-functions-intro \"4. The load-history\")
+;;      (find-strange-functions-intro \"4.1. `find-efunctionlgrep'\")
 
 ;; Defuns:
 {defuns}\
@@ -376,8 +373,10 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 
 ;; Source and location in the load-history:
 ;; (find-efunctionlgrep 'find-{c}file '{c})
-;; (find-eloadhistory-for 'find-diagxyfile)
-;; (find-eloadhistory-for 'find-diagxyfile 2 \" ee-diagxyfile)\")
+;; (find-eloadhistory-for 'find-{c}file)
+;; (find-eloadhistory-for 'find-{c}file 2 \" ee-{c}file)\")
+;; See: (find-strange-functions-intro \"4. The load-history\")
+;;      (find-strange-functions-intro \"4.1. `find-efunctionlgrep'\")
 
 ;; Defuns (incomplete and without the overrides):
 
@@ -458,6 +457,8 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; (find-efunctionlgrep 'find-{c}page \"{c}\")
 ;; (find-eloadhistory-for 'find-{c}page)
 ;; (find-eloadhistory-for 'find-{c}page 2 \" find-{c}page)\")
+;; See: (find-strange-functions-intro \"4. The load-history\")
+;;      (find-strange-functions-intro \"4.1. `find-efunctionlgrep'\")
 
 ;; Some defuns (recreated - may be wrong):
 
