@@ -1,6 +1,6 @@
 ;;; eev-beginner.el -- load eev, turn eev-mode on, open a tutorial.
 
-;; Copyright (C) 2019-2021,2023 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240304
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-beginner.el>
@@ -185,6 +185,7 @@
   "Load all basic modules of eev, turn eev-mode on, and open a tutorial."
   (interactive)
   (require 'eev-load)
+  (require 'eev-aliases)
   (eev-mode 1)
   (find-eev-quick-intro))
 

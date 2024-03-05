@@ -333,7 +333,7 @@ The easiest way to install eev is with `M-x list-packages', as
 explained in this video:
 
   http://anggtwu.net/2020-list-packages-eev-nav.html
-  http://anggtwu.net/eev-videos/M-x-list-packages-eev-nav.mp4
+  http://anggtwu.net/2020-list-packages-eev-nav.html#00:01
   http://www.youtube.com/watch?v=kxBjiUo88_U
 
 The three links in the \"Video links:\" block below
@@ -355,8 +355,7 @@ and open this tutorial, run `M-x eev-beginner'.
 \"Installing\" eev doesn't \"load\" eev. The difference between
 installing and loading is explained here:
 
-  (find-eev-install-intro \"0. Loading eev\")
-  (find-eev-install-intro \"0. Loading eev\" \"_load_ eev on startup\")
+  (find-eev-levels-intro)
 
 TIP FOR BEGINNERS: if you are a real beginner with, say, less
 than 10 minutes of experience using Emacs, then you will probably
@@ -2795,54 +2794,59 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-I'm rewriting this intro!
-See: (find-eev-install-intro)
+
+This intro is unfinished!
+It is a rewrite of some sections of:
+  (find-eev-install-intro)
+TODO: mention:
+  (find-eev-install-intro \"5.1. With `M-x list-packages'\")
+  (find-eev-install-intro \"5.2. With `package-install'\")
+
 
 
 
 0. Introduction
 ===============
-If you are learning eev and you have it installed, then I
-recommend that you put these four lines in your init file (obs: I
-will always refer to the Emacs init file as \"~/.emacs\"):
+If you are starting to learn eev then you probably installed it with
+`M-x list-packages', ran `M-x eev-beginner', followed the instructions
+in the first sections of the main tutorial, and saved some elisp
+hyperlinks in your notes. To be more concrete, supposed that you saved
+only this hyperlink - to the main tutorial - in your ~/TODO:
+
+  (find-eev-quick-intro)
+
+Then you restart Emacs and that hyperlink doesn't work... you try to
+execute it with `M-e' but now `M-e' does something unexpected, and you
+try to execute it with `C-e C-x C-e', and you get this error:
+
+  Symbol's function definition is void: find-eev-quick-intro
+
+Emacs forgot everything about eev! One way to make it load eev, activate
+eev-mode, and enter the main tutorial is by running `M-x eev-beginner';
+another way to make Emacs load (all the modules of) eev and turn
+eev-mode on is to put these four lines in your init file (obs: I will
+always refer to the Emacs init file as \"~/.emacs\"):
 
   ;; See: (find-eev-levels-intro)
   (require 'eev-load)               ; (find-eev \"eev-load.el\")
   (require 'eev-aliases)            ; (find-eev \"eev-aliases.el\")
   (eev-mode 1)                      ; (find-eev \"eev-mode.el\")
 
-These lines loads all modules of eev, defines some aliases that
-don't start with the prefixes \"find-\", \"ee\", or \"br\" - for
-example, \"M-x 1c\" becomes an alias for \"M-x
+The first `require' loads all the main modules of eev except for
+`eev-aliases'; the second require loads `eev-aliases', that defines some
+aliases that don't start with the prefixes \"find-\", \"ee\", or \"br\"
+- for example, \"M-x 1c\" becomes an alias for \"M-x
 find-1stclassvideos\" - and the last line turns eev-mode on.
 
-Some people feel that this level of eev-ness in every Emacs
-session is too much for them - they prefer to have eev installed,
-but by default with nothing loaded or turned on... this intro is
-for them.
-
+Some people feel that this level of eev-ness in every Emacs session is
+too much for them - they prefer to have eev installed, but by default
+with nothing loaded or turned on... _this intro is for them_.
 
 
 
 
 1. Installing
 =============
-_Installing_ eev only does this:
-
-  a. The directory with the eev files is put in the load-path. If
-     eev has been \"loaded\" - as explained in the next section -
-     then the functions `find-eev' and `find-eevfile' will be
-     defined, and the sexps below will open that directory with
-     dired:
-
-       (find-eev \"\")
-       (find-eevfile \"\")
-
-  b. The function `eev-beginner' is declared as an autoload. It
-     is defined, and explained, here:
-
-       (find-eev \"eev-beginner.el\")
-
 The easiest way to install eev is with `M-x list-packages'. If
 you are totally new to Emacs and you find the interface of
 list-packages confusing, take a look at:
@@ -2865,6 +2869,22 @@ If you are prefer to use the version of eev from its git
 repository you can install it with:
 
   (package-vc-install \"https://github.com/edrx/eev\")
+
+_Installing_ eev only does this:
+
+  a. The directory with the eev files is put in the load-path. If
+     eev has been \"loaded\" - as explained in the next section -
+     then the functions `find-eev' and `find-eevfile' will be
+     defined, and the sexps below will open that directory with
+     dired:
+
+       (find-eev \"\")
+       (find-eevfile \"\")
+
+  b. The function `eev-beginner' is declared as an autoload. It
+     is defined, and explained, here:
+
+       (find-eev \"eev-beginner.el\")
 
 
 

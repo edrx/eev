@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240220
+;; Version:    20240304
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -2715,7 +2715,7 @@ os.exit()
 
 
 ;; «find-extra-file-links»  (to ".find-extra-file-links")
-;; Skel: (find-find-links-links-new "extra-file" "fname c" "dir")
+;; Skel: (find-find-links-links-new "extra-file" "fname c" "dir fname0 fullfname")
 ;; Docs: (find-audiovideo-intro "4.1. `find-extra-file-links'")
 ;;
 (defun find-extra-file-links (&optional fname c &rest pos-spec-list)
@@ -2727,19 +2727,20 @@ os.exit()
   (setq fname (or fname "{fname}"))
   (setq c (or c "{c}"))
   (let* ((dir (file-name-directory fname))
-	 (fname0 (file-name-nondirectory fname)))
+	 (fname0 (file-name-nondirectory fname))
+         (fullfname (ee-expand fname)))
     (apply
      'find-elinks-elisp
      `((find-extra-file-links ,fname ,c ,@pos-spec-list)
+       (find-efunction 'find-extra-file-links)
        ;; Convention: the first sexp always regenerates the buffer.
-       ;; (find-efunction 'find-extra-file-links)
-       ;; ""
        ,(ee-template0 "\
-;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
-;;      (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
-;;      (find-pdf-like-intro \"9. Generating three pairs\" \"`M-h M-p'\")
+;;
+;; See: (find-audiovideo-intro \"4.1. `find-extra-file-links'\")
+;;      (find-eev-quick-intro \"9.1. `code-c-d'\")
 
 ;; Links to this file and directory:
+;; file:///{fullfname}
 ;; (find-fline {(ee-S dir)} {(ee-S fname0)})
 ;; (find-fline {(ee-S fname)})
 ;; (find-fline {(ee-S dir)})
@@ -3899,19 +3900,22 @@ print(trits1)
 
 
 ;; «find-importlib-links»  (to ".find-importlib-links")
-;; Skel: (find-find-links-links-new "importlib" "pkg" "pkg_")
+;; Skel: (find-find-links-links-new "importlib" "pkg distr" "pkg_")
 ;; Tests: (find-importlib-links)
 ;;        (find-importlib-links "requests")
+;;        (find-importlib-links "PIL")
+;;        (find-importlib-links "PIL" "pillow")
 ;; See:   http://anggtwu.net/find-yttranscript-links.html
 ;;
-(defun find-importlib-links (&optional pkg &rest pos-spec-list)
+(defun find-importlib-links (&optional pkg distr &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for importlib."
   (interactive)
   (setq pkg (or pkg "{pkg}"))
+  (setq distr (or distr "{distr}"))
   (let* ((pkg_ (string-replace "-" "_" pkg)))
     (apply
      'find-elinks
-     `((find-importlib-links ,pkg ,@pos-spec-list)
+     `((find-importlib-links ,pkg ,distr ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-importlib-links)
        ""
@@ -3928,6 +3932,7 @@ print(trits1)
 import importlib.metadata, pprint
 import {pkg_}
 {pkg_}.__file__
+dist = importlib.metadata.distribution('{distr}')
 dist = importlib.metadata.distribution('{pkg}')
 pprint.pprint(dist.files)
 md = dist.metadata

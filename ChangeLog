@@ -1,5 +1,11 @@
 2024-03-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-eev-levels-intro): rewrote some sections.
+
+	* eev-beginner.el (eev-beginner): added a (require 'eev-aliases).
+
+	* eev-tlinks.el (find-extra-file-links): small changes.
+
 	* eev-intro.el (find-strange-functions-intro): wrote several new
 	sections.
 
