@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240304
+;; Version:    20240305
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -339,9 +339,9 @@ explained in this video:
 The three links in the \"Video links:\" block below
 
   [Video links:]
-    (find-eevnavvideo \"0:30\" \"0.1. M-x package-initialize\")
-    (find-eevnavvideo \"0:39\" \"0.2. M-x list-packages\")
-    (find-eevnavvideo \"2:38\" \"0.3. M-x eev-beginner\")
+    (find-eevnavvideo \"00:30\" \"0.1. M-x package-initialize\")
+    (find-eevnavvideo \"00:39\" \"0.2. M-x list-packages\")
+    (find-eevnavvideo \"02:33\" \"0.3. M-x eev-beginner\")
 
 point to positions in that video; to learn how to use links like
 those, visit this URL:
@@ -368,10 +368,10 @@ after starting it again you will need to type `M-x eev-beginner'
 to activate eev again. For an explanation of this in video, see:
 
   [Video links:]
-    (find-eevnavvideo \"3:46\" \"0.4. for the beginners: quitting and restarting\")
-    (find-eevnavvideo \"4:06\"   \"the part of the sequence of keys\")
-    (find-eevnavvideo \"4:21\"   \"go to the file menu, click quit\")
-    (find-eevnavvideo \"4:46\"   \"enter emacs again, type M-x eev-beginner\")
+    (find-eevnavvideo \"03:46\" \"0.4. for the beginners: quitting and restarting\")
+    (find-eevnavvideo \"04:05\"   \"the part of the sequence of keys\")
+    (find-eevnavvideo \"04:23\"   \"go to the file menu, click quit\")
+    (find-eevnavvideo \"04:41\"   \"enter emacs again, type M-x eev-beginner\")
 
 Eventually you will learn how to get out of everything and how to undo
 almost anything, _BUT THAT WILL NOT HAPPEN IN THE FIRST TEN MINUTES_.
@@ -569,7 +569,7 @@ creates this buffer, and switches to it:
 
 
 [Video links:]
-  (find-eev2020video \"29:39\" \"2. A tale of two `describe-key's\")
+  (find-eev2020video \"29:38\" \"2. A tale of two `describe-key's\")
   (find-eev2020video \"31:31\"   \"the problem with the standard `describe-key'\")
   (find-eev2020video \"35:07\"   \"My variant: `find-ekey-links'\")
   (find-eev2020video \"37:00\"   \"how `find-ekey-links' generates its links\")
@@ -897,12 +897,11 @@ For more details see:
 
 [Video links:]
   (find-eevnavvideo \"10:36\" \"if I type <f8> six times here\")
-  (find-eevnavvideo \"10:50\" \"a shell running inside Emacs\")
-  (find-eev2021video \"0:14\" \"and if we type f8 several times here\")
-  (find-eev2019video \"15:11\" \"Demo: the eepitch block (in red star lines)\")
+  (find-eevnavvideo \"10:49\" \"a shell running inside Emacs\")
+  (find-eev2021video \"00:14\" \"and if we type f8 several times here\")
+  (find-eev2019video \"15:13\" \"Demo: the eepitch block (in red star lines)\")
   (find-eev2019video \"15:48\" \"Demo: eepitch on non-red star lines\")
-  (find-eev2019video \"15:56\" \"Demo: eepitch in action\")
-  (find-eevtestblsvideo \"2:33\" \"if I run f8 here I start a new Lua interpreter\")
+  (find-eev2019video \"15:58\" \"Demo: eepitch in action\")
 
 
 
@@ -1055,12 +1054,12 @@ star, but to make that work you need to know a bit of Lisp. See:
 7. Quick access to one-liners
 =============================
 [Video links:]
-  (find-eevnavvideo \"6:28\"  \"M-j: you can forget practically everything...\")
-  (find-eevnavvideo \"6:41\"  \"if you type just M-j\")
-  (find-eevnavvideo \"6:48\"  \"has a header that is beginner-friendly\")
-  (find-eevnavvideo \"8:48\"  \"most of the entries have hyperlinks to the manual\")
-  (find-eevnavvideo \"9:48\"  \"M-j with numeric prefixes\")
-  (find-eevnavvideo \"9:59\"  \"M-2 M-j runs (find-emacs-keys-intro)\")
+  (find-eevnavvideo \"06:29\" \"M-j: you can forget practically everything...\")
+  (find-eevnavvideo \"06:41\" \"if you type just M-j\")
+  (find-eevnavvideo \"06:49\" \"has a header that is beginner-friendly\")
+  (find-eevnavvideo \"08:45\" \"most of the entries have hyperlinks to the manual\")
+  (find-eevnavvideo \"09:49\" \"M-j with numeric prefixes\")
+  (find-eevnavvideo \"09:59\" \"M-2 M-j runs (find-emacs-keys-intro)\")
   (find-eevnavvideo \"10:06\" \"M-5 M-j runs (find-eev-quick-intro)\")
 
 
@@ -1236,9 +1235,9 @@ next section. Try it now:
   e (find-fline \"/tmp/foo.tex\")
 
 [Video links:]
-  (find-eev2020video \"26:49\" \"1.5.3. `M-J' (meta-uppercase-J)\")
+  (find-eev2020video \"26:48\" \"1.5.3. `M-J' (meta-uppercase-J)\")
   (find-eev2020video \"26:58\"   \"transforms the current line\")
-  (find-eev2020video \"27:37\"   \"into a defun\")
+  (find-eev2020video \"27:36\"   \"into a defun\")
 
 
 
@@ -1571,10 +1570,10 @@ files.
 See also: (find-code-c-d-intro)
 
 [Video links:]
-  (find-eev2020video  \"8:20\" \"`code-c-d' defines several new functions\")
+  (find-eev2020video \"08:18\" \"`code-c-d' defines several new functions\")
   (find-eev2020video \"14:43\" \"1.4. How code-c-d is implemented\")
   (find-eev2020video \"17:20\"   \"find-code-c-d shows the code...\")
-  (find-eev2019video \"17:07\" \"Demo: `code-c-d'\")
+  (find-eev2019video \"17:02\" \"Demo: `code-c-d'\")
 
 
 
@@ -1714,8 +1713,8 @@ some string in it...
   (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
 
 [Video links:]
-  (find-eev2020video \"4:52\" \"`find-pdf-page' calls an external program\")
-  (find-eev2020video \"5:26\" \"`find-pdf-text' converts the PDF to text and\")
+  (find-eev2020video \"04:51\" \"`find-pdf-page' calls an external program\")
+  (find-eev2020video \"05:26\" \"`find-pdf-text' converts the PDF to text and\")
 
 
 
@@ -19356,8 +19355,9 @@ at the top. For example,
   (find-eloadhistory-for 'find-eevfile 2 \" ee-eevfile)\")
 
 shows the entry in the load-history for the file in which `find-eevfile'
-was defined, and it jumps to the the beginning of this block in it:
+was defined, and it jumps to the first defun in this block:
 
+  ee-eevfile
   (defun . ee-eevfile)
   (defun . find-eevfile)
   (defun . find-eevsh)
@@ -19369,7 +19369,8 @@ was defined, and it jumps to the the beginning of this block in it:
 These are exactly the functions that were defined by this call to
 `code-c-d',
 
-  (code-c-d \"eev\" ee-eev-source-directory :anchor)
+  ;; (find-code-c-d \"eev\" ee-eev-source-directory :anchor)
+          (code-c-d \"eev\" ee-eev-source-directory :anchor)
 
 that appears here:
 

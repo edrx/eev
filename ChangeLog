@@ -1,4 +1,20 @@
+2024-03-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-mode.el (eev-mode-map-set): bind `M-h M-l' to
+	`find-elocus-links'.
+
+	* eev-elinks.el (find-elocus-links, ee-read-key-sequence)
+	(ee-binding-locus, ee-keymap-lookup): new functions.
+
+2024-03-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-helpful.el (find-hkeymap-links): new function.
+
+	* eev-code.el (ee-code-c-d-base): added a defvar.
+
 2024-03-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-eev-reload-links): added eev-aliases.
 
 	* eev-intro.el (find-eev-levels-intro): rewrote some sections.
 

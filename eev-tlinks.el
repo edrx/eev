@@ -1022,21 +1022,19 @@ sudo dpkg -i *.deb
 ;;;  \___|\___| \_/      |_|  \___|_|\___/ \__,_|\__,_|
 ;;;                                                    
 ;; «find-eev-reload-links»  (to ".find-eev-reload-links")
-;; Skel: (find-find-links-links-new "eev-reload" "dir" "")
+;; Skel: (find-find-links-links-new "eev-reload" "" "")
 ;; Test: (find-eev-reload-links)
 ;;
-(defun find-eev-reload-links (&optional dir &rest pos-spec-list)
+(defun find-eev-reload-links (&rest pos-spec-list)
 "Visit a temporary buffer with a script for reloading eev. Experimental!"
   (interactive)
-  (setq dir (or dir "{dir}"))
   (apply
    'find-elinks-elisp
-   `((find-eev-reload-links ,dir ,@pos-spec-list)
+   `((find-eev-reload-links ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-eev-reload-links)
      ""
-     ,(ee-template0 "\
-
+     ,(ee-template0 "
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
@@ -1063,7 +1061,8 @@ git pull
   eev-wconfig
   eev-audiovideo
   eev-videolinks
-  eev-rcirc\"))
+  eev-rcirc
+  eev-aliases\"))
 	 do (load modulename))
 
 

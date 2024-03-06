@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240305
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-helpful.el>
@@ -31,6 +31,7 @@
 
 ;; «.find-helpful-links»	(to "find-helpful-links")
 ;; «.find-hlinks»		(to "find-hlinks")
+;; «.find-hkeymap-links»	(to "find-hkeymap-links")
 
 
 
@@ -179,6 +180,49 @@ the name of a buffer in helpful-mode.")
 (defun find-hvariable (symbol &rest pos-spec-list)
   "Run `(helpful-variable SYMBOL)' and search for POS-SPEC-LIST."
   (apply 'find-dbsw-call `(helpful-variable ',symbol) pos-spec-list))
+
+
+
+;; «find-hkeymap-links»  (to ".find-hkeymap-links")
+;; Skel: (find-find-links-links-new "hkeymap" "symbol" "ee-buffer-name")
+;; Test: (find-hkeymap-links 'emacs-lisp-mode-map)
+;;
+(defun find-hkeymap-links (&optional symbol &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for hkeymap."
+  (interactive)
+  (setq symbol (or symbol "{symbol}"))
+  (let ((ee-buffer-name
+	 (or ee-buffer-name
+	     (format "*(find-hkeymap-links '%s)*" symbol))))
+    (apply
+     'find-elinks
+     `((find-hkeymap-links ',symbol ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-hkeymap-links)
+       ""
+       (find-evariable ',symbol)
+       (find-hvariable ',symbol)
+       ""
+       ,(helpful--format-keymap (symbol-value symbol))
+       )
+     pos-spec-list)))
+
+'("--A test:--"
+
+  (defun find-4a (a b c d) (find-wset "13_o2_o2_o_o+"  a b c d))
+  (find-4a nil
+    ' (find-hkeymap-links 'emacs-lisp-mode-map)
+    ' (find-hkeymap-links 'lisp-mode-shared-map)
+    ' (find-hkeymap-links 'prog-mode-map)
+    )
+  (find-4a nil
+    ' (find-evariable 'emacs-lisp-mode-map)
+    ' (find-evariable 'lisp-mode-shared-map)
+    ' (find-evariable 'prog-mode-map)
+    )
+
+"--end--")
+
 
 
 

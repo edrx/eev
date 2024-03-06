@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240113
+;; Version:    20240306
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -85,6 +85,7 @@
 ;; «.find-eminormodes-links»	(to "find-eminormodes-links")
 ;; «.find-emodeline-links»	(to "find-emodeline-links")
 ;; «.find-emenubar-links»	(to "find-emenubar-links")
+;; «.find-elocus-links»		(to "find-elocus-links")
 
 ;; «.find-code-pdf-links»	(to "find-code-pdf-links")
 ;; «.find-pdf-links»		(to "find-pdf-links")
@@ -309,7 +310,8 @@ This is an internal function used by `find-efunction-links' and
     (find-efunctionlgrep ',f)
     (find-efunctionlgrep ',f ',f)
     (find-eloadhistory-for ',f)
-    (find-estring-elisp (ee-eloadhistory-find-flines))
+    (find-eloadhistory-for ',f 2 ,(format " %s)" f))
+    ;; (find-estring-elisp (ee-eloadhistory-find-flines))
     ""
     (symbol-file ',f 'defun)
     (find-fline (symbol-file ',f 'defun))
@@ -1735,6 +1737,71 @@ You can use this to understand how the mode line works."
      )
    pos-spec-list))
 
+
+
+;;;  _                         
+;;; | |    ___   ___ _   _ ___ 
+;;; | |   / _ \ / __| | | / __|
+;;; | |__| (_) | (__| |_| \__ \
+;;; |_____\___/ \___|\__,_|___/
+;;;                            
+;; «find-elocus-links»  (to ".find-elocus-links")
+;; Skel: (find-find-links-links-new "elocus" "key keymap" "f")
+;; Test: (find-elocus-links)
+;;       (find-elocus-links "M-h M-h" eev-mode-map)
+;;
+(defun find-elocus-links (&optional key keymap &rest pos-spec-list)
+  "Visit a temporary buffer with info about KEY and its locus (a KEYMAP).
+When `find-elocus-links' is called interactively it asks the user for a
+key sequence, calls `help--binding-locus' to find the keymap in which
+that key sequence is defined, and calls `keymap-lookup' to find the
+command bound to that key sequence - and then it shows lots of
+hyperlinks about all that."
+  (interactive (list (ee-read-key-sequence "Key sequence: ")))
+  (setq key    (or key "{key}"))
+  (setq keymap (or keymap (ee-binding-locus key) "{keymap}"))
+  (let* ((f (ee-keymap-lookup (symbol-value keymap) key)))
+    (apply
+     'find-elinks-elisp
+     `((find-elocus-links ,key ',keymap ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-elocus-links)
+       ""
+       ,(ee-template0 "\
+;; (require 'helpful)
+;; (find-evariable       '{keymap})
+;; (find-evardescr       '{keymap})
+;; (find-hkeymap-links   '{keymap})
+;; (find-hkeymap-links   '{keymap} 2 {(ee-S key)} \"{f}\")
+;; (find-efunction-links '{f})
+;; (find-efunctiondescr  '{f})
+;; (find-efunction       '{f})
+")
+       )
+     pos-spec-list)))
+
+
+;; Internal functions used by `find-elocus-links'.
+;; Tests: (ee-read-key-sequence "Key sequence: ")
+;;        (ee-binding-locus "M-h M-h")
+;;        (ee-keymap-lookup eev-mode-map "M-h")
+;;        (ee-keymap-lookup eev-mode-map "M-h M-h")
+;;        (ee-keymap-lookup eev-mode-map "M-h M-h M-h")
+;;        (ee-keymap-lookup "foo"        "M-h M-h M-h")
+;;        (ee-active-minor-modes)
+;;   See: (find-efunction 'help--binding-locus)
+;;
+(defun ee-read-key-sequence (prompt)
+  (format-kbd-macro (read-key-sequence-vector prompt)))
+
+(defun ee-binding-locus (key)
+  (help--binding-locus (kbd key) nil))
+
+(defun ee-keymap-lookup (keymap key)
+  (if (keymapp keymap)
+      (let ((result (keymap-lookup keymap key)))
+	(and (commandp result)
+	     result))))
 
 
 

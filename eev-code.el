@@ -214,6 +214,7 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
    ;;      (eek \"M-h M-f  apply\")
    ;;      (eek \"M-h M-f  interactive\")
    ;;
+   (defvar ee-{c}dir \"{d}\")
    (setq ee-{c}dir \"{d}\")
    (defun ee-{c}file (str)
      (concat (ee-expand ee-{c}dir) str))
