@@ -1771,6 +1771,8 @@ hyperlinks about all that."
 ;; (require 'helpful)
 ;; (find-evariable       '{keymap})
 ;; (find-evardescr       '{keymap})
+;; (find-ekeymapdescr     {keymap})
+;; (find-ekeymapdescr     {keymap} {(ee-S key)} \"{f}\")
 ;; (find-hkeymap-links   '{keymap})
 ;; (find-hkeymap-links   '{keymap} 2 {(ee-S key)} \"{f}\")
 ;; (find-efunction-links '{f})
