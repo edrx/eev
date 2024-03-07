@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231205
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
@@ -216,10 +216,12 @@
 
 
 
-;; This `require' is needed because I had to replace the original
-;; `eepitch-window-show' by a hack that needs `find-2a'... =(
+;; This `eev-multiwindow' is needed because I had to replace the
+;; original `eepitch-window-show' by a hack that needs `find-2a'... =(
 ;;
-(require 'eev-multiwindow)
+(require 'eev-multiwindow)		; for `find-2a'
+(require 'eev-blinks)			; for `find-ebuffer'
+(require 'eev-elinks)			; for `ee-intern'
 
 
 

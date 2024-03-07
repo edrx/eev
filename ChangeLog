@@ -1,3 +1,7 @@
+2024-03-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el: added two `require's.
+
 2024-03-06  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-mode.el (eev-mode-map-set): bind `M-h M-l' to

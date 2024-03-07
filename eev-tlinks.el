@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240304
+;; Version:    20240306
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -137,6 +137,8 @@
 ;;   «.ee-use-red-stars»		(to "ee-use-red-stars")
 ;;   «.ee-use-red-bullets»		(to "ee-use-red-bullets")
 ;; «.find-angg-es-links»		(to "find-angg-es-links")
+;; «.find-angg-not-configured»		(to "find-angg-not-configured")
+;; «.find-es-not-configured»		(to "find-es-not-configured")
 ;; «.find-1stclassvideo-links»		(to "find-1stclassvideo-links")
 ;;   «.ee-1stclassvideo-basicinfo»	(to "ee-1stclassvideo-basicinfo")
 ;;   «.ee-1stclassvideo-basicsexps»	(to "ee-1stclassvideo-basicsexps")
@@ -3394,6 +3396,9 @@ This function is used by `ee-0x0-upload-region'."
    pos-spec-list))
 
 
+
+;; «find-angg-not-configured»  (to ".find-angg-not-configured")
+;; «find-es-not-configured»    (to ".find-es-not-configured")
 ;; Based on this suggestion by Quiliro Ordoñez, but simpler:
 ;; https://lists.gnu.org/archive/html/eev/2022-08/msg00005.html
 ;;
@@ -3650,7 +3655,8 @@ is nil, use the result of (ee-1stclassvideos)."
   (find-estring-elisp (ee-code-1stclassvideos cs)))
 (defun   ee-code-1stclassvideos (&optional cs)
   (concat
-   ";; See: (find-eev \"eev-tlinks.el\" \"code-1stclassvideos\")\n\n"
+   ";; See: (find-eev \"eev-tlinks.el\" \"code-1stclassvideos\")\n"
+   ";;      (find-strange-functions-intro \"2. Here\")\n\n\n"
    (mapconcat 'ee-code-1stclassvideo
 	      (or cs (ee-1stclassvideos))
 	      "\n\n")))
