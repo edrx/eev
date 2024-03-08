@@ -1,7 +1,16 @@
+2024-03-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-1stclassvideo-basicinfo): small changes.
+
 2024-03-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-videolinks.el (ee-1stclassvideos-hsubsurl): new function.
+
+	* eev-tlinks.el (find-1stclassvideohsubs): use
+	`ee-1stclassvideos-hsubsurl'.
+
 	* eev-intro.el (find-eev-levels-intro): added a section about
-	loading only eepitch.el
+	loading only eepitch.el.
 
 	* eepitch.el: added two `require's.
 

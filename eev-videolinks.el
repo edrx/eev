@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240220
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -841,6 +841,8 @@ of the videos and play them with mpv. Compare with
 ;; (ee-1stclassvideos-localmp4 "eev2021")
 ;; (ee-1stclassvideos-mp4found "eev2021")
 ;; (ee-1stclassvideos-hash     "eev2021")
+;; (ee-1stclassvideos-hsubsurl "eev2021")
+;; (ee-1stclassvideos-hsubsurl "eev2021" "01:45")
 ;; (find-eev "eev-videolinks.el" "more-info")
 ;;
 (defun ee-1stclassvideos-field (c &optional field)
@@ -866,6 +868,13 @@ of the videos and play them with mpv. Compare with
 (defun ee-1stclassvideos-mp4found (c)
   (ee-psne-downloaded-p
    (ee-1stclassvideos-field c :mp4)))
+
+(defun ee-1stclassvideos-hsubsurl (c &optional pos)
+  (let ((url0 (ee-1stclassvideos-field c :hsubs)))
+    (if (not pos)
+	url0
+      (let ((baseurl (replace-regexp-in-string "#.*$" "" url0)))
+	(format "%s#%s" baseurl pos)))))
 
 
 

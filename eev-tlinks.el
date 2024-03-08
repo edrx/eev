@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240306
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3500,19 +3500,22 @@ This function is used by `ee-0x0-upload-region'."
 
 ;; «ee-1stclassvideo-basicinfo»  (to ".ee-1stclassvideo-basicinfo")
 ;; Tests: (find-estring (ee-1stclassvideo-basicinfo "eev2021"))
+;;        (find-estring (ee-1stclassvideo-basicinfo "eev2021" "01:45"))
 ;;        (find-estring (ee-1stclassvideo-basicinfo "2021ssr"))
 ;;
 (defun ee-1stclassvideo-basicinfo (c &optional pos)
   (ee-let*-macro-1stclassvideo-c
    c
-   (let* ((hsubsurl-t0 ";; HSubs: {hsubs}\n")
-	  (hsubsurl    (if hsubs (ee-template0 hsubsurl-t0) "")))
+   (let* ((yttime      (if pos (ee-time-to-youtube-time pos) ""))
+	  (hsubsurl    (and hsubs (ee-1stclassvideos-hsubsurl c pos)))
+	  (hsubsline0  ";; HSubs: {hsubsurl}\n")
+	  (hsubsline   (if hsubs (ee-template0 hsubsline0) "")))
      (ee-template0 "\
 ;; Title: {title}
 ;; MP4:   {mp4}
-;; YT:    {yt}
+;; YT:    {yt}{yttime}
 ;; Page:  {page}
-{hsubsurl}\
+{hsubsline}\
 ;; Comment: {comment}
 ;; Date:    {date}
 ;; Length:  {length}
@@ -3691,10 +3694,7 @@ is nil, use the result of (ee-1stclassvideos)."
 
 (defun find-1stclassvideohsubs (c &optional pos &rest pos-spec-list)
   (interactive (list (ee-1stclassvideo-around-point-ask)))
-  (let* ((url0    (ee-1stclassvideos-field c :hsubs))
-         (baseurl (replace-regexp-in-string "#.*$" "" url0))
-	 (url1    (if pos (format "%s#%s" baseurl pos) url0)))
-    (find-googlechrome url1)))
+  (find-googlechrome (ee-1stclassvideos-hsubsurl c pos)))
 
 (defun find-1stclassvideodef (c &rest pos-spec-list)
   (interactive (list (ee-1stclassvideo-around-point-ask)))
