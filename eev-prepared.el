@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    2021aug11
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-prepared.el>
@@ -47,6 +47,16 @@
 
 (require 'eev-env)
 (require 'eev-code)
+
+;; Compare with:
+;;   (find-eev "eev-code.el" "code-c-d-s")
+;;   (find-eev "eev-code.el" "code-c-d-s" "ee-eev-source-directory")
+;; See: (find-eev-intro "that require extra setup:")
+;;
+(ee-setenv "EEVDIR"
+           (let ((fname (locate-library "eev")))
+             (if fname (directory-file-name (file-name-directory fname))
+               "~/eev-current")))       ; eev.el, etc
 
 (ee-setenv "EEVTMPDIR" "$HOME/.eev")	; ee.sh and other temp scripts
 (ee-setenv "EEVRCDIR"  "$EEVDIR/rcfiles")

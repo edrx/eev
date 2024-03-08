@@ -1,6 +1,14 @@
 2024-03-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-intro.el (find-eev-levels-intro): added a section about
+	loading only eepitch.el
+
 	* eepitch.el: added two `require's.
+
+	* eev-env.el: moved the (ee-setenv "EEVDIR" ...) to
+	eev-prepared.el.
+
+	* eev-channels.el: added a (require 'eev-prepared).
 
 2024-03-06  Eduardo Ochs  <eduardoochs@gmail.com>
 

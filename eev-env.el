@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-env.el>
@@ -57,25 +57,13 @@
   (if (null (getenv envvar))
       (setenv envvar (ee-expand value))))
 
-
-
 ;; The variable $S is used by:
 ;; (find-psne-intro "4. The environment variable $S")
 ;;
 (ee-setenv "S" "~/snarf")
 
-
-;; Used by some deprecated features... compare with:
-;;   (find-eev "eev-code.el" "code-c-d-s")
-;;   (find-eev "eev-code.el" "code-c-d-s" "ee-eev-source-directory")
-;; These deprecated features are (very badly) explained here:
-;;   (find-eev-intro "that require extra setup:")
-;;
-(ee-setenv "EEVDIR"
-           (let ((fname (locate-library "eev")))
-             (if fname (directory-file-name (file-name-directory fname))
-               "~/eev-current")))       ; eev.el, etc
-
+;; The other environment variables were all moved to:
+;;   (find-eev "eev-prepared.el")
 
 
 

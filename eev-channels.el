@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20190313
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-channels.el>
@@ -51,7 +51,7 @@
 ;; «.eechannel-assert»	(to "eechannel-assert")
 ;; «.eexterm»		(to "eexterm")
 
-
+(require 'eev-prepared) 		; (find-eev "eev-prepared.el")
 
 (defun ee-read-file (fname)
   (with-temp-buffer

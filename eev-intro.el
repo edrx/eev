@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240305
+;; Version:    20240307
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -2324,7 +2324,7 @@ Here's what `(require 'eev-load)' does:
      characters be displayed as colored glyphs: \"\" (char 15),
      \"«\" (char 171), and \"»\" (char 187).
 
-  3) The environment variables \"S\" and \"EEVDIR\" are set.
+  3) The environment variable \"S\" is set.
 
   4) An innocuous wrapper is installed around an internal
      function used by `man'. See:
@@ -2946,6 +2946,25 @@ See:
 
 
 
+
+5. Completion
+=============
+In mar/2024 a person told me in the #emacs IRC channel that loading all
+modules of eev cluttered the autocompletion mechanisms that she (he?
+They?) was using... she needed a minimal setup that would load only
+eepitch and a way to turn the keybindings for <f8> and M-T on and off,
+and she doesn't use elisp hyperlinks. After a few minutes of
+brainstorming and tests we got this,
+
+  ;; Load only eepitch and a way to access <f8> and M-T.
+  ;; Use `M-x eev-beginner' to explore the rest of eev.
+  ;; See: (find-eev-levels-intro \"5. Completion\")
+  (require 'eepitch)      ; (find-eev \"eepitch.el\")
+  (require 'eev-mode)     ; (find-eev \"eev-mode.el\")
+
+that worked well enough. Then she disconnected - before telling me which
+autocompletion packages she uses...
+
 " pos-spec-list)))
 
 ;; (find-eev-levels-intro)
@@ -3095,7 +3114,7 @@ things that happen are:
      characters be displayed as colored glyphs: \"\" (char 15),
      \"«\" (char 171), and \"»\" (char 187).
 
-  3) The environment variables \"S\" and \"EEVDIR\" are set.
+  3) The environment variable \"S\" is set.
 
   4) An innocuous wrapper is installed around an internal
      function used by `man' (with `advice-add'). See:
