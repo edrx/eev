@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240307
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -18257,7 +18257,10 @@ The quickest way to open or recreate this is with `M-7 M-j'.
 
 This intro is a very quick introduction to Emacs Lisp. Its intent
 is not to teach people how to _write_ Elisp code, only to teach
-them how to _read_ Elisp code.
+them how to _read_ Elisp code. Its prerequisites are just these
+two sections of the main tutorial:
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
 
 Different people prefer different kinds of tutorials.
 Many people love the eintr, but I don't: (find-node \"(eintr)Top\")
@@ -19216,6 +19219,7 @@ It is meant as both a tutorial and a sandbox.
 
 Prerequisites:
   (find-elisp-intro)
+TODO: update this:
   http://anggtwu.net/2024-find-lgreps.html
 
 Note: this is a work in progress!
@@ -19437,13 +19441,111 @@ The best way to understand the technical details of
 
 5. Defuns, recreated
 ====================
+[Explain why we can't always trust the defuns block]
+[An example with code-c-d:]
+
+  (find-eev \"eev-code.el\" \"code-c-d-s\")
+  (find-eev \"eev-code.el\" \"code-c-d-s\" \"eli\")
+
+[compare:]
+
+  (find-2a
+    ' (find-code-c-d \"eli\" ee-emacs-lisp-directory \"eintr\" :gz)
+    ' (find-sf-links '(find-elinode \"Top\"))
+    )
+
+
+
+
+6. Macros
+=========
+[TODO: explain that in recent versions of Emacs `find-efunction' can
+find most functions defined by cl macros, but not all...]
+
+Emacs comes with lots of strange functions; most (or all?) of them are
+created by macros. Here is an example: `cl-struct-p' is a function
+defined in a normal way, but `cl-struct-p--cmacro' is a function defined
+in a strange way:
+
+  ok:        (find-efunction   'cl-struct-p)
+  fails:     (find-efunction   'cl-struct-p--cmacro)
+  bytecomp:  (find-efunctionpp 'cl-struct-p)
+  bytecomp:  (find-efunctionpp 'cl-struct-p--cmacro)
+
+The `find-efunctionpp's are not very helpful because these two functions
+are byte-compiled, and the
+
+  (find-efunction 'cl-struct-p--cmacro)
+
+fails. But if we try this,
+
+  (find-efunction-links 'cl-struct-p--cmacro)
+         (eek \"M-h M-f  cl-struct-p--cmacro\")
+
+one of the blocks that appears in the temporary buffer is this one:
+
+  # (find-efunctionlgrep 'cl-struct-p--cmacro)
+  # (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p--cmacro)
+  # (find-eloadhistory-for 'cl-struct-p--cmacro)
+  # (find-eloadhistory-for 'cl-struct-p--cmacro 2 \" cl-struct-p--cmacro)\")
+
+The second argument to `find-efunctionlgrep' is a stem. In this case the
+`find-efunction-links' has guessed the stem incorrectly - it guessed the
+stem as being the name of the original function, for simplicity -, but
+if we duplicate that line and experiment a bit we can find a stem that
+works:
+
+  # (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p--cmacro)
+  # (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p)
+
+The second `find-efunctionlgrep' above shows three good guesses for
+places that can be the sexps that define `cl-struct-p--cmacro', but I
+find the code very hard to understand... the first guess points to a
+sexp that is several lines long, the second guess points to this sexp,
+that is just one line:
+
+  (cl-assert (cl-struct-p (cl--find-class 'cl-structure-class)))
+
+We can try to run macroexpand and macroexpand-all on that sexp and
+pretty-print the results, with `find-eppm' and `find-eppma',
+
+  (find-eppm '
+    (cl-assert (cl-struct-p (cl--find-class 'cl-structure-class)))
+  )
+
+  (find-eppma '
+    (cl-assert (cl-struct-p (cl--find-class 'cl-structure-class)))
+  )
+
+and do the same with the other guesses. I tried this with the three
+sexps - the three \"guesses\" - and examined the two expansions for each
+one, and I couldn't find any mentions to `cl-struct-p--cmacro'... so in
+this case this `find-efunctionlgrep'
+
+  (find-efunctionlgrep 'cl-struct-p--cmacro 'cl-struct-p)
+
+didn't help me to understand where, and how, `cl-struct-p--cmacro', was
+defined... bleh =(.
+
+[TODO: explain this:]
+
+  (find-egrep \"grep --color=auto -nH --null -e --cmacro *.el */*.el\")
+  (find-efunction 'cl-define-compiler-macro)
+  (find-efunction 'cl-define-compiler-macro \"\\\"--cmacro\\\"\")
 
 
 
 
 
 
-[TODO: rewrite the rest!]
+
+
+
+
+
+
+
+[TODO: delete most of the old stuff below, reuse a few parts...]
 
 The easiest, and most high-level, way to inspect strange
 functions uses a kind of \"here\". If you type `M-h M-s' with the
@@ -19523,10 +19625,6 @@ moment]
 
 [Describe M-x sf - how to load it, how to test it]
 
-
-
-
-
 1. Introduction
 ===============
 Sometimes `find-efunction' can't find the place in which a
@@ -19604,61 +19702,6 @@ and `find-eetcfile', and then they search for their stems -
 
 surrounded by certain delimiter characters.
 
-
-
-
-
-
-
-
-
-
-Compare `cl-struct-p', that is a \"normal\"
-function
-
-
- - it can find the file in which the function
-was defined,
-
-
-
-
-  (find-efunction 'find-efile)
-  (find-efunction-links  'find-efile)
-  (find-eloadhistory-for 'find-efile)
-  (find-eloadhistory-for 'find-efile 6 \" find-efile)\")
-  (find-lgrep            'find-efile       \"\\\"e\\\"\")
-
-                         (find-eetcfile \"\")
-                         (find-eetcfile \"NEWS\")
-  (find-efunction        'find-eetcfile)
-  (find-efunctionpp      'find-eetcfile)
-  (find-efunction-links  'find-eetcfile)
-  (find-eloadhistory-for 'find-eetcfile)
-  (find-eloadhistory-for 'find-eetcfile 6 \" find-eetcfile)\")
-  (find-lgreps           'find-eetcfile)
-  (find-lgreps           'find-eetcfile    \"find-eetcfile\")
-  (find-lgreps           'find-eetcfile         \"eetc\")
-  (find-lgrep            'find-eetcfile       \"\\\"eetc\\\"\")
-
-  (defun . ee-eetcfile)
-  (defun . find-eetcfile)
-  (defun . find-eetcsh)
-  (defun . find-eetcsh0)
-  (defun . find-eetcsh00)
-  (defun . find-eetcgrep)
-  (defun . find-eetcfile)
-
-       (code-c-d \"eetc\" data-directory :gz)
-  (find-code-c-d \"eetc\" data-directory :gz)
-
-  (find-eev-quick-intro \"9.1. `code-c-d'\")
-  (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
-
-
-
-Hello
-=====
 " pos-spec-list)))
 
 ;; (find-strange-functions-intro)

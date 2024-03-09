@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231223
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-qrl.el>
@@ -102,9 +102,7 @@
     (apply 'ee-qrl0 plist)))		; else replace to the end of the buffer
 
 ;; «.aliases»	(to "aliases")
-(defalias 'qrl0 'ee-qrl0)
-(defalias 'qrl  'ee-qrl)
-
+;; Moved to: (find-eev "eev-aliases.el" "query-replace-list")
 
 (provide 'eev-qrl)
 

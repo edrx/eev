@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240201
+;; Version:    20240308
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -885,6 +885,12 @@ The \"Local variables:\" section in the buffer is processed."
 ;;; | | | | (_| \__ \ | | | | || (_| | |_) | |  __/\__ \
 ;;; |_| |_|\__,_|___/_| |_|  \__\__,_|_.__/|_|\___||___/
 ;;;                                                     
+;; Test:   (cl-defstruct mypoint x y)
+;;       (setq myp (make-mypoint :x 3 :y 4))
+;;                               (ee-struct-index-table myp)
+;;   (ee-hashtable-to-string nil (ee-struct-index-table myp))
+;;              (find-ehashtable (ee-struct-index-table myp))
+;;
 ;; «find-ehashtable»  (to ".find-ehashtable")
 
 (defun ee-hashtable-to-string (f hashtable)
@@ -900,7 +906,7 @@ returned an empty string disappear in the concatenation.
 If F is nil then use a default function.
 
 I often refer to strings that may have, and usually do have,
-newlines, as \"big strings\". This is a bit childish, I know..."
+newlines, as \"big strings\". This function returns a \"big string\"."
   (setq f (or f (lambda (k v h) (format "%S -> %S\n" k v))))
   (let ((lines (cl-loop for k being the hash-keys of hashtable
 	 	        collect (funcall f k (gethash k hashtable) hashtable))))
@@ -944,7 +950,7 @@ newlines, as \"big strings\". This is a bit childish, I know..."
 ;;   (find-eppm             ' (cl-defstruct mypoint x y) )
 ;;  
 ;;   (cl-defstruct mypoint x y)
-;;   (cl-defstruct (mypoint-colored (:include point)) color)
+;;   (cl-defstruct (mypoint-colored (:include mypoint)) color)
 ;;  
 ;;   (setq myp (make-mypoint         :x 3 :y 4))
 ;;   (setq myp (make-mypoint-colored :x 3 :y 4))
@@ -1372,6 +1378,10 @@ that `find-epp' would print in a single line."
 (defun find-eppm (code &rest pos-spec-list)
   "This is essentially the same as (find-epp (macroexpand CODE))."
   (apply 'find-epp (macroexpand code) pos-spec-list))
+
+(defun find-eppma (code &rest pos-spec-list)
+  "This is essentially the same as (find-epp (macroexpand-all CODE))."
+  (apply 'find-epp (macroexpand-all code) pos-spec-list))
 
 ;; «find-efunctionpp»  (to ".find-efunctionpp")
 ;; See: (find-elisp-intro "6. Defining functions")

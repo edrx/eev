@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240219
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kl-here.el>
@@ -165,8 +165,14 @@
     `(find-evariable-links ',v)
     ))
 
+;; Not included in the test suite:
+;; Skel: (find-linki-links "libera")
+(defun ee-find-libera-linki ()
+  `(find-libera-2a ,rcirc-target))
+
 ;; Skel: (find-linki-links "epackage")
 ;; Needs a rename
+
 
 
 ;;;  _                           
@@ -317,24 +323,8 @@
 ;;;  \__,_|_|_|\__,_|___/\___||___/
 ;;;                                
 ;; «aliases»  (to ".aliases")
-;; See: (find-kla-intro "4. Aliases")
-;; This is temporary!
-
-(defalias 'kl    'eekl)
-(defalias 'kll	 'eekll)
-(defalias 'kls	 'eekls)
-
-(defalias 'kla   'eekla)
-(defalias 'kla0  'eekla0)
-(defalias 'klas  'eeklas)
-(defalias 'klf   'eeklf)
-(defalias 'klfs  'eeklfs)
-(defalias 'klt   'eeklt)
-(defalias 'klts  'eeklts)
-(defalias 'kli   'ee-kl-insert)
-(defalias 'kla2  'eekla2)
-
-
+;; Moved to: (find-eev "eev-aliases.el" "kl-here")
+;;      See: (find-kla-intro "4. Aliases")
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240227
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-aliases.el>
@@ -75,6 +75,13 @@
 ;; From: (find-eev "eev-hydras.el" "aliases")
 ;;  See: (find-edit-index-intro)
 (defalias 'ei 'ee-edit-index)
+
+
+;; TODO: fix this!
+;; (find-eev "eev-tlinks.el" "show2")
+;; (find-eev "eev-tlinks.el" "show2-use")
+;; (find-eloadhistory-for 'show2 2 " show2)")
+
 
 
 

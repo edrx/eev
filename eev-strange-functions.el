@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240304
+;; Version:    20240308
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-strange-functions.el>
@@ -282,16 +282,21 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
      (setq ee-sf-result `(ee-sf-1stclassvideo-links ,stem . ,rest)))))
 
 ;; Tests (use `M-x sf'):
+;;   (find-eevnavvideo)
 ;;   (find-eevnavvideo "0:31" "0.1. M-x package-initialize")
 ;;
 (defun ee-sf-1stclassvideo-links (c &optional time &rest rest)
   (let* ((qrest       (ee-Qrest rest))
 	 (basicinfo   (ee-1stclassvideo-basicinfo  c time))
 	 (basicsexps  (ee-1stclassvideo-basicsexps c time))
+	 (psnetime    (if time (format " \"%s\"" time) ""))
+	 (psneline    (ee-template0
+		       ";; Psne:  (find-1stclassvideo-psne  \"{c}\"{psnetime})"))
 	 (defuns      (ee-1stclassvideo-defuns c)))
     `(,(ee-template0 "\
 ;; Variants:
 {basicsexps}\
+{psneline}
 
 ;; Info about this video:
 {basicinfo}\

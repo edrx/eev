@@ -1,4 +1,23 @@
+2024-03-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-load.el: added a mention to eev-tla - a (require 'eev-tla),
+	commented out.
+
+	* eev-kl-here.el: moved all aliases to eev-aliases.el.
+
+	* eev-hydras.el: moved all aliases to eev-aliases.el.
+
+	* eev-kl-here.el (ee-find-libera-linki): new function.
+
 2024-03-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-strange-functions-intro): added a section
+	about strange functions created by macros.
+
+	* eev-blinks.el (find-eppma): new function.
+
+	* eev-strange-functions.el (ee-sf-1stclassvideo-links): added a
+	psne to the variants.
 
 	* eev-tlinks.el (ee-1stclassvideo-basicinfo): small changes.
 

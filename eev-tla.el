@@ -136,7 +136,7 @@
 ;; «.code-tla»			(to "code-tla")
 ;; «.find-tla-def-links»	(to "find-tla-def-links")
 ;; «.find-tla-links»		(to "find-tla-links")
-;;
+;; «.tla»			(to "tla")
 ;; «.find-pdf-txt»		(to "find-pdf-txt")
 ;; «.find-pdf-txt-links»	(to "find-pdf-txt-links")
 
@@ -375,8 +375,12 @@ See: (find-eevfile \"eev-tla.el\" \";; Commentary:\")"
 
 
 
+;; «tla»  (to ".tla")
 ;; Let's make `tla' point to this file,
-(code-tla 'tla (ee-eevfile "eev-tla.el"))
+;;
+;; (find-code-tla 'tla (ee-eevfile "eev-tla.el"))
+        (code-tla 'tla (ee-eevfile "eev-tla.el"))
+;;
 ;; so that people will start with a non-empty
 ;; `ee-tla-table'. Try:
 ;;   (find-estring (ee-tla-table-to-string) "tla ->")

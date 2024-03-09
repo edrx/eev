@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240304
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -185,6 +185,9 @@
 ;; IMPORTANT: Since 2019mar05 these files are no longer loaded by
 ;; default! Note the "'" at the beginning of each line!
 
+;; This is experimental, messy, and is used only by me and Erich Ruff.
+' (require 'eev-tla)            ; (find-eev "eev-tla.el")
+;;
 ;; This can't be loaded by default because it needs a package (hydra).
 ' (require 'eev-hydras)         ; (find-eev "eev-hydras.el")
 

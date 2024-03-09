@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20221122
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://angg.twu.net/eev-current/eev-hydras.el>
@@ -84,10 +84,8 @@
 ;;;                            
 ;; «ei»       (to ".ei")
 ;; «aliases»  (to ".aliases")
-;; This file is not loaded by default, but if you run
-;;   (require 'eev-hydras)
-;; this will define `M-x ei' as an alias for `M-x ee-edit-index'.
-(defalias 'ei 'ee-edit-index)
+;; Moved to: (find-eev "eev-aliases.el" "edit-index")
+
 
 (defun ee-edit-index ()
   "Call `ee-edit-index-hydra/body' to edit the index."
