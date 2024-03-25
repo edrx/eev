@@ -203,8 +203,8 @@ Try this: (find-code-c-d \"CODE\" \"/DIR/\" :info \"INFO\")"
 
 (defun ee-code-c-d-base (c d)
   (ee-template0 "\
-   ;; {(ee-S `(find-code-c-d ,c ,d ,@rest))} 
-   ;; {(ee-S `(ee-code-c-d-base ,c ,d))} 
+   ;; {(ee-S `(find-code-c-d ,c ,d ,@rest))}
+   ;; {(ee-S `(ee-code-c-d-base ,c ,d))}
    ;; See: (find-eev-quick-intro \"9.1. `code-c-d'\")
    ;;      (find-elisp-intro \"5. Variables\")
    ;;      (find-elisp-intro \"5. Variables\" \"setq\")

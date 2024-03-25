@@ -218,12 +218,9 @@
 ;; (require 'eev)                 ; (find-eev "eev.el")
 ;; (require 'eev-glyphs)          ; (find-eev "eev-glyphs.el")
 ;; (require 'eev-compose)         ; (find-eev "eev-compose.el")
-;;       ; (find-eev "eev-glyphs.el" "eev-set-default-glyphs")
-;;       ; (find-eev "eev.el"        "ee-setenv")
 ;; (require 'eev-steps)           ; (find-eev "eev-steps.el")
 ;; (require 'eev-langs)           ; (find-eev "eev-langs.el")
 ;; (require 'eev-mini-steps)      ; (find-eev "eev-mini-steps.el")
-;; (require 'eechannel)           ; (find-eev "eechannel.el")
 
 
 

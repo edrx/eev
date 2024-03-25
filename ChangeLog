@@ -1,4 +1,17 @@
+2024-03-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (find-eatprocess0, find-eatprocess)
+	(eepitch-line-eat, eepitch-eat): new functions.
+
 2024-03-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-strange-functions.el (ee-sf-get-sexp-flash)
+	(find-strange-function-links): moved the `ee-goto-eol' to
+	`find-strange-function-eol-links'.
+	(find-strange-function-eol-links): new function.
+
+	* eev-mode.el (eev-mode-map-set): now `M-h M-S' is a variant of
+	`M-h M-s' that doesn't move the point to eol.
 
 	* eev-load.el: added a mention to eev-tla - a (require 'eev-tla),
 	commented out.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240308
+;; Version:    20240309
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-strange-functions.el>
@@ -129,6 +129,12 @@
       (find-sf-debug-links (ee-sf-get-sexp-flash))
     (find-sf-links (ee-sf-get-sexp-flash))))
 
+(defun find-strange-function-eol-links (dbg)
+  (interactive "P")
+  (ee-goto-eol)
+  (find-strange-function-links dbg))
+
+
 
 
 
@@ -148,7 +154,6 @@
   "Highlight (\"flash\") the sexp before eol and return it.
 This is similar to `M-0 M-e': we go to the end of the line and
 then we return the sexp before point."
-  (ee-goto-eol)
   (save-excursion
     (eeflash+ (ee-backward-sexp)
 	      (ee-forward-sexp)
@@ -445,6 +450,8 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 (defun ee-sf-pdf-links (c fname)
   (let* ((defuns1  (ee-code-pdf-page c fname))
 	 (defuns2  (ee-code-pdf-text c fname))
+	 (dir      (file-name-directory fname))
+	 (fname0   (file-name-nondirectory fname))
 	 (page0    (cadr ee-sf-sexp))
 	 (page     (if page0 (format " %s" (ee-S page0)) ""))
 	 (pagerest (format "%s%s" page (ee-Qrest (cddr ee-sf-sexp))))
@@ -457,6 +464,8 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; (find-{c}text{page})
 ;; (find-{c}page{pagerest})
 ;; (find-{c}text{pagerest})
+;; (find-fline \"{dir}\" \"{fname0}\")
+;; (find-fline \"{dir}\")
 
 ;; Source and location in the load-history:
 ;; (find-efunctionlgrep 'find-{c}page \"{c}\")

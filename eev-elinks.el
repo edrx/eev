@@ -1673,6 +1673,9 @@ You can use this to understand how the mode line works."
      (ee-no-properties (format-mode-line mode-line-format))
      (insert "\n# " (format-mode-line mode-line-format))
      ""
+     (find-estring (format-mode-line mode-line-format))
+     (find-estring (format-mode-line header-line-format))
+     ""
      (find-evardescr 'mode-line-front-space)
      (find-evardescr 'mode-line-mule-info)
      (find-evardescr 'mode-line-client)

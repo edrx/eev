@@ -891,6 +891,7 @@ The \"Local variables:\" section in the buffer is processed."
 ;;   (ee-hashtable-to-string nil (ee-struct-index-table myp))
 ;;              (find-ehashtable (ee-struct-index-table myp))
 ;;
+;; See also: (find-epackage-links 'ht)
 ;; «find-ehashtable»  (to ".find-ehashtable")
 
 (defun ee-hashtable-to-string (f hashtable)

@@ -2940,9 +2940,14 @@ different things, and each one does more than the previous one.
 
 4. Aliases
 ==========
-TODO: write this!
+If you don't load eev-aliases.el the other modules of eev will only
+define functions and variables that start with the prefixes \"find-\",
+\"ee\", \"code-\" or \"br\", with one exception: \"to\".
+
 See:
   (find-eev \"eev-aliases.el\")
+  (find-eev-intro \"1. `eev-mode'\")
+  (find-eev-intro \"1. `eev-mode'\" \"prefixes\")
 
 
 
@@ -9362,7 +9367,7 @@ default - and its error messages appear here:
   (find-ebuffer \"*Messages*\")
 
 [Video links:]
-  (find-eev2020video \"6:25\" \"`find-video'\")
+  (find-eev2020video \"06:25\" \"`find-video'\")
 
 
 
@@ -9390,7 +9395,7 @@ When it is on you will see an \"avadj\" at the mode line. Let's
 examine `M--' and `M-+' first. With eev-avadj-mode on, try typing
 several `M--'s and `M-+'s (or `M-='s) on the line below:
 
-  This time offset - 9:59 - will change
+  This time offset - 10:00 - will change
 
 Now, as an exercise, try to use `M--'s and `M-+'s/`M-='s, plus
 `M-h M-2' (`ee-duplicate-this-line') and other more standard
@@ -9445,11 +9450,6 @@ and now try `M-0 M-p' on these lines:
   ;; 4:19 blah
   ;; 2:19
 
-For more realistic examples, see:
-
-  (find-videos-intro)
-
-
 
 
 
@@ -9489,11 +9489,11 @@ contains a line like this:
 
   (setq ee-audiovideo-last 'find-ec2020video)
 
-This line will be explained in the section 4.4.
+That line will be explained in the section 4.4.
 
 [Video links:]
   (find-eev2020video \"12:54\" \"This block is a kind of an index for that video\")
-  (find-eev2020video \"13:30\" \"we can index video tutorials\")
+  (find-eev2020video \"13:27\" \"we can index video tutorials\")
 
 
 
@@ -9502,8 +9502,6 @@ This line will be explained in the section 4.4.
 ----------------------------
 The easiest way to produce `code-audio' and `code-video'
 hyperlinks is with `M-h M-e', that runs `find-extra-file-links'.
-This an experimental feature whose behavior may change soon, but
-here is how it works now.
 
 If you run
 
@@ -9523,8 +9521,8 @@ and that contains several blocks like this one:
 
 If you change the \"{c}\" in the first line to \"FOO\" and
 execute it you will get a buffer generated from the same
-template, but with all the \"{c}\"s replaced by \"FOO\"s. In that
-buffer the block above will become this:
+template, but with all the \"{c}\"s replaced by \"FOO\"s. In the
+new version of the buffer the block above will become this:
 
   ;; Links to a video file:
   ;; (find-video \"/tmp/foo.mp4\")
@@ -9534,22 +9532,29 @@ buffer the block above will become this:
 
 The typical way of using `find-extra-file-links' is from dired,
 by placing the cursor on the line of a file that you want to
-create links to, and then typing `M-h M-e'. `M-h M-e' is similar
-to the \"dired half\" of `M-h M-p' - see:
+create links to, and then typing `M-h M-e'. Try that on the sexp
+below, that opens a dired buffer and puts the point on the line
+with the file \"eev-load.el\":
+
+  (find-eevfile \"\" \"eev-load.el\")
+
+A historical note: `M-h M-e' was inspired by the \"dired half\"
+of `M-h M-p' - see:
 
   (find-pdf-like-intro \"9. Generating three pairs\")
   (find-pdf-like-intro \"9. Generating three pairs\" \"M-h M-p\")
 
-but `M-h M-e' produces many more links.
+but `M-h M-e' produces many more links, and `M-h M-e' made that way
+of using `M-h M-p' obsolete.
 
 [Video links:]
-  (find-eevtemplvideo \"28:12\" \"6. `find-here-links' and `find-extra-file-links'\")
-  (find-eevtemplvideo \"30:18\"  \"`M-h M-e' runs `find-extra-file-links'\")
+  (find-eevtemplvideo \"28:11\" \"6. `find-here-links' and `find-extra-file-links'\")
+  (find-eevtemplvideo \"30:19\"  \"`M-h M-e' runs `find-extra-file-links'\")
   (find-eevtemplvideo \"30:42\"  \"here is an example in Lisp\")
   (find-eevtemplvideo \"31:06\"  \"and I can change this {c}\")
-  (find-eevtemplvideo \"31:22\"  \"Let me show a more realistic example\")
-  (find-eevtemplvideo \"31:28\"  \"let's go to the directory with the video file\")
-  (find-eevtemplvideo \"31:45\"  \"this file is a video file\")
+  (find-eevtemplvideo \"31:21\"  \"Let me show a more realistic example\")
+  (find-eevtemplvideo \"31:26\"  \"let's go to the directory with the video file\")
+  (find-eevtemplvideo \"31:50\"  \"this file is a video file\")
 
 
 
@@ -9557,11 +9562,10 @@ but `M-h M-e' produces many more links.
 
 4.2. `eewrap-audiovideo'
 ------------------------
-And older, and clumsier, way of creating
-
-If you type `M-V' (`eewrap-audiovideo') on a line containing a
-shorthand word and a file name of an audio or video file, for
-example, here,
+And older, and clumsier, way of creating short links to audio and
+video files is with `M-V'. If you type `M-V' (`eewrap-audiovideo')
+on a line containing a shorthand word and a file name of an audio
+or video file - for example, here,
 
   sunwillset  ~/Zoe_Keating/Sun_Will_Set.ogg
 
@@ -9591,6 +9595,7 @@ audio or video file, starting from some given time offset. The
 default is always what is stored in `ee-audiovideo-last', and
 each call to a short hyperlink of the form `find-xxxaudio' or
 `find-xxxvideo' sets that variable.
+
 
 
 
@@ -9740,6 +9745,8 @@ Here is an example of changing `'ee-mpv-video-options' temporarily:
           (cons \"--video-rotate=90\" ee-mpv-video-options)))
       (find-mpv-video fname pos)))
 
+See also this:
+  (find-mpv-links)
 
 
 
@@ -16494,6 +16501,7 @@ instead of killing a link. The last lines of that buffer will be
 these links, that explain everything:
 
   # And:
+  #   (find-kl-here-intro \"5. The innards\")
   #   (find-here-links-intro \"8. Debugging\")
   #   (find-here-links-intro \"8. Debugging\" \"Each test tests\")
   #   (find-eev \"eev-kl-here.el\" \"hprog\")
@@ -16755,6 +16763,14 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
+This intro corresponds to one of my presentations at
+the EmacsConf2022. It page and its video are here:
+   Page:  http://anggtwu.net/emacsconf2022-py.html
+   Info:  (find-1stclassvideo-links \"eev2022py\")
+   Play:  (find-eev2022pyvideo \"00:00\")
+   HSubs: (find-eev2022pyhsubs \"00:00\")
+
+
 
 0. Preparation
 ==============
@@ -16764,7 +16780,7 @@ Many examples in this intro will suppose that you have run this,
 
 that can't be run by default because it defines three functions
 with atypical names: `pdk', `sdk', and `mdk', that will be
-explained in the section 42. So run the sexp above now!
+explained in the section 5. So run the sexp above now!
 
 
 
@@ -16923,6 +16939,7 @@ and with the functions in:
 
 The fields `:base-html', `:base-web', and `:base-html' are used
 in expansions. What are the other fields?
+
 
 
 
@@ -17091,10 +17108,10 @@ The `defvar' in
 uses some regexps that are smarter than the ones that were
 generated by the `find-rstdoc-links'...
 
-TODO: explain how to use `find-rstdoc-links'!
 
 
-
+TODO: explain how to edit the defvars/setqs and how to test
+the fields step by step!
 
 " pos-spec-list)))
 
@@ -19228,15 +19245,15 @@ Both this intro and the HTML page above are unfinished!
 
 
 
-1. Introduction
-===============
+1. Introduction: videos
+=======================
 We saw in
 
   (find-eev-quick-intro \"9.1. `code-c-d'\")
   (find-eev-quick-intro \"9.1. `code-c-d'\" \"find-code-c-d\")
 
 that each call to `code-c-d' defines several functions, and we
-can use `find-code-c-d' to display the code that the
+can use a `find-code-c-d' to display the code that the
 corresponding `code-c-d' would run.
 
 I will refer to the functions defined by a call to `code-c-d' as

@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012,2015,2018-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240307
+;; Version:    20240325
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
@@ -48,6 +48,7 @@
 ;; «.other-terms»		(to "other-terms")
 ;;   «.eepitch-ansiterm»	(to "eepitch-ansiterm")
 ;;   «.eepitch-vterm»		(to "eepitch-vterm")
+;;   «.eepitch-eat»		(to "eepitch-eat")
 ;; «.wait-for-hooks»		(to "wait-for-hooks")
 ;;   «.ee-wait»			(to "ee-wait")
 ;;   «.eepitch-sly»		(to "eepitch-sly")
@@ -861,9 +862,37 @@ This is useful for for running processes that use pagers like
 	(find-ebuffer buffername)
       (vterm buffername))))
 
+;; Tests:
+;;   (require 'eat)
+;;   (find-eatprocess nil "DASH")
+;;   (find-eatprocess "/bin/dash" "DASH")
+;;   (find-eatprocess "/bin/dash")
+;;   (find-eatprocess)
+;;
+(defun find-eatprocess0 (program buffername)
+  "An internal function used by `find-eatprocess'."
+  (if (get-buffer   buffername)
+      (find-ebuffer buffername)
+    (find-ebuffer buffername)
+    (eat-mode)
+    (eat-exec (current-buffer) (buffer-name)
+	      "/usr/bin/env" nil
+	      (list "sh" "-c" program))))
 
-;; `eepitch-ansiterm' and `eepitch-vterm' use these variants of the
-;; original `eepitch-line'.
+(defun find-eatprocess (&optional program name0)
+  "See: (find-eev \"eepitch.el\" \"other-terms\")"
+  (if program
+      (find-eatprocess0
+       program
+       (format "*eat: %s*" (or name0 program)))
+    (find-eatprocess0
+     shell-file-name
+     (if name0 (format "*eat: %s*" name0) "*eat*"))))
+
+
+
+;; `eepitch-ansiterm', `eepitch-vterm' and `eepitch-eat' use these
+;; variants of the original `eepitch-line'.
 ;;
 (defun eepitch-line-ansiterm (line)
   "Send LINE to the ansi-term buffer and run the key binding for RET there."
@@ -876,6 +905,12 @@ This is useful for for running processes that use pagers like
   (eepitch-eval-at-target-window
     '(progn (vterm-send-string line)	; "type" the line
 	    (vterm-send-return))))      ; then do a RET
+
+(defun eepitch-line-eat (line)
+  "Send LINE to the eat buffer and run the key binding for RET there."
+  (eepitch-eval-at-target-window
+    `(progn (eat-term-send-string eat-terminal ,line)   ; "type" the line
+	    (eat-term-send-string eat-terminal "\r")))) ; then do a RET
 
 
 ;; «eepitch-ansiterm»  (to ".eepitch-ansiterm")
@@ -911,6 +946,24 @@ The arguments are explained here:
   (interactive)
   (prog1 (eepitch `(find-vtermprocess ,program ,name0))
     (setq eepitch-line 'eepitch-line-vterm)))
+
+;; «eepitch-eat»  (to ".eepitch-eat")
+;; Tests:
+;;   (eepitch-eat nil "DASH")
+;;   (eepitch-eat "/bin/dash" "DASH")
+;;   (eepitch-eat "/bin/dash")
+;;   (eepitch-eat)
+;;   (eepitch-line "echo $(tput setaf 1)Hello$(tput setaf 0)")
+;;
+(defun eepitch-eat (&optional program name0)
+  "This is like `eepitch-comint', but using eat instead of comint.
+It uses `eepitch-line-eat' instead of `eepitch-line'.
+The arguments are explained here:
+  (find-eev \"eepitch.el\" \"other-terms\")"
+  (interactive)
+  (prog1 (eepitch `(find-eatprocess ,program ,name0))
+    (setq eepitch-line 'eepitch-line-eat)))
+
 
 
 

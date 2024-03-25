@@ -1071,6 +1071,22 @@ git pull
 (load user-init-file)
 (load \"~/.emacs\")
 (load \"~/.emacs.d/init.el\")
+
+
+;; Compare this: (find-eev \"eev-load.el\")
+;; and the output of:
+(let* ((fname (ee-eevfile \"eev-load.el\"))
+       (bigstr (ee-read-file fname))
+       (sexps (read (format \"(\\n%s\\n)\" bigstr)))
+       (f (lambda (sexp)
+	    (pcase sexp
+              (`(require ',feature) feature))))
+       (features0 (mapcar f sexps))
+       (features (seq-filter 'identity features0))
+       )
+  ;; (find-eppp sexps)
+  (find-eppp features)
+  )
 ")
      )
    pos-spec-list))
@@ -3491,6 +3507,7 @@ This function is used by `ee-0x0-upload-region'."
 {dlsubs}\
 
 ;; See:
+;; (find-strange-functions-intro \"1. Introduction: videos\")
 ;; (find-video-links-intro \"9. First-class videos\")
 ;; (find-eev \"eev-videolinks.el\" \"first-class-videos\")
 ;; (find-eev \"eev-videolinks.el\" \"second-class-videos\")
@@ -4089,6 +4106,10 @@ This doesn't support pos-spec lists yet."
       (setq tcmsg (with-current-buffer tcbuf (telega-msg-at (point))))
       (setq tcmsgc (plist-get (plist-get (plist-get tcmsg :content) :text) :text))
       (setq tcmsgc (ee-no-properties (telega-msg-content-text tcmsg)))
+      (find-einspect tcbuf)
+      (find-einspect tcchat)
+      (find-einspect tcmsg)
+      (find-einspect tcmsgc)
       (telega-tme-internal-link-to tcchat)
       (find-eppp tcchat)
       (plist-get tcchat :chat_id)

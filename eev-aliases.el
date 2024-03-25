@@ -30,6 +30,11 @@
 
 ;;; Comment:
 
+;; See:
+;;   (find-eev-intro "1. `eev-mode'")
+;;   (find-eev-intro "1. `eev-mode'" "prefixes")
+;;   (find-eev-levels-intro "4. Aliases")
+
 ;; «.1stclassvideos»		(to "1stclassvideos")
 ;; «.kl-here»			(to "kl-here")
 ;; «.kla»			(to "kla")
