@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240309
+;; Version:    20240505
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -781,11 +781,11 @@ The Emacs manuals are in \"info\" format, which means:
 
        Manual title                       elisp hyperlink
        ----------------------------------------------------------
-       GNU Emacs Manual                 (find-node \"(emacs)\"Top)
+       GNU Emacs Manual                 (find-node \"(emacs)Top\")
        Emacs Lisp / GNU Emacs Lisp
-         Reference Manual               (find-node \"(elisp)\"Top)
+         Reference Manual               (find-node \"(elisp)Top\")
        An Introduction to
-         Programming in Emacs Lisp      (find-node \"(eintr)\"Top)
+         Programming in Emacs Lisp      (find-node \"(eintr)Top\")
 
   e) The \"Info directory\" lists all the installed info manuals.
      You can access it with:
@@ -1980,7 +1980,13 @@ The most basic keys of eev are:
   <f8>  - See: (find-eev-quick-intro \"6. Controlling shell-like programs\")
   M-T   - See: (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
 
-The beginner's way of creating \"hyperlinks to here\" is with:
+The easiest way of creating \"hyperlinks to here\" is with:
+  M-x kl  - See: (find-kl-here-intro \"2. Try it!\")
+                 (find-kl-here-intro \"3. Info\")
+  M-x kll - See: (find-kl-here-intro \"2. Try it!\" \"kll\")
+  M-x kls - See: (find-kl-here-intro \"4. `M-x kls'\")
+
+Here is an older way, more powerful but much harder to use:
   M-h M-3   - (find-here-links-intro \"4. `find-here-links-3'\")
   M-h M-1   - (find-here-links-intro \"5. `find-here-links-1'\")
   M-h M-w   - (find-here-links-intro \"6. Copying the hyperlink\" \"M-h M-w\")
@@ -14886,631 +14892,296 @@ The quickest way to open or recreate this is with `M-3 M-j'.
 
 
 
-This is a tutorial on how to install Emacs and eev on M$ Windows,
-and on the basic steps for learning Emacs and eev after
-installing them. If you're a W$ user you should start by reading
-this tutorial online in a browser, at
-
-  http://anggtwu.net/eev-intros/find-windows-beginner-intro.html
-
-while you run Emacs in another window (see section 1). After
-getting eev installed on your machine (see section 3) you will be
-able to access this tutorial from Emacs by typing `M-3 M-j'.
-
-The main tutorial on eev is this one,
-
-  (find-eev-quick-intro)
-  http://anggtwu.net/eev-intros/find-eev-quick-intro.html
-
-The sections from 5.6 onwards were written in nov/2021 and they
-cover how to install some external programs to make almost all
-features of eev work on M$ Windows. Feedback on them would be
-greatly appreciated!
-
-
-
-
-
-
 0. Introduction
 ===============
-My favorite exposition of what eev is is this presentation,
-called \"How to record executable notes with eev - and how to
-play them back\":
+I work in a big federal university in Brazil, but in a small campus in
+the countryside that has just six courses - two STEM and four non-STEM.
+I usually teach Calculus 2 and 3 to the students of Computer Science and
+Production Engineering, but surprisingly, and depressingly, we can count
+on the fingers of one hand the students that have enough interest in
+programming to be willing to try GNU/Linux and \"exotic\" languages.
+
+In the first semester of 2024 I started to repeat many many times in my
+classes that learning even the basics of Maxima could give them - the
+students - lots of important insights and save them a lot of time, and
+three students (out of 60) became somewhat interested in trying Emacs,
+eev and Maxima. One of them suggested using WSL - \"Windows Subsystem
+for Linux\" - instead of my previous method, that used this:
 
-  http://anggtwu.net/emacsconf2019.html
-  http://anggtwu.net/LATEX/2019emacsconf.pdf (slides)
-  http://www.youtube.com/watch?v=86yiRG8YJD0  (video)
-
-The video ends with a demo that shows a non-trivial example of
-\"executable notes\". The most interesting part of that demo
-shows how to use eev to send commands to an external program - a
-unix shell, being run in interactive mode. Here's a link to that
-part of the video on youtube, plus two related links that are
-harder to explain:
-
-  http://www.youtube.com/watch?v=86yiRG8YJD0#t=15m11s
-  (find-eev2019video \"15:11\" \"Demo: the eepitch block\")
-  http://anggtwu.net/.emacs.videos.html#eev2019
-
-I don't have easy access to Windows machines, so I have to rely
-on friends to test some things for me. I also don't have easy
-access to people who use Windows and who do have experience using
-terminals, so from time to time I give workshops for \"total
-beginners\" like the one described here,
-
-  (find-video-links-intro \"8. Windows\")
-
-and I see that the people on those workshops get stuck on ideas
-that I thought that were obvious, and I change my approach, and I
-rewrite lots of things.
-
-This is my N-th attempt to rewrite this tutorial.
-
-Version of these instructions: 2022nov28.
-
-
-
-
-1. Download and install Emacs
-=============================
-You can install a recent version of Emacs for Windows with the
-\"installer.exe\" below:
-
-  https://www.gnu.org/software/emacs/
-  https://www.gnu.org/software/emacs/download.html#windows
-  https://ftp.gnu.org/gnu/emacs/windows/
-  https://ftp.gnu.org/gnu/emacs/windows/emacs-28/
-  https://ftp.gnu.org/gnu/emacs/windows/emacs-28/emacs-28.2-installer.exe
-
-You may need to create a desktop icon or shortcut to
-<emacsdir>/bin/runemacs.exe.
-
-
-
-1.1. Using Emacs 27.2 on Windows
---------------------------------
-Long story short: DON'T DO THAT! =(
-Installing eev - or any other package from ELPA - on Emacs 27.2
-on Windows may be tricky. For details, see:
-
-  (find-eev-install-intro \"5. Ways to download eev\")
-  (find-eev-install-intro \"5. Ways to download eev\" \"2.\")
-  (find-eev-install-intro \"5. Ways to download eev\" \"because of this bug\")
-
-So: please upgrade to Emacs28 if you can!
-
-
-
-
-2. Key sequences and how to quit
-================================
-Most people who use Emacs do many things by using key sequences - for
-example `C-x C-s' to save the current file.
-
-`C-x C-s' is the Emacs notation for \"control-x control-s\". This
-notation is explained here:
-
-  (find-enode \"User Input\" \"<Ctrl>\" \"a\" \"C-a\")
-  (find-enode \"User Input\" \"<Meta>-a\" \"M-a\" \"<Alt>\")
-
-The best way to learn key sequences when you are a beginner is by
-using the menu bar:
-
-  (find-enode \"Menu Bar\")
-
-for example, in the \"File\" menu the last option is:
-
-  Quit             C-x C-c
-
-If you type just `C-x' and wait the `C-x' will be displayed in the
-\"Echo area\" at the bottom of the screen.  This is explained here:
-
-  (find-enode \"Echo Area\")
-
-  The line at the very bottom of the frame is the \"echo area\".  It is
-  used to display small amounts of text for various purposes.
-
-     The echo area is so-named because one of the things it is used
-  for is \"echoing\", which means displaying the characters of a
-  multi-character command as you type.  Single-character commands are
-  not echoed.  Multi-character commands (*note Keys) are echoed if you
-  pause for more than a second in the middle of a command.  Emacs then
-  echoes all the characters of the command so far, to prompt you for
-  the rest.  Once echoing has started, the rest of the command echoes
-  immediately as you type it.  This behavior is designed to give
-  confident users fast response, while giving hesitant users maximum
-  feedback.
-
-     The echo area is also used to display an \"error message\" when a
-  command cannot do its job.  Error messages may be accompanied by
-  beeping or by flashing the screen.
-
-There are several ways to abort a key sequence in the middle.  They
-are explained here,
-
-  (find-enode \"Quitting\")
-
-but what I recommend to beginners is: if you are stuck in the middle
-of a key sequence and don't know how to abort it, just go to the
-\"File\" menu, use the option \"Quit\", and restart Emacs.
-
-
-
-
-3. Using M-x and installing eev
-===============================
-We can run commands by name by using `M-x'.  `M-x' uses the last line
-of the screen as a \"minibuffer\" - see:
-
-  (find-enode \"Minibuffer\")
-  (find-enode \"Basic Minibuffer\" \"it appears in the echo area\")
-  (find-enode \"M-x\" \"Running Commands by Name\")
-
-To install eev, do this:
-  1. run `M-x package-initialize',
-  2. run `M-x list-packages',
-  3. select \"eev\" at the list of packages,
-  4. click on \"install\".
-
-To load eev and enter its tutorial, run
-  `M-x eev-beginner'.
-
-The tutorial looks like this:
-  (find-eev-quick-intro)
-
-There's a video about these basic steps here:
-
-  \"How to install eev with M-x list-packages and how to navigate its tutorials\"
-  http://anggtwu.net/eev-videos/2020-list-packages-eev-nav.mp4
-             http://anggtwu.net/2020-list-packages-eev-nav.html
-             http://anggtwu.net/.emacs.videos.html#eevnav
-             http://www.youtube.com/watch?v=kxBjiUo88_U
-
-
-
-
-
-4. Understanding buffers and the mode line
-==========================================
-It's good to be able to interpret the mode line - it gives a lot of
-information about where we are.  See:
-
-  (find-enode \"Mode Line\")
-
-For example, after running `M-x eev-beginner' the mode line says this:
-
-  -:**-  *(find-eev-quick-intro)*   Top L1     (Fundamental eev) ---
-
-The best way to understand what each component means is by moving the
-mouse pointer onto it and looking at the help that is displayed.  The
-main components in this case are:
-
-   \"**\" - this buffer is read-write and has been modified.  See:
-
-      (find-enode \"Mode Line\" \"**\")
-
-   \"*(find-eev-quick-intro)*\" - the name of this buffer.
-
-      A curiosity: this buffer is not associated to a file!  If you
-      try to save it with `C-x C-s' or with the \"Save\" option in the
-      \"File\" menu you will get a prompt in the minibuffer that starts
-      with:
-
-        File to save in:
-
-      For more information on buffers and files, see:
-
-        (find-enode \"Mode Line\" \" BUF \" \"name of the buffer\")
-        (find-enode \"Buffers\" \"Most buffers are made by visiting files\")
-        (find-enode \"Basic Files\")
-
-   \"Top L1\" - see:
-
-      (find-enode \"Mode Line\" \"Top\")
-      (find-enode \"Mode Line\" \"line number at point\")
-      (find-enode \"Point\")
-
-   \"(Fundamental eev)\" - see:
-
-      (find-enode \"Mode Line\" \"(MAJOR MINOR)\")
-      (find-enode \"Mode Line\" \"major mode\")
-      (find-enode \"Mode Line\" \"minor modes\")
-
-
-
-
-5. More on modes
-================
-The \"eev\" in the mode line means that the key bindings defined by eev
-are \"active\".  The main key bindings of eev are listed here,
-
-  (find-emacs-keys-intro \"1. Basic keys (eev)\")
-
-and if you want more details about what is an \"active keymap\" you can
-read these sections of the manual:
-
-  (find-enode \"Key Bindings\")
-  (find-enode \"Keymaps\")
-  (find-enode \"Local Keymaps\")
-
-The five main major modes that beginners need to learn about are the
-Fundamental Mode, the Help Mode, the Info Mode, Dired Mode, and Shell
-mode.  In the Fundamental Mode most \"basic\" keys are interpreted as
-editing keys - see:
-
-  (find-enode \"Major Modes\" \"Fundamental mode\")
-  (find-enode \"Keymaps\" \"self-inserting character\")
-
-
-
-
-5.1. Eev mode
--------------
-The three main keys of Eev Mode are these ones:
-
-  M-e   - to follow a hyperlink.  Mnemonic: \"(e)valuate\"/\"(e)xecute\".
-          See: (find-eev-quick-intro \"2. Evaluating Lisp\")
-               (find-eev-quick-intro \"3. Elisp hyperlinks\")
-  M-j   - to jump to certain predefined places.  In particular,
-              `M-j' takes you to a buffer with basic help and a
-                    list of jump targets. See:
-                    (find-eev-quick-intro \"7.2. The list of eejump targets\")
-          `M-2 M-j' takes you to this help page.
-          `M-5 M-j' takes you to: (find-eev-quick-intro)
-  M-k   - to go back.  Mnemonic: \"(k)ill buffer\".
-          See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"M-k\")
-
-The text above was taken from:
-
-  (find-emacs-keys-intro \"1. Basic keys (eev)\")
-
-From this point onwards I will suppose that the reader knows how to
-use at least `M-e' and `M-j'.
-
-Note the Eev mode is a global minor mode.  The next subsections are
-about the other four main major modes - besides Fundamental mode.
-
-
-
-
-5.2. Help Mode
---------------
-Most help commands in Emacs display buffers in Help Mode.  For
-example, if you run `C-h f Info-mode' or execute one of the sexps
-below
-
-  (find-efunctiondescr 'Info-mode)
-  (find-efunctiondescr 'help-mode)
-  (find-efunctiondescr 'dired-mode)
-
-you will get buffers in Help Mode - they are read-only, and if you
-type `q' in them this be interpreted as `quit' rather than as \"insert
-the character `q'\".
-
-
-
-5.3. Info Mode
---------------
-The key sequence `C-h r' opens the Emacs manual in Info Mode.  This is
-a read-only mode like Help Mode, but more keys become navigation keys.
-The main ones are:
-
-  q     Quit Info: reselect previously selected buffer.
-  RET   Follow a node reference near point.
-  n     Move to the \"next\" node of this node.
-  p     Move to the \"previous\" node of this node.
-  u     Move \"up\" from this node.
-
-Also, the tool bar changes completely, and it shows icons
-corresponding to the main navigation keys.  See:
-
-  (find-enode \"Tool Bars\")
-
-
-
-5.4. Dired Mode
----------------
-Dired Mode lets you navigate the directory structure.  You can enter
-it by typing `C-x C-f RET'.  If you type `RET' on a line that shows a
-directory this will be interpreted as \"enter that directory\", and
-`RET' on a line that shows a file is interpreted as \"open that file\".
-See:
-
-  (find-enode \"Dired\")
-  (find-enode \"Dired Enter\" \"C-x C-f\")
-  (find-enode \"ls in Lisp\")
-
-
-
-5.5. Shell Mode
----------------
-Emacs can run terminals inside its buffers - and by default that
-terminal runs the default shell.  In Windows the default shell is
-\"cmd.exe\", that is reminiscent of MS-DOS, and is VERY clumsly.  See:
-
-  https://en.wikipedia.org/wiki/Windows_Console
-  https://en.wikipedia.org/wiki/Command-line_interface
-  https://en.wikipedia.org/wiki/MS-DOS#Windows_command-line_interface
-  https://en.wikipedia.org/wiki/Cmd.exe
-  https://en.wikipedia.org/wiki/Batch_file
-  https://en.wikipedia.org/wiki/Terminal_emulator
-
-If you run `M-x shell' you will get a shell buffer.  See:
-
-  (find-enode \"Interactive Shell\")
-
-especially this part of the first paragraph:
-
-  To give input to the subshell, go to the end of the buffer and type
-  the input, terminated by <RET>.
-
-As an exercise, try to give these commands to the Windows shell:
-
-  dir
-  cd
-  cd ..
-  dir
-
-
-
-5.6. Eshell
------------
-The manual of Eshell - here,
-
-  (find-node \"(eshell)Top\")
-
-describes it as: \"Eshell is a shell-like command interpreter
-implemented in Emacs Lisp\".
-
-This feature of eev:
-
-  (find-psne-intro \"1. Local copies of files from the internet\")
-
-needs to run wget on a unix-like shell, and it turns out that
-this can be achieved easily using Eshell. For a discussion of the
-tecnhical details, see:
-
-  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00051.html
-  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00058.html
-  https://lists.gnu.org/archive/html/help-gnu-emacs/2021-10/msg00126.html
-
-
-
-5.6.1. Echo in Eshell
----------------------
-Note that the \"echo\" of Eshell has a quirk: if you run these
-lines
-
-  echo http://foo.bar/    >> ~/.psne.log
-  echo http://qux.bletch/ >> ~/.psne.log
-  echo http://plic.ploc/  >> ~/.psne.log
-
-on a \"normal\" unix shell these URLs will be appended to
-~/.psne.log with newlines separating them, but if you run that in
-Eshell they will be appended without newlines. One way to fix
-that is to invoke the (built-in!) echo of Eshell with the \"-N\"
-option, like this:
-
-  echo -N http://foo.bar/    >> ~/.psne.log
-  echo -N http://qux.bletch/ >> ~/.psne.log
-  echo -N http://plic.ploc/  >> ~/.psne.log
-
-The option \"-N\" (\"terminate with a newline\") is only
-explained in the source of eshell:
-
-  (find-efile \"eshell/em-basic.el\" \"defun eshell/echo\" \"?N\")
-
-`find-psne-links' accepts two optional arguments after the URL.
-The first of them is called `wget-options', and when it is not
-given it defaults to \"-nc\" (\"no-clobber\"). The second
-optional argument is called `echo-options', and _ideally_ it
-should default to \"\" on \"normal\" unix shells, and to \"-N\"
-on eshell. When it is not given eev runs the function
-`ee-find-psne-echo-options' to decide what to do, and the default
-definition of that function is:
-
-  ;; See: (find-eev \"eev-tlinks.el\" \"ee-find-psne-echo-options\")
-  ;;
-  (defun ee-find-psne-echo-options ()
-    (if (eq system-type 'windows-nt) \"-N\" \"\"))
-
-which means: if a person is \"on Windows\", suppose that she is
-using Eshell, and that she needs \"echo -N\"; is a person is on
-\"non-Windows\", suppose that she is using a \"normal\" unix
-shell, and that she needs just \"echo\", without the \"-N\". The
-exact definition of the term \"on Windows\" can be found here:
-
-  (find-evardescr 'system-type      \"windows-nt\")
-  (find-elnode \"System Environment\" \"windows-nt\")
-
-The suppositions above are often wrong. Here is the easiest way
-to fix them: if you are \"on Windows\" but you use a \"normal\"
-unix shell, you can put these two lines in your ~/.emacs to
-override the definition above:
-
-  ;; See: (find-windows-beginner-intro \"5.6.1. Echo in Eshell\")
-  (defun ee-find-psne-echo-options () \"\")
-
-and if you are \"on non-Windows\" but you use mostly Eshell, you
-can put this in your ~/.emacs instead:
-
-  ;; See: (find-windows-beginner-intro \"5.6.1. Echo in Eshell\")
-  (defun ee-find-psne-echo-options () \"-N\")
-
-If you use both Eshell and \"normal\" unix shells you can try to
-redefine `ee-find-psne-echo-options' in other ways. If you find a
-smarter way that works well, please get in touch!!!
-
-
-
-
-6. Video links
-==============
-If you're on Windows you need to start by configuring your
-browser and the path to it. The old instructions for that are
-here...
-
-  (find-video-links-intro)
-  (find-video-links-intro \"3. `find-youtube-video'\")
-  (find-video-links-intro \"4. Configuring the browser\")
-
-...but in may/2022 I created a better way. It is explained in
-the next section.
-
-
-
-
-
-7. eev-wconfig.el
-=================
-NOTE: until may/2022 this section was about this module:
-
-  (find-eev \"eev-on-windows.el\")
-
-that became obsolete, and was superseded by:
-
-  (find-eev \"eev-wconfig.el\")
-  (find-eev \"eev-wconfig.el\" \"intro\")
-
-To run eev-wconfig you need to run these sexps:
-
-  (require 'eev-wconfig)
   (find-wconfig-links)
+  (find-1stclassvideo-links \"2022eevwconfig\")
+  (find-1stclassvideo-links \"2022eevwconfigpt1\")
+  (find-1stclassvideo-links \"2022eevwconfigpt2\")
 
-`(find-wconfig-links)' shows a temporary buffer with links to
-several \"sub-wconfigs\". The main ones are:
-
-  (find-wconfig-browser-links)
-  (find-wconfig-wget-links)
-  (find-wconfig-shell-links)
-  (find-wconfig-lua-links)
-  (find-wconfig-mpv-links)
-  (find-wconfig-exercises-links)
-
-Each one of these sub-wconfigs has detailed instructions for
-configuring the thing/word after it: browser, wget, (E)shell,
-Lua, Mpv. The best way to understand how to use these
-sub-wconfigs is by watching the video about eev-wconfig, that is
-here:
-
-  Page:  http://anggtwu.net/eev-wconfig.html
-  Index: (find-1stclassvideoindex  \"2022eevwconfig\")
-  Info:  (find-1stclassvideo-links \"2022eevwconfig\")
-  Play:  (find-2022eevwconfigvideo   \"0:00\")
-         (find-2022eevwconfigvideo   \"17:29\" \"(find-wconfig-browser-links)\")
-         (find-2022eevwconfigvideo   \"26:52\" \"...a long digression...\")
-         (find-2022eevwconfigvideo   \"39:20\" \"(find-wconfig-wget-links)\")
-         (find-2022eevwconfigvideo   \"53:41\" \"(find-wconfig-shell-links)\")
-         (find-2022eevwconfigvideo   \"57:45\" \"(find-wconfig-lua-links)\")
-         (find-2022eevwconfigvideo   \"59:17\" \"(find-wconfig-mpv-links)\")
-         (find-2022eevwconfigvideo \"1:06:16\" \"(find-wconfig-exercises-links)\")
-
-Note that I've included links to the parts of the video that
-describe each one of the sub-wconfigs, and note that you will
-only be able to use the `find-2022eevwconfigvideo' links _to play
-local copies of the videos_ after configuring mpv... so it's
-better to start by accessing this section in a browser, at:
-
-  http://anggtwu.net/eev-intros/find-windows-beginner-intro.html#7
+and we are now testing this new set of instructions.
+Note: _This is a work in progress!!!_
 
 
 
 
-7.1. `ee-use-windows'
----------------------
-(Obsolete, deleted)
+1. Install WSL, Debian, and Emacs
+=================================
+The complete instructions are here:
+
+  https://learn.microsoft.com/en-us/windows/wsl/install
+  https://learn.microsoft.com/en-us/windows/wsl/basic-commands
+
+Here is the short version. Run PowerShell as an administrator with:
+
+  Start -> W -> Windows PowerShell [right click] -> Run as administrator
+
+and inside the PowerShell window run these commands:
+
+  wsl -l -v
+  wsl --install Debian
+
+I usually run this instead, with an extra \"wsl --unregister Debian\" in
+the middle to delete the Debian image that I created in a previous test:
+
+  wsl -l -v
+  wsl --unregister Debian
+  wsl --install Debian
+
+After the command \"wsl --install Debian\" finishes it will ask you for
+a username and a password; people usually choose short usernames in
+lowercase letters, like \"edrx\", \"caiop\" or \"gabriel\".
+
+After setting the user and password you will get a Unix prompt. Then you
+need to run this
+
+  sudo apt-get install -y emacs
+
+to install Emacs; what you will see, including the prompts and messages,
+will be something like this:
+
+  edrx@Acer-PC: $ sudo apt-get install -y emacs
+  [Password for edrx]:
+  (...about 100 lines...)
+  edrx@Acer-PC: $
+
+Then run \"emacs &\" to start Emacs - i.e.:
+
+  edrx@Acer-PC: $ emacs &
 
 
 
 
-7.2. Testing wget.exe
----------------------
-(Obsolete, deleted)
+2. Install eev
+==============
+The instructions - in Portuguese - are here:
+
+  http://anggtwu.net/2024-emacs-windows.html#eev
+
+Type `M-x find-windows-beginner-intro' to open this intro.
 
 
 
-7.3. Lua
---------
-(Obsolete, deleted)
+3. Use eepitch to install Debian packages
+=========================================
+Eepitch is explained here:
 
+  http://anggtwu.net/eepitch.html
 
-
-
-7.4. Downloading videos
------------------------
-The default behavior for a video link like this one
-
-  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
-
-is to download a local copy of the video if it hasn't been
-already downloaded, and then play the local copy with mpv. The
-downloading is not automatic; the user has to \"psne\" it - see
-the section 7.2 and this video:
-
-  (find-eevvlinksvideo \"6:09\" \"if I execute this `find-eevtestblsvideo'\")
-  (find-eevvlinksvideo \"6:15\" \"the last line says `Local file NOT found'\")
-
-Now that you understand psne-ing, try the three standard
-behaviors for video links. First make sure that we don't have a
-local copy of the \"eevtestbls\" video, by running this:
+Run the eepitch block below by typing <f8> on each line, starting by the
+first line with a red star. Some lines will ask for a password in the
+minibuffer (at the bottom of the screen).
 
  (eepitch-shell)
  (eepitch-kill)
  (eepitch-shell)
-  rm -fv $S/http/anggtwu.net/eev-videos/2021-test-blocks.mp4
-  ls -l  $S/http/anggtwu.net/eev-videos/2021-test-blocks.mp4
-
-Then run these sexps:
-
-  (ee-use-local-videos)
-  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
-
-  (setq ee-find-eev-video-function 'find-eevlinks-video)
-  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
-
-  (ee-use-youtube-videos)
-  (find-eevtestblsvideo \"2:33\" \"if I run f8 here\")
-
-The three behaviors are explained here:
-
-  (find-video-links-intro \"7. `find-eev-video'\")
-  (find-video-links-intro \"The default is `find-eevlocal-video', but\")
-
-
-
-7.5. Downloading PDFs
----------------------
-(Obsolete, deleted)
-
-
-
-
-7.6. Saving your settings
--------------------------
-(Obsolete, deleted)
+echo '
+  # Edrx:
+  deb http://deb.debian.org/debian/ bookworm main contrib non-free
+' | sudo tee -a /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install -y emacs-el emacs-common-non-dfsg
+sudo apt-get install -y wget curl
+sudo apt-get install -y mpv
+sudo apt-get install -y xterm xpdf poppler-utils
+sudo apt-get install -y sbcl sbcl-doc sbcl-source
+sudo apt-get install -y maxima gnuplot
+sudo apt-get install -y lua5.1 lua5.1-dev lua5.1-doc
+sudo apt-get install -y lua5.2 lua5.2-dev lua5.2-doc
+sudo apt-get install -y lua5.3 lua5.3-dev
+sudo apt-get install -y lua5.4 lua5.4-dev
+sudo apt-get install -y lua-lpeg lua-lpeg-dev
+sudo apt-get install -y dict dictd dict-foldoc dict-gcide dict-jargon dict-vera dict-wn
+sudo apt-get install -y unicode-data
+sudo apt-get install -y python3 python3-doc
+sudo apt-get install -y tkdiff
+sudo apt-get install -y yt-dlp
+sudo apt-get install -y dctrl-tools
+sudo apt-get install -y lynx
 
 
 
-7.7. Testing your settings
---------------------------
-(Obsolete, deleted)
+
+4. Use eepitch to install Google Chrome
+=======================================
+Run the eepitch block below by typing <f8> on each line.
+Note the comments about errors...
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd /tmp/
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#
+# The \"dpkg -i\" below will give lots of errors:
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+#
+# The \"apt-get install -y -f\" below will fix the errors:
+sudo apt-get install -y -f
 
 
 
-7.8. Saving your settings to your ~/.emacs
-------------------------------------------
-(Obsolete, deleted)
+
+5. Learn the basics of Emacs and eev
+====================================
+The \"basics\" are these sections of the main tutorial,
+
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+
+the two main keys of eev, that are `M-e' and `M-j',
+the hints in the header of `M-j',
+copying and pasting, that is explained here:
+
+  Menu bar -> Edit -> Cut (C-w)
+  Menu bar -> Edit -> Copy (M-w)
+  Menu bar -> Edit -> Paste (C-y)
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+  (find-emacs-keys-intro \"3. Cutting & pasting\")
+
+this method for saving elisp hyperlinks to intros and info pages,
+
+  (find-kl-here-intro \"2. Try it!\")
+  (find-kl-here-intro \"3. Info\")
+  (find-eev-quick-intro \"5. Links to Emacs documentation\")
+  (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
+
+the Emacs keys that are explained in these sections,
+
+  (find-emacs-keys-intro \"4. Moving point\")
+  (find-emacs-keys-intro \"5. Undoing\")
+  (find-emacs-keys-intro \"6. Windows\")
+  (find-emacs-keys-intro \"7. Files and buffers\")
+
+these sections with more on eepitch,
+
+  (find-eev-quick-intro \"6.1. The main key: <F8>\")
+  (find-eev-quick-intro \"6.2. Other targets\")
+  (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+
+and these sections on anchors and short hyperlinks:
+
+  (find-eev-quick-intro \"8.1. Introduction: `to'\")
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+  (find-pdf-like-intro)
+  (find-psne-intro)
 
 
 
-8. Summary
-==========
 
-[Unfinished!!!]
+6. Test Maxima
+==============
+Here is a basic test of Maxima. The link with `find-maximanode' will
+open the manual of Maxima, and the eepitch block will define and plot
+two functions using an external program - GnuPlot. Type `q' on the
+GnuPlot window to close it.
+
+# (find-maximanode \"plot2d\")
+
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+max(2, 4);
+min(2, 4);
+q(t)   := max(0, t-2);
+r(t)   := min(q(t), 2);
+S(x,y) := max(r(x), r(y));
+plot2d (r(t), [t, 0, 6]);
+plot3d (S(x,y), [x, 0, 6], [y, 0, 6]);
 
 
 
+7. Test Maxima with find-wget
+=============================
+This sexp
+
+  (find-angg-es-links)
+
+displays a temporary buffer with instructions for configuring certain
+elisp hyperlinks functions to make them use `find-wget'. Run the second
+progn block in it with `M-e', and then try this:
+
+  (find-es \"maxima\" \"eev-demo\")
+
+
+
+8. Videos
+=========
+This sexp
+
+  (1c)
+
+displays a list of all the \"first-class videos\" of eev. For example,
+this video
+
+  (find-1stclassvideo-links \"2022findeevangg\")
+
+explains the trick with `(find-angg-es-links)' of the previous section.
+Try to understand what each of the elisp hyperlinks below does:
+
+  Play:  (find-2022findeevanggvideo \"10:54\")
+  HSubs: (find-2022findeevangghsubs \"10:54\")
+  Index: (find-1stclassvideo-index \"2022findeevangg\")
+  Info:  (find-1stclassvideo-links \"2022findeevangg\")
+
+This sexp
+
+  (find-2022findeevanggvideo \"10:54\" \"Let me now show something else.\")
+
+plays the local copy of the video if we have a local copy, or shows us a
+temporary buffer with a script that lets us download a local copy. But
+sometimes we just want to read the subtitles of the video; read this
+
+  (find-strange-functions-intro \"1. Introduction: videos\")
+
+to see a way to convert:
+
+      (find-2022findeevanggvideo \"10:54\" \"Let me now show something else.\")
+  to: (find-2022findeevangghsubs \"10:54\" \"Let me now show something else.\")
+
+
+
+
+9. Learn Lisp
+=============
+See:
+  (find-elisp-intro)
+  (find-elisp-intro \"M-7 M-j\")
+  (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
+
+
+
+10. Edit your init file
+=======================
+See:
+  (find-eev-levels-intro \"0. Introduction\")
+  (find-eev-quick-intro \"7.1. `eejump'\")
+  (find-eev-quick-intro \"7.2. The list of eejump targets\")
+  (find-eev-quick-intro \"7.3. Defining eejump targets\")
+  (find-eev-quick-intro \"7.4. Commands with very short names\")
+  (find-eejumps 2 \"eejump-55\")
+
+
+
+[Unfinished!]
 
 " pos-spec-list)))
 
@@ -15541,12 +15212,9 @@ More intros:  (find-eev-quick-intro)
               (find-eepitch-intro)
 This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
-The quickest way to open or recreate this is with `M-x ex',
-but you will need to run this:
-  (defun ex () (interactive) (find-eev-exercises-intro))
 
-
-
+Note: this intro is obsolete!!!
+See: (find-kl-here-intro)
 
 This is part of the material the I prepared for this workshop:
   http://anggtwu.net/2021-workshop.html

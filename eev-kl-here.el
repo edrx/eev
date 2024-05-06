@@ -183,7 +183,7 @@
 ;;;       |_|              |___/ 
 ;;
 ;; This is an hprogram similar to the one used by `find-here-links',
-;; but in this one each :if returns a single sexp (for `kl').
+;; but in this one each `:if' returns a single sexp (for `kl').
 ;; See:
 ;;   (find-here-links-intro "9. The hlang")
 ;;   (find-eev "eev-hlinks.el" "hprog")

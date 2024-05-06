@@ -377,6 +377,7 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
     `(,(ee-template0 "\
 ;; Variants:
 ;; (find-{c}file \"\")
+;; (find-{c}sh   \"find * | sort\")
 ;; (find-{c}sh   \"pwd\")
 ;; (find-{c}sh0  \"pwd\")
 ;; (find-{c}node \"\")

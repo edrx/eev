@@ -4989,7 +4989,7 @@ A \"Maxima message\" is a message in the Maxima mailing list."
 # (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&viewday={day}&style=threaded\" \"Showing\")
 # (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&style=threaded&limit=250\" \"Showing\")
 
-# (find-lynx \"https://sourceforge.net/p/maxima/mailman/message/{n}/\" 75)
+# (find-lynx \"https://sourceforge.net/p/maxima/mailman/message/{n}/\" 80)
 ")))
 
 ;; «find-maximamsg»  (to ".find-maximamsg")
