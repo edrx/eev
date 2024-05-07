@@ -1,3 +1,9 @@
+2024-05-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-lynx): new function.
+
+	* eev-brxxx.el (brlynx, brlynxl, brlynxd): new functions.
+
 2024-05-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-windows-beginner-intro): rewritten.

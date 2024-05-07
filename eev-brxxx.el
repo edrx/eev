@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230719
+;; Version:    20240507
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-brxxx.el>
@@ -383,6 +383,9 @@ This should be made smarter - file:// urls should be returned unchanged."
         (code-brurl 'find-eww      :remote 'breww :local 'brewwl :dired 'brewwd)
 ;; (find-code-brurl 'find-eww      :remote 'brew  :local 'brewl  :dired 'brewd)
         (code-brurl 'find-eww      :remote 'brew  :local 'brewl  :dired 'brewd)
+
+;; (find-code-brurl 'find-lynx  :remote 'brlynx :local 'brlynxl :dired 'brlynxd)
+        (code-brurl 'find-lynx  :remote 'brlynx :local 'brlynxl :dired 'brlynxd)
 
 ;; (find-code-brurl 'find-wget         :remote 'brwget)
         (code-brurl 'find-wget         :remote 'brwget)

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240206
+;; Version:    20240507
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -122,6 +122,7 @@
 ;; «.find-telegachat-msgc»	(to "find-telegachat-msgc")
 ;; «.find-firefox»		(to "find-firefox")
 ;; «.find-googlechrome»		(to "find-googlechrome")
+;; «.find-lynx»			(to "find-lynx")
 ;; «.find-lgrep»		(to "find-lgrep")
 ;; «.find-efunctionlgrep»	(to "find-efunctionlgrep")
 
@@ -549,6 +550,11 @@ also go to that message and highlight it."
 (defvar ee-googlechrome-program "google-chrome")
 (defun find-firefox      (url) (find-bgprocess `(,ee-firefox-program      ,url)))
 (defun find-googlechrome (url) (find-bgprocess `(,ee-googlechrome-program ,url)))
+
+;; «find-lynx»  (to ".find-lynx")
+(defun find-lynx (url &rest pos-spec-list)
+  (apply 'find-callprocess
+	 `("lynx" "-dump" "-width=205" ,url) pos-spec-list))
 
 
 

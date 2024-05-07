@@ -15089,12 +15089,10 @@ and these sections on anchors and short hyperlinks:
 
 6. Test Maxima
 ==============
-Here is a basic test of Maxima. The link with `find-maximanode' will
-open the manual of Maxima, and the eepitch block will define and plot
-two functions using an external program - GnuPlot. Type `q' on the
+Here is a basic test of Maxima. The eepitch block below will define
+three functions in Maxima and then plot two of them using an external
+program - GnuPlot - that uses an external window. Type `q' on the
 GnuPlot window to close it.
-
-# (find-maximanode \"plot2d\")
 
  (eepitch-maxima)
  (eepitch-kill)
@@ -15109,6 +15107,7 @@ plot3d (S(x,y), [x, 0, 6], [y, 0, 6]);
 
 
 
+
 7. Test Maxima with find-wget
 =============================
 This sexp
@@ -15117,9 +15116,15 @@ This sexp
 
 displays a temporary buffer with instructions for configuring certain
 elisp hyperlinks functions to make them use `find-wget'. Run the second
-progn block in it with `M-e', and then try this:
+progn block in it with `M-e', run this `code-c-d' to define
+`find-maximanode',
+
+  (code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
+
+and then try:
 
   (find-es \"maxima\" \"eev-demo\")
+
 
 
 

@@ -3354,8 +3354,10 @@ This function is used by `ee-0x0-upload-region'."
      (find-eev-quick-intro "9. Shorter hyperlinks")
      (find-eev-quick-intro "9.1. `code-c-d'")
      (find-eev-quick-intro "9.2. Extra arguments to `code-c-d'" "to anchors")
-     (find-2022findeevanggvideo "11:30" "(find-angg-es-links)")
-     (find-2022findeevanggvideo "14:12" "the find-wgeta searches for")
+     (find-2022findeevanggvideo "11:29" "(find-angg-es-links)")
+     (find-2022findeevangghsubs "11:29" "(find-angg-es-links)")
+     (find-2022findeevanggvideo "14:06" "the find-wgeta searches for")
+     (find-2022findeevangghsubs "14:06" "the find-wgeta searches for")
      ""
      ,(ee-template0 "\
 
