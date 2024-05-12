@@ -1,5 +1,8 @@
 2024-05-12  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-blinks.el (ee-buffer-local-variables): use
+	`buffer-local-variables'.
+
 	* eev-tlinks.el (find-subed-mpv-links): new function.
 
 	* eev-testblocks.el (ee-insert-test-subed-vtt-mode): new function.

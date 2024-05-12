@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240308
+;; Version:    20240512
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1585,8 +1585,7 @@ Example: (find-ekeymapdescr (ee-minor-mode-keymap 'eev-mode))"
 
 (defun ee-buffer-local-variables ()
   "Like `(buffer-local-variables)', but sorts the entries alphabetically."
-  (sort (buffer-local-variables)
-	(lambda (a b) (string< (car a) (car b)))))
+  (ee-sort-pairs (buffer-local-variables)))
 
 ;; Broken? See: (find-efile "international/ccl.el")
 (defun find-eccldump (ccl-code &rest pos-spec-list)

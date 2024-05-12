@@ -5255,21 +5255,24 @@ print({funname}(42))
 
 
 ;; «find-subed-mpv-links»  (to ".find-subed-mpv-links")
-;; Skel: (find-find-links-links-new "subed-mpv" "" "")
+;; Skel: (find-find-links-links-new "subed-mpv" "emacs-width" "ee-buffer-name")
 ;; Test: (find-subed-mpv-links)
 ;;
-(defun find-subed-mpv-links (&rest pos-spec-list)
+
+(defun find-subed-mpv-links (&optional emacs-width &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for subed-mpv."
   (interactive)
-  (apply
-   'find-elinks
-   `((find-subed-mpv-links ,@pos-spec-list)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-subed-mpv-links)
-     (find-efunction 'ee-insert-test-subed-vtt-mode)
-     (find-eevfile "eev-testblocks.el" "ee-insert-test-subed-vtt-mode")
-     ""
-     ,(ee-template0 "\
+  (setq emacs-width (or emacs-width 140))
+  (let* ((ee-buffer-name "{ee-buffer-name}"))
+    (apply
+     'find-elinks
+     `((find-subed-mpv-links ,emacs-width ,@pos-spec-list)
+       (find-subed-mpv-links "{emacs-width}")
+       (find-efunction 'find-subed-mpv-links)
+       (find-efunction 'ee-insert-test-subed-vtt-mode)
+       (find-eevfile "eev-testblocks.el" "ee-insert-test-subed-vtt-mode")
+       ""
+       ,(ee-template0 "\
 
 1. Get the video
 ================
@@ -5330,21 +5333,25 @@ To load subed from another place, skip the
 
 4. A test block in a .vtt
 =========================
-If everything is right then opening the \"a.vtt\" below with
-the fourth sexp below will put it in subed-vtt-mode. To turn
-`subed-auto-find-video' on or off, run one of the `setq's.
+If everything is right then opening the \"a.vtt\" with the
+last sexp below will put it in subed-vtt-mode. Many of the
+sexps below are optional.
 
-  (setq subed-auto-find-video t)
-  (setq subed-auto-find-video nil)
-  (find-fline \"/tmp/subed-test/\")
-  (find-fline \"/tmp/subed-test/a.vtt\")
+ (setq subed-auto-find-video t)
+ (setq subed-auto-find-video nil)
+ (setq subed-mpv-arguments '(\"--osd-level=2\" \"--geometry=320x200-0+0\"))
+ (set-frame-parameter (selected-frame) 'fullscreen 'fullheight)
+ (set-frame-position (selected-frame) 0 0)
+ (set-frame-parameter (selected-frame) 'width {emacs-width})
+ (find-fline \"/tmp/subed-test/\")
+ (find-fline \"/tmp/subed-test/a.vtt\")
 
 Typing `M-x eeit' between two subtitles will insert a big test block
 in the .vtt. To run that test block, just type <f8>s on its red star
 lines.
 ")
      )
-   pos-spec-list))
+   pos-spec-list)))
 
 
 
