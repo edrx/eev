@@ -5258,12 +5258,11 @@ print({funname}(42))
 ;; Skel: (find-find-links-links-new "subed-mpv" "emacs-width" "ee-buffer-name")
 ;; Test: (find-subed-mpv-links)
 ;;
-
 (defun find-subed-mpv-links (&optional emacs-width &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for subed-mpv."
   (interactive)
   (setq emacs-width (or emacs-width 140))
-  (let* ((ee-buffer-name "{ee-buffer-name}"))
+  (let* ((ee-buffer-name "*find-subed-mpv-links*"))
     (apply
      'find-elinks
      `((find-subed-mpv-links ,emacs-width ,@pos-spec-list)
@@ -5271,6 +5270,7 @@ print({funname}(42))
        (find-efunction 'find-subed-mpv-links)
        (find-efunction 'ee-insert-test-subed-vtt-mode)
        (find-eevfile "eev-testblocks.el" "ee-insert-test-subed-vtt-mode")
+       "# http://anggtwu.net/2024-find-subed-mpv-links.html"
        ""
        ,(ee-template0 "\
 

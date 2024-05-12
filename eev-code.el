@@ -343,6 +343,9 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 ;;;                                                 
 ;; «code-c-d-s» (to ".code-c-d-s")
 ;; Some default `code-c-d's (debian-centric).
+;; Tests: (ee-locate-library "eev-code.el")
+;;        (ee-locate-library "loadup.el")
+;;        (ee-locate-library "leim-list.el")
 
 (defun ee-locate-library (fname)
   (if (locate-library fname)
