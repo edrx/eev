@@ -1,6 +1,6 @@
 ;;; eev-testblocks.el - create "test blocks" using multiline comments.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2019-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231214
+;; Version:    20240512
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -392,6 +392,55 @@ use \"%s\";
 
 %%%%%%%%%%
 " (buffer-name)))))
+
+(defun ee-insert-test-subed-vtt-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (ee-expand "
+NOTE
+ Set `subed-mpv-media-file'
+ ==========================
+       subed-mpv-media-file
+                            (subed-guess-media-file)
+ (setq subed-mpv-media-file (subed-guess-media-file))
+       subed-mpv-media-file
+
+ Start mpv, check the socket
+ ===========================
+ (find-sh0 \"rm -Rfv /tmp/subed/\")
+  subed-mpv-socket-dir
+ (subed-mpv--play subed-mpv-media-file)
+ (subed-mpv--socket)
+ (find-sh0 \"ls -lAF /tmp/subed/\")
+
+ Send commands to the socket
+ ===========================
+ (find-subedsgrep \"grep --color=auto -nH --null -e subed-mpv--client-send *.el\")
+ (subed-mpv--client-send `(set_property pause no))
+ (subed-mpv--client-send `(set_property pause yes))
+ (subed-mpv--client-send `(seek  10 relative+exact)))
+ (subed-mpv--client-send `(seek -10 relative+exact)))
+
+ Examine some local variables
+ ============================
+ (find-ebufferlocalvars \"\\n (subed\")
+ (find-eaproposf \"subed-mpv\")
+ (find-eaproposv \"subed-mpv\")
+ subed-mpv--client-command-queue
+ subed-mpv--client-proc
+ subed-mpv--client-test-request
+ subed-mpv--retry-delays
+ subed-mpv--server-proc
+ subed-mpv-arguments
+ subed-mpv-executable
+ subed-mpv-file-loaded-hook
+ subed-mpv-frame-step-map
+ subed-mpv-is-playing
+ subed-mpv-media-file
+ subed-mpv-playback-position
+ subed-mpv-playback-position-hook
+ subed-mpv-playback-speed
+ subed-mpv-socket-dir
+"))))
 
 (defun ee-insert-test-tcl-mode ()
   (interactive)

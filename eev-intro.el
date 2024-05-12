@@ -1570,9 +1570,13 @@ files.
 See also: (find-code-c-d-intro)
 
 [Video links:]
+  (find-eev2020hsubs \"08:18\" \"`code-c-d' defines several new functions\")
   (find-eev2020video \"08:18\" \"`code-c-d' defines several new functions\")
+  (find-eev2020hsubs \"14:43\" \"1.4. How code-c-d is implemented\")
   (find-eev2020video \"14:43\" \"1.4. How code-c-d is implemented\")
+  (find-eev2020hsubs \"17:20\"   \"find-code-c-d shows the code...\")
   (find-eev2020video \"17:20\"   \"find-code-c-d shows the code...\")
+  (find-eev2019hsubs \"17:02\" \"Demo: `code-c-d'\")
   (find-eev2019video \"17:02\" \"Demo: `code-c-d'\")
 
 

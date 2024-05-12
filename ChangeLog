@@ -1,3 +1,9 @@
+2024-05-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-subed-mpv-links): new function.
+
+	* eev-testblocks.el (ee-insert-test-subed-vtt-mode): new function.
+
 2024-05-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (find-lynx): new function.
