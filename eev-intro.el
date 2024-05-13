@@ -569,10 +569,15 @@ creates this buffer, and switches to it:
 
 
 [Video links:]
+  (find-eev2020hsubs \"29:38\" \"2. A tale of two `describe-key's\")
   (find-eev2020video \"29:38\" \"2. A tale of two `describe-key's\")
+  (find-eev2020hsubs \"31:31\"   \"the problem with the standard `describe-key'\")
   (find-eev2020video \"31:31\"   \"the problem with the standard `describe-key'\")
+  (find-eev2020hsubs \"35:07\"   \"My variant: `find-ekey-links'\")
   (find-eev2020video \"35:07\"   \"My variant: `find-ekey-links'\")
+  (find-eev2020hsubs \"37:00\"   \"how `find-ekey-links' generates its links\")
   (find-eev2020video \"37:00\"   \"how `find-ekey-links' generates its links\")
+  (find-eev2020hsubs \"37:14\"   \"hacker-friendly in the way that I wanted\")
   (find-eev2020video \"37:14\"   \"hacker-friendly in the way that I wanted\")
 
 
@@ -896,11 +901,17 @@ For more details see:
   (find-wrap-intro \"2. <M-T>: produce an eepitch block\")
 
 [Video links:]
-  (find-eevnavvideo \"10:36\" \"if I type <f8> six times here\")
-  (find-eevnavvideo \"10:49\" \"a shell running inside Emacs\")
+  (find-eevnavhsubs  \"10:36\" \"if I type <f8> six times here\")
+  (find-eevnavvideo  \"10:36\" \"if I type <f8> six times here\")
+  (find-eevnavhsubs  \"10:49\" \"a shell running inside Emacs\")
+  (find-eevnavvideo  \"10:49\" \"a shell running inside Emacs\")
+  (find-eev2021hsubs \"00:14\" \"and if we type f8 several times here\")
   (find-eev2021video \"00:14\" \"and if we type f8 several times here\")
-  (find-eev2019video \"15:13\" \"Demo: the eepitch block (in red star lines)\")
+  (find-eev2019hsubs \"15:13\" \"the alternative to `M-x eev'\")
+  (find-eev2019video \"15:13\" \"the alternative to `M-x eev'\")
+  (find-eev2019hsubs \"15:48\" \"Demo: eepitch on non-red star lines\")
   (find-eev2019video \"15:48\" \"Demo: eepitch on non-red star lines\")
+  (find-eev2019hsubs \"15:58\" \"Demo: eepitch in action\")
   (find-eev2019video \"15:58\" \"Demo: eepitch in action\")
 
 
@@ -1054,12 +1065,19 @@ star, but to make that work you need to know a bit of Lisp. See:
 7. Quick access to one-liners
 =============================
 [Video links:]
+  (find-eevnavhsubs \"06:29\" \"M-j: you can forget practically everything...\")
   (find-eevnavvideo \"06:29\" \"M-j: you can forget practically everything...\")
+  (find-eevnavhsubs \"06:41\" \"if you type just M-j\")
   (find-eevnavvideo \"06:41\" \"if you type just M-j\")
+  (find-eevnavhsubs \"06:49\" \"has a header that is beginner-friendly\")
   (find-eevnavvideo \"06:49\" \"has a header that is beginner-friendly\")
+  (find-eevnavhsubs \"08:45\" \"most of the entries have hyperlinks to the manual\")
   (find-eevnavvideo \"08:45\" \"most of the entries have hyperlinks to the manual\")
+  (find-eevnavhsubs \"09:49\" \"M-j with numeric prefixes\")
   (find-eevnavvideo \"09:49\" \"M-j with numeric prefixes\")
+  (find-eevnavhsubs \"09:59\" \"M-2 M-j runs (find-emacs-keys-intro)\")
   (find-eevnavvideo \"09:59\" \"M-2 M-j runs (find-emacs-keys-intro)\")
+  (find-eevnavhsubs \"10:06\" \"M-5 M-j runs (find-eev-quick-intro)\")
   (find-eevnavvideo \"10:06\" \"M-5 M-j runs (find-eev-quick-intro)\")
 
 
@@ -1384,11 +1402,16 @@ the other ones are similar.
 8. Anchors
 ==========
 [Video links:]
+  (find-eevfherelhsubs \"14:18\" \"4.1. Creating anchors\")
   (find-eevfherelvideo \"14:18\" \"4.1. Creating anchors\")
+  (find-eevfherelhsubs \"15:22\"  \"an index at the beginning of the file\")
   (find-eevfherelvideo \"15:22\"  \"an index at the beginning of the file\")
-  (find-eevfherelvideo \"15:47\"  \"the tutorial also explains ... `M-A'\")
-  (find-eevfherelvideo \"16:07\"  \"`M-A' duplicates the line and...\")
-  (find-eevfherelvideo \"16:19\"  \"`M-B' creates an e-script block\")
+  (find-eevfherelhsubs \"15:48\"  \"the tutorial also explains ... `M-A'\")
+  (find-eevfherelvideo \"15:48\"  \"the tutorial also explains ... `M-A'\")
+  (find-eevfherelhsubs \"16:06\"  \"`M-A' duplicates the line and...\")
+  (find-eevfherelvideo \"16:06\"  \"`M-A' duplicates the line and...\")
+  (find-eevfherelhsubs \"16:15\"  \"`M-B' creates an e-script block\")
+  (find-eevfherelvideo \"16:15\"  \"`M-B' creates an e-script block\")
 
 
 8.1. Introduction: `to'
@@ -1558,6 +1581,7 @@ section 9.2 - to point to anchors or to e-script blocks in your
 files.
 
 [Video links:]
+  (find-eevfherelhsubs \"17:02\" \"4.2. The option :anchor for `code-c-d'\")
   (find-eevfherelvideo \"17:02\" \"4.2. The option :anchor for `code-c-d'\")
 
 
@@ -1576,8 +1600,8 @@ See also: (find-code-c-d-intro)
   (find-eev2020video \"14:43\" \"1.4. How code-c-d is implemented\")
   (find-eev2020hsubs \"17:20\"   \"find-code-c-d shows the code...\")
   (find-eev2020video \"17:20\"   \"find-code-c-d shows the code...\")
-  (find-eev2019hsubs \"17:02\" \"Demo: `code-c-d'\")
-  (find-eev2019video \"17:02\" \"Demo: `code-c-d'\")
+  (find-eev2019hsubs \"17:05\" \"Demo: `code-c-d'\")
+  (find-eev2019video \"17:05\" \"Demo: `code-c-d'\")
 
 
 
@@ -1717,7 +1741,9 @@ some string in it...
   (find-pdf-text \"~/Coetzee99.pdf\" 3 \"LECTURE I\")
 
 [Video links:]
+  (find-eev2020hsubs \"04:51\" \"`find-pdf-page' calls an external program\")
   (find-eev2020video \"04:51\" \"`find-pdf-page' calls an external program\")
+  (find-eev2020hsubs \"05:26\" \"`find-pdf-text' converts the PDF to text and\")
   (find-eev2020video \"05:26\" \"`find-pdf-text' converts the PDF to text and\")
 
 
@@ -3295,7 +3321,9 @@ easy to \"play back\" later, step by step and in any order. We
 call these executable logs, or executable notes, \"e-scripts\".
 
 [Video links:]
-  (find-eev2019video \"5:41\" \"e-scripts\")
+  (find-eev2019hsubs \"05:24\" \"e-scripts\")
+  (find-eev2019video \"05:24\" \"e-scripts\")
+  (find-eev2019hsubs \"12:54\" \"A demo\")
   (find-eev2019video \"12:54\" \"A demo\")
 
 
@@ -3503,10 +3531,14 @@ Note that `M-h M-1' undoes what `M-h M-3' did. In a figure:
 
 
 [Video links:]
-  (find-eevfherelvideo \"4:40\" \"2. The beginner's way\")
-  (find-eevfherelvideo \"4:40\" \"2.1. The 3-window setting - and going back from it\")
-  (find-eevfherelvideo \"6:47\"  \"`M-h M-3': three windows; `M-h M-1' goes back\")
-  (find-eevfherelvideo \"7:29\"  \"the original configuration can be anything\")
+  (find-eevfherelhsubs \"04:40\" \"2. The beginner's way\")
+  (find-eevfherelvideo \"04:40\" \"2. The beginner's way\")
+  (find-eevfherelhsubs \"04:40\" \"2.1. The 3-window setting - and going back from it\")
+  (find-eevfherelvideo \"04:40\" \"2.1. The 3-window setting - and going back from it\")
+  (find-eevfherelhsubs \"06:47\"  \"`M-h M-3': three windows; `M-h M-1' goes back\")
+  (find-eevfherelvideo \"06:47\"  \"`M-h M-3': three windows; `M-h M-1' goes back\")
+  (find-eevfherelhsubs \"07:26\"  \"the original configuration can be anything\")
+  (find-eevfherelvideo \"07:26\"  \"the original configuration can be anything\")
 
 
 
@@ -3540,7 +3572,8 @@ the one with the key sequences described here:
   (find-eev-quick-intro \"5.2. Cutting and pasting\")
 
 [Video links:]
-  (find-eevfherelvideo \"8:56\" \"2.2. Copying one link\")
+  (find-eevfherelvideo \"08:56\" \"2.2. Copying one link\")
+  (find-eevfherelvideo \"08:56\" \"2.2. Copying one link\")
 
 
 
@@ -3840,10 +3873,14 @@ If you want to add support for more complex pos-spec-lists, just
 replace `ee-goto-rest' with your own extended version.
 
   [Video links:]
-    (find-eev2019video \"1:08\" \"a string to search for\")
-    (find-eev2020video \"2:25\" \"variants that were better behaved\")
-    (find-eev2020video \"2:36\" \"in the same window\")
-    (find-eev2020video \"2:53\" \"pos-spec-lists\")
+    (find-eev2019hsubs \"01:45\" \"a string to search for\")
+    (find-eev2019video \"01:45\" \"a string to search for\")
+    (find-eev2020hsubs \"02:23\" \"variants that were better behaved\")
+    (find-eev2020video \"02:23\" \"variants that were better behaved\")
+    (find-eev2020hsubs \"02:36\" \"in the same window\")
+    (find-eev2020video \"02:36\" \"in the same window\")
+    (find-eev2020hsubs \"02:52\" \"pos-spec-lists\")
+    (find-eev2020video \"02:52\" \"pos-spec-lists\")
 
 
 
@@ -3897,10 +3934,12 @@ based on `C-y' (`yank'),
   (find-enode \"Yanking\")
 
 but `M-h M-y' \"yanks\" the text at the end of the sexp, in
-quotes, as an new argument.
+quotes, as a new argument.
 
   [Video links:]
-    (find-eevfherelvideo \"10:30\" \"2.3. Duplicating and refining\")
+    (find-eevfherelhsubs \"10:31\" \"2.3. Duplicating and refining\")
+    (find-eevfherelvideo \"10:31\" \"2.3. Duplicating and refining\")
+    (find-eevfherelhsubs \"10:53\"  \"as a string at the end of the sexp\")
     (find-eevfherelvideo \"10:53\"  \"as a string at the end of the sexp\")
 
 
@@ -3963,8 +4002,10 @@ sequence intended for beginners. I prefer to use something like
 `C-a shift-<down> M-w'.
 
   [Video links:]
-    (find-eevfherelvideo \"12:35\" \"3. Using a single window\")
-    (find-eevfherelvideo \"13:19\"  \"go back usually by using\")
+    (find-eevfherelhsubs \"12:36\" \"3. Using a single window\")
+    (find-eevfherelvideo \"12:36\" \"3. Using a single window\")
+    (find-eevfherelhsubs \"13:21\"  \"go back usually by using\")
+    (find-eevfherelvideo \"13:21\"  \"go back usually by using\")
 
 
 
@@ -4045,9 +4086,12 @@ The big figure below shows all the key sequences:
 
 
 [Video links:]
-  (find-eevfherelvideo  \"8:56\" \"2.2. Copying one link\")
-  (find-eevfherelvideo \"10:10\"  \"when people know a few more keys... C-w and M-w\")
-  (find-eevfherelvideo \"10:21\"  \"that correspond to Cut, Copy, and Paste\")
+  (find-eevfherelhsubs \"08:56\" \"2.2. Copying one link\")
+  (find-eevfherelvideo \"08:56\" \"2.2. Copying one link\")
+  (find-eevfherelhsubs \"10:09\"  \"when people know a few more keys... C-w and M-w\")
+  (find-eevfherelvideo \"10:09\"  \"when people know a few more keys... C-w and M-w\")
+  (find-eevfherelhsubs \"10:22\"  \"that correspond to Cut, Copy, and Paste\")
+  (find-eevfherelvideo \"10:22\"  \"that correspond to Cut, Copy, and Paste\")
 
 
 
@@ -6454,7 +6498,8 @@ For a good visual introduction to eepitch, see this page:
   http://anggtwu.net/eepitch.html
 
 My video for the EmacsConf2019 has a simple demo of eepitch:
-  (find-eev2019video \"15:56\")
+  (find-eev2019hsubs \"15:38\")
+  (find-eev2019video \"15:38\")
   https://www.youtube.com/watch?v=86yiRG8YJD0&t=956
   http://anggtwu.net/emacsconf2019.html
 

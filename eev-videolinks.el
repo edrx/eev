@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240307
+;; Version:    20240513
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -417,8 +417,10 @@ of the videos and play them with mpv. Compare with
      :mp4   "http://anggtwu.net/eev-videos/2020-find-here-links.mp4"
      :yt    "http://www.youtube.com/watch?v=8jtiBlaDor4"
      :page  "http://anggtwu.net/2020-find-here-links.html"
+     :hsubs "http://anggtwu.net/2020-find-here-links.html#0:00"
      :date    "2020dec26"
      :length  "24:08"
+     :subs    ".vtt"
      :index   t
      :comment "A badly-rehearsed tutorial on an advanced feature.")
     ;;
