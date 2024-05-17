@@ -1391,9 +1391,18 @@ the other ones are similar.
   execute the three defuns for `c', `d', and `e', and jump to
   \"/tmp/foo.tex\" from anywhere with `M-x e'.
 
-  A detailed explanation of `ee-copy-rest' can be found here:
+  For more on `ee-copy-rest', and on its successor, `ee-copy-rest-3', see:
 
     (find-eev \"eev-tlinks.el\" \"ee-copy-rest\")
+    (find-eev \"eev-tlinks.el\" \"ee-copy-rest-3-intro\")
+    (find-eev \"eev-tlinks.el\" \"ee-copy-rest-3-tests\")
+
+[Video links:]
+  (find-2021ffllhsubs \"10:59\" \"Pay attention to all these {stem}s here\")
+  (find-2021ffllvideo \"10:59\" \"Pay attention to all these {stem}s here\")
+  (find-2024luasohsubs \"06:31\" \"ee-copy-rest copies the rest to\")
+  (find-2024luasovideo \"06:31\" \"ee-copy-rest copies the rest to\")
+
 
 
 

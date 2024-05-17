@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240512
+;; Version:    20240517
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -80,6 +80,9 @@
 
 
 ;; «.ee-copy-rest»			(to "ee-copy-rest")
+;; «.ee-copy-rest-3-intro»		(to "ee-copy-rest-3-intro")
+;; «.ee-copy-rest-3-tests»		(to "ee-copy-rest-3-tests")
+;; «.ee-copy-rest-3»			(to "ee-copy-rest-3")
 ;;
 ;; «.find-find-links-links»		(to "find-find-links-links")
 ;; «.find-find-links-links-new»		(to "find-find-links-links-new")
@@ -259,7 +262,7 @@
 ;;
 ;; TO DO: update the decumentation here:
 ;;   (find-eev-quick-intro "7.5. `find-latex-links'")
-;;   (find-links-intro "10. The rest of the buffer")
+;;   (find-links-intro "7. The rest of the buffer")
 
 (defvar eeflash-copy '(highlight 0.5))
 
@@ -330,6 +333,102 @@ notion of \"the rest of this buffer\": it will be everything from
 ;;   "Copy into the kill ring everything from NLINES down on, and run CODE.
 ;; The target of the hyperlink in CODE is opened in the right-side window."
 ;;   (ee-copy-after-and nlines `(find-2b nil ',code)))
+
+
+
+;;;                                                            _       _____ 
+;;;   ___  ___        ___ ___  _ __  _   _       _ __ ___  ___| |_    |___ / 
+;;;  / _ \/ _ \_____ / __/ _ \| '_ \| | | |_____| '__/ _ \/ __| __|____ |_ \ 
+;;; |  __/  __/_____| (_| (_) | |_) | |_| |_____| | |  __/\__ \ ||_____|__) |
+;;;  \___|\___|      \___\___/| .__/ \__, |     |_|  \___||___/\__|   |____/ 
+;;;                           |_|    |___/                                   
+;;
+;; «ee-copy-rest-3-intro»  (to ".ee-copy-rest-3-intro")
+;; `ee-copy-rest-3' is a variant of `ee-copy-rest' that receives three
+;; arguments: where the region starts, where the region ends, and
+;; where it should be copied to. Its code is be much easier to
+;; understand than the code of `ee-copy-rest', and it is very
+;; flexible:
+;;
+;;   1a) "where the region starts" is usually a number of lines to skip,
+;;   1b) "where the region ends" is usually a string to search for,
+;;   1c) "where it should be copied to" is usually a sexp, like:
+;;         (find-fline "/tmp/foo.tex")
+;;
+;; The three arguments are called `skip', `gotoend', and `target',
+;; and they are expanded by the functions `ee-copy-rest-skip0',
+;; `ee-copy-rest-gotoend0', and `ee-copy-rest-showtarget0' into
+;; code that can be `eval'ed. These functions support some
+;; shorthands:
+;;
+;;   2a) when `skip' is nil this means "start on the next line",
+;;   2b) when `gotoend' is nil this means "until the end of the buffer",
+;;   2c) when `target' is a string this means a file with that name.
+;;
+;; «ee-copy-rest-3-tests»  (to ".ee-copy-rest-3-tests")
+;; Try these low-level tests:
+;;
+;;                (ee-copy-rest-skip0 nil)
+;;          (eval (ee-copy-rest-skip0 nil))
+;;                (ee-copy-rest-skip0 1)
+;;                (ee-copy-rest-skip0 2)
+;;          (eval (ee-copy-rest-skip0 2))
+;;                (ee-copy-rest-gotoend0 nil)
+;;                (ee-copy-rest-gotoend0 "find-2a")
+;;          (eval (ee-copy-rest-gotoend0 "find-2a"))
+;;                (ee-copy-rest-showtarget0 '(find-ebuffer "buf"))
+;;                (ee-copy-rest-showtarget0 "/tmp/o")
+;;   (find-2a nil (ee-copy-rest-showtarget0 "/tmp/o"))
+;;
+;; and these high-level tests:
+;;
+;;   (ee-copy-rest-3 3   ";; \ END" '(find-ebuffer "b"))
+;;   (ee-copy-rest-3 2   ";; \ END" "/tmp/o")
+;;   (ee-copy-rest-3 1   ";; \ END" "/tmp/o")
+;;   (ee-copy-rest-3 nil ";; \ END" "/tmp/o")
+;;     foo
+;;     bar
+;; END
+
+;; «ee-copy-rest-3»  (to ".ee-copy-rest-3")
+;;
+(defun ee-copy-rest-skip0 (&optional skip)
+  "An internal function used by `ee-copy-rest-3'."
+  (cond ((null    skip) '(move-beginning-of-line 2))
+        ((numberp skip) `(move-beginning-of-line (+ 2 ,skip)))
+	(t              skip)))
+
+(defun ee-copy-rest-gotoend0 (&optional end)
+  "An internal function used by `ee-copy-rest-3'."
+  (cond ((null end)    '(end-of-buffer))
+	((stringp end) `(progn (search-forward ,end) (search-backward ,end)))
+	t              end))
+
+(defun ee-copy-rest-showtarget0 (target)
+  "An internal function used by `ee-copy-rest-3'."
+  (cond ((stringp target) `(find-fline ,target))
+	(t                target)))
+
+(defun ee-copy-rest-3 (skip gotoend target)
+  "Copy the region between SKIP and GOTOEND to the kill ring and SHOWTARGET.
+SKIP       is either nil, a number of lines to skip, or a sexp.
+GOTOEND    is either nil, a string to search for, or a sexp.
+SHOWTARGET is either a filename or a sexp to be used in a `find-2a'.\n
+See the tests in the comments to understand the details."
+  (save-excursion
+    (let* ((start (progn (eval (ee-copy-rest-skip0    skip))    (point)))
+	   (end   (progn (eval (ee-copy-rest-gotoend0 gotoend)) (point)))
+	   (show  (ee-copy-rest-showtarget0 target))
+	   (str   (buffer-substring start end))
+	   (len   (ee-count-lines str))
+	   (msg   `(Copied ,len lines to the kill ring - use C-y to paste)))
+    (eeflash+ start end eeflash-copy)
+    (kill-new str)
+    (find-2a nil show)
+    msg)))
+
+
+
 
 
 

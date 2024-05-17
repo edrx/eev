@@ -1,3 +1,13 @@
+2024-05-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): indicate that the
+	video "2021ffll" now has subtitles.
+
+	* eev-tlinks.el (ee-copy-rest-skip0, ee-copy-rest-gotoend0)
+	(ee-copy-rest-showtarget0, ee-copy-rest-3): new functions.
+
+	* eev-intro.el (find-eev-quick-intro): mention `ee-copy-rest-3'.
+
 2024-05-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el: add variants - that end in "hsubs", and that point
