@@ -1,3 +1,8 @@
+2024-05-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): added a line saying
+	"The quickest way to open or recreate this is with `M-3 M-j'".
+
 2024-05-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-videolinks.el (ee-1stclassvideos-info): indicate that the
