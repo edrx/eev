@@ -1,3 +1,21 @@
+2024-05-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-dot-emacs-intro): major rewrite.
+	(find-eev-intro): added `(find-debootstrap-intro)' and
+	`(find-lean4-intro)'.
+
+	* eev-blinks.el (find-estring-2a): new function.
+
+	* eev-tlinks.el (ee-debootstrap0-pkgs-a, ee-debootstrap0-pkgs-b):
+	new variables.
+	(find-debootstrap0-links, ee-debootstrap0, ee-debootstrap1)
+	(find-debootstrap1-links, find-debootstrap2-links): new functions.
+
+2024-05-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-debootstrap-intro, find-lean4-intro): new
+	functions.
+
 2024-05-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-windows-beginner-intro): added a line saying

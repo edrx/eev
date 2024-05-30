@@ -25,8 +25,8 @@
 ;; Latest version: <http://anggtwu.net/eev-current/eev-rstdoc.el>
 ;;       htmlized: <http://anggtwu.net/eev-current/eev-rstdoc.el.html>
 ;;       See also: <http://anggtwu.net/eev-current/eev-beginner.el.html>
-;;                 <http://anggtwu.net/eev-intros/find-eev-intro.html>
-;;                                                (find-eev-intro)
+;;                 <http://anggtwu.net/eev-intros/find-rstdoc-intro.html>
+;;                                               (find-rstdoc-intro)
 
 ;; «.introduction»		(to "introduction")
 ;; «.default-defvars»		(to "default-defvars")

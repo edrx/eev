@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240512
+;; Version:    20240530
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -833,6 +833,9 @@ CODE argument, and process the POS-SPEC-LIST."
   (apply 'ee-goto-position pos-spec-list))
 
 ;; «find-estring»  (to ".find-estring")
+;; Tests: (find-2a nil '(find-estring       ";; Foo\n(+ 1 2)\n"))
+;;        (find-2a nil '(find-estring-elisp ";; Foo\n(+ 1 2)\n"))
+;;        (find-estring-2a                  ";; Foo\n(+ 1 2)\n")
 ;;
 (defun find-estring (string &rest pos-spec-list)
   "Visit a temporary buffer whose contents are given by STR.
@@ -849,6 +852,11 @@ This function is similar to `find-estring', but this one also
 runs `emacs-lisp-mode' in the buffer."
   (apply 'find-eoutput-rerun (or ee-buffer-name "*string*")
 	 `(progn (insert ,string) (emacs-lisp-mode)) pos-spec-list))
+
+(defun find-estring-2a (str &rest pos-spec-list)
+  "Show STR in the window at the right."
+  (find-2a nil `(find-estring str ,@pos-spec-list)))
+
 
 
 

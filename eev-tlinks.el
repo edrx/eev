@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240517
+;; Version:    20240530
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -185,6 +185,11 @@
 ;; «.find-luainit-links»		(to "find-luainit-links")
 ;; «.find-luaso-links»			(to "find-luaso-links")
 ;; «.find-subed-mpv-links»		(to "find-subed-mpv-links")
+;; «.find-debootstrap0-links»		(to "find-debootstrap0-links")
+;;   «.ee-debootstrap0»			(to "ee-debootstrap0")
+;; «.find-debootstrap1-links»		(to "find-debootstrap1-links")
+;;   «.ee-debootstrap1»			(to "ee-debootstrap1")
+;; «.find-debootstrap2-links»		(to "find-debootstrap2-links")
 
 
 (require 'eev-env)
@@ -4646,6 +4651,8 @@ du -ch
 
 # (find-fline     \"/tmp/wget-recursive/\")
 # (find-sh-at-dir \"/tmp/wget-recursive/\" \"find * | sort\")
+# (find-fline     \"{lurl}\")
+# (find-sh \"rm -Rv {lurl}\")
 
 cd     /tmp/wget-recursive/
 tar              -cvf /tmp/wget-recursive.tar .
@@ -5452,6 +5459,235 @@ lines.
      )
    pos-spec-list)))
 
+
+
+;;;      _      _                 _       _                   
+;;;   __| | ___| |__   ___   ___ | |_ ___| |_ _ __ __ _ _ __  
+;;;  / _` |/ _ \ '_ \ / _ \ / _ \| __/ __| __| '__/ _` | '_ \ 
+;;; | (_| |  __/ |_) | (_) | (_) | |_\__ \ |_| | | (_| | |_) |
+;;;  \__,_|\___|_.__/ \___/ \___/ \__|___/\__|_|  \__,_| .__/ 
+;;;                                                    |_|    
+;; See: (find-debootstrap-intro)
+
+;; «find-debootstrap0-links»  (to ".find-debootstrap0-links")
+;; Skel: (find-find-links-links-new "debootstrap0" "container n" "ee-buffer-name")
+;; Test: (find-debootstrap0-links)
+;;
+(defun find-debootstrap0-links (&optional container n &rest pos-spec-list)
+"See: (find-debootstrap-intro)"
+  (interactive)
+  (setq container (or container "subdebian"))
+  (setq n         (or n         "0"))
+  (let* ((ee-buffer-name "*find-debootstrap0-links*"))
+    (apply
+     'find-elinks
+     `((find-debootstrap0-links ,container ,n ,@pos-spec-list)
+       (find-debootstrap0-links "{container}" "{n}")
+       (find-debootstrap0-links)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-debootstrap0-links)
+       ""
+       ,(ee-debootstrap0 container n)
+       ,(ee-template0 "\
+")
+       )
+     pos-spec-list)))
+
+(defvar ee-debootstrap0-pkgs-a
+  "systemd,dbus,sudo,openssh-server,xauth,xterm")
+
+(defvar ee-debootstrap0-pkgs-b
+  "psmisc")
+
+
+;; «ee-debootstrap0»  (to ".ee-debootstrap0")
+;; Tests: (find-estring-2a (ee-debootstrap0 "subdebian" "0"))
+;;        (find-estring-2a (ee-debootstrap0 "{container}" "{n}"))
+;;
+(defun ee-debootstrap0 (&optional container n)
+  "An internal function used by `find-debootstrap0-links'."
+  (setq container (or container "subdebian"))
+  (setq n         (or n         "0"))
+  (ee-template0 "\
+ From: (find-estring-2a (ee-debootstrap0 \"{container}\" \"{n}\"))
+ See: https://wiki.debian.org/nspawn#Host_Preparation
+
+ (sh-mode)
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+sudo bash
+  echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/nspawn.conf
+  systemctl restart systemd-sysctl.service
+exit
+
+ Create a /var/lib/machines/{container}/ with debootstrap.
+ This takes several minutes.
+
+ (eepitch-shell3)
+ (eepitch-kill)
+ (eepitch-shell3)
+sudo ls -lAFh /var/lib/machines/
+sudo rm -Rf   /var/lib/machines/{container}/
+sudo debootstrap \\
+  --include={ee-debootstrap0-pkgs-a},{ee-debootstrap0-pkgs-b} \\
+  stable /var/lib/machines/{container}
+
+ Save /var/lib/machines/{container}/ into {container}{n}.tar.
+ This is very quick.
+
+sudo ls -lAFh /var/lib/machines/
+sudo du -ch   /var/lib/machines/
+sudo machinectl export-tar {container} /var/lib/machines/{container}{n}.tar
+sudo ls -lAFh /var/lib/machines/
+
+"))
+
+
+;; «ee-debootstrap1»  (to ".ee-debootstrap1")
+;; Tests: (find-estring-2a (ee-debootstrap1 "{user}" "{passwd}"))
+;;        (find-estring-2a (ee-debootstrap1 "edrx" "edrx"))
+;;
+(defun ee-debootstrap1 (&optional user passwd)
+  "An internal function used by `find-debootstrap1-links'."
+  (setq user   (or user   user-login-name))
+  (setq passwd (or passwd user))
+  (let* ((key (find-sh0 "cat ~/.ssh/id_rsa.pub")))
+    (ee-template0 "\
+ From: (find-estring-2a (ee-debootstrap1 \"{user}\" \"{passwd}\"))
+ (sh-mode)
+
+echo \"{passwd}/{passwd}/Full Name/////Y/\" | tr / '\\n' | adduser {user}
+
+ls -lAF /etc/sudoers
+echo '
+  # Edrx:
+  # (find-es \"sudo\")
+  User_Alias FULLTIMERS = {user}
+  FULLTIMERS ALL = NOPASSWD: ALL
+' | tee -a /etc/sudoers
+ls -lAF    /etc/sudoers
+
+mkdir -p            /home/{user}/.ssh/
+mkdir -p                 /root/.ssh/
+echo '{key}' > /home/edrx/.ssh/authorized_keys
+echo '{key}' >      /root/.ssh/authorized_keys
+chmod 600           /home/{user}/.ssh/authorized_keys
+chmod 700           /home/{user}/.ssh/
+chmod 600                /root/.ssh/authorized_keys
+chmod 700                /root/.ssh/
+chown -Rv {user}:{user} /home/{user}/.ssh/
+
+touch                    /root/.Xauthority
+touch               /home/{user}/.Xauthority
+chown     {user}:{user} /home/{user}/.Xauthority
+")))
+
+
+;; «find-debootstrap1-links»  (to ".find-debootstrap1-links")
+;; Skel: (find-find-links-links-new "debootstrap1" "container user passwd" "ee-buffer-name key")
+;; Test: (find-debootstrap1-links)
+;;
+(defun find-debootstrap1-links (&optional container user passwd &rest pos-spec-list)
+"See: (find-debootstrap-intro)"
+  (interactive)
+  (setq container (or container "subdebian"))
+  (setq user      (or user      user-login-name))
+  (setq passwd    (or passwd    user))
+  (let* ((ee-buffer-name "*find-debootstrap1-links*")
+	 (key (find-sh0 "cat ~/.ssh/id_rsa.pub")))
+    (apply
+     'find-elinks
+     `((find-debootstrap1-links ,container ,user ,passwd ,@pos-spec-list)
+       (find-debootstrap1-links "{container}" "{user}" "{passwd}")
+       (find-debootstrap1-links)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-debootstrap1-links)
+       (find-efunction 'ee-debootstrap1)
+       ""
+       ,(ee-template0 "\
+ (setq truncate-lines t)
+ (sh-mode)
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+ Restore /var/lib/machines/{container}/ from {container}0.tar.
+ This is very quick.
+sudo rm -Rf                /var/lib/machines/{container}/
+sudo ls -lAFh              /var/lib/machines/
+sudo machinectl import-tar /var/lib/machines/{container}0.tar {container}
+sudo ls -lAFh              /var/lib/machines/
+sudo du -ch                /var/lib/machines/{container}/
+
+
+
+
+sudo systemd-nspawn -U --machine {container}
+
+{(ee-debootstrap1 user passwd)}\
+
+exit
+
+
+
+
+
+ Save /var/lib/machines/{container}/ into {container}1.tar.
+ This is very quick.
+sudo ls -lAFh /var/lib/machines/
+sudo du -ch   /var/lib/machines/
+sudo machinectl export-tar {container} /var/lib/machines/{container}1.tar
+sudo ls -lAFh /var/lib/machines/
+")
+       )
+     pos-spec-list)))
+
+
+;; «find-debootstrap2-links»  (to ".find-debootstrap2-links")
+;; Skel: (find-find-links-links-new "debootstrap2" "container user" "ee-buffer-name")
+;; Test: (find-debootstrap2-links)
+;;
+(defun find-debootstrap2-links (&optional container user &rest pos-spec-list)
+"See: (find-debootstrap-intro)"
+  (interactive)
+  (setq container (or container "subdebian"))
+  (setq user      (or user user-login-name))
+  (let* ((ee-buffer-name "*find-debootstrap2-links*"))
+    (apply
+     'find-elinks
+     `((find-debootstrap2-links ,container ,user ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-debootstrap2-links)
+       ""
+       ,(ee-template0 "\
+ Export the ssh keys of the container to the host.
+ The tests in the \"Try:\" are optional.
+
+ (find-3EE '(eepitch-shell) '(eepitch-shell2))
+ (find-3ee '(eepitch-shell) '(eepitch-shell2))
+ (eepitch-shell)
+ (eepitch-shell2)
+sudo systemd-nspawn -U --machine {container}
+  mkdir -p /run/sshd     ; ps ax | grep ssh
+  /usr/sbin/sshd -p 4444 ; ps ax | grep ssh
+
+ (eepitch-shell)
+ssh-keygen -f ~/.ssh/known_hosts -R \"[localhost]:4444\"
+ssh -p 4444 -o StrictHostKeyChecking=accept-new root@localhost echo Ok
+ssh -p 4444 -o StrictHostKeyChecking=accept-new {user}@localhost echo Ok
+
+ Try:
+ (find-fline \"/scp:root@localhost#4444:\")
+ (find-fline \"/scp:{user}@localhost#4444:\")
+ (find-bgprocess \"ssh -p 4444 -X -f {user}@localhost xterm\")
+
+ (eepitch-shell2)
+  killall sshd;   sleep 1; ps ax | grep ssh
+exit
+")
+       )
+     pos-spec-list)))
 
 
 
