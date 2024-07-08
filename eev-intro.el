@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240530
+;; Version:    20240708
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -6944,8 +6944,8 @@ Links:
   Pages:  http://anggtwu.net/emacsconf2021.html
           https://emacsconf.org/2021/talks/test/
   Slides: http://anggtwu.net/LATEX/2021emacsconf.pdf
-  Video:  https://emacsconf.org/2021/talks/test/
-          (find-eev2021video \"0:00\")
+  Video:  (find-eev2021video \"00:00\")
+          (find-eev2021video \"00:00\")
 
 
 
@@ -6974,6 +6974,10 @@ will run as:
 
 and you can use that to inspect the `ee-insert-test-' support for
 the current major mode, or to implement it yourself.
+
+  [Video links:]
+    (find-eev2021video \"04:22\" \"find-eeit-links\")
+    (find-eev2021hsubs \"04:22\" \"find-eeit-links\")
 
 
 
@@ -17626,6 +17630,9 @@ This intro supposes that you know:
 
   8. how to use the local variables list:
        (find-enode \"Specifying File Variables\" \"local variables list\")
+     an example:
+       (find-eev \"eev-aliases.el\" \"edit-index\" \";; Local Variables:\")
+
 
 Here you will learn how (and why) to put messy notes _in elisp_
 at the end of your ~/.emacs. Note that this is a style that many
@@ -17710,6 +17717,12 @@ It is meant as both a tutorial and a sandbox.
 
 
 
+THIS IS A WORK IN PROGRESS!!!
+The code works - including the \"ssh -X\" -
+but I need to write more explanations...
+
+
+
 0. Introduction
 ===============
 This other intro
@@ -17725,8 +17738,6 @@ explains how to:
 
 This intro shows how to do something similar, but starting on Debian,
 and installing a \"subdebian\" using debootstrap.
-
-THIS IS A WORK IN PROGRESS!!!
 
 Try:
 
@@ -17763,39 +17774,98 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-THIS IS A WORK IN PROGRESS!
-THIS IS A VERY EARLY DRAFT!
+Warning: WORK IN PROGRESS!
+VERY EARLY DRAFT!
+UNFINISHED! UNTESTED!
 
-Test this page in HTML first:
-  http://anggtwu.net/eev-intros/find-lean4-intro.html
 
-  (find-lean4doc     \"whatIsLean\")
-  (find-leantpildoc  \"introduction\")
+
+0. Prerequisites
+================
+  http://anggtwu.net/2024-lean4-oficina-0.html
+  (find-windows-beginner-intro)
+
+
+
+1. Download the five manuals
+============================
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  mkdir -p $S
+  cd /tmp/
+  wget -N http://anggtwu.net/tmp/2024-lean4-oficina-manuais.tgz
+  # (find-fline            \"/tmp/2024-lean4-oficina-manuais.tgz\")
+  tar -C $S/ -xvzf          /tmp/2024-lean4-oficina-manuais.tgz
+
+
+
+2. Setup the ~/.emacs
+=====================
+;;-- (ee-copy-rest-3m nil \";;--end\" \"~/.emacs\")
+
+;; From: (find-dot-emacs-intro \"3. Loading eev by default\")
+;; See: (find-eev-levels-intro)
+(require 'eev-load)               ; (find-eev \"eev-load.el\")
+(require 'eev-aliases)            ; (find-eev \"eev-aliases.el\")
+(eev-mode 1)                      ; (find-eev \"eev-mode.el\")
+
+;; From: (find-angg-es-links)
+(defun find-angg (fname &rest rest)
+  (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
+(defun find-anggfile (fname &rest rest)
+  (apply 'find-wget  (format \"http://anggtwu.net/%s\" fname) rest))
+(defun find-es (fname &rest rest)
+  (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
+
+(require 'eev-lean4)      ; (find-eev \"eev-lean4.el\")
+(defun el4 () (interactive) (find-eev \"eev-lean4.el\"))
+
+;; From: (find-melpa-links)
+(require 'package)
+(add-to-list 'package-archives
+  '(\"melpa\" . \"https://melpa.org/packages/\"))
+
+;;--end
+
+
+
+3. Test the five manuals
+========================
   (find-fplean4doc   \"getting-to-know/evaluating\")
+  (find-lean4doc     \"whatIsLean\")
   (find-leanmetadoc  \"main/01_intro\")
-  (find-leanmathsdoc \"index\")
+  (find-tclean4doc   \"trust/trust\")
+  (find-tpil4doc     \"introduction\")
+  (find-fplean4page)
+  (find-lean4page)
+  (find-leanmetapage)
+  (find-tclean4page)
+  (find-tpil4page)
+
+  Broken - I did not include this one:
+  (find-leanrefdoc   \"using_lean#using-lean-with-emacs\")
   (find-leanrefdocw  \"using_lean#using-lean-with-emacs\")
-
-https://leanprover-community.github.io/install/debian.html
-https://leanprover-community.github.io/install/debian_details.html
-
-(find-es \"lean\" \"lean4-mode\")
-
-Prerequisites:
-  (find-rstdoc-intro)
-  (find-angg \".emacs.lean.el\")
-  (find-angg-es-links)
-  (find-windows-beginner-intro \"7. Test Maxima with find-wget\")
+  https://leanprover.github.io/reference/using_lean.html#using-lean-with-emacs
 
 
-1. `find-wgetrecursive-links'
-=============================
-  (find-wgetrecursive-links \"https://lean-lang.org/lean4/doc/\")
-  (find-wgetrecursive-links \"https://lean-lang.org/theorem_proving_in_lean4/\")
-  (find-wgetrecursive-links \"https://lean-lang.org/functional_programming_in_lean/\")
-  (find-wgetrecursive-links \"https://leanprover-community.github.io/lean4-metaprogramming-book/\")
-  (find-wgetrecursive-links \"https://leanprover-community.github.io/mathematics_in_lean/\")
-  (find-wgetrecursive-links \"https://leanprover.github.io/reference/\")
+
+4. Install Lean4
+================
+  (find-es \"lean\" \"install-2024\")
+
+
+
+5. Install lean4-mode
+=====================
+  (find-es \"lean\" \"lean4-mode-vc\")
+  (package-vc-install \"https://github.com/leanprover-community/lean4-mode\")
+  (find-lean4modefile \"README.md\")
+
+
+6. Test lean4-mode
+==================
+  (find-es \"lean\" \"Std.Format\")
 
 
 

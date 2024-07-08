@@ -20,7 +20,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240309
+;; Version:    20240619
 ;; Keywords:   e-scripts
 ;;
 ;; Supersedes: (find-eev "eev-all.el")
@@ -195,7 +195,9 @@
 ;; See: (find-eev-levels-intro)
 ' (require 'eev-aliases)        ; (find-eev "eev-aliases.el")
 
-
+;; This is experimental and very incomplete.
+;; See: (find-lean4-intro)
+' (require 'eev-lean4)          ; (find-eev "eev-lean4.el")
 
 
 ;; Make `M-x eev-beginner' work in the "expert setups" too.

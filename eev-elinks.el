@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240306
+;; Version:    20240623
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -1187,10 +1187,10 @@ means."
        (find-ecolors)
        ""
        (face-all-attributes ',face-symbol (selected-frame))
-       (find-epp (face-all-attributes ',face-symbol (selected-frame)))
+       (find-eppp (face-all-attributes ',face-symbol (selected-frame)))
        ""
        (face-id ',face-symbol)
-       (find-epp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))
+       (find-eppp (mapcar (lambda (face) (cons (face-id face) face)) (face-list)))
        )
      pos-spec-list)))
 
@@ -1264,6 +1264,7 @@ to understand how this is used. ARG is usually
      (find-ecolor-links ,(or initialcolor "gray"))
      (find-ecolors)
      (find-ecolors ,initialcolor)
+     ,`(insert (propertize " Sample " 'face '(:foreground ,initialcolor)))
      ,`(insert (propertize " Sample " 'face '(:background ,initialcolor)))
      ,`(ee-color-values ,initialcolor)
      (kill-new ,initialcolor)

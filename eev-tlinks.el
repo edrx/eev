@@ -432,6 +432,12 @@ See the tests in the comments to understand the details."
     (find-2a nil show)
     msg)))
 
+(defun ee-copy-rest-3m (skip gotoend target)
+  "Like `ee-copy-rest-3', but runs a mkdir if TARGET is a string."
+  (if (stringp target)
+      (make-directory (file-name-directory target) 'make-parents))
+  (ee-copy-rest-3 skip gotoend target))
+
 
 
 
@@ -3108,6 +3114,8 @@ sudo ./install-tl -select-repository
    `((find-newbrowser-links ,browser ,binary ,b ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-newbrowser-links)
+     ""
+     ";; See: (find-wconfig-browser-links)"
      ""
      ,(ee-template0 "\
 ;; 1. This block defines `find-{browser}', `br{b}', `br{b}l', and `br{b}d'.

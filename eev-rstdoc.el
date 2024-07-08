@@ -1,6 +1,6 @@
 ;;; eev-rstdoc.el -- links to documentation generated from RST files.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2022-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2022-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20230127
+;; Version:    20240619
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-rstdoc.el>
@@ -486,7 +486,9 @@
 (defun      code-rstdoc (kw)
   (eval (ee-read (ee-code-rstdoc kw))))
 (defun find-code-rstdoc (kw &rest rest)
-  (apply 'find-estring-elisp (ee-code-rstdoc kw) rest))
+  (let ((ee-buffer-name
+	 (or ee-buffer-name "*find-code-rstdoc*")))
+    (apply 'find-estring-elisp (ee-code-rstdoc kw) rest)))
 (defun   ee-code-rstdoc (kw0)
   (let* ((c        (ee-rstdoc-c  kw0))
          (kw       (ee-rstdoc-kw kw0))
@@ -552,6 +554,15 @@ to shorten the rstdoc at point.\"
   (ee-rstdoc-kill
    (format \"(find-{c}doc \\\"%s\\\")\"
            (ee-rstdoc-short-around-point {kw}))))
+
+(defun {kill}f (&optional fname)
+  \"Put on the kill ring a sexp hyperlink to the rstdoc of FNAME.
+This function uses the regexps in the :res field of `{var}'
+to shorten the rstdoc of FNAME.\"
+  (interactive)
+  (ee-rstdoc-kill
+   (format \"(find-{c}doc \\\"%s\\\")\"
+	   (ee-rstdoc-short {kw} (or fname (buffer-file-name))))))
 ")))
 
 
