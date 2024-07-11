@@ -1,5 +1,7 @@
 2024-07-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev.el: bumped the version.
+
 	* eev-intro.el (find-windows-beginner-intro): added a "sudo
 	apt-get update" and a "sudo apt-get upgrade -y".
 
