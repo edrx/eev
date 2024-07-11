@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240708
+;; Version:    20240710
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -15015,16 +15015,23 @@ lowercase letters, like \"edrx\", \"caiop\" or \"gabriel\".
 After setting the user and password you will get a Unix prompt. Then you
 need to run this
 
+  sudo apt-get update
+  sudo apt-get upgrade -y
   sudo apt-get install -y emacs
 
 to install Emacs; what you will see, including the prompts and messages,
 will be something like this:
 
-  edrx@Acer-PC: $ sudo apt-get install -y emacs
+  edrx@Acer-PC: $ sudo apt-get update
   [Password for edrx]:
-  (...about 100 lines...)
+  (...)
+  edrx@Acer-PC: $ sudo apt-get upgrade -y
+  (...)
+  edrx@Acer-PC: $ sudo apt-get install -y emacs
+  (...)
   edrx@Acer-PC: $
 
+Note that sometimes sudo asks for a password, and sometimes it doesn't.
 Then run \"emacs &\" to start Emacs - i.e.:
 
   edrx@Acer-PC: $ emacs &
