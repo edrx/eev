@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240717
+;; Version:    20240718
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3883,6 +3883,7 @@ is nil, use the result of (ee-1stclassvideos)."
      `((find-dot-emacs-links ,opts ,@pos-spec-list)
        (find-dot-emacs-links "eev angges")
        (find-dot-emacs-links "eev angges maxima5470 mfms")
+       (find-dot-emacs-links "eev angges melpa lean4 maxima5470 mfms")
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-dot-emacs-links)
        (find-dot-emacs-intro)
@@ -3911,6 +3912,47 @@ is nil, use the result of (ee-1stclassvideos)."
 (eev-mode 1)                      ; (find-eev \"eev-mode.el\")
 ")
 
+;; Test: (find-estring-elisp (ee-dot-emacs-angges))
+(defun ee-dot-emacs-angges (&rest rest) "\
+;; From: (find-angg-es-links)
+(defun find-angg (fname &rest rest)
+  (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
+(defun find-anggfile (fname &rest rest)
+  (apply 'find-wget  (format \"http://anggtwu.net/%s\" fname) rest))
+(defun find-es (fname &rest rest)
+  (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-melpa))
+(defun ee-dot-emacs-melpa (&rest rest) "\
+;; From: (find-melpa-links)
+(require 'package)
+(add-to-list 'package-archives
+  '(\"melpa\" . \"https://melpa.org/packages/\"))
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-maxima5470))
+(defun ee-dot-emacs-maxima5470 (&rest rest) "\
+;; From: (find-windows-beginner-intro \"8. Test Maxima with find-wget\")
+(code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-epl))
+(defun ee-dot-emacs-epl (&rest rest) "\
+;; See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+(defvar eepitch-preprocess-regexp \"^\")
+(setq   eepitch-preprocess-regexp \"^\")
+(defun eepitch-preprocess-line (line)
+  (replace-regexp-in-string eepitch-preprocess-regexp \"\" line))
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-lean4))
+(defun ee-dot-emacs-lean4 (&rest rest) "\
+;; See: (find-lean4-intro)
+(require 'eev-lean4)      ; (find-eev \"eev-lean4.el\")
+(defun el4 () (interactive) (find-eev \"eev-lean4.el\"))
+")
+
 ;; Test: (find-estring-elisp (ee-dot-emacs-mfms))
 (defun ee-dot-emacs-mfms (&rest rest) "\
 ;; From: (find-mpv-links)
@@ -3928,32 +3970,6 @@ is nil, use the result of (ee-1stclassvideos)."
 	'(\"--fs\" \"--osd-level=2\"
 	  \"--video-margin-ratio-bottom=0.15\"
 	  \"--sub-font-size=35\")))
-")
-
-;; Test: (find-estring-elisp (ee-dot-emacs-angges))
-(defun ee-dot-emacs-angges (&rest rest) "\
-;; From: (find-angg-es-links)
-(defun find-angg (fname &rest rest)
-  (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
-(defun find-anggfile (fname &rest rest)
-  (apply 'find-wget  (format \"http://anggtwu.net/%s\" fname) rest))
-(defun find-es (fname &rest rest)
-  (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
-")
-
-;; Test: (find-estring-elisp (ee-dot-emacs-maxima5470))
-(defun ee-dot-emacs-maxima5470 (&rest rest) "\
-;; From: (find-windows-beginner-intro \"8. Test Maxima with find-wget\")
-(code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
-")
-
-;; Test: (find-estring-elisp (ee-dot-emacs-epl))
-(defun ee-dot-emacs-epl (&rest rest) "\
-;; See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
-(defvar eepitch-preprocess-regexp \"^\")
-(setq   eepitch-preprocess-regexp \"^\")
-(defun eepitch-preprocess-line (line)
-  (replace-regexp-in-string eepitch-preprocess-regexp \"\" line))
 ")
 
 

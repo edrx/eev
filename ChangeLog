@@ -1,3 +1,8 @@
+2024-07-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-dot-emacs-melpa, ee-dot-emacs-lean4): new
+	functions.
+
 2024-07-17  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-dot-emacs-links, ee-dot-emacs-concat)
