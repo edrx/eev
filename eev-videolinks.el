@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240517
+;; Version:    20240715
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -74,6 +74,7 @@
 ;;   «.eev2023replsb»			(to "eev2023replsb")
 ;;   «.2024git»				(to "2024git")
 ;;   «.2024luaso»			(to "2024luaso")
+;;   «.2024algpergs»			(to "2024algpergs")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -827,6 +828,21 @@ of the videos and play them with mpv. Compare with
      :length  "14:16"
      :subs    ".vtt"
      :comment "See: (find-lua-tutorial-intro)")
+    ;;
+    ;; «2024algpergs»  (to ".2024algpergs")
+    ;; Play: (find-2024algpergsvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2024algpergs")
+    ("2024algpergs"
+     :title "Algumas perguntas pros estudantes de C2 que estão aprendendo Emacs, eev e Maxima"
+     :mp4   "http://anggtwu.net/eev-videos/2024-algumas-perguntas.mp4"
+     :yt    "http://www.youtube.com/watch?v=FjhyhTxN_-o"
+     :page  "http://anggtwu.net/2024-algumas-perguntas.html"
+     :hsubs "http://anggtwu.net/2024-algumas-perguntas.html#00:00"
+     :lang  "portuguese"
+     :date    "2024jul13"
+     :length  "10:13"
+     :subs    ".vtt"
+     :comment "A video in Portuguese about installation on Windows.")
     ))
 
 

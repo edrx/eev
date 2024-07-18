@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240530
+;; Version:    20240717
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -156,6 +156,7 @@
 ;; «.find-1stclassvideos»		(to "find-1stclassvideos")
 ;;   «.1c»				(to "1c")
 ;;   «.aliases»				(to "aliases")
+;; «.find-dot-emacs-links»		(to "find-dot-emacs-links")
 ;; «.find-advicebefore-links»		(to "find-advicebefore-links")
 ;; «.find-osm-links»			(to "find-osm-links")
 ;; «.find-pip3-links»			(to "find-pip3-links")
@@ -3861,7 +3862,108 @@ is nil, use the result of (ee-1stclassvideos)."
 
 
 
+;;;      _       _                                      
+;;;   __| | ___ | |_       ___ _ __ ___   __ _  ___ ___ 
+;;;  / _` |/ _ \| __|____ / _ \ '_ ` _ \ / _` |/ __/ __|
+;;; | (_| | (_) | ||_____|  __/ | | | | | (_| | (__\__ \
+;;;  \__,_|\___/ \__|     \___|_| |_| |_|\__,_|\___|___/
+;;;                                                     
+;; «find-dot-emacs-links»  (to ".find-dot-emacs-links")
+;; Skel: (find-find-links-links-new "dot-emacs" "opts" "ee-buffer-name")
+;; Test: (find-dot-emacs-links)
+;;
+(defun find-dot-emacs-links (&optional opts &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for dot-emacs."
+  (interactive)
+  (setq opts (or opts "eev"))
+  (let* ((body (ee-dot-emacs-concat opts))
+         (ee-buffer-name "*(find-dot-emacs-links)*"))
+    (apply
+     'find-elinks-elisp
+     `((find-dot-emacs-links ,opts ,@pos-spec-list)
+       (find-dot-emacs-links "eev angges")
+       (find-dot-emacs-links "eev angges maxima5470 mfms")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-dot-emacs-links)
+       (find-dot-emacs-intro)
+       ""
+       ,(ee-template0 "\
+;; (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
+{body}\
+;;--end
+")
+       )
+     pos-spec-list)))
 
+;; Test: (find-estring-elisp (ee-dot-emacs-concat "eev mfms"))
+(defun ee-dot-emacs-concat (opts)
+  (string-join 
+   (cl-loop for opt in (ee-split opts)
+            for sym = (ee-intern "ee-dot-emacs-%s" opt)
+            collect (funcall sym))
+   "\n"))
+
+;; Test: (find-estring-elisp (ee-dot-emacs-eev))
+(defun ee-dot-emacs-eev (&rest rest) "\
+;; See: (find-eev-levels-intro)
+(require 'eev-load)               ; (find-eev \"eev-load.el\")
+(require 'eev-aliases)            ; (find-eev \"eev-aliases.el\")
+(eev-mode 1)                      ; (find-eev \"eev-mode.el\")
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-mfms))
+(defun ee-dot-emacs-mfms (&rest rest) "\
+;; From: (find-mpv-links)
+;;  See: http://anggtwu.net/eev-videos.html#smaller-fullscreen
+;;
+(defun mf ()
+  \"Make mpv use (real) full screen.\"
+  (interactive)
+  (setq ee-mpv-video-options '(\"--fs\" \"--osd-level=2\")))
+;;
+(defun ms ()
+  \"Make mpv use a \\\"smaller full screen\\\".\"
+  (interactive)
+  (setq ee-mpv-video-options
+	'(\"--fs\" \"--osd-level=2\"
+	  \"--video-margin-ratio-bottom=0.15\"
+	  \"--sub-font-size=35\")))
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-angges))
+(defun ee-dot-emacs-angges (&rest rest) "\
+;; From: (find-angg-es-links)
+(defun find-angg (fname &rest rest)
+  (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
+(defun find-anggfile (fname &rest rest)
+  (apply 'find-wget  (format \"http://anggtwu.net/%s\" fname) rest))
+(defun find-es (fname &rest rest)
+  (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-maxima5470))
+(defun ee-dot-emacs-maxima5470 (&rest rest) "\
+;; From: (find-windows-beginner-intro \"8. Test Maxima with find-wget\")
+(code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-epl))
+(defun ee-dot-emacs-epl (&rest rest) "\
+;; See: (find-eepitch-intro \"3.3. `eepitch-preprocess-line'\")
+(defvar eepitch-preprocess-regexp \"^\")
+(setq   eepitch-preprocess-regexp \"^\")
+(defun eepitch-preprocess-line (line)
+  (replace-regexp-in-string eepitch-preprocess-regexp \"\" line))
+")
+
+
+
+;;;            _       _          
+;;;   __ _  __| |_   _(_) ___ ___ 
+;;;  / _` |/ _` \ \ / / |/ __/ _ \
+;;; | (_| | (_| |\ V /| | (_|  __/
+;;;  \__,_|\__,_| \_/ |_|\___\___|
+;;;                               
 ;; «find-advicebefore-links»  (to ".find-advicebefore-links")
 ;; Skel: (find-find-links-links-new "advicebefore" "fun" "")
 ;; Test: (find-advicebefore-links)
@@ -5553,16 +5655,17 @@ sudo ls -lAFh /var/lib/machines/
 
 
 ;; «ee-debootstrap1»  (to ".ee-debootstrap1")
-;; Tests: (find-estring-2a (ee-debootstrap1 "{user}" "{passwd}"))
-;;        (find-estring-2a (ee-debootstrap1 "edrx" "edrx"))
+;; Tests: (find-estring-2a (ee-debootstrap1 "{container}" "{user}" "{passwd}"))
+;;        (find-estring-2a (ee-debootstrap1 "subdebian" "edrx" "edrx"))
 ;;
-(defun ee-debootstrap1 (&optional user passwd)
+(defun ee-debootstrap1 (&optional container user passwd)
   "An internal function used by `find-debootstrap1-links'."
-  (setq user   (or user   user-login-name))
-  (setq passwd (or passwd user))
+  (setq container (or container "subdebian"))
+  (setq user      (or user   user-login-name))
+  (setq passwd    (or passwd user))
   (let* ((key (find-sh0 "cat ~/.ssh/id_rsa.pub")))
     (ee-template0 "\
- From: (find-estring-2a (ee-debootstrap1 \"{user}\" \"{passwd}\"))
+ From: (find-estring-2a (ee-debootstrap1 \"{container}\" \"{user}\" \"{passwd}\"))
  (sh-mode)
 
 echo \"{passwd}/{passwd}/Full Name/////Y/\" | tr / '\\n' | adduser {user}
@@ -5575,6 +5678,10 @@ echo '
   FULLTIMERS ALL = NOPASSWD: ALL
 ' | tee -a /etc/sudoers
 ls -lAF    /etc/sudoers
+
+cat /etc/hosts
+echo '127.0.1.1   {container}' | tee -a /etc/hosts
+cat /etc/hosts
 
 mkdir -p            /home/{user}/.ssh/
 mkdir -p                 /root/.ssh/
@@ -5633,7 +5740,7 @@ sudo du -ch                /var/lib/machines/{container}/
 
 sudo systemd-nspawn -U --machine {container}
 
-{(ee-debootstrap1 user passwd)}\
+{(ee-debootstrap1 container user passwd)}\
 
 exit
 

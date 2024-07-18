@@ -1,3 +1,20 @@
+2024-07-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-dot-emacs-links, ee-dot-emacs-concat)
+	(ee-dot-emacs-eev, ee-dot-emacs-mfms, ee-dot-emacs-angges)
+	(ee-dot-emacs-maxima5470, ee-dot-emacs-epl): new functions.
+
+	* eev-intro.el (find-windows-beginner-intro): small changes.
+
+2024-07-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-debootstrap1): new argument: `container'.
+
+2024-07-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): new video:
+	"2024algpergs".
+
 2024-07-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: bumped the version.

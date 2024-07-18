@@ -15049,15 +15049,15 @@ Type `M-x find-windows-beginner-intro' to open this intro.
 
 
 
-3. Use eepitch to install Debian packages
+3. Use eepitch to add a Debian repository
 =========================================
 Eepitch is explained here:
 
   http://anggtwu.net/eepitch.html
 
 Run the eepitch block below by typing <f8> on each line, starting by the
-first line with a red star. Some lines will ask for a password in the
-minibuffer (at the bottom of the screen).
+first line with a red star. The line with the \"sudo\" will ask for a
+password in the minibuffer (at the bottom of the screen).
 
  (eepitch-shell)
  (eepitch-kill)
@@ -15066,6 +15066,20 @@ echo '
   # Edrx:
   deb http://deb.debian.org/debian/ bookworm main contrib non-free
 ' | sudo tee -a /etc/apt/sources.list
+
+ Lines with two red stars are comments.
+ If you need to edit /etc/apt/sources.list by hand, use:
+ (find-fline \"/sudo:root@localhost:/etc/apt/sources.list\")
+
+
+
+4. Use eepitch to install Debian packages
+=========================================
+Run the eepitch block below:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
 sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get install -y emacs-el emacs-common-non-dfsg
@@ -15073,7 +15087,7 @@ sudo apt-get install -y wget curl
 sudo apt-get install -y mpv
 sudo apt-get install -y xterm xpdf poppler-utils
 sudo apt-get install -y sbcl sbcl-doc sbcl-source
-sudo apt-get install -y maxima gnuplot
+sudo apt-get install -y maxima maxima-doc gnuplot
 sudo apt-get install -y lua5.1 lua5.1-dev lua5.1-doc
 sudo apt-get install -y lua5.2 lua5.2-dev lua5.2-doc
 sudo apt-get install -y lua5.3 lua5.3-dev
@@ -15089,8 +15103,7 @@ sudo apt-get install -y lynx
 
 
 
-
-4. Use eepitch to install Google Chrome
+5. Use eepitch to install Google Chrome
 =======================================
 Run the eepitch block below by typing <f8> on each line.
 Note the comments about errors...
@@ -15099,7 +15112,7 @@ Note the comments about errors...
  (eepitch-kill)
  (eepitch-shell)
 cd /tmp/
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 #
 # The \"dpkg -i\" below will give lots of errors:
 sudo dpkg -i google-chrome-stable_current_amd64.deb
@@ -15110,7 +15123,7 @@ sudo apt-get install -y -f
 
 
 
-5. Learn the basics of Emacs and eev
+6. Learn the basics of Emacs and eev
 ====================================
 The \"basics\" are these sections of the main tutorial,
 
@@ -15160,7 +15173,7 @@ and these sections on anchors and short hyperlinks:
 
 
 
-6. Test Maxima
+7. Test Maxima
 ==============
 Here is a basic test of Maxima. The eepitch block below will define
 three functions in Maxima and then plot two of them using an external
@@ -15181,7 +15194,7 @@ plot3d (S(x,y), [x, 0, 6], [y, 0, 6]);
 
 
 
-7. Test Maxima with find-wget
+8. Test Maxima with find-wget
 =============================
 This sexp
 
@@ -15201,7 +15214,7 @@ and then try:
 
 
 
-8. Videos
+9. Videos
 =========
 This sexp
 
@@ -15238,8 +15251,8 @@ to see a way to convert:
 
 
 
-9. Learn Lisp
-=============
+10. Learn Lisp
+==============
 See:
   (find-elisp-intro)
   (find-elisp-intro \"M-7 M-j\")
@@ -15247,7 +15260,7 @@ See:
 
 
 
-10. Edit your init file
+11. Edit your init file
 =======================
 See:
   (find-eev-levels-intro \"0. Introduction\")
