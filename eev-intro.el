@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240710
+;; Version:    20240719
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -2845,6 +2845,7 @@ This intro is unfinished!
 It is a rewrite of some sections of:
   (find-eev-install-intro)
 TODO: mention:
+  (find-dot-emacs-links)
   (find-eev-install-intro \"5.1. With `M-x list-packages'\")
   (find-eev-install-intro \"5.2. With `package-install'\")
 
@@ -17609,8 +17610,12 @@ It is meant as both a tutorial and a sandbox.
 
 Note:
 THIS IS A VERY EARLY DRAFT!
-THIS IS A MESS!!!
-  See:
+THIS IS OBSOLETE!
+Now it is better to start with this:
+  (find-dot-emacs-links)
+  http://anggtwu.net/2024-find-dot-emacs-links.html
+
+I need to rewrite the material below...
 
 
 

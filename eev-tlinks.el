@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240718
+;; Version:    20240719
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3886,9 +3886,12 @@ is nil, use the result of (ee-1stclassvideos)."
        (find-dot-emacs-links "eev angges melpa lean4 maxima5470 mfms")
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-dot-emacs-links)
-       (find-dot-emacs-intro)
-       ""
+       ";;"
        ,(ee-template0 "\
+;; See: http://anggtwu.net/2024-find-dot-emacs-links.html
+;;      (find-dot-emacs-intro)
+
+
 ;; (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
 {body}\
 ;;--end
