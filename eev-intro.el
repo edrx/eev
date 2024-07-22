@@ -17809,6 +17809,12 @@ UNFINISHED! UNTESTED!
 ================
   http://anggtwu.net/2024-lean4-oficina-0.html
   (find-windows-beginner-intro)
+  (find-windows-beginner-intro \"6. Learn the basics of Emacs and eev\")
+
+(find-eev-quick-intro \"6.1. The main key: <F8>\")
+(find-eev-quick-intro \"6.2. Other targets\")
+(find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+(find-eev-quick-intro \"6.4. Red stars\")
 
 
 

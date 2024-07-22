@@ -1,3 +1,16 @@
+2024-07-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newbrowser-links): marked as obsolete.
+	(find-newbrowser2-links): new function.
+
+2024-07-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-dot-emacs-links): point to
+	<http://anggtwu.net/2024-find-dot-emacs-links.html>.
+
+	* eev-intro.el (find-dot-emacs-intro): point to
+	<http://anggtwu.net/2024-find-dot-emacs-links.html>.
+
 2024-07-18  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-dot-emacs-melpa, ee-dot-emacs-lean4): new
