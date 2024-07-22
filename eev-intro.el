@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240719
+;; Version:    20240722
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -17811,10 +17811,60 @@ UNFINISHED! UNTESTED!
   (find-windows-beginner-intro)
   (find-windows-beginner-intro \"6. Learn the basics of Emacs and eev\")
 
-(find-eev-quick-intro \"6.1. The main key: <F8>\")
-(find-eev-quick-intro \"6.2. Other targets\")
-(find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
-(find-eev-quick-intro \"6.4. Red stars\")
+  (find-emacs-keys-intro \"1. Basic keys (eev)\")
+  (find-emacs-keys-intro \"2. Key sequences and how to abort them\")
+  (find-emacs-keys-intro \"3. Cutting & pasting\")
+  (find-emacs-keys-intro \"4. Moving point\")
+  (find-emacs-keys-intro \"5. Undoing\")
+  (find-emacs-keys-intro \"6. Windows\")
+  (find-emacs-keys-intro \"7. Files and buffers\")
+
+  (find-eev-quick-intro \"2. Evaluating Lisp\")
+  (find-eev-quick-intro \"3. Elisp hyperlinks\")
+  (find-eev-quick-intro \"3.1. Non-elisp hyperlinks\")
+  (find-eev-quick-intro \"5. Links to Emacs documentation\")
+  (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
+  (find-eev-quick-intro \"5.2. Cutting and pasting\")
+    http://anggtwu.net/IMAGES/2024-emacs-cut-copy-and-paste.png
+    http://anggtwu.net/2024-find-dot-emacs-links.html
+
+  (find-eev-quick-intro \"6.1. The main key: <F8>\")
+  (find-eev-quick-intro \"6.2. Other targets\")
+  (find-eev-quick-intro \"6.3. Creating eepitch blocks: `M-T'\")
+  (find-eev-quick-intro \"6.4. Red stars\")
+    http://anggtwu.net/eepitch.html#test-blocks
+    http://anggtwu.net/eepitch.html#trying-it
+
+  (find-eev-quick-intro \"7. Quick access to one-liners\")
+  (find-eev-quick-intro \"7.1. `eejump'\")
+  (find-eev-quick-intro \"7.2. The list of eejump targets\")
+  (find-eev-quick-intro \"8. Anchors\")
+  (find-eev-quick-intro \"8.1. Introduction: `to'\")
+  (find-eev-quick-intro \"9. Shorter hyperlinks\")
+  (find-eev-quick-intro \"9.1. `code-c-d'\")
+  (find-eev-quick-intro \"9.2. Extra arguments to `code-c-d'\")
+
+  (find-psne-intro \"1. Local copies of files from the internet\")
+  (find-psne-intro \"3. The new way: `M-x brep'\")
+    http://anggtwu.net/eev-videos.html#links-to-videos
+    http://anggtwu.net/eev-videos.html#what-are-local-copies
+    http://anggtwu.net/eev-videos.html#first-class-videos
+    http://anggtwu.net/eev-videos.html#mpv-keys
+
+  (find-pdf-like-intro \"1. PDF-like documents\")
+  (find-pdf-like-intro \"2. Preparation\")
+  (find-pdf-like-intro \"3. Hyperlinks to PDF files\")
+  (find-pdf-like-intro \"4. Hyperlinks to pages of PDF files\")
+  (find-pdf-like-intro \"5. A convention on page numbers\")
+  (find-pdf-like-intro \"6. How the external programs are called\")
+  (find-pdf-like-intro \"7. Shorter hyperlinks to PDF files\")
+  (find-pdf-like-intro \"8. `find-pdf'-pairs\")
+
+  (find-kl-here-intro \"1. Introduction\")
+  (find-kl-here-intro \"2. Try it!\")
+  (find-kl-here-intro \"3. Info\")
+
+
 
 
 
@@ -17833,31 +17883,8 @@ UNFINISHED! UNTESTED!
 
 2. Setup the ~/.emacs
 =====================
-;;-- (ee-copy-rest-3m nil \";;--end\" \"~/.emacs\")
-
-;; From: (find-dot-emacs-intro \"3. Loading eev by default\")
-;; See: (find-eev-levels-intro)
-(require 'eev-load)               ; (find-eev \"eev-load.el\")
-(require 'eev-aliases)            ; (find-eev \"eev-aliases.el\")
-(eev-mode 1)                      ; (find-eev \"eev-mode.el\")
-
-;; From: (find-angg-es-links)
-(defun find-angg (fname &rest rest)
-  (apply 'find-wgeta (format \"http://anggtwu.net/%s\" fname) rest))
-(defun find-anggfile (fname &rest rest)
-  (apply 'find-wget  (format \"http://anggtwu.net/%s\" fname) rest))
-(defun find-es (fname &rest rest)
-  (apply 'find-wgeta (format \"http://anggtwu.net/e/%s.e\" fname) rest))
-
-(require 'eev-lean4)      ; (find-eev \"eev-lean4.el\")
-(defun el4 () (interactive) (find-eev \"eev-lean4.el\"))
-
-;; From: (find-melpa-links)
-(require 'package)
-(add-to-list 'package-archives
-  '(\"melpa\" . \"https://melpa.org/packages/\"))
-
-;;--end
+  http://anggtwu.net/2024-find-dot-emacs-links.html
+  (find-dot-emacs-links \"eev angges melpa lean4 maxima5470 mfms\")
 
 
 

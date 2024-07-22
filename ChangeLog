@@ -1,3 +1,7 @@
+2024-07-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-lean4-intro): small changes.
+
 2024-07-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-newbrowser-links): marked as obsolete.
