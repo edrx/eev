@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240530
+;; Version:    20240724
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -73,6 +73,7 @@
 ;; «.find-einternals»		(to "find-einternals")
 ;; «.find-einsert»		(to "find-einsert")
 ;; «.find-eunicode»		(to "find-eunicode")
+;;   «.ee-symbol-function»	(to "ee-symbol-function")
 ;; «.find-eejumps»		(to "find-eejumps")
 ;; «.find-eeshortdefs»		(to "find-eeshortdefs")
 ;; «.find-eaproposf»		(to "find-eaproposf")
@@ -1407,7 +1408,7 @@ that `find-epp' would print in a single line."
 	 (body (format ";; %s\n;; See: %S\n;;\n%s\n"
 		       fefpp
 		       '(find-eev "eev-blinks.el" "find-efunctionpp")
-		       (pp-to-string (symbol-function symbol)))))
+		       (pp-to-string (ee-symbol-function symbol)))))
     (apply 'find-estring-elisp body pos-spec-list)))
 
 ;; Test: (find-eppp-with-prefix ";; HELLO\n" '(1 "2" (3 4)))
@@ -1680,6 +1681,30 @@ Hint: install the Debian package \"unicode-data\".")
 
 
 
+;;;       _                               
+;;;   ___| | ___  ___ _   _ _ __ ___  ___ 
+;;;  / __| |/ _ \/ __| | | | '__/ _ \/ __|
+;;; | (__| | (_) \__ \ |_| | | |  __/\__ \
+;;;  \___|_|\___/|___/\__,_|_|  \___||___/
+;;;                                       
+;; «ee-symbol-function»  (to ".ee-symbol-function")
+;; This is an experimental hack for handling some versions of Emacs31. See:
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00292.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00311.html
+
+(defun ee-closure-to-lambda (c)
+  "Experimental!!! See the comments in the source!"
+  `(lambda ,(aref c 0) ,@(aref c 1)))
+
+(defun ee-symbol-function (sym)
+  "Experimental!!! See the comments in the source!"
+  (let ((o (symbol-function sym)))
+    (if (closurep o)
+	(ee-closure-to-lambda o)
+      o)))
+
+
+
 
 
 ;;;   __ _           _                  _                           
@@ -1696,7 +1721,7 @@ Hint: install the Debian package \"unicode-data\".")
 ;; Related to: (find-eev "eejump.el")
 
 (defun ee-defun-sexp-for (symbol) 
-  `(defun ,symbol ,@(cdr (symbol-function symbol))))
+  `(defun ,symbol ,@(cdr (ee-symbol-function symbol))))
 
 (defun ee-defun-str-for (symbol)
   (replace-regexp-in-string
@@ -1752,10 +1777,10 @@ Hint: install the Debian package \"unicode-data\".")
 (defun ee-shortdefp (sym)
   (and (fboundp  sym)
        (commandp sym)
-       (listp      (symbol-function  sym))
-       (eq (car    (symbol-function  sym)) 'lambda)
-       (<= (length (symbol-name      sym)) ee-shortdefp-maxlen-name)
-       (<= (length (ee-defun-str-for sym)) ee-shortdefp-maxlen-def)))
+       (listp      (ee-symbol-function sym))
+       (eq (car    (ee-symbol-function sym)) 'lambda)
+       (<= (length (symbol-name        sym)) ee-shortdefp-maxlen-name)
+       (<= (length (ee-defun-str-for   sym)) ee-shortdefp-maxlen-def)))
 
 (defun ee-shortdef-symbols ()
   (apropos-internal "^.*$" 'ee-shortdefp))

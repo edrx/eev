@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240722
+;; Version:    20240724
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -17807,6 +17807,9 @@ UNFINISHED! UNTESTED!
 
 0. Prerequisites
 ================
+  (find-eev-quick-intro \"7. Quick access to one-liners\")
+  (find-eev-quick-intro \"7. Quick access to one-liners\" \"forget\")
+
   http://anggtwu.net/2024-lean4-oficina-0.html
   (find-windows-beginner-intro)
   (find-windows-beginner-intro \"6. Learn the basics of Emacs and eev\")
@@ -17883,8 +17886,8 @@ UNFINISHED! UNTESTED!
 
 2. Setup the ~/.emacs
 =====================
-  http://anggtwu.net/2024-find-dot-emacs-links.html
-  (find-dot-emacs-links \"eev angges melpa lean4 maxima5470 mfms\")
+See: http://anggtwu.net/2024-find-dot-emacs-links.html
+Use: (find-dot-emacs-links \"eev angges melpa lean4 maxima5470 mfms\")
 
 
 
@@ -17914,9 +17917,46 @@ UNFINISHED! UNTESTED!
 
 
 
+
 5. Install lean4-mode
 =====================
-  (find-es \"lean\" \"lean4-mode-vc\")
+Check the version of your Emacs:
+  (emacs-version)
+If it is at least 29, then running this sexp should be enough:
+
+  (package-vc-install \"https://github.com/leanprover-community/lean4-mode\")
+
+If not then you need to download lean4-mode with this eepitch block,
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-fline \"~/.emacs.d/elpa/lean4-mode/\")
+  rm -Rfv  ~/.emacs.d/elpa/lean4-mode/
+  mkdir -p ~/.emacs.d/elpa/lean4-mode/
+  cd       ~/.emacs.d/elpa/lean4-mode/
+  git clone https://github.com/leanprover-community/lean4-mode .
+
+Then add \"~/.emacs.d/elpa/lean4-mode/\" to the Emacs load-path, with:
+
+(add-to-list 'load-path \"~/.emacs.d/elpa/lean4-mode/\")
+;; Tests: (find-fline \"~/.emacs.d/elpa/lean4-mode/\")
+;;        (ee-locate-library \"lean4-mode\")
+;;        (find-eppp load-path)
+
+
+
+
+See: https://github.com/leanprover-community/lean4-mode
+
+
+
+
+     (find-es \"lean\" \"lean4-mode-vc\")
+     (find-efunction 'ee-locate-library)
+     (ee-locate-library \"lean4-mode\")
+     (find-eev \"eev-lean4.el\" \"etc\")
+
   (package-vc-install \"https://github.com/leanprover-community/lean4-mode\")
   (find-lean4modefile \"README.md\")
 

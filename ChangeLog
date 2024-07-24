@@ -1,3 +1,10 @@
+2024-07-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (ee-closure-to-lambda, ee-symbol-function): new
+	functions.
+	(ee-defun-sexp-for, ee-shortdefp, find-efunctionpp): use
+	`ee-symbol-function'.
+
 2024-07-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-lean4-intro): small changes.
