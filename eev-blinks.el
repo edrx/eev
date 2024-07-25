@@ -1691,10 +1691,15 @@ Hint: install the Debian package \"unicode-data\".")
 ;; This is an experimental hack for handling some versions of Emacs31. See:
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00292.html
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00311.html
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00328.html
+;; TODO: fix this:
+;;   (find-elisp-intro "6. Defining functions")
 
 (defun ee-closure-to-lambda (c)
   "Experimental!!! See the comments in the source!"
-  `(lambda ,(aref c 0) ,@(aref c 1)))
+  (let ((arglist (aref c 0))
+	(body    (aref c 1)))
+  `(lambda ,arglist ,@body)))
 
 (defun ee-symbol-function (sym)
   "Experimental!!! See the comments in the source!"

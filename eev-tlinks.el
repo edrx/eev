@@ -192,6 +192,7 @@
 ;; «.find-debootstrap1-links»		(to "find-debootstrap1-links")
 ;;   «.ee-debootstrap1»			(to "ee-debootstrap1")
 ;; «.find-debootstrap2-links»		(to "find-debootstrap2-links")
+;; «.find-package-vc-install-links»	(to "find-package-vc-install-links")
 
 
 (require 'eev-env)
@@ -5881,6 +5882,72 @@ ssh -p 4444 -o StrictHostKeyChecking=accept-new {user}@localhost echo Ok
  (eepitch-shell2)
   killall sshd;   sleep 1; ps ax | grep ssh
 exit
+")
+       )
+     pos-spec-list)))
+
+
+
+;;;                 _           _        _ _ 
+;;; __   _____     (_)_ __  ___| |_ __ _| | |
+;;; \ \ / / __|____| | '_ \/ __| __/ _` | | |
+;;;  \ V / (_|_____| | | | \__ \ || (_| | | |
+;;;   \_/ \___|    |_|_| |_|___/\__\__,_|_|_|
+;;;                                          
+;; «find-package-vc-install-links»  (to ".find-package-vc-install-links")
+;; Skel: (find-find-links-links-new "package-vc-install" "giturl" "name dir0 dir")
+;; Test: (find-package-vc-install-links)
+;;  See: (find-lean4-intro "5. Install lean4-mode")
+;;
+(defun find-package-vc-install-links (&optional giturl &rest pos-spec-list)
+"Show a script that does part of the work of `package-vc-install'.
+GITURL must be a git url - other version control systems are not
+supported."
+  (interactive)
+  (setq giturl (or giturl "{giturl}"))
+  (let* ((name (file-name-nondirectory giturl))
+         (dir0 (ee-expand "$HOME/.emacs.d/elpa/"))
+         (dir (concat dir0 name)))
+    (apply
+     'find-elinks-elisp
+     `((find-package-vc-install-links ,giturl ,@pos-spec-list)
+       (find-package-vc-install-links "https://github.com/leanprover-community/lean4-mode")
+       (find-package-vc-install-links "https://github.com/edrx/eev")
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-package-vc-install-links)
+       ""
+       ,(ee-template0 "\
+;; Check the version of your Emacs:
+;;   (emacs-version)
+;;
+;; If you're on emacs 29.1 or newer then the sexp with
+;; `package-vc-install' below should work. See:
+;;   (find-enode \"Fetching Package Sources\")
+;;   (find-efunctiondescr 'package-vc-install)
+;;
+(package-vc-install \"{giturl}\")
+
+
+;; Otherwise try the script below.
+;; It will try to download the package from:
+;;   {giturl}
+;; and install it into:
+;;   {dir}
+;;   (find-fline \"{dir0}\")
+;;   (find-fline \"{dir0}\" \"{name}\")
+;;   (find-fline \"{dir}\")
+;; ...BUT IT WILL NOT INSTALL ITS DEPENDENCIES!
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+rm -Rfv  {dir}
+mkdir -p {dir}
+cd       {dir}
+git clone {giturl} .
+
+ (add-to-list 'load-path \"{dir}\")
+ (find-eppp load-path)
 ")
        )
      pos-spec-list)))
