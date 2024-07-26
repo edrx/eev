@@ -3259,10 +3259,10 @@ call BINARY instead of \"google-chrome\"."
 ;;   (find-dot-emacs-intro)
 ;; and run:
 ;;   
-;; (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
+;;   (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
 ;; From: (find-newbrowser2-links \"{binary}\")
+;; Test: (find-googlechrome \"https://www.lua.org/\")
 (defun find-googlechrome (url) (find-bgprocess `(\"{binary}\" ,url)))
-(find-googlechrome \"https://www.lua.org/\")
 ;;--end
 ")
      )
