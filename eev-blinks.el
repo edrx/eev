@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240724
+;; Version:    20240725
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1704,7 +1704,8 @@ Hint: install the Debian package \"unicode-data\".")
 (defun ee-symbol-function (sym)
   "Experimental!!! See the comments in the source!"
   (let ((o (symbol-function sym)))
-    (if (closurep o)
+    (if (and (fboundp 'closurep)
+	     (closurep o))
 	(ee-closure-to-lambda o)
       o)))
 

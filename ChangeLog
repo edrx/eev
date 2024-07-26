@@ -1,5 +1,8 @@
 2024-07-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-blinks.el (ee-symbol-function): added a test for (fboundp
+	'closurep).
+
 	* eev-tlinks.el (find-package-vc-install-links): new function.
 
 2024-07-24  Eduardo Ochs  <eduardoochs@gmail.com>
