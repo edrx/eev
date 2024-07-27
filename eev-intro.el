@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240724
+;; Version:    20240726
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -17799,18 +17799,24 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-Warning: WORK IN PROGRESS!
-VERY EARLY DRAFT!
-UNFINISHED! UNTESTED!
+THIS IS A WORK IN PROGRESS!!!
+I am using it in this workshop:
+  Page:  http://anggtwu.net/2024-lean4-oficina-0.html
+  Play:  (find-2024lean4of0video \"00:00\")
+  HSubs: (find-2024lean4of0hsubs \"00:00\")
+  Info:  (find-1stclassvideo-links \"2024lean4of0\")
 
 
 
 0. Prerequisites
 ================
+See: http://anggtwu.net/2024-first-executable-notes.html
+Copy the rest of this section to your ~/TODO, and try to
+understand its links:
+
   (find-eev-quick-intro \"7. Quick access to one-liners\")
   (find-eev-quick-intro \"7. Quick access to one-liners\" \"forget\")
 
-  http://anggtwu.net/2024-lean4-oficina-0.html
   (find-windows-beginner-intro)
   (find-windows-beginner-intro \"6. Learn the basics of Emacs and eev\")
 
@@ -17828,7 +17834,6 @@ UNFINISHED! UNTESTED!
   (find-eev-quick-intro \"5. Links to Emacs documentation\")
   (find-eev-quick-intro \"5.1. Navigating the Emacs manuals\")
   (find-eev-quick-intro \"5.2. Cutting and pasting\")
-    http://anggtwu.net/IMAGES/2024-emacs-cut-copy-and-paste.png
     http://anggtwu.net/2024-find-dot-emacs-links.html
 
   (find-eev-quick-intro \"6.1. The main key: <F8>\")
@@ -17880,6 +17885,7 @@ UNFINISHED! UNTESTED!
   cd /tmp/
   wget -N http://anggtwu.net/tmp/2024-lean4-oficina-manuais.tgz
   # (find-fline            \"/tmp/2024-lean4-oficina-manuais.tgz\")
+  tar        -tvzf          /tmp/2024-lean4-oficina-manuais.tgz
   tar -C $S/ -xvzf          /tmp/2024-lean4-oficina-manuais.tgz
 
 
@@ -17887,7 +17893,7 @@ UNFINISHED! UNTESTED!
 2. Setup the ~/.emacs
 =====================
 See: http://anggtwu.net/2024-find-dot-emacs-links.html
-Use: (find-dot-emacs-links \"eev angges melpa lean4 maxima5470 mfms\")
+Use: (find-dot-emacs-links \"eevgit eev angges melpa lean4 maxima5470 mfms\")
 
 
 
@@ -17913,12 +17919,52 @@ Use: (find-dot-emacs-links \"eev angges melpa lean4 maxima5470 mfms\")
 
 4. Install Lean4
 ================
+Follow the instructions here:
+
   (find-es \"lean\" \"install-2024\")
 
+i.e.,:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  rm -Rv /tmp/elan-install/
+  mkdir  /tmp/elan-install/
+  cd     /tmp/elan-install/
+  curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf \
+    | sh -s -- --default-toolchain leanprover/lean4:stable
+
+The installer will ask if you want it to change some files like
+~/.bashrc and ~/.zshrc to include ~/.elan/bin/ in the PATH. If you're
+only going to use Lean from Emacs, say no - because of this:
+
+  (find-eev \"eev-lean4.el\" \"PATH\")
 
 
 
-5. Install lean4-mode
+
+5. Take a look at the libraries
+===============================
+If everything went right then the installer will put Lean's libraries
+here,
+
+  (find-fline \"~/.elan/toolchains/\")
+  (find-fline \"~/.elan/toolchains/leanprover--lean4---stable/\")
+
+and these short hyperlink should work:
+
+  (find-lean4prefile \"\")
+  (find-lean4presh \"find * | sort\")
+
+If they don't work you will need to override a `code-c-d' that is here:
+
+  (find-eev \"eev-lean4.el\" \"code-c-ds\")
+
+
+
+
+
+6. Install lean4-mode
 =====================
 The instructions in
 
@@ -17939,17 +17985,53 @@ then run this progn,
     (package-install 'flycheck)
     (package-install 'lsp-mode)
     (package-install 'magit-section)
+    (package-install 'company)
     )
 
 and try:
 
   (require 'lean4-mode)
 
+If that `require' returns `lean4-mode', that's a good sign.
 
 
-6. Test lean4-mode
-==================
-  (find-es \"lean\" \"Std.Format\")
+
+
+7. Project root
+===============
+If you open the file Init.lean with the second sexp below,
+
+  (find-lean4prefile \"\")
+  (find-lean4prefile \"Init.lean\")
+
+then lsp-mode will ask where is the \"project root\", and there will be
+an option to say that it is at that the directory above, i.e., at:
+
+  ~/.elan/toolchains/leanprover--lean4---stable/
+
+I don't understand projects and project roots well... =(
+
+
+
+
+8. Visit a .lean file
+=====================
+Try this with `M-3 M-e':
+
+  (find-lean4prefile \"Init/Data/Format/Basic.lean\" \"inductive Format\")
+
+the prefix `M-3' will make the file be opened at the window at the
+right. Then try these navigation keys:
+
+  M-.   - go forward (xref-find-definitions)
+  M-,   - go back (xref-go-back)
+
+
+
+9. Try a snippet
+================
+In: (find-es \"lean\" \"Std.Format\")
+TODO: explain this!
 
 
 

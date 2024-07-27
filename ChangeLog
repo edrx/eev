@@ -1,5 +1,7 @@
 2024-07-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-tlinks.el (ee-dot-emacs-eevgit): new function.
+
 	* eev.el: bumped the version.
 
 	* eev-videolinks.el (ee-1stclassvideos-info): new video:

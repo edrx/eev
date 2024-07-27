@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240721
+;; Version:    20240726
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3970,6 +3970,12 @@ is nil, use the result of (ee-1stclassvideos)."
             collect (funcall sym))
    "\n"))
 
+;; Test: (find-estring-elisp (ee-dot-emacs-eevgit))
+(defun ee-dot-emacs-eevgit (&rest rest) "\
+;; See: (find-package-vc-install-links \"https://github.com/edrx/eev\")
+(add-to-list 'load-path \"~/.emacs.d/elpa/eev\")
+")
+
 ;; Test: (find-estring-elisp (ee-dot-emacs-eev))
 (defun ee-dot-emacs-eev (&rest rest) "\
 ;; See: (find-eev-levels-intro)
@@ -4015,8 +4021,10 @@ is nil, use the result of (ee-1stclassvideos)."
 ;; Test: (find-estring-elisp (ee-dot-emacs-lean4))
 (defun ee-dot-emacs-lean4 (&rest rest) "\
 ;; See: (find-lean4-intro)
-(require 'eev-lean4)      ; (find-eev \"eev-lean4.el\")
+(add-to-list 'load-path \"~/.emacs.d/elpa/lean4-mode\")
+(defun fli () (interactive) (find-lean4-intro))
 (defun el4 () (interactive) (find-eev \"eev-lean4.el\"))
+(require 'eev-lean4)      ; (find-eev \"eev-lean4.el\")
 ")
 
 ;; Test: (find-estring-elisp (ee-dot-emacs-mfms))

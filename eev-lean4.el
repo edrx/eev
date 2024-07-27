@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240707
+;; Version:    20240726
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-lean4.el>
@@ -33,15 +33,18 @@
 ;; This file contains part of the setup for this workshop:
 ;;
 ;;   http://anggtwu.net/2024-lean4-oficina-0.html
+;;   (find-lean4-intro)
 ;;
 ;; This is very experimental and very undocumented!
 ;;
-;; (load (buffer-file-name))
+;;   (load (buffer-file-name))
 
 ;;
 
 ;; Index:
 ;; «.PATH»			(to "PATH")
+;; «.lean4-mode»		(to "lean4-mode")
+;; «.code-c-ds»			(to "code-c-ds")
 ;; «.etc»			(to "etc")
 ;; «.ee-let*-macro-leandoc»	(to "ee-let*-macro-leandoc")
 ;; «.code-leandocpdf»		(to "code-leandocpdf")
@@ -74,13 +77,20 @@
 ;; (find-sh "echo $PATH | tr : '\n'")
 
 
-;; «etc»  (to ".etc")
+;; «lean4-mode»  (to ".lean4-mode")
+;; See: (find-lean4-intro "6. Install lean4-mode")
+(add-to-list 'load-path "~/.emacs.d/elpa/lean4-mode")
+(ignore-errors (require 'lean4-mode))
+
+
+;; «code-c-ds»  (to ".code-c-ds")
 ;; (find-lean4prefile "")
 ;; (find-lean4presh "find * | sort")
 (code-c-d "lean4pre"  "~/.elan/toolchains/leanprover--lean4---stable/src/lean/")
 
-;; If lean4-mode or lsp-mode are not installed
-;; these `code-c-d's will do weird things.
+;; If lean4-mode or lsp-mode are not installed then the `code-c-d's
+;; below will point to "nil" instead of to a real directory, and you
+;; will have to rerun them at some point.
 ;;
 ;; (find-code-c-d "lean4mode" (ee-locate-library "lean4-mode"))
 ;; (find-code-c-d "lspmode"   (ee-locate-library "lsp-mode"))
@@ -89,6 +99,8 @@
 ;; (find-lean4modefile "")
 ;; (find-lspmodefile "")
 
+
+;; «etc»  (to ".etc")
 ;; (find-es "lean" "lean4-mode-vc")
 ;; (find-es "lsp" "lsp-mode-git")
 
