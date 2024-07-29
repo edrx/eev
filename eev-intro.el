@@ -17990,20 +17990,21 @@ then run this progn,
     (add-to-list 'package-archives
       '(\"melpa\" . \"https://melpa.org/packages/\"))
     ;;
-    (setq package-check-signature nil)
-    ;;
+    ;; See:
+    ;; https://mail.gnu.org/archive/html/help-gnu-emacs/2024-05/msg00248.html
     (package-initialize)
+    (setq package-check-signature nil)
     (package-refresh-contents)
-    ;;
-    ;; Make everything work on Emacs28:
-    (setq package-install-upgrade-built-in t)
     (package-install 'gnu-elpa-keyring-update)
+    (setq package-check-signature t)
+    ;;
+    ;; See:
+    ;; https://emacs.stackexchange.com/questions/80871/how-to-provide-updated-seq-package-to-magit
+    (setq package-install-upgrade-built-in t)
     (package-install 'compat)
     (package-install 'seq)
     (progn (unload-feature 'seq t) (require 'seq))
     (package-install 'magit)
-    ;;
-    (setq package-check-signature nil)
     ;;
     ;; Missing in the instructions for lean4-mode:
     (package-install 'company)

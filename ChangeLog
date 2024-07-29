@@ -3,6 +3,7 @@
 	* eev-intro.el (find-emacs-keys-intro): list some key sequences
 	for frames.
 	(find-lean4-intro): many changes; made it work on Emacs28.
+	(find-lean4-intro): added some links.
 
 2024-07-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
