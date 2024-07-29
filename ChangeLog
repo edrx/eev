@@ -1,3 +1,9 @@
+2024-07-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-emacs-keys-intro): list some key sequences
+	for frames.
+	(find-lean4-intro): many changes; made it work on Emacs28.
+
 2024-07-26  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-dot-emacs-eevgit): new function.

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240726
+;; Version:    20240728
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-lean4.el>
@@ -36,6 +36,7 @@
 ;;   (find-lean4-intro)
 ;;
 ;; This is very experimental and very undocumented!
+;; Reload with:
 ;;
 ;;   (load (buffer-file-name))
 
@@ -60,6 +61,10 @@
 ;;   «.ee-leandoc-:tclean4»	(to "ee-leandoc-:tclean4")
 ;;   «.ee-leandoc-:tpil4»	(to "ee-leandoc-:tpil4")
 
+;; (require 'subr-x)
+(require 'eev-rstdoc)
+(setq package-install-upgrade-built-in t) ; needed for Emacs28?
+
 
 
 
@@ -70,8 +75,8 @@
 ;;; |_| /_/   \_\_| |_| |_|
 ;;;                        
 ;; «PATH»  (to ".PATH")
-;; See: (find-es "lean" "install-2024")
-;; export PATH=$HOME/.elan/bin:$PATH
+;; Similar to: export PATH=$HOME/.elan/bin:$PATH
+;;        See: (find-lean4-intro "4. Install Lean4")
 (setenv "PATH" (format "%s/.elan/bin:%s" (getenv "HOME") (getenv "PATH")))
 ;; (find-sh "echo $PATH")
 ;; (find-sh "echo $PATH | tr : '\n'")

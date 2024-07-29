@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240726
+;; Version:    20240729
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -2135,6 +2135,10 @@ C-x 2   -- split-window-vertically (Above/Below) (find-enode \"Split Window\")
 C-x 3   -- split-window-horizontally       (L|R) (find-enode \"Split Window\")
 C-x 4 0 -- kill-buffer-and-window                (find-enode \"Change Window\")
 C-x +   -- balance-windows                       (find-enode \"Change Window\")
+C-x 5 o	-- other-frame                           (find-enode \"Frame Commands\")
+C-x 5 0 -- delete-frame                          (find-enode \"Frame Commands\")
+C-x 5 1 -- delete-other-frames                   (find-enode \"Frame Commands\")
+C-x 5 2	-- make-frame-command                    (find-enode \"Creating Frames\")
 
 
 
@@ -17931,12 +17935,16 @@ i.e.,:
   rm -Rv /tmp/elan-install/
   mkdir  /tmp/elan-install/
   cd     /tmp/elan-install/
-  curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf \
-    | sh -s -- --default-toolchain leanprover/lean4:stable
+  curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf \\
+    | sh -s -- -y --default-toolchain leanprover/lean4:stable
 
-The installer will ask if you want it to change some files like
-~/.bashrc and ~/.zshrc to include ~/.elan/bin/ in the PATH. If you're
-only going to use Lean from Emacs, say no - because of this:
+The \"-y\" after the \"sh\" in the last line makes the installer use
+certain defaults without asking questions.
+
+Note about $PATH: if you remove the \"-y\" then the installer may ask if
+you want it to change some files like ~/.bashrc and ~/.zshrc to include
+~/.elan/bin/ in the PATH. If you're only going to use Lean from Emacs,
+you can say no - because of this:
 
   (find-eev \"eev-lean4.el\" \"PATH\")
 
@@ -17979,13 +17987,32 @@ then run this progn,
 
   (progn
     (find-2a nil '(find-ebuffer \"*Messages*\"))
+    (add-to-list 'package-archives
+      '(\"melpa\" . \"https://melpa.org/packages/\"))
+    ;;
+    (setq package-check-signature nil)
+    ;;
     (package-initialize)
     (package-refresh-contents)
+    ;;
+    ;; Make everything work on Emacs28:
+    (setq package-install-upgrade-built-in t)
+    (package-install 'gnu-elpa-keyring-update)
+    (package-install 'compat)
+    (package-install 'seq)
+    (progn (unload-feature 'seq t) (require 'seq))
+    (package-install 'magit)
+    ;;
+    (setq package-check-signature nil)
+    ;;
+    ;; Missing in the instructions for lean4-mode:
+    (package-install 'company)
+    ;;
+    ;; From the instructions for lean4-mode:
     (package-install 'dash)
     (package-install 'flycheck)
     (package-install 'lsp-mode)
     (package-install 'magit-section)
-    (package-install 'company)
     )
 
 and try:
@@ -18005,7 +18032,7 @@ If you open the file Init.lean with the second sexp below,
   (find-lean4prefile \"Init.lean\")
 
 then lsp-mode will ask where is the \"project root\", and there will be
-an option to say that it is at that the directory above, i.e., at:
+an option (\"i\") to say that it is at the directory above, i.e., at:
 
   ~/.elan/toolchains/leanprover--lean4---stable/
 
@@ -18023,15 +18050,34 @@ Try this with `M-3 M-e':
 the prefix `M-3' will make the file be opened at the window at the
 right. Then try these navigation keys:
 
-  M-.   - go forward (xref-find-definitions)
+  M-.   - go to   (xref-find-definitions)
   M-,   - go back (xref-go-back)
+
+For a demo of these keys, see this part of the video (in Portuguese):
+
+  (find-2024lean4of0hsubs \"14:12\" \"`go to' e `go back'\")
+  (find-2024lean4of0video \"14:12\" \"`go to' e `go back'\")
+
 
 
 
 9. Try a snippet
 ================
-In: (find-es \"lean\" \"Std.Format\")
-TODO: explain this!
+Watch this part of the video,
+
+  (find-2024lean4of0hsubs \"16:31\" \"(anotações sobre coerção)\")
+  (find-2024lean4of0video \"16:31\" \"(anotações sobre coerção)\")
+  (find-2024lean4of0hsubs \"17:39\" \"bota isso aqui no clipboard do Emacs\")
+  (find-2024lean4of0video \"17:39\" \"bota isso aqui no clipboard do Emacs\")
+
+and try to use the notes in the link below, including the snippet.
+If LSP asks for a project root, answer \"i\", for:
+
+  i ==> Import project root /tmp/L/
+
+Here is the link:
+
+  (find-es \"lean\" \"Std.Format\")
 
 
 

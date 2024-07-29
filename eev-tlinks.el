@@ -198,6 +198,7 @@
 (require 'eev-env)
 (require 'eev-wrap)    ; For: (find-eev "eev-wrap.el" "ee-template0") 
 (require 'cl-lib)      ; For `cl-remove-if'
+(require 'subr-x)      ; For `string-join'
 
 
 
@@ -3240,7 +3241,9 @@ call BINARY instead of \"google-chrome\"."
      ""
      ,(ee-template0 "\
 ;; Make `{binary}' the default browser.
-;; This is a hack that makes `find-googlechrome' call `{binary}'!
+;; This is a hack that makes `find-googlechrome' call `{binary}'.
+;; Note that this hack bypasses the variable `ee-googlechrome-program'!
+;; See: (find-eev \"eev-plinks.el\" \"find-googlechrome\")
 
 
 ;; Try:
