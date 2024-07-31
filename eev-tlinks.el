@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240726
+;; Version:    20240731
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -132,7 +132,7 @@
 ;; «.find-eeit-links»			(to "find-eeit-links")
 ;; «.find-texlive-links»		(to "find-texlive-links")
 ;; «.find-newbrowser-links»		(to "find-newbrowser-links")
-;; «.find-newbrowser2-links»		(to "find-newbrowser2-links")
+;; «.find-altbrowser-links»		(to "find-altbrowser-links")
 ;; «.find-newpdfviewer-links»		(to "find-newpdfviewer-links")
 ;; «.ee-0x0-upload-region»		(to "ee-0x0-upload-region")
 ;; «.find-0x0-links»			(to "find-0x0-links")
@@ -3120,7 +3120,7 @@ sudo ./install-tl -select-repository
      (find-efunction 'find-newbrowser-links)
      ""
      ";; Important: this function is OBSOLETE!"
-     ";; It was superseded by: (find-newbrowser2-links)"
+     ";; It was superseded by: (find-altbrowser-links)"
      ""
      ""
      ""
@@ -3221,23 +3221,24 @@ sudo ./install-tl -select-repository
 ;;; | | | |  __/\ V  V /| |_) | | | (_) \ V  V /\__ \  __/ |  / __/ 
 ;;; |_| |_|\___| \_/\_/ |_.__/|_|  \___/ \_/\_/ |___/\___|_| |_____|
 ;;;                                                                 
-;; «find-newbrowser2-links»  (to ".find-newbrowser2-links")
-;; Skel: (find-find-links-links-new "newbrowser2" "binary" "")
-;; Test: (find-newbrowser2-links)
+;; «find-altbrowser-links»  (to ".find-altbrowser-links")
+;; Skel: (find-find-links-links-new "altbrowser" "binary" "")
+;; Test: (find-altbrowser-links)
 ;;
-(defun find-newbrowser2-links (&optional binary &rest pos-spec-list)
+(defun find-altbrowser-links (&optional binary &rest pos-spec-list)
 "Visit a temporary buffer with instructions for making `find-googlechrome'
-call BINARY instead of \"google-chrome\"."
+use an alternate browser. More precisely, it shows how to redefine
+`find-googlechrome' to make it call BINARY instead of \"google-chrome\"."
   (interactive)
   (setq binary (or binary "{binary}"))
   (apply
    'find-elinks-elisp
-   `((find-newbrowser2-links ,binary ,@pos-spec-list)
-     (find-newbrowser2-links "{binary}" ,@pos-spec-list)
-     (find-newbrowser2-links "google-chrome" ,@pos-spec-list)
-     (find-newbrowser2-links "chromium" ,@pos-spec-list)
+   `((find-altbrowser-links ,binary ,@pos-spec-list)
+     (find-altbrowser-links "{binary}" ,@pos-spec-list)
+     (find-altbrowser-links "google-chrome" ,@pos-spec-list)
+     (find-altbrowser-links "chromium" ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-newbrowser2-links)
+     (find-efunction 'find-altbrowser-links)
      ""
      ,(ee-template0 "\
 ;; Make `{binary}' the default browser.
@@ -3263,7 +3264,7 @@ call BINARY instead of \"google-chrome\"."
 ;; and run:
 ;;   
 ;;   (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
-;; From: (find-newbrowser2-links \"{binary}\")
+;; From: (find-altbrowser-links \"{binary}\")
 ;; Test: (find-googlechrome \"https://www.lua.org/\")
 (defun find-googlechrome (url) (find-bgprocess `(\"{binary}\" ,url)))
 ;;--end

@@ -282,7 +282,7 @@ local files for the leandoc PL."
 ;;     (kill-new \"/tmp/print.pdf\")
 ;;     {baseweb}print.html
 ;;
-;;  c) Copy the `print.pdf' to the right place:
+;;  c) Copy the `print.pdf' to the right (local) place:
 ;;     (find-sh0 \"cp -v /tmp/print.pdf {basewebl}\")
 ;;
 ;;  d) Generate the `print.txt':
@@ -290,11 +290,30 @@ local files for the leandoc PL."
 ;;     (find-{kw}docfile \"\" \"print\")
 ;;     (find-{kw}docsh \"pdftotext -layout print.pdf print.txt\")
 ;;     (find-{kw}docfile \"print.txt\")
+;;
+;;  e) Copy the `print.pdf' to anggtwu.net:
 
+ (eepitch-eshell)
+ (eepitch-kill)
+ (eepitch-eshell)
+ls                $S/https/{baseweb-}
+ls       $Linp/snarf/https/{baseweb-}
+ls       $Lins/snarf/https/{baseweb-}
+mkdir -p $Linp/snarf/https/{baseweb-}
+mkdir -p $Lins/snarf/https/{baseweb-}
+cp -v             $S/https/{baseweb-}print.pdf \\
+         $Linp/snarf/https/{baseweb-}
+cp -v             $S/https/{baseweb-}print.pdf \\
+         $Lins/snarf/https/{baseweb-}
 
 ;; 3. I use this to adjust how blogme htmlizes `find-{kw}doc':
 ;;    (find-blogme3-rstdoc-links \"{kw}\")
 ;;    ^ This only works on my machine!
+;;
+;; 4. Similar, but for `find-{kw}page':
+;;    (find-blogme3 \"sandwiches-defs.lua\")
+code_pdf(\"{kw}\", \"http://anggtwu.net/snarf/https/{baseweb-}print.pdf\")
+
 ")
 	)
       pos-spec-list))))

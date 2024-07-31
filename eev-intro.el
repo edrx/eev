@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240729
+;; Version:    20240731
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -17908,11 +17908,16 @@ Use: (find-dot-emacs-links \"eevgit eev angges melpa lean4 maxima5470 mfms\")
   (find-leanmetadoc  \"main/01_intro\")
   (find-tclean4doc   \"trust/trust\")
   (find-tpil4doc     \"introduction\")
-  (find-fplean4page)
-  (find-lean4page)
-  (find-leanmetapage)
-  (find-tclean4page)
-  (find-tpil4page)
+  (find-fplean4page  9 \"Evaluating Expressions\")
+  (find-fplean4text  9 \"Evaluating Expressions\")
+  (find-lean4page    1 \"What is Lean\")
+  (find-lean4text    1 \"What is Lean\")
+  (find-leanmetapage 1 \"What's the goal of this book?\")
+  (find-leanmetatext 1 \"What's the goal of this book?\")
+  (find-tclean4page  5 \"Trust\")
+  (find-tclean4text  5 \"Trust\")
+  (find-tpil4page    1 \"Introduction\")
+  (find-tpil4text    1 \"Introduction\")
 
   Broken - I did not include this one:
   (find-leanrefdoc   \"using_lean#using-lean-with-emacs\")
@@ -18037,7 +18042,8 @@ an option (\"i\") to say that it is at the directory above, i.e., at:
 
   ~/.elan/toolchains/leanprover--lean4---stable/
 
-I don't understand projects and project roots well... =(
+Answer \"i\". Note: I don't understand projects and project roots well
+enough... =(
 
 
 

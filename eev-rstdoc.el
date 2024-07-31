@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240619
+;; Version:    20240731
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-rstdoc.el>
@@ -134,7 +134,7 @@
 ;;
 ;; The first two sexps above will open URLs like these ones:
 ;;
-;;   file:///usr/share/doc/python3.9-doc/html/tutorial/controlflow.html#lambda-expressions
+;;   file:///usr/share/doc/python3.11-doc/html/tutorial/controlflow.html#lambda-expressions
 ;;   https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions
 ;;
 ;; i.e., the `find-pydoc' uses the local copy of the Python docs, that
@@ -142,7 +142,7 @@
 ;; copy "from the web", that takes longer. The third sexp, the one
 ;; with `find-pydocr', opens this file:
 ;;
-;;   /usr/share/doc/python3.9/html/_sources/tutorial/controlflow.rst.txt
+;;   /usr/share/doc/python3.11/html/_sources/tutorial/controlflow.rst.txt
 ;;
 ;; that is the source of "control.html", in RST format - see:
 ;;
@@ -237,7 +237,7 @@
 ;; and in a way that supposes that we are on Debian Stable, and that
 ;; we have these packages installed:
 ;;
-;;   python3.9-doc
+;;   python3.11-doc
 ;;   python-sympy-doc
 ;;   python-matplotlib-doc
 ;;
@@ -280,8 +280,8 @@
 (defvar ee-rstdoc-:py
       '(:base      "index"
         :base-web  "https://docs.python.org/3/"
-        :base-html "file:///usr/share/doc/python3.9-doc/html/"
-        :base-rst  "/usr/share/doc/python3.9/html/_sources/"
+        :base-html "file:///usr/share/doc/python3.11-doc/html/"
+        :base-rst  "/usr/share/doc/python3.11/html/_sources/"
         :rst       ".rst.txt"
         :res       ("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
                     "^https://docs.python.org/3/"

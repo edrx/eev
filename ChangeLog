@@ -1,3 +1,15 @@
+2024-07-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rstdoc.el: replaced all occurrences of "python3.9" by
+	"python3.11".
+
+2024-07-30  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-newbrowser2-links): renamed to
+	`find-altbrowser-links'.
+
+	* eev-intro.el (find-lean4-intro): Small changes.
+
 2024-07-29  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-emacs-keys-intro): list some key sequences
