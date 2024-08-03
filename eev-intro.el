@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240731
+;; Version:    20240803
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -17997,11 +17997,13 @@ then run this progn,
     ;;
     ;; See:
     ;; https://mail.gnu.org/archive/html/help-gnu-emacs/2024-05/msg00248.html
+    ;; https://www.reddit.com/r/emacs/comments/bn6k1y/updating_gnu_elpa_keys/
+    ;; http://anggtwu.net/2024-no-public-key.html
     (package-initialize)
     (setq package-check-signature nil)
     (package-refresh-contents)
     (package-install 'gnu-elpa-keyring-update)
-    (setq package-check-signature t)
+    (setq package-check-signature 'allow-unsigned)
     ;;
     ;; See:
     ;; https://emacs.stackexchange.com/questions/80871/how-to-provide-updated-seq-package-to-magit

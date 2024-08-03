@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240726
+;; Version:    20240802
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -843,6 +843,7 @@ of the videos and play them with mpv. Compare with
      :date    "2024jul04"
      :length  "37:20"
      :subs    ".vtt"
+     :index   t
      :comment "A video in Portuguese about a workshop on Lean4.")
     ;;
     ;; «2024algpergs»  (to ".2024algpergs")

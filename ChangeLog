@@ -1,3 +1,13 @@
+2024-08-03  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-lean4-intro): use (setq
+	package-check-signature 'allow-unsigned) instead of (setq
+	package-check-signature t).
+
+2024-08-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): added ':index t'.
+
 2024-07-31  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-rstdoc.el: replaced all occurrences of "python3.9" by
