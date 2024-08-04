@@ -3,6 +3,8 @@
 	* eev-intro.el (find-lean4-intro): use (setq
 	package-check-signature 'allow-unsigned) instead of (setq
 	package-check-signature t).
+	(find-windows-beginner-intro): added a "sudo apt-get install -y
+	git".
 
 2024-08-02  Eduardo Ochs  <eduardoochs@gmail.com>
 

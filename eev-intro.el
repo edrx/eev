@@ -15105,6 +15105,7 @@ sudo apt-get install -y tkdiff
 sudo apt-get install -y yt-dlp
 sudo apt-get install -y dctrl-tools
 sudo apt-get install -y lynx
+sudo apt-get install -y git
 
 
 
