@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240802
+;; Version:    20240807
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -76,6 +76,7 @@
 ;;   «.2024luaso»			(to "2024luaso")
 ;;   «.2024lean4of0»			(to "2024lean4of0")
 ;;   «.2024algpergs»			(to "2024algpergs")
+;;   «.2024convite»			(to "2024convite")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -860,6 +861,21 @@ of the videos and play them with mpv. Compare with
      :length  "10:13"
      :subs    ".vtt"
      :comment "A video in Portuguese about installation on Windows.")
+    ;;
+    ;; «2024convite»  (to ".2024convite")
+    ;; Play: (find-2024convitevideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2024convite")
+    ("2024convite"
+     :title "Convite: Maxima"
+     :mp4   "http://anggtwu.net/eev-videos/2024-convite-maxima.mp4"
+     :yt    "http://www.youtube.com/watch?v=wVwxugy15cU"
+     :page  "http://anggtwu.net/2024-convite-maxima.html"
+     :hsubs "http://anggtwu.net/2024-convite-maxima.html#00:00"
+     :lang  "portuguese"
+     :date    "2024aug06"
+     :length  "20:22"
+     :subs    ".vtt"
+     :comment "COMMENT")
     ))
 
 

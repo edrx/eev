@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240803
+;; Version:    20240810
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -15091,8 +15091,9 @@ sudo apt-get install -y emacs-el emacs-common-non-dfsg
 sudo apt-get install -y wget curl
 sudo apt-get install -y mpv
 sudo apt-get install -y xterm xpdf poppler-utils
+sudo apt-get install -y gcl gcl-doc
 sudo apt-get install -y sbcl sbcl-doc sbcl-source
-sudo apt-get install -y maxima maxima-doc gnuplot
+sudo apt-get install -y maxima maxima-doc maxima-share gnuplot
 sudo apt-get install -y lua5.1 lua5.1-dev lua5.1-doc
 sudo apt-get install -y lua5.2 lua5.2-dev lua5.2-doc
 sudo apt-get install -y lua5.3 lua5.3-dev
@@ -15217,6 +15218,12 @@ and then try:
 
   (find-es \"maxima\" \"eev-demo\")
 
+Compare with:
+
+  (find-2022findeevangghsubs \"15:14\" \"run this eepitch-maxima (again)\")
+  (find-2022findeevanggvideo \"15:14\" \"run this eepitch-maxima (again)\")
+
+
 
 
 
@@ -15269,6 +15276,9 @@ See:
 11. Edit your init file
 =======================
 See:
+  http://anggtwu.net/2024-find-dot-emacs-links.html
+  (find-efunction 'find-dot-emacs-links)
+
   (find-eev-levels-intro \"0. Introduction\")
   (find-eev-quick-intro \"7.1. `eejump'\")
   (find-eev-quick-intro \"7.2. The list of eejump targets\")
