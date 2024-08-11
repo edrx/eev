@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240731
+;; Version:    20240811
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -182,6 +182,7 @@
 ;; «.code-brappend»			(to "code-brappend")
 ;; «.find-maximamsg-links»		(to "find-maximamsg-links")
 ;; «.find-maximamsg»			(to "find-maximamsg")
+;; «.find-qdraw-links»			(to "find-qdraw-links")
 ;; «.find-linki-links»			(to "find-linki-links")
 ;; «.find-gitdoc-links»			(to "find-gitdoc-links")
 ;; «.find-luainit-links»		(to "find-luainit-links")
@@ -5317,6 +5318,49 @@ A \"Maxima message\" is a message in the Maxima mailing list."
       (&optional n yyyymm day &rest rest) 
       (ee-split (or str "999999"))
     (find-maximamsg-links n yyyymm day)))
+
+
+
+;; «find-qdraw-links»  (to ".find-qdraw-links")
+;; Skel: (find-find-links-links-new "qdraw" "fs xr yr" "")
+;; Test: (find-qdraw-links)
+;;
+(defun find-qdraw-links (&optional fs xr yr &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for qdraw."
+  (interactive)
+  (setq fs (or fs "{fs}"))
+  (setq xr (or xr "{xr}"))
+  (setq yr (or yr "{yr}"))
+  (apply
+   'find-elinks
+   `((find-qdraw-links ,fs ,xr ,yr ,@pos-spec-list)
+     (find-qdraw-links "x,x^2,x^3,x^4" "-2,2" "-2,2")
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-qdraw-links)
+     ""
+     (find-windows-beginner-intro "12. Install qdraw")
+     ;; (defalias 'qdraw 'find-qdraw-links)
+     ""
+     ,(ee-template0 "\
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+load_qdraw();
+fs : [{fs}];
+/* qdraw(xr({xr}),yr({yr}), ex(fs,x,{xr})); */
+
+colors : [red, orange, forest_green, blue, dark_violet]$
+myqdraw([lists]) := apply('qdraw, apply('append, lists))$
+myexs_1(ii)      := ex1(fs[ii], x, {xr}, lc(colors[ii]))$
+myexs_1(ii)      := ex1(fs[ii], x, {xr}, lc(colors[ii]), lk(fs[ii]))$
+myexs()          := makelist(myexs_1(ii), ii, length(fs))$
+myexs();
+
+myqdraw([xr({xr}),yr({yr})], myexs());
+")
+     )
+   pos-spec-list))
+
 
 
 

@@ -1,3 +1,10 @@
+2024-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): added the section
+	"12. Install qdraw".
+
+	* eev-tlinks.el (find-qdraw-links): new function.
+
 2024-08-10  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-windows-beginner-intro): added a "sudo

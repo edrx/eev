@@ -15132,6 +15132,11 @@ sudo apt-get install -y -f
 
 6. Learn the basics of Emacs and eev
 ====================================
+The best way to learn the basics is to start by copying this
+section to your ~/TODO file. This is explained in these pages:
+  http://anggtwu.net/2024-first-executable-notes.html
+  http://anggtwu.net/2024-restructuring.html
+
 The \"basics\" are these sections of the main tutorial,
 
   (find-eev-quick-intro \"2. Evaluating Lisp\")
@@ -15270,6 +15275,8 @@ See:
   (find-elisp-intro)
   (find-elisp-intro \"M-7 M-j\")
   (find-eev-quick-intro \"4. Creating Elisp Hyperlinks\")
+  (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\")
+
 
 
 
@@ -15277,14 +15284,47 @@ See:
 =======================
 See:
   http://anggtwu.net/2024-find-dot-emacs-links.html
-  (find-efunction 'find-dot-emacs-links)
+  (find-dot-emacs-links)
 
-  (find-eev-levels-intro \"0. Introduction\")
-  (find-eev-quick-intro \"7.1. `eejump'\")
-  (find-eev-quick-intro \"7.2. The list of eejump targets\")
-  (find-eev-quick-intro \"7.3. Defining eejump targets\")
-  (find-eev-quick-intro \"7.4. Commands with very short names\")
-  (find-eejumps 2 \"eejump-55\")
+
+
+
+12. Install qdraw
+=================
+Qdraw is an extension of the default drawing functions
+that come with Maxima. It is explained here:
+
+  https://home.csulb.edu/~woollett/
+  https://home.csulb.edu/~woollett/mbe13.html
+  https://home.csulb.edu/~woollett/mbe13qdraw.pdf
+
+The easiest way to install qdraw is by running this
+eepitch block,
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  cd /tmp/
+  wget -N http://anggtwu.net/tmp/edrx-maxima.tgz
+  tar -C ~/ -xvzf /tmp/edrx-maxima.tgz
+
+that also installs my init file for Maxima and lots of
+small programs that I wrote. Note that the \"tar -xvzf\"
+above extracts the files from this .tgz file
+
+  (find-fline \"/tmp/edrx-maxima.tgz\")
+
+into these three directories:
+
+  (find-fline \"~/.maxima/\")
+  (find-fline \"~/MAXIMA/\")
+  (find-fline \"~/luatree/\")
+
+Here are some tests:
+
+  (find-qdraw-links \"x,x^2,x^3,x^4\" \"-2,2\" \"-2,2\")
+  (find-es \"maxima\" \"2024.1-intro-complex\")
+
 
 
 
