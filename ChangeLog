@@ -1,5 +1,8 @@
 2024-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev-edit.el (ee-copy-this-line-to-kill-ring): fixed a bug/typo -
+	"end" was using "bol" instead of "eol"!
+
 	* eev-intro.el (find-windows-beginner-intro): added the section
 	"12. Install qdraw".
 
