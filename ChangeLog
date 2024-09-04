@@ -1,3 +1,26 @@
+2024-09-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-dot-emacs-sly): new function.
+
+2024-09-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-clhsdoci, ee-clhs-lookup-index): new
+	functions.
+
+	* eev-rstdoc.el (ee-rstdoc-default-defuns): added `:clhs'.
+
+	* eev-intro.el (find-try-sly-intro): new function.
+
+	* eev-tlinks.el (find-try-sly-links): point to
+	`find-try-sly-intro'.
+
+	* eev-plinks.el (find-wget-org): new function.
+
+2024-08-18  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): new video:
+	"2024lean4of0a2".
+
 2024-08-11  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-edit.el (ee-copy-this-line-to-kill-ring): fixed a bug/typo -

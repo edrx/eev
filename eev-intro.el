@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240810
+;; Version:    20240904
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -105,6 +105,7 @@
 ;; «.find-dot-emacs-intro»		(to "find-dot-emacs-intro")
 ;; «.find-debootstrap-intro»		(to "find-debootstrap-intro")
 ;; «.find-lean4-intro»			(to "find-lean4-intro")
+;; «.find-try-sly-intro»		(to "find-try-sly-intro")
 
 ;; Videos:
 ;; «.find-three-main-keys-intro»	(to "find-three-main-keys-intro")
@@ -1479,7 +1480,7 @@ all the index anchors together. For an example, see:
 One way to type the chars `«' and `»' is with `C-x 8 <' and
 `C-x 8 >'. Try:
 
-  (eek \"RET C-x 8 < t a g C-x 8 >\")
+  (eek \"RET C-x 8 < t a g C-x 8 > <up>\")
 
 
 
@@ -3119,18 +3120,16 @@ These ones explain advanced features that require extra setup:
   39. (find-lua-tutorial-intro)
   40. (find-debootstrap-intro)
   41. (find-lean4-intro)
-  42. (find-prepared-intro)
-  43. (find-bounded-intro)
-  44. (find-channels-intro)
-
-This one was used in a video:
-
-  45. (find-three-main-keys-intro)
+  42. (find-try-sly-intro)
+  43. (find-prepared-intro)
+  44. (find-bounded-intro)
+  45. (find-channels-intro)
 
 These ones are obsolete:
 
   46. (find-emacs-intro)
-  47. (find-defun-intro)
+  47. (find-three-main-keys-intro)
+  48. (find-defun-intro)
 
 For an index of the videos, run:
 
@@ -18139,11 +18138,204 @@ Here is the link:
 
   (find-es \"lean\" \"Std.Format\")
 
+" pos-spec-list)))
+
+;; (find-lean4-intro)
+
+
+
+
+;;;  _                        _       
+;;; | |_ _ __ _   _       ___| |_   _ 
+;;; | __| '__| | | |_____/ __| | | | |
+;;; | |_| |  | |_| |_____\__ \ | |_| |
+;;;  \__|_|   \__, |     |___/_|\__, |
+;;;           |___/             |___/ 
+;;
+;; «find-try-sly-intro»  (to ".find-try-sly-intro")
+;; Skel: (find-intro-links "try-sly")
+;; Test: (find-try-sly-intro)
+
+(defun find-try-sly-intro (&rest pos-spec-list) (interactive)
+  (let ((ee-buffer-name "*(find-try-sly-intro)*"))
+    (apply 'find-eintro "\
+\(Re)generate: (find-try-sly-intro)
+Source code:  (find-efunction 'find-try-sly-intro)
+More intros:  (find-eev-quick-intro)
+              (find-eev-intro)
+              (find-eepitch-intro)
+This buffer is _temporary_ and _editable_.
+It is meant as both a tutorial and a sandbox.
+
+Prerequisites:
+  (find-windows-beginner-intro \"7. Test Maxima\")
+and a Maxima compiled with SBCL. The Maxima in Debian uses GCL, that is
+not supported by quicklisp...
+
+This is a PARTIAL rewrite of:
+  (find-try-sly-links)
+
+At some point in the future this intro will show how to install Sly on
+Debian and how to use it with Maxima - but this is in a very preliminary
+stage...
+
+
+
+
+1. Install the Common Lisp Hyperspec
+====================================
+Run this with <f8>s:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  sudo apt-get install -y hyperspec
+
+Note that the package \"hyperspec\" will install
+a local copy of the CLHS here:
+
+  (find-fline \"/usr/share/doc/hyperspec/\")
+
+The low-level way to point to pages of the CLHS is with `find-clhsdoc'.
+The easiest way to define the function `find-clhsdoc' is by running
+`ee-rstdoc-default-defuns'. Try:
+
+  ;; See: (find-rstdoc-intro \"0. Preparation\")
+  (ee-rstdoc-default-defuns)
+
+Then this should open the contents page of the local copy of the CLHS:
+
+  (find-clhsdoc \"Front/Contents\")
+
+
+
+
+2. Install some elisp packages
+==============================
+Here we use low-level sexps instead of `M-x list-packages'.
+Note that some of the sexps below take several seconds to run.
+
+(progn
+  (package-initialize)
+  (add-to-list 'package-archives
+    '(\"melpa\" . \"https://melpa.org/packages/\"))
+  (package-refresh-contents)
+  (package-install 'sly)
+  (package-install 'clhs)
+  )
+
+The high-level way to point to pages of the CLHS is with
+`find-clhsdoci'. Try:
+
+  ;; See: (find-eev \"eev-plinks.el\" \"find-clhsdoci\")
+  (find-clhsdoci \"car\")
+
+
+
+
+3. Adjust your ~/.emacs
+=======================
+Now add these sexps to your ~/.emacs:
+
+  (code-c-d \"sly\" (ee-locate-library \"sly.el\") \"sly\")
+  (code-c-d \"ql\" \"~/quicklisp/\")
+
+The best way to do that is with:
+
+  (find-dot-emacs-links \"sly\")
+
+
+
+
+
+4. Download quicklisp.lisp
+==========================
+Quicklisp is a package manager for Common Lisp. See:
+
+  https://beta.quicklisp.org/
+
+ To delete a previous installation, do:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  ls -lAF $S/https/beta.quicklisp.org/quicklisp*
+  rm -Rfv $S/https/beta.quicklisp.org/quicklisp*
+  ls -lAF ~/quicklisp/
+  rm -Rfv ~/quicklisp/
+
+ Then download the Quicklisp installer with:
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+  mkdir -p $S/https/beta.quicklisp.org/
+  cd       $S/https/beta.quicklisp.org/
+  ls -lAF
+  wget -N https://beta.quicklisp.org/quicklisp.lisp
+  # (find-fline \"$S/https/beta.quicklisp.org/\")
+  # (find-fline \"$S/https/beta.quicklisp.org/quicklisp.lisp\")
+
+
+
+5. Install Quicklisp and Slynk
+==============================
+See:
+
+  https://joaotavora.github.io/sly/
+  https://joaotavora.github.io/sly/#Connecting-to-a-remote-Lisp
+  (find-slynode \"Connecting to a remote Lisp\")
+
+ Install Quicklisp
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd $S/https/beta.quicklisp.org/
+sbcl --load quicklisp.lisp
+  (quicklisp-quickstart:help)
+  (quicklisp-quickstart:install)
+  (exit)
+
+ Install Slynk
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+  (load #P\"~/quicklisp/setup.lisp\")
+  (ql:quickload :slynk)
+  (exit)
+
+ Make SBCL load Quicklisp by default.
+ This is optional!
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+  (load #P\"~/quicklisp/setup.lisp\")
+  (ql-impl-util::write-init-forms t)  ; write the init block to stdout
+  (ql:add-to-init-file)               ; write the init block to ~/.sbclrc
+
+  (exit)
+
+
+
+Etc
+===
+
+  ;; Inspect the ~/quicklisp/ directory:
+  ;;   (find-qlfile \"\")
+  ;;   (find-qlsh \"find * | sort\")
+
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+  (load #P\"~/quicklisp/setup.lisp\")
+  (ql:quickload :slynk)
+
 
 
 " pos-spec-list)))
 
-;; (find-lean4-intro)
+;; (find-try-sly-intro)
+
 
 
 
@@ -18160,10 +18352,9 @@ Here is the link:
 ;; Skel: (find-intro-links "three-main-keys")
 ;; (find-three-main-keys-intro)
 
-;; Used in this video:
-;; http://anggtwu.net/index.html#eev-three-main-keys
-;; A version in English in coming soon!
-
+;; Obsolete! Superseded by:
+;;   http://anggtwu.net/eepitch.html#trying-it
+;;
 (defun find-three-main-keys-intro (&rest pos-spec-list) (interactive)
   (let ((ee-buffer-name "*(find-three-main-keys-intro)*"))
     (apply 'find-eintro "\

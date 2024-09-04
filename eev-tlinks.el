@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240811
+;; Version:    20240904
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -4051,6 +4051,13 @@ is nil, use the result of (ee-1stclassvideos)."
 	  \"--sub-font-size=35\")))
 ")
 
+;; Test: (find-estring-elisp (ee-dot-emacs-sly))
+(defun ee-dot-emacs-sly (&rest rest) "\
+;; See: (find-try-sly-intro \"3. Adjust your ~/.emacs\")
+(code-c-d \"sly\" (ee-locate-library \"sly.el\") \"sly\")
+(code-c-d \"ql\" \"~/quicklisp/\")
+")
+
 
 
 ;;;            _       _          
@@ -4643,6 +4650,10 @@ N should be either a number or a symbol; SEXP should be a sexp."
    `((find-try-sly-links ,@pos-spec-list)
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-try-sly-links)
+     ""
+     "# Obsolete! Superseded by:"
+     (find-try-sly-intro)
+     ""
      ""
      ,(ee-template0 (ee-adjust-red-stars "\
  1. Install some Debian packages

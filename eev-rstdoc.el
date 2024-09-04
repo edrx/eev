@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240731
+;; Version:    20240901
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-rstdoc.el>
@@ -568,9 +568,11 @@ to shorten the rstdoc of FNAME.\"
 
 
 ;; «default-defuns»  (to ".default-defuns")
+;; See: (find-rstdoc-intro "0. Preparation")
 ;; Try: (find-code-rstdoc :py)
 ;;      (find-code-rstdoc :sympy)
 ;;      (find-code-rstdoc :mpl)
+;;      (find-code-rstdoc :clhs)
 ;;
 ;; This is mostly for tests.
 ;; Most people will prefer to define their own variables -
@@ -581,7 +583,8 @@ to shorten the rstdoc of FNAME.\"
   (interactive)
   (code-rstdoc :py)
   (code-rstdoc :sympy)
-  (code-rstdoc :mpl))
+  (code-rstdoc :mpl)
+  (code-rstdoc :clhs))
 
 
 

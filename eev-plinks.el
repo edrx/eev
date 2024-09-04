@@ -1,6 +1,6 @@
 ;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240507
+;; Version:    20240901
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -125,6 +125,7 @@
 ;; «.find-lynx»			(to "find-lynx")
 ;; «.find-lgrep»		(to "find-lgrep")
 ;; «.find-efunctionlgrep»	(to "find-efunctionlgrep")
+;; «.find-clhsdoci»		(to "find-clhsdoci")
 
 
 
@@ -426,6 +427,12 @@ block."
   (emacs-lisp-mode)
   (apply 'ee-goto-position pos-spec-list))
 
+(defun find-wget-org (url &rest pos-spec-list)
+  "Like `find-wget-elisp', but puts the output buffer in org-mode."
+  (find-wget url)
+  (org-mode)
+  (apply 'ee-goto-position pos-spec-list))
+
 (defun find-wgeta (url &rest pos-spec-list)
   "Like `find-wget', but uses `ee-goto-anchor'."
   (find-wget url)
@@ -638,6 +645,28 @@ See: (find-strange-functions-intro)"
 		(group (or (any " )") eol))
 		;;     (or (any " )") eol)  ; <- doesn't work
 		))))
+
+
+
+;; «find-clhsdoci»  (to ".find-clhsdoci")
+;; Needs: (find-try-sly-intro "1. Install the Common Lisp Hyperspec")
+;;        (find-try-sly-intro "2. Install some elisp packages")
+;;   Try: (ee-clhs-lookup-index "car")
+;;        (find-clhsdoci        "car")
+;;
+(defun find-clhsdoci (clhsname &rest rest)
+  "Open the page of the Common Lisp Hyperspec corresponding to CLHSNAME.
+This function uses `ee-clhs-lookup-index' and `find-clhsdoc'."
+  (let* ((str0 (ee-clhs-lookup-index clhsname))
+	 (str (replace-regexp-in-string "\\.html?$" "" str0)))
+    (find-clhsdoc str)))
+
+(defun ee-clhs-lookup-index (clhsname)
+  "Use the hash table (clhs-symbols) to convert CLHSNAME to (part of) a URL.
+This is an internal function used by `find-clhsdoci'."
+  (require 'clhs)
+  (gethash (upcase clhsname) (clhs-symbols)))
+
 
 
 

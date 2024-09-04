@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240807
+;; Version:    20240818
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -75,6 +75,7 @@
 ;;   «.2024git»				(to "2024git")
 ;;   «.2024luaso»			(to "2024luaso")
 ;;   «.2024lean4of0»			(to "2024lean4of0")
+;;   «.2024lean4of0a2»			(to "2024lean4of0a2")
 ;;   «.2024algpergs»			(to "2024algpergs")
 ;;   «.2024convite»			(to "2024convite")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
@@ -847,6 +848,22 @@ of the videos and play them with mpv. Compare with
      :index   t
      :comment "A video in Portuguese about a workshop on Lean4.")
     ;;
+    ;; «2024lean4of0a2»  (to ".2024lean4of0a2")
+    ;; Play: (find-2024lean4of0a2video "0:00")
+    ;; Index: (find-1stclassvideoindex "2024lean4of0a2")
+    ("2024lean4of0a2"
+     :title "Oficina de Lean4 - versão 0 - aula 2"
+     :mp4   "http://anggtwu.net/eev-videos/2024-lean4-oficina-0-aula-2.mp4"
+     :yt    "http://www.youtube.com/watch?v=MXUJ8YLp5dU"
+     :page  "http://anggtwu.net/2024-lean4-oficina-0-aula-2.html"
+     :hsubs "http://anggtwu.net/2024-lean4-oficina-0-aula-2.html#00:00"
+     :lang  "portuguese"
+     :date    "2024aug09"
+     :length  "29:53"
+     :subs    ".vtt"
+     :index   t
+     :comment "A video in Portuguese about a workshop on Lean4.")
+    ;;
     ;; «2024algpergs»  (to ".2024algpergs")
     ;; Play: (find-2024algpergsvideo "0:00")
     ;; Index: (find-1stclassvideoindex "2024algpergs")
@@ -875,7 +892,8 @@ of the videos and play them with mpv. Compare with
      :date    "2024aug06"
      :length  "20:22"
      :subs    ".vtt"
-     :comment "COMMENT")
+     :index   t
+     :comment "An invitation to (run) Maxima (from eev). In Portuguese.")
     ))
 
 
