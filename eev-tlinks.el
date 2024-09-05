@@ -4054,8 +4054,9 @@ is nil, use the result of (ee-1stclassvideos)."
 ;; Test: (find-estring-elisp (ee-dot-emacs-sly))
 (defun ee-dot-emacs-sly (&rest rest) "\
 ;; See: (find-try-sly-intro \"3. Adjust your ~/.emacs\")
-(code-c-d \"sly\" (ee-locate-library \"sly.el\") \"sly\")
 (code-c-d \"ql\" \"~/quicklisp/\")
+(code-c-d \"sly\" (ee-locate-library \"sly.el\") \"sly\")
+(code-c-d \"slynk\" (ee-slyfile \"slynk/\"))
 ")
 
 
@@ -4651,7 +4652,7 @@ N should be either a number or a symbol; SEXP should be a sexp."
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-try-sly-links)
      ""
-     "# Obsolete! Superseded by:"
+     "# Obsolete! Use the intro instead:"
      (find-try-sly-intro)
      ""
      ""

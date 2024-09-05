@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240904
+;; Version:    20240905
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -18317,20 +18317,125 @@ sbcl --load quicklisp.lisp
 
 
 
-Etc
-===
+6. Sly: basic keys
+==================
+If you run this,
 
-  ;; Inspect the ~/quicklisp/ directory:
-  ;;   (find-qlfile \"\")
-  ;;   (find-qlsh \"find * | sort\")
-
- (eepitch-sbcl)
+ (eepitch-sly)
  (eepitch-kill)
- (eepitch-sbcl)
-  (load #P\"~/quicklisp/setup.lisp\")
-  (ql:quickload :slynk)
+ (eepitch-sly)
+  (inspect (make-pathname :name \"FOO\"))
+
+you will get a target buffer with a name like \"*sly-mrepl for sbcl*\",
+and the output of the `(inspect ...)' will be something like this:
+
+  CL-USER> (inspect (make-pathname :name \"FOO\"))
+  The object is a PATHNAME.
+  0. NAMESTRING: NIL
+  1. HOST: #<SB-IMPL::UNIX-HOST {<}100010D353{>}>
+  2. DEVICE: NIL
+  3. DIR+HASH: NIL
+  4. NAME: \"FOO\"
+  5. TYPE: NIL
+  6. VERSION: NIL
+  > 
+
+We will use that buffer to learn how to use three key sequences: `M-.',
+`M-,', and `C-c I'. They are explained in these info pages:
+
+  (find-slynode \"Finding definitions\" \"M-.\" \"Go to\")
+  (find-slynode \"Finding definitions\" \"M-,\" \"Go back\")
+  (find-emajormode-links 'sly-inspector-mode)
+
+The major mode of our target buffer is `sly-mrepl-mode', and if you run
+`C-h m' on that buffer you will see that the list of active minor modes
+there has several modes of with names like `sly-*'. This means that
+`M-.', `M-,', and `C-c I' may be defined in keymaps that are not
+`sly-mrepl-mode-map'; if you have `helpful' installed, try:
+
+  (find-emajormode-links 'sly-mrepl-mode)
+  (find-hfunction 'sly-mrepl-mode)
+  (find-hvariable 'sly-mrepl-mode-map)
+  (find-hfunction 'sly-autodoc-mode)
+  (find-hvariable 'sly-autodoc-mode-map)
+  (find-hfunction 'sly-interactive-buttons-mode)
+  (find-hfunction 'sly-mode)
+  (find-hvariable 'sly-mode-map)
+  (find-hfunction 'sly-stickers-shortcut-mode)
+  (find-hvariable 'sly-stickers-shortcut-mode-map)
+  (find-hvariable 'sly-stickers-mode-map)
+  (find-hfunction 'sly-trace-dialog-shortcut-mode)
+  (find-hvariable 'sly-trace-dialog-shortcut-mode-map)
+
+They are all in `sly-mode-map'. Anyway, run this again,
+
+ (eepitch-sly)
+ (eepitch-kill)
+ (eepitch-sly)
+  (inspect (make-pathname :name \"FOO\"))
+
+put the point on the \"SB-IMPL::UNIX-HOST\" in the target buffer, and
+type `M-.'; this will take you to the source of SB-IMPL::UNIX-HOST. Then
+type `M-,'; this will take you back to the previous buffer.
+
+Then go to the target buffer again, put the point between the two
+closing parentheses of the (inspect (...)) sexp , and type `C-c I'. The
+default for `C-c I' is to inspect the sexp before point, so it will say
+
+  [sly] Inspect value (evaluated): (make-pathname :name \"FOO\")
+
+in the minibuffer, and ask for a confirmation. Type RET; this will open
+a buffer with a name like \"*sly-inspector for sbcl*\", whose major mode
+is `sly-inspector-mode'. Again, its Sly-related keybings are in several
+keymaps:
+
+  (find-emajormode-links 'sly-inspector-mode)
+  (find-hfunction 'sly-inspector-mode)
+  (find-hvariable 'sly-inspector-mode-map)
+  (find-hfunction 'sly-mode)
+  (find-hvariable 'sly-mode-map)
+  (find-hfunction 'sly-stickers-shortcut-mode)
+  (find-hvariable 'sly-stickers-shortcut-mode-map)
+  (find-hvariable 'sly-stickers-mode-map)
+  (find-hfunction 'sly-trace-dialog-shortcut-mode)
+  (find-hvariable 'sly-trace-dialog-shortcut-mode-map)
 
 
+
+7. Tell Maxima how to load Sly
+==============================
+Use this:
+
+;;-- (ee-copy-rest-3m nil \";;-- end\" \"~/.maxima/startsly.lisp\")
+;; From: (find-try-sly-intro \"7. Tell Maxima how to load Sly\")
+;; Based on: (find-angg \".maxima/startsly.lisp\")
+;;
+(load #P\"~/quicklisp/setup.lisp\")
+(ql:quickload :slynk)
+(slynk:create-server :port 56789 :dont-close t)
+;;-- end
+
+
+
+8. Inspect Maxima with Sly
+==========================
+Note that here we have two eepitch targets,
+and we alternate between them...
+
+ (eepitch-sly)
+ (eepitch-kill)
+ (eepitch-sly)
+
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+  load(\"startsly\");
+
+ (sly-connect \"localhost\" 56789)
+ (eepitch-sly)
+  (describe '$changevar)
+  ;; Now go to the sly-mrepl buffer, put the point
+  ;; on the \"MAXIMA::$CHANGEVAR\", and type `M-.'.
 
 " pos-spec-list)))
 
