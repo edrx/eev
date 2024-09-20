@@ -794,7 +794,7 @@ We define it just to make this work: (find-efunction 'find-pdftotext-page)"
 ;; «find-texworkspdf-page» (to ".find-texworkspdf-page")
 ;; At one point TeXworks was my default PDF viewer on W$s. See:
 ;;
-;;   http://www.tug.org/texworks/
+;;   https://www.tug.org/texworks/
 ;;   https://tug.org/pipermail/tex-live/2019-March/043227.html
 ;;   https://tug.org/pipermail/tex-live/2019-March/043229.html
 ;;   http://anggtwu.net/find-pdf-page.html

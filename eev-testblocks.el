@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240512
+;; Version:    20240915
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -99,6 +99,18 @@ gcc -o {fname} {fnamec}
 
 */
 ")))))
+
+(defun ee-insert-test-elixir-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+~S\"\"\"
+ (eepitch-iex)
+ (eepitch-kill)
+ (eepitch-iex)
+c \"%s\"
+
+\"\"\"
+" (buffer-name)))))
 
 (defun ee-insert-test-fennel-mode ()
   (interactive)

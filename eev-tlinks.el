@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240904
+;; Version:    20240913
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -162,6 +162,7 @@
 ;; «.find-osm-links»			(to "find-osm-links")
 ;; «.find-pip3-links»			(to "find-pip3-links")
 ;; «.find-yttranscript-links»		(to "find-yttranscript-links")
+;; «.find-yttranscript0-links»		(to "find-yttranscript0-links")
 ;; «.find-importlib-links»		(to "find-importlib-links")
 ;; «.find-pypi-links»			(to "find-pypi-links")
 ;; «.find-nov-links»			(to "find-nov-links")
@@ -245,7 +246,6 @@
 ;;   |% (defun c () (interactive) (find-sh "pdflatex foo.tex"))        |
 ;;   |% (defun d () (interactive) (find-pdf-page "/tmp/foo.pdf"))      |
 ;;   |% (defun e () (interactive) (find-fline "/tmp/foo.tex"))         |
-;;   |% (defun w () (interactive) (find-texworks "/tmp/foo.tex"))      |
 ;;   |%                                                                |
 ;;   |\documentclass{article}                                          |
 ;;   |\begin{document}                                                 |
@@ -1494,7 +1494,7 @@ cd {dir}
 # (find-{stem}video \"0:00\")
 
 # Transcript:
-# (find-yttranscript-links \"{stem}\" \"{hash}\")
+# (find-yttranscript0-links \"{stem}\" \"{hash}\")
 ")
        )
      pos-spec-list)))
@@ -2602,7 +2602,6 @@ wget -nc  {url-}.mp4
 % (defun c () (interactive) (find-sh \"pdflatex {stem-}.tex\"))
 % (defun d () (interactive) (find-pdf-page \"{stem}.pdf\"))
 % (defun e () (interactive) (find-fline    \"{stem}.tex\"))
-% (defun w () (interactive) (find-texworks \"{stem}.tex\"))
 %
 \\documentclass{<}article{>}
 \\begin{<}document{>}
@@ -4200,24 +4199,83 @@ pip3 install {pkg}
 
 
 
-
 ;; «find-yttranscript-links»  (to ".find-yttranscript-links")
 ;; Skel: (find-find-links-links-new "yttranscript" "c hash" "")
 ;; Test: (find-yttranscript-links)
 ;;       (find-yttranscript-links "acmetour" "dP1xVpMPn8M")
 ;; See:  http://anggtwu.net/find-yttranscript-links.html
+;; Based on code by Bruno Macedo.
 ;;
 (defun find-yttranscript-links (&optional c hash &rest pos-spec-list)
 "Display a temporary script that downloads a transcript from youtube."
   (interactive (list nil (ee-youtubedl-hash-around-point)))
   (setq c (or c "{c}"))
   (setq hash (or hash "{hash}"))
-  (let ((ee-buffer-name (or ee-buffer-name "*find-yttranscript-links*")))
+  (apply
+   'find-elinks
+   `((find-yttranscript-links ,c ,hash ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-yttranscript-links)
+     ""
+     ,(ee-template0 "\
+# (find-pip3-links \"youtube_transcript_api\")
+
+ (python-mode)
+ (eepitch-python)
+ (eepitch-kill)
+ (eepitch-python)
+from youtube_transcript_api import YouTubeTranscriptApi
+from math import floor
+
+m       = lambda n: n  % 60
+d       = lambda n: n // 60
+mmss    = lambda n:      \"%d:%02d\" %           (d(n), m(n))
+hhmmss  = lambda n: \"%d:%02d:%02d\" % (d(d(n)),m(d(n)),m(n))
+timestr = lambda n: mmss(n) if n < 3600 else hhmmss(n)
+sexp    = lambda n,text: '%s(%s \"%s\" \"%s\")' % (p, f, timestr(floor(n)), text)
+
+p       = \"% \"
+f       = \"find-{c}video\"
+trlist  = YouTubeTranscriptApi.list_transcripts(\"{hash}\")
+tr      = YouTubeTranscriptApi.get_transcript(\"{hash}\")
+
+for o in trlist: print(o)
+
+for o in trlist: print(repr(o))
+
+times   = [i['start'] for i in tr]
+texts   = [i['text']  for i in tr]
+sexps   = [sexp(n,text) for n,text in zip(times,texts)]
+print('\\n'.join(sexps))
+")
+     )
+   pos-spec-list))
+
+
+
+;; «find-yttranscript0-links»  (to ".find-yttranscript0-links")
+;; Skel: (find-find-links-links-new "yttranscript" "c hash" "")
+;; Test: (find-yttranscript0-links)
+;;       (find-yttranscript0-links "acmetour" "dP1xVpMPn8M")
+;; See:  http://anggtwu.net/find-yttranscript-links.html
+;;
+(defun find-yttranscript0-links (&optional c hash &rest pos-spec-list)
+"Display a temporary script that downloads a transcript from youtube.\n
+This is the original version, described in:
+  http://anggtwu.net/find-yttranscript-links.html
+it uses `youtube_transcript_downloader', that is broken. See:
+  https://github.com/t4skmanag3r/youtube_transcript_downloader/issues/2\n
+Use `find-yttranscript-links' instead."
+  (interactive (list nil (ee-youtubedl-hash-around-point)))
+  (setq c (or c "{c}"))
+  (setq hash (or hash "{hash}"))
+  (let ((ee-buffer-name (or ee-buffer-name "*find-yttranscript0-links*")))
     (apply
      'find-elinks
-     `((find-yttranscript-links ,c ,hash ,@pos-spec-list)
+     `((find-yttranscript0-links ,c ,hash ,@pos-spec-list)
+       (find-yttranscript-links ,c ,hash ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
-       (find-efunction 'find-yttranscript-links)
+       (find-efunction 'find-yttranscript0-links)
        ""
        ,(ee-template0 "\
 # (find-pip3-links \"youtube-transcript-downloader\")
@@ -4239,6 +4297,9 @@ print(trits1)
 ")
        )
      pos-spec-list)))
+
+
+
 
 
 ;; «find-importlib-links»  (to ".find-importlib-links")

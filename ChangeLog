@@ -1,3 +1,25 @@
+2024-09-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): added the section
+	"13. An editable HELP".
+
+	* eepitch.el (eepitch-iex): new function.
+
+	* eev-testblocks.el (ee-insert-test-elixir-mode): new function.
+
+2024-09-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-yttranscript0-links): new name: the function
+	`find-yttranscript-links' was renamed to
+	`find-yttranscript0-links'.
+	(find-yttranscript-links): new function, based on code by Bruno
+	Macedo.
+
+2024-09-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-latex-links): deleted the reference to
+	texworks.
+
 2024-09-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-try-sly-intro): rewrote several sections.

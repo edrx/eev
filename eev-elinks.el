@@ -1827,6 +1827,10 @@ hyperlinks about all that."
 ;;      (find-pdf-like-intro "9. Generating three pairs" "find-code-pdf-links")
 
 ;; See: (find-efunction 'ee-if-prefixp)
+;; Tests:                     (ee-expand "~/foo")
+;;                            (ee-expand "$S/https/")
+;;      (ee-shorten-file-name (ee-expand "~/foo"))
+;;      (ee-shorten-file-name (ee-expand "$S/https/"))
 (defun ee-shorten-file-name (fname)
   "Shorten FNAME if possible to make it start with \"$S/\" or \"~/\"."
   (or (ee-if-prefixp "$S/" "$S/" fname 'fname+)

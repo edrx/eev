@@ -1143,6 +1143,7 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 (defun eepitch-sml    () (interactive) (eepitch-comint "sml" "sml"))
 (defun eepitch-labltk () (interactive) (eepitch-comint "labltk" "labltk"))
 (defun eepitch-erl    () (interactive) (eepitch-comint "erl" "erl"))
+(defun eepitch-iex    () (interactive) (eepitch-comint "iex" "iex"))
 (defun eepitch-coqtop () (interactive) (eepitch-comint "coqtop" "coqtop"))
 
 ;; Forth:

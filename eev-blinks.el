@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240725
+;; Version:    20240920
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1695,11 +1695,19 @@ Hint: install the Debian package \"unicode-data\".")
 ;; TODO: fix this:
 ;;   (find-elisp-intro "6. Defining functions")
 
+(defun ee-closure-to-list (c)
+  "Experimental!!! See the comments in the source!"
+  (cl-loop for i from 1 to (length c)
+	   collect (aref c (1- i))))
+
 (defun ee-closure-to-lambda (c)
   "Experimental!!! See the comments in the source!"
-  (let ((arglist (aref c 0))
-	(body    (aref c 1)))
-  `(lambda ,arglist ,@body)))
+  (let ((list (ee-closure-to-list c)))
+    (seq-let [arglist body _ _ docstring interactivespec] list
+      `(lambda ,arglist
+	 ,@(if docstring (list docstring))
+	 ,@(if interactivespec `((interactive ,interactivespec)))
+	 ,@body))))
 
 (defun ee-symbol-function (sym)
   "Experimental!!! See the comments in the source!"

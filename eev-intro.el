@@ -5991,7 +5991,6 @@ this in the first case,
   |% (defun c () (interactive) (find-sh \"pdflatex {stem}.tex\"))       |
   |% (defun d () (interactive) (find-pdf-page \"{stem}.pdf\"))          |
   |% (defun e () (interactive) (find-fline    \"{stem}.tex\"))          |
-  |% (defun w () (interactive) (find-texworks \"{stem}.tex\"))          |
   |%                                                                  |
   |\\documentclass{article}                                            |
   |\\begin{document}                                                   |
@@ -15319,11 +15318,52 @@ into these three directories:
   (find-fline \"~/MAXIMA/\")
   (find-fline \"~/luatree/\")
 
-Here are some tests:
+Here are some tests for qdraw:
 
   (find-qdraw-links \"x,x^2,x^3,x^4\" \"-2,2\" \"-2,2\")
   (find-es \"maxima\" \"2024.1-intro-complex\")
 
+and here is a test for LuaTree - one of the \"lots of small
+programs that I wrote\":
+
+  (find-es \"maxima\" \"luatree\")
+
+
+
+
+13. An editable HELP
+====================
+Run this sexp:
+
+  (defun h () (interactive) (find-2a nil '(find-fline \"~/HELP\")))
+
+It defines a function called `h', that displays the file ~/HELP in the
+window at the right, and makes that function a command, in this sense:
+
+  (find-elnode \"Using Interactive\")
+
+HOMEWORK: try to understand each part of the `defun' above.
+Here are some hints.
+
+  1. You will need to learn how to use `M-h M-f' well:
+
+     (find-eev-quick-intro \"4.2. `find-ekey-links' and friends\" \"M-h M-f\")
+
+  2. You will need to understand several sections of this intro:
+
+     (find-elisp-intro)
+
+  3. The \"'\" is the hardest part. It is explained here:
+
+     (find-elisp-intro \"3. `quote'\")
+
+  4. `M-x h' is similar to `M-2 M-1 M-j' and `M-3 M-1 M-j' - but the
+     `(defun h ...)' above needs an `(interactive)', and these defuns
+
+       (find-eejumps \"eejump-21\")
+       (find-eejumps \"eejump-31\")
+
+     do not. Why?
 
 
 
@@ -18169,15 +18209,12 @@ It is meant as both a tutorial and a sandbox.
 
 Prerequisites:
   (find-windows-beginner-intro \"7. Test Maxima\")
-and a Maxima compiled with SBCL. The Maxima in Debian uses GCL, that is
-not supported by quicklisp...
+and, for the last sections, a Maxima compiled with SBCL.
+The Maxima in Debian uses GCL, that is not supported by
+Quicklisp or by Sly.
 
-This is a PARTIAL rewrite of:
+This is rewrite of:
   (find-try-sly-links)
-
-At some point in the future this intro will show how to install Sly on
-Debian and how to use it with Maxima - but this is in a very preliminary
-stage...
 
 
 
@@ -18436,6 +18473,15 @@ and we alternate between them...
   (describe '$changevar)
   ;; Now go to the sly-mrepl buffer, put the point
   ;; on the \"MAXIMA::$CHANGEVAR\", and type `M-.'.
+
+ This blocks starts the Sly debugger and shows a backtrace.
+ See: (find-slynode \"Debugger\")
+
+ (eepitch-maxima)
+:lisp (defun foo () \"Foo\")
+?foo();
+:lisp (defun foo () (breakhere) \"Foo\")
+?foo();
 
 " pos-spec-list)))
 
