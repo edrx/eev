@@ -1,3 +1,13 @@
+2024-09-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-wget0, find-wget, find-wget-elisp)
+	(find-wget-org, find-wgeta, find-wgeta-elisp): added an
+	`(interactive ...).
+
+	* eev-blinks.el (ee-closure-to-list): new function.
+	(ee-closure-to-lambda): use `ee-closure-to-list'; added support
+	for docstrings and interactive specs.
+
 2024-09-15  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-intro.el (find-windows-beginner-intro): added the section

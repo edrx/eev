@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240901
+;; Version:    20240920
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -390,6 +390,7 @@ headers in case of error. This is a quick hack."
 If a buffer named \"*wget: URL*\" already exists then this
 function visits it instead of running wget again.
 If wget can't download URL then this function runs `error'."
+  (interactive (browse-url-interactive-arg "URL: "))
   (let* ((eurl (ee-expand url))
 	 (wgetprogandargs (list ee-wget-program "-q" "-O" "-" eurl))
 	 (wgetbufname (format "*wget: %s*" eurl)))
@@ -419,27 +420,32 @@ The default definition for `find-wget' simply calls `find-wget0'.
 If you need to adjust how `find-wget0' handles encodings,
 redefine `find-wget' to make it call `find-wget0' inside a `let*'
 block."
+  (interactive (browse-url-interactive-arg "URL: "))
   (apply 'find-wget0 url pos-spec-list))
 
 (defun find-wget-elisp (url &rest pos-spec-list)
   "Like `find-wget', but puts the output buffer in emacs-lisp-mode."
+  (interactive (browse-url-interactive-arg "URL: "))
   (find-wget url)
   (emacs-lisp-mode)
   (apply 'ee-goto-position pos-spec-list))
 
 (defun find-wget-org (url &rest pos-spec-list)
   "Like `find-wget-elisp', but puts the output buffer in org-mode."
+  (interactive (browse-url-interactive-arg "URL: "))
   (find-wget url)
   (org-mode)
   (apply 'ee-goto-position pos-spec-list))
 
 (defun find-wgeta (url &rest pos-spec-list)
   "Like `find-wget', but uses `ee-goto-anchor'."
+  (interactive (browse-url-interactive-arg "URL: "))
   (find-wget url)
   (apply 'ee-goto-anchor pos-spec-list))
 
 (defun find-wgeta-elisp (url &rest pos-spec-list)
   "Like `find-wgeta', but puts the output buffer in emacs-lisp-mode."
+  (interactive (browse-url-interactive-arg "URL: "))
   (find-wget url)
   (emacs-lisp-mode)
   (apply 'ee-goto-anchor pos-spec-list))
