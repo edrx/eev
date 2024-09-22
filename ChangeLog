@@ -1,3 +1,20 @@
+2024-09-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (ee-lisp-symbol-around-point)
+	(ee-lisp-symbol-around-point-ask): new functions.
+
+	* eev-plinks.el (find-clhsdoci): use
+	`ee-lisp-symbol-around-point-ask'.
+
+	* eev-tlinks.el (find-quicklisp-links, find-sbcl-links): use
+	`ee-lisp-symbol-around-point-ask'.
+
+2024-09-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-dot-emacs-sly): small changes.
+	(find-quicklisp-links): new function.
+	(find-sbcl-links): new function.
+
 2024-09-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (find-wget0, find-wget, find-wget-elisp)

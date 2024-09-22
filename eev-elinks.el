@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240623
+;; Version:    20240922
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -180,6 +180,19 @@ This function is not very smart - it doesn't understand section names."
 
 (defun ee-1stclassvideos ()
   (sort (mapcar 'car ee-1stclassvideos-info) 'string<))
+
+(defun ee-lisp-symbol-around-point ()  
+"Return the Lisp symbol around point.
+This function is not very smart."
+  (interactive)
+  (ee-stuff-around-point "A-Za-z0-9-+_:*"))
+
+(defun ee-lisp-symbol-around-point-ask (&optional prompt)
+"Ask for a Lisp symbol; the default is the Lisp symbol at point."
+  (interactive)
+  (read-string (or prompt "Symbol: ")
+	       (ee-lisp-symbol-around-point)))
+
   
 
 

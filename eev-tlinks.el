@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240913
+;; Version:    20240922
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -184,6 +184,8 @@
 ;; «.find-maximamsg-links»		(to "find-maximamsg-links")
 ;; «.find-maximamsg»			(to "find-maximamsg")
 ;; «.find-qdraw-links»			(to "find-qdraw-links")
+;; «.find-quicklisp-links»		(to "find-quicklisp-links")
+;; «.find-sbcl-links»			(to "find-sbcl-links")
 ;; «.find-linki-links»			(to "find-linki-links")
 ;; «.find-gitdoc-links»			(to "find-gitdoc-links")
 ;; «.find-luainit-links»		(to "find-luainit-links")
@@ -4054,6 +4056,9 @@ is nil, use the result of (ee-1stclassvideos)."
 (defun ee-dot-emacs-sly (&rest rest) "\
 ;; See: (find-try-sly-intro \"3. Adjust your ~/.emacs\")
 (code-c-d \"ql\" \"~/quicklisp/\")
+(code-c-d \"qlreleases\" \"~/quicklisp/dists/quicklisp/installed/releases/\")
+(code-c-d \"qlsystems\"  \"~/quicklisp/dists/quicklisp/installed/systems/\")
+(code-c-d \"qlsoftware\" \"~/quicklisp/dists/quicklisp/software/\")
 (code-c-d \"sly\" (ee-locate-library \"sly.el\") \"sly\")
 (code-c-d \"slynk\" (ee-slyfile \"slynk/\"))
 ")
@@ -5433,6 +5438,99 @@ myqdraw([xr({xr}),yr({yr})], myexs());
 ")
      )
    pos-spec-list))
+
+
+
+;; «find-quicklisp-links»  (to ".find-quicklisp-links")
+;; Skel: (find-find-links-links-new "quicklisp" "pkg" "")
+;; Test: (find-quicklisp-links)
+;;       (find-quicklisp-links "cffi")
+;;
+(defun find-quicklisp-links (&optional pkg &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for quicklisp."
+  (interactive (list (ee-lisp-symbol-around-point-ask "Package name: ")))
+  (setq pkg (or pkg "{pkg}"))
+  (apply
+   'find-elinks
+   `((find-quicklisp-links ,pkg ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-quicklisp-links)
+     ""
+     (find-try-sly-intro "3. Adjust your ~/.emacs")
+     (find-try-sly-intro "4. Download quicklisp.lisp")
+     (find-fline "~/.sbclrc")
+     ""
+     ,(ee-template0 "\
+# (find-qlfile \"\")
+# (find-qlsh \"find * | sort\")
+# (find-qlsh \"find * | sort | grep {pkg}\")
+# (find-qlreleasesfile \"\" \"{pkg}.txt\")
+# (find-qlreleasesfile \"{pkg}.txt\")
+# (find-qlsoftwarefile \"\" \"{pkg}\")
+# https://{pkg}.common-lisp.dev/
+
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+(load #P\"~/quicklisp/setup.lisp\")
+
+;; https://www.quicklisp.org/beta/#basic-commands
+;; https://www.quicklisp.org/beta/#installation
+(ql:system-apropos \"{pkg}\")
+(ql:quickload \"{pkg}\")
+(ql:install \"{pkg}\")
+(ql:uninstall \"{pkg}\")
+
+
+ More actions:
+ (find-es \"lisp\" \"quicklisp\")
+ (find-es \"lisp\" \"eev-quicklisp\")
+
+")
+     )
+   pos-spec-list))
+
+
+
+;; «find-sbcl-links»  (to ".find-sbcl-links")
+;; Skel: (find-find-links-links-new "sbcl" "name" "")
+;; Test: (find-sbcl-links 'require)
+;;
+(defun find-sbcl-links (&optional name &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for sbcl."
+  (interactive (list (ee-lisp-symbol-around-point-ask)))
+  (setq name (or name "{name}"))
+  (apply
+   'find-elinks-elisp
+   `((find-sbcl-links ',name ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-sbcl-links)
+     ""
+     ,(ee-template0 "\
+;; (find-clhsdoci \"{name}\")
+;; (find-sbclnode \"Function Index\" \" {name}:\")
+;; (find-sbclgrep \"grep --color=auto -niRH --null -e '{name}' *\")
+;; (find-sbclgrep \"grep --color=auto -niRH --null -e 'defun {name}' *\")
+;; (find-sbclsh \"find * | sort\")
+;; (find-sbclsh \"find * | sort | grep {name}\")
+;; (find-quicklisp-links \"{name}\")
+;; (find-try-sly-intro)
+
+ (eepitch-sbcl)
+ (eepitch-kill)
+ (eepitch-sbcl)
+(apropos \"{name}\")
+(describe '{name})
+
+ (eepitch-sly)
+ (eepitch-kill)
+ (eepitch-sly)
+(apropos \"{name}\")
+(describe '{name})
+")
+     )
+   pos-spec-list))
+
 
 
 

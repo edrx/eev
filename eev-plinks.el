@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240920
+;; Version:    20240922
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -663,6 +663,7 @@ See: (find-strange-functions-intro)"
 (defun find-clhsdoci (clhsname &rest rest)
   "Open the page of the Common Lisp Hyperspec corresponding to CLHSNAME.
 This function uses `ee-clhs-lookup-index' and `find-clhsdoc'."
+  (interactive (list (ee-lisp-symbol-around-point-ask)))
   (let* ((str0 (ee-clhs-lookup-index clhsname))
 	 (str (replace-regexp-in-string "\\.html?$" "" str0)))
     (find-clhsdoc str)))
