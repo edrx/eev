@@ -1,3 +1,16 @@
+2024-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-yttranscript-links): small changes.
+	(find-yttranscript0-links): commented out the (interactive ...).
+
+	* eev-intro.el (find-windows-beginner-intro): in the section "3.
+	Use eepitch to add a Debian repository": removed "main".
+
+2024-09-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-strange-functions.el (ee-sf-pdf-links): small changes.
+	(find-sf-debug-links): small changes.
+
 2024-09-22  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-elinks.el (ee-lisp-symbol-around-point)

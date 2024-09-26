@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240922
+;; Version:    20240925
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -4241,12 +4241,15 @@ sexp    = lambda n,text: '%s(%s \"%s\" \"%s\")' % (p, f, timestr(floor(n)), text
 
 p       = \"% \"
 f       = \"find-{c}video\"
+
 trlist  = YouTubeTranscriptApi.list_transcripts(\"{hash}\")
+trlist1 = [x for x in trlist]
+trlist2 = [str(x) for x in trlist]
+trlist3 = '\\n'.join(trlist2)
+print(trlist3)
+
+tr      = YouTubeTranscriptApi.get_transcript(\"{hash}\", languages=['en-GB'])
 tr      = YouTubeTranscriptApi.get_transcript(\"{hash}\")
-
-for o in trlist: print(o)
-
-for o in trlist: print(repr(o))
 
 times   = [i['start'] for i in tr]
 texts   = [i['text']  for i in tr]
@@ -4271,7 +4274,7 @@ This is the original version, described in:
 it uses `youtube_transcript_downloader', that is broken. See:
   https://github.com/t4skmanag3r/youtube_transcript_downloader/issues/2\n
 Use `find-yttranscript-links' instead."
-  (interactive (list nil (ee-youtubedl-hash-around-point)))
+  ;; (interactive (list nil (ee-youtubedl-hash-around-point)))
   (setq c (or c "{c}"))
   (setq hash (or hash "{hash}"))
   (let ((ee-buffer-name (or ee-buffer-name "*find-yttranscript0-links*")))

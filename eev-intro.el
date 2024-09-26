@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240905
+;; Version:    20240925
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -15067,7 +15067,7 @@ password in the minibuffer (at the bottom of the screen).
  (eepitch-shell)
 echo '
   # Edrx:
-  deb http://deb.debian.org/debian/ bookworm main contrib non-free
+  deb http://deb.debian.org/debian/ bookworm contrib non-free
 ' | sudo tee -a /etc/apt/sources.list
 
  Lines with two red stars are comments.

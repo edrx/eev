@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240309
+;; Version:    20240925
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-strange-functions.el>
@@ -115,6 +115,7 @@
 #   ee-hlang-sexp2
 #   (find-efunction '{(car ee-hlang-sexp1)})
 #   (find-efunction '{(car ee-hlang-sexp2)})
+#   (find-efunction '{(car ee-sf-result)})
 #   (find-evariable 'ee-hprog-for-sf)
 #   (find-efunction 'ee-sf-run-hprog-first-half)
 #   (find-efunction 'ee-sf-run-hprog)
@@ -465,6 +466,8 @@ is `find-blahfoo' then set `ee-sf-stem' to \"blah\" and set
 ;; (find-{c}text{page})
 ;; (find-{c}page{pagerest})
 ;; (find-{c}text{pagerest})
+;; (find-pdf-page      \"{dir}{fname0}\"{page})
+;; (find-pdftools-page \"{dir}{fname0}\"{page})
 ;; (find-fline \"{dir}\" \"{fname0}\")
 ;; (find-fline \"{dir}\")
 
