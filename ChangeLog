@@ -1,3 +1,49 @@
+2024-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-kl-here.el (ee-hprog-for-linki): added three new cases:
+	`ee-wgetes-bufferp', `ee-wgetangg-bufferp', and `ee-wget-bufferp'.
+	(ee-find-wgetes-linki, ee-find-wgetangg-linki)
+	(ee-find-wget-linki): new functions.
+
+	* eev-hlinks.el (ee-hprog-find-here-links): added three new cases:
+	`ee-wgetes-bufferp', `ee-wgetangg-bufferp', and `ee-wget-bufferp'.
+	(ee-wgetes-bufferp, ee-wgetangg-bufferp, ee-wget-bufferp): new
+	functions.
+
+	* eev-elinks.el (ee-find-wgetes-links, ee-find-wgetangg-links)
+	(ee-find-wget-links): new functions.
+
+	* eev-htests.el: added tests for `wgetes', `wgetangg', and `wget'.
+
+2024-10-01  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-angg-wget, find-anggfile-wget)
+	(find-es-wget): new functions.
+
+	* eev-edit.el (ee-preceding-tag-flash-no-error): new function.
+
+	* eev-hlinks.el (ee-buffer-re-wget, ee-buffer-re-wgetangg): new
+	functions.
+
+2024-09-28  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-ethemes-links, ee-load-themes)
+	(ee-custom-theme-load-path): new functions.
+
+2024-09-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): deleted the mention
+	to luatree - luatree doesn't run on GCL Maxima.
+
+2024-09-26  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rstdoc.el (ee-rstdoc-:sqlite3): new variable.
+	(ee-rstdoc-default-defuns): added `(code-rstdoc :sqlite3)'.
+
+	* eev-testblocks.el (ee-insert-test-sql-mode): new function.
+
+	* eepitch.el (eepitch-sqlite3): new function.
+
 2024-09-25  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-yttranscript-links): small changes.
@@ -32,7 +78,7 @@
 
 	* eev-plinks.el (find-wget0, find-wget, find-wget-elisp)
 	(find-wget-org, find-wgeta, find-wgeta-elisp): added an
-	`(interactive ...).
+	`(interactive ...)'.
 
 	* eev-blinks.el (ee-closure-to-list): new function.
 	(ee-closure-to-lambda): use `ee-closure-to-list'; added support

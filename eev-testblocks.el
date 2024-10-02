@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240915
+;; Version:    20240926
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -403,6 +403,18 @@ use \"%s\";
 . %s
 
 %%%%%%%%%%
+" (buffer-name)))))
+
+(defun ee-insert-test-sql-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+/*
+ (eepitch-sqlite3)
+ (eepitch-kill)
+ (eepitch-sqlite3)
+.read \"%s\"
+
+*/
 " (buffer-name)))))
 
 (defun ee-insert-test-subed-vtt-mode ()

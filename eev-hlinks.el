@@ -1,6 +1,6 @@
 ;;; eev-hlinks.el --- `find-here-links' and variants.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2020-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2020-2024 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20231227
+;; Version:    20241002
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-hlinks.el>
@@ -215,8 +215,8 @@ which kind \"here\" the current buffer is."
 ;; their names, and replaced them with "hprog"s and "hlang"s.
 ;; An old comment:
 ;; 
-;; ;; Note the _AT THIS MOMENT_ the easiest way to add support for a new
-;; ;; kind of "here" in `ee-fhl-main-program' is to override this
+;; ;; Note that _AT THIS MOMENT_ the easiest way to add support for a
+;; ;; new kind of "here" in `ee-fhl-main-program' is to override this
 ;; ;; variable by setq-ing it in your init file... this is just because
 ;; ;; I've been lazy and I haven't implemented YET a way to make
 ;; ;; `ee-fhl-main-program' call "subprograms". If you need to extend
@@ -267,6 +267,9 @@ which kind \"here\" the current buffer is."
    (:if (ee-efaces-bufferp)    (ee-find-efaces-links))
    (:if (ee-pdftext-bufferp)   (ee-find-pdftext-links))
    (:if (ee-eshortdoc-bufferp) (ee-find-eshortdoc-links))
+   (:if (ee-wgetes-bufferp)    (ee-find-wgetes-links))
+   (:if (ee-wgetangg-bufferp)  (ee-find-wgetangg-links))
+   (:if (ee-wget-bufferp)      (ee-find-wget-links))
    ;;
    ;; By buffer name, when it is "*Help*":
    (:if (ee-efunctiondescr-bufferp) (ee-find-efunctiondescr-links))
@@ -430,6 +433,11 @@ This is the standard high-level way to call `ee-hlang-run'."
       (match-string 1 (buffer-name))))
 (defun ee-buffer-eq (str) (string= str (buffer-name)))
 
+(defun ee-buffer-re-wget (subre)
+  (ee-buffer-re (format "^\\*wget: %s\\*$" subre)))
+(defun ee-buffer-re-wgetangg (subre)
+  (ee-buffer-re (format "^\\*wget: http://anggtwu.net/%s\\*$" subre)))
+
 (defun ee-buffer-help0    () (ee-buffer-eq "*Help*"))
 (defun ee-buffer-help-re0 (re n)
   (if (ee-buffer-help0)
@@ -494,6 +502,9 @@ a single whitespace character, and the results are `concat'-ed."
 (defun ee-custom-bufferp   () (ee-buffer-re ee-custom-re))
 (defun ee-custom-f-bufferp () (ee-buffer-re ee-custom-f-re))
 (defun ee-custom-v-bufferp () (ee-buffer-re ee-custom-v-re))
+(defun ee-wgetes-bufferp   () (ee-buffer-re-wgetangg "e/\\(.*\\)\\.e"))
+(defun ee-wgetangg-bufferp () (ee-buffer-re-wgetangg   "\\(.*\\)"))
+(defun ee-wget-bufferp     () (ee-buffer-re-wget       "\\(.*\\)"))
 
 ;; By buffer name (when it is "*Help*")
 ;;

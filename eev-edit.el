@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240811
+;; Version:    20241001
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-edit.el>
@@ -163,6 +163,11 @@ A \"tag\" is the string between \"«»\"s in an anchor."
 	  (eeflash start end eeflash-copy)
 	  str)
       (error "No preceding tag!"))))
+
+(defun ee-preceding-tag-flash-no-error ()
+  "See `ee-preceding-tag-flash'.
+Return the preceding tag if there is one; otherwise return nil."
+  (ignore-errors (ee-preceding-tag-flash)))
 
 (defun ee-copy-preceding-tag-to-kill-ring ()
   "Copy the preceding tag to the kill ring and highlight (\"flash\") it.

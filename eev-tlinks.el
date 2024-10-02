@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240925
+;; Version:    20240928
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -197,6 +197,7 @@
 ;;   «.ee-debootstrap1»			(to "ee-debootstrap1")
 ;; «.find-debootstrap2-links»		(to "find-debootstrap2-links")
 ;; «.find-package-vc-install-links»	(to "find-package-vc-install-links")
+;; «.find-ethemes-links»		(to "find-ethemes-links")
 
 
 (require 'eev-env)
@@ -6181,6 +6182,63 @@ git clone {giturl} .
 ")
        )
      pos-spec-list)))
+
+
+
+;;;  _   _                              
+;;; | |_| |__   ___ _ __ ___   ___  ___ 
+;;; | __| '_ \ / _ \ '_ ` _ \ / _ \/ __|
+;;; | |_| | | |  __/ | | | | |  __/\__ \
+;;;  \__|_| |_|\___|_| |_| |_|\___||___/
+;;;                                     
+;; «find-ethemes-links»  (to ".find-ethemes-links")
+;; Skel: (find-find-links-links-new "ethemes" "" "")
+;; Test: (find-ethemes-links)
+;;
+(defun find-ethemes-links (&rest pos-spec-list)
+"Visit a temporary buffer with an alternative interface to `customize-themes'."
+  (interactive)
+  (apply
+   'find-elinks-elisp
+   `((find-ethemes-links ,@pos-spec-list)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-ethemes-links)
+     ""
+     ,(ee-template0 "\
+;; (eek \"M-h M-k <menu-bar> <options> <customize> <customize-themes>\")
+;; (eek         \"<menu-bar> <options> <customize> <customize-themes>\")
+;; (find-efunction-links 'customize-themes)
+;; (find-efunction       'customize-themes)
+;; (customize-themes)
+;;
+;; (find-2a nil '(find-efaces))
+;;
+{(ee-load-themes)}\
+
+;; (find-eppp       custom-theme-load-path)
+;; (find-eppp      (custom-theme--load-path))
+;; (find-efunction 'custom-theme--load-path)
+;;
+{(ee-custom-theme-load-path)}\
+")
+     )
+   pos-spec-list))
+
+;; Test: (find-estring (ee-load-themes))
+;;       (find-estring (ee-custom-theme-load-path))
+;;
+(defun ee-load-themes ()
+  "An internal function used by `find-ethemes-links'."
+  (cl-loop for o in (ee-sort-symbols (custom-available-themes))
+  	   concat (ee-pp0 `(load-theme ',o 'no-confirm))
+           concat "\n"))
+
+(defun ee-custom-theme-load-path ()
+  "An internal function used by `find-ethemes-links'."
+  (cl-loop for p in (custom-theme--load-path)
+	   concat (ee-pp0 `(find-fline ,p))
+	   concat "\n"))
+
 
 
 

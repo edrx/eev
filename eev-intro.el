@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240925
+;; Version:    20240927
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -15039,6 +15039,18 @@ Then run \"emacs &\" to start Emacs - i.e.:
 
   edrx@Acer-PC: $ emacs &
 
+If you don't mind typing a bit more, run this instead of \"emacs &\":
+
+                  emacs -fg bisque -bg black -fn 6x13 &
+
+Here are the meaning of the extra options:
+
+  \"-fg bisque\": use bisque as the foreground color
+  \"-bg black\":  use black  as the background color
+  \"-fn 6x13\":   use \"6x13\", a font that is small but very readable
+
+Bisque is a kind of beige.
+
 
 
 
@@ -15322,11 +15334,6 @@ Here are some tests for qdraw:
 
   (find-qdraw-links \"x,x^2,x^3,x^4\" \"-2,2\" \"-2,2\")
   (find-es \"maxima\" \"2024.1-intro-complex\")
-
-and here is a test for LuaTree - one of the \"lots of small
-programs that I wrote\":
-
-  (find-es \"maxima\" \"luatree\")
 
 
 

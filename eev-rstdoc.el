@@ -35,6 +35,7 @@
 ;;   «.ee-rstdoc-:mpl»		(to "ee-rstdoc-:mpl")
 ;; «.other-defvars»		(to "other-defvars")
 ;;   «.ee-rstdoc-:clhs»		(to "ee-rstdoc-:clhs")
+;;   «.ee-rstdoc-:sqlite3»	(to "ee-rstdoc-:sqlite3")
 ;; «.basic-ops»			(to "basic-ops")
 ;; «.around-point»		(to "around-point")
 ;; «.code-rstdoc»		(to "code-rstdoc")
@@ -354,6 +355,32 @@
       "See: (find-code-rstdoc :clhs)")
 
 
+;; «ee-rstdoc-:sqlite3»  (to ".ee-rstdoc-:sqlite3")
+;; The docs for SQLite3 (a.k.a. SQLite).
+;; To use this in Debian, run:
+;;
+;;   sudo apt-get install sqlite3 sqlite3-doc
+;;
+;; and put these two lines in your ~/.emacs:
+;;
+;; ;; (find-code-rstdoc :sqlite3)
+;;         (code-rstdoc :sqlite3)
+;;
+;; Skel: (find-rstdoc-links :sqlite3)
+(defvar ee-rstdoc-:sqlite3
+      '(:base      "sitemap"
+        :base-web  "https://www.sqlite.org/"
+        :base-html "file:///usr/share/doc/sqlite3/"
+        :base-rst  "/BASE-RST/"
+        :rst       ".rst"
+        :res       ("#.*$" "\\?.*$" ".html$" ".txt$" ".rst$" "^file://"
+                    "^https://www.sqlite.org/"
+                    "^/usr/share/doc/sqlite3/"
+                    "^/BASE-RST/")
+        :kill      s3k
+	))
+
+
 
 ;;;  ____            _                        
 ;;; | __ )  __ _ ___(_) ___    ___  _ __  ___ 
@@ -584,7 +611,8 @@ to shorten the rstdoc of FNAME.\"
   (code-rstdoc :py)
   (code-rstdoc :sympy)
   (code-rstdoc :mpl)
-  (code-rstdoc :clhs))
+  (code-rstdoc :clhs)
+  (code-rstdoc :sqlite3))
 
 
 

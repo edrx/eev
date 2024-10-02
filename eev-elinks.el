@@ -66,6 +66,7 @@
 ;; «.find-elongkey-links»	(to "find-elongkey-links")
 ;; «.find-einfo-links»		(to "find-einfo-links")
 ;; «.find-eintro»		(to "find-eintro")
+;; «.ee-find-wget-links»	(to "ee-find-wget-links")
 
 ;; «.ee-code-c-d-filter»	(to "ee-code-c-d-filter")
 ;; «.ee-find-xxxfile-sexps»	(to "ee-find-xxxfile-sexps")
@@ -729,6 +730,30 @@ a hack to let use use `M-h M-i' for both \"intro\" and \"info\"."
   (if (ee-intro-stem)
       (find-eintro-links)
     (find-einfo-links)))
+
+
+;; «ee-find-wget-links»  (to ".ee-find-wget-links")
+;; Test: (find-elinks (ee-find-wgetes-links "maxima" "eev-demo"))
+;;       (find-elinks (ee-find-wgetangg-links "LUA/Co1.lua" "Co"))
+;;       (find-elinks (ee-find-wget-links "http://angg.twu.net/davidwest.txt"))
+;;  See: (find-eev "eev-hlinks.el" "hprog")
+;;       (find-eev "eev-hlinks.el" "hprog" "ee-find-wgetes-links")
+;;
+(defun ee-find-wgetes-links (&optional stem tag)
+  (setq stem (or stem (ee-wgetes-bufferp)))
+  (setq tag  (or tag  (ee-preceding-tag-flash-no-error)))
+  `((find-es      ,stem ,@(if tag (list tag)))
+    (find-es-wget ,stem ,@(if tag (list tag)))))
+
+(defun ee-find-wgetangg-links (&optional stem tag)
+  (setq stem (or stem (ee-wgetangg-bufferp)))
+  (setq tag  (or tag  (ee-preceding-tag-flash-no-error)))
+  `((find-angg      ,stem ,@(if tag (list tag)))
+    (find-angg-wget ,stem ,@(if tag (list tag)))))
+
+(defun ee-find-wget-links (&optional url)
+  (setq url (or url (ee-wget-bufferp)))
+  `((find-wget ,url)))
 
 
 

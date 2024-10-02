@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240128
+;; Version:    20241002
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-htests.el>
@@ -120,6 +120,12 @@ running SEXP1 in the buffer A, and C is the result of running
 ;;   (find-tlhi '(find-eshortdoc 'keymaps)     '(ee-find-eshortdoc-linki))
 ;;   (find-tlhs '(find-ecolors)                '(ee-find-ecolors-links))
 ;;   (find-tlhi '(find-ecolors)                '(ee-find-ecolors-linki))
+;;   (find-tlhs '(find-es-wget "maxima" "eev-demo")  '(ee-find-wgetes-links))
+;;   (find-tlhi '(find-es-wget "maxima" "eev-demo")  '(ee-find-wgetes-linki))
+;;   (find-tlhs '(find-angg-wget "LUA/Co1.lua" "Co") '(ee-find-wgetangg-links))
+;;   (find-tlhi '(find-angg-wget "LUA/Co1.lua" "Co") '(ee-find-wgetangg-linki))
+;;   (find-tlhs '(find-wget "http://www.lua.org/")   '(ee-find-wget-links))
+;;   (find-tlhi '(find-wget "http://www.lua.org/")   '(ee-find-wget-linki))
 ;;   (find-tlhs '(find-efaces)                 '(ee-find-efaces-links))
 ;;   (find-tlhi '(find-efaces)                 '(ee-find-efaces-linki))
 ;;   (find-tlhs '(find-efunctiondescr 'car)    '(ee-find-efunctiondescr-links))

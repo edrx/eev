@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240309
+;; Version:    20241002
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-kl-here.el>
@@ -131,11 +131,6 @@
 	 (symbol (ee-custom-lispify-tag-name name)))
     `(find-customizevariable ',symbol)))
 
-;; Skel: (find-linki-links "eshortdoc")
-(defun  ee-find-eshortdoc-linki ()
-  (let ((symbol (intern (ee-eshortdoc-bufferp))))
-    `(find-eshortdoc ',symbol)))
-
 ;; Skel: (find-linki-links "ecolors")
 (defun ee-find-ecolors-linki ()
   '(find-ecolors))
@@ -143,6 +138,28 @@
 ;; Skel: (find-linki-links "efaces")
 (defun ee-find-efaces-linki ()
   '(find-efaces))
+
+;; Skel: (find-linki-links "eshortdoc")
+(defun  ee-find-eshortdoc-linki ()
+  (let ((symbol (intern (ee-eshortdoc-bufferp))))
+    `(find-eshortdoc ',symbol)))
+
+;; Skel: (find-linki-links "wgetes")
+(defun ee-find-wgetes-linki ()
+  (let ((stem (ee-wgetes-bufferp))
+        (tag  (ee-preceding-tag-flash-no-error)))
+    `(find-es ,stem ,@(if tag (list tag)))))
+
+;; Skel: (find-linki-links "wgetangg")
+(defun ee-find-wgetangg-linki ()
+  (let ((stem (ee-wgetangg-bufferp))
+	(tag  (ee-preceding-tag-flash-no-error)))
+    `(find-angg ,stem ,@(if tag (list tag)))))
+
+;; Skel: (find-linki-links "wget")
+(defun ee-find-wget-linki ()
+  (let ((url (ee-wget-bufferp)))
+    `(find-wget ,url)))
 
 ;; Skel: (find-linki-links "efunctiondescr")
 (defun ee-find-efunctiondescr-linki ()
@@ -172,6 +189,7 @@
 
 ;; Skel: (find-linki-links "epackage")
 ;; Needs a rename
+
 
 
 
@@ -210,6 +228,9 @@
    (:if (ee-efaces-bufferp)    (ee-find-efaces-linki))    ; done
    (:if (ee-pdftext-bufferp)   (ee-find-pdftext-linki))   ; not yet
    (:if (ee-eshortdoc-bufferp) (ee-find-eshortdoc-linki)) ; done
+   (:if (ee-wgetes-bufferp)    (ee-find-wgetes-linki))
+   (:if (ee-wgetangg-bufferp)  (ee-find-wgetangg-linki))
+   (:if (ee-wget-bufferp)      (ee-find-wget-linki))
    ;;
    ;; By buffer name, when it is "*Help*":
    (:if (ee-efunctiondescr-bufferp) (ee-find-efunctiondescr-linki)) ; done

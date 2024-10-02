@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240325
+;; Version:    20240926
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
@@ -1173,7 +1173,9 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 (defun eepitch-clojure () (interactive)
   (eepitch '(find-comintprocess "clojure" "clojure -r")))
 
-;; SQL. To do: add postgres and sqlite
+;; SQL. To do: add postgres
+(defun eepitch-sqlite3 () (interactive)
+  (eepitch-comint "sqlite3" "sqlite3 :memory:"))
 (defun eepitch-mysql () (interactive)
   (eepitch '(ee-with-pager-cat '(find-comintprocess "mysql" "mysql -u root"))))
 

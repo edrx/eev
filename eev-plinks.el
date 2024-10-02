@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240922
+;; Version:    20241001
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -115,6 +115,7 @@
 ;; «.find-wget»			(to "find-wget")
 ;; «.find-anggwget»		(to "find-anggwget")
 ;; «.find-anggwgeta»		(to "find-anggwgeta")
+;; «.find-angg-public-copies»	(to "find-angg-public-copies")
 ;; «.find-gitk»			(to "find-gitk")
 ;; «.find-tkdiff»		(to "find-tkdiff")
 ;; «.find-osm»			(to "find-osm")
@@ -479,6 +480,19 @@ block."
 (defun find-anggwgeta-elisp (fname &rest pos-spec-list)
   "See `find-wgeta-elisp' and this: (find-angg-es-links)"
   (apply 'find-wgeta-elisp (concat "http://anggtwu.net/" fname) pos-spec-list))
+
+;; «find-angg-public-copies»  (to ".find-angg-public-copies")
+;; See: (find-angg-es-links 2 "public copies")
+;;      (find-angg-es-links 2 "public copies" " find-angg ")
+;;      (find-angg-es-links 2 "public copies" " find-anggfile ")
+;;      (find-angg-es-links 2 "public copies" " find-es ")
+;;
+(defun find-angg-wget (fname &rest rest)
+  (apply 'find-wgeta (format "http://anggtwu.net/%s" fname) rest))
+(defun find-anggfile-wget (fname &rest rest)
+  (apply 'find-wget  (format "http://anggtwu.net/%s" fname) rest))
+(defun find-es-wget (fname &rest rest)
+  (apply 'find-wgeta (format "http://anggtwu.net/e/%s.e" fname) rest))
 
 
 
