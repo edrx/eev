@@ -5421,6 +5421,8 @@ A \"Maxima message\" is a message in the Maxima mailing list."
      (find-efunction 'find-qdraw-links)
      ""
      (find-windows-beginner-intro "12. Install qdraw")
+     (find-es "maxima" "flatten")
+     (find-es "qdraw" "ex1")
      ;; (defalias 'qdraw 'find-qdraw-links)
      ""
      ,(ee-template0 "\
@@ -5429,13 +5431,15 @@ A \"Maxima message\" is a message in the Maxima mailing list."
  (eepitch-maxima)
 load_qdraw();
 fs : [{fs}];
-/* qdraw(xr({xr}),yr({yr}), ex(fs,x,{xr})); */
+/* \"fs\" is a list of functions of x. For an ugly plot, do:
+   qdraw(xr({xr}),yr({yr}), ex(fs,x,{xr}));
+*/
 
 colors : [red, orange, forest_green, blue, dark_violet]$
-myqdraw([lists]) := apply('qdraw, apply('append, lists))$
-myexs_1(ii)      := ex1(fs[ii], x, {xr}, lc(colors[ii]))$
-myexs_1(ii)      := ex1(fs[ii], x, {xr}, lc(colors[ii]), lk(fs[ii]))$
-myexs()          := makelist(myexs_1(ii), ii, length(fs))$
+myqdraw([dra]) := apply('qdraw, flatten([drargs]));
+myex1(j)       := ex1(fs[j], x,{xr}, lc(colors[j]))$
+myex1(j)       := ex1(fs[j], x,{xr}, lc(colors[j]), lk(fs[j]))$
+myexs()        := makelist(myex1(j), j,1,length(fs))$
 myexs();
 
 myqdraw([xr({xr}),yr({yr})], myexs());

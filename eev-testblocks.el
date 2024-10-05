@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240926
+;; Version:    20241005
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -269,6 +269,18 @@ dofile \"%s\"
 load(\"%s\");
 
 */
+" (buffer-name)))))
+
+(defun ee-insert-test-octave-mode ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+#{
+ (eepitch-octave)
+ (eepitch-kill)
+ (eepitch-octave)
+run %s
+
+#}
 " (buffer-name)))))
 
 (defun ee-insert-test-org-mode ()

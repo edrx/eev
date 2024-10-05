@@ -1,3 +1,7 @@
+2024-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-octave-mode): new function.
+
 2024-10-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-kl-here.el (ee-hprog-for-linki): added three new cases:
