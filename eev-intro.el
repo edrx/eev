@@ -332,8 +332,13 @@ For more material on eev, see:
 
 1. Installing eev
 =================
-The easiest way to install eev is with `M-x list-packages', as
-explained in this video:
+If you already use Emacs then the easiest way to install eev is
+with the \"single-sexp `try-it's\", that are explained in this page:
+
+  http://anggtwu.net/2024-find-tryit-links.html
+
+If you are not yet familiar with Emacs then the easiest way is with
+`M-x list-packages', as explained in this video:
 
   http://anggtwu.net/2020-list-packages-eev-nav.html
   http://anggtwu.net/2020-list-packages-eev-nav.html#00:01

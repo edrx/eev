@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241001
+;; Version:    20241014
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -377,9 +377,12 @@ headers in case of error. This is a quick hack."
 ;;;                                 |___/          
 ;;
 ;; «find-wget» (to ".find-wget")
-;; See this thread:
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-01/msg00033.html
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-01/threads.html#00033
+;; `find-wget' is explained in this video:
+;;   (find-2022findeevangghsubs "03:28")
+;;   (find-2022findeevanggvideo "03:28")
+;; See this thread about a bug on Windows:
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2024-01/msg00033.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2024-01/threads.html#00033
 
 (defvar ee-wget-program "wget")
 

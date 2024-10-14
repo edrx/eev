@@ -353,7 +353,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
        (if truename (file-truename (locate-library fname))
 	(locate-library fname)))))
 (defvar ee-eev-source-directory
-  (ee-locate-library "eev-code.el" 'truename))
+  (ee-locate-library "eev-code.el" t))
 (defvar ee-emacs-lisp-directory
   (or (ee-locate-library "loadup.el")
       (format "/usr/share/emacs/%d.%d/lisp/"

@@ -3943,6 +3943,7 @@ is nil, use the result of (ee-1stclassvideos)."
 ;; «find-dot-emacs-links»  (to ".find-dot-emacs-links")
 ;; Skel: (find-find-links-links-new "dot-emacs" "opts" "ee-buffer-name")
 ;; Test: (find-dot-emacs-links)
+;;  See: http://anggtwu.net/2024-find-dot-emacs-links.html
 ;;
 (defun find-dot-emacs-links (&optional opts &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for dot-emacs."
