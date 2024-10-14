@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240805
+;; Version:    20241013
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-code.el>
@@ -346,12 +346,14 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 ;; Tests: (ee-locate-library "eev-code.el")
 ;;        (ee-locate-library "loadup.el")
 ;;        (ee-locate-library "leim-list.el")
-
-(defun ee-locate-library (fname)
+;;
+(defun ee-locate-library (fname &optional truename)
   (if (locate-library fname)
-      (file-name-directory (locate-library fname))))
+      (file-name-directory
+       (if truename (file-truename (locate-library fname))
+	(locate-library fname)))))
 (defvar ee-eev-source-directory
-  (ee-locate-library "eev-code.el"))
+  (ee-locate-library "eev-code.el" 'truename))
 (defvar ee-emacs-lisp-directory
   (or (ee-locate-library "loadup.el")
       (format "/usr/share/emacs/%d.%d/lisp/"

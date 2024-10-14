@@ -424,18 +424,12 @@ block."
   (interactive (browse-url-interactive-arg "URL: "))
   (apply 'find-wget0 url pos-spec-list))
 
-(defun find-wget-elisp (url &rest pos-spec-list)
-  "Like `find-wget', but puts the output buffer in emacs-lisp-mode."
+(defun find-wget-mode (sexp url &rest pos-spec-list)
+  "Like `find-wget', but runs SEXP in the buffer with the contents of URL.
+SEXP is usually - but not necessarily - a sexp that sets major mode."
   (interactive (browse-url-interactive-arg "URL: "))
   (find-wget url)
-  (emacs-lisp-mode)
-  (apply 'ee-goto-position pos-spec-list))
-
-(defun find-wget-org (url &rest pos-spec-list)
-  "Like `find-wget-elisp', but puts the output buffer in org-mode."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (find-wget url)
-  (org-mode)
+  (eval sexp)
   (apply 'ee-goto-position pos-spec-list))
 
 (defun find-wgeta (url &rest pos-spec-list)
@@ -444,12 +438,26 @@ block."
   (find-wget url)
   (apply 'ee-goto-anchor pos-spec-list))
 
+(defun find-wgeta-mode (sexp url &rest pos-spec-list)
+  "Like `find-wget-mode', but uses `ee-goto-anchor'."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (find-wget-mode url sexp)
+  (apply 'ee-goto-anchor pos-spec-list))
+
+(defun find-wget-elisp (url &rest pos-spec-list)
+  "Like `find-wget', but puts the output buffer in emacs-lisp-mode."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (apply '(emacs-lisp-mode) 'find-wget-mode url pos-spec-list))
+
 (defun find-wgeta-elisp (url &rest pos-spec-list)
   "Like `find-wgeta', but puts the output buffer in emacs-lisp-mode."
   (interactive (browse-url-interactive-arg "URL: "))
-  (find-wget url)
-  (emacs-lisp-mode)
-  (apply 'ee-goto-anchor pos-spec-list))
+  (apply '(emacs-lisp-mode) 'find-wgeta-mode url pos-spec-list))
+
+(defun find-wget-org (url &rest pos-spec-list)
+  "Like `find-wget-elisp', but puts the output buffer in org-mode."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (apply '(org-mode) 'find-wget-mode url pos-spec-list))
 
 ;; Tests:
 ;; (find-wget  "http://anggtwu.net/eev-current/eev-plinks.el")
@@ -458,6 +466,8 @@ block."
 ;; (find-wget  "http://anggtwu.net/eev-current/DOESNOTEXIST")
 ;; (find-wget-elisp  "http://anggtwu.net/eev-current/eev-plinks.el" "find-wget")
 ;; (find-wgeta-elisp "http://anggtwu.net/eev-current/eev-plinks.el" "find-wget")
+;; (find-wget-mode '(change-log-mode) "http://anggtwu.net/eev-current/ChangeLog")
+;; (find-wget-org  "http://doc.norang.ca/org-mode.org")
 ;;
 ;; «find-anggwget»   (to ".find-anggwget")
 ;; «find-anggwgeta»  (to ".find-anggwgeta")
@@ -482,10 +492,16 @@ block."
   (apply 'find-wgeta-elisp (concat "http://anggtwu.net/" fname) pos-spec-list))
 
 ;; «find-angg-public-copies»  (to ".find-angg-public-copies")
-;; See: (find-angg-es-links 2 "public copies")
-;;      (find-angg-es-links 2 "public copies" " find-angg ")
-;;      (find-angg-es-links 2 "public copies" " find-anggfile ")
-;;      (find-angg-es-links 2 "public copies" " find-es ")
+;; The functions below are longer-named copies of these ones: 
+;;   (find-angg-es-links 2 "public copies")
+;;   (find-angg-es-links 2 "public copies" " find-angg ")
+;;   (find-angg-es-links 2 "public copies" " find-anggfile ")
+;;   (find-angg-es-links 2 "public copies" " find-es ")
+;; The default for `find-angg' and `find-es' is still to yield errors
+;; that say "`find-angg' and `find-es' not configured!". See:
+;;   (find-eev "eev-tlinks.el" "find-angg-not-configured")
+;; The functions below are only used in these tests:
+;;   (find-eev "eev-htests.el" "tests" "find-angg-wget")
 ;;
 (defun find-angg-wget (fname &rest rest)
   (apply 'find-wgeta (format "http://anggtwu.net/%s" fname) rest))

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240922
+;; Version:    20241013
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -64,6 +64,7 @@
 ;; «.find-evariable-links»	(to "find-evariable-links")
 ;; «.find-ekey-links»		(to "find-ekey-links")
 ;; «.find-elongkey-links»	(to "find-elongkey-links")
+;; «.find-eapropos-links»	(to "find-eapropos-links")
 ;; «.find-einfo-links»		(to "find-einfo-links")
 ;; «.find-eintro»		(to "find-eintro")
 ;; «.ee-find-wget-links»	(to "ee-find-wget-links")
@@ -292,14 +293,15 @@ The buffer is put in Emacs Lisp mode."
 (defun find-efunction-links (&optional f &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks related to the function F."
   (interactive (find-function-read))
-  (apply 'find-elinks
-   `((find-efunction-links ',f ,@pos-spec-list)
-     (eek ,(format "M-h M-f  %s" f))
-     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
-     ""
-     ,@(ee-find-efunction-links f)
-     )
-   pos-spec-list))
+  (let ((ee-buffer-name (or ee-buffer-name "*find-efunction-links*")))
+    (apply 'find-elinks
+      `((find-efunction-links ',f ,@pos-spec-list)
+        (eek ,(format "M-h M-f  %s" f))
+        (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
+	""
+	,@(ee-find-efunction-links f)
+	)
+      pos-spec-list)))
 
 (defun ee-find-efunction-links (f)
   "Return a list of hyperlinks for F (a function symbol).
@@ -501,7 +503,8 @@ This is an internal function used by `find-efunction-links' and
 "Visit a temporary buffer containing hyperlinks related to the key sequence KEY.
 See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
   (interactive "kElisp hyperlinks for key: ")
-  (let ((longkey     (format-kbd-macro key))
+  (let ((ee-buffer-name (or ee-buffer-name "*find-ekey-links*"))
+        (longkey     (format-kbd-macro key))
 	(longkey+ (ee-format-kbd-macro key))
 	(f                (key-binding key)))
     (apply 'find-elinks
@@ -510,13 +513,10 @@ See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
 	     (find-elongkey-links      ,longkey)
 	     (find-elongkey-links      ,longkey+)
 	     (find-efunction-links    ',f)
-	     (eek ,(format "M-h M-k  %s" longkey))
-	     (eek ,(format "M-h M-k  %s" longkey+))
-	     (eek ,(format "M-h M-f  %s" f))
 	     ;; (find-efunctiondescr ',f)
 	     ""
-	     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
-	     ""
+	     ;; (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
+	     ;; ""
 	     ,@(ee-find-eboundkey-links key f)
 	     )
 	   pos-spec-list)))
@@ -528,13 +528,13 @@ See: (find-eev \"eev-elinks.el\" \"find-ekey-links\")"
 Example: (find-elongkey-links \"M-h M-k\")
 See `read-kbd-macro' and `edmacro-mode' for the format."
   (interactive "sElisp hyperlinks for key (long format): ")
-  (let* ((key (read-kbd-macro longkey))
+  (let* ((ee-buffer-name (or ee-buffer-name "*find-elongkey-links*"))
+         (key (read-kbd-macro longkey))
 	 (f   (key-binding key)))
     (apply 'find-elinks
 	   `((find-elongkey-links   ,longkey)
 	     (find-ekey-links       ,key)
 	     (find-efunction-links ',f)
-	     (find-eev-quick-intro "4.2. `find-ekey-links' and friends")
 	     ""
 	     ,@(ee-find-eboundkey-links key f)
 	     )
@@ -545,34 +545,78 @@ See `read-kbd-macro' and `edmacro-mode' for the format."
   "From KEY and its binding, F, produce a list of hyperlinks.
 This is an internal function used by `find-ekey-links' and
 `find-elongkey-links'."
-  `((find-efunctiondescr ',f)
-    (find-ekeydescr ,key)
-    (find-efunction ',f)
-    (find-efunctionpp ',f)
-    (find-efunctiond ',f)
-    ""
-    (Info-goto-emacs-key-command-node ,key)
-    (Info-goto-emacs-command-node ',f)
-    (find-enode "Command Index" ,(format "* %S:" f))
-    (find-elnode "Index" ,(format "* %S:" f))
-    ""
-    (describe-key-briefly ,key)
-    (find-estring (documentation ',f))
-    (find-estring (documentation ',f t))
-    (describe-key ,key)
-    (describe-function ',f)
-    ""
-    (where-is ',f)
-    (key-description ,key)
-    (format-kbd-macro ,key)
-    (format-kbd-macro ,key t)
-    (ee-format-kbd-macro ,key)
-    (key-binding ,key)
-    ))
+  (let ((longkey     (format-kbd-macro key))
+	(longkey+ (ee-format-kbd-macro key)))
+    `((find-eev-quick-intro "4.2. `find-ekey-links' and friends")
+      (eek ,(format "M-h M-k  %s" longkey))
+      (eek ,(format "M-h M-k  %s" longkey+))
+      (eek ,(format "C-h   k  %s" longkey+))
+      (eek ,(format "M-h M-f  %s" f))
+      ""
+      (find-efunctiondescr ',f)
+      (find-ekeydescr ,key)
+      (find-efunction ',f)
+      (find-efunctionpp ',f)
+      (find-efunctiond ',f)
+      ""
+      (Info-goto-emacs-key-command-node ,key)
+      (Info-goto-emacs-command-node ',f)
+      (find-enode "Command Index" ,(format "* %S:" f))
+      (find-elnode "Index" ,(format "* %S:" f))
+      ""
+      (describe-key-briefly ,key)
+      (find-estring (documentation ',f))
+      (find-estring (documentation ',f t))
+      (describe-key ,key)
+      (describe-function ',f)
+      ""
+      (where-is ',f)
+      (key-description ,key)
+      (format-kbd-macro ,key)
+      (format-kbd-macro ,key t)
+      (ee-format-kbd-macro ,key)
+      (key-binding ,key)
+      )))
 
 
 
 
+;;;                                             
+;;;   ___  __ _ _ __  _ __ ___  _ __   ___  ___ 
+;;;  / _ \/ _` | '_ \| '__/ _ \| '_ \ / _ \/ __|
+;;; |  __/ (_| | |_) | | | (_) | |_) | (_) \__ \
+;;;  \___|\__,_| .__/|_|  \___/| .__/ \___/|___/
+;;;            |_|             |_|              
+;;
+;; «find-eapropos-links»  (to ".find-eapropos-links")
+;; Skel: (find-find-links-links-new "eapropos" "regexp" "ee-buffer-name")
+;; Test: (find-eapropos-links "process")
+;;
+(defun find-eapropos-links (&optional regexp &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for eapropos."
+  (interactive "sApropos symbol (regexp): ")
+  (setq regexp (or regexp "{regexp}"))
+  (let ((ee-buffer-name (or ee-buffer-name "*find-eapropos-links*")))
+    (apply
+     'find-elinks
+     `((find-eapropos-links ,regexp ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-eapropos-links)
+       ""
+       (find-eaproposf ,regexp)
+       (find-eaproposv ,regexp)
+       (find-eapropos ,regexp)
+       ""
+       (apropos ,regexp)
+       (apropos-command ,regexp)
+       (apropos-function ,regexp)
+       (apropos-variable ,regexp)
+       (apropos-local-variable ,regexp)
+       ""
+       (eek ,(format "M-h a %s" regexp))
+       (eek ,(format "C-h a %s" regexp))
+       )
+     pos-spec-list)))
 
 
 

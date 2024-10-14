@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240927
+;; Version:    20241013
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -339,15 +339,18 @@ explained in this video:
   http://anggtwu.net/2020-list-packages-eev-nav.html#00:01
   http://www.youtube.com/watch?v=kxBjiUo88_U
 
-The three links in the \"Video links:\" block below
+The three \"video\" links in the \"Video links:\" block below
 
   [Video links:]
+    (find-eevnavhsubs \"00:30\" \"0.1. M-x package-initialize\")
     (find-eevnavvideo \"00:30\" \"0.1. M-x package-initialize\")
+    (find-eevnavhsubs \"00:39\" \"0.2. M-x list-packages\")
     (find-eevnavvideo \"00:39\" \"0.2. M-x list-packages\")
+    (find-eevnavhsubs \"02:33\" \"0.3. M-x eev-beginner\")
     (find-eevnavvideo \"02:33\" \"0.3. M-x eev-beginner\")
 
-point to positions in that video; to learn how to use links like
-those, visit this URL:
+point to positions in that video, and the \"hsubs\" links point to its
+subtitles. To learn how to use links like those, visit this URL:
 
   http://anggtwu.net/eev-intros/find-video-links-intro.html
                                (find-video-links-intro)
@@ -371,9 +374,13 @@ after starting it again you will need to type `M-x eev-beginner'
 to activate eev again. For an explanation of this in video, see:
 
   [Video links:]
+    (find-eevnavhsubs \"03:46\" \"0.4. for the beginners: quitting and restarting\")
     (find-eevnavvideo \"03:46\" \"0.4. for the beginners: quitting and restarting\")
+    (find-eevnavhsubs \"04:05\"   \"the part of the sequence of keys\")
     (find-eevnavvideo \"04:05\"   \"the part of the sequence of keys\")
+    (find-eevnavhsubs \"04:23\"   \"go to the file menu, click quit\")
     (find-eevnavvideo \"04:23\"   \"go to the file menu, click quit\")
+    (find-eevnavhsubs \"04:41\"   \"enter emacs again, type M-x eev-beginner\")
     (find-eevnavvideo \"04:41\"   \"enter emacs again, type M-x eev-beginner\")
 
 Eventually you will learn how to get out of everything and how to undo
@@ -1744,7 +1751,7 @@ executing the eepitch block below with <f8>s,
  (eepitch-kill)
  (eepitch-shell)
   cd
-  wget -nc https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  wget -nc http://anggtwu.net/TannerLectures/Coetzee99.pdf
 
 then these sexps will be hyperlinks to a page of a PDF, and to
 some string in it...
@@ -8294,7 +8301,7 @@ examples. If you run this e-script
  (eepitch-kill)
  (eepitch-shell)
   cd
-  wget -nc https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  wget -nc http://anggtwu.net/TannerLectures/Coetzee99.pdf
 
 you will download a local copy of J.M. Coetzee's \"The Lives of
 Animals\" into your home directory. To check that the PDF has been
@@ -8307,12 +8314,12 @@ downloaded, use:
 Eev also implements another way, called \"psne\", to download
 local copies of files from the internet.\"Psne-ing\" a URL like
 
-  https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+  http://anggtwu.net/TannerLectures/Coetzee99.pdf
 
 downloads it to a local file with a name like:
 
-       $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-  ~/snarf/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+       $S/http/anggtwu.net/TannerLectures/Coetzee99.pdf
+  ~/snarf/http/anggtwu.net/TannerLectures/Coetzee99.pdf
 
 that is _much_ longer that just \"~/Coetzee99.pdf\"; this has the
 advantage of preserving more information about the URL from which
@@ -8889,8 +8896,8 @@ If we download a local copy of a PDF, like we did here,
 
   (find-pdf-like-intro \"2. Preparation\")
 
-      https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-  -> $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+      http://anggtwu.net/TannerLectures/Coetzee99.pdf
+  -> $S/http/anggtwu.net/TannerLectures/Coetzee99.pdf
 
 then it makes sense to have a `brxxx'-function, called `brpdfl',
 that we can run on the \"https://\" URL above, and that will open
@@ -9153,10 +9160,8 @@ file from the internet... here we will discuss the second way, in
 which the conversion from URL to a local file name works like
 this:
 
-      https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-  -> $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-
-
+      http://anggtwu.net/TannerLectures/Coetzee99.pdf
+  -> $S/http/anggtwu.net/TannerLectures/Coetzee99.pdf
 
 
 
@@ -9316,8 +9321,8 @@ The details on how to create these \"brxxx functions\" are here:
 ======================
 Converting a \"non-psne URL\" to a \"psne URL\" by hand, like this,
 
-      https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-  -> $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+      http://anggtwu.net/TannerLectures/Coetzee99.pdf
+  -> $S/http/anggtwu.net/TannerLectures/Coetzee99.pdf
 
 is error-prone and boring.
 
@@ -9334,8 +9339,8 @@ because most people prefer to use the key `M-s' for their other
 things. Then try it by putting the cursor here and typing `M-s' four
 times. Watch the four psne-nesses below flip.
 
-   https://tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
-  $S/https/tannerlectures.utah.edu/_resources/documents/a-to-z/c/Coetzee99.pdf
+   http://anggtwu.net/TannerLectures/Coetzee99.pdf
+  $S/http/anggtwu.net/TannerLectures/Coetzee99.pdf
    http://www.gnu.org/software/emacs/emacs-paper.html
   $S/http/www.gnu.org/software/emacs/emacs-paper.html
 

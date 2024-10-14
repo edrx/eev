@@ -1,3 +1,37 @@
+2024-10-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-locate-library): added "&optional truename".
+	(ee-eev-source-directory): use 'truename.
+
+	* eev-tlinks.el (ee-dot-emacs-maxima5470): now it adds "~/MAXIMA/"
+	to the load-path and ".mac" to the auto-mode-alist.
+
+	* eev-intro.el (find-pdf-like-intro, find-psne-intro): updated the
+	URL to the PDF of J.M. Coetzee's "The Lives of Animals". See this
+	page for the reason:
+	<http://anggtwu.net/TannerLectures/README.html>.
+
+	* eev-elinks.el (find-eapropos-links): new function.
+
+	* eev-mode.el (eev-mode-map-set): new binding: `M-h a' for
+	`find-eapropos-links'.
+
+	* eev-plinks.el (find-wget-mode, find-wgeta-mode): new functions.
+	(find-wget-elisp, find-wget-org): use `find-wget-mode'.
+	(find-wgeta-elisp): use `find-wgeta-mode'.
+
+2024-10-12  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-wrap.el (ee-ppp00): new function.
+
+	* eev-blinks.el (ee-epropertize, find-epropertize)
+	(find-epropertize-2b): new functions.
+
+2024-10-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-ekey-links, find-elongkey-links)
+	(find-efunction-links, ee-find-eboundkey-links): small changes.
+
 2024-10-04  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-testblocks.el (ee-insert-test-octave-mode): new function.

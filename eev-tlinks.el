@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240928
+;; Version:    20241013
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3602,7 +3602,9 @@ This function is used by `ee-0x0-upload-region'."
 ;; «find-angg-not-configured»  (to ".find-angg-not-configured")
 ;; «find-es-not-configured»    (to ".find-es-not-configured")
 ;; Based on this suggestion by Quiliro Ordoñez, but simpler:
-;; https://lists.gnu.org/archive/html/eev/2022-08/msg00005.html
+;;   https://lists.gnu.org/archive/html/eev/2022-08/msg00005.html
+;; See:
+;;   (find-angg-es-links)
 ;;
 (defun find-angg-not-configured (&rest rest) (interactive)
   (error "`find-angg' not configured! Run: (find-angg-es-links)"))
@@ -4014,6 +4016,9 @@ is nil, use the result of (ee-1stclassvideos)."
 (defun ee-dot-emacs-maxima5470 (&rest rest) "\
 ;; From: (find-windows-beginner-intro \"8. Test Maxima with find-wget\")
 (code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
+;;
+(add-to-list 'load-path \"~/MAXIMA/\")
+(add-to-alist 'auto-mode-alist '(\"\\.mac$\" . maxima-mode))
 ")
 
 ;; Test: (find-estring-elisp (ee-dot-emacs-epl))

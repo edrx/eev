@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240920
+;; Version:    20241012
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -57,6 +57,7 @@
 ;; «.find-ebuffer»		(to "find-ebuffer")
 ;; «.find-eoutput»		(to "find-eoutput")
 ;; «.find-estring»		(to "find-estring")
+;; «.find-epropertize»		(to "find-epropertize")
 ;; «.find-ehashtable»		(to "find-ehashtable")
 ;; «.find-estruct»		(to "find-estruct")
 ;; «.find-sh»			(to "find-sh")
@@ -857,6 +858,51 @@ runs `emacs-lisp-mode' in the buffer."
 (defun find-estring-2a (str &rest pos-spec-list)
   "Show STR in the window at the right."
   (find-2a nil `(find-estring str ,@pos-spec-list)))
+
+
+
+
+;;;   __ _           _                                            _   _         
+;;;  / _(_)_ __   __| |       ___ _ __  _ __ ___  _ __   ___ _ __| |_(_)_______ 
+;;; | |_| | '_ \ / _` |_____ / _ \ '_ \| '__/ _ \| '_ \ / _ \ '__| __| |_  / _ \
+;;; |  _| | | | | (_| |_____|  __/ |_) | | | (_) | |_) |  __/ |  | |_| |/ /  __/
+;;; |_| |_|_| |_|\__,_|      \___| .__/|_|  \___/| .__/ \___|_|   \__|_/___\___|
+;;;                              |_|             |_|                            
+;;
+;; «find-epropertize»  (to ".find-epropertize")
+;; See:
+;;   (find-elnode "Special Properties" "face")
+;;   (find-elnode "Special Properties" "mouse-face")
+;;   (find-elnode "Special Properties" "keymap")
+;;
+;; Tests:
+;;   (find-epropertize '(face (:foreground "red")))
+;;   (find-epropertize '(face (:foreground "yellow" :background "red")))
+;;   (find-epropertize '(face                      (:background "red")))
+;;   (find-epropertize '(face font-lock-comment-face))
+;;   (find-epropertize '(mouse-face highlight))
+;;
+;;    (setq       ee-fep-keymap (make-sparse-keymap))
+;;    (define-key ee-fep-keymap (kbd "C-c C-c") 'next-line)
+;;   (find-epropertize-2b `(keymap ,ee-fep-keymap))
+;;   (find-epropertize-2b `(keymap ,ee-fep-keymap mouse-face highlight))
+;;
+(defun ee-epropertize (textproperties)
+  "And internal function used by `find-epropertize'."
+  (concat (apply 'propertize "Some text" textproperties) "\n\n"))
+
+(defun find-epropertize (textproperties)
+  "Show a string with TEXTPROPERTIES at the window at the right.
+TEXTPROPERTIES is a list of the form (prop1 value1 prop2 value2 ...)."
+    (find-2a nil `(find-estring ,(ee-epropertize textproperties) 3)))
+
+(defun find-epropertize-2b (textproperties)
+  "Show a string with TEXTPROPERTIES at the window at the right.
+TEXTPROPERTIES is a list of the form (prop1 value1 prop2 value2 ...).
+This is a variant of `find-epropertize' that switches to the window at
+the right."
+    (find-2b nil `(find-estring ,(ee-epropertize textproperties) 3)))
+
 
 
 

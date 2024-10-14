@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240220
+;; Version:    20241012
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-wrap.el>
@@ -121,8 +121,8 @@ The name of this function comes from the \"S\" in `(format \"%S\" <obj>)'."
 
 
 (defalias 'ee-pp0 'ee-S)
-
-(defun ee-ppp0 (list) (concat "(" (mapconcat 'ee-pp0 list "\n ") ")\n"))
+(defun ee-ppp00 (list)             (mapconcat 'ee-pp0 list "\n"))
+(defun ee-ppp0  (list) (concat "(" (mapconcat 'ee-pp0 list "\n ") ")\n"))
 
 
 
