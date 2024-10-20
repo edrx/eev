@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241014
+;; Version:    20241020
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -450,17 +450,17 @@ SEXP is usually - but not necessarily - a sexp that sets major mode."
 (defun find-wget-elisp (url &rest pos-spec-list)
   "Like `find-wget', but puts the output buffer in emacs-lisp-mode."
   (interactive (browse-url-interactive-arg "URL: "))
-  (apply '(emacs-lisp-mode) 'find-wget-mode url pos-spec-list))
+  (apply 'find-wget-mode '(emacs-lisp-mode) url pos-spec-list))
 
 (defun find-wgeta-elisp (url &rest pos-spec-list)
   "Like `find-wgeta', but puts the output buffer in emacs-lisp-mode."
   (interactive (browse-url-interactive-arg "URL: "))
-  (apply '(emacs-lisp-mode) 'find-wgeta-mode url pos-spec-list))
+  (apply 'find-wgeta-mode '(emacs-lisp-mode) url pos-spec-list))
 
 (defun find-wget-org (url &rest pos-spec-list)
   "Like `find-wget-elisp', but puts the output buffer in org-mode."
   (interactive (browse-url-interactive-arg "URL: "))
-  (apply '(org-mode) 'find-wget-mode url pos-spec-list))
+  (apply 'find-wget-mode '(org-mode) url pos-spec-list))
 
 ;; Tests:
 ;; (find-wget  "http://anggtwu.net/eev-current/eev-plinks.el")

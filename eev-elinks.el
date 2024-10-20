@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241013
+;; Version:    20241020
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -405,7 +405,7 @@ This is an internal function used by `find-efunction-links' and
   (interactive (find-function-read 'defvar))
   (apply
    'find-elinks
-   `((find-evariable-links ,var ,@pos-spec-list)
+   `((find-evariable-links ',var ,@pos-spec-list)
      (eek ,(format "M-h M-v  %s" var))
      ;; Convention: the first sexp always regenerates the buffer.
      (find-efunction 'find-evariable-links)
@@ -1438,6 +1438,7 @@ If D is t then try to use `ee-package-dir' to get the directory."
 # (kill-new      (ee-package-url '{pkg}))
 # (insert \"\\n# \" (ee-package-url '{pkg}))
 # (package-delete (ee-package-desc '{pkg}))
+# (package-delete (package-get-descriptor '{pkg}))
 
 # (find-epackage-links '{pkg} \"{c}\" t)
 # (find-epackages      '{pkg})
@@ -1502,6 +1503,9 @@ If D is t then try to use `ee-package-dir' to get the directory."
 ;; WARNING: the function `ee-package-dir' and its dependency
 ;; `ee-package-desc' use several functions from "package.el", and I
 ;; don't understand package.el well enough!
+;;
+;; UPDATE (2024oct20): apparently we can use `package-get-descriptor'
+;; instead of `ee-package-desc'...
 ;;
 ;; See: (find-efile "emacs-lisp/package.el" "(cl-defstruct (package-desc")
 ;;      (find-efunction 'describe-package-1)

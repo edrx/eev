@@ -1,3 +1,15 @@
+2024-10-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-wget-elisp, find-wgeta-elisp)
+	(find-wget-org): fixed some typos/bugs.
+
+	* eev-elinks.el (ee-find-epackage-links0): added some sexps that
+	use `package-get-descriptor'.
+
+2024-10-17  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eaproposf, find-eaproposv): small changes.
+
 2024-10-13  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-code.el (ee-locate-library): added "&optional truename".

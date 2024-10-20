@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241012
+;; Version:    20241017
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1884,6 +1884,8 @@ Hint: install the Debian package \"unicode-data\".")
 ;; (find-eaproposf {(ee-S regexp)})
 ;; (find-eaproposv {(ee-S regexp)})
 ;; (find-eapropos  {(ee-S regexp)})
+;; (find-eapropos-links {(ee-S regexp)})
+;; (find-efunction 'find-eaproposf)
 ")
 	   ,(ee-eaproposf0 regexp 'fboundp "(find-efunction '%s)\n"))
 	 rest))
@@ -1896,6 +1898,8 @@ Hint: install the Debian package \"unicode-data\".")
 ;; (find-eaproposv {(ee-S regexp)})
 ;; (find-eaproposf {(ee-S regexp)})
 ;; (find-eapropos  {(ee-S regexp)})
+;; (find-eapropos-links {(ee-S regexp)})
+;; (find-efunction 'find-eaproposv)
 ")
 	   ,(ee-eaproposf0 regexp 'boundp "(find-evardescr '%s)\n"))
 	 rest))

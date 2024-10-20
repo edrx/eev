@@ -84,8 +84,7 @@
 ;;;                            
 ;; «ei»       (to ".ei")
 ;; «aliases»  (to ".aliases")
-;; Moved to: (find-eev "eev-aliases.el" "edit-index")
-
+;; The alias `ei' was moved to: (find-eev "eev-aliases.el" "edit-index")
 
 (defun ee-edit-index ()
   "Call `ee-edit-index-hydra/body' to edit the index."

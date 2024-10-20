@@ -8317,7 +8317,7 @@ downloaded, use:
   (find-sh0 \"ls -l ~/Coetzee99.pdf\")
 
 Eev also implements another way, called \"psne\", to download
-local copies of files from the internet.\"Psne-ing\" a URL like
+local copies of files from the internet. \"Psne-ing\" a URL like
 
   http://anggtwu.net/TannerLectures/Coetzee99.pdf
 

@@ -5391,6 +5391,9 @@ A \"Maxima message\" is a message in the Maxima mailing list."
 # (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&viewday={day}&style=threaded\" \"Showing\")
 # (find-lynx \"https://sourceforge.net/p/maxima/mailman/maxima-discuss/?viewmonth={yyyymm}&style=threaded&limit=250\" \"Showing\")
 
+# (find-esgrep \"grep --color=auto -nH --null -e '{yyyymm} {day}' maxima.e\")
+# (find-esgrep \"grep --color=auto -nH --null -e '{n}' maxima.e\")
+
 # (find-lynx \"https://sourceforge.net/p/maxima/mailman/message/{n}/\" 80)
 ")))
 
