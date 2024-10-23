@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241013
+;; Version:    20241021
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -4016,10 +4016,11 @@ is nil, use the result of (ee-1stclassvideos)."
 ;; Test: (find-estring-elisp (ee-dot-emacs-maxima5470))
 (defun ee-dot-emacs-maxima5470 (&rest rest) "\
 ;; From: (find-windows-beginner-intro \"8. Test Maxima with find-wget\")
+;;  and: (find-windows-beginner-intro \"12. Install qdraw\")
 (code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
-;;
 (add-to-list 'load-path \"~/MAXIMA/\")
-(add-to-alist 'auto-mode-alist '(\"\\.mac$\" . maxima-mode))
+(add-to-list 'auto-mode-alist '(\"\\\\.mac$\"  . maxima-mode))
+(autoload 'maxima-mode \"maxima\" nil t)
 ")
 
 ;; Test: (find-estring-elisp (ee-dot-emacs-epl))
@@ -5445,7 +5446,7 @@ fs : [{fs}];
 */
 
 colors : [red, orange, forest_green, blue, dark_violet]$
-myqdraw([dra]) := apply('qdraw, flatten([drargs]));
+myqdraw([dra]) := apply('qdraw, flatten([dra]));
 myex1(j)       := ex1(fs[j], x,{xr}, lc(colors[j]))$
 myex1(j)       := ex1(fs[j], x,{xr}, lc(colors[j]), lk(fs[j]))$
 myexs()        := makelist(myex1(j), j,1,length(fs))$

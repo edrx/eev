@@ -1,3 +1,8 @@
+2024-10-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-dot-emacs-maxima5470): added an autoload for
+	maxima-mode.
+
 2024-10-20  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-plinks.el (find-wget-elisp, find-wgeta-elisp)
