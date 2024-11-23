@@ -1,3 +1,25 @@
+2024-11-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-dot-emacs-edrxmaxima): new function.
+	(find-dot-emacs-links): recommend `edrxmaxima' instead of
+	`maxima5470'.
+
+	* eev-intro.el (find-windows-beginner-intro): explain that the
+	"tar -C ~/ -xvzf /tmp/edrx-maxima.tgz" may overwrite some files.
+
+2024-11-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): mention myqdraw.
+
+2024-11-10  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): new video:
+	"2024butler" (subtitles only).
+
+2024-10-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-code-c-d-add-pair): make `d' always be a string.
+
 2024-10-21  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-dot-emacs-maxima5470): added an autoload for

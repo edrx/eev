@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240818
+;; Version:    20241110
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -78,6 +78,7 @@
 ;;   «.2024lean4of0a2»			(to "2024lean4of0a2")
 ;;   «.2024algpergs»			(to "2024algpergs")
 ;;   «.2024convite»			(to "2024convite")
+;;   «.2024butler»			(to "2024butler")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -894,6 +895,20 @@ of the videos and play them with mpv. Compare with
      :subs    ".vtt"
      :index   t
      :comment "An invitation to (run) Maxima (from eev). In Portuguese.")
+    ;;
+    ;; «2024butler»  (to ".2024butler")
+    ;; Subs: (find-2024butlerhsubs "0:00")
+    ;;       (find-2024butlerlsubs "0:00")
+    ("2024butler"
+     :title "I Read The Most Misunderstood Philosopher in the World (Philosophy Tube)"
+     :mp4   "http://anggtwu.net/eev-videos/2024-philosophy-tube-butler.mp4"
+     :yt    "http://www.youtube.com/watch?v=zUW-6atPvUQ"
+     :page  "http://anggtwu.net/2024-philosophy-tube-butler.html"
+     :hsubs "http://anggtwu.net/2024-philosophy-tube-butler.html#0:00"
+     :date    "2024may17",
+     :length  "1:15:09"
+     :subs    ".vtt"
+     :comment "See: http://anggtwu.net/emacsconf2024.html#butler")
     ))
 
 

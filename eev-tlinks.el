@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241021
+;; Version:    20241123
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3955,8 +3955,8 @@ is nil, use the result of (ee-1stclassvideos)."
      'find-elinks-elisp
      `((find-dot-emacs-links ,opts ,@pos-spec-list)
        (find-dot-emacs-links "eev angges")
-       (find-dot-emacs-links "eev angges maxima5470 mfms")
-       (find-dot-emacs-links "eev angges melpa lean4 maxima5470 mfms")
+       (find-dot-emacs-links "eev angges edrxmaxima mfms")
+       (find-dot-emacs-links "eev angges melpa lean4 edrxmaxima mfms")
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-dot-emacs-links)
        ";;"
@@ -4011,6 +4011,15 @@ is nil, use the result of (ee-1stclassvideos)."
 (require 'package)
 (add-to-list 'package-archives
   '(\"melpa\" . \"https://melpa.org/packages/\"))
+")
+
+;; Test: (find-estring-elisp (ee-dot-emacs-edrxmaxima))
+(defun ee-dot-emacs-edrxmaxima (&rest rest) "\
+;; From: (find-windows-beginner-intro \"8. Test Maxima with find-wget\")
+;;  See: (find-windows-beginner-intro \"12. Install qdraw\")
+;;       (find-fline \"~/MAXIMA/edrx-maxima.el\")
+(code-c-d \"maxima\" \"/usr/share/maxima/5.47.0/\" \"maxima\")
+(ignore-errors (load \"~/MAXIMA/edrx-maxima.el\"))
 ")
 
 ;; Test: (find-estring-elisp (ee-dot-emacs-maxima5470))
@@ -5453,6 +5462,22 @@ myexs()        := makelist(myex1(j), j,1,length(fs))$
 myexs();
 
 myqdraw([xr({xr}),yr({yr})], myexs());
+
+
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+load_myqdraw();
+[xmin,xmax, ymin,ymax] : [{xr}, {yr}];
+colors : [red, orange, forest_green, blue, dark_violet]$
+fs : [{fs}];
+
+myexj(j) := myex1(fs[j], lc(colors[j]));
+myexj(j) := myex1(fs[j], lc(colors[j]), lk(fs[j]));
+myexs()  := makelist(myexj(j), j,1,length(fs))$
+myqdraw(myexs());
+myqdraw(xyrange0(), myexs());
+
 ")
      )
    pos-spec-list))

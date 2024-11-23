@@ -15326,19 +15326,27 @@ eepitch block,
  (eepitch-shell)
   cd /tmp/
   wget -N http://anggtwu.net/tmp/edrx-maxima.tgz
+  # (find-fline \"/tmp/edrx-maxima.tgz\")
+  # (find-fline \"/tmp/edrx-maxima.tgz\" \".maxima/maxima-init.mac\")
   tar -C ~/ -xvzf /tmp/edrx-maxima.tgz
 
-that also installs my init file for Maxima and lots of
-small programs that I wrote. Note that the \"tar -xvzf\"
-above extracts the files from this .tgz file
-
-  (find-fline \"/tmp/edrx-maxima.tgz\")
-
-into these three directories:
+that also installs my init file for Maxima and lots of small
+programs that I wrote. Note that the \"tar -C ~/ -xvzf\" above
+will extract the files from the .tgz into these five directories,
 
   (find-fline \"~/.maxima/\")
   (find-fline \"~/MAXIMA/\")
+  (find-fline \"~/lisptree/\")
   (find-fline \"~/luatree/\")
+  (find-fline \"~/myqdraw/\")
+
+overwriting any files with the same names that are already there -
+and you had done any changes yourself to the Maxima init file the
+\"tar\" above will overwrite it. Check:
+
+  (find-fline \"~/.maxima/maxima-init.mac\")
+  (find-fline \"/tmp/edrx-maxima.tgz\")
+  (find-fline \"/tmp/edrx-maxima.tgz\" \".maxima/maxima-init.mac\")
 
 Here are some tests for qdraw:
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241013
+;; Version:    20241027
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-code.el>
@@ -128,6 +128,9 @@ Examples: (ee-areplace '((1 . one) (2 . two) (3 . three)) 2 'foo)
 ;; «code-c-d-pairs» (to ".code-c-d-pairs")
 ;; Explained here: (find-eev "eev-elinks.el" "ee-code-c-d-filter")
 ;;      Called by: (find-efunction 'code-c-d "ee-code-c-d-add-pair")
+;; Mainly used by: (find-kl-here-intro)
+;;                 (find-kla-intro "1. Introduction")
+;;            See: (find-eppp ee-code-c-d-pairs)
 
 (defvar ee-code-c-d-pairs nil
   "Each (code-c-d C D) call generates an entry (C (ee-expand D)) here.
@@ -136,6 +139,7 @@ previous one. This list is maintained by `ee-code-c-d-add-pair'
 and is used by `ee-find-xxxfile-sexps' and `find-file-links'.")
 
 (defun ee-code-c-d-add-pair (c d)
+  (setq d (format "%s" d))
   (setq ee-code-c-d-pairs (ee-areplace ee-code-c-d-pairs c (list d))))
 
 
