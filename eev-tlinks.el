@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241123
+;; Version:    20241129
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -198,6 +198,7 @@
 ;; «.find-debootstrap2-links»		(to "find-debootstrap2-links")
 ;; «.find-package-vc-install-links»	(to "find-package-vc-install-links")
 ;; «.find-ethemes-links»		(to "find-ethemes-links")
+;; «.find-tryit-links»			(to "find-tryit-links")
 
 
 (require 'eev-env)
@@ -6279,6 +6280,132 @@ git clone {giturl} .
 	   concat "\n"))
 
 
+
+;;;   __ _           _       _              _ _        _ _       _        
+;;;  / _(_)_ __   __| |     | |_ _ __ _   _(_) |_     | (_)_ __ | | _____ 
+;;; | |_| | '_ \ / _` |_____| __| '__| | | | | __|____| | | '_ \| |/ / __|
+;;; |  _| | | | | (_| |_____| |_| |  | |_| | | ||_____| | | | | |   <\__ \
+;;; |_| |_|_| |_|\__,_|      \__|_|   \__, |_|\__|    |_|_|_| |_|_|\_\___/
+;;;                                   |___/                               
+;;
+;; «find-tryit-links»  (to ".find-tryit-links")
+;; See: http://anggtwu.net/2024-find-tryit-links.html
+;;
+(defvar ee-tryit-compact nil
+  "When this is non-nil `ee-tryit-progn' produces a single-line sexp.")
+(defvar ee-tryit-config  ""
+  "Used by `ee-tryit-progn'.")
+
+;; (find-tryit-links)
+;; (find-tryit-links "e 1e")
+;; (find-tryit-links "e 1e" '((foo) (bar)))
+(defun find-tryit-links (&optional configs sexps &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for tryit."
+  (interactive (list nil (ee-tryit-read-sexps)))
+  (setq configs (or configs "ire 1ire"))
+  (let* ((body (ee-tryit-progns configs sexps)))
+    (apply
+     'find-elinks-elisp
+     `((find-tryit-links ,configs ',sexps)
+       (find-tryit-links "irue 1irue" ',sexps)
+       (find-tryit-links "_ 1" ',sexps)
+       (find-tryit-links "s S" ',sexps)
+       (find-tryit-links "s S s1 S1" ',sexps)
+       ;; Convention: the first sexps always regenerates the buffer.
+       (find-efunction 'find-tryit-links)
+       ""
+       ,(ee-template0 "\
+;; See: http://anggtwu.net/2024-find-tryit-links.html
+;;      https://bpa.st/
+
+{body}
+")
+       )
+     pos-spec-list)))
+
+(defun ee-tryit-read-sexps ()
+  (when current-prefix-arg
+    (ee-goto-eol)
+    (list (read (ee-last-sexp)))))
+
+;; (ee-tryit-tostring 1)
+;; (ee-tryit-tostring 's)
+;; (ee-tryit-tostring '(eev-beginner))
+;; (ee-tryit-tostring ";; See: link")
+(defun ee-tryit-tostring (o)
+  (cond ((stringp o) o)
+	((consp   o) (ee-S o))
+	(t           (format "%s" o))))
+
+;; (let ((ee-tryit-config "abC")) (ee-tryit-has 'b))
+;; (let ((ee-tryit-config "abC")) (ee-tryit-has 'B))
+;; (let ((ee-tryit-config "abC")) (ee-tryit-has 'c))
+;; (let ((ee-tryit-config "abC")) (ee-tryit-has 'C))
+(defun ee-tryit-has (c)
+  (let ((case-fold-search nil))
+    (string-match (ee-tryit-tostring c)
+		  ee-tryit-config)))
+
+;; (let ((ee-tryit-compact t  )) (ee-tryit-line '(eev-beginner)))
+;; (let ((ee-tryit-compact nil)) (ee-tryit-line '(eev-beginner)))
+(defun ee-tryit-line (sexp)
+  (if sexp
+      (format (if ee-tryit-compact " %s" "\n  %s")
+	      (ee-tryit-tostring sexp))
+    ""))
+
+;; (let ((ee-tryit-config "b")) (ee-tryit-if 'b '(eev-beginner)))
+;; (let ((ee-tryit-config "x")) (ee-tryit-if 'b '(eev-beginner)))
+(defun ee-tryit-if (c &rest sexps)
+  (declare (indent 1))
+  (if (ee-tryit-has c)
+      (mapconcat 'ee-tryit-line sexps "")
+    ""))
+  
+;; (let ((ee-tryit-config "im"))   (ee-tryit-body))
+;; (let ((ee-tryit-config "ireb")) (ee-tryit-body))
+;; (let ((ee-tryit-config "ikeb")) (ee-tryit-body))
+(defun ee-tryit-body ()
+  (concat
+   (ee-tryit-if "i" '(package-initialize))
+   (ee-tryit-if "m" '(add-to-list
+		      'package-archives
+		      '("melpa" . "https://melpa.org/packages/")))
+   ;;
+   (ee-tryit-if "k"
+     ";;"
+     ";; See: http://anggtwu.net/2024-no-public-key.html"
+     '(setq package-check-signature nil)
+     '(package-refresh-contents)
+     '(package-install 'gnu-elpa-keyring-update)
+     '(setq package-check-signature 'allow-unsigned)
+     ";;")
+   ;;
+   (ee-tryit-if "r" '(package-refresh-contents)) ; also in "k"
+   (ee-tryit-if "e" '(package-install 'eev))
+   (ee-tryit-if "<SE>" '(straight-use-package 'eev))
+   (ee-tryit-if "<SG>" '(straight-use-package
+			 '(eev :type git :host github :repo "edrx/eev")))
+   (ee-tryit-if "b" '(eev-beginner))
+   ))
+
+;; (ee-tryit-progn "1ire")
+;; (ee-tryit-progn  "ire")
+;; (ee-tryit-progn  "ire" '((foo) (bar)))
+(defun ee-tryit-progn (config &optional sexps)
+  (let* ((ee-tryit-config config)
+	 (ee-tryit-compact (ee-tryit-has "1"))
+	 (body (ee-tryit-body))
+	 (lastsexps (mapconcat 'ee-tryit-line sexps "")))
+    (format "(progn%s%s)" body lastsexps)))
+
+;; (ee-tryit-progns "ike 1ire")
+;; (ee-tryit-progns "ike 1ire" nil)
+;; (ee-tryit-progns "ike 1ire" '((foo) (bar)))
+(defun ee-tryit-progns (configs &optional sexps)
+  (cl-loop for config in (ee-split configs)
+	   concat (ee-tryit-progn config sexps)
+	   concat "\n\n"))
 
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241013
+;; Version:    20241127
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -15127,6 +15127,7 @@ sudo apt-get install -y yt-dlp
 sudo apt-get install -y dctrl-tools
 sudo apt-get install -y lynx
 sudo apt-get install -y git
+sudo apt-get install -y imagemagick qpdf
 
 
 

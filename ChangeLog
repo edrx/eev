@@ -1,3 +1,17 @@
+2024-11-29  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-tryit-links): new function.
+	(ee-tryit-compact, ee-tryit-config): new variables.
+	(ee-tryit-read-sexps, ee-tryit-tostring, ee-tryit-has)
+	(ee-tryit-line, ee-tryit-if, ee-tryit-body, ee-tryit-progn)
+	(ee-tryit-progns): new functions.
+
+2024-11-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): added "sudo apt-get
+	install -y imagemagick qpdf" (for creating animations with
+	myqdraw).
+
 2024-11-23  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (ee-dot-emacs-edrxmaxima): new function.
