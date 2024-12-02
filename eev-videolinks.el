@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241110
+;; Version:    20241202
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -79,6 +79,8 @@
 ;;   «.2024algpergs»			(to "2024algpergs")
 ;;   «.2024convite»			(to "2024convite")
 ;;   «.2024butler»			(to "2024butler")
+;;   «.2024trywithasexp»		(to "2024trywithasexp")
+;;   «.2024bashtest»			(to "2024bashtest")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -905,10 +907,40 @@ of the videos and play them with mpv. Compare with
      :yt    "http://www.youtube.com/watch?v=zUW-6atPvUQ"
      :page  "http://anggtwu.net/2024-philosophy-tube-butler.html"
      :hsubs "http://anggtwu.net/2024-philosophy-tube-butler.html#0:00"
-     :date    "2024may17",
+     :date    "2024may17"
      :length  "1:15:09"
      :subs    ".vtt"
      :comment "See: http://anggtwu.net/emacsconf2024.html#butler")
+    ;;
+    ;; «2024trywithasexp»  (to ".2024trywithasexp")
+    ;; Play: (find-2024trywithasexpvideo "0:00")
+    ;; Subs: (find-2024trywithasexphsubs "0:00")
+    ;;       (find-2024trywithasexplsubs "0:00")
+    ("2024trywithasexp"
+     :title "Trying eev with a sexp (2024)"
+     :mp4   "http://anggtwu.net/eev-videos/2024-trying-eev-with-a-sexp.mp4"
+     :yt    "http://www.youtube.com/watch?v=BzovupjRhQM"
+     :page  "http://anggtwu.net/2024-find-tryit-links.html"
+     :hsubs "http://anggtwu.net/2024-trying-eev-with-a-sexp.html#0:00"
+     :date    "2024dec01"
+     :length  "3:56"
+     :subs    ".vtt"
+     :comment "A way to install and try eev very quickly.")
+    ;;
+    ;; «2024bashtest»  (to ".2024bashtest")
+    ;; Play: (find-2024bashtestvideo "0:00")
+    ;; Subs: (find-2024trywithasexphsubs "0:00")
+    ;;       (find-2024trywithasexplsubs "0:00")
+    ("2024bashtest"
+     :title "An example of a bash script with test blocks (2024)"
+     :mp4   "http://anggtwu.net/eev-videos/2024-bash-test-blocks.mp4"
+     :yt    "http://www.youtube.com/watch?v=hok5wH4XBYg"
+     :page  "http://anggtwu.net/2024-bash-test-blocks.html"
+     :hsubs "http://anggtwu.net/2024-bash-test-blocks.html#0:00"
+     :date    "2024dec01"
+     :length  "7:12"
+     :subs    ".vtt"
+     :comment "An introduction to test blocks to people who are afraid of them.")
     ))
 
 

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241129
+;; Version:    20241202
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -6290,15 +6290,19 @@ git clone {giturl} .
 ;;
 ;; «find-tryit-links»  (to ".find-tryit-links")
 ;; See: http://anggtwu.net/2024-find-tryit-links.html
+;;      (find-lean4-intro "6. Install lean4-mode")
 ;;
 (defvar ee-tryit-compact nil
   "When this is non-nil `ee-tryit-progn' produces a single-line sexp.")
 (defvar ee-tryit-config  ""
-  "Used by `ee-tryit-progn'.")
+  "See `ee-tryit-body'.")
 
 ;; (find-tryit-links)
 ;; (find-tryit-links "e 1e")
 ;; (find-tryit-links "e 1e" '((foo) (bar)))
+;; (find-tryit-links "ikeb")
+;; (find-tryit-links "ikeb" '((find-eev-quick-intro "2. Evaluating Lisp")))
+;;
 (defun find-tryit-links (&optional configs sexps &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for tryit."
   (interactive (list nil (ee-tryit-read-sexps)))
@@ -6308,14 +6312,16 @@ git clone {giturl} .
      'find-elinks-elisp
      `((find-tryit-links ,configs ',sexps)
        (find-tryit-links "irue 1irue" ',sexps)
-       (find-tryit-links "_ 1" ',sexps)
-       (find-tryit-links "s S" ',sexps)
-       (find-tryit-links "s S s1 S1" ',sexps)
-       ;; Convention: the first sexps always regenerates the buffer.
+       (find-tryit-links "ikeb" ',sexps)
+       (find-tryit-links "<SE>b" ',sexps)
+       (find-tryit-links "<SG>b" ',sexps)
+       (find-tryit-links "m<LI><2M><LSM><LP>" ',sexps)
+       (find-efunction 'ee-tryit-body)
        (find-efunction 'find-tryit-links)
        ""
        ,(ee-template0 "\
 ;; See: http://anggtwu.net/2024-find-tryit-links.html
+;;      (find-1stclassvideo-links \"2024trywithasexp\")
 ;;      https://bpa.st/
 
 {body}
@@ -6387,6 +6393,24 @@ git clone {giturl} .
    (ee-tryit-if "<SG>" '(straight-use-package
 			 '(eev :type git :host github :repo "edrx/eev")))
    (ee-tryit-if "b" '(eev-beginner))
+   ;;
+   ;; For Lean.
+   ;; See: (find-lean4-intro "6. Install lean4-mode")
+   (ee-tryit-if "<LI>" ";; See: (find-lean4-intro \"6. Install lean4-mode\")")
+   (ee-tryit-if "<2M>" '(find-2a nil '(find-ebuffer "*Messages*")))
+   (ee-tryit-if "<LSM>"
+     ";; https://emacs.stackexchange.com/questions/80871/how-to-provide-updated-seq-package-to-magit"
+     '(setq package-install-upgrade-built-in t)
+     '(package-install 'compat)
+     '(package-install 'seq)
+     '(progn (unload-feature 'seq t) (require 'seq))
+     '(package-install 'magit))
+   (ee-tryit-if "<LP>" 
+     '(package-install 'company)
+     '(package-install 'dash)
+     '(package-install 'flycheck)
+     '(package-install 'lsp-mode)
+     '(package-install 'magit-section))
    ))
 
 ;; (ee-tryit-progn "1ire")
