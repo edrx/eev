@@ -3929,9 +3929,7 @@ is nil, use the result of (ee-1stclassvideos)."
 
 ;; «1c»  (to ".1c")
 ;; «aliases»  (to ".aliases")
-;; Suggestion: put the aliases below in your init file.
-;; (defalias '1c  'find-1stclassvideos)
-;; (defalias '1cl 'find-1stclassvideo-links)
+;; See: (find-eev "eev-aliases.el" "1stclassvideos")
 
 
 
