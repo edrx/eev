@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241202
+;; Version:    20241207
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -81,6 +81,7 @@
 ;;   «.2024butler»			(to "2024butler")
 ;;   «.2024trywithasexp»		(to "2024trywithasexp")
 ;;   «.2024bashtest»			(to "2024bashtest")
+;;   «.eev2024»				(to "eev2024")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -941,6 +942,21 @@ of the videos and play them with mpv. Compare with
      :length  "7:12"
      :subs    ".vtt"
      :comment "An introduction to test blocks to people who are afraid of them.")
+    ;;
+    ;; «eev2024»  (to ".eev2024")
+    ;; Play: (find-eev2024video "0:00")
+    ;; Subs: (find-eev2024hsubs "0:00")
+    ("eev2024"
+     :title "Emacs, eev, and Maxima - Now!"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2024.mp4"
+     :yt    "http://www.youtube.com/watch?v=ZQ4mUSRcqJc"
+     :page  "http://anggtwu.net/emacsconf2024.html"
+     :hsubs "http://anggtwu.net/emacsconf2024.html#0:00"
+     :lang  "portuguese"
+     :date    "2024dec07"
+     :length  "30:33"
+     :subs    ".vtt"
+     :comment "A non-technical video about teaching Emacs and eev to Brazilian students.")
     ))
 
 

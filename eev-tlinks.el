@@ -5444,6 +5444,24 @@ A \"Maxima message\" is a message in the Maxima mailing list."
      ;; (defalias 'qdraw 'find-qdraw-links)
      ""
      ,(ee-template0 "\
+ This needs qdraw and myqdraw
+ (eepitch-maxima)
+ (eepitch-kill)
+ (eepitch-maxima)
+load_myqdraw();
+[xmin,xmax, ymin,ymax] : [{xr}, {yr}];
+colors : [red, orange, forest_green, blue, dark_violet]$
+fs : [{fs}];
+
+myexj(j) := myex1(fs[j], lc(colors[j]));
+myexj(j) := myex1(fs[j], lc(colors[j]), lk(fs[j]));
+myexs()  := makelist(myexj(j), j,1,length(fs))$
+myqdraw(xyrange0(), myexs());
+myqdraw(myexs());
+
+
+
+ This only needs qdraw
  (eepitch-maxima)
  (eepitch-kill)
  (eepitch-maxima)
@@ -5462,20 +5480,6 @@ myexs();
 
 myqdraw([xr({xr}),yr({yr})], myexs());
 
-
- (eepitch-maxima)
- (eepitch-kill)
- (eepitch-maxima)
-load_myqdraw();
-[xmin,xmax, ymin,ymax] : [{xr}, {yr}];
-colors : [red, orange, forest_green, blue, dark_violet]$
-fs : [{fs}];
-
-myexj(j) := myex1(fs[j], lc(colors[j]));
-myexj(j) := myex1(fs[j], lc(colors[j]), lk(fs[j]));
-myexs()  := makelist(myexj(j), j,1,length(fs))$
-myqdraw(myexs());
-myqdraw(xyrange0(), myexs());
 
 ")
      )
