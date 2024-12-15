@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241017
+;; Version:    20241214
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -42,6 +42,7 @@
 
 
 ;; «.eek»			(to "eek")
+;; «.eek2»			(to "eek2")
 ;; «.ee-goto-position»		(to "ee-goto-position")
 ;; «.ee-goto-rest»		(to "ee-goto-rest")
 ;;   «.curved-single-quotes»	(to "curved-single-quotes")
@@ -128,6 +129,28 @@ An example: (eek \"C-x 4 C-h\")"
 (defun find-eek (str &rest pos-spec-list)
   (eek str)
   (apply 'ee-goto-position pos-spec-list))
+
+
+;; «eek2»  (to ".eek2")
+(defun eek2 (str &optional norecord)
+  "Execute STR as a keyboard macro. See `edmacro-mode' for the exact format.\n
+This is a variant of `eek' that pushes events into `unread-command-events'.
+An example: (eek2 \"C-x 4 C-h\")"
+  (interactive "sKeys: ")
+  (setq unread-command-events
+	(nconc unread-command-events (ee-eek2 str))))
+
+;; See: (find-elnode "Event Input Misc" "Variable: unread-command-events")
+;;      (find-elnode "Event Input Misc" "(no-record . EVENT)")
+;;      https://lists.gnu.org/archive/html/eev/2024-12/msg00003.html
+;; Compare: '((t . ?\C-h) (t . ?i))
+;;           (ee-eek2 "C-h i")
+;;           (ee-eek2 "C-h i" 'no-record)
+(defun ee-eek2 (str &optional norecord)
+  "An internal function used by `eek2'."
+  (cl-loop for ev in (listify-key-sequence (read-kbd-macro str))
+	   collect (cons (or norecord t) ev)))
+
 
 
 

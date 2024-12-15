@@ -4253,6 +4253,7 @@ d       = lambda n: n // 60
 mmss    = lambda n:      \"%d:%02d\" %           (d(n), m(n))
 hhmmss  = lambda n: \"%d:%02d:%02d\" % (d(d(n)),m(d(n)),m(n))
 timestr = lambda n: mmss(n) if n < 3600 else hhmmss(n)
+sexp    = lambda n,text: '%s %s' % (timestr(floor(n)), text)
 sexp    = lambda n,text: '%s(%s \"%s\" \"%s\")' % (p, f, timestr(floor(n)), text)
 
 p       = \"% \"

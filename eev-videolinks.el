@@ -956,6 +956,7 @@ of the videos and play them with mpv. Compare with
      :date    "2024dec07"
      :length  "30:33"
      :subs    ".vtt"
+     :index   t
      :comment "A non-technical video about teaching Emacs and eev to Brazilian students.")
     ))
 
