@@ -1,3 +1,21 @@
+2024-12-23  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): registered two new
+	first-class video:s "2021sapt" and "2023visaud".
+
+	* eev-plinks.el (ee-wget-downloading): new function.
+	(find-wget0): use `ee-wget-downloading'.
+
+2024-12-20  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-dot-emacs-eval, ee-dot-emacs-read): new
+	functions.
+
+2024-12-19  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): registered a new
+	first-class video: "2023slogans".
+
 2024-12-14  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (eek2, ee-eek2): new functions.

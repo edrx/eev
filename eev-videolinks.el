@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241207
+;; Version:    20241223
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -50,6 +50,7 @@
 ;;   «.oficina20210»			(to "oficina20210")
 ;;   «.oficina2021a»			(to "oficina2021a")
 ;;   «.oficina2021b»			(to "oficina2021b")
+;;   «.2021sapt»			(to "2021sapt")
 ;;   «.2021ssr»				(to "2021ssr")
 ;;   «.2021workshop1»			(to "2021workshop1")
 ;;   «.2021workshop2»			(to "2021workshop2")
@@ -72,6 +73,8 @@
 ;;   «.eev2022py»			(to "eev2022py")
 ;;   «.eev2023repls»			(to "eev2023repls")
 ;;   «.eev2023replsb»			(to "eev2023replsb")
+;;   «.2023slogans»			(to "2023slogans")
+;;   «.2023visaud»			(to "2023visaud")
 ;;   «.2024git»				(to "2024git")
 ;;   «.2024luaso»			(to "2024luaso")
 ;;   «.2024lean4of0»			(to "2024lean4of0")
@@ -501,6 +504,21 @@ of the videos and play them with mpv. Compare with
      :length  "14:10"
      :comment "A few very basic exercises for beginners. In portuguese.")
     ;;
+    ;; «2021sapt»  (to ".2021sapt")
+    ;; Play: (find-2021saptvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2021sapt")
+    ("2021sapt"
+     :title "Sobre aulas por Telegram"
+     :mp4   "http://anggtwu.net/eev-videos/2021aulas-por-telegram.mp4"
+     :yt    "http://www.youtube.com/watch?v=OofZQYkNVhg"
+     :page  "http://anggtwu.net/2021aulas-por-telegram.html"
+     :hsubs "http://anggtwu.net/2021aulas-por-telegram.html#00:00"
+     :lang  "portuguese"
+     :date    "2021jun11"
+     :length  "50:35"
+     :subs    ".vtt"
+     :comment "A presentation in Portuguese about my online classes during the pandemic.")
+    ;;
     ;; «2021ssr»  (to ".2021ssr")
     ;; Play: (find-2021ssrvideo "0:00")
     ;; Index: (find-1stclassvideoindex "2021ssr")
@@ -807,6 +825,37 @@ of the videos and play them with mpv. Compare with
      :subs    ".vtt"
      :length  "20:52"
      :comment "How to run the demos here: (find-show2-intro)")
+    ;;
+    ;; «2023slogans»  (to ".2023slogans")
+    ;; Info:  (find-1stclassvideo-links "2023slogans")
+    ;; HSubs: (find-2023sloganslsubs "0:00")
+    ;; LSubs: (find-2023sloganslsubs "0:00")
+    ("2023slogans"
+     :title "Precisamos de mais slogans (sobre as reclamações do CAEPRO)"
+     :mp4   "http://anggtwu.net/eev-videos/2023-precisamos-de-mais-slogans.mp4"
+     :yt    "http://www.youtube.com/watch?v=qwTqIBlu9CM"
+     :page  "http://anggtwu.net/2023-precisamos-de-mais-slogans.html"
+     :hsubs "http://anggtwu.net/2023-precisamos-de-mais-slogans.html#00:00"
+     :lang  "portuguese"
+     :date    "2023mar19"
+     :length  "1:45:44"
+     :subs    ".vtt"
+     :comment "A video in Portuguese about how I've been teaching (Maths).")
+    ;;
+    ;; «2023visaud»  (to ".2023visaud")
+    ;; Play:  (find-2023visaudvideo "0:00")
+    ;; HSubs: (find-2023visaudhsubs "0:00")
+    ("2023visaud"
+     :title "Visual vs. auditivo (sobre as reclamações do CAEPRO)"
+     :mp4   "http://anggtwu.net/eev-videos/2023-visual-vs-auditivo.mp4"
+     :yt    "http://www.youtube.com/watch?v=vVNpWTYR4wE"
+     :page  "http://anggtwu.net/2023-visual-vs-auditivo.html"
+     :hsubs "http://anggtwu.net/2023-visual-vs-auditivo.html#00:00"
+     :lang  "portuguese"
+     :date    "2023mar13"
+     :length  "1:01:13"
+     :subs    ".vtt"
+     :comment "Another video in Portuguese about how I've been teaching (Maths).")
     ;;
     ;; «2024git»  (to ".2024git")
     ;; Play: (find-2024gitvideo "0:00")

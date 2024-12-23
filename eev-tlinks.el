@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241202
+;; Version:    20241220
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -3971,7 +3971,10 @@ is nil, use the result of (ee-1stclassvideos)."
        )
      pos-spec-list)))
 
-;; Test: (find-estring-elisp (ee-dot-emacs-concat "eev mfms"))
+;; Tests: (find-estring-elisp (ee-dot-emacs-concat "eev mfms"))
+;;        (find-epp           (ee-dot-emacs-read   "eev mfms"))
+(defun ee-dot-emacs-eval   (opts) (eval    (ee-dot-emacs-read opts)))
+(defun ee-dot-emacs-read   (opts) (ee-read (ee-dot-emacs-concat opts)))
 (defun ee-dot-emacs-concat (opts)
   (string-join 
    (cl-loop for opt in (ee-split opts)

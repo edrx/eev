@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241020
+;; Version:    20241223
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -386,6 +386,10 @@ headers in case of error. This is a quick hack."
 
 (defvar ee-wget-program "wget")
 
+(defun ee-wget-downloading (url)
+  (message "Wgetting: %s" url)
+  (redisplay))
+
 (defun find-wget00 (url)
   (find-callprocess00 `(,ee-wget-program "-q" "-O" "-" ,url)))
 
@@ -402,11 +406,12 @@ If wget can't download URL then this function runs `error'."
 	(apply 'find-ebuffer wgetbufname pos-spec-list)
       ;;
       ;; If the buffer wgetbufname doesn't exist, then:
+      (ee-wget-downloading url)
       (let* ((wgetoutput (find-callprocess00-ne wgetprogandargs))
 	     (wgetstatus ee-find-callprocess00-exit-status))
 	;;
+	;; See: (find-node "(wget)Exit Status" "0" "No problems")
 	(if (not (equal wgetstatus 0))
-	    ;; See: (find-node "(wget)Exit Status")
 	    (error "wget can't download: %s" eurl))
 	;;
 	(find-ebuffer wgetbufname)	; create buffer
