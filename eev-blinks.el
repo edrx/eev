@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241214
+;; Version:    20241227
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -135,6 +135,8 @@ An example: (eek \"C-x 4 C-h\")"
 (defun eek2 (str &optional norecord)
   "Execute STR as a keyboard macro. See `edmacro-mode' for the exact format.\n
 This is a variant of `eek' that pushes events into `unread-command-events'.
+If STR is a string, convert it to a list with `ee-eek2';
+If STR is already a list, push it unchanged.
 An example: (eek2 \"C-x 4 C-h\")"
   (interactive "sKeys: ")
   (setq unread-command-events
@@ -145,11 +147,19 @@ An example: (eek2 \"C-x 4 C-h\")"
 ;;      https://lists.gnu.org/archive/html/eev/2024-12/msg00003.html
 ;; Compare: '((t . ?\C-h) (t . ?i))
 ;;           (ee-eek2 "C-h i")
+;;           (ee-eek2 "<f8>")
 ;;           (ee-eek2 "C-h i" 'no-record)
-(defun ee-eek2 (str &optional norecord)
-  "An internal function used by `eek2'."
-  (cl-loop for ev in (listify-key-sequence (read-kbd-macro str))
-	   collect (cons (or norecord t) ev)))
+(defun ee-eek2 (stringorlist &optional norecord)
+  "Convert STRINGORLIST to a list of keyboard events.
+If STRINGORLIST is a string, do something like this:\n
+  (ee-eek2 \"C-h i\")
+  ;; --> ((t . ?\\C-h) (t . ?i))\n
+If STRINGORLIST is already a list, return it unchanged.
+This is an internal function used by `eek2'."
+  (if (listp stringorlist)
+      stringorlist
+    (cl-loop for ev in (listify-key-sequence (read-kbd-macro stringorlist))
+	     collect (cons (or norecord t) ev))))
 
 
 

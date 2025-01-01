@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241223
+;; Version:    20241231
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -84,6 +84,7 @@
 ;;   «.2024butler»			(to "2024butler")
 ;;   «.2024trywithasexp»		(to "2024trywithasexp")
 ;;   «.2024bashtest»			(to "2024bashtest")
+;;   «.2024pianoroll»			(to "2024pianoroll")
 ;;   «.eev2024»				(to "eev2024")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
@@ -991,6 +992,20 @@ of the videos and play them with mpv. Compare with
      :length  "7:12"
      :subs    ".vtt"
      :comment "An introduction to test blocks to people who are afraid of them.")
+    ;;
+    ;; «2024pianoroll»  (to ".2024pianoroll")
+    ;; Play: (find-2024pianorollvideo "0:00")
+    ;; Subs: (find-2024pianorollhsubs "0:00")
+    ("2024pianoroll"
+     :title "Piano roll macros"
+     :mp4   "http://anggtwu.net/eev-videos/2024-piano-roll-macros.mp4"
+     :yt    "http://www.youtube.com/watch?v=8vhynSPXJos"
+     :page  "http://anggtwu.net/2024-piano-roll-macros.html"
+     :hsubs "http://anggtwu.net/2024-piano-roll-macros.html#0:00"
+     :date    "2024dec31"
+     :length  "17:05"
+     :subs    ".vtt"
+     :comment "This video is about keyboard macros AND elisp macros!")
     ;;
     ;; «eev2024»  (to ".eev2024")
     ;; Play: (find-eev2024video "0:00")

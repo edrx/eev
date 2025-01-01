@@ -10975,11 +10975,9 @@ the right way:
 
   (find-eev \"eev-qrl.el\")
 
-That file is not loaded by default. To make Emacs always load it,
-add these lines to your ~/.emacs:
+Note that `qrl' is an alias:
 
-;; From: (find-templates-intro \"4. Adding meat\")
-(require 'eev-qrl)     ; (find-eev \"eev-qrl.el\")
+  (find-eev \"eev-aliases.el\" \"query-replace-list\")
 
 
 
