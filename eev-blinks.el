@@ -2,7 +2,7 @@
 ;; The basic hyperlinks are the ones that do not depend on templates,
 ;; and that are not created by `code-c-d' and friends.
 
-;; Copyright (C) 1999-2024 Free Software Foundation, Inc.
+;; Copyright (C) 1999-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241227
+;; Version:    20250119
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -61,6 +61,7 @@
 ;; «.find-epropertize»		(to "find-epropertize")
 ;; «.find-ehashtable»		(to "find-ehashtable")
 ;; «.find-estruct»		(to "find-estruct")
+;; «.find-clprin1»		(to "find-clprin1")
 ;; «.find-sh»			(to "find-sh")
 ;; «.find-man»			(to "find-man")
 ;; «.find-man-bug»		(to "find-man-bug")
@@ -78,6 +79,7 @@
 ;;   «.ee-symbol-function»	(to "ee-symbol-function")
 ;; «.find-eejumps»		(to "find-eejumps")
 ;; «.find-eeshortdefs»		(to "find-eeshortdefs")
+;; «.find-eeshortaliases»	(to "find-eeshortaliases")
 ;; «.find-eaproposf»		(to "find-eaproposf")
 
 
@@ -363,6 +365,15 @@ then go to the position specified by POS-SPEC-LIST.\n
   (interactive "kFind function on key: ")
   (apply 'find-wottb-call '(describe-key key) "*Help*" pos-spec-list))
 
+;; Tests: (find-etypedescr 'decoded-time)
+;;        (find-etypedescr 'decoded-time "weekday")
+;;
+(defun find-etypedescr (type &rest pos-spec-list)
+  "Hyperlink to the result of running `cl-describe-type' on TYPE.
+TYPE must be a symbol."
+  (apply 'find-wottb-call `(cl-describe-type ',type) "*Help*" pos-spec-list))
+
+
 ;; Tests: (find-efunctiond 'find-file)
 ;;        (find-efunctiond 'next-line "next-line-add-newlines")
 ;;
@@ -456,16 +467,16 @@ far less convenient. The suffix `0' means \"low-level\"."
 ;;;                                                   
 ;; «find-dbsw»  (to ".find-dbsw")
 ;; See: https://lists.gnu.org/archive/html/help-gnu-emacs/2022-03/msg00354.html
-;; Thanks to Emanuel Berg for help with this!
+;; Thanks to Emanuel Berg and to bpalmer for help with this!
 ;;
 (defun find-dbsw-call (sexp &rest pos-spec-list)
   "Run SEXP in \"display-buffer-same-window mode\" and go to POS-SPEC-LIST.
 This is similar to `find-wottb-call' but uses another method to
-force using the same window. This is an experimental hack and may
-change soon."
+force using the same window. Note: this is a hack!"
   (let ((display-buffer-overriding-action '(display-buffer-same-window)))
-    (eval sexp))
-  (apply 'ee-goto-position pos-spec-list))
+    (eval sexp)
+    (switch-to-buffer (window-buffer (selected-window)))
+    (apply 'ee-goto-position pos-spec-list)))
 
 
 
@@ -1058,6 +1069,7 @@ newlines, as \"big strings\". This function returns a \"big string\"."
 ;;  
 ;;                                  (find-estruct myp)
 ;;                 (find-estruct (ee-struct-class myp))
+;;                (find-estructt (ee-struct-class myp))
 ;;
 ;; WARNING: this is a quick hack.
 ;; THANKS: to pjb from #emacs.
@@ -1120,6 +1132,28 @@ fieldname value\", like this:
 (defun find-estructt (stro &rest pos-spec-list)
   "Like `find-estructt', but pretty-prints a list of triples."
   (apply 'find-epp (ee-struct-to-triples stro) pos-spec-list))
+
+
+
+;; «find-clprin1»  (to ".find-clprin1")
+;; Tests:
+;;   (cl-defstruct mytriple a b c)
+;;                  (make-mytriple :a 22 :c "44")
+;;    (find-estruct (make-mytriple :a 22 :c "44"))
+;;   (find-estructt (make-mytriple :a 22 :c "44"))
+;;    (find-clprin1 (make-mytriple :a 22 :c "44"))
+;;   (defun deepo (n) (if (zerop n) 0 (list (deepo (1- n)))))
+;;   (let ((print-level 10)) (cl-print-object (deepo 20) (current-buffer)))
+;;   (let ((print-level 10)) (find-clprin1 (deepo 20)))
+;;                           (find-clprin1 (deepo 20))
+;; See:
+;;   (find-egrep "grep --color=auto -nH --null -e cl-print-object *.el */*.el")
+;;
+(defun find-clprin1 (o &rest pos-spec-list)
+"Visit a temporary buffer containing a `cl-prin1'-printed version of O."
+  (find-estring-elisp
+   (cl-prin1-to-string o)
+   (apply 'ee-goto-position pos-spec-list)))
 
 
 
@@ -1501,7 +1535,6 @@ that `find-epp' would print in a single line."
 
 
 
-
 ;;;  _                 _       _     _     _                   
 ;;; | | ___   __ _  __| |     | |__ (_)___| |_ ___  _ __ _   _ 
 ;;; | |/ _ \ / _` |/ _` |_____| '_ \| / __| __/ _ \| '__| | | |
@@ -1771,6 +1804,7 @@ Hint: install the Debian package \"unicode-data\".")
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00292.html
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00311.html
 ;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00328.html
+;; (find-efile "emacs-lisp/cl-preloaded.el" "(cl--define-built-in-type closure")
 ;; TODO: fix this:
 ;;   (find-elisp-intro "6. Defining functions")
 
@@ -1883,7 +1917,8 @@ Hint: install the Debian package \"unicode-data\".")
 
 (defun ee-find-eeshortdefs-header ()
   ";; Generated by: (find-eeshortdefs)
-;; See: (find-eev-quick-intro \"7.4. Commands with very short names\")
+;; See: (find-eeshortaliases)
+;;      (find-eev-quick-intro \"7.4. Commands with very short names\")
 ;; Current short defs:\n\n")
 
 (defun find-eeshortdefs (&rest pos-spec-list)
@@ -1894,6 +1929,42 @@ Hint: install the Debian package \"unicode-data\".")
 	   (concat (ee-find-eeshortdefs-header)
 		   (ee-find-eeshortdefs-body))
 	   pos-spec-list)))
+
+
+;; «find-eeshortaliases»  (to ".find-eeshortaliases")
+;; Test: (find-eeshortaliases)
+
+(defun ee-shortaliasp (sym)
+  (and (fboundp  sym)
+       (commandp sym)
+       (symbolp    (ee-symbol-function sym))
+       (<= (length (symbol-name        sym)) ee-shortdefp-maxlen-name)))
+
+(defun ee-shortalias-symbols ()
+  (apropos-internal "^.*$" 'ee-shortaliasp))
+
+(defun ee-defalias-str-for (symbol)
+  (format "(defalias '%s '%s)" symbol (ee-symbol-function symbol)))
+
+(defun ee-find-eeshortaliases-body ()
+  (mapconcat 'ee-defalias-str-for
+	     (ee-shortalias-symbols) "\n"))
+
+(defun ee-find-eeshortaliases-header ()
+  ";; Generated by: (find-eeshortaliases)
+;; See: (find-eeshortdefs)
+;;      (find-eev \"eev-aliases.el\")
+;; Current short aliases:\n\n")
+
+(defun find-eeshortaliases (&rest pos-spec-list)
+  "This is similar to `find-eejumps', but lists commands with very short names."
+  (interactive)
+  (let ((ee-buffer-name "*(find-eeshortaliases)*"))
+    (apply 'find-estring-elisp
+	   (concat (ee-find-eeshortaliases-header)
+		   (ee-find-eeshortaliases-body))
+	   pos-spec-list)))
+
 
 
 
@@ -1935,6 +2006,22 @@ Hint: install the Debian package \"unicode-data\".")
 ;; (find-efunction 'find-eaproposv)
 ")
 	   ,(ee-eaproposf0 regexp 'boundp "(find-evardescr '%s)\n"))
+	 rest))
+
+(defun find-eapropost (regexp &rest rest)
+  "Go to a temporary buffer listing all types whose names match REGEXP."
+  (interactive "sApropos type (regexp): ")
+  (apply 'find-elinks-elisp
+	 `(,(ee-template0 "\
+;; (find-eapropost {(ee-S regexp)})
+;; (find-eaproposf {(ee-S regexp)})
+;; (find-eapropos  {(ee-S regexp)})
+;; (find-etype-links)
+;; (find-etype-links {(ee-S regexp)})
+;; (find-eapropos-links {(ee-S regexp)})
+;; (find-efunction 'find-eapropost)
+")
+	   ,(ee-eaproposf0 regexp 'cl-find-class "(find-etypedescr '%s)\n"))
 	 rest))
 
 (defun ee-eaproposf0 (regexp predicate fmt)

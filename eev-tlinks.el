@@ -5545,6 +5545,7 @@ myqdraw([xr({xr}),yr({yr})], myexs());
 ;; «find-sbcl-links»  (to ".find-sbcl-links")
 ;; Skel: (find-find-links-links-new "sbcl" "name" "")
 ;; Test: (find-sbcl-links 'require)
+;;       (find-sbcl-links "SB-MOP")
 ;;
 (defun find-sbcl-links (&optional name &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for sbcl."
@@ -5577,6 +5578,13 @@ myqdraw([xr({xr}),yr({yr})], myexs());
  (eepitch-sly)
 (apropos \"{name}\")
 (describe '{name})
+
+(list-all-packages)
+
+                   (find-package \"{name}\")
+         (describe (find-package \"{name}\"))
+          (type-of (find-package \"{name}\"))
+(describe (type-of (find-package \"{name}\")))
 ")
      )
    pos-spec-list))

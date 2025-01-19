@@ -1310,7 +1310,9 @@ you can list the current commands with very short names with:
   (find-eeshortdefs)
 
 [Video links:]
+  (find-eev2020hsubs \"19:03\" \"commands with very short names\")
   (find-eev2020video \"19:03\" \"commands with very short names\")
+  (find-eev2020husbs \"21:07\" \"commands with very short numbers\")
   (find-eev2020video \"21:07\" \"commands with very short numbers\")
 
 
@@ -3013,6 +3015,7 @@ See:
   (find-eev \"eev-aliases.el\")
   (find-eev-intro \"1. `eev-mode'\")
   (find-eev-intro \"1. `eev-mode'\" \"prefixes\")
+  (find-dot-emacs-links \"eev\")
 
 
 

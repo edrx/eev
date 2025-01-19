@@ -1,6 +1,6 @@
 ;;; eev-aliases.el -- aliases that don't start with the standard prefixes. -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2024 Free Software Foundation, Inc.
+;; Copyright (C) 2024,2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240309
+;; Version:    20250108
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-aliases.el>
@@ -29,11 +29,41 @@
 ;;                                               (find-kla-intro)
 
 ;;; Comment:
-
-;; See:
+;;
+;; The main tutorial of eev explains how to create "commands with
+;; very short names" and "commands with very short numbers":
+;;
+;;   (find-eev-quick-intro "7.4. Commands with very short names")
+;;   (find-eev-quick-intro "7.4. Commands with very short names" "short numbers")
+;;
+;; You can see the ones that are currently defined with:
+;;
+;;   (find-eejumps)
+;;   (find-eeshortdefs)
+;;   (find-eeshortaliases)
+;;
+;; The "commands with very short names" defined with `defun' are
+;; displayed with `(find-eeshortdefs)', and the ones that are defined
+;; with `defalias' are displayed by `(find-eeshortdefs)'.
+;;
+;; If you just "load" eev, in this sense,
+;;
+;;   (find-eev-levels-intro "2. Loading")
+;;
+;; then it will only define functions and variables that start with
+;; the prefixes "find-", "ee", "code-" or "br", with one exception:
+;; "to". This is explained here,
+;;
+;;   (find-eev-levels-intro "4. Aliases")
 ;;   (find-eev-intro "1. `eev-mode'")
 ;;   (find-eev-intro "1. `eev-mode'" "prefixes")
-;;   (find-eev-levels-intro "4. Aliases")
+;;
+;; but most people will load this file, that defines several short
+;; aliases that don't start with those prefixes. See:
+;;
+;;   (find-dot-emacs-links "eev")
+
+;; Index:
 
 ;; «.1stclassvideos»		(to "1stclassvideos")
 ;; «.kl-here»			(to "kl-here")

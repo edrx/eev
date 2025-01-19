@@ -65,6 +65,7 @@
 ;; «.find-ekey-links»		(to "find-ekey-links")
 ;; «.find-elongkey-links»	(to "find-elongkey-links")
 ;; «.find-eapropos-links»	(to "find-eapropos-links")
+;; «.find-etype-links»		(to "find-etype-links")
 ;; «.find-einfo-links»		(to "find-einfo-links")
 ;; «.find-eintro»		(to "find-eintro")
 ;; «.ee-find-wget-links»	(to "ee-find-wget-links")
@@ -615,6 +616,53 @@ This is an internal function used by `find-ekey-links' and
        ""
        (eek ,(format "M-h a %s" regexp))
        (eek ,(format "C-h a %s" regexp))
+       )
+     pos-spec-list)))
+
+
+
+;;;   __ _           _            _                    
+;;;  / _(_)_ __   __| |       ___| |_ _   _ _ __   ___ 
+;;; | |_| | '_ \ / _` |_____ / _ \ __| | | | '_ \ / _ \
+;;; |  _| | | | | (_| |_____|  __/ |_| |_| | |_) |  __/
+;;; |_| |_|_| |_|\__,_|      \___|\__|\__, | .__/ \___|
+;;;                                   |___/|_|         
+;;
+;; «find-etype-links»  (to ".find-etype-links")
+;; Skel: (find-find-links-links-new "etype" "type" "typesymbol typeregexp")
+;; Test: (find-etype-links)
+;;       (find-etype-links 'decoded-time)
+;;       (find-etype-links 'advice)
+;;  See: (find-efunction 'cl-describe-type)
+;;
+(defun find-etype-links (&optional type &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks about TYPE."
+  (interactive)
+  ;; (setq type (or type "{type}"))
+  (let* ((typesymbol (or type "{typesymbol}"))
+         (typeregexp (or type ".*")))
+    (apply
+     'find-elinks
+     `((find-etype-links ,type ,@pos-spec-list)
+       (find-etype-links 'decoded-time ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-etype-links)
+       ""
+       ,(ee-template0 "\
+# (find-eapropost \"{typeregexp}\")
+# (find-eaproposf \"{typeregexp}\")
+# (find-etypedescr '{typesymbol}\")
+# (cl-describe-type '{typesymbol}\")
+
+# (find-efunction-links 'make-{typesymbol})
+# (find-eloadhistory-for 'make-{typesymbol} 2 \" make-{typesymbol})\")
+
+# (find-egrep \"grep --color=auto -nH --null -e {typesymbol} *.el */*.el\")
+# (find-egrep \"grep --color=auto -nH --null -e cl-defstruct *.el */*.el\")
+# (find-egrep \"grep --color=auto -nH --null -e cl--define-built-in-type *.el */*.el\")
+# (find-egrep \"grep --color=auto -nH --null -e defclass *.el */*.el\")
+# (find-egrep \"grep --color=auto -nH --null -e oclosure-define *.el */*.el\")
+")
        )
      pos-spec-list)))
 
@@ -1594,6 +1642,8 @@ Convert PKG - a symbol - to a package-desc structure (or to nil)."
 (local-set-key    (kbd \"{longkey}\") '{command})
 (local-unset-key  (kbd \"{longkey}\"))
 
+(define-key global-map (kbd \"{longkey}\") '{command})
+
 ;; (find-ekeymapdescr eev-mode-map)
 (define-key eev-mode-map (kbd \"{longkey}\") '{command})
 (define-key eev-mode-map (kbd \"{longkey}\") nil)
@@ -1852,10 +1902,12 @@ hyperlinks about all that."
   (interactive (list (ee-read-key-sequence "Key sequence: ")))
   (setq key    (or key "{key}"))
   (setq keymap (or keymap (ee-binding-locus key) "{keymap}"))
-  (let* ((f (ee-keymap-lookup (symbol-value keymap) key)))
+  (let* ((f (ee-keymap-lookup (symbol-value keymap) key))
+         (fstr (format "%S" f)))
     (apply
      'find-elinks-elisp
      `((find-elocus-links ,key ',keymap ,@pos-spec-list)
+       (find-elocus-links ,key ',keymap ,fstr)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-elocus-links)
        ""
