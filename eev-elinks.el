@@ -643,7 +643,7 @@ This is an internal function used by `find-ekey-links' and
          (typeregexp (or type ".*")))
     (apply
      'find-elinks
-     `((find-etype-links ,type ,@pos-spec-list)
+     `((find-etype-links ,(ee-add-quote type) ,@pos-spec-list)
        (find-etype-links 'decoded-time ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-etype-links)
@@ -651,8 +651,8 @@ This is an internal function used by `find-ekey-links' and
        ,(ee-template0 "\
 # (find-eapropost \"{typeregexp}\")
 # (find-eaproposf \"{typeregexp}\")
-# (find-etypedescr '{typesymbol}\")
-# (cl-describe-type '{typesymbol}\")
+# (find-etypedescr '{typesymbol})
+# (cl-describe-type '{typesymbol})
 
 # (find-efunction-links 'make-{typesymbol})
 # (find-eloadhistory-for 'make-{typesymbol} 2 \" make-{typesymbol})\")
@@ -662,6 +662,8 @@ This is an internal function used by `find-ekey-links' and
 # (find-egrep \"grep --color=auto -nH --null -e cl--define-built-in-type *.el */*.el\")
 # (find-egrep \"grep --color=auto -nH --null -e defclass *.el */*.el\")
 # (find-egrep \"grep --color=auto -nH --null -e oclosure-define *.el */*.el\")
+
+# (find-estring (ee-eaproposf0 \".*\" 'cl-find-class \"(find-etypedescr '%s)\\n\"))
 ")
        )
      pos-spec-list)))

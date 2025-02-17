@@ -16419,16 +16419,19 @@ This buffer is _temporary_ and _editable_.
 It is meant as both a tutorial and a sandbox.
 
 
-
 This is a tutorial for:
   (find-eev \"eev-hydras.el\")
 that is a module of eev that is not loaded by default.
+
 To test it you will need the package \"hydra\", from ELPA,
   https://github.com/abo-abo/hydra
-and this `require':
+  (find-epackage-links 'hydra)
+this `require',
   (require 'eev-hydras)
-This will define `M-x ei' as an alias. See:
-  (find-eev \"eev-hydras.el\" \"ei\")
+and this `defalias',
+  (defalias 'ei 'ee-edit-index)
+from:
+  (find-eev \"eev-aliases.el\" \"edit-index\")
 
 
 

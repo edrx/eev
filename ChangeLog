@@ -1,3 +1,7 @@
+2025-01-27  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-aliases.el: Added `u0'.
+
 2025-01-19  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-eapropost): new function.

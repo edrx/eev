@@ -3954,7 +3954,7 @@ is nil, use the result of (ee-1stclassvideos)."
      'find-elinks-elisp
      `((find-dot-emacs-links ,opts ,@pos-spec-list)
        (find-dot-emacs-links "eev angges")
-       (find-dot-emacs-links "eev angges edrxmaxima mfms")
+       (find-dot-emacs-links "eev angges melpa edrxmaxima mfms")
        (find-dot-emacs-links "eev angges melpa lean4 edrxmaxima mfms")
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-dot-emacs-links)

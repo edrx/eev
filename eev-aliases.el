@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250108
+;; Version:    20250127
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-aliases.el>
@@ -70,6 +70,7 @@
 ;; «.kla»			(to "kla")
 ;; «.query-replace-list»	(to "query-replace-list")
 ;; «.edit-index»		(to "edit-index")
+;; «.u0»			(to "u0")
 
 
 
@@ -110,6 +111,10 @@
 ;; From: (find-eev "eev-hydras.el" "aliases")
 ;;  See: (find-edit-index-intro)
 (defalias 'ei 'ee-edit-index)
+
+;; «u0»  (to ".u0")
+;; From: (find-eev "eev-tlinks.el" "ee-0x0-upload-region")
+(defalias 'u0 'ee-0x0-upload-region)
 
 
 ;; TODO: fix this!
