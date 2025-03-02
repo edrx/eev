@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250119
+;; Version:    20250302
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -367,6 +367,7 @@ then go to the position specified by POS-SPEC-LIST.\n
 
 ;; Tests: (find-etypedescr 'decoded-time)
 ;;        (find-etypedescr 'decoded-time "weekday")
+;;   See: (find-etype-links)
 ;;
 (defun find-etypedescr (type &rest pos-spec-list)
   "Hyperlink to the result of running `cl-describe-type' on TYPE.
@@ -1135,26 +1136,101 @@ fieldname value\", like this:
 
 
 
+
+;;;   __ _           _            _            _       _ 
+;;;  / _(_)_ __   __| |       ___| |_ __  _ __(_)_ __ / |
+;;; | |_| | '_ \ / _` |_____ / __| | '_ \| '__| | '_ \| |
+;;; |  _| | | | | (_| |_____| (__| | |_) | |  | | | | | |
+;;; |_| |_|_| |_|\__,_|      \___|_| .__/|_|  |_|_| |_|_|
+;;;                                |_|                   
+;;
 ;; «find-clprin1»  (to ".find-clprin1")
-;; Tests:
-;;   (cl-defstruct mytriple a b c)
-;;                  (make-mytriple :a 22 :c "44")
-;;    (find-estruct (make-mytriple :a 22 :c "44"))
-;;   (find-estructt (make-mytriple :a 22 :c "44"))
-;;    (find-clprin1 (make-mytriple :a 22 :c "44"))
-;;   (defun deepo (n) (if (zerop n) 0 (list (deepo (1- n)))))
-;;   (let ((print-level 10)) (cl-print-object (deepo 20) (current-buffer)))
-;;   (let ((print-level 10)) (find-clprin1 (deepo 20)))
-;;                           (find-clprin1 (deepo 20))
-;; See:
+;; Pretty-print elisp objects using `cl-prin1-to-string'.
+;; For functions that use `pp-to-string', see:
+;;   (to "find-epp")
+;;
+;; Some elisp classes have special `cl-print-object' methods that tell
+;; Emacs how to pretty-print their objects. The lower-level way of
+;; converting objects to strings in Emacs ignore these special
+;; `cl-print-object' methods, but these functions use them:
+;;
+;;   (find-efunction 'cl-prin1)
+;;   (find-efunction 'cl-prin1-to-string)
+;;
+;; In this section we define the functions `find-clprin1',
+;; `find-clprin1s' and `find-clprin1ind', that are based on
+;; `cl-prin1-to-string'. Try:
+;;
+;;                          (cl-defstruct mytriple a b c)
+;;                                  (make-mytriple :a 22 :c "44")
+;;   (find-2a nil '(find-clprin1    (make-mytriple :a 22 :c "44")))
+;;   (find-2a nil '(find-clprin1ind (make-mytriple :a 22 :c "44")))
+;;                                  (cl-find-class 'cl-structure-class)
+;;   (find-2a nil '(find-clprin1ind (cl-find-class 'cl-structure-class)))
+;;
+;; Here are some examples of classes with special `cl-print-object'
+;; methods:
+;;
 ;;   (find-egrep "grep --color=auto -nH --null -e cl-print-object *.el */*.el")
+;;
+;; Some tests for `print-level':
+;;  See: (find-elnode "Output Variables" "print-level")
+;; Test: (defun deepo (n) (if (zerop n) 0 (list (deepo (1- n)))))
+;;       (let ((print-level 10)) (find-clprin1 (deepo 20)))
+;;                               (find-clprin1 (deepo 20))
 ;;
 (defun find-clprin1 (o &rest pos-spec-list)
 "Visit a temporary buffer containing a `cl-prin1'-printed version of O."
-  (find-estring-elisp
-   (cl-prin1-to-string o)
-   (apply 'ee-goto-position pos-spec-list)))
+  (apply 'find-estring-elisp (cl-prin1-to-string o) pos-spec-list))
 
+;; Tests: (find-clprin1  (cl--class-slots (cl-find-class 'cl-structure-class)))
+;;        (find-clprin1s (cl--class-slots (cl-find-class 'cl-structure-class)))
+(defun find-clprin1s (o &rest pos-spec-list)
+"Visit a temporary buffer containing a `cl-prin1'-printed version of O.
+This is a variant of `find-clprin1s' in which O is expected to be a list
+of objects and each one of these objects is `cl-prin1'-printed in a
+different line."
+  (apply 'find-estring-elisp (ee-clprin1s o) pos-spec-list))
+
+;; Test: (find-clprin1ind (cl-find-class 'cl-structure-class))
+(defun find-clprin1ind (o &rest pos-spec-list)
+"Visit a temporary buffer containing a `cl-prin1'-printed version of O.
+This is a variant of `find-clprin1' that tries to insert newlines at the
+right places in the output of `cl-prin1-to-string' and then runs
+`ee-indent-as-elisp' in the result."
+  (apply 'find-estring-elisp (ee-clprin1ind o) pos-spec-list))
+
+
+;; Low-level functions used by `find-clprin1' and friends.
+;; I sometimes use them with `-->', the main threading macro of
+;; dash.el. For example:
+;;   (--> 'cl-structure-class cl-find-class)
+;;   (--> 'cl-structure-class cl-find-class cl-type-of)
+;;   (--> 'cl-structure-class cl-find-class cl--class-slots)
+;;   (--> 'cl-structure-class cl-find-class cl--class-slots ee-clprin1)
+;;   (--> 'cl-structure-class cl-find-class cl--class-slots ee-clprin1s)
+;;   (--> 'cl-structure-class cl-find-class ee-clprin1)
+;;   (--> 'cl-structure-class cl-find-class find-clprin1ind)
+
+;; Test: (ee-indent-as-elisp "(defun foo ()\n(interactive)\n42)")
+(defun ee-indent-as-elisp (str)
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert str)
+    (indent-region (point-min) (point-max))
+    (buffer-substring (point-min) (point-max))))
+
+(defun ee-clprin1  (o) (cl-prin1-to-string o))
+(defun ee-clprin1s (o) (mapconcat 'cl-prin1-to-string o "\n"))
+
+;; (find-estring-elisp (ee-clprin1    (cl-find-class 'cl-structure-class)))
+;; (find-estring-elisp (ee-clprin1ind (cl-find-class 'cl-structure-class)))
+(defun ee-clprin1ind (o)
+  (let* ((str1 (cl-prin1-to-string o))
+	 (str2 (replace-regexp-in-string " :"  "\n:"  str1))
+	 (str3 (replace-regexp-in-string " #s" "\n#s" str2))
+	 (str4 (ee-indent-as-elisp str3)))
+    str4))
 
 
 
@@ -1470,8 +1546,12 @@ This is Debian-specific. See `find-Package'."
 ;;; |_| |_|_| |_|\__,_|     \___| .__/| .__/ 
 ;;;                             |_|   |_|    
 ;; «find-epp»  (to ".find-epp")
-;; Pretty-priting sexps.
-;; "pp0" -> "pretty-print a Lisp object in a very compact way".
+;; Pretty-print elisp objects using `pp-to-string'.
+;; For variants that use `cl-prin1-to-string', see:
+;;   (to "find-clprin1")
+;;
+;; An abbreviation: "pp0" means "pretty-print an elisp object in a
+;;   very compact way".
 ;; Tests:
 ;;   (find-epp '(mapcar (lambda (a) (* a a)) '(2 3 4 5)))
 ;;   (find-efunctionpp 'find-efunction)
@@ -1976,43 +2056,53 @@ Hint: install the Debian package \"unicode-data\".")
 ;;;                                    |_|             |_|                  
 ;;
 ;; «find-eaproposf»  (to ".find-eaproposf")
-;; Tests: (find-eaproposf "^find-.*-links$")
-;;        (find-eaproposv "process")
-;;        (find-estring (ee-eaproposf0 "^find-.*-links$" 'fboundp ": %s\n"))
+;; Variants of `find-eapropos'.
 
+;; Test: (find-eaproposf "^find-.*-links$")
 (defun find-eaproposf (regexp &rest rest)
   "Go to a temporary buffer listing all functions whose names match REGEXP."
   (interactive "sApropos function (regexp): ")
-  (apply 'find-elinks-elisp
-	 `(,(ee-template0 "\
+  (let* ((ee-buffer-name
+	  (or ee-buffer-name
+	      (format "*%S*" `(find-eaproposf ,regexp)))))
+    (apply 'find-elinks-elisp
+	   `(,(ee-template0 "\
 ;; (find-eaproposf {(ee-S regexp)})
 ;; (find-eaproposv {(ee-S regexp)})
 ;; (find-eapropos  {(ee-S regexp)})
 ;; (find-eapropos-links {(ee-S regexp)})
 ;; (find-efunction 'find-eaproposf)
 ")
-	   ,(ee-eaproposf0 regexp 'fboundp "(find-efunction '%s)\n"))
-	 rest))
+	     ,(ee-eaproposf0 regexp 'fboundp "(find-efunction '%s)\n"))
+	   rest)))
 
+;; Test: (find-eaproposv "process")
 (defun find-eaproposv (regexp &rest rest)
   "Go to a temporary buffer listing all variables whose names match REGEXP."
   (interactive "sApropos variable (regexp): ")
-  (apply 'find-elinks-elisp
-	 `(,(ee-template0 "\
+  (let* ((ee-buffer-name
+	  (or ee-buffer-name
+	      (format "*%S*" `(find-eaproposv ,regexp)))))
+    (apply 'find-elinks-elisp
+	   `(,(ee-template0 "\
 ;; (find-eaproposv {(ee-S regexp)})
 ;; (find-eaproposf {(ee-S regexp)})
 ;; (find-eapropos  {(ee-S regexp)})
 ;; (find-eapropos-links {(ee-S regexp)})
 ;; (find-efunction 'find-eaproposv)
 ")
-	   ,(ee-eaproposf0 regexp 'boundp "(find-evardescr '%s)\n"))
-	 rest))
+	     ,(ee-eaproposf0 regexp 'boundp "(find-evardescr '%s)\n"))
+	   rest)))
 
+;; Test: (find-eapropost ".*")
 (defun find-eapropost (regexp &rest rest)
   "Go to a temporary buffer listing all types whose names match REGEXP."
   (interactive "sApropos type (regexp): ")
-  (apply 'find-elinks-elisp
-	 `(,(ee-template0 "\
+  (let* ((ee-buffer-name
+	  (or ee-buffer-name
+	      (format "*%S*" `(find-eapropost ,regexp)))))
+    (apply 'find-elinks-elisp
+	   `(,(ee-template0 "\
 ;; (find-eapropost {(ee-S regexp)})
 ;; (find-eaproposf {(ee-S regexp)})
 ;; (find-eapropos  {(ee-S regexp)})
@@ -2021,9 +2111,10 @@ Hint: install the Debian package \"unicode-data\".")
 ;; (find-eapropos-links {(ee-S regexp)})
 ;; (find-efunction 'find-eapropost)
 ")
-	   ,(ee-eaproposf0 regexp 'cl-find-class "(find-etypedescr '%s)\n"))
-	 rest))
+	     ,(ee-eaproposf0 regexp 'cl-find-class "(find-etypedescr '%s)\n"))
+	   rest)))
 
+;; Test: (find-estring (ee-eaproposf0 "^find-.*-links$" 'fboundp ": %s\n"))
 (defun ee-eaproposf0 (regexp predicate fmt)
   "An internal function used by `find-eaproposf'."
   (mapconcat (lambda (sym) (format fmt sym))

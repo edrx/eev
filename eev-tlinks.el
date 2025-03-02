@@ -689,6 +689,8 @@ This is an internal function used by `find-{stem}-links'.\"
 ;; Skel: (find-find-links-links-new "let*-macro" "stem args defs" "sep part1 part2")
 ;; Test: (find-let*-macro-links "foo" "a b c" "d e f")
 ;;  See: (find-templates-intro "7. let* macros")
+;;       (find-2024pianorollhsubs "6:46" "let*-macro")
+;;       (find-2024pianorollvideo "6:46" "let*-macro")
 ;;
 (defun find-let*-macro-links (&optional stem args defs &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for let*-macro."
@@ -2016,6 +2018,7 @@ fossil open ~/usrc/fossil-repos/{subdir}.fsl
 ;; «find-apt-get-source-links»  (to ".find-apt-get-source-links")
 ;; (find-find-links-links "{k}" "apt-get-source" "pkg")
 ;; A test: (find-apt-get-source-links)
+;;    See: (find-eev2019video "14:43" "So the quickest way to change xpdf")
 
 (defun find-apt-get-source-links (&optional pkg &rest pos-spec-list)
 "Visit a temporary buffer containing a script for apt-get source."
@@ -3034,6 +3037,8 @@ dofile \\\"%s\\\"
 ;;;   |_|\___/_/\_\_____|_| \_/ \___|
 ;;;                                  
 ;; «find-texlive-links»  (to ".find-texlive-links")
+;; Skel: (find-find-links-links-new "texlive" "date" "")
+;; Test: (find-texlive-links)
 
 (defun find-texlive-links (&optional date &rest pos-spec-list)
 "Visit a temporary buffer containing an e-script for installing texlive from upstream."

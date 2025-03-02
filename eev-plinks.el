@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241223
+;; Version:    20250222
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -449,7 +449,7 @@ SEXP is usually - but not necessarily - a sexp that sets major mode."
 (defun find-wgeta-mode (sexp url &rest pos-spec-list)
   "Like `find-wget-mode', but uses `ee-goto-anchor'."
   (interactive (browse-url-interactive-arg "URL: "))
-  (find-wget-mode url sexp)
+  (find-wget-mode sexp url)
   (apply 'ee-goto-anchor pos-spec-list))
 
 (defun find-wget-elisp (url &rest pos-spec-list)

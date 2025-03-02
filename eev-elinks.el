@@ -651,8 +651,12 @@ This is an internal function used by `find-ekey-links' and
        ,(ee-template0 "\
 # (find-eapropost \"{typeregexp}\")
 # (find-eaproposf \"{typeregexp}\")
+# (find-eaproposf \"^{typesymbol}--\")
 # (find-etypedescr '{typesymbol})
 # (cl-describe-type '{typesymbol})
+
+# (find-eaproposf \"^{typesymbol}--\")
+# (--> '{typesymbol} cl-find-class cl--class-slots (mapconcat 'cl-prin1-to-string it \"\\n\"))
 
 # (find-efunction-links 'make-{typesymbol})
 # (find-eloadhistory-for 'make-{typesymbol} 2 \" make-{typesymbol})\")

@@ -1,3 +1,15 @@
+2025-03-02  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-eaproposf, find-eaproposv, find-eapropost):
+	use better buffer names.
+	(find-clprin1s, find-clprin1ind, ee-indent-as-elisp, ee-clprin1)
+	(ee-clprin1s, ee-clprin1ind): new functions.
+
+2025-02-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-wgeta-mode): fixed the order of the
+	arguments in the call to `find-wget-mode'.
+
 2025-01-27  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-aliases.el: Added `u0'.
