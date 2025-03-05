@@ -1,6 +1,6 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241027
+;; Version:    20250304
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-code.el>
@@ -68,11 +68,16 @@
 ;;;  \__,_|_|_|___/\__|___/
 ;;;                        
 ;; «alists» (to ".alists")
-;; A simple and flexible implementation of argument lists.
-;; Inspired by: (find-node "(cl)Argument Lists")
-;;              (find-node "(cl)Argument Lists" "&body")
-;;    See also: (find-elnode "Symbol Type" ":" "keyword")
-;;              (find-elnode "Constant Variables")
+;; Some functions for association lists. See:
+;;   (find-elnode "Association Lists")
+;; Note: these functions are from 2019! At that point I found the
+;; standard functions for alists confusing, and I felt that it would
+;; be better to write my own variants, with simpler semantics...
+;; See also:
+;;   (find-node "(cl)Argument Lists")
+;;   (find-node "(cl)Argument Lists" "&body")
+;;   (find-elnode "Symbol Type" ":" "keyword")
+;;   (find-elnode "Constant Variables")
 
 ;; Test: (ee-aref '((1 . one) (2 . two) (3 . three)) 2)
 ;;                              -> two
@@ -140,7 +145,7 @@ and is used by `ee-find-xxxfile-sexps' and `find-file-links'.")
 
 (defun ee-code-c-d-add-pair (c d)
   (setq d (format "%s" d))
-  (setq ee-code-c-d-pairs (ee-areplace ee-code-c-d-pairs c (list d))))
+  (setq ee-code-c-d-pairs (ee-aset ee-code-c-d-pairs c (list d))))
 
 
 
@@ -368,7 +373,6 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 	      emacs-major-version emacs-minor-version)))
 
 (code-c-d "eli"    ee-emacs-lisp-directory "eintr" :gz) ; (find-elinode "Top")
-(code-c-d "el"     ee-emacs-lisp-directory "elisp" :gz) ; (find-elnode  "Top")
 (code-c-d "e"      ee-emacs-lisp-directory "emacs" :gz) ; (find-enode   "Top")
 (code-c-d "org"    (ee-locate-library "org") "org" :gz) ; (find-orgnode "Top")
 (code-c-d "cl"     (ee-efile "emacs-lisp/") "cl"   :gz) ; (find-clnode  "Top")
@@ -377,6 +381,15 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (code-c-d "eleim"  ee-emacs-leim-directory :gz)
 (code-c-d "equail" (ee-eleimfile "quail/") :gz)
 (code-c-d "eetc"   data-directory :gz)
+
+;; 2025mar04: INCOMPATIBLE CHANGE!
+;; Now `find-elfile' points to ".../lisp/emacs-lisp/" instead of
+;; to ".../lisp/", and, as it is declared last, doing
+;;   (find-elfile "backquote.el")
+;; and then `M-x kl' will generate the right link.
+;;
+;; (code-c-d "el"  ee-emacs-lisp-directory  "elisp" :gz) ; (find-elnode "Top")
+(code-c-d "el"     (ee-efile "emacs-lisp/") "elisp" :gz) ; (find-elfile "")
 
 (code-c-d "eev"    ee-eev-source-directory :anchor)      ; (find-eev "")
 (code-c-d "eevvideos" "$S/http/anggtwu.net/eev-videos/") ; (find-eevvideos "")

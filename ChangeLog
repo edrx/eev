@@ -1,3 +1,14 @@
+2025-03-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-clprin2, ee-clprin2): new aliases.
+
+2025-03-04  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el (ee-code-c-d-add-pair): use `ee-aset' instead of
+	`ee-areplace'.
+	("el"): made `find-elfile' point to ".../lisp/emacs-lisp/" instead
+	of to ".../lisp/".
+
 2025-03-02  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-eaproposf, find-eaproposv, find-eapropost):

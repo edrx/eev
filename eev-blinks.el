@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250302
+;; Version:    20250305
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -1158,8 +1158,8 @@ fieldname value\", like this:
 ;;   (find-efunction 'cl-prin1-to-string)
 ;;
 ;; In this section we define the functions `find-clprin1',
-;; `find-clprin1s' and `find-clprin1ind', that are based on
-;; `cl-prin1-to-string'. Try:
+;; `find-clprin1s', `find-clprin1ind', and `find-clprin2',, that are
+;; based on `cl-prin1-to-string'. Try:
 ;;
 ;;                          (cl-defstruct mytriple a b c)
 ;;                                  (make-mytriple :a 22 :c "44")
@@ -1168,9 +1168,14 @@ fieldname value\", like this:
 ;;                                  (cl-find-class 'cl-structure-class)
 ;;   (find-2a nil '(find-clprin1ind (cl-find-class 'cl-structure-class)))
 ;;
+;; The `s' in `find-clprin1s' is a plural, and the `ind' in
+;; `find-clprin1ind' means "indent in a nice way". `clprin2' is an
+;; alias for `clprin1ind'.
+;;
 ;; Here are some examples of classes with special `cl-print-object'
 ;; methods:
 ;;
+;;   (find-efunctiondescr 'cl-print-object)
 ;;   (find-egrep "grep --color=auto -nH --null -e cl-print-object *.el */*.el")
 ;;
 ;; Some tests for `print-level':
@@ -1200,6 +1205,8 @@ right places in the output of `cl-prin1-to-string' and then runs
 `ee-indent-as-elisp' in the result."
   (apply 'find-estring-elisp (ee-clprin1ind o) pos-spec-list))
 
+(defalias 'find-clprin2 'find-clprin1ind)
+
 
 ;; Low-level functions used by `find-clprin1' and friends.
 ;; I sometimes use them with `-->', the main threading macro of
@@ -1226,11 +1233,15 @@ right places in the output of `cl-prin1-to-string' and then runs
 ;; (find-estring-elisp (ee-clprin1    (cl-find-class 'cl-structure-class)))
 ;; (find-estring-elisp (ee-clprin1ind (cl-find-class 'cl-structure-class)))
 (defun ee-clprin1ind (o)
+  "Like `cl-prin1-to-string', but indents the result in a nice way."
   (let* ((str1 (cl-prin1-to-string o))
 	 (str2 (replace-regexp-in-string " :"  "\n:"  str1))
 	 (str3 (replace-regexp-in-string " #s" "\n#s" str2))
-	 (str4 (ee-indent-as-elisp str3)))
-    str4))
+	 (str4 (replace-regexp-in-string "•[ \n]+" " " str3)) ; a hack!
+	 (str5 (ee-indent-as-elisp str4)))
+    str5))
+
+(defalias 'ee-clprin2 'ee-clprin1ind)
 
 
 
@@ -1880,21 +1891,34 @@ Hint: install the Debian package \"unicode-data\".")
 ;;;  \___|_|\___/|___/\__,_|_|  \___||___/
 ;;;                                       
 ;; «ee-symbol-function»  (to ".ee-symbol-function")
-;; This is an experimental hack for handling some versions of Emacs31. See:
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00292.html
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00311.html
-;; https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00328.html
-;; (find-efile "emacs-lisp/cl-preloaded.el" "(cl--define-built-in-type closure")
-;; TODO: fix this:
-;;   (find-elisp-intro "6. Defining functions")
+;; Some terminology: if we run
+;;
+;;   (defun foo (a) (* 10 a))
+;;   (symbol-function 'foo)
+;;
+;; the result used to be an "old-style lambda":        (lambda (a) (* 10 a))
+;; but in newer emacses it is a "vector-like lambda":  #[(a) ((* 10 a)) nil]
+;;
+;; Many functions in eev expect old-style lambdas - and this is a hack
+;; that makes them work in newer emacses. See:
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00292.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00311.html
+;;   https://lists.gnu.org/archive/html/help-gnu-emacs/2024-07/msg00328.html
+;;   (find-es "emacs" "lambdas-for-beginners")
+;;   http://anggtwu.net/2025-modern.html
+;;
+;; The names of the fields of a vector-like lambda can be found here:
+;;   (find-elfile "cl-preloaded.el" "built-in-type closure" "vector-like")
+;;
+;; TODO: Fix this: (find-elisp-intro "6. Defining functions")
 
 (defun ee-closure-to-list (c)
-  "Experimental!!! See the comments in the source!"
+  "Convert a \"vector-like lambda\" to a list."
   (cl-loop for i from 1 to (length c)
 	   collect (aref c (1- i))))
 
 (defun ee-closure-to-lambda (c)
-  "Experimental!!! See the comments in the source!"
+  "Convert a \"vector-like lambda\" to an \"old-style lambda\"."
   (let ((list (ee-closure-to-list c)))
     (seq-let [arglist body _ _ docstring interactivespec] list
       `(lambda ,arglist
@@ -1903,7 +1927,8 @@ Hint: install the Debian package \"unicode-data\".")
 	 ,@body))))
 
 (defun ee-symbol-function (sym)
-  "Experimental!!! See the comments in the source!"
+  "Like `symbol-function', but always returns an \"old-style lambda\".
+See the comments in the source!"
   (let ((o (symbol-function sym)))
     (if (and (fboundp 'closurep)
 	     (closurep o))

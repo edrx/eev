@@ -649,14 +649,17 @@ This is an internal function used by `find-ekey-links' and
        (find-efunction 'find-etype-links)
        ""
        ,(ee-template0 "\
+# (find-eapropost \".*\")
 # (find-eapropost \"{typeregexp}\")
 # (find-eaproposf \"{typeregexp}\")
+# (find-eaproposf \"^{typesymbol}-\")
 # (find-eaproposf \"^{typesymbol}--\")
 # (find-etypedescr '{typesymbol})
 # (cl-describe-type '{typesymbol})
 
 # (find-eaproposf \"^{typesymbol}--\")
-# (--> '{typesymbol} cl-find-class cl--class-slots (mapconcat 'cl-prin1-to-string it \"\\n\"))
+# (--> '{typesymbol} cl-find-class cl--class-slots ee-clprin1s)
+# (--> '{typesymbol} cl-find-class cl--class-slots find-clprin1s)
 
 # (find-efunction-links 'make-{typesymbol})
 # (find-eloadhistory-for 'make-{typesymbol} 2 \" make-{typesymbol})\")
@@ -1478,8 +1481,9 @@ If D is t then try to use `ee-package-dir' to get the directory."
 {findelpafiles}
 
 # (ee-package-dir '{pkg})
-# (find-epp     (ee-package-desc '{pkg}))
-# (find-estruct (ee-package-desc '{pkg}))
+# (find-epp        (package-get-descriptor '{pkg}))
+# (find-estruct    (package-get-descriptor '{pkg}))
+# (find-clprin1ind (package-get-descriptor '{pkg}))
 
 # (package-initialize)
 # (package-refresh-contents)

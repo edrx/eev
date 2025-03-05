@@ -15794,7 +15794,15 @@ have run the `defalias'es below:
   (defalias 'kli   'ee-kl-insert)
   (defalias 'kla2  'eekla2)
 
-To make these aliases permanent, copy them to your ~/.emacs.
+The recommended way to activate these aliases is to load the file
+\"eev-aliases.el\". Most people use settings in which it is loaded by
+default - see:
+
+  (find-eev \"eev-aliases.el\" \"kla\")
+  (find-eev-levels-intro \"4. Aliases\")
+  (find-eev \"eev-beginner.el\" \"eev-beginner\")
+  (find-eev \"eev-beginner.el\" \"eev-beginner\" \"eev-aliases\")
+
 Without these aliases everything in eev-kla.el will still work,
 but you will have to type `M-x eekla' instead of `M-x kla', `M-x
 eeklas' instead of `M-x klas', and so on.
