@@ -89,9 +89,13 @@
 
 
 ;; «code-c-ds»  (to ".code-c-ds")
+;; (find-fline "~/.elan/toolchains/")
 ;; (find-lean4prefile "")
 ;; (find-lean4presh "find * | sort")
-(code-c-d "lean4pre"  "~/.elan/toolchains/leanprover--lean4---stable/src/lean/")
+(code-c-d "lean4pre" "~/.elan/toolchains/leanprover--lean4---stable/src/lean/")
+(code-c-d "lean4pre" "~/.elan/toolchains/leanprover--lean4---v4.19.0/src/lean/")
+;; (find-lean4prefile "")
+
 
 ;; If lean4-mode or lsp-mode are not installed then the `code-c-d's
 ;; below will point to "nil" instead of to a real directory, and you

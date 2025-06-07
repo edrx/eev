@@ -1,6 +1,6 @@
 ;;; eev-testblocks.el - create "test blocks" using multiline comments.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2019-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2019-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241005
+;; Version:    20250506
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -207,6 +207,9 @@ include(\"%s\")
 ))))
 
 (defun ee-insert-test-lisp-mode ()
+  (funcall (ee-intern "ee-insert-test-lisp-mode-%s" current-prefix-arg)))
+
+(defun ee-insert-test-lisp-mode-nil ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
 #|

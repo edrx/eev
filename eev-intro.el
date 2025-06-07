@@ -1,6 +1,6 @@
 ;;; eev-intro.el --- sandboxed tutorials for eev, like (find-eev-quick-intro)  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2013-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2013-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241127
+;; Version:    20250607
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -6959,7 +6959,8 @@ for examples:
 My presentation at the EmacsConf2021 was about test blocks.
 Links:
 
-  Pages:  http://anggtwu.net/emacsconf2021.html
+  Pages:  http://anggtwu.net/eepitch.html
+          http://anggtwu.net/emacsconf2021.html
           https://emacsconf.org/2021/talks/test/
   Slides: http://anggtwu.net/LATEX/2021emacsconf.pdf
   Video:  (find-eev2021video \"00:00\")
@@ -14993,8 +14994,15 @@ for Linux\" - instead of my previous method, that used this:
   (find-1stclassvideo-links \"2022eevwconfigpt1\")
   (find-1stclassvideo-links \"2022eevwconfigpt2\")
 
-and we are now testing this new set of instructions.
+and we are now testing this new set of instructions. My presentation at
+the EmacsConf 2024 was about this - see:
+
+  Page:  http://anggtwu.net/emacsconf2024.html
+  Play:  (find-eev2024video \"0:00\")
+  HSubs: (find-eev2024hsubs \"0:00\")
+
 Note: _This is a work in progress!!!_
+
 
 
 
@@ -15327,13 +15335,18 @@ eepitch block,
  (eepitch-kill)
  (eepitch-shell)
   cd /tmp/
+  wget -N http://anggtwu.net/tmp/edrx-dot-maxima.tgz
   wget -N http://anggtwu.net/tmp/edrx-maxima.tgz
   # (find-fline \"/tmp/edrx-maxima.tgz\")
-  # (find-fline \"/tmp/edrx-maxima.tgz\" \".maxima/maxima-init.mac\")
+  # (find-fline \"/tmp/edrx-dot-maxima.tgz\")
+  # (find-fline \"/tmp/edrx-dot-maxima.tgz\" \".maxima/maxima-init.mac\")
+  tar -C ~/ -xvzf /tmp/edrx-dot-maxima.tgz
   tar -C ~/ -xvzf /tmp/edrx-maxima.tgz
+  # (find-fline \"~/MAXIMA/edrx-maxima.el\")
+ (load         \"~/MAXIMA/edrx-maxima.el\")
 
 that also installs my init file for Maxima and lots of small
-programs that I wrote. Note that the \"tar -C ~/ -xvzf\" above
+programs that I wrote. Note that the \"tar -C ~/ -xvzf\"s above
 will extract the files from the .tgz into these five directories,
 
   (find-fline \"~/.maxima/\")
@@ -15342,18 +15355,20 @@ will extract the files from the .tgz into these five directories,
   (find-fline \"~/luatree/\")
   (find-fline \"~/myqdraw/\")
 
-overwriting any files with the same names that are already there -
-and you had done any changes yourself to the Maxima init file the
-\"tar\" above will overwrite it. Check:
+overwriting any files with the same names that are already there.
+In particular, if you had done any changes yourself to the Maxima init
+files, the \"tar ...edrx-dot-maxima.tgz\" above will overwrite it!
+Check:
 
   (find-fline \"~/.maxima/maxima-init.mac\")
-  (find-fline \"/tmp/edrx-maxima.tgz\")
-  (find-fline \"/tmp/edrx-maxima.tgz\" \".maxima/maxima-init.mac\")
+  (find-fline \"/tmp/edrx-dot-maxima.tgz\")
+  (find-fline \"/tmp/edrx-dot-maxima.tgz\" \".maxima/maxima-init.mac\")
 
 Here are some tests for qdraw:
 
   (find-qdraw-links \"x,x^2,x^3,x^4\" \"-2,2\" \"-2,2\")
-  (find-es \"maxima\" \"2024.1-intro-complex\")
+  (find-myqdraw \"myqdraw3.mac\" \"myimp\")
+  (find-myqdraw \"myqdraw3.mac\" \"zpts\")
 
 
 

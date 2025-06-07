@@ -1,6 +1,6 @@
 ;;; eev-plinks.el -- elisp hyperlinks to invoke external processes.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250222
+;; Version:    20250321
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-plinks.el>
@@ -430,7 +430,7 @@ If you need to adjust how `find-wget0' handles encodings,
 redefine `find-wget' to make it call `find-wget0' inside a `let*'
 block."
   (interactive (browse-url-interactive-arg "URL: "))
-  (apply 'find-wget0 url pos-spec-list))
+  (apply 'find-wget0 (ee-expand url) pos-spec-list))
 
 (defun find-wget-mode (sexp url &rest pos-spec-list)
   "Like `find-wget', but runs SEXP in the buffer with the contents of URL.
@@ -697,6 +697,7 @@ See: (find-strange-functions-intro)"
 ;;        (find-try-sly-intro "2. Install some elisp packages")
 ;;   Try: (ee-clhs-lookup-index "car")
 ;;        (find-clhsdoci        "car")
+;;        (find-ehashtable (clhs-symbols))
 ;;
 (defun find-clhsdoci (clhsname &rest rest)
   "Open the page of the Common Lisp Hyperspec corresponding to CLHSNAME.

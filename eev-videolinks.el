@@ -1,6 +1,6 @@
 ;;; eev-videolinks.el --- support for [Video links:] blocks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2021-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2021-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241231
+;; Version:    20250516
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-videolinks.el>
@@ -84,8 +84,9 @@
 ;;   «.2024butler»			(to "2024butler")
 ;;   «.2024trywithasexp»		(to "2024trywithasexp")
 ;;   «.2024bashtest»			(to "2024bashtest")
-;;   «.2024pianoroll»			(to "2024pianoroll")
 ;;   «.eev2024»				(to "eev2024")
+;;   «.2024pianoroll»			(to "2024pianoroll")
+;;   «.2025modern»			(to "2025modern")
 ;; «.ee-1stclassvideos-field»		(to "ee-1stclassvideos-field")
 ;; «.second-class-videos»		(to "second-class-videos")
 ;;   «.code-eevvideo»			(to "code-eevvideo")
@@ -993,6 +994,21 @@ of the videos and play them with mpv. Compare with
      :subs    ".vtt"
      :comment "An introduction to test blocks to people who are afraid of them.")
     ;;
+    ;; «eev2024»  (to ".eev2024")
+    ;; Play: (find-eev2024video "0:00")
+    ;; Subs: (find-eev2024hsubs "0:00")
+    ("eev2024"
+     :title "Emacs, eev, and Maxima - Now! (EmacsConf 2024)"
+     :mp4   "http://anggtwu.net/eev-videos/emacsconf2024.mp4"
+     :yt    "http://www.youtube.com/watch?v=ZQ4mUSRcqJc"
+     :page  "http://anggtwu.net/emacsconf2024.html"
+     :hsubs "http://anggtwu.net/emacsconf2024.html#0:00"
+     :date    "2024dec07"
+     :length  "30:33"
+     :subs    ".vtt"
+     :index   t
+     :comment "A non-technical video about teaching Emacs and eev to Brazilian students.")
+    ;;
     ;; «2024pianoroll»  (to ".2024pianoroll")
     ;; Play: (find-2024pianorollvideo "0:00")
     ;; Subs: (find-2024pianorollhsubs "0:00")
@@ -1007,21 +1023,19 @@ of the videos and play them with mpv. Compare with
      :subs    ".vtt"
      :comment "This video is about keyboard macros AND elisp macros!")
     ;;
-    ;; «eev2024»  (to ".eev2024")
-    ;; Play: (find-eev2024video "0:00")
-    ;; Subs: (find-eev2024hsubs "0:00")
-    ("eev2024"
-     :title "Emacs, eev, and Maxima - Now!"
-     :mp4   "http://anggtwu.net/eev-videos/emacsconf2024.mp4"
-     :yt    "http://www.youtube.com/watch?v=ZQ4mUSRcqJc"
-     :page  "http://anggtwu.net/emacsconf2024.html"
-     :hsubs "http://anggtwu.net/emacsconf2024.html#0:00"
-     :lang  "portuguese"
-     :date    "2024dec07"
-     :length  "30:33"
+    ;; «2025modern»  (to ".2025modern")
+    ;; Play: (find-2025modernvideo "0:00")
+    ;; Index: (find-1stclassvideoindex "2025modern")
+    ("2025modern"
+     :title "Some problems of modernizing Emacs (incomplete - slides 0 to 6 only)"
+     :mp4   "http://anggtwu.net/eev-videos/2025-modern.mp4"
+     :yt    "http://www.youtube.com/watch?v=BRbOXmvkFFA"
+     :page  "http://anggtwu.net/2025-modern.html"
+     :hsubs "http://anggtwu.net/2025-modern.html#0:00"
+     :date    "2025mar12"
+     :length  "20:38"
      :subs    ".vtt"
-     :index   t
-     :comment "A non-technical video about teaching Emacs and eev to Brazilian students.")
+     :comment "A video about vector-like lambdas, `cl-print', and buttons.")
     ))
 
 
@@ -1040,6 +1054,7 @@ of the videos and play them with mpv. Compare with
 ;; (ee-1stclassvideos-localmp4 "eev2021")
 ;; (ee-1stclassvideos-mp4found "eev2021")
 ;; (ee-1stclassvideos-hash     "eev2021")
+;; (ee-1stclassvideos-hsubstem "eev2021")
 ;; (ee-1stclassvideos-hsubsurl "eev2021")
 ;; (ee-1stclassvideos-hsubsurl "eev2021" "01:45")
 ;; (find-eev "eev-videolinks.el" "more-info")
@@ -1054,6 +1069,13 @@ of the videos and play them with mpv. Compare with
 (defun ee-1stclassvideos-pagestem (c)
   (let ((url (ee-1stclassvideos-field c :page)))
      (replace-regexp-in-string "^.*/\\([^/]*\\)\\.html$" "\\1" url)))
+
+(defun ee-1stclassvideos-hsubstem (c)
+  (let ((url (or (ee-1stclassvideos-field c :hsubs) "nil")))
+     (replace-regexp-in-string "^.*/\\([^/]*\\)\\.html.*$" "\\1" url)))
+
+(defun ee-1stclassvideos-lsubstem (c)
+  (ee-1stclassvideos-mp4stem c))
 
 (defun ee-1stclassvideos-hash (c)
   (let ((yt (ee-1stclassvideos-field c :yt)))

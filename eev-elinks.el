@@ -872,7 +872,7 @@ a hack to let use use `M-h M-i' for both \"intro\" and \"info\"."
 ;;
 ;; Note that this code is very old and uses only very basic Lisp
 ;; functions. The functions in eev-kla.el do something similar to
-;; this, but using cl-loop. See:
+;; this, but using `cl-loop'. See:
 ;;   (find-kla-intro)
 ;;
 ;; Each call to `(code-c-d C D)' generates an entry `(C D)' in the

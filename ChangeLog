@@ -1,3 +1,36 @@
+2025-06-07  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-info): new video
+	(incomplete!): "2025modern".
+
+	* eev-intro.el (find-windows-beginner-intro): moved the files in
+	"~/.maxima/" to edrx-dot-maxima.tgz; added a red star line with a
+	(load "~/MAXIMA/edrx-maxima.el").
+
+2025-05-16  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-videolinks.el (ee-1stclassvideos-hsubstem)
+	(ee-1stclassvideos-lsubstem): new functions.
+
+2025-05-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (ee-let*-macro-1stclassvideo-c): new variables:
+	`pagestem'...
+
+2025-05-06  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-testblocks.el (ee-insert-test-lisp-mode-nil): new function.
+	(ee-insert-test-lisp-mode): use `current-prefix-arg'.
+
+2025-03-22  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-windows-beginner-intro): mention my
+	presentation at the EmacsConf 2024.
+
+2025-03-21  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-plinks.el (find-wget): run `ee-expand' on url.
+
 2025-03-05  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-blinks.el (find-clprin2, ee-clprin2): new aliases.
