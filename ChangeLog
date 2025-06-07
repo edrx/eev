@@ -1,5 +1,7 @@
 2025-06-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eev.el: Bumped the version.
+
 	* eev-videolinks.el (ee-1stclassvideos-info): new video
 	(incomplete!): "2025modern".
 
