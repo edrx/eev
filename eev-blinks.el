@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250305
+;; Version:    20250831
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -829,12 +829,20 @@ support a POS-SPEC-LIST like this function does."
 ;; Hyperlinks to buffers
 ;; Tests:
 ;;   (find-ebuffer "*Messages*")
+;;   (find-emarker (point-marker) 1)
 
 (defun find-ebuffer (buffer &rest pos-spec-list)
   "Hyperlink to an Emacs buffer (existing or not)."
   (interactive "bBuffer: ")
   (switch-to-buffer buffer)
   (apply 'ee-goto-position pos-spec-list))
+
+(defun find-emarker (marker &rest pos-spec-list)
+  "Hyperlink to a marker."
+  (switch-to-buffer (marker-buffer marker))
+  (goto-char (marker-position marker))
+  (ee-goto-rest pos-spec-list))
+
 
 
 

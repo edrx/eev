@@ -1,3 +1,17 @@
+2025-08-31  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-blinks.el (find-emarker): new function.
+
+2025-06-24  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-intro.el (find-video-links-intro): rewrote the section "9.
+	First-class videos".
+
+2025-06-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-rstdoc.el (ee-rstdoc-:py): support removing prefixes like
+	"https://docs.python.org/pt-br/3.13/".
+
 2025-06-07  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev.el: Bumped the version.
