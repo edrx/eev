@@ -1,6 +1,6 @@
 ;; eepitch.el - record interactions with shells as readable notes, redo tasks.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012,2015,2018-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2012,2015,2018-2025 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20240926
+;; Version:    20250831
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
@@ -52,6 +52,8 @@
 ;; «.wait-for-hooks»		(to "wait-for-hooks")
 ;;   «.ee-wait»			(to "ee-wait")
 ;;   «.eepitch-sly»		(to "eepitch-sly")
+;; «.badly-behaved»		(to "badly-behaved")
+;;   «.eepitch-b»		(to "eepitch-b")
 ;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
 ;; «.eepitch-langs-vterm»	(to "eepitch-langs-vterm")
@@ -1066,6 +1068,84 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 
 (defun eepitch-sly () (interactive)
   (eepitch '(find-slyprocess)))
+
+
+
+;;;  ____            _ _         _          _                         _ 
+;;; | __ )  __ _  __| | |_   _  | |__   ___| |__   __ ___   _____  __| |
+;;; |  _ \ / _` |/ _` | | | | | | '_ \ / _ \ '_ \ / _` \ \ / / _ \/ _` |
+;;; | |_) | (_| | (_| | | |_| | | |_) |  __/ | | | (_| |\ V /  __/ (_| |
+;;; |____/ \__,_|\__,_|_|\__, | |_.__/ \___|_| |_|\__,_| \_/ \___|\__,_|
+;;;                      |___/                                          
+;;
+;; «badly-behaved»  (to ".badly-behaved")
+;; Sometimes a target is so badly behaved - for example: Slime - that
+;; I don't know how to write a sexp like this for it,
+;;
+;;   (eepitch CODE)
+;;
+;; that would pitch to the right target buffer... in the case of Slime
+;; the target buffer is a buffer with a name like "*slime-repl sbcl*"
+;; or "*slime-repl sbcl*<4>", that is in `slime-repl-mode', and that
+;; has an active `slime-buffer-connection', but there may be several
+;; buffers like that, and writing a trick with hooks that would select
+;; the right buffer - as `find-slyprocess' does, above - turned out to
+;; be too hard...
+;;
+;; In cases like that the best solution is to treat the `eepitch' in
+;; `(eepitch CODE)' as a black box that needs to be opened, that needs
+;; to have its components run step by step by hand, and that the user
+;; needs to select the right target buffer by running `M-x b' on it.
+;; For example, in
+;;
+;;    (eepitch-sbcl-slime)
+;;    (eepitch-kill)
+;;    (eepitch-sbcl-slime)
+;;
+;; each `eepitch-sbcl-slime' opens a temporary buffer that is "the
+;; black box opened up".
+;;
+;; Note: this section only contains the core functions.
+;; For a test, see:
+;;   http://anggtwu.net/elisp/2025-eepitch-b.el
+;;          (find-angg "elisp/2025-eepitch-b.el")
+
+
+;; «eepitch-b»  (to ".eepitch-b")
+(defvar eepitch-b-source-buffer "")
+(defvar eepitch-b-source-marker nil)
+
+(defun eepitch-b-show-source ()
+  (interactive)
+  (find-emarker eepitch-b-source-marker))
+
+(defun eepitch-b-show-target ()
+  (interactive)
+  (find-ebuffer eepitch-buffer-name))
+
+(defun eepitch-b-show-source-and-target ()
+  (interactive)
+  (find-2a '(eepitch-b-show-source) '(eepitch-b-show-target))
+  (message "%S -> %S" eepitch-b-source-buffer eepitch-buffer-name)
+  (format  "`%s' -> `%s'" eepitch-b-source-buffer eepitch-buffer-name))
+
+(defun eepitch-b-set-source ()
+  (interactive)
+  (setq eepitch-b-source-buffer (buffer-name))
+  (setq eepitch-b-source-marker (point-marker)))
+
+(defun eepitch-b-set-target ()
+  (interactive)
+  (setq eepitch-buffer-name (buffer-name))
+  (eepitch-b-show-source-and-target))
+
+(defun eepitch-b-insert ()
+  (interactive)
+  (let* ((sexp `(eepitch-to-buffer ,eepitch-buffer-name))
+	 (line (format " %s\n" (ee-S sexp))))
+    (move-beginning-of-line nil)
+    (insert line)))
+
 
 
 

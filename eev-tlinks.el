@@ -3114,8 +3114,9 @@ sudo ./install-tl -select-repository
 ;; «find-newbrowser-links»  (to ".find-newbrowser-links")
 ;; Skel: (find-find-links-links-new "newbrowser" "browser binary b" "")
 ;; Test: (find-newbrowser-links "googlechrome" "google-chrome" "g")
-;; See:  (find-wconfig-browser-links)
+;;  See: (find-wconfig-browser-links)
 ;;       (find-efunction 'find-wconfig-browser-links)
+;;       http://anggtwu.net/eev-customize.html#find-elinks-elisp
 ;;
 (defun find-newbrowser-links (&optional browser binary b &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for newbrowser."
@@ -3234,6 +3235,7 @@ sudo ./install-tl -select-repository
 ;; «find-altbrowser-links»  (to ".find-altbrowser-links")
 ;; Skel: (find-find-links-links-new "altbrowser" "binary" "")
 ;; Test: (find-altbrowser-links)
+;;  See: http://anggtwu.net/eev-customize.html#find-elinks-elisp
 ;;
 (defun find-altbrowser-links (&optional binary &rest pos-spec-list)
 "Visit a temporary buffer with instructions for making `find-googlechrome'
@@ -3289,6 +3291,7 @@ use an alternate browser. More precisely, it shows how to redefine
 ;; «find-newpdfviewer-links»  (to ".find-newpdfviewer-links")
 ;; Skel: (find-find-links-links-new "newpdfviewer" "short binary" "")
 ;; Test: (find-newpdfviewer-links "okular")
+;;  See: http://anggtwu.net/eev-customize.html#find-elinks-elisp
 ;;
 (defun find-newpdfviewer-links (&optional short binary &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for newpdfviewer."

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250624
+;; Version:    20250831
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -6963,9 +6963,11 @@ Links:
           http://anggtwu.net/emacsconf2021.html
           https://emacsconf.org/2021/talks/test/
   Slides: http://anggtwu.net/LATEX/2021emacsconf.pdf
-  Video:  (find-eev2021video \"00:00\")
-          (find-eev2021video \"00:00\")
-
+  Video:  (find-eev2021hsubs \"00:14\" \"if we type f8 several times here\")
+          (find-eev2021video \"00:14\" \"if we type f8 several times here\")
+          (find-eev2021hsubs \"00:42\" \"as a multi-line comment\")
+          (find-eev2021video \"00:42\" \"as a multi-line comment\")
+          
 
 
 

@@ -1,5 +1,11 @@
 2025-08-31  Eduardo Ochs  <eduardoochs@gmail.com>
 
+	* eepitch.el (eepitch-b-source-buffer, eepitch-b-source-marker):
+	new variables.
+	(eepitch-b-show-source, eepitch-b-show-target)
+	(eepitch-b-show-source-and-target, eepitch-b-set-source)
+	(eepitch-b-set-target, eepitch-b-insert): new functions.
+
 	* eev-blinks.el (find-emarker): new function.
 
 2025-06-24  Eduardo Ochs  <eduardoochs@gmail.com>

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250506
+;; Version:    20250831
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -58,9 +58,17 @@
 ;; «eeit»  (to ".eeit")
 ;; «ee-insert-test»  (to ".ee-insert-test")
 ;; «ee-insert-test-block»  (to ".ee-insert-test-block")
-;; See: (find-eepitch-intro "3. Test blocks")
-;; Insert a "test block" in a Lua/Python/Ruby/shell/Tcl/etc script.
-
+;;
+;; Long story short: `M-x eeit' inserts a "test block"
+;; in a Lua/Python/Ruby/shell/Tcl/etc script.
+;;
+;; See: http://anggtwu.net/eepitch.html
+;;      (find-eepitch-intro "3. Test blocks")
+;;      (find-eev2021hsubs "00:14" "if we type f8 several times here")
+;;      (find-eev2021video "00:14" "if we type f8 several times here")
+;;      (find-eev2021hsubs "00:42" "as a multi-line comment")
+;;      (find-eev2021video "00:42" "as a multi-line comment")
+;;      
 (defalias 'eeit           'ee-insert-test-block)
 (defalias 'ee-insert-test 'ee-insert-test-block)
 

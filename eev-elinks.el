@@ -1262,6 +1262,7 @@ See: (find-pdf-like-intro)
 ;; «ee-hyperlink-prefix» (to ".ee-hyperlink-prefix")
 ;; Tests: (ee-hyperlink-prefix)
 ;;         ee-hyperlink-prefix
+;; See: http://anggtwu.net/eev-customize.html#ee-hyperlink-prefix
 
 (defun ee-hyperlink-prefix ()
   "A lispish interface for customizing the variable `ee-hyperlink-prefix'.
