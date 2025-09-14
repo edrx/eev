@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250831
+;; Version:    20250914
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eepitch.el>
@@ -54,6 +54,9 @@
 ;;   «.eepitch-sly»		(to "eepitch-sly")
 ;; «.badly-behaved»		(to "badly-behaved")
 ;;   «.eepitch-b»		(to "eepitch-b")
+;;   «.ee-buffers-in-mode»	(to "ee-buffers-in-mode")
+;;   «.eepitch-gdb»		(to "eepitch-gdb")
+;;   «.eepitch-slime»		(to "eepitch-slime")
 ;;
 ;; «.eepitch-langs»		(to "eepitch-langs")
 ;; «.eepitch-langs-vterm»	(to "eepitch-langs-vterm")
@@ -1079,6 +1082,10 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 ;;;                      |___/                                          
 ;;
 ;; «badly-behaved»  (to ".badly-behaved")
+;; See: (find-eepitch-intro "4. Badly-behaved targets")
+;;      (find-eepitch-intro "4. Badly-behaved targets" "For example")
+;; Warning: EXPERIMENTAL! BADLY DOCUMENTED! BADLY TESTED!
+;;
 ;; Sometimes a target is so badly behaved - for example: Slime - that
 ;; I don't know how to write a sexp like this for it,
 ;;
@@ -1096,22 +1103,14 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
 ;; `(eepitch CODE)' as a black box that needs to be opened, that needs
 ;; to have its components run step by step by hand, and that the user
 ;; needs to select the right target buffer by running `M-x b' on it.
-;; For example, in
+;; For example, in...
 ;;
-;;    (eepitch-sbcl-slime)
-;;    (eepitch-kill)
-;;    (eepitch-sbcl-slime)
-;;
-;; each `eepitch-sbcl-slime' opens a temporary buffer that is "the
-;; black box opened up".
-;;
-;; Note: this section only contains the core functions.
-;; For a test, see:
-;;   http://anggtwu.net/elisp/2025-eepitch-b.el
-;;          (find-angg "elisp/2025-eepitch-b.el")
+;;   [I need to rewrite the rest!]
 
 
 ;; «eepitch-b»  (to ".eepitch-b")
+;; The basic functions for the support for badly-behaved targets.
+;;
 (defvar eepitch-b-source-buffer "")
 (defvar eepitch-b-source-marker nil)
 
@@ -1123,28 +1122,111 @@ If the mrepl doesn't start in 30 seconds this function yields an error."
   (interactive)
   (find-ebuffer eepitch-buffer-name))
 
+;; Test:
+;; (eepitch-b-set-source)
+;; (find-2a nil '(eepitch-b-show-source))
+;; (eepitch-b-set-source 2)
+;; (find-2a nil '(eepitch-b-show-source))
+(defun eepitch-b-set-source (&optional n)
+  (interactive)
+  (setq eepitch-b-source-buffer (buffer-name))
+  (setq eepitch-b-source-marker
+	(save-excursion
+	  (if n (forward-line n))
+	  (point-marker))))
+
+;; Test:
+;; (eepitch-to-buffer "TODO")
+;; (eepitch-b-set-source 3)
+;; (eek "C-x 1")
+;; (eepitch-b-show-source-and-target)
 (defun eepitch-b-show-source-and-target ()
   (interactive)
   (find-2a '(eepitch-b-show-source) '(eepitch-b-show-target))
   (message "%S -> %S" eepitch-b-source-buffer eepitch-buffer-name)
   (format  "`%s' -> `%s'" eepitch-b-source-buffer eepitch-buffer-name))
 
-(defun eepitch-b-set-source ()
-  (interactive)
-  (setq eepitch-b-source-buffer (buffer-name))
-  (setq eepitch-b-source-marker (point-marker)))
-
 (defun eepitch-b-set-target ()
+  "An internal function used by `eepitch-set-source-and-M-x-b'."
   (interactive)
   (setq eepitch-buffer-name (buffer-name))
   (eepitch-b-show-source-and-target))
 
+;; See: (find-eepitch-intro "4. Badly-behaved targets" "For example")
+(defun eepitch-set-source-and-M-x-b (&optional n)
+  (interactive)
+  (eepitch-b-set-source n)
+  (defalias 'b 'eepitch-b-set-target)
+  (format "`M-x b' will set the eepitch target and return to `%s'"
+	  eepitch-b-source-buffer))
+
+;; Unused at the moment!
 (defun eepitch-b-insert ()
   (interactive)
   (let* ((sexp `(eepitch-to-buffer ,eepitch-buffer-name))
 	 (line (format " %s\n" (ee-S sexp))))
     (move-beginning-of-line nil)
     (insert line)))
+
+
+;; «ee-buffers-in-mode»  (to ".ee-buffers-in-mode")
+;; These functions are used by some badly behaved targets - like gdb.
+;;
+(defun ee-buffers-in-mode (majormode)
+  (ee-buffers-in-modes (list majormode)))
+
+(defun ee-buffers-in-modes (majormodes)
+  (sort (cl-loop for b in (buffer-list)
+		 if (member (with-current-buffer b major-mode) majormodes)
+		 collect (buffer-name b))))
+
+(defun ee-kill-buffers-in-mode (majormode)
+  (ee-kill-buffers-in-modes (list majormode)))
+
+(defun ee-kill-buffers-in-modes (majormodes)
+  (let* ((bufs (ee-buffers-in-modes majormodes)))
+    (cl-loop for b in bufs
+	     do (ee-kill-buffer b))
+    `(Buffers killed: ,(or bufs 'none))))
+
+(defun find-ebuffer-in-mode (majormode &rest pos-spec-list)
+  "Similar to `find-ebuffer', but goes to the only buffer in MAJORMODE.
+If the number of buffers with major mode MAJORMODE is not exactly one,
+raise an error."
+  (let ((buffers (ee-buffers-in-mode majormode)))
+    (if (= 1 (length buffers))
+	(apply 'find-ebuffer (car buffers) pos-spec-list)
+      (error "Error - buffers with major mode %s: %S"
+	     majormode (or buffers 'none)))))
+
+
+;; «eepitch-gdb»  (to ".eepitch-gdb")
+;; See: (find-eepitch-intro "4. Badly-behaved targets" "For example")
+
+(defun eepitch-gdb-kill ()
+  (ee-kill-buffers-in-mode 'gud-mode))
+
+(defun eepitch-gdb-start (command-line)
+  (eepitch-set-source-and-M-x-b 1)
+  (gdb command-line))
+
+(defun eepitch-gdb-select ()
+  (eepitch '(find-buffer-in-mode 'gud-mode)))
+
+
+;; «eepitch-slime»  (to ".eepitch-slime")
+;; See: (find-eev "eev-testblocks.el" "slime")
+;;
+(defun eepitch-slime-kill ()
+  (ee-kill-buffers-in-mode 'slime-repl-mode))
+
+(defun eepitch-slime-start (command)
+  (eepitch-set-source-and-M-x-b 1)
+  (slime command))
+
+(defun eepitch-slime-select ()
+  (eepitch '(find-ebuffer-in-mode 'slime-repl-mode)))
+
 
 
 

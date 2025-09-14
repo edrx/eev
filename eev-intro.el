@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250831
+;; Version:    20250913
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -6527,16 +6527,8 @@ This intro _complements_ the material in:
   (find-eev-quick-intro \"6. Controlling shell-like programs\")
 For a good visual introduction to eepitch, see this page:
   http://anggtwu.net/eepitch.html
-
-My video for the EmacsConf2019 has a simple demo of eepitch:
-  (find-eev2019hsubs \"15:38\")
-  (find-eev2019video \"15:38\")
-  https://www.youtube.com/watch?v=86yiRG8YJD0&t=956
-  http://anggtwu.net/emacsconf2019.html
-
-This (old) video shows a demo like the one in section 1.3:
-  https://www.youtube.com/watch?v=Lj_zKC5BR64&t=16s
-The relevant part is from t=16s to t=25s.
+For some demos, see:
+  (find-eev-quick-intro \"6. Controlling shell-like programs\" \"[Video links:]\")
 
 In this intro we suppose that the reader knows what is a terminal
 and what is a shell. In Unix-like systems the terminal and the
@@ -7153,6 +7145,76 @@ blocks in SmallTalk source files - but I haven't tried that yet.
 
 
 
+
+4. Badly-behaved targets
+========================
+In an eepitch block like this one
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+
+the first two red star lines are typically only used when we want to kill
+a current shell target - if it exists - and then create a new one.
+
+For \"badly-behaved targets\" - I will explain the term precisely in the
+next section - it is hard to define a function `eepitch-BBT' that would
+work well enough in an eepitch block like this one,
+
+ (eepitch-BBT)
+ (eepitch-kill)
+ (eepitch-BBT)
+
+and it is more practical to have a eepitch block with functions specific
+for the target BBT, like this one:
+
+ (eepitch-BBT-kill)
+ (eepitch-BBT-start)
+ (eepitch-BBT-select)
+
+but sometimes it is better to replace the middle red star line by
+several lines, and make them remind us how to go back to our source
+buffer. For example, here,
+
+ (eepitch-gdb-kill)
+ To restart gdb:
+    (eepitch-set-source-and-M-x-b 2)
+    (gdb \"gdb -i=mi\")
+ (eepitch-gdb-select)
+
+the sexp `(gdb \"gdb -i=mi\")' asks some questions, messes up our window
+configuration, and only leaves us at the target buffer after too many
+keystrokes.
+
+Note that running the sexp `(eepitch-set-source-and-M-x-b 2)' prints
+instructions in the echo area - it says:
+
+  \"`M-x b' will set the eepitch target and return to `*(find-eepitch-intro)*'\"
+
+So after the `(gdb \"gdb -i=mi\")' finishes we need to run `M-x b'. The
+sexp `(eepitch-set-source-and-M-x-b 2)' has saved the source buffer -
+\"*(find-eepitch-intro)*\" - and the line that we need to return to,
+that is 2 lines below the `(eepitch-set-source-and-M-x-b 2)' itself;
+when we type `M-x b' Emacs interprets that as: this is the target
+<b>uffer - go <b>ack to the source <b>uffer and use this window setup:
+
+   _____________________
+  |          |          |
+  |  source  |  target  |
+  |  buffer  |  buffer  |
+  |          |          |
+  |__________|__________|
+
+
+
+
+4.1. What are badly-behaved targets?
+------------------------------------
+(Examples: gdb, slime)
+(Compare with Sly)
+
+UNFINISHED!!!
+See: (find-eev \"eepitch.el\" \"badly-behaved\")
 
 
 

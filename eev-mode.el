@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20241013
+;; Version:    20250914
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-mode.el>
@@ -51,7 +51,7 @@ See: (find-eev-quick-intro \"3. Elisp hyperlinks\" \"go back\" \"`M-k'\")
 and: (find-eval-intro \"`M-k'\")"
   (interactive)
   (let ((kill-buffer-query-functions nil))
-    (kill-this-buffer)))
+    (kill-current-buffer)))
 
 
 

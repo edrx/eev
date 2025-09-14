@@ -1,3 +1,28 @@
+2025-09-14  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-mode.el (ee-kill-this-buffer): use `kill-current-buffer'
+	instead of `kill-this-buffer' because in recent versions of Emacs
+	`kill-this-buffer' can be invoked only from a menu or a tool bar.
+
+	* eepitch.el (eepitch-gdb-start, eepitch-slime-kill)
+	(eepitch-slime-start, eepitch-slime-select): new functions.
+
+2025-09-13  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eepitch.el (eepitch-slime-kill, eepitch-slime-select): new
+	functions.
+
+	* eev-testblocks.el (ee-insert-test-lisp-mode-1): new function - a
+	variant that uses slime.
+
+	* eev-intro.el (find-eepitch-intro): new section: "4.
+	Badly-behaved targets".
+
+	* eepitch.el (ee-buffers-in-mode, ee-buffers-in-modes)
+	(ee-kill-buffers-in-mode, ee-kill-buffers-in-modes)
+	(find-ebuffer-in-mode, eepitch-gdb-kill, eepitch-gdb-select): new
+	functions.
+
 2025-08-31  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eepitch.el (eepitch-b-source-buffer, eepitch-b-source-marker):

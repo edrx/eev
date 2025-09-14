@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250831
+;; Version:    20250913
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-testblocks.el>
@@ -44,6 +44,36 @@
 ;; «.ee-insert-test»		(to "ee-insert-test")
 ;; «.ee-insert-test-block»	(to "ee-insert-test-block")
 ;; «.examples»			(to "examples")
+;;   «.c-mode»			(to "c-mode")
+;;   «.elixir-mode»		(to "elixir-mode")
+;;   «.fennel-mode»		(to "fennel-mode")
+;;   «.f90-mode»		(to "f90-mode")
+;;   «.gnuplot-mode»		(to "gnuplot-mode")
+;;   «.haskell-mode»		(to "haskell-mode")
+;;   «.js-mode»			(to "js-mode")
+;;   «.julia-mode»		(to "julia-mode")
+;;   «.latex-mode»		(to "latex-mode")
+;;   «.lisp»			(to "lisp")
+;;   «.lisp-mode»		(to "lisp-mode")
+;;     «.slime»			(to "slime")
+;;   «.lua-mode»		(to "lua-mode")
+;;   «.makefile-gmake»		(to "makefile-gmake")
+;;   «.makefile-mode»		(to "makefile-mode")
+;;   «.maxima-mode»		(to "maxima-mode")
+;;   «.octave-mode»		(to "octave-mode")
+;;   «.org-mode»		(to "org-mode")
+;;   «.php-mode»		(to "php-mode")
+;;   «.python-mode»		(to "python-mode")
+;;   «.racket-mode»		(to "racket-mode")
+;;   «.raku-mode»		(to "raku-mode")
+;;   «.ruby-mode»		(to "ruby-mode")
+;;   «.scheme-mode»		(to "scheme-mode")
+;;   «.sml-mode»		(to "sml-mode")
+;;   «.sh-mode»			(to "sh-mode")
+;;   «.sql-mode»		(to "sql-mode")
+;;   «.subed-vtt-mode»		(to "subed-vtt-mode")
+;;   «.tcl-mode»		(to "tcl-mode")
+;;   «.tuareg-mode»		(to "tuareg-mode")
 
 
 
@@ -93,6 +123,8 @@ If the major mode is `foo-mode' then this function calls
 ;; «examples»  (to ".examples")
 ;; See: (find-eepitch-intro "3.1. `find-eeit-links'")
 
+
+;; «c-mode»  (to ".c-mode")
 (defun ee-insert-test-c-mode ()
   (interactive)
   (let* ((fnamec (buffer-name))
@@ -108,6 +140,8 @@ gcc -o {fname} {fnamec}
 */
 ")))))
 
+
+;; «elixir-mode»  (to ".elixir-mode")
 (defun ee-insert-test-elixir-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -120,6 +154,8 @@ c \"%s\"
 \"\"\"
 " (buffer-name)))))
 
+
+;; «fennel-mode»  (to ".fennel-mode")
 (defun ee-insert-test-fennel-mode ()
   (interactive)
   (let* ((fname (buffer-name))
@@ -134,6 +170,8 @@ c \"%s\"
 \")
 " stem)))))
 
+
+;; «f90-mode»  (to ".f90-mode")
 (defun ee-insert-test-f90-mode ()
   (interactive)
   (let* ((fullname  (buffer-name))
@@ -149,6 +187,8 @@ c \"%s\"
 
 ")))))
 
+
+;; «gnuplot-mode»  (to ".gnuplot-mode")
 (defun ee-insert-test-gnuplot-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -163,6 +203,8 @@ c \"%s\"
 
 " (buffer-name)))))
 
+
+;; «haskell-mode»  (to ".haskell-mode")
 (defun ee-insert-test-haskell-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -175,6 +217,8 @@ c \"%s\"
 -}
 " (buffer-name)))))
 
+
+;; «js-mode»  (to ".js-mode")
 (defun ee-insert-test-js-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -187,6 +231,8 @@ require(\"./%s\")
 */
 " (buffer-name)))))
 
+
+;; «julia-mode»  (to ".julia-mode")
 (defun ee-insert-test-julia-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -199,6 +245,8 @@ include(\"%s\")
 =#
 " (buffer-name)))))
 
+
+;; «latex-mode»  (to ".latex-mode")
 (defun ee-insert-test-latex-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -214,6 +262,8 @@ include(\"%s\")
 " ; (buffer-name)
 ))))
 
+
+;; «lisp-mode»  (to ".lisp-mode")
 (defun ee-insert-test-lisp-mode ()
   (funcall (ee-intern "ee-insert-test-lisp-mode-%s" current-prefix-arg)))
 
@@ -229,6 +279,25 @@ include(\"%s\")
 |#
 " (buffer-name)))))
 
+
+;; «slime»  (to ".slime")
+;; See: (find-eev "eepitch.el" "eepitch-slime")
+(defun ee-insert-test-lisp-mode-1 ()
+  (interactive)
+  (insert (ee-adjust-red-stars (format "
+#|
+ (eepitch-slime-kill)
+ To restart Slime:
+    (eepitch-set-source-and-M-x-b 2)
+    (slime \"sbcl\")
+ (eepitch-slime-select)
+(load \"%s\")
+
+|#
+" (buffer-name)))))
+
+
+;; «lua-mode»  (to ".lua-mode")
 (defun ee-insert-test-lua-mode ()
   (interactive)
   (let ((equals (make-string (or current-prefix-arg 0) ?=)))
@@ -242,6 +311,8 @@ dofile \"%s\"
 --]%s]
 " equals (buffer-name) equals)))))
 
+
+;; «makefile-gmake»  (to ".makefile-gmake")
 (defun ee-insert-test-makefile-gmake-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -256,6 +327,8 @@ dofile \"%s\"
 
 " (buffer-name)))))
 
+
+;; «makefile-mode»  (to ".makefile-mode")
 (defun ee-insert-test-makefile-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -270,6 +343,8 @@ dofile \"%s\"
 
 " (buffer-name)))))
 
+
+;; «maxima-mode»  (to ".maxima-mode")
 (defun ee-insert-test-maxima-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -282,6 +357,8 @@ load(\"%s\");
 */
 " (buffer-name)))))
 
+
+;; «octave-mode»  (to ".octave-mode")
 (defun ee-insert-test-octave-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -294,6 +371,8 @@ run %s
 #}
 " (buffer-name)))))
 
+
+;; «org-mode»  (to ".org-mode")
 (defun ee-insert-test-org-mode ()
   (interactive)
   (insert (ee-adjust-red-stars "
@@ -306,6 +385,8 @@ run %s
 
 ")))
 
+
+;; «php-mode»  (to ".php-mode")
 (defun ee-insert-test-php-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -320,6 +401,8 @@ include '%s';
 ?>
 " (buffer-name)))))
 
+
+;; «python-mode»  (to ".python-mode")
 (defun ee-insert-test-python-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -332,6 +415,8 @@ exec(open(\"%s\").read(), globals())
 \"\"\"
 " (buffer-name)))))
 
+
+;; «racket-mode»  (to ".racket-mode")
 (defun ee-insert-test-racket-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -344,6 +429,8 @@ exec(open(\"%s\").read(), globals())
 |#
 " (buffer-name)))))
 
+
+;; «raku-mode»  (to ".raku-mode")
 (defun ee-insert-test-raku-mode ()
   (interactive)
   (let ((libname
@@ -365,6 +452,8 @@ use %s
 )
 " (buffer-name) libname)))))
 
+
+;; «ruby-mode»  (to ".ruby-mode")
 (defun ee-insert-test-ruby-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -377,6 +466,8 @@ load \"%s\"
 =end
 " (buffer-name)))))
 
+
+;; «scheme-mode»  (to ".scheme-mode")
 ;; For Chez Scheme.
 (defun ee-insert-test-scheme-mode ()
   (interactive)
@@ -403,6 +494,8 @@ load \"%s\"
 ;; |#
 ;; " (buffer-name)))))
 
+
+;; «sml-mode»  (to ".sml-mode")
 (defun ee-insert-test-sml-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -416,6 +509,8 @@ use \"%s\";
 *)
 " (buffer-name)))))
 
+
+;; «sh-mode»  (to ".sh-mode")
 (defun ee-insert-test-sh-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -428,6 +523,8 @@ use \"%s\";
 %%%%%%%%%%
 " (buffer-name)))))
 
+
+;; «sql-mode»  (to ".sql-mode")
 (defun ee-insert-test-sql-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -440,6 +537,8 @@ use \"%s\";
 */
 " (buffer-name)))))
 
+
+;; «subed-vtt-mode»  (to ".subed-vtt-mode")
 (defun ee-insert-test-subed-vtt-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (ee-expand "
@@ -489,6 +588,8 @@ NOTE
  subed-mpv-socket-dir
 "))))
 
+
+;; «tcl-mode»  (to ".tcl-mode")
 (defun ee-insert-test-tcl-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
@@ -501,6 +602,8 @@ lindex {{} {This is a test block:
 }} 0 ;# End of the test block
 " (buffer-name)))))
 
+
+;; «tuareg-mode»  (to ".tuareg-mode")
 (defun ee-insert-test-tuareg-mode ()
   (interactive)
   (insert (ee-adjust-red-stars (format "
