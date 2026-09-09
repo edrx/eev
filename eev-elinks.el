@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260902
+;; Version:    20260908
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -268,6 +268,20 @@ The buffer is put in Emacs Lisp mode."
   (let ((ee-buffer-name (or ee-buffer-name "*Elisp hyperlinks*"))
 	(ee-hyperlink-prefix ";; "))
     (apply 'find-estring-elisp (ee-links-to-string links) pos-spec-list)))
+
+(defun find-elinks-mode (sexp links &rest pos-spec-list)
+  "Visit a temporary buffer containing LINKS converted to hyperlink lines.
+This function is similar to `find-elinks-elisp', but it runs SEXP in the
+temporary buffer. SEXP is usually - but not necessarily - a function
+that sets the major mode."
+  (let ((ee-buffer-name (or ee-buffer-name "*Elisp hyperlinks*")))
+    (apply 'find-estring-mode sexp (ee-links-to-string links) pos-spec-list)))
+
+(defun find-elinks-mode-prefix (sexp prefix links &rest pos-spec-list)
+  "Like `find-elinks-mode', but also sets `ee-hyperlink-prefix' to PREFIX."
+  (let ((ee-buffer-name (or ee-buffer-name "*Elisp hyperlinks*"))
+	(ee-hyperlink-prefix prefix))
+    (apply 'find-estring-mode sexp (ee-links-to-string links) pos-spec-list)))
 
 
 

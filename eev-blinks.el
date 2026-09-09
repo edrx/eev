@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20251228
+;; Version:    20260908
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -917,6 +917,14 @@ This function is similar to `find-estring', but this one also
 runs `emacs-lisp-mode' in the buffer."
   (apply 'find-eoutput-rerun (or ee-buffer-name "*string*")
 	 `(progn (insert ,string) (emacs-lisp-mode)) pos-spec-list))
+
+(defun find-estring-mode (sexp string &rest pos-spec-list)
+  "Visit a temporary buffer whose contents are given by STR.
+This function is similar to `find-estring-elisp', but instead of
+running `(emacs-lisp-mode)' it runs SEXP, that is usually - but not
+necessarily - a sexp that sets the major mode."
+  (apply 'find-eoutput-rerun (or ee-buffer-name "*string*")
+	 `(progn (insert ,string) ,sexp) pos-spec-list))
 
 (defun find-estring-2a (str &rest pos-spec-list)
   "Show STR in the window at the right."

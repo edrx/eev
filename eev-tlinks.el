@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260902
+;; Version:    20260909
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -201,6 +201,7 @@
 ;; «.find-package-vc-install-links»	(to "find-package-vc-install-links")
 ;; «.find-ethemes-links»		(to "find-ethemes-links")
 ;; «.find-tryit-links»			(to "find-tryit-links")
+;; «.find-githubio-links»		(to "find-githubio-links")
 
 
 (require 'eev-env)
@@ -6541,6 +6542,124 @@ git clone {giturl} .
   (cl-loop for config in (ee-split configs)
 	   concat (ee-tryit-progn config sexps)
 	   concat "\n\n"))
+
+
+
+
+;;;        _ _   _           _           _       
+;;;   __ _(_) |_| |__  _   _| |__       (_) ___  
+;;;  / _` | | __| '_ \| | | | '_ \      | |/ _ \ 
+;;; | (_| | | |_| | | | |_| | |_) |  _  | | (_) |
+;;;  \__, |_|\__|_| |_|\__,_|_.__/  (_) |_|\___/ 
+;;;  |___/                                       
+;;
+;; «find-githubio-links»  (to ".find-githubio-links")
+;; Skel: (find-find-links-links-new "githubio" "username" "")
+;; Test: (find-githubio-links)
+;;       (find-githubio-links "edrx")
+;;       (find-githubio-links "edrx" "o")
+;;       (find-githubio-links "edrx" "o" 2 "Part 2" '(eek "C-l"))
+;;  See: (find-es "git" "github.io")
+;;
+(defun find-githubio-links (&optional username fname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for githubio."
+  (interactive)
+  (setq username (or username "{username}"))
+  (setq fname (or fname "o"))
+  (apply
+   'find-elinks-mode-prefix '(sh-mode) "# "
+   `((find-githubio-links ,username ,fname ,@pos-spec-list)
+     (find-githubio-links "edrx" ,fname)
+     (find-githubio-links "renderedner" ,fname)
+     ;; Convention: the first sexp always regenerates the buffer.
+     (find-efunction 'find-githubio-links)
+     ""
+     ,(ee-template0 "\
+# Part 1, adapted from:   https://pages.github.com/
+# The repository in:            https://github.com/{username}/{username}.github.io
+# becomes this local directory:                    /tmp/{username}.github.io/
+# and that becomes the page in:                 https://{username}.github.io/
+#
+# These instructions suppose that your page at github.io is a
+# \"scratch\" page, that you intend to delete and recreate many times.
+#
+# To delete the previous repository, do:
+#   https://github.com/{username}/{username}.github.io
+#    -> Settings -> Danger zone -> Delete this repository
+# See: (find-es \"git\" \"delete-repository\")
+#
+# To (re)create the repository {username}.github.io, go to:
+#   https://github.com/{username}?tab=repositories
+#    -> + -> New repository
+#    -> Repository name: (kill-new \"{username}.github.io\")
+#       Description:     (kill-new \"Test @ github.io\")
+
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-fline \"/tmp/{username}.github.io/\")
+rm -Rfv        /tmp/{username}.github.io/
+mkdir          /tmp/{username}.github.io/
+cd             /tmp/{username}.github.io/
+git clone https://github.com/{username}/{username}.github.io .
+
+echo \"Hello World\" > index.html
+# git init
+  git add index.html
+  git commit -m \"Initial commit\"
+  git branch -M main
+# git remote add origin https://github.com/{username}/{username}.github.io.git
+  git ls-files
+  git push -u origin main
+
+ls -laF
+
+# Test:    https://{username}.github.io/
+# (find-gitk \"/tmp/{username}.github.io/\")
+
+
+
+ Part 2: Minipaste preparation.
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+# (find-fline \"/tmp/{username}.github.io/\")
+rm -Rfv        /tmp/{username}.github.io/
+mkdir          /tmp/{username}.github.io/
+cd             /tmp/{username}.github.io/
+git clone https://github.com/{username}/{username}.github.io .
+ls -laF
+
+
+
+ Part 3: Minipaste itself.
+ Use <M-x p> to edit the file that will be uploaded.
+
+ (code-c-d \"minipaste\" \"/tmp/{username}.github.io/\" :anchor)
+ (defun p () (interactive) (find-minipaste \"{fname}\"))
+
+ Upload the file.
+ (eepitch-shell)
+ (eepitch-kill)
+ (eepitch-shell)
+cd /tmp/{username}.github.io/
+git add {fname}
+git commit -m '{fname}'
+git push
+
+ Test the upload.
+ Note that github usually takes about 30s...
+# (find-anggfile \"{fname}\")
+# (find-wget \"https://{username}.github.io/{fname}\")
+# (find-wgeta \"https://{username}.github.io/{fname}\")
+# (find-wget-elisp \"https://{username}.github.io/{fname}\")
+# (find-wgeta-elisp \"https://{username}.github.io/{fname}\")
+# (find-wget-mode '(sh-mode) \"https://{username}.github.io/{fname}\")
+# (find-wgeta-mode '(sh-mode) \"https://{username}.github.io/{fname}\")
+
+")
+     )
+   pos-spec-list))
 
 
 

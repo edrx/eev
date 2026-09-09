@@ -1,3 +1,18 @@
+2026-09-09  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-githubio-links): new function.
+
+2026-09-08  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-elinks.el (find-elinks-mode, find-elinks-mode-prefix): new
+	functions.
+
+	* eev-blinks.el (find-estring-mode): new function.
+
+2026-09-05  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-code.el ("tramp"): added a code-c-d for tramp.
+
 2026-09-03  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-dot-emacs-links): small changes.

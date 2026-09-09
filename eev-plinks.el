@@ -434,7 +434,7 @@ block."
 
 (defun find-wget-mode (sexp url &rest pos-spec-list)
   "Like `find-wget', but runs SEXP in the buffer with the contents of URL.
-SEXP is usually - but not necessarily - a sexp that sets major mode."
+SEXP is usually - but not necessarily - a sexp that sets the major mode."
   (interactive (browse-url-interactive-arg "URL: "))
   (find-wget url)
   (eval sexp)

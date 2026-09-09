@@ -1,6 +1,6 @@
 ;;; eev-code.el -- `code-c-d', that generates and evaluates Lisp defuns.  -*- lexical-binding: nil; -*-
 
-;; Copyright (C) 2012-2025 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2026 Free Software Foundation, Inc.
 ;;
 ;; This file is part of GNU eev.
 ;;
@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20250304
+;; Version:    20260905
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-code.el>
@@ -378,6 +378,7 @@ Note: the POS-SPEC-LIST arguments are currently not used."
 (code-c-d "cl"     (ee-efile "emacs-lisp/") "cl"   :gz) ; (find-clnode  "Top")
 (code-c-d "eshell" (ee-efile "eshell/") "eshell" :gz) ; (find-eshellnode "Top")
 (code-c-d "rcirc"  (ee-efile "net/") "rcirc" :gz)     ; (find-rcircnode "Top")
+(code-c-d "tramp"  (ee-efile "net/") "tramp" :gz)     ; (find-trampnode "Top")
 (code-c-d "eleim"  ee-emacs-leim-directory :gz)
 (code-c-d "equail" (ee-eleimfile "quail/") :gz)
 (code-c-d "eetc"   data-directory :gz)
