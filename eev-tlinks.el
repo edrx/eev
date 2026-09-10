@@ -6736,7 +6736,7 @@ git push
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-minipaste-links)
        ""
-       (ee-minipaste-links-body username fname)
+       ,(ee-minipaste-links-body username fname)
        )
      pos-spec-list)))
 
