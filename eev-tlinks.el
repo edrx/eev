@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260909
+;; Version:    20260910
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -202,6 +202,10 @@
 ;; «.find-ethemes-links»		(to "find-ethemes-links")
 ;; «.find-tryit-links»			(to "find-tryit-links")
 ;; «.find-githubio-links»		(to "find-githubio-links")
+;;   «.ee-minipaste-links-body»		(to "ee-minipaste-links-body")
+;; «.find-minipaste-dwim»		(to "find-minipaste-dwim")
+;; «.find-minipaste-links»		(to "find-minipaste-links")
+;; «.find-minipaste-config-links»	(to "find-minipaste-config-links")
 
 
 (require 'eev-env)
@@ -6565,7 +6569,7 @@ git clone {giturl} .
 "Visit a temporary buffer containing hyperlinks for githubio."
   (interactive)
   (setq username (or username "{username}"))
-  (setq fname (or fname "o"))
+  (setq fname (or fname "00"))
   (apply
    'find-elinks-mode-prefix '(sh-mode) "# "
    `((find-githubio-links ,username ,fname ,@pos-spec-list)
@@ -6632,12 +6636,27 @@ ls -laF
 
 
 
- Part 3: Minipaste itself.
- Use <M-x p> to edit the file that will be uploaded.
-
- (code-c-d \"minipaste\" \"/tmp/{username}.github.io/\" :anchor)
- (defun p () (interactive) (find-minipaste \"{fname}\"))
-
+# Part 3: A taste of Minipaste.")
+     ;;
+     ,(ee-minipaste-links-body username fname)
+     ;;
+     ,(ee-template0 "\n\n
+# Part 4: Configure and try Minipaste.
+# If you're interested in using Minipaste, configure it with:
+#   (find-minipaste-config-links \"{username}\")
+# and use it with `M-x mip' (`find-minipaste-dwim').")
+     )
+   pos-spec-list))
+
+
+;; «ee-minipaste-links-body»  (to ".ee-minipaste-links-body")
+;; Test: (find-estring (ee-minipaste-links-body "edrx" "00"))
+(defun ee-minipaste-links-body (username fname)
+  (ee-template0 "\
+# The code below will do this:
+#  (find-fline \"/tmp/{username}.github.io/{fname}\")
+#         -> https://{username}.github.io/{fname}
+
  Upload the file.
  (eepitch-shell)
  (eepitch-kill)
@@ -6648,18 +6667,110 @@ git commit -m '{fname}'
 git push
 
  Test the upload.
- Note that github usually takes about 30s...
-# (find-anggfile \"{fname}\")
+ Note that github usually takes about 30s to send a file
+ from the git repositories for github.io to its web servers...
 # (find-wget \"https://{username}.github.io/{fname}\")
 # (find-wgeta \"https://{username}.github.io/{fname}\")
 # (find-wget-elisp \"https://{username}.github.io/{fname}\")
 # (find-wgeta-elisp \"https://{username}.github.io/{fname}\")
 # (find-wget-mode '(sh-mode) \"https://{username}.github.io/{fname}\")
 # (find-wgeta-mode '(sh-mode) \"https://{username}.github.io/{fname}\")
+"))
 
+
+
+;;;  __  __ _       _                 _       
+;;; |  \/  (_)_ __ (_)_ __   __ _ ___| |_ ___ 
+;;; | |\/| | | '_ \| | '_ \ / _` / __| __/ _ \
+;;; | |  | | | | | | | |_) | (_| \__ \ ||  __/
+;;; |_|  |_|_|_| |_|_| .__/ \__,_|___/\__\___|
+;;;                  |_|                      
+;;
+;; «find-minipaste-dwim»  (to ".find-minipaste-dwim")
+;; This code is EXPERIMENTAL and MESSY!
+
+(defvar ee-minipaste-username)
+
+(defun ee-minipaste-username ()
+  (or ee-minipaste-username "{username}"))
+
+(defun ee-minipastedir ()
+  (format "/tmp/%s.github.io/" (ee-minipaste-username)))
+
+(defun ee-minipaste-configured ()
+  (and ee-minipaste-username
+       (file-directory-p (ee-minipastedir))))
+
+(defun ee-in-minipastedir (fullfname)
+  (and fullfname
+       (equal (file-name-directory fullfname)
+	      (ee-minipastedir))))
+
+(defun ee-minipaste-file-stem ()
+  (and (ee-in-minipaste-file)
+       (file-name-nondirectory (buffer-file-name))))
+
+(defun find-minipaste-dwim (fullfname)
+  (interactive (list (buffer-file-name)))
+  (if (ee-minipaste-configured)
+      (if (ee-in-minipastedir fullfname)
+	  (find-minipaste-links
+	   (file-name-nondirectory fullfname))
+	(find-2a nil `(find-fline ,(ee-minipastedir))))
+    (find-githubio-links ee-minipaste-username)))
+
+
+;; «find-minipaste-links»  (to ".find-minipaste-links")
+;; Skel: (find-find-links-links-new "minipaste" "fname" "username")
+;; Test: (find-minipaste-links)
+;;       (find-minipaste-links "00")
+;;
+(defun find-minipaste-links (&optional fname &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for minipaste."
+  (interactive)
+  (setq fname (or fname "{fname}"))
+  (let* ((username (or ee-minipaste-username "{username}")))
+    (apply
+     'find-elinks-mode-prefix '(sh-mode) "# "
+     `((find-minipaste-links ,fname ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-minipaste-links)
+       ""
+       (ee-minipaste-links-body username fname)
+       )
+     pos-spec-list)))
+
+
+;; «find-minipaste-config-links»  (to ".find-minipaste-config-links")
+;; Skel: (find-find-links-links-new "minipaste-config" "username" "ee-hyperlink-prefix")
+;; Test: (find-minipaste-config-links)
+;;
+(defun find-minipaste-config-links (&optional username &rest pos-spec-list)
+"Visit a temporary buffer containing hyperlinks for minipaste-config."
+  (interactive)
+  (setq username (or username ee-minipaste-username "{username}"))
+  (let* ((ee-hyperlink-prefix (or ee-hyperlink-prefix "*minipaste-config*")))
+    (apply
+     'find-elinks-elisp
+     `((find-minipaste-config-links ,username ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-minipaste-config-links)
+       ""
+       ,(ee-template0 "\
+;; See: (find-githubio-links)
+;; Based on: (find-dot-emacs-links)
+
+;; (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
+;; See: (find-efunction 'find-minipaste-dwim)
+(setq ee-minipaste-username \"{username}\")
+(defalias 'mip 'find-minipaste-dwim)
+;;--end
 ")
-     )
-   pos-spec-list))
+       )
+     pos-spec-list)))
+
+
+
 
 
 
