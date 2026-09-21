@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260908
+;; Version:    20260915
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-elinks.el>
@@ -282,6 +282,10 @@ that sets the major mode."
   (let ((ee-buffer-name (or ee-buffer-name "*Elisp hyperlinks*"))
 	(ee-hyperlink-prefix prefix))
     (apply 'find-estring-mode sexp (ee-links-to-string links) pos-spec-list)))
+
+(defun find-elinks-sh (links &rest pos-spec-list)
+  "Like `find-elink-elisp', but uses `sh-mode'."
+  (apply 'find-elinks-mode-prefix '(sh-mode) "# " links pos-spec-list))
 
 
 

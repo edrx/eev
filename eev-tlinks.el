@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260910
+;; Version:    20260915
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-tlinks.el>
@@ -202,10 +202,10 @@
 ;; «.find-ethemes-links»		(to "find-ethemes-links")
 ;; «.find-tryit-links»			(to "find-tryit-links")
 ;; «.find-githubio-links»		(to "find-githubio-links")
-;;   «.ee-minipaste-links-body»		(to "ee-minipaste-links-body")
-;; «.find-minipaste-dwim»		(to "find-minipaste-dwim")
-;; «.find-minipaste-links»		(to "find-minipaste-links")
-;; «.find-minipaste-config-links»	(to "find-minipaste-config-links")
+;;   «.find-githubio-parts»		(to "find-githubio-parts")
+;;   «.find-minipaste-config-links»	(to "find-minipaste-config-links")
+;;   «.find-minipaste-dwim»		(to "find-minipaste-dwim")
+;;   «.find-minipaste-links»		(to "find-minipaste-links")
 
 
 (require 'eev-env)
@@ -6558,27 +6558,43 @@ git clone {giturl} .
 ;;;  |___/                                       
 ;;
 ;; «find-githubio-links»  (to ".find-githubio-links")
-;; Skel: (find-find-links-links-new "githubio" "username" "")
+;; Skel: (find-find-links-links-new "githubio" "username fname" "part1 part2")
 ;; Test: (find-githubio-links)
 ;;       (find-githubio-links "edrx")
-;;       (find-githubio-links "edrx" "o")
-;;       (find-githubio-links "edrx" "o" 2 "Part 2" '(eek "C-l"))
-;;  See: (find-es "git" "github.io")
+;;       (find-githubio-links "edrx" "42")
+;;  See: http://anggtwu.net/2026-eev-minipaste.html
+;;       (find-es "git" "github.io")
 ;;
 (defun find-githubio-links (&optional username fname &rest pos-spec-list)
 "Visit a temporary buffer containing hyperlinks for githubio."
   (interactive)
   (setq username (or username "{username}"))
-  (setq fname (or fname "00"))
-  (apply
-   'find-elinks-mode-prefix '(sh-mode) "# "
-   `((find-githubio-links ,username ,fname ,@pos-spec-list)
-     (find-githubio-links "edrx" ,fname)
-     (find-githubio-links "renderedner" ,fname)
-     ;; Convention: the first sexp always regenerates the buffer.
-     (find-efunction 'find-githubio-links)
-     ""
-     ,(ee-template0 "\
+  (setq fname (or fname "0"))
+  (let* ((part1 (ee-find-githubio-part1 username))
+	 (part2 (ee-find-githubio-part2 username))
+	 (part3 (ee-find-githubio-part3 username fname))
+	 (part4 (ee-find-githubio-part4 username)))
+    (apply
+     'find-elinks-sh
+     `((find-githubio-links ,username ,fname ,@pos-spec-list)
+       (find-githubio-links "edrx" ,fname)
+       (find-githubio-links "renderedner" ,fname)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-githubio-links)
+       ""
+       ,(ee-template0 "\
+{part1}\n\n\n
+{part2}\n\n\n
+{part3}\n\n\n
+{part4}"))
+     pos-spec-list)))
+
+
+;; «find-githubio-parts»  (to ".find-githubio-parts")
+;; Test: (find-estring-sh (ee-find-githubio-part1 "edrx"))
+(defun ee-find-githubio-part1 (username)
+  "An internal function used by `find-githubio-links'."
+  (ee-template0 "\
 # Part 1, adapted from:   https://pages.github.com/
 # The repository in:            https://github.com/{username}/{username}.github.io
 # becomes this local directory:                    /tmp/{username}.github.io/
@@ -6619,10 +6635,14 @@ echo \"Hello World\" > index.html
 ls -laF
 
 # Test:    https://{username}.github.io/
-# (find-gitk \"/tmp/{username}.github.io/\")
+# (find-gitk \"/tmp/{username}.github.io/\")\
+"))
 
 
-
+;; Test: (find-estring-sh (ee-find-githubio-part2 "edrx"))
+(defun ee-find-githubio-part2 (username)
+  "An internal function used by `find-githubio-links'."
+  (ee-template0 "\
  Part 2: Minipaste preparation.
  (eepitch-shell)
  (eepitch-kill)
@@ -6632,27 +6652,35 @@ rm -Rfv        /tmp/{username}.github.io/
 mkdir          /tmp/{username}.github.io/
 cd             /tmp/{username}.github.io/
 git clone https://github.com/{username}/{username}.github.io .
-ls -laF
+ls -laF"))
 
 
+;; Test: (find-estring-sh (ee-find-githubio-part3 "edrx" "0"))
+(defun ee-find-githubio-part3 (username fname)
+  "An internal function used by `find-githubio-links'."
+  (let* ((upload (ee-find-githubio-upload username fname)))
+    (ee-template0 "\
+# Part 3: A taste of Minipaste.
+{upload}")))
 
-# Part 3: A taste of Minipaste.")
-     ;;
-     ,(ee-minipaste-links-body username fname)
-     ;;
-     ,(ee-template0 "\n\n
+
+;; Test: (find-estring-sh (ee-find-githubio-part4 "edrx"))
+(defun ee-find-githubio-part4 (username)
+  "An internal function used by `find-githubio-links'."
+  (ee-template0 "\
 # Part 4: Configure and try Minipaste.
 # If you're interested in using Minipaste, configure it with:
 #   (find-minipaste-config-links \"{username}\")
-# and use it with `M-x mip' (`find-minipaste-dwim').")
-     )
-   pos-spec-list))
+# and use it with `M-x mip' (`find-minipaste-dwim')."))
 
 
-;; «ee-minipaste-links-body»  (to ".ee-minipaste-links-body")
-;; Test: (find-estring (ee-minipaste-links-body "edrx" "00"))
-(defun ee-minipaste-links-body (username fname)
-  (ee-template0 "\
+
+;; Test: (find-estring-sh (ee-find-githubio-upload "edrx" "0"))
+(defun ee-find-githubio-upload (username fname)
+  "An internal function used by `find-githubio-links' and Minipaste."
+  (let* ((baseurl   (ee-template0 "https://{username}.github.io/"))
+	 (findwgets (ee-minipaste-find-wgets baseurl fname)))
+    (ee-template0 "\
 # The code below will do this:
 #  (find-fline \"/tmp/{username}.github.io/{fname}\")
 #         -> https://{username}.github.io/{fname}
@@ -6669,13 +6697,51 @@ git push
  Test the upload.
  Note that github usually takes about 30s to send a file
  from the git repositories for github.io to its web servers...
-# (find-wget \"https://{username}.github.io/{fname}\")
-# (find-wgeta \"https://{username}.github.io/{fname}\")
-# (find-wget-elisp \"https://{username}.github.io/{fname}\")
-# (find-wgeta-elisp \"https://{username}.github.io/{fname}\")
-# (find-wget-mode '(sh-mode) \"https://{username}.github.io/{fname}\")
-# (find-wgeta-mode '(sh-mode) \"https://{username}.github.io/{fname}\")
+{findwgets}")))
+
+
+;; Test: (find-estring-sh (ee-minipaste-find-wgets "http://foo/" "bar"))
+(defun ee-minipaste-find-wgets (baseurl fname)
+  "An internal function used by `find-githubio-links' and Minipaste."
+  (ee-template0 "\
+# (find-wget \"{baseurl}{fname}\")
+# (find-wgeta \"{baseurl}{fname}\")
+# (find-wget-elisp \"{baseurl}{fname}\")
+# (find-wgeta-elisp \"{baseurl}{fname}\")
+# (find-wget-mode '(sh-mode) \"{baseurl}{fname}\")
+# (find-wgeta-mode '(sh-mode) \"{baseurl}{fname}\")\
 "))
+
+
+;; «find-minipaste-config-links»  (to ".find-minipaste-config-links")
+;; Skel: (find-find-links-links-new "minipaste-config" "username" "ee-buffer-name")
+;; Test: (find-minipaste-config-links)
+;;
+(defun find-minipaste-config-links (&optional username &rest pos-spec-list)
+  "Visit a temporary buffer containing hyperlinks for minipaste-config."
+  (interactive)
+  (setq username (or username ee-minipaste-username "{username}"))
+  (let* ((ee-buffer-name (or ee-buffer-name "*minipaste-config*")))
+    (apply
+     'find-elinks-elisp
+     `((find-minipaste-config-links ,username ,@pos-spec-list)
+       ;; Convention: the first sexp always regenerates the buffer.
+       (find-efunction 'find-minipaste-config-links)
+       ""
+       ,(ee-template0 "\
+;;      See: (find-githubio-links)
+;; Based on: (find-dot-emacs-links)
+
+;; (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
+;; See: (find-efunction 'find-minipaste-dwim)
+(setq ee-minipaste-username \"{username}\")
+(defalias 'mip 'find-minipaste-dwim)
+;;--end
+")
+       )
+     pos-spec-list)))
+
+
 
 
 
@@ -6687,9 +6753,9 @@ git push
 ;;;                  |_|                      
 ;;
 ;; «find-minipaste-dwim»  (to ".find-minipaste-dwim")
-;; This code is EXPERIMENTAL and MESSY!
+;; See: http://anggtwu.net/2026-eev-minipaste.html
 
-(defvar ee-minipaste-username)
+(defvar ee-minipaste-username nil)
 
 (defun ee-minipaste-username ()
   (or ee-minipaste-username "{username}"))
@@ -6703,71 +6769,50 @@ git push
 
 (defun ee-in-minipastedir (fullfname)
   (and fullfname
-       (equal (file-name-directory fullfname)
-	      (ee-minipastedir))))
-
-(defun ee-minipaste-file-stem ()
-  (and (ee-in-minipaste-file)
-       (file-name-nondirectory (buffer-file-name))))
+       (equal (ee-minipastedir)
+	      (file-name-directory fullfname))))
 
 (defun find-minipaste-dwim (fullfname)
+  "(Mini)paste a file to github.io, or show how to configure Minipaste.
+There are two cases in which the behavior of this function is easy to explain:\n
+1. if Minipaste is not configured, run `find-githubio-links'.
+2. If Minipaste is configured and we're editing a file with a name like
+   \"/tmp/<mygithubusername>.github.io/nnn\", then run `find-minipaste-links'
+   to let the user upload the file \"nnn\" to her page on github.io.\n
+In the other cases try to do something sensible - like showing the
+Minipaste directory in Dired in the right window, to let the user choose
+a file with a name like \"/tmp/<mygithubusername>.github.io/nnn\" that
+doesn't exist yet.\n
+This function is usually aliased to `mip'."
   (interactive (list (buffer-file-name)))
-  (if (ee-minipaste-configured)
-      (if (ee-in-minipastedir fullfname)
-	  (find-minipaste-links
-	   (file-name-nondirectory fullfname))
-	(find-2a nil `(find-fline ,(ee-minipastedir))))
-    (find-githubio-links ee-minipaste-username)))
+  (if (not (ee-minipaste-configured))
+      (find-githubio-links ee-minipaste-username)
+    (if (ee-in-minipastedir fullfname)
+	(find-minipaste-links (file-name-nondirectory fullfname))
+      (find-2a nil `(find-fline ,(ee-minipastedir))))))
 
 
 ;; «find-minipaste-links»  (to ".find-minipaste-links")
-;; Skel: (find-find-links-links-new "minipaste" "fname" "username")
+;; Skel: (find-find-links-links-new "minipaste" "fname" "upload")
 ;; Test: (find-minipaste-links)
-;;       (find-minipaste-links "00")
+;;       (find-minipaste-links "42")
 ;;
 (defun find-minipaste-links (&optional fname &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for minipaste."
+  "See `find-minipaste-dwim'."
   (interactive)
   (setq fname (or fname "{fname}"))
-  (let* ((username (or ee-minipaste-username "{username}")))
+  (let* ((upload (ee-find-githubio-upload ee-minipaste-username fname)))
     (apply
-     'find-elinks-mode-prefix '(sh-mode) "# "
+     'find-elinks-sh
      `((find-minipaste-links ,fname ,@pos-spec-list)
        ;; Convention: the first sexp always regenerates the buffer.
        (find-efunction 'find-minipaste-links)
        ""
-       ,(ee-minipaste-links-body username fname)
+       ,upload
        )
      pos-spec-list)))
 
 
-;; «find-minipaste-config-links»  (to ".find-minipaste-config-links")
-;; Skel: (find-find-links-links-new "minipaste-config" "username" "ee-hyperlink-prefix")
-;; Test: (find-minipaste-config-links)
-;;
-(defun find-minipaste-config-links (&optional username &rest pos-spec-list)
-"Visit a temporary buffer containing hyperlinks for minipaste-config."
-  (interactive)
-  (setq username (or username ee-minipaste-username "{username}"))
-  (let* ((ee-hyperlink-prefix (or ee-hyperlink-prefix "*minipaste-config*")))
-    (apply
-     'find-elinks-elisp
-     `((find-minipaste-config-links ,username ,@pos-spec-list)
-       ;; Convention: the first sexp always regenerates the buffer.
-       (find-efunction 'find-minipaste-config-links)
-       ""
-       ,(ee-template0 "\
-;; See: (find-githubio-links)
-;; Based on: (find-dot-emacs-links)
-
-;; (ee-copy-rest-3 nil \";;--end\" \"~/.emacs\")
-;; See: (find-efunction 'find-minipaste-dwim)
-(setq ee-minipaste-username \"{username}\")
-(defalias 'mip 'find-minipaste-dwim)
-;;--end
-")
-       )
-     pos-spec-list)))
 
 
 

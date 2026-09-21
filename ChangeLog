@@ -1,3 +1,18 @@
+2026-09-15  Eduardo Ochs  <eduardoochs@gmail.com>
+
+	* eev-tlinks.el (find-githubio-links): rewritten.
+	(ee-find-githubio-part1, ee-find-githubio-part2)
+	(ee-find-githubio-part3, ee-find-githubio-part4)
+	(ee-find-githubio-upload, ee-minipaste-find-wgets)
+	(find-minipaste-config-links, ee-minipaste-username)
+	(ee-minipastedir, ee-minipaste-configured, ee-in-minipastedir)
+	(find-minipaste-dwim, find-minipaste-links): new functions.
+	(ee-minipaste-username): new variable.
+
+	* eev-blinks.el (find-estring-sh): new function.
+
+	* eev-elinks.el (find-elinks-sh): new function.
+
 2026-09-09  Eduardo Ochs  <eduardoochs@gmail.com>
 
 	* eev-tlinks.el (find-githubio-links): new function.

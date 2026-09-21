@@ -21,7 +21,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260908
+;; Version:    20260915
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-blinks.el>
@@ -925,6 +925,10 @@ running `(emacs-lisp-mode)' it runs SEXP, that is usually - but not
 necessarily - a sexp that sets the major mode."
   (apply 'find-eoutput-rerun (or ee-buffer-name "*string*")
 	 `(progn (insert ,string) ,sexp) pos-spec-list))
+
+(defun find-estring-sh (string &rest pos-spec-list)
+  "Like `find-estring-elisp', but uses `sh-mode'."
+  (apply 'find-estring-mode '(sh-mode) string pos-spec-list))
 
 (defun find-estring-2a (str &rest pos-spec-list)
   "Show STR in the window at the right."

@@ -19,7 +19,7 @@
 ;;
 ;; Author:     Eduardo Ochs <eduardoochs@gmail.com>
 ;; Maintainer: Eduardo Ochs <eduardoochs@gmail.com>
-;; Version:    20260903
+;; Version:    20260918
 ;; Keywords:   e-scripts
 ;;
 ;; Latest version: <http://anggtwu.net/eev-current/eev-intro.el>
@@ -8814,9 +8814,10 @@ position of a PDF,
 will be called a `find-pdf'-pair.
 
 [Video links:]
-  (find-eev2020video \"4:52\" \"`find-pdf-page' calls an external program\")
-  (find-eev2020video \"5:26\" \"`find-pdf-text' converts the PDF to text and\")
-
+  (find-eev2020video \"04:51\" \"it invokes my favorite PDF viewer\")
+  (find-eev2020hsubs \"04:51\" \"it invokes my favorite PDF viewer\")
+  (find-eev2020video \"05:22\" \"runs a program called pdftotext\")
+  (find-eev2020hsubs \"05:22\" \"runs a program called pdftotext\")
 
 
 
@@ -8931,11 +8932,12 @@ behave roughly as abbreviations for:
   (find-pdf-text \"~/Coetzee99.pdf\" (+ -110 113) \"LECTURE I.\")
 
 [Video links:]
-  (find-eev2020video \"10:22\" \"1.3. Shorter hyperlinks to PDFs and videos\")
-  (find-eev2020video \"10:45\"   \"`code-pdf-page' creates short hyperlink functions\")
-  (find-eev2020video \"11:38\"   \"let's try...\")
-  (find-eev2020video \"11:55\"   \"`find-fongspivatext'\")
-
+  (find-eev2020video \"10:23\" \"1.3. Shorter hyperlinks to PDFs and videos\")
+  (find-eev2020hsubs \"10:23\" \"1.3. Shorter hyperlinks to PDFs and videos\")
+  (find-eev2020video \"10:43\" \"code-pdf-page ... defines a function\")
+  (find-eev2020hsubs \"10:43\" \"code-pdf-page ... defines a function\")
+  (find-eev2020video \"11:51\" \"find-fongspivatext\")
+  (find-eev2020hsubs \"11:51\" \"find-fongspivatext\")
 
 
 
@@ -10030,12 +10032,19 @@ of using `M-h M-p' obsolete.
 
 [Video links:]
   (find-eevtemplvideo \"28:11\" \"6. `find-here-links' and `find-extra-file-links'\")
+  (find-eevtemplhsubs \"28:11\" \"6. `find-here-links' and `find-extra-file-links'\")
   (find-eevtemplvideo \"30:19\"  \"`M-h M-e' runs `find-extra-file-links'\")
+  (find-eevtemplhsubs \"30:19\"  \"`M-h M-e' runs `find-extra-file-links'\")
   (find-eevtemplvideo \"30:42\"  \"here is an example in Lisp\")
+  (find-eevtemplhsubs \"30:42\"  \"here is an example in Lisp\")
   (find-eevtemplvideo \"31:06\"  \"and I can change this {c}\")
+  (find-eevtemplhsubs \"31:06\"  \"and I can change this {c}\")
   (find-eevtemplvideo \"31:21\"  \"Let me show a more realistic example\")
+  (find-eevtemplhsubs \"31:21\"  \"Let me show a more realistic example\")
   (find-eevtemplvideo \"31:26\"  \"let's go to the directory with the video file\")
+  (find-eevtemplhsubs \"31:26\"  \"let's go to the directory with the video file\")
   (find-eevtemplvideo \"31:50\"  \"this file is a video file\")
+  (find-eevtemplhsubs \"31:50\"  \"this file is a video file\")
 
 
 
